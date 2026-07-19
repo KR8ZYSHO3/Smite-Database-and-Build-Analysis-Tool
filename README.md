@@ -7,16 +7,31 @@
 
 ---
 
-## Clickable web GUI (recommended)
+## Live web GUI (works now)
 
-After GitHub Pages is enabled on this repo (`Settings → Pages → Branch: main → /docs`):
+GitHub Pages on this account is broken (every Pages deploy dies with **`startup_failure`** / never runs jobs).  
+So the site is served from the `docs/` folder on **jsDelivr** (pulls straight from GitHub — no Pages, no Actions).
 
-### **https://kr8zysho3.github.io/Smite-Database-and-Build-Analysis-Tool/**
+### **[Open the web app →](https://cdn.jsdelivr.net/gh/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool@main/docs/index.html)**
+
+Direct URL:
+
+```
+https://cdn.jsdelivr.net/gh/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool@main/docs/index.html
+```
+
+Backup mirror:
+
+```
+https://raw.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main/docs/index.html
+```
 
 Tabs: **Tier List · Gods · Conquest Builds · Items**
 
 > Use scope **`overall`** for the full S-tier list (~11).  
-> Role scopes (Mid, Jungle, …) only show ~3 S-tier gods each (top ~12% of that role).
+> Role scopes (Mid, Jungle, …) only show ~3 S-tier gods each.
+
+After you push updates to `main`, CDN cache can lag a few minutes. Hard-refresh the tab if data looks old.
 
 ---
 
@@ -29,6 +44,18 @@ python -m smite2db.gui
 ```
 
 Or double-click `launch_gui.bat`.
+
+---
+
+## Optional: your own free URL (Netlify Drop)
+
+If you want a short link like `https://something.netlify.app` (still no GitHub Pages):
+
+1. Open **[app.netlify.com/drop](https://app.netlify.com/drop)** (free account)
+2. Drag the entire **`docs`** folder onto the page
+3. Netlify gives you a live HTTPS URL immediately
+
+Repo also has `netlify.toml` / `vercel.json` / `render.yaml` if you prefer “connect GitHub” on those hosts.
 
 ---
 
@@ -50,7 +77,7 @@ python -m smite2db.analyze run
 # Conquest builds (enforces ≤3 actives)
 python -m smite2db.conquest_builds
 
-# Export JSON for the web GUI / GitHub Pages
+# Export JSON for the web GUI
 python -m smite2db.export_web
 ```
 
@@ -72,7 +99,7 @@ python -m http.server 8080
 | **Tier lists** | Patch momentum 48% · kit 28% · build 14% · novelty/stability |
 | **Conquest builds** | Statistical role builds: 1 starter + 6 items · **≤3 actives** |
 | **Desktop GUI** | tkinter app (`python -m smite2db.gui`) |
-| **Web GUI** | Static site in `docs/` for GitHub Pages |
+| **Web GUI** | Static site in `docs/` (CDN / Netlify / any static host) |
 
 Database: `data/smite2.db`  
 Web data: `docs/data/*.json`
@@ -88,6 +115,14 @@ python -m smite2db.analyze momentum --entity-type god --limit 15
 python -m smite2db.conquest_builds
 python -m smite2db.export_web
 ```
+
+---
+
+## Why not GitHub Pages?
+
+This repo’s Pages builds never start (`startup_failure`, 0 jobs) even with  
+**Deploy from a branch → main → /docs**. That is a GitHub-side Actions/Pages issue, not missing files.  
+CDN hosting avoids that path entirely.
 
 ---
 

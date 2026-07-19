@@ -1,21 +1,28 @@
-# Web GUI (GitHub Pages)
+# Web GUI (static)
 
-This folder is the **clickable browser UI**.
+Open **`index.html`** after a local server or any static host.
 
-After enabling GitHub Pages (Settings → Pages → Deploy from branch → `/docs`):
+## Live links (no GitHub Pages required)
 
-**https://kr8zysho3.github.io/Smite-Database-and-Build-Analysis-Tool/**
+GitHub Pages is unreliable on this repo (Actions `startup_failure`). Use:
 
-Local preview (required — `file://` cannot fetch JSON):
+### Recommended (always current `@main`)
+
+**https://cdn.jsdelivr.net/gh/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool@main/docs/index.html**
+
+### Alternate
+
+**https://raw.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main/docs/index.html**
+
+## Local
 
 ```powershell
 cd docs
 python -m http.server 8080
-# open http://localhost:8080
+# http://localhost:8080
 ```
 
-Refresh exported data from the SQLite DB:
+## Pretty custom URL (optional, free)
 
-```powershell
-python -m smite2db.export_web
-```
+1. [Netlify Drop](https://app.netlify.com/drop) — drag this whole `docs` folder  
+2. Or connect the GitHub repo in Netlify / Vercel / Render (configs in repo root)

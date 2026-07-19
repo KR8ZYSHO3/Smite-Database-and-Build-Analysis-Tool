@@ -1,4 +1,4 @@
-/* SMITE 2 Database — static web GUI (GitHub Pages) */
+/* SMITE 2 Database — static web GUI (CDN / Netlify / any static host) */
 
 const state = {
   meta: null,

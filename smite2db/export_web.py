@@ -24,6 +24,14 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
         "source": "https://wiki.smite2.com",
         "exported_at": datetime.now(timezone.utc).isoformat(),
         "repo": "https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool",
+        "live_url": (
+            "https://cdn.jsdelivr.net/gh/KR8ZYSHO3/"
+            "Smite-Database-and-Build-Analysis-Tool@main/docs/index.html"
+        ),
+        "live_url_alt": (
+            "https://raw.githack.com/KR8ZYSHO3/"
+            "Smite-Database-and-Build-Analysis-Tool/main/docs/index.html"
+        ),
     }
     try:
         for r in conn.execute("SELECT key, value FROM meta"):

@@ -1,0 +1,13 @@
+# Optional free static host: https://render.com
+# Connect GitHub → New Static Site → this repo → publish path docs
+services:
+  - type: web
+    name: smite2-db
+    runtime: static
+    rootDir: docs
+    buildCommand: "true"
+    staticPublishPath: .
+    headers:
+      - path: /data/*
+        name: Cache-Control
+        value: public, max-age=300

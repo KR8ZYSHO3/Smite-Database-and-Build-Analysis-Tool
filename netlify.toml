@@ -1,0 +1,18 @@
+# Optional: connect this repo at https://app.netlify.com
+# Publish directory is docs/ (no build step).
+# Does NOT use GitHub Actions / GitHub Pages.
+
+[build]
+  publish = "docs"
+  command = "echo 'static site — no build'"
+
+[[headers]]
+  for = "/data/*"
+  [headers.values]
+    Cache-Control = "public, max-age=300"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
