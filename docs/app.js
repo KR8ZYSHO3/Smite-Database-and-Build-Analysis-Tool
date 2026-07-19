@@ -19,20 +19,47 @@ function fmt(v, d = 1) {
   return n.toFixed(d);
 }
 
+function applyPayload(payload) {
+  if (!payload || typeof payload !== "object") {
+    throw new Error("Invalid data payload");
+  }
+  state.meta = payload.meta || {};
+  state.tiers = payload.tiers || {};
+  state.builds = payload.builds || {};
+  state.gods = payload.gods || [];
+  state.items = payload.items || [];
+}
+
+async function fetchJson(url) {
+  const r = await fetch(url, { cache: "no-cache" });
+  if (!r.ok) throw new Error(`HTTP ${r.status} for ${url}`);
+  return r.json();
+}
+
 async function loadData() {
+  // Embedded single-file build (standalone.html) — no network fetch needed.
+  if (window.__SMITE2_DATA__) {
+    applyPayload(window.__SMITE2_DATA__);
+    return;
+  }
+
   const base = new URL("./data/", window.location.href);
+  // Prefer one-shot bundle (fewer requests on CDNs).
+  try {
+    applyPayload(await fetchJson(new URL("bundle.json", base)));
+    return;
+  } catch (bundleErr) {
+    console.warn("bundle.json failed, falling back to split files", bundleErr);
+  }
+
   const [meta, tiers, builds, gods, items] = await Promise.all([
-    fetch(new URL("meta.json", base)).then((r) => r.json()),
-    fetch(new URL("tiers.json", base)).then((r) => r.json()),
-    fetch(new URL("builds.json", base)).then((r) => r.json()),
-    fetch(new URL("gods.json", base)).then((r) => r.json()),
-    fetch(new URL("items.json", base)).then((r) => r.json()),
+    fetchJson(new URL("meta.json", base)),
+    fetchJson(new URL("tiers.json", base)),
+    fetchJson(new URL("builds.json", base)),
+    fetchJson(new URL("gods.json", base)),
+    fetchJson(new URL("items.json", base)),
   ]);
-  state.meta = meta;
-  state.tiers = tiers;
-  state.builds = builds;
-  state.gods = gods;
-  state.items = items;
+  applyPayload({ meta, tiers, builds, gods, items });
 }
 
 function setupTabs() {
@@ -449,8 +476,10 @@ async function main() {
   } catch (err) {
     loading.innerHTML = `<div class="err"><strong>Failed to load data.</strong><br>${escapeHtml(
       err.message || err
-    )}<br><br>If opening the HTML file directly, use a local server or GitHub Pages
-    (browsers block fetch() from file://).</div>`;
+    )}<br><br>
+    <strong>Do not use jsDelivr for .html</strong> — it serves HTML as plain text.<br>
+    Use the <code>standalone.html</code> link (raw.githack), desktop GUI, or
+    <code>python -m http.server</code> in the docs folder.</div>`;
   }
 }
 

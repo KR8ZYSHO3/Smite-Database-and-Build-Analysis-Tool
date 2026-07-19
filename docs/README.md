@@ -1,28 +1,21 @@
-# Web GUI (static)
+# Web GUI
 
-Open **`index.html`** after a local server or any static host.
+## Open this (live)
 
-## Live links (no GitHub Pages required)
+**https://raw.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main/docs/standalone.html**
 
-GitHub Pages is unreliable on this repo (Actions `startup_failure`). Use:
+`standalone.html` embeds CSS, JS, and all JSON data (~1 MB). No extra fetches.
 
-### Recommended (always current `@main`)
+## Do not use
 
-**https://cdn.jsdelivr.net/gh/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool@main/docs/index.html**
-
-### Alternate
-
-**https://raw.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main/docs/index.html**
+`https://cdn.jsdelivr.net/gh/.../docs/index.html` — jsDelivr returns HTML as **plain text**.
 
 ## Local
 
 ```powershell
 cd docs
 python -m http.server 8080
-# http://localhost:8080
+# http://localhost:8080/standalone.html
 ```
 
-## Pretty custom URL (optional, free)
-
-1. [Netlify Drop](https://app.netlify.com/drop) — drag this whole `docs` folder  
-2. Or connect the GitHub repo in Netlify / Vercel / Render (configs in repo root)
+Rebuild after data refresh: `python -m smite2db.export_web`

@@ -143,10 +143,54 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     (WEB_DATA / "items.json").write_text(json.dumps(items), encoding="utf-8")
     (WEB_DATA / "bundle.json").write_text(json.dumps(payload), encoding="utf-8")
 
+    write_standalone(payload)
+
     conn.close()
     print(f"Exported web data → {WEB_DATA}")
     print(f"  gods: {len(gods)}  tier scopes: {len(tiers)}  items: {len(items)}")
+    print(f"  standalone: {ROOT / 'docs' / 'standalone.html'}")
     return WEB_DATA
+
+
+def write_standalone(payload: dict | None = None) -> Path:
+    """Build a single HTML file with CSS/JS/data inlined (works on CDNs that mangle multi-file apps)."""
+    docs = ROOT / "docs"
+    out = docs / "standalone.html"
+    html = (docs / "index.html").read_text(encoding="utf-8")
+    css = (docs / "style.css").read_text(encoding="utf-8")
+    js = (docs / "app.js").read_text(encoding="utf-8")
+    if payload is None:
+        payload = json.loads((WEB_DATA / "bundle.json").read_text(encoding="utf-8"))
+    # Compact JSON for size; keep it valid for embedding in <script>
+    data_js = json.dumps(payload, separators=(",", ":"), ensure_ascii=False)
+    # Break </script> sequences that could appear inside strings
+    data_js = data_js.replace("</", "<\\/")
+
+    html = html.replace(
+        '  <!-- Static site: works on jsDelivr / Netlify / any host. Relative asset paths. -->\n'
+        '  <link rel="stylesheet" href="./style.css" />',
+        "  <style>\n" + css + "\n  </style>",
+    )
+    # Prefer the comment-less form too
+    html = html.replace(
+        '  <link rel="stylesheet" href="./style.css" />',
+        "  <style>\n" + css + "\n  </style>",
+    )
+    embed = (
+        "  <script>window.__SMITE2_DATA__ = "
+        + data_js
+        + ";</script>\n"
+        "  <script>\n"
+        + js
+        + "\n  </script>"
+    )
+    html = html.replace('  <script src="./app.js"></script>', embed)
+    html = html.replace(
+        "Local / GitHub Pages viewer",
+        "Self-contained viewer (data embedded)",
+    )
+    out.write_text(html, encoding="utf-8")
+    return out
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SMITE 2 Database &amp; Build Analysis</title>
   <meta name="description" content="SMITE 2 tier lists, god metrics, and Conquest builds (1 starter + 6 items, max 3 actives)." />
-  <!-- Static site: works on jsDelivr / Netlify / any host. Relative asset paths. -->
+  <!-- Multi-file build. Prefer standalone.html on CDNs (jsDelivr serves .html as text/plain). -->
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
@@ -22,7 +22,7 @@
       </div>
     </header>
 
-    <div id="loading" class="loading">Loading data…</div>
+    <div id="loading" class="loading">Loading data… If this never finishes, open <strong>standalone.html</strong> instead of index.html.</div>
 
     <div id="app-main" style="display:none">
       <nav class="tabs">
