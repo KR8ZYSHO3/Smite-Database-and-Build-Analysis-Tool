@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SMITE 2 Database &amp; Build Analysis</title>
+  <meta name="description" content="SMITE 2 tier lists, god metrics, and Conquest builds (1 starter + 6 items, max 3 actives)." />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="top">
+      <div>
+        <h1>SMITE 2 Database &amp; Build Analysis</h1>
+        <div class="sub" id="meta-line">Loading…</div>
+      </div>
+      <div>
+        <span class="badge">SMITE 2 only</span>
+        <span class="badge">Patch-weighted tiers</span>
+        <span class="badge">1 starter + 6 · ≤3 actives</span>
+      </div>
+    </header>
+
+    <div id="loading" class="loading">Loading data…</div>
+
+    <div id="app-main" style="display:none">
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="tiers">Tier List</button>
+        <button class="tab-btn" data-tab="gods">Gods</button>
+        <button class="tab-btn" data-tab="builds">Conquest Builds</button>
+        <button class="tab-btn" data-tab="items">Items</button>
+        <button class="tab-btn" data-tab="about">About</button>
+      </nav>
+
+      <!-- Tiers -->
+      <section id="panel-tiers" class="panel active">
+        <div class="toolbar">
+          <label>Scope
+            <select id="tier-scope"></select>
+          </label>
+          <label>Tier
+            <select id="tier-filter">
+              <option>All</option>
+              <option>S</option>
+              <option>A</option>
+              <option>B</option>
+              <option>C</option>
+              <option>D</option>
+            </select>
+          </label>
+          <span class="muted" id="tier-count"></span>
+        </div>
+        <div class="grid-2">
+          <div class="card scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th><th>Tier</th><th>Name</th><th>Score</th><th>Patch</th><th>Kit</th><th>Build</th>
+                </tr>
+              </thead>
+              <tbody id="tier-body"></tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h2>Details</h2>
+            <div class="detail" id="tier-detail">Select a row. Use Scope = overall for all S-tier gods (~11). Role scopes only show ~3 S-tier each.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gods -->
+      <section id="panel-gods" class="panel">
+        <div class="toolbar">
+          <input id="god-search" type="search" placeholder="Search gods…" style="min-width:220px" />
+        </div>
+        <div class="grid-2">
+          <div class="card scroll">
+            <table>
+              <thead>
+                <tr><th>God</th><th>Pantheon</th><th>Dmg</th><th>Tier</th><th>Rank</th></tr>
+              </thead>
+              <tbody id="god-list-body"></tbody>
+            </table>
+          </div>
+          <div class="card scroll">
+            <h2 id="god-title">Select a god</h2>
+            <div class="muted" id="god-sub"></div>
+            <div id="god-metrics" style="margin:10px 0"></div>
+            <h3>Abilities</h3>
+            <div class="scroll" style="max-height:200px">
+              <table>
+                <thead>
+                  <tr><th>Slot</th><th>Name</th><th>Dmg5</th><th>STR%</th><th>INT%</th><th>CD</th><th>Pwr</th></tr>
+                </thead>
+                <tbody id="god-abilities"></tbody>
+              </table>
+            </div>
+            <h3>Build notes</h3>
+            <pre class="detail" id="god-build"></pre>
+            <h3>Patch / tier</h3>
+            <pre class="detail" id="god-patch"></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Builds -->
+      <section id="panel-builds" class="panel">
+        <div class="toolbar">
+          <label>Role
+            <select id="build-role"></select>
+          </label>
+        </div>
+        <p class="muted" id="build-desc"></p>
+        <div class="grid-2">
+          <div class="card" id="build-template"></div>
+          <div id="build-gods"></div>
+        </div>
+      </section>
+
+      <!-- Items -->
+      <section id="panel-items" class="panel">
+        <div class="toolbar">
+          <input id="item-search" type="search" placeholder="Search items…" style="min-width:220px" />
+          <label>Tier
+            <select id="item-tier">
+              <option>All</option>
+              <option>3</option>
+              <option>2</option>
+              <option>1</option>
+              <option>Starter</option>
+              <option>Relic</option>
+              <option>Curio</option>
+              <option>Consumable</option>
+              <option>God Specific</option>
+            </select>
+          </label>
+        </div>
+        <div class="grid-2">
+          <div class="card scroll">
+            <table>
+              <thead>
+                <tr><th>Item</th><th>Tier</th><th>Type</th><th>Cost</th><th>Stats</th></tr>
+              </thead>
+              <tbody id="item-body"></tbody>
+            </table>
+          </div>
+          <div class="card">
+            <h2>Item detail</h2>
+            <pre class="detail" id="item-detail">Select an item.</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section id="panel-about" class="panel">
+        <div class="card">
+          <h2>About this tool</h2>
+          <p>
+            Local / GitHub Pages viewer for <strong>SMITE 2 only</strong> data
+            (gods, abilities, items, patch notes). Not Smite 1.
+          </p>
+          <ul>
+            <li><strong>Tier lists</strong> — patch-note momentum (48%) + kit (28%) + build fit (14%) + novelty/stability.</li>
+            <li><strong>Conquest builds</strong> — 1 starter + 6 items, hard cap of <strong>3 Active items</strong> (relics separate).</li>
+            <li><strong>Source</strong> — official wiki.smite2.com via the Python scraper in this repo.</li>
+          </ul>
+          <p class="muted">
+            This is a statistical model, not live win rates. Use Scope = <code>overall</code> for the full S-tier list;
+            role scopes only promote ~top 12% of that role (~3 S gods).
+          </p>
+          <p>
+            <a href="https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool" target="_blank" rel="noopener">
+              GitHub repository
+            </a>
+            · Desktop GUI: <code>python -m smite2db.gui</code>
+            · Refresh data: scrape → analyze → <code>python -m smite2db.export_web</code>
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      SMITE 2 Database &amp; Build Analysis Tool · community data from wiki.smite2.com · not affiliated with Hi-Rez / Titan Forge
+    </footer>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>
