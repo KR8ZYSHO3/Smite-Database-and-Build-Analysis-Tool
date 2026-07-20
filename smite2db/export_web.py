@@ -241,6 +241,17 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
             (ROOT / "data" / "conquest_builds.md").write_text(
                 render_markdown(builds), encoding="utf-8"
             )
+            qg = builds.get("quality_gate") or {}
+            if qg:
+                status = "OK" if qg.get("ok") else "WARN"
+                print(f"Build quality gate: {status}")
+                for role, info in (qg.get("roles") or {}).items():
+                    print(
+                        f"  {role}: unique {info.get('unique')}/{info.get('total')}"
+                        f"  shared_groups={info.get('shared_groups', 0)}"
+                    )
+                for w in qg.get("warnings") or []:
+                    print(f"  ! {w}")
         except Exception as exc:  # noqa: BLE001
             print(f"WARN: could not rebuild builds: {exc}")
     if builds is None and builds_path.exists():

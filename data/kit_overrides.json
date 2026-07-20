@@ -1,0 +1,12 @@
+{
+  "_comment": "Optional human kit overrides. Keys are exact god names from the wiki.",
+  "_example": {
+    "SomeGod": {
+      "force_tags": ["channel", "heal"],
+      "remove_tags": ["aa"],
+      "prefer_items": ["Chronos' Pendant", "Gem of Isolation"],
+      "ban_items": ["Riptalon", "Deathbringer"],
+      "archetype": "sustain_mage"
+    }
+  }
+}

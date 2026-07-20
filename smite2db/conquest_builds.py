@@ -21,6 +21,14 @@ from pathlib import Path
 from typing import Any
 
 from .db import DEFAULT_DB, connect
+from .kit_effects import (
+    apply_kit_overrides,
+    effect_labels,
+    explain_item_pick,
+    extract_kit_effects,
+    family_score_boost,
+    prefer_ban_adjust,
+)
 
 # SMITE 2 active-item rules (shop T3 On-Use items in the 6-item grid):
 # - Hard game limit is 3 (item text + curios share this budget; curios auto-drop at 3).
@@ -1199,7 +1207,7 @@ def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, Any]:
     if "aa" in tags:
         aa_score = max(aa_score, 0.7)
 
-    return {
+    base_bias = {
         "str": (row["avg_scaling_str"] or 0) / 100.0,
         "int": (row["avg_scaling_int"] or 0) / 100.0,
         "primary": row["primary_scaling"] or "Mixed",
@@ -1229,6 +1237,12 @@ def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, Any]:
         "ability_blob": blob[:4000],
         "full_blob": full_blob[:2000],
     }
+    # Structured effects + optional human overrides
+    base_bias = apply_kit_overrides(base_bias, god_name)
+    effects = extract_kit_effects(base_bias)
+    base_bias["effects"] = effects
+    base_bias["effect_labels"] = effect_labels(effects)
+    return base_bias
 
 
 def rescore_for_god(
@@ -1566,6 +1580,14 @@ def rescore_for_god(
         if pen_v >= 8 and item.is_active_item and (item.total_cost or 0) >= 3200:
             s -= 10
 
+    # Structured effect → item family boost (Magus for multi-hit, Chronos for spam, …)
+    effects = bias.get("effects")
+    if not effects:
+        effects = extract_kit_effects(bias)
+    fam_boost, _ = family_score_boost(item.name, effects)
+    s += fam_boost
+    s += prefer_ban_adjust(item.name, bias)
+
     # Deterministic per-god reordering so near-ties don't all pick the same flex.
     # Large enough to swap #1/#2 among peer items; kit tags + signatures still dominate.
     g = bias.get("god_name") or ""
@@ -1581,6 +1603,8 @@ def rescore_for_god(
 # ---------------------------------------------------------------------------
 
 def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
+    if bias.get("force_archetype"):
+        return str(bias["force_archetype"])
     tags: set[str] = set(bias.get("tags") or [])
     sb = float(bias.get("style_burst") or 0.5)
     sd = float(bias.get("style_dps") or 0.5)
@@ -2934,6 +2958,10 @@ def build_god_build(
         return True
 
     t3 = [s for s in t3 if kit_ok(s)]
+    # Human ban list from kit_overrides.json
+    bans = [b.lower() for b in (bias.get("ban_items") or [])]
+    if bans:
+        t3 = [s for s in t3 if not any(b in s.name.lower() for b in bans)]
     max_act = max_shop_actives_for_god(role, dtype, bias)
 
     # Slot-based path from kit archetype (primary differentiator across gods)
@@ -2993,6 +3021,20 @@ def build_god_build(
     relics.sort(key=lambda x: x.role_score, reverse=True)
 
     tags = sorted(bias.get("tags") or [])
+    effects = bias.get("effects") or extract_kit_effects(bias)
+    effect_labs = bias.get("effect_labels") or effect_labels(effects)
+    path_cards = _path_item_cards(items_6, bias, role)
+    starter_why = None
+    starter_card = None
+    if starters:
+        starter_why = explain_item_pick(
+            starters[0].name,
+            bias=bias,
+            role=role,
+            effects=effects,
+            is_starter=True,
+        )
+        starter_card = _item_card(starters[0], why=starter_why)
     return {
         "god": god["entity_name"],
         "role": role,
@@ -3004,15 +3046,17 @@ def build_god_build(
         "scaling": bias.get("primary"),
         "archetype": archetype,
         "kit_tags": tags,
+        "kit_effects": effect_labs,
+        "kit_effect_scores": effects,
         "patch_trajectory": bias.get("trajectory"),
         "avg_str_scaling": round((bias.get("str") or 0) * 100, 1),
         "avg_int_scaling": round((bias.get("int") or 0) * 100, 1),
-        "starter": _item_card(starters[0]) if starters else None,
-        "items": [_item_card(p) for p in items_6],
-        "full_path": [_item_card(p) for p in items_6],
+        "starter": starter_card,
+        "items": path_cards,
+        "full_path": path_cards,
         "inventory_slots": 7,
-        "cores": [_item_card(c) for c in cores[:4]],
-        "defense": [_item_card(d) for d in defs[:2]],
+        "cores": _path_item_cards(cores[:4], bias, role),
+        "defense": _path_item_cards(defs[:2], bias, role),
         "relics": [_item_card(r) for r in relics[:2]],
         "max_shop_actives": max_act,
         "hard_max_actives": HARD_MAX_ACTIVE_ITEMS,
@@ -3091,7 +3135,7 @@ def _fill_six_items(
     return path[:6]
 
 
-def _item_card(it: ScoredItem | None) -> dict | None:
+def _item_card(it: ScoredItem | None, why: str | None = None) -> dict | None:
     if not it:
         return None
     # Prefer showing identity stats first (pen / damp / plat / ten / prots)
@@ -3109,7 +3153,7 @@ def _item_card(it: ScoredItem | None) -> dict | None:
         if len(ordered) >= 5:
             break
     pen = item_pen_value(it)
-    return {
+    card = {
         "name": it.name,
         "score": round(it.role_score, 1),
         "cost": it.total_cost,
@@ -3124,6 +3168,33 @@ def _item_card(it: ScoredItem | None) -> dict | None:
         "effect": (it.passive or it.active or "")[:180],
         "is_active": bool(it.is_active_item),
     }
+    if why:
+        card["why"] = why
+    return card
+
+
+def _path_item_cards(
+    path: list[ScoredItem],
+    bias: dict,
+    role: str,
+) -> list[dict]:
+    """Attach per-item kit/effect why lines."""
+    effects = bias.get("effects") or extract_kit_effects(bias)
+    cards = []
+    for it in path:
+        why = explain_item_pick(
+            it.name,
+            bias=bias,
+            role=role,
+            effects=effects,
+            slot_hint=_slot_label(it),
+            is_pen=is_pen_item(it),
+            is_active=bool(it.is_active_item),
+        )
+        card = _item_card(it, why=why)
+        if card:
+            cards.append(card)
+    return cards
 
 
 def _explain_god_build(
@@ -3158,21 +3229,80 @@ def _explain_god_build(
         ", ".join(f"{k} {v:+.1f}" for k, v in top_axes) if top_axes else "none"
     )
 
+    effects = bias.get("effects") or extract_kit_effects(bias)
+    eff_labs = bias.get("effect_labels") or effect_labels(effects)
+    eff_show = ", ".join(eff_labs[:6]) if eff_labs else "general kit"
+
     parts = [
         f"{god['entity_name']} · {role} · archetype «{arch}» ({power_style}).",
-        f"Kit tags: {tag_show}.",
+        f"Kit effects: {eff_show}.",
+        f"Tags: {tag_show}.",
         f"Style {style}; patch {traj} (net {psc:+.1f}, r5 {r5:+.1f}).",
         f"Patch axes (r5): {axis_txt}.",
         f"Scale STR {(bias.get('str') or 0)*100:.0f}% / INT {(bias.get('int') or 0)*100:.0f}%.",
     ]
-    # Link first items to tags
     if path:
-        parts.append("Path exploits: " + ", ".join(p.name for p in path[:3]) + "…")
+        # First item why-style summary
+        top_whys = []
+        for p in path[:3]:
+            top_whys.append(
+                f"{p.name} ({explain_item_pick(p.name, bias=bias, role=role, effects=effects, is_pen=is_pen_item(p))})"
+            )
+        parts.append("Path: " + "; ".join(top_whys) + ".")
     pens = [p.name for p in path if is_pen_item(p)]
     if pens:
         parts.append("Pen: " + ", ".join(pens) + ".")
     parts.append(f"Actives {n_act}/{max_act} · pen ≈ {pen_total:.0f}.")
     return " ".join(parts)
+
+
+def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
+    """
+    Soft QA on exported paths: uniqueness, pen on damage roles, luxury cap.
+    Returns summary attached to the report (does not fail hard).
+    """
+    summary: dict[str, Any] = {"roles": {}, "ok": True, "warnings": []}
+    for role, data in (report.get("roles") or {}).items():
+        gods = data.get("recommended_gods") or []
+        paths: dict[tuple, list[str]] = {}
+        pen_fail = []
+        lux_fail = []
+        for gb in gods:
+            names = tuple(it["name"] for it in (gb.get("items") or []))
+            paths.setdefault(names, []).append(gb.get("god") or "?")
+            pen = float(gb.get("pen_total") or 0)
+            if role in DAMAGE_ROLES_NEED_PEN and pen < MIN_BUILD_PEN:
+                pen_fail.append(gb.get("god"))
+            lux = [
+                it["name"]
+                for it in (gb.get("items") or [])
+                if any(
+                    k in (it.get("name") or "").lower()
+                    for k in ("dreamer", "wish-granting", "parashu", "tahuti")
+                )
+            ]
+            if len(lux) > 1:
+                lux_fail.append(f"{gb.get('god')}:{lux}")
+        unique = len(paths)
+        total = len(gods)
+        shared = {", ".join(v): list(k) for k, v in paths.items() if len(v) > 1}
+        role_ok = unique >= max(1, total - 1) and not pen_fail and not lux_fail
+        if not role_ok:
+            summary["ok"] = False
+        if shared:
+            summary["warnings"].append(f"{role}: shared paths {list(shared.keys())}")
+        if pen_fail:
+            summary["warnings"].append(f"{role}: low pen {pen_fail}")
+        if lux_fail:
+            summary["warnings"].append(f"{role}: multi-luxury {lux_fail}")
+        summary["roles"][role] = {
+            "unique": unique,
+            "total": total,
+            "shared_groups": len(shared),
+            "pen_fail": pen_fail,
+            "luxury_fail": lux_fail,
+        }
+    return summary
 
 
 def generate_all(conn: sqlite3.Connection, gods_per_role: int = 10) -> dict[str, Any]:
@@ -3182,8 +3312,9 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 10) -> dict[str,
         "mode": "Conquest",
         "method": (
             "God-first Conquest builds: each path is assembled from that god's ability kit "
-            "(metrics + ability text tags + burst/dps style) and patch trajectory, "
-            "using archetype slot recipes so gods in the same role diverge. "
+            "(structured effects + tags + metrics + patch axes), archetype slot recipes, "
+            "item-family matching, and per-item why lines. "
+            "Optional data/kit_overrides.json force tags / prefer / ban items. "
             "Role cards explain the job only — they are NOT a full build. "
             "Carry/Mid backline + pen; Jungle ganks; Solo frontline bulk; Support peels. "
             f"Shop actives ≤{DEFAULT_MAX_SHOP_ACTIVES} default "
@@ -3204,6 +3335,7 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 10) -> dict[str,
             "template": template,
             "recommended_gods": god_builds,
         }
+    report["quality_gate"] = quality_gate_builds(report)
     return report
 
 

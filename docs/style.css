@@ -393,13 +393,41 @@ tr.selected td {
   display: grid;
   grid-template-columns: 36px 1fr auto auto;
   gap: 8px;
-  align-items: center;
+  align-items: start;
   background: linear-gradient(90deg, rgba(0,0,0,0.28), rgba(22, 28, 44, 0.9));
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 9px 11px;
   font-size: 0.95rem;
   transition: 0.12s ease;
+}
+.buy-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.item-why {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--muted);
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
+.kit-effects {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 4px;
+}
+.kit-effects .tag.effect {
+  color: #c4b5fd;
+  border-color: rgba(167, 139, 250, 0.4);
+  background: rgba(91, 33, 182, 0.18);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-weight: 600;
 }
 .buy-row:hover {
   border-color: var(--border-glow);

@@ -465,8 +465,18 @@ function selectGod(name, switchTab) {
             <span class="pill">actives ${nAct}/${maxA}</span>
             <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
           </div>
+          ${
+            (gb.kit_effects || []).length
+              ? `<div class="kit-effects"><span class="muted">Kit effects:</span> ${(gb.kit_effects || [])
+                  .slice(0, 6)
+                  .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
+                  .join("")}</div>`
+              : ""
+          }
           <p class="muted why">${escapeHtml(gb.why || "")}</p>
-          <div><strong>Starter</strong> — ${escapeHtml(gb.starter?.name || "—")}</div>
+          <div><strong>Starter</strong> — ${escapeHtml(gb.starter?.name || "—")}${
+            gb.starter?.why ? ` <span class="item-why">— ${escapeHtml(gb.starter.why)}</span>` : ""
+          }</div>
           <ol class="buy-list">
             ${items.map((it, i) => buyRow(it, i + 1)).join("")}
           </ol>
@@ -596,6 +606,7 @@ function godBuildCard(gb, role) {
   const penG = gb.pen_total ?? itemsG.reduce((s, it) => s + (it.pen || 0), 0);
   const mitG = itemsG.reduce((s, it) => s + (it.damp || 0) + (it.plat || 0) + (it.ten || 0), 0);
   const showMit = role === "Support" || role === "Solo";
+  const effects = gb.kit_effects || [];
   return `
     <article class="card build-card god-build-card">
       <header class="gbc-head">
@@ -613,6 +624,14 @@ function godBuildCard(gb, role) {
         ${gb.patch_trajectory ? `<span class="pill ice">${escapeHtml(gb.patch_trajectory)}</span>` : ""}
       </div>
       ${
+        effects.length
+          ? `<div class="kit-effects"><span class="muted">Kit effects:</span> ${effects
+              .slice(0, 6)
+              .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
+              .join("")}</div>`
+          : ""
+      }
+      ${
         (gb.kit_tags || []).length
           ? `<div class="kit-tags">${(gb.kit_tags || [])
               .slice(0, 8)
@@ -621,7 +640,9 @@ function godBuildCard(gb, role) {
           : ""
       }
       <p class="why">${escapeHtml(gb.why || "")}</p>
-      <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(gb.starter?.name || "—")}</div>
+      <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(gb.starter?.name || "—")}${
+        gb.starter?.why ? ` <span class="item-why">— ${escapeHtml(gb.starter.why)}</span>` : ""
+      }</div>
       <ol class="buy-list">
         ${itemsG.map((it, i) => buyRow(it, i + 1)).join("")}
       </ol>
@@ -659,9 +680,13 @@ function buyRow(it, n) {
         : it.is_active
           ? "is-active"
           : "";
-  return `<li class="buy-row ${slotClass}">
+  const why = it.why ? `<div class="item-why">${escapeHtml(it.why)}</div>` : "";
+  return `<li class="buy-row ${slotClass}" title="${escapeAttr(it.why || it.effect || "")}">
     <span class="buy-n">${n}</span>
-    <span class="buy-name">${escapeHtml(it.name)}</span>
+    <div class="buy-main">
+      <span class="buy-name">${escapeHtml(it.name)}</span>
+      ${why}
+    </div>
     <span class="buy-tags">${tags.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")}</span>
     <span class="buy-cost">${it.cost != null ? it.cost + "g" : ""}</span>
   </li>`;
