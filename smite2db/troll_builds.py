@@ -155,6 +155,13 @@ AXIS_BLURBS: dict[str, str] = {
 }
 
 
+def _god_salt(bias: dict[str, Any], *parts: str) -> int:
+    raw = "|".join(
+        [str(bias.get("god_name") or ""), str(bias.get("aspect_name") or ""), *parts]
+    )
+    return sum((i + 1) * ord(c) for i, c in enumerate(raw))
+
+
 def detect_troll_axes(
     bias: dict[str, Any],
     role: str,
@@ -170,62 +177,79 @@ def detect_troll_axes(
     blob = blob.lower()
     scores: dict[str, float] = {a: 0.0 for a in TROLL_AXES}
 
-    # Role priors
+    # Role priors (lighter — kit should dominate)
     if role in ("Support", "Solo"):
-        scores["unkillable"] += 1.2
-        scores["peel_prison"] += 1.4
-        scores["aura_tax"] += 1.3
-        scores["antiheal_tax"] += 0.6
+        scores["unkillable"] += 0.8
+        scores["peel_prison"] += 1.0
+        scores["aura_tax"] += 0.9
+        scores["antiheal_tax"] += 0.5
+        # AA clown on Support only if kit/aspect truly enables it
+        scores["aa_clown"] -= 1.2
     if role in ("Mid", "Carry"):
-        scores["infinite_poke"] += 1.0
-        scores["aa_clown"] += 0.5
-        scores["active_toybox"] += 0.4
+        scores["infinite_poke"] += 0.9
+        scores["aa_clown"] += 0.4
+        scores["active_toybox"] += 0.35
     if role == "Jungle":
-        scores["peel_prison"] += 0.5
-        scores["antiheal_tax"] += 0.7
-        scores["aa_clown"] += 0.6
-        scores["unkillable"] += 0.4
+        scores["peel_prison"] += 0.4
+        scores["antiheal_tax"] += 0.6
+        scores["aa_clown"] += 0.5
+        scores["unkillable"] += 0.3
 
-    # Tag / effect driven
+    # Tag / effect driven — stronger kit signal
     if tags & {"heal", "heavy_heal", "self_sustain"} or effects.get("heal", 0) >= 0.6:
-        scores["unkillable"] += 1.5
-        scores["antiheal_tax"] += 0.4  # they heal; also can deny
+        scores["unkillable"] += 2.0
+        scores["antiheal_tax"] += 0.5
     if tags & {"hard_cc", "high_cc"} or effects.get("hard_cc", 0) >= 0.7:
-        scores["peel_prison"] += 1.8
+        scores["peel_prison"] += 2.2
     if tags & {"dot", "heavy_dot", "zone", "pet_zone", "channel"} or effects.get("dot", 0) >= 0.6:
-        scores["infinite_poke"] += 1.6
-    if tags & {"aa", "as_steroid"} or float(bias.get("aa_score") or 0) >= 0.55:
-        scores["aa_clown"] += 1.7
+        scores["infinite_poke"] += 2.0
+    if tags & {"mana_stack"}:
+        scores["infinite_poke"] += 1.4
     if tags & {"spam"} or float(bias.get("avg_cd") or 12) <= 8.5:
-        scores["infinite_poke"] += 1.0
-    if tags & {"team_buff"} or role == "Support":
-        scores["aura_tax"] += 1.2
+        scores["infinite_poke"] += 1.2
+    if tags & {"team_buff"}:
+        scores["aura_tax"] += 1.6
     if tags & {"shield", "heavy_shield", "immobile"}:
-        scores["unkillable"] += 1.0
+        scores["unkillable"] += 1.3
     if tags & {"execute", "burst", "ult_nuke"}:
-        scores["active_toybox"] += 0.8
-        # still can unkillable if tank role
-    if use_aspect or bias.get("is_aspect"):
-        scores["aa_clown"] += 0.5  # aspects often enable weird modes
-        if re.search(r"no scaling|base damage with no scaling", blob):
-            scores["unkillable"] += 1.2
-            scores["aura_tax"] += 0.8
-            scores["infinite_poke"] -= 0.5
-        if re.search(r"ranged|on-hit|crit|attack speed", blob):
-            scores["aa_clown"] += 1.5
-        if re.search(r"cooldown rate|reduced cooldown", blob):
-            scores["infinite_poke"] += 1.0
+        scores["active_toybox"] += 1.0
+    if tags & {"prot_shred"}:
+        scores["antiheal_tax"] += 0.6
+        scores["peel_prison"] += 0.4
 
-    # Mage guardians doing AA is maximum troll
-    if (bias.get("primary") == "Intelligence" or "magical" in str(bias.get("god_name") or "").lower()) and (
-        "aa" in tags or scores["aa_clown"] >= 2
-    ):
-        if role in ("Support", "Solo", "Mid"):
-            scores["aa_clown"] += 0.8
+    # AA clown: need real AA identity — not every god with "basic attack" in passive text
+    aa_real = (
+        float(bias.get("aa_score") or 0) >= 0.6
+        or ("aa" in tags and "as_steroid" in tags)
+        or re.search(r"basics? are ranged|ranged basic|on-hits?|attack speed", blob)
+    )
+    if aa_real:
+        scores["aa_clown"] += 2.4
+    elif "aa" in tags:
+        scores["aa_clown"] += 0.6  # weak
+
+    if use_aspect or bias.get("is_aspect"):
+        if re.search(r"no scaling|base damage with no scaling", blob):
+            scores["unkillable"] += 1.5
+            scores["aura_tax"] += 1.0
+            scores["infinite_poke"] -= 0.6
+            scores["aa_clown"] -= 0.8
+        if re.search(r"basics? are ranged|attacks are ranged|on-hits?|crits?|attack speed", blob):
+            scores["aa_clown"] += 2.0
+        if re.search(r"cooldown rate|reduced cooldown|permanent cooldown", blob):
+            scores["infinite_poke"] += 1.3
+        if re.search(r"heal|attach|ally", blob):
+            scores["unkillable"] += 0.8
+            scores["aura_tax"] += 0.5
+
+    # Per-god micro-bias so similar tanks don't always share #1 axis
+    g = str(bias.get("god_name") or "")
+    if g:
+        for i, ax in enumerate(TROLL_AXES):
+            scores[ax] += (_god_salt(bias, "axis", ax) % 17) * 0.06
 
     ranked = sorted(scores.items(), key=lambda x: -x[1])
-    # Keep axes with meaningful score
-    out = [(a, s) for a, s in ranked if s >= 0.8]
+    out = [(a, s) for a, s in ranked if s >= 0.6]
     if not out:
         out = [("unkillable", 1.0), ("peel_prison", 0.9)]
     return out
@@ -238,23 +262,29 @@ def pick_troll_identity(
     use_aspect: bool = False,
     rng: random.Random | None = None,
 ) -> dict[str, Any]:
-    """Primary + secondary axis, title, blurb."""
+    """Primary + secondary axis, title, blurb — god-salted among top axes."""
     rng = rng or random.Random(
         sum(ord(c) for c in f"{bias.get('god_name')}|{role}|{bias.get('aspect_name') or ''}")
     )
     ranked = detect_troll_axes(bias, role, use_aspect=use_aspect)
-    primary = ranked[0][0]
-    secondary = ranked[1][0] if len(ranked) > 1 else primary
-    # Slight god-salted swap if top two are close
-    if len(ranked) > 1 and ranked[0][1] - ranked[1][1] < 0.35:
-        if rng.random() < 0.35:
-            primary, secondary = secondary, primary
+    # Pick primary from top-3 close axes using god salt (not always global #1)
+    pool = [ranked[0]]
+    best = ranked[0][1]
+    for a, s in ranked[1:4]:
+        if s >= best - 0.85:
+            pool.append((a, s))
+    primary = pool[_god_salt(bias, "prim", role) % len(pool)][0]
+    rest = [a for a, _ in ranked if a != primary]
+    secondary = rest[0] if rest else primary
+    if len(rest) > 1 and ranked[0][1] - (ranked[1][1] if len(ranked) > 1 else 0) < 0.5:
+        secondary = rest[_god_salt(bias, "sec", role) % min(3, len(rest))]
+
     titles = TROLL_TITLES.get(primary) or ["Certified Troll Path"]
-    title = titles[rng.randrange(len(titles))]
+    title = titles[_god_salt(bias, "title", primary) % len(titles)]
     return {
         "primary_axis": primary,
         "secondary_axis": secondary,
-        "axes_ranked": ranked[:4],
+        "axes_ranked": ranked[:5],
         "title": title,
         "blurb": AXIS_BLURBS.get(primary, "Be annoying on purpose."),
         "disclaimer": "TROLL / MEME — not ranked advice. Legal items, illegal vibes.",
@@ -267,86 +297,161 @@ def troll_score_delta(
     bias: dict[str, Any],
     role: str,
 ) -> tuple[float, list[str]]:
-    """Score boost for troll identity + reasons."""
+    """Score boost for troll identity + kit fit + god diversify."""
     n = item.name.lower()
     fam = item_family(item.name) or ""
     primary = identity["primary_axis"]
     secondary = identity["secondary_axis"]
     delta = 0.0
     why: list[str] = []
+    tags = set(bias.get("tags") or [])
+    effects = bias.get("effects") or {}
 
     def hit_keys(keys: list[str]) -> bool:
         return any(k in n for k in keys)
 
-    for axis, weight in ((primary, 1.0), (secondary, 0.55)):
+    for axis, weight in ((primary, 1.0), (secondary, 0.5)):
         keys = AXIS_ITEM_KEYS.get(axis) or []
         if hit_keys(keys):
-            delta += 55 * weight
+            delta += 42 * weight
             if weight >= 0.9:
                 why.append(f"troll {axis.replace('_', ' ')}")
+
+    # Kit signature boost (god-specific — largest diversifier)
+    from .kit_effects import family_score_boost
+    from .conquest_builds import TAG_ITEM_SIGNATURES
+
+    fam_b, fam_r = family_score_boost(item.name, effects if isinstance(effects, dict) else {})
+    delta += fam_b * 0.85
+    if fam_r:
+        why.append(fam_r[0][:40])
+    for tag in tags:
+        for i, key in enumerate(TAG_ITEM_SIGNATURES.get(tag, [])[:4]):
+            if key in n:
+                delta += 36 - i * 4
+                if "kit" not in " ".join(why):
+                    why.append(f"kit:{tag}")
+                break
+
+    # Prefer/ban from aspect
+    for p in bias.get("prefer_items") or []:
+        if p in n:
+            delta += 28
+            why.append("kit/aspect signature")
+    for b in bias.get("ban_items") or []:
+        if b in n:
+            delta -= 50
 
     # Tryhard penalty unless axis wants that item
     primary_keys = AXIS_ITEM_KEYS.get(primary) or []
     for k in TRYHARD_PENALTY_KEYS:
         if k in n and not any(pk in n for pk in primary_keys if len(pk) > 3):
-            # Deathbringer OK for aa_clown
             if primary == "aa_clown" and k == "deathbringer":
                 continue
-            if primary == "active_toybox" and k in ("dreamer", "parashu"):
+            if primary == "active_toybox" and any(x in n for x in ("dreamer", "parashu", "wish")):
                 continue
             if primary == "infinite_poke" and "obsidian" in k:
                 continue
-            delta -= 35
+            delta -= 40
             break
 
-    # Axis-specific stat lean
     hp = _canon_stat_value(item.stats, "hp")
-    mprot = _canon_stat_value(item.stats, "mprot")
-    pprot = _canon_stat_value(item.stats, "pprot")
     cdr = _canon_stat_value(item.stats, "cdr")
     as_v = _canon_stat_value(item.stats, "as")
     crit = _canon_stat_value(item.stats, "crit")
     pen = item_pen_value(item)
+    int_v = _canon_stat_value(item.stats, "int")
+    str_v = _canon_stat_value(item.stats, "str")
 
     if primary == "unkillable":
         if item.item_type == "Defensive" or hp >= 250:
-            delta += 28
+            delta += 22
         if item.item_type == "Offensive" and pen >= 15 and hp < 150:
-            delta -= 40
+            delta -= 45
     if primary == "peel_prison":
-        if fam in ("anti_crit", "anti_as", "magi", "tenacity", "binding", "peel"):
-            delta += 30
+        if fam in ("anti_crit", "anti_as", "magi", "tenacity", "binding", "peel", "isolation"):
+            delta += 24
         if cdr >= 10:
-            delta += 12
+            delta += 10
     if primary == "antiheal_tax":
         if fam in ("antiheal", "divine", "contagion"):
-            delta += 45
+            delta += 40
     if primary == "infinite_poke":
-        if cdr >= 10 or fam in ("chronos", "focus", "mana", "zone", "magus"):
-            delta += 32
+        if cdr >= 10 or fam in ("chronos", "focus", "mana", "zone", "magus", "dot"):
+            delta += 28
         if (item.total_cost or 0) >= 3400 and item.is_active_item:
-            delta -= 15  # less pure luxury, more CDR
+            delta -= 12
     if primary == "aa_clown":
         if as_v >= 10 or crit >= 15 or fam in ("as_crit", "onhit", "ls"):
-            delta += 40
-        if role in ("Support", "Solo") and item.item_type == "Offensive":
-            delta += 15  # wrong and proud
+            delta += 36
+        # Support AA clown still needs some bulk
+        if role == "Support" and item.item_type == "Defensive":
+            delta += 12
     if primary == "aura_tax":
-        if fam == "aura" or any(k in n for k in ("thebes", "chandra", "sovereign")):
-            delta += 45
+        if fam == "aura" or any(k in n for k in ("thebes", "chandra", "sovereign", "heartward")):
+            delta += 40
     if primary == "active_toybox":
         if item.is_active_item and (item.total_cost or 0) >= 2800:
-            delta += 38
+            delta += 36
             why.append("active toy")
 
-    # Prefer items already preferred by aspect/kit troll lean
-    for p in bias.get("prefer_items") or []:
-        if p in n:
-            delta += 12
+    # Damage-type match (stop physical toys on pure mages unless AA clown)
+    if primary != "aa_clown":
+        if bias.get("primary") == "Intelligence" and str_v >= 40 and int_v < 30:
+            delta -= 55
+        if bias.get("primary") == "Strength" and int_v >= 50 and str_v < 25:
+            delta -= 40
+
+    # Large god-specific reordering among peers
+    delta += (_god_salt(bias, "item", item.name) % 47) * 1.25
 
     if not why and delta > 20:
         why.append(f"{primary.replace('_', ' ')} core")
     return delta, why[:2]
+
+
+def _kit_signature_keys(bias: dict[str, Any]) -> list[str]:
+    """Item name keys this god's kit wants (rotated by god)."""
+    from .conquest_builds import TAG_ITEM_SIGNATURES
+
+    tags = sorted(bias.get("tags") or [])
+    prefs: list[str] = []
+    for tag in tags:
+        for key in TAG_ITEM_SIGNATURES.get(tag, []):
+            if key not in prefs:
+                prefs.append(key)
+    for p in bias.get("prefer_items") or []:
+        if p not in prefs:
+            prefs.append(p)
+    if not prefs:
+        return []
+    rot = _god_salt(bias, "sigrot") % len(prefs)
+    return prefs[rot:] + prefs[:rot]
+
+
+def _pick_from_pool_god(
+    pool: list[ScoredItem],
+    seen: set[str],
+    bias: dict[str, Any],
+    slot_label: str,
+    *,
+    max_actives: int,
+    actives: int,
+    top_k: int = 7,
+) -> ScoredItem | None:
+    """God-salted pick among top-K scored items (always diversify)."""
+    cands = [
+        x
+        for x in pool
+        if x.name not in seen and not (x.is_active_item and actives >= max_actives)
+    ]
+    if not cands:
+        return None
+    cands.sort(key=lambda x: x.role_score, reverse=True)
+    k = min(top_k, len(cands))
+    near = cands[:k]
+    idx = _god_salt(bias, "pick", slot_label) % len(near)
+    return near[idx]
 
 
 def build_troll_build(
@@ -438,65 +543,177 @@ def build_troll_build(
         starters = [starter_pick] + [s for s in starters if s.name != starter_pick.name]
 
     t3 = [s for s in scored if is_t3_core(next(i for i in items if i["name"] == s.name))]
+    # Type filter for non-AA-clown paths
+    if identity["primary_axis"] != "aa_clown":
+        if mage:
+            t3 = [
+                s
+                for s in t3
+                if _canon_stat_value(s.stats, "int") >= _canon_stat_value(s.stats, "str")
+                or s.item_type in ("Defensive", "Hybrid")
+                or _canon_stat_value(s.stats, "int") >= 25
+                or is_pen_item(s)
+            ]
+        elif physical:
+            t3 = [
+                s
+                for s in t3
+                if _canon_stat_value(s.stats, "str") >= _canon_stat_value(s.stats, "int")
+                or s.item_type in ("Defensive", "Hybrid")
+                or _canon_stat_value(s.stats, "as") > 0
+                or is_pen_item(s)
+            ]
+
     max_act = max_shop_actives_for_god(role, dtype, bias)
     if identity["primary_axis"] == "active_toybox":
         max_act = min(HARD_MAX_ACTIVE_ITEMS, max(max_act, 2))
 
-    # Slot recipe from troll axis (override archetype assembly)
-    slots = list(TROLL_SLOTS.get(identity["primary_axis"]) or TROLL_SLOTS["unkillable"])
-    # Mage AA clown: ensure power type ok
-    path: list[ScoredItem] = []
-    seen: set[str] = set()
-    actives = 0
-    dkey = str(bias.get("god_name") or "") + "|troll|" + identity["primary_axis"]
+    # --- Assembly: kit baseline first, then troll-mutate (god-specific) ---
+    from .conquest_builds import assemble_kit_path
 
-    from .conquest_builds import _pick_slot_item
+    # Real kit path for this god (base or aspect already in bias)
+    try:
+        baseline_path, _arch = assemble_kit_path(
+            t3, bias, role, mage=mage, physical=physical, max_actives=max_act
+        )
+    except Exception:
+        baseline_path = []
 
-    for slot in slots:
-        if len(path) >= 6:
+    path: list[ScoredItem] = list(baseline_path[:6]) if baseline_path else []
+    seen: set[str] = {x.name for x in path}
+    actives = sum(1 for x in path if x.is_active_item)
+
+    # 1) Pin 1–2 kit signature items (god-unique identity)
+    sig_keys = _kit_signature_keys(bias)[:8]
+    sig_injected = 0
+    for key in sig_keys:
+        if sig_injected >= 2:
             break
-        pick = _pick_slot_item(
-            t3,
-            slot,
-            seen,
-            mage=mage,
-            physical=physical,
-            role=role,
-            max_actives=max_act,
-            active_count=actives,
-            diversify_key=dkey,
-            tags=tags,
-            luxury_actives=sum(1 for x in path if x.is_active_item and (x.total_cost or 0) >= 3200),
-            max_luxury_actives=2 if identity["primary_axis"] == "active_toybox" else 1,
+        if any(key in x.name.lower() for x in path):
+            # already have signature
+            sig_injected += 1
+            continue
+        cands = [
+            x
+            for x in t3
+            if x.name not in seen
+            and key in x.name.lower()
+            and not (x.is_active_item and actives >= max_act)
+        ]
+        if not cands:
+            continue
+        cands.sort(
+            key=lambda x: x.role_score + (_god_salt(bias, "sig", x.name) % 23),
+            reverse=True,
+        )
+        pick = cands[0]
+        if len(path) < 6:
+            path.append(pick)
+        else:
+            # replace lowest non-signature
+            drop = min(
+                range(len(path)),
+                key=lambda i: path[i].role_score
+                + (80 if any(k in path[i].name.lower() for k in sig_keys[:4]) else 0),
+            )
+            seen.discard(path[drop].name)
+            if path[drop].is_active_item:
+                actives = max(0, actives - 1)
+            path[drop] = pick
+        seen.add(pick.name)
+        if pick.is_active_item:
+            actives += 1
+        sig_injected += 1
+        troll_whys.setdefault(pick.name, []).append("kit signature")
+
+    # 2) Inject 2–3 troll-axis items, god-rotated key order (not always Spectral #1)
+    axis_keys = list(AXIS_ITEM_KEYS.get(identity["primary_axis"]) or [])
+    for k in AXIS_ITEM_KEYS.get(identity["secondary_axis"]) or []:
+        if k not in axis_keys:
+            axis_keys.append(k)
+    if axis_keys:
+        rot = _god_salt(bias, "axrot", identity["primary_axis"]) % len(axis_keys)
+        axis_keys = axis_keys[rot:] + axis_keys[:rot]
+
+    troll_injected = 0
+    max_troll = 3
+    for key in axis_keys:
+        if troll_injected >= max_troll:
+            break
+        if any(key in x.name.lower() for x in path):
+            continue
+        cands = [
+            x
+            for x in t3
+            if x.name not in seen
+            and key in x.name.lower()
+            and not (x.is_active_item and actives >= max_act)
+        ]
+        if not cands:
+            continue
+        # God-diversified pick among all key matches, not just score #1
+        cands.sort(key=lambda x: x.role_score, reverse=True)
+        pick = cands[_god_salt(bias, "axpick", key) % min(len(cands), 4)]
+        # Prefer replacing non-signature, non-already-troll slot
+        drop = None
+        ranked = sorted(range(len(path)), key=lambda i: path[i].role_score)
+        for i in ranked:
+            nlow = path[i].name.lower()
+            if any(k in nlow for k in sig_keys[:5]):
+                continue
+            drop = i
+            break
+        if drop is None and len(path) >= 6:
+            continue
+        if len(path) < 6:
+            path.append(pick)
+        else:
+            seen.discard(path[drop].name)
+            if path[drop].is_active_item:
+                actives = max(0, actives - 1)
+            path[drop] = pick
+        seen.add(pick.name)
+        if pick.is_active_item:
+            actives += 1
+        troll_injected += 1
+        troll_whys.setdefault(pick.name, []).insert(0, f"troll {identity['primary_axis'].replace('_', ' ')}")
+
+    # 3) Fill to 6 with god-salted troll scores
+    while len(path) < 6:
+        pick = _pick_from_pool_god(
+            t3, seen, bias, f"fill{len(path)}", max_actives=max_act, actives=actives, top_k=8
         )
         if not pick:
-            continue
+            break
         path.append(pick)
         seen.add(pick.name)
         if pick.is_active_item:
             actives += 1
 
-    # Force inject top axis keys
-    path = _inject_troll_cores(path, t3, identity, max_act, seen_actives=actives)
-    path = list(path)[:6]
-    seen = {x.name for x in path}
-    actives = sum(1 for x in path if x.is_active_item)
-
-    # Fill remaining by pure troll score
-    if len(path) < 6:
-        rest = [x for x in t3 if x.name not in seen]
-        rest.sort(key=lambda x: x.role_score, reverse=True)
-        for x in rest:
-            if len(path) >= 6:
+    # 4) Final god flavor: swap one non-signature slot so near-clones still diverge
+    if len(path) >= 4:
+        flex_i = _god_salt(bias, "flexi") % len(path)
+        # skip if only signature left
+        for _ in range(len(path)):
+            nlow = path[flex_i].name.lower()
+            if not any(k in nlow for k in sig_keys[:4]):
                 break
-            if x.is_active_item and actives >= max_act:
-                continue
-            path.append(x)
-            seen.add(x.name)
-            if x.is_active_item:
-                actives += 1
+            flex_i = (flex_i + 1) % len(path)
+        alt = _pick_from_pool_god(
+            t3,
+            seen - {path[flex_i].name},
+            bias,
+            "finalflex",
+            max_actives=max_act,
+            actives=actives - (1 if path[flex_i].is_active_item else 0),
+            top_k=8,
+        )
+        if alt and alt.name != path[flex_i].name:
+            seen.discard(path[flex_i].name)
+            path[flex_i] = alt
+            seen.add(alt.name)
 
-    path = _order_buy_path(path, role)
+    path = _order_buy_path(path[:6], role)
 
     # Cards
     path_cards = []

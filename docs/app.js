@@ -1264,93 +1264,191 @@ function detectTrollAxesJS(god, role, useAspect) {
     active_toybox: 0,
   };
   if (role === "Support" || role === "Solo") {
-    scores.unkillable += 1.2;
-    scores.peel_prison += 1.4;
-    scores.aura_tax += 1.3;
+    scores.unkillable += 0.8;
+    scores.peel_prison += 1.0;
+    scores.aura_tax += 0.9;
+    scores.aa_clown -= 1.2;
   }
   if (role === "Mid" || role === "Carry") {
-    scores.infinite_poke += 1.0;
-    scores.aa_clown += 0.5;
+    scores.infinite_poke += 0.9;
+    scores.aa_clown += 0.4;
   }
   if (role === "Jungle") {
-    scores.aa_clown += 0.6;
-    scores.antiheal_tax += 0.7;
-  }
-  if (tags.has("heal") || tags.has("heavy_heal") || tags.has("self_sustain")) scores.unkillable += 1.5;
-  if (tags.has("hard_cc") || tags.has("high_cc")) scores.peel_prison += 1.8;
-  if (tags.has("dot") || tags.has("heavy_dot") || tags.has("zone") || tags.has("pet_zone") || tags.has("channel"))
-    scores.infinite_poke += 1.6;
-  if (tags.has("aa") || tags.has("as_steroid") || aa >= 0.55) scores.aa_clown += 1.7;
-  if (tags.has("spam")) scores.infinite_poke += 1.0;
-  if (tags.has("team_buff") || role === "Support") scores.aura_tax += 1.2;
-  if (tags.has("shield") || tags.has("immobile")) scores.unkillable += 1.0;
-  if (tags.has("burst") || tags.has("ult_nuke") || tags.has("execute")) scores.active_toybox += 0.8;
-  if (aspect) {
     scores.aa_clown += 0.5;
+    scores.antiheal_tax += 0.6;
+  }
+  if (tags.has("heal") || tags.has("heavy_heal") || tags.has("self_sustain")) scores.unkillable += 2.0;
+  if (tags.has("hard_cc") || tags.has("high_cc")) scores.peel_prison += 2.2;
+  if (tags.has("dot") || tags.has("heavy_dot") || tags.has("zone") || tags.has("pet_zone") || tags.has("channel"))
+    scores.infinite_poke += 2.0;
+  if (tags.has("mana_stack") || tags.has("spam")) scores.infinite_poke += 1.2;
+  const aaReal = aa >= 0.6 || (tags.has("aa") && tags.has("as_steroid"));
+  if (aaReal) scores.aa_clown += 2.4;
+  else if (tags.has("aa")) scores.aa_clown += 0.5;
+  if (tags.has("team_buff")) scores.aura_tax += 1.6;
+  if (tags.has("shield") || tags.has("immobile")) scores.unkillable += 1.3;
+  if (tags.has("burst") || tags.has("ult_nuke") || tags.has("execute")) scores.active_toybox += 1.0;
+  if (aspect) {
     if (/no scaling|base damage with no scaling/i.test(blob)) {
-      scores.unkillable += 1.2;
-      scores.aura_tax += 0.8;
+      scores.unkillable += 1.5;
+      scores.aura_tax += 1.0;
+      scores.aa_clown -= 0.8;
     }
-    if (/ranged|on-hit|crit|attack speed/i.test(blob)) scores.aa_clown += 1.5;
-    if (/cooldown rate|reduced cooldown/i.test(blob)) scores.infinite_poke += 1.0;
+    if (/basics? are ranged|on-hit|crit|attack speed/i.test(blob)) scores.aa_clown += 2.0;
+    if (/cooldown rate|reduced cooldown/i.test(blob)) scores.infinite_poke += 1.3;
+  }
+  // Per-god micro bias
+  for (const ax of Object.keys(scores)) {
+    scores[ax] += (hashStr(god.name + ax) % 17) * 0.06;
   }
   return Object.entries(scores).sort((a, b) => b[1] - a[1]);
 }
 
 function buildTrollPathJS(god, role, useAspect, chaos) {
   let ranked = detectTrollAxesJS(god, role, useAspect);
-  let primary = ranked[0][0];
-  let secondary = ranked[1] ? ranked[1][0] : primary;
+  // God-salt among top-3 close axes (not always global #1)
+  const best = ranked[0][1];
+  const axisPool = ranked.filter(([, s], i) => i === 0 || s >= best - 0.9).slice(0, 3);
+  const salt = hashStr(`${god.name}|${role}|asp=${useAspect}|${(god.aspects || [])[0]?.name || ""}`);
+  let primary = axisPool[salt % axisPool.length][0];
+  let secondary = ranked.find(([a]) => a !== primary)?.[0] || primary;
   if (chaos && secondary !== primary) {
     const t = primary;
     primary = secondary;
     secondary = t;
   }
-  const salt = hashStr(`${god.name}|${role}|${primary}|${useAspect}`);
   const titles = TROLL_TITLES[primary] || ["Certified Troll Path"];
   const title = titles[salt % titles.length];
   const aspect = useAspect && (god.aspects || [])[0] ? god.aspects[0] : null;
 
-  const keys = [...(TROLL_AXIS_KEYS[primary] || [])];
-  for (const k of TROLL_AXIS_KEYS[secondary] || []) {
-    if (!keys.includes(k)) keys.push(k);
-  }
+  // Kit baseline first (god-specific serious path)
+  const baselineNames = useAspect
+    ? (god.conquest_by_role_aspect?.[role]?.items || []).map((i) => i.name)
+    : getBaselinePath(god, role);
   const pool = (state.items || []).filter(isT3Item);
-  const picked = [];
-  const seen = new Set();
-  for (const key of keys) {
-    if (picked.length >= 6) break;
+  const byName = Object.fromEntries(pool.map((it) => [it.name, it]));
+  let picked = baselineNames.map((n) => byName[n]).filter(Boolean);
+  const seen = new Set(picked.map((p) => p.name));
+
+  // Kit tag signature keys (god tags)
+  const tagKeys = {
+    heal: ["asclepius", "lifebinder", "bancroft", "soul gem"],
+    heavy_heal: ["asclepius", "lifebinder"],
+    hard_cc: ["isolation", "binding", "stygian"],
+    high_cc: ["isolation", "binding"],
+    dot: ["magus", "desolat", "isolation", "contagion"],
+    heavy_dot: ["magus", "desolat"],
+    pet_zone: ["isolation", "magus", "soul gem"],
+    mana_stack: ["thoth", "doom orb", "book of"],
+    spam: ["chronos", "genji", "breastplate"],
+    channel: ["chronos", "gem of focus", "myrddin"],
+    shield: ["phoenix", "pridwen", "shifter"],
+    team_buff: ["thebes", "chandra"],
+    aa: ["riptalon", "avenging", "demon"],
+    as_steroid: ["riptalon", "ichival"],
+  };
+  const tags = god.kit_tags || [];
+  let sigKeys = [];
+  for (const t of tags) {
+    for (const k of tagKeys[t] || []) if (!sigKeys.includes(k)) sigKeys.push(k);
+  }
+  if (sigKeys.length) {
+    const rot = salt % sigKeys.length;
+    sigKeys = sigKeys.slice(rot).concat(sigKeys.slice(0, rot));
+  }
+
+  function injectKey(key, why, maxN) {
+    if (picked.length >= 6 && maxN <= 0) return false;
+    if ([...seen].some((n) => n.toLowerCase().includes(key))) return false;
     const hits = pool
       .filter((it) => !seen.has(it.name) && it.name.toLowerCase().includes(key))
       .sort((a, b) => (b.total_cost || 0) - (a.total_cost || 0));
-    if (!hits.length) continue;
-    const it = hits[salt % Math.min(hits.length, 3)];
-    picked.push(it);
+    if (!hits.length) return false;
+    const it = hits[salt % Math.min(hits.length, 4)];
+    it._trollWhy = why;
+    if (picked.length < 6) {
+      picked.push(it);
+    } else {
+      // replace lowest-cost non-signature-ish
+      let drop = 0;
+      for (let i = 0; i < picked.length; i++) {
+        const n = picked[i].name.toLowerCase();
+        if (!sigKeys.some((k) => n.includes(k))) {
+          drop = i;
+          break;
+        }
+      }
+      seen.delete(picked[drop].name);
+      picked[drop] = it;
+    }
     seen.add(it.name);
+    return true;
   }
-  // fill
+
+  // Pin up to 2 kit signatures
+  let sigN = 0;
+  for (const k of sigKeys) {
+    if (sigN >= 2) break;
+    if (injectKey(k, `😈 kit:${k}`, 2)) sigN++;
+  }
+
+  // Rotate troll axis keys by god salt
+  let keys = [...(TROLL_AXIS_KEYS[primary] || [])];
+  for (const k of TROLL_AXIS_KEYS[secondary] || []) {
+    if (!keys.includes(k)) keys.push(k);
+  }
+  if (keys.length) {
+    const rot = salt % keys.length;
+    keys = keys.slice(rot).concat(keys.slice(0, rot));
+  }
+  let trollN = 0;
+  for (const key of keys) {
+    if (trollN >= 3) break;
+    if (injectKey(key, `😈 troll ${primary.replace(/_/g, " ")}`, 3)) trollN++;
+  }
+
+  // Fill from baseline leftovers / pool diversify
   if (picked.length < 6) {
     const rest = pool
       .filter((it) => !seen.has(it.name))
-      .sort((a, b) => (b.total_cost || b.cost || 0) - (a.total_cost || a.cost || 0));
+      .sort((a, b) => {
+        const ha = hashStr(god.name + a.name) % 40;
+        const hb = hashStr(god.name + b.name) % 40;
+        return (b.total_cost || 0) + hb - ((a.total_cost || 0) + ha);
+      });
     for (const it of rest) {
       if (picked.length >= 6) break;
-      // prefer defensive for unkillable/peel
       const n = it.name.toLowerCase();
-      if (primary === "unkillable" || primary === "peel_prison" || primary === "aura_tax") {
-        if ((it.item_type || "").toLowerCase() === "offensive" && !keys.some((k) => n.includes(k))) continue;
+      if (primary !== "aa_clown" && (role === "Support" || role === "Solo")) {
+        if ((it.item_type || "").toLowerCase() === "offensive" && !keys.some((k) => n.includes(k)))
+          continue;
       }
+      it._trollWhy = `😈 troll flex · ${god.name}`;
       picked.push(it);
       seen.add(it.name);
     }
   }
 
-  const baseline = getBaselinePath(god, role);
-  const starter = getStarter(god, role);
+  // Final god flavor swap
+  if (picked.length >= 4) {
+    const fi = salt % picked.length;
+    const alts = pool.filter((it) => !seen.has(it.name));
+    if (alts.length) {
+      const alt = alts[hashStr(god.name + "flex") % Math.min(alts.length, 8)];
+      seen.delete(picked[fi].name);
+      alt._trollWhy = `😈 ${god.name} flavor`;
+      picked[fi] = alt;
+      seen.add(alt.name);
+    }
+  }
+
+  const starter = useAspect
+    ? god.conquest_by_role_aspect?.[role]?.starter || getStarter(god, role)
+    : getStarter(god, role);
   const items = picked.slice(0, 6).map((it) => ({
     name: it.name,
     cost: it.total_cost ?? it.cost,
-    why: `😈 troll ${primary.replace(/_/g, " ")}`,
+    why: it._trollWhy || `😈 troll ${primary.replace(/_/g, " ")}`,
     troll: true,
     slot: "counter",
     is_active: String(it.categories || "").toLowerCase().includes("active"),
@@ -1359,7 +1457,7 @@ function buildTrollPathJS(god, role, useAspect, chaos) {
   let monologue = `${title}. ${TROLL_BLURBS[primary] || "Be annoying on purpose."} Primary annoyance: ${primary.replace(
     /_/g,
     " "
-  )}; backup bit: ${secondary.replace(/_/g, " ")}.`;
+  )}; backup bit: ${secondary.replace(/_/g, " ")}. Kit-first troll for ${god.name}.`;
   if (aspect) monologue += ` Running ${aspect.name} because the bit is better.`;
 
   return {
@@ -1371,7 +1469,7 @@ function buildTrollPathJS(god, role, useAspect, chaos) {
     aspect,
     starter,
     items,
-    baseline,
+    baseline: baselineNames,
   };
 }
 
