@@ -58,6 +58,7 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
                t.tier, t.rank_in_scope, t.score, t.patch_score, t.kit_score, t.build_score,
                t.confidence, t.rationale,
                p.trajectory, p.net_weighted_score, p.recent_5_score, p.buff_events, p.nerf_events,
+               p.axes_json, p.recent_axes_json,
                b.recommended_starter, b.core_items_json, b.defense_items_json, b.relic_suggestions,
                b.build_notes
         FROM gods g
@@ -69,12 +70,22 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
         """
     ):
         d = dict(r)
-        for key in ("core_items_json", "defense_items_json", "relic_suggestions", "roles"):
+        for key in ("core_items_json", "defense_items_json", "relic_suggestions", "roles",
+                    "axes_json", "recent_axes_json"):
             if d.get(key):
                 try:
-                    d[key.replace("_json", "")] = json.loads(d[key])
+                    parsed = json.loads(d[key])
+                    if key.endswith("_json"):
+                        d[key.replace("_json", "")] = parsed
+                    else:
+                        d[key] = parsed
                 except json.JSONDecodeError:
                     pass
+        # Friendly aliases for UI
+        if d.get("recent_axes"):
+            d["patch_axes"] = d["recent_axes"]
+        elif d.get("axes"):
+            d["patch_axes"] = d["axes"]
         # abilities
         abs_ = [
             dict(a)

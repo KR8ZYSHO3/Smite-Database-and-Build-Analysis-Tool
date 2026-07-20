@@ -418,7 +418,10 @@ class ScoredItem:
     score_breakdown: dict[str, float] = field(default_factory=dict)
     passive: str = ""
     active: str = ""
-    is_active_item: bool = False  # counts toward the 3-active shop cap
+    is_active_item: bool = False
+    recent_momentum: float = 0.0
+    patch_axes: dict[str, float] = field(default_factory=dict)
+    patch_axes_r5: dict[str, float] = field(default_factory=dict)
 
 
 def is_shop_active_item(
@@ -466,6 +469,24 @@ def is_shop_active_item(
     return False
 
 
+def _parse_axes_json(raw: str | None) -> dict[str, float]:
+    if not raw:
+        return {}
+    try:
+        data = json.loads(raw)
+    except (json.JSONDecodeError, TypeError):
+        return {}
+    if not isinstance(data, dict):
+        return {}
+    out: dict[str, float] = {}
+    for k, v in data.items():
+        try:
+            out[str(k)] = float(v)
+        except (TypeError, ValueError):
+            continue
+    return out
+
+
 def load_items(conn: sqlite3.Connection) -> list[dict]:
     rows = conn.execute(
         """
@@ -474,12 +495,30 @@ def load_items(conn: sqlite3.Connection) -> list[dict]:
         FROM items
         """
     ).fetchall()
-    momentum = {
-        r["entity_name"]: r["net_weighted_score"] or 0.0
+    momentum: dict[str, float] = {}
+    recent_mom: dict[str, float] = {}
+    item_axes: dict[str, dict[str, float]] = {}
+    item_axes_r5: dict[str, dict[str, float]] = {}
+    try:
+        for r in conn.execute(
+            """
+            SELECT entity_name, net_weighted_score, recent_5_score,
+                   axes_json, recent_axes_json
+            FROM entity_patch_summary WHERE entity_type='item'
+            """
+        ):
+            name = r["entity_name"]
+            momentum[name] = r["net_weighted_score"] or 0.0
+            recent_mom[name] = r["recent_5_score"] or 0.0
+            item_axes[name] = _parse_axes_json(r["axes_json"] if "axes_json" in r.keys() else None)
+            item_axes_r5[name] = _parse_axes_json(
+                r["recent_axes_json"] if "recent_axes_json" in r.keys() else None
+            )
+    except sqlite3.OperationalError:
         for r in conn.execute(
             "SELECT entity_name, net_weighted_score FROM entity_patch_summary WHERE entity_type='item'"
-        )
-    }
+        ):
+            momentum[r["entity_name"]] = r["net_weighted_score"] or 0.0
     items = []
     for r in rows:
         stats = _parse_stats(r["stats_json"], r["stats_text"])
@@ -508,6 +547,9 @@ def load_items(conn: sqlite3.Connection) -> list[dict]:
                 "stats": stats,
                 "flags": flags,
                 "momentum": momentum.get(r["name"], 0.0),
+                "recent_momentum": recent_mom.get(r["name"], 0.0),
+                "patch_axes": item_axes.get(r["name"], {}),
+                "patch_axes_r5": item_axes_r5.get(r["name"], {}),
                 "passive": r["passive"] or "",
                 "active": active,
                 "categories": cats,
@@ -634,9 +676,22 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
         util += 8
     breakdown["utility_text"] = util
 
-    # patch momentum (recent meta signal) — moderated so raw stats lead
-    mom = item["momentum"] * 8
+    # patch momentum (recent meta signal) — recent_5 weighted harder
+    mom = (item.get("momentum") or 0) * 6 + (item.get("recent_momentum") or 0) * 12
+    # Item's own patch axes: if item was buffed on pen/damage, prefer it
+    ia = item.get("patch_axes_r5") or item.get("patch_axes") or {}
+    axis_boost = 0.0
+    if ia:
+        axis_boost += float(ia.get("damage", 0) or 0) * 10
+        axis_boost += float(ia.get("pen", 0) or 0) * 14
+        axis_boost += float(ia.get("survivability", 0) or 0) * 8
+        axis_boost += float(ia.get("cooldown", 0) or 0) * 6
+        axis_boost += float(ia.get("attack_speed", 0) or 0) * 8
+        axis_boost += float(ia.get("crit", 0) or 0) * 8
+        axis_boost += float(ia.get("heal", 0) or 0) * 6
+    mom += axis_boost
     breakdown["momentum"] = round(mom, 2)
+    breakdown["item_axes"] = round(axis_boost, 2)
 
     # cost efficiency: prefer 2300-2800 cores; starters handled separately
     cost = item["total_cost"] or 0
@@ -673,6 +728,9 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
         passive=item["passive"],
         active=item["active"],
         is_active_item=bool(item.get("is_active_item")),
+        recent_momentum=float(item.get("recent_momentum") or 0),
+        patch_axes=dict(item.get("patch_axes") or {}),
+        patch_axes_r5=dict(item.get("patch_axes_r5") or {}),
     )
 
 
@@ -841,7 +899,10 @@ def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, Any]:
             "dots": 0,
             "shields": 0,
             "patch_score": 0.0,
+            "recent_patch": 0.0,
             "trajectory": "stable",
+            "patch_axes": {},
+            "patch_axes_r5": {},
             "god_name": "",
             "aa_score": 0.0,
             "avg_cd": 12.0,
@@ -897,16 +958,37 @@ def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, Any]:
     gname_row = conn.execute("SELECT name FROM gods WHERE id=?", (god_id,)).fetchone()
     god_name = gname_row["name"] if gname_row else ""
 
-    patch = conn.execute(
-        """
-        SELECT net_weighted_score, recent_5_score, trajectory
-        FROM entity_patch_summary
-        WHERE entity_type='god' AND entity_name=?
-        """,
-        (god_name,),
-    ).fetchone()
+    patch = None
+    try:
+        patch = conn.execute(
+            """
+            SELECT net_weighted_score, recent_5_score, trajectory,
+                   axes_json, recent_axes_json
+            FROM entity_patch_summary
+            WHERE entity_type='god' AND entity_name=?
+            """,
+            (god_name,),
+        ).fetchone()
+    except sqlite3.OperationalError:
+        patch = conn.execute(
+            """
+            SELECT net_weighted_score, recent_5_score, trajectory
+            FROM entity_patch_summary
+            WHERE entity_type='god' AND entity_name=?
+            """,
+            (god_name,),
+        ).fetchone()
     patch_score = float(patch["net_weighted_score"] or 0) if patch else 0.0
+    recent_patch = float(patch["recent_5_score"] or 0) if patch else 0.0
     trajectory = (patch["trajectory"] if patch else None) or "stable"
+    patch_axes = {}
+    patch_axes_r5 = {}
+    if patch:
+        keys = patch.keys()
+        if "axes_json" in keys:
+            patch_axes = _parse_axes_json(patch["axes_json"])
+        if "recent_axes_json" in keys:
+            patch_axes_r5 = _parse_axes_json(patch["recent_axes_json"])
 
     avg_pwr = float(ab["avg_pwr"] or 40) if ab else 40.0
     max_pwr = float(ab["max_pwr"] or 40) if ab else 40.0
@@ -1036,7 +1118,10 @@ def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, Any]:
         "dots": dots,
         "shields": shields,
         "patch_score": patch_score,
+        "recent_patch": recent_patch,
         "trajectory": trajectory,
+        "patch_axes": patch_axes,
+        "patch_axes_r5": patch_axes_r5,
         "god_name": god_name,
         "aa_score": aa_score,
         "ability_blob": blob[:4000],
@@ -1237,21 +1322,88 @@ def rescore_for_god(
         if _canon_stat_value(item.stats, "ten") >= 5 or "tenacit" in blob or "magi" in nlow:
             s += 24
 
-    # Patch trajectory: rising gods lean aggressive; falling lean safer
+    # --- Patch exploit: god axis vector + item momentum ---
     traj = (bias.get("trajectory") or "stable").lower()
     pscore = float(bias.get("patch_score") or 0)
-    if traj == "rising" or pscore >= 1.0:
-        s += item.momentum * 14
+    r5 = float(bias.get("recent_patch") or 0)
+    # Prefer recent item momentum (last 5 patches)
+    s += (item.momentum or 0) * 8 + (item.recent_momentum or 0) * 16
+
+    g_axes = bias.get("patch_axes_r5") or bias.get("patch_axes") or {}
+    # Prefer recent axes when present
+    if not g_axes:
+        g_axes = {}
+    # Positive damage buffs → lean pen + power; damage nerfs → bulk / CDR / efficiency
+    dmg_ax = float(g_axes.get("damage", 0) or 0)
+    cd_ax = float(g_axes.get("cooldown", 0) or 0)
+    pen_ax = float(g_axes.get("pen", 0) or 0)
+    surv_ax = float(g_axes.get("survivability", 0) or 0)
+    heal_ax = float(g_axes.get("heal", 0) or 0)
+    as_ax = float(g_axes.get("attack_speed", 0) or 0)
+    crit_ax = float(g_axes.get("crit", 0) or 0)
+    mana_ax = float(g_axes.get("mana", 0) or 0)
+
+    if dmg_ax >= 0.25:
+        s += pen_v * 0.9 + 8
+        if int_v >= 50 or str_v >= 40:
+            s += 14
         if item.item_type == "Offensive":
-            s += 12
-    elif traj == "falling" or pscore <= -1.5:
+            s += 10
+    elif dmg_ax <= -0.35:
         if item.item_type == "Defensive" or _canon_stat_value(item.stats, "hp") >= 250:
-            s += 20
-        s += cdr_v * 0.5
+            s += 22
+        s += cdr_v * 0.8
         if item.is_active_item and (item.total_cost or 0) >= 3200:
-            s -= 10  # skip glass luxury while nerfed
-    else:
-        s += item.momentum * 6
+            s -= 14
+    # Cooldown buffed (positive) → free to stack damage; CD nerfed → buy CDR
+    if cd_ax >= 0.25:
+        s += pen_v * 0.4 + (10 if (int_v >= 40 or str_v >= 30) else 0)
+    elif cd_ax <= -0.25:
+        s += cdr_v * 1.6 + 12
+    if pen_ax >= 0.15:
+        s += pen_v * 1.4 + 10
+    if surv_ax >= 0.25:
+        s += (
+            _canon_stat_value(item.stats, "hp") * 0.08
+            + _canon_stat_value(item.stats, "pprot") * 0.25
+            + _canon_stat_value(item.stats, "mprot") * 0.25
+            + 8
+        )
+    elif surv_ax <= -0.25 and role in DAMAGE_ROLES_NEED_PEN:
+        # survivability nerfed on a damage god → still buy some bulk
+        if _canon_stat_value(item.stats, "hp") >= 200 or item.item_type == "Defensive":
+            s += 12
+    if heal_ax >= 0.2 and (ls_v >= 8 or "heal" in blob):
+        s += 18
+    if as_ax >= 0.2:
+        s += as_v * 1.1 + 10
+    if crit_ax >= 0.15:
+        s += crit_v * 1.2 + 10
+    if mana_ax >= 0.2 and (
+        _canon_stat_value(item.stats, "mp") >= 150
+        or any(k in nlow for k in ("thoth", "book", "doom orb", "pendant"))
+    ):
+        s += 16
+
+    # Item's own recent patch axes (meta itemization)
+    ia = item.patch_axes_r5 or item.patch_axes or {}
+    if ia:
+        s += float(ia.get("damage", 0) or 0) * 12
+        s += float(ia.get("pen", 0) or 0) * 16
+        s += float(ia.get("survivability", 0) or 0) * 10
+        s += float(ia.get("cooldown", 0) or 0) * 8
+        s += float(ia.get("attack_speed", 0) or 0) * 10
+        s += float(ia.get("crit", 0) or 0) * 10
+
+    if traj == "rising" or r5 >= 0.8 or pscore >= 1.0:
+        if item.item_type == "Offensive":
+            s += 10
+    elif traj == "falling" or r5 <= -0.8 or pscore <= -1.5:
+        if item.item_type == "Defensive" or _canon_stat_value(item.stats, "hp") >= 250:
+            s += 16
+        s += cdr_v * 0.4
+        if item.is_active_item and (item.total_cost or 0) >= 3200:
+            s -= 8
 
     # Damage-role pen requirement (matching type)
     if role in DAMAGE_ROLES_NEED_PEN:
@@ -2277,11 +2429,18 @@ def _explain_god_build(
     )
     traj = bias.get("trajectory") or "stable"
     psc = float(bias.get("patch_score") or 0)
+    r5 = float(bias.get("recent_patch") or 0)
+    axes = bias.get("patch_axes_r5") or bias.get("patch_axes") or {}
+    top_axes = sorted(axes.items(), key=lambda x: abs(x[1]), reverse=True)[:3]
+    axis_txt = (
+        ", ".join(f"{k} {v:+.1f}" for k, v in top_axes) if top_axes else "none"
+    )
 
     parts = [
         f"{god['entity_name']} · {role} · archetype «{arch}» ({power_style}).",
         f"Kit tags: {tag_show}.",
-        f"Style {style}; patch {traj} ({psc:+.1f}).",
+        f"Style {style}; patch {traj} (net {psc:+.1f}, r5 {r5:+.1f}).",
+        f"Patch axes (r5): {axis_txt}.",
         f"Scale STR {(bias.get('str') or 0)*100:.0f}% / INT {(bias.get('int') or 0)*100:.0f}%.",
     ]
     # Link first items to tags

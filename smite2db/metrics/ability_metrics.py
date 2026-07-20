@@ -251,6 +251,35 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
 
         flex = min(stance_variants * 4.0, 12.0)
 
+        # AA-kit bonus: abilities that buff basic attacks are undercounted on raw ability dmg
+        aa_hits = 0
+        for a in non_basic_abs:
+            blob = " ".join(
+                str(x)
+                for x in (
+                    a.get("name"),
+                    # features don't carry description; use power from AS-style low dmg high util
+                )
+            )
+            # Heuristic: low/no damage ability with short CD often AS steroid (Rama 2, etc.)
+            dmg = a.get("damage_rank5") or 0
+            cd = a.get("cooldown_rank5") or 12
+            if dmg < 80 and cd and cd <= 16 and not _is_ultimate(a.get("slot")):
+                # passive AS / AA packs show as utility without damage
+                if (a.get("utility_score") or 0) >= 15 or dmg == 0:
+                    aa_hits += 0.5
+        # Stronger signal from god ability text would need join; use count of zero-damage combat abs
+        zero_dmg_combat = sum(
+            1
+            for a in combat
+            if not _is_ultimate(a.get("slot")) and (a.get("damage_rank5") or 0) < 40
+        )
+        aa_bonus = 0.0
+        if zero_dmg_combat >= 1 and avg_str >= 40 and dtype == "physical":
+            aa_bonus = 180.0 + zero_dmg_combat * 60.0  # lifts Rama/Apollo-class kits
+        elif zero_dmg_combat >= 2 and dtype == "physical":
+            aa_bonus = 120.0
+
         kit_raws.append(
             (
                 god_id,
@@ -266,11 +295,12 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                     "cc_count": cc_count,
                     "heal_count": heal_count,
                     "mobility_count": mobility_count,
-                    "burst_raw": burst,
-                    "dps_raw": dps,
+                    "burst_raw": burst + aa_bonus * 0.35,
+                    "dps_raw": dps + aa_bonus,
                     "util_raw": util + flex,
-                    "power_raw": power + flex * 0.5,
+                    "power_raw": power + flex * 0.5 + (8 if aa_bonus else 0),
                     "damage_type": dtype_by_god.get(god_id),
+                    "aa_bonus": aa_bonus,
                 },
             )
         )

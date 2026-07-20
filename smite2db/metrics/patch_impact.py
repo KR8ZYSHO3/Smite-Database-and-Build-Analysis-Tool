@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 import sqlite3
 from collections import defaultdict
@@ -120,6 +121,99 @@ def classify_direction(text: str, section: str = "") -> str:
     if "nerf" in sec and "buff" not in sec:
         return "nerf"
     return "neutral"
+
+
+# Stat axes used for patch vectors → itemization / exploit rules
+STAT_AXES = (
+    "damage",
+    "cooldown",
+    "pen",
+    "survivability",
+    "heal",
+    "attack_speed",
+    "crit",
+    "mana",
+    "utility",
+    "general",
+)
+
+_AXIS_PATTERNS: list[tuple[str, re.Pattern[str]]] = [
+    (
+        "damage",
+        re.compile(
+            r"\b(damage|scaling|strength|intelligence|power|base damage|"
+            r"magical damage|physical damage|bonus damage|explosion|"
+            r"tick damage|damage per)\b",
+            re.I,
+        ),
+    ),
+    (
+        "cooldown",
+        re.compile(r"\b(cooldown|cool down|\bcd\b|haste)\b", re.I),
+    ),
+    (
+        "pen",
+        re.compile(r"\b(penetrat|pen\b|protection reduction|shred)\b", re.I),
+    ),
+    (
+        "survivability",
+        re.compile(
+            r"\b(health|protections?|shield|mitigat|dampen|plating|tenacit|"
+            r"damage reduction|max health|hp5|physical prot|magical prot)\b",
+            re.I,
+        ),
+    ),
+    (
+        "heal",
+        re.compile(r"\b(heal|healing|lifesteal|life steal|restore health|hp5)\b", re.I),
+    ),
+    (
+        "attack_speed",
+        re.compile(r"\b(attack speed|basic attack|in-hand|on-hit|on hit)\b", re.I),
+    ),
+    (
+        "crit",
+        re.compile(r"\b(crit(?:ical)?(?: strike)?|crit chance|crit damage)\b", re.I),
+    ),
+    (
+        "mana",
+        re.compile(r"\b(mana|cost|mp5|mana regen)\b", re.I),
+    ),
+    (
+        "utility",
+        re.compile(
+            r"\b(stun|root|slow|silence|range|radius|duration|movement|"
+            r"dash|leap|cc|crowd control|knock)\b",
+            re.I,
+        ),
+    ),
+]
+
+
+def classify_stat_axes(text: str) -> dict[str, float]:
+    """
+    Map a patch bullet to one or more stat axes with relative weights (sum ≈ 1).
+
+    Used to build per-entity patch vectors for itemization (exploit buffs/nerfs).
+    """
+    t = text or ""
+    hits: dict[str, float] = {}
+    for axis, pat in _AXIS_PATTERNS:
+        if pat.search(t):
+            # cooldown+cost both hit mana pattern — prefer cooldown when CD mentioned
+            hits[axis] = hits.get(axis, 0) + 1.0
+    if "cooldown" in hits and "mana" in hits:
+        # "mana cost" alone stays mana; "cooldown" line that mentions cost keeps both
+        if re.search(r"\bmana cost|cost increased|cost reduced|cost from\b", t, re.I) and not re.search(
+            r"\bcooldown\b", t, re.I
+        ):
+            hits.pop("cooldown", None)
+        elif re.search(r"\bcooldown\b", t, re.I) and not re.search(r"\bmana\b", t, re.I):
+            hits.pop("mana", None)
+    if not hits:
+        return {"general": 1.0}
+    total = sum(hits.values())
+    return {k: v / total for k, v in hits.items()}
 
 
 def change_magnitude(text: str, direction: str) -> float:
@@ -274,6 +368,7 @@ def parse_patch_wikitext_entities(
                 "direction": direction,
                 "magnitude": mag,
                 "change_text": text,
+                "axes": classify_stat_axes(text),
             }
         )
     return events
@@ -400,6 +495,14 @@ def compute_patch_impacts(conn: sqlite3.Connection) -> dict[str, int]:
 
     conn.execute("DELETE FROM patch_impacts")
     conn.execute("DELETE FROM entity_patch_summary")
+    # Optional axis vector columns (safe on existing DBs)
+    for col in ("axes_json", "recent_axes_json"):
+        try:
+            conn.execute(
+                f"ALTER TABLE entity_patch_summary ADD COLUMN {col} TEXT"
+            )
+        except sqlite3.OperationalError:
+            pass  # already exists
 
     # Aggregate (patch, entity, direction) -> stats
     agg: dict[tuple, dict[str, Any]] = {}
@@ -413,8 +516,6 @@ def compute_patch_impacts(conn: sqlite3.Connection) -> dict[str, int]:
             )
         # Merge sparse structured JSON when present
         if p["content_json"]:
-            import json
-
             try:
                 blob = json.loads(p["content_json"])
             except json.JSONDecodeError:
@@ -447,6 +548,7 @@ def compute_patch_impacts(conn: sqlite3.Connection) -> dict[str, int]:
                             "direction": direction,
                             "magnitude": change_magnitude(text, direction),
                             "change_text": text[:500],
+                            "axes": classify_stat_axes(key + " " + text),
                         }
                     )
 
@@ -464,6 +566,8 @@ def compute_patch_impacts(conn: sqlite3.Connection) -> dict[str, int]:
             if ev["direction"] == "new":
                 # Single modest novelty bump, not sum of every kit bullet
                 signed = direction_sign("new") * 1.2 * w
+            rank = patch_ids.index(p["id"])
+            axes = ev.get("axes") or classify_stat_axes(ev.get("change_text") or "")
             if not slot:
                 agg[key] = {
                     "patch_id": p["id"],
@@ -477,7 +581,11 @@ def compute_patch_impacts(conn: sqlite3.Connection) -> dict[str, int]:
                     "sample_text": ev["change_text"][:400],
                     "patch_name": p["name"],
                     "release_date": p["release_date"],
-                    "patch_rank": patch_ids.index(p["id"]),
+                    "patch_rank": rank,
+                    "axes": {a: signed * wt for a, wt in axes.items()},
+                    "axes_r5": {
+                        a: (signed * wt if rank < 5 else 0.0) for a, wt in axes.items()
+                    },
                 }
             else:
                 slot["magnitude"] = max(slot["magnitude"], ev["magnitude"])
@@ -487,6 +595,11 @@ def compute_patch_impacts(conn: sqlite3.Connection) -> dict[str, int]:
                 slot["change_count"] += 1
                 if len(ev["change_text"]) > 20 and ev["direction"] in ("buff", "nerf", "shift"):
                     slot["sample_text"] = ev["change_text"][:400]
+                for a, wt in axes.items():
+                    contrib = signed * wt * stack_factor
+                    slot["axes"][a] = slot["axes"].get(a, 0.0) + contrib
+                    if rank < 5:
+                        slot["axes_r5"][a] = slot["axes_r5"].get(a, 0.0) + contrib
 
     for slot in agg.values():
         conn.execute(
@@ -552,14 +665,27 @@ def compute_patch_impacts(conn: sqlite3.Connection) -> dict[str, int]:
             trajectory = "stable"
 
         patches_touched = len({s["patch_id"] for s in slots})
+
+        # Merge axis vectors across all direction buckets for this entity
+        axes_all: dict[str, float] = defaultdict(float)
+        axes_r5: dict[str, float] = defaultdict(float)
+        for s in slots:
+            for a, v in (s.get("axes") or {}).items():
+                axes_all[a] += v
+            for a, v in (s.get("axes_r5") or {}).items():
+                axes_r5[a] += v
+        # Round for stable JSON
+        axes_json = {k: round(v, 4) for k, v in sorted(axes_all.items()) if abs(v) > 1e-6}
+        r5_json = {k: round(v, 4) for k, v in sorted(axes_r5.items()) if abs(v) > 1e-6}
+
         conn.execute(
             """
             INSERT INTO entity_patch_summary (
                 entity_type, entity_name, patches_touched, buff_events, nerf_events,
                 shift_events, new_events, net_raw_score, net_weighted_score,
                 recent_5_score, recent_10_score, last_direction, last_patch,
-                last_patch_date, trajectory
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                last_patch_date, trajectory, axes_json, recent_axes_json
+            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
             """,
             (
                 et,
@@ -577,6 +703,8 @@ def compute_patch_impacts(conn: sqlite3.Connection) -> dict[str, int]:
                 last["patch_name"],
                 last["release_date"],
                 trajectory,
+                json.dumps(axes_json),
+                json.dumps(r5_json),
             ),
         )
 

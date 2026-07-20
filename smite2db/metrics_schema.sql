@@ -81,6 +81,8 @@ CREATE TABLE IF NOT EXISTS entity_patch_summary (
     last_patch          TEXT,
     last_patch_date     TEXT,
     trajectory          TEXT,          -- rising | falling | stable | volatile | new
+    axes_json           TEXT,          -- {"damage":1.2,"cooldown":-0.4,...} recency-weighted
+    recent_axes_json    TEXT,          -- same axes, last 5 patches only
     PRIMARY KEY (entity_type, entity_name)
 );
 

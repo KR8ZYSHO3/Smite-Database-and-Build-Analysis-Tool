@@ -90,13 +90,53 @@ def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
         """
     ).fetchall()
 
-    # Item patch momentum
-    item_momentum = {
-        r["entity_name"]: r["net_weighted_score"]
+    # Item patch momentum + axis vectors
+    item_momentum: dict[str, float] = {}
+    item_recent: dict[str, float] = {}
+    item_axes: dict[str, dict[str, float]] = {}
+    try:
+        for r in conn.execute(
+            """
+            SELECT entity_name, net_weighted_score, recent_5_score,
+                   recent_axes_json, axes_json
+            FROM entity_patch_summary WHERE entity_type='item'
+            """
+        ):
+            item_momentum[r["entity_name"]] = r["net_weighted_score"] or 0.0
+            item_recent[r["entity_name"]] = r["recent_5_score"] or 0.0
+            raw = r["recent_axes_json"] or r["axes_json"]
+            if raw:
+                try:
+                    item_axes[r["entity_name"]] = {
+                        str(k): float(v) for k, v in json.loads(raw).items()
+                    }
+                except (json.JSONDecodeError, TypeError, ValueError):
+                    item_axes[r["entity_name"]] = {}
+    except sqlite3.OperationalError:
         for r in conn.execute(
             "SELECT entity_name, net_weighted_score FROM entity_patch_summary WHERE entity_type='item'"
-        )
-    }
+        ):
+            item_momentum[r["entity_name"]] = r["net_weighted_score"] or 0.0
+
+    # God patch axes for itemization
+    god_axes: dict[str, dict[str, float]] = {}
+    try:
+        for r in conn.execute(
+            """
+            SELECT entity_name, recent_axes_json, axes_json
+            FROM entity_patch_summary WHERE entity_type='god'
+            """
+        ):
+            raw = r["recent_axes_json"] or r["axes_json"]
+            if raw:
+                try:
+                    god_axes[r["entity_name"]] = {
+                        str(k): float(v) for k, v in json.loads(raw).items()
+                    }
+                except (json.JSONDecodeError, TypeError, ValueError):
+                    pass
+    except sqlite3.OperationalError:
+        pass
 
     catalog: list[dict[str, Any]] = []
     for it in items:
@@ -148,6 +188,8 @@ def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                 "is_t3": is_t3 and not is_starter,
                 "is_relic": is_relic,
                 "momentum": item_momentum.get(it["name"], 0.0),
+                "recent_momentum": item_recent.get(it["name"], 0.0),
+                "patch_axes": item_axes.get(it["name"], {}),
                 "offensive_power": _offensive_power(stats, tags),
                 "defensive_power": _defensive_power(stats, tags),
             }
@@ -231,7 +273,36 @@ def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                     s += 15
                 if g["heal_count"] and ("heal" in " ".join(tags) or "hp" in tags):
                     s += 10
-            s += it["momentum"] * 8  # patch-favored items
+            s += (it.get("momentum") or 0) * 6 + (it.get("recent_momentum") or 0) * 14
+            # Item patch axes
+            ia = it.get("patch_axes") or {}
+            if ia:
+                if "pen" in tags:
+                    s += float(ia.get("pen", 0) or 0) * 12
+                if "str" in tags or "int" in tags:
+                    s += float(ia.get("damage", 0) or 0) * 8
+                if "prot" in tags or "hp" in tags:
+                    s += float(ia.get("survivability", 0) or 0) * 8
+                if "cdr" in tags:
+                    s += float(ia.get("cooldown", 0) or 0) * 6
+                if "as" in tags:
+                    s += float(ia.get("attack_speed", 0) or 0) * 8
+            # God patch axes → exploit (what this god was buffed/nerfed on)
+            ga = god_axes.get(g["name"] or "", {})
+            if ga:
+                dmg_a = float(ga.get("damage", 0) or 0)
+                if dmg_a >= 0.25 and role == "offense":
+                    s += 12 if ("pen" in tags or "str" in tags or "int" in tags) else 0
+                if dmg_a <= -0.35 and role == "defense":
+                    s += 14
+                if float(ga.get("cooldown", 0) or 0) <= -0.25 and "cdr" in tags:
+                    s += 12
+                if float(ga.get("attack_speed", 0) or 0) >= 0.2 and "as" in tags:
+                    s += 12
+                if float(ga.get("survivability", 0) or 0) >= 0.2 and (
+                    "prot" in tags or "hp" in tags
+                ):
+                    s += 10
             # cost efficiency mild preference for 2400-2800 cores
             cost = it["total_cost"]
             if 2300 <= cost <= 2800:
