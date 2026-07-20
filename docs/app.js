@@ -321,16 +321,12 @@ function selectGod(name, switchTab) {
     .filter(Boolean)
     .join(" · ");
 
-  const conf = g.confidence != null ? Number(g.confidence) : null;
+  // Compact banner — only the essentials (full stats live in patch/abilities details)
   $("#god-metrics").innerHTML = [
-    pill(`Tier ${g.tier || "—"} #${g.rank_in_scope ?? "—"}`),
-    pill(`Score ${fmt(g.score)}`),
-    pill(`Patch ${fmt(g.patch_score)}`),
-    pill(`Kit ${fmt(g.kit_score)}`),
-    pill(`Build ${fmt(g.build_score)}`),
-    pill(`STR% ${fmt(g.avg_scaling_str, 0)} / INT% ${fmt(g.avg_scaling_int, 0)}`),
-    pill(`Trajectory ${g.trajectory || "—"}`),
-    conf != null ? pill(`Conf ${Math.round(conf * 100)}%`) : "",
+    pill(`${g.tier || "—"} #${g.rank_in_scope ?? "—"}`),
+    pill(`${fmt(g.score)}`),
+    pill(g.trajectory || "—"),
+    pill(`${fmt(g.avg_scaling_str, 0)}/${fmt(g.avg_scaling_int, 0)} STR/INT`),
   ]
     .filter(Boolean)
     .join(" ");
@@ -461,13 +457,10 @@ function selectGod(name, switchTab) {
       .join("");
   }
 
-  // Bring builds into view with room to read a full path
+  // Keep banner in view; only nudge if builds are far below
   requestAnimationFrame(() => {
     const dossier = document.querySelector(".god-dossier");
-    const builds = $("#god-builds-section");
-    if (dossier && builds) {
-      dossier.scrollTop = Math.max(0, builds.offsetTop - 12);
-    }
+    if (dossier) dossier.scrollTop = 0;
   });
 
   const axLines = Object.entries(axes)
