@@ -1566,12 +1566,12 @@ def rescore_for_god(
         if pen_v >= 8 and item.is_active_item and (item.total_cost or 0) >= 3200:
             s -= 10
 
-    # Deterministic micro-jitter from god name so near-ties don't all pick the same flex
-    # (small; kit tags still dominate)
+    # Deterministic per-god reordering so near-ties don't all pick the same flex.
+    # Large enough to swap #1/#2 among peer items; kit tags + signatures still dominate.
     g = bias.get("god_name") or ""
     if g:
-        h = sum(ord(c) for c in (g + item.name)) % 17
-        s += h * 0.35
+        h = sum((i + 1) * ord(c) for i, c in enumerate(g + "|" + item.name)) % 41
+        s += h * 0.85
 
     return s
 
@@ -1821,6 +1821,84 @@ def _item_matches_slot(
     return power_ok()
 
 
+# Preferred item-name substrings by kit tag — large boosts inside matching slots.
+# This is the main god-specific differentiator (not global #1 pen every time).
+TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
+    "mana_stack": ["thoth", "doom orb", "book of", "transcend"],
+    "heavy_dot": ["magus", "isolation", "desolat", "divine", "contagion"],
+    "dot": ["magus", "desolat", "isolation", "divine", "contagion"],
+    "channel": ["chronos", "gem of focus", "myrddin", "desolat"],
+    "spam": ["chronos", "pendant", "gem of focus", "breastplate", "genji"],
+    "ult_nuke": ["soul reaver", "tahuti", "obsidian", "titan", "desolat"],
+    "burst": ["desolat", "obsi", "titan", "soul reaver", "tahuti", "heartseeker"],
+    "pet_zone": ["isolation", "magus", "soul gem", "divine", "grimoire"],
+    "zone": ["isolation", "magus", "soul gem", "divine"],
+    "aa": ["riptalon", "demon", "deathbringer", "qins", "ichival", "wind", "avenging", "musashi"],
+    "as_steroid": ["riptalon", "demon", "ichival", "avenging", "wind"],
+    "heal": ["bancroft", "soul gem", "typhon", "asclepius", "lifebinder", "gluttonous"],
+    "heavy_heal": ["asclepius", "bancroft", "typhon", "lifebinder"],
+    "self_sustain": ["bancroft", "typhon", "gluttonous", "bloodforge", "devourer"],
+    "execute": ["soul reaver", "bloodforge", "titan", "obsi", "desolat"],
+    "prot_shred": ["magus", "executioner", "desolat", "void", "obsi", "titan"],
+    "shield": ["pridwen", "phoenix", "shifter", "spectral"],
+    "heavy_shield": ["pridwen", "phoenix", "spectral", "shifter"],
+    "high_cc": ["isolation", "binding", "chronos", "breastplate", "genji"],
+    "hard_cc": ["isolation", "binding", "stygian"],
+    "immobile": ["alchemist", "magi", "cloak", "mantle", "spectral", "oni"],
+    "mobile": ["jotunn", "hydra", "arondight", "heartseeker"],
+    "gap_close": ["jotunn", "hydra", "arondight", "heartseeker", "transcend"],
+    "team_buff": ["thebes", "sovereign", "heartward", "chandra", "providence"],
+    "anti_cc": ["magi", "mantle", "alchemist", "prophetic"],
+    "sustained": ["chronos", "pendant", "bloodforge", "devourer", "qins"],
+}
+
+
+def _god_slot_salt(diversify_key: str, slot: str, role: str, item_name: str = "") -> int:
+    """Deterministic 0..N salt unique per god × slot × item."""
+    raw = f"{diversify_key}|{slot}|{role}|{item_name}"
+    return sum((i + 1) * ord(ch) for i, ch in enumerate(raw))
+
+
+def _tag_signature_boost(nlow: str, tags: set[str], slot: str) -> float:
+    """Large preference for items that match the god's kit tags."""
+    boost = 0.0
+    matched_tags = 0
+    for tag in tags:
+        prefs = TAG_ITEM_SIGNATURES.get(tag)
+        if not prefs:
+            continue
+        for i, key in enumerate(prefs):
+            if key in nlow:
+                # earlier preference list entry = stronger
+                boost += 48 - i * 4
+                matched_tags += 1
+                break
+    # Identity slots get an extra kick when a signature hits
+    if matched_tags and slot in (
+        "flat_pen",
+        "pct_pen",
+        "power",
+        "dot_core",
+        "zone_core",
+        "mana_stack",
+        "sustain",
+        "cdr",
+        "aa_core",
+        "as_core",
+        "crit_core",
+        "onhit",
+        "gap",
+        "luxury",
+        "mitigate",
+        "counter",
+        "aura",
+        "shield_item",
+        "heal_aura",
+    ):
+        boost += 18 * min(matched_tags, 3)
+    return boost
+
+
 def _pick_slot_item(
     pool: list[ScoredItem],
     slot: str,
@@ -1832,7 +1910,11 @@ def _pick_slot_item(
     max_actives: int,
     active_count: int,
     diversify_key: str = "",
+    tags: set[str] | None = None,
+    luxury_actives: int = 0,
+    max_luxury_actives: int = 1,
 ) -> ScoredItem | None:
+    tags = tags or set()
     cands = [
         x
         for x in pool
@@ -1843,53 +1925,258 @@ def _pick_slot_item(
     if not cands:
         return None
 
+    # Hard cap luxury On-Use (Dreamer's / Wish / Parashu) — one per path max
+    if slot == "luxury" or slot in ("power", "cdr", "sustain"):
+        if luxury_actives >= max_luxury_actives:
+            cands = [
+                x
+                for x in cands
+                if not (x.is_active_item and (x.total_cost or 0) >= 3200)
+            ]
+            if not cands:
+                return None
+
     def slot_rank(x: ScoredItem) -> float:
-        sc = x.role_score
+        sc = float(x.role_score)
         n = x.name.lower()
         # prefer true identity items inside a slot
         if slot == "mana_stack":
             if any(k in n for k in ("thoth", "book of", "doom orb", "transcend")):
-                sc += 40
+                sc += 55
             elif "pendant" in n:
-                sc += 10
+                sc += 18
         if slot == "pct_pen" and not x.is_active_item:
-            sc += 15
+            sc += 20
+        if slot == "flat_pen" and not x.is_active_item:
+            sc += 12
+            # Prefer real flat pen cores over Gluttonous/Dreamer-as-pen
+            if any(k in n for k in ("desolat", "magus", "divine", "pendulum", "crusher", "jotunn", "cosmic")):
+                sc += 22
+            if any(k in n for k in ("dreamer", "wish-granting", "parashu")):
+                sc -= 35
         if slot in ("mitigate", "counter", "aura") and x.item_type == "Defensive":
             sc += 12
-        if slot == "dot_core" and any(k in n for k in ("desolat", "magus", "isolation")):
-            sc += 20
+        if slot == "dot_core" and any(k in n for k in ("desolat", "magus", "isolation", "divine")):
+            sc += 28
+        if slot == "zone_core" and any(k in n for k in ("isolation", "magus", "soul gem", "grimoire")):
+            sc += 28
         if slot == "defense" and role in ("Carry", "Mid", "Jungle"):
-            # Genji / Breastplate / Alchemist over pure HP bricks
             if any(k in n for k in ("genji", "breastplate", "valor", "alchemist", "magi", "cloak")):
                 sc += 28
             if _canon_stat_value(x.stats, "cdr") >= 10:
                 sc += 15
+        if slot == "luxury":
+            # Prefer passives for most gods; actives only when kit wants burst finisher
+            if x.is_active_item and (x.total_cost or 0) >= 3200:
+                if "burst" in tags or "ult_nuke" in tags or "execute" in tags:
+                    sc += 8
+                else:
+                    sc -= 25
+            elif any(k in n for k in ("tahuti", "soul reaver", "myrddin", "deathbringer", "bloodforge")):
+                sc += 18
+        # Kit-tag signature affinity (primary god differentiator)
+        sc += _tag_signature_boost(n, tags, slot)
+        # Per-god reordering of the entire candidate list (not only near-ties).
+        # Magnitude is large enough to swap #1/#2/#3 among legitimate slot peers.
+        if diversify_key:
+            salt = _god_slot_salt(diversify_key, slot, role, x.name) % 53
+            sc += salt * 1.15
         return sc
 
     cands.sort(key=slot_rank, reverse=True)
-    # Near-tie diversity: identity slots stay #1; flex/luxury rotate by god name
-    flex_slots = {
-        "luxury",
-        "power",
-        "sustain",
-        "cdr",
-        "defense",
-        "hybrid_bulk",
-        "aura",
-        "mitigate",
-        "gap",
-        "ls_core",
-        "as_core",
-        "crit_core",
-    }
-    if diversify_key and slot in flex_slots and len(cands) > 1:
+
+    # Always pick among top-K by god salt — every slot, including pen/power.
+    # Full top-K (no score-floor collapse) so similar-tag gods still diverge.
+    if diversify_key and len(cands) > 1:
+        wide = {
+            "flat_pen",
+            "pct_pen",
+            "power",
+            "luxury",
+            "defense",
+            "mitigate",
+            "counter",
+            "aura",
+            "hybrid_bulk",
+            "sustain",
+            "cdr",
+            "cdr_def",
+            "gap",
+            "ls_core",
+            "as_core",
+            "crit_core",
+            "antiheal",
+            "shield_item",
+            "heal_aura",
+            "sustain_tank",
+            "power_bruiser",
+            "dot_core",
+            "zone_core",
+            "mana_stack",
+            "tenacity",
+            "onhit",
+        }
+        top_k = 7 if slot in wide else 5
+        top_k = min(top_k, len(cands))
+        # Soft quality gate: drop only true junk (>35% behind #1), keep ≥3 when possible
         best = slot_rank(cands[0])
-        margin = max(10.0, abs(best) * 0.06)
-        near = [c for c in cands[:6] if slot_rank(c) >= best - margin]
-        if len(near) > 1:
-            idx = sum(ord(ch) for ch in (diversify_key + "|" + slot + "|" + role)) % len(near)
-            return near[idx]
+        floor = best - max(80.0, abs(best) * 0.35)
+        near = [c for c in cands[:top_k] if slot_rank(c) >= floor]
+        if len(near) < min(3, top_k):
+            near = cands[:top_k]
+        idx = _god_slot_salt(diversify_key, slot, role) % len(near)
+        return near[idx]
     return cands[0]
+
+
+def _inject_signature_items(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    tags: set[str],
+    dkey: str,
+    role: str,
+    *,
+    mage: bool,
+    physical: bool,
+    max_actives: int,
+    seen: set[str],
+    actives: int,
+) -> tuple[list[ScoredItem], set[str], int]:
+    """
+    Force 1–2 kit-signature items into the path if tags demand them and
+    they are not already present. Replaces lowest-score non-pen filler.
+    """
+    # Weight rarer/identity tags first so two zone mages with different secondary
+    # tags (heal vs hard_cc) inject different cores.
+    tag_priority = [
+        "mana_stack",
+        "heavy_dot",
+        "channel",
+        "aa",
+        "as_steroid",
+        "heavy_heal",
+        "self_sustain",
+        "heal",
+        "execute",
+        "ult_nuke",
+        "prot_shred",
+        "pet_zone",
+        "zone",
+        "spam",
+        "heavy_shield",
+        "shield",
+        "team_buff",
+        "immobile",
+        "mobile",
+        "gap_close",
+        "hard_cc",
+        "high_cc",
+        "anti_cc",
+        "dot",
+        "burst",
+        "sustained",
+    ]
+    ordered_tags = [t for t in tag_priority if t in tags] + sorted(
+        t for t in tags if t not in tag_priority
+    )
+    # God-exclusive secondary: start from a god-rotated tag so shared tags don't
+    # always inject the same first preference (Divine Ruin / Magus clones).
+    if ordered_tags and dkey:
+        rot = _god_slot_salt(dkey, "tagrot", role) % len(ordered_tags)
+        ordered_tags = ordered_tags[rot:] + ordered_tags[:rot]
+
+    prefs: list[str] = []
+    for tag in ordered_tags:
+        for key in TAG_ITEM_SIGNATURES.get(tag, []):
+            if key not in prefs:
+                prefs.append(key)
+    if not prefs:
+        return path, seen, actives
+
+    # Second rotation on preference keys by god name
+    if prefs and dkey:
+        rot = _god_slot_salt(dkey, "signature", role) % len(prefs)
+        prefs = prefs[rot:] + prefs[:rot]
+
+    path = list(path)
+    injected = 0
+    max_inject = 2
+    for key in prefs:
+        if injected >= max_inject or len(path) >= 6 and injected >= 1:
+            break
+        # already have a matching item?
+        if any(key in x.name.lower() for x in path):
+            continue
+        cands = [
+            x
+            for x in pool
+            if x.name not in seen
+            and key in x.name.lower()
+            and not (x.is_active_item and actives >= max_actives)
+        ]
+        if mage:
+            cands = [
+                x
+                for x in cands
+                if _canon_stat_value(x.stats, "int") >= _canon_stat_value(x.stats, "str")
+                or x.item_type == "Defensive"
+                or _canon_stat_value(x.stats, "int") >= 25
+            ]
+        elif physical:
+            cands = [
+                x
+                for x in cands
+                if _canon_stat_value(x.stats, "str") >= _canon_stat_value(x.stats, "int")
+                or x.item_type == "Defensive"
+                or _canon_stat_value(x.stats, "str") >= 20
+                or _canon_stat_value(x.stats, "as") > 0
+            ]
+        if not cands:
+            continue
+        cands.sort(
+            key=lambda x: x.role_score
+            + (_god_slot_salt(dkey, "sig", role, x.name) % 23),
+            reverse=True,
+        )
+        pick = cands[0]
+        # Prefer replacing luxury actives / low-score filler, never strip last pen
+        drop_idx = None
+        pen_idxs = [
+            i
+            for i, it in enumerate(path)
+            if is_pen_item(it) and _pen_matches_kit(it, mage=mage, physical=physical)
+        ]
+        for i, it in enumerate(path):
+            if it.is_active_item and (it.total_cost or 0) >= 3200:
+                drop_idx = i
+                break
+        if drop_idx is None:
+            ranked = sorted(
+                range(len(path)),
+                key=lambda i: path[i].role_score,
+            )
+            for i in ranked:
+                if len(pen_idxs) <= 1 and i in pen_idxs:
+                    continue
+                drop_idx = i
+                break
+        if drop_idx is None:
+            if len(path) < 6:
+                path.append(pick)
+                seen.add(pick.name)
+                if pick.is_active_item:
+                    actives += 1
+                injected += 1
+            continue
+        seen.discard(path[drop_idx].name)
+        if path[drop_idx].is_active_item:
+            actives = max(0, actives - 1)
+        path[drop_idx] = pick
+        seen.add(pick.name)
+        if pick.is_active_item:
+            actives += 1
+        injected += 1
+    return path, seen, actives
 
 
 def assemble_kit_path(
@@ -1901,22 +2188,34 @@ def assemble_kit_path(
     physical: bool,
     max_actives: int,
 ) -> tuple[list[ScoredItem], str]:
-    """Build a 6-item path from archetype slots + scores (not one global top-6)."""
+    """Build a 6-item path from archetype slots + god-specific scores (not global top-6)."""
     arch = detect_archetype(bias, role, mage, physical)
     slots = list(ARCHETYPE_SLOTS.get(arch, ARCHETYPE_SLOTS["burst_mage"]))
-    # Secondary flex: spammy kits swap last luxury for CDR if not already
     tags = set(bias.get("tags") or [])
+    # Secondary flex: spammy kits swap last luxury for CDR if not already
     if "spam" in tags and "cdr" not in slots[:3]:
         slots = slots[:-1] + ["cdr"] if slots[-1] == "luxury" else slots
     if "ult_nuke" in tags and "pct_pen" not in slots[:2]:
-        # ensure shred early for nuke ults
         if "pct_pen" in slots:
             slots.remove("pct_pen")
             slots.insert(1, "pct_pen")
+    # Dot/zone kits: ensure identity core slot early
+    if ("heavy_dot" in tags or "dot" in tags) and "dot_core" not in slots and role in ("Mid", "Carry"):
+        if slots[0] in ("power", "flat_pen", "cdr"):
+            slots = ["dot_core"] + [s for s in slots if s != "dot_core"]
+            slots = slots[:6]
+    if ("pet_zone" in tags or "zone" in tags) and "zone_core" not in slots and role == "Mid":
+        if "flat_pen" in slots:
+            idx = slots.index("flat_pen")
+            slots.insert(idx + 1, "zone_core")
+            slots = slots[:6]
+
     path: list[ScoredItem] = []
     seen: set[str] = set()
     actives = 0
+    luxury_actives = 0
     dkey = str(bias.get("god_name") or "")
+    max_lux = 1  # hard: at most one Dreamer's/Wish/Parashu-class active
 
     for slot in slots:
         if len(path) >= 6:
@@ -1931,6 +2230,9 @@ def assemble_kit_path(
             max_actives=max_actives,
             active_count=actives,
             diversify_key=dkey,
+            tags=tags,
+            luxury_actives=luxury_actives,
+            max_luxury_actives=max_lux,
         )
         if not pick:
             continue
@@ -1938,15 +2240,42 @@ def assemble_kit_path(
         seen.add(pick.name)
         if pick.is_active_item:
             actives += 1
+            if (pick.total_cost or 0) >= 3200:
+                luxury_actives += 1
 
-    # Fill remaining from highest kit score, prefer passives if active-capped
+    # Force kit signatures so two zone mages don't share identical shells
+    path, seen, actives = _inject_signature_items(
+        path,
+        pool,
+        tags,
+        dkey,
+        role,
+        mage=mage,
+        physical=physical,
+        max_actives=max_actives,
+        seen=seen,
+        actives=actives,
+    )
+    luxury_actives = sum(
+        1 for x in path if x.is_active_item and (x.total_cost or 0) >= 3200
+    )
+
+    # Fill remaining — god-salted ranking, ban extra luxury actives
     if len(path) < 6:
         rest = [x for x in pool if x.name not in seen]
         rest.sort(
             key=lambda x: (
                 x.role_score
-                - (100 if x.is_active_item and actives >= max_actives else 0)
-                + (sum(ord(c) for c in (dkey + x.name)) % 17) * 0.4
+                - (120 if x.is_active_item and actives >= max_actives else 0)
+                - (
+                    80
+                    if x.is_active_item
+                    and (x.total_cost or 0) >= 3200
+                    and luxury_actives >= max_lux
+                    else 0
+                )
+                + _tag_signature_boost(x.name.lower(), tags, "fill")
+                + (_god_slot_salt(dkey, "fill", role, x.name) % 47) * 1.2
             ),
             reverse=True,
         )
@@ -1955,12 +2284,178 @@ def assemble_kit_path(
                 break
             if x.is_active_item and actives >= max_actives:
                 continue
+            if (
+                x.is_active_item
+                and (x.total_cost or 0) >= 3200
+                and luxury_actives >= max_lux
+            ):
+                continue
             path.append(x)
             seen.add(x.name)
             if x.is_active_item:
                 actives += 1
+                if (x.total_cost or 0) >= 3200:
+                    luxury_actives += 1
 
+    def _is_luxury_toy(it: ScoredItem) -> bool:
+        """Late glass cannons — Dreamer's, Wish-Granting, Parashu, Tahuti, etc."""
+        n = it.name.lower()
+        # Named finisher toys always count (Rod of Tahuti is 3000)
+        if any(k in n for k in ("dreamer", "wish-granting", "parashu", "tahuti")):
+            return True
+        cost = it.total_cost or 0
+        if it.is_active_item and cost >= 3400:
+            return True
+        # expensive pure power with no defenses
+        if (
+            cost >= 3400
+            and it.item_type in ("Offensive", "Hybrid")
+            and _canon_stat_value(it.stats, "hp") < 200
+            and _canon_stat_value(it.stats, "pprot") + _canon_stat_value(it.stats, "mprot") < 20
+        ):
+            return True
+        return False
+
+    # Luxury scrub: at most one expensive glass toy (active OR Wish-class passive)
+    lux_idxs = [i for i, x in enumerate(path) if _is_luxury_toy(x)]
+    if len(lux_idxs) > max_lux:
+        keep = max(
+            lux_idxs,
+            key=lambda i: _god_slot_salt(dkey, "luxkeep", role, path[i].name)
+            + path[i].role_score * 0.01,
+        )
+        for i in lux_idxs:
+            if i == keep:
+                continue
+            for alt in pool:
+                if alt.name in {x.name for x in path}:
+                    continue
+                if _is_luxury_toy(alt):
+                    continue
+                if mage and _canon_stat_value(alt.stats, "int") < 30 and alt.item_type != "Defensive":
+                    continue
+                if physical and _canon_stat_value(alt.stats, "str") < 20 and alt.item_type != "Defensive":
+                    if _canon_stat_value(alt.stats, "as") <= 0:
+                        continue
+                path[i] = alt
+                break
+
+    # Final god-flavor swap: guarantee one flex slot is unique to this god name
+    # even when tags/archetype fully overlap with another god.
+    path = _god_flavor_flex(
+        path[:6],
+        pool,
+        dkey,
+        role,
+        tags,
+        mage=mage,
+        physical=physical,
+        max_actives=max_actives,
+    )
+    # Re-scrub after flavor (flavor can reintroduce a second luxury)
+    lux_idxs = [i for i, x in enumerate(path) if _is_luxury_toy(x)]
+    if len(lux_idxs) > max_lux:
+        keep = max(
+            lux_idxs,
+            key=lambda i: _god_slot_salt(dkey, "luxkeep2", role, path[i].name),
+        )
+        for i in lux_idxs:
+            if i == keep:
+                continue
+            for alt in pool:
+                if alt.name in {x.name for x in path} or _is_luxury_toy(alt):
+                    continue
+                if alt.is_active_item and sum(1 for x in path if x.is_active_item) >= max_actives:
+                    continue
+                path[i] = alt
+                break
     return path[:6], arch
+
+
+def _god_flavor_flex(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    dkey: str,
+    role: str,
+    tags: set[str],
+    *,
+    mage: bool,
+    physical: bool,
+    max_actives: int,
+) -> list[ScoredItem]:
+    """Replace one non-critical slot with a god-salted alternate from a wide peer pool."""
+    if not path or not dkey:
+        return path
+    path = list(path)
+    seen = {x.name for x in path}
+    # Never swap the sole matching pen item
+    pen_idxs = [
+        i
+        for i, it in enumerate(path)
+        if is_pen_item(it) and _pen_matches_kit(it, mage=mage, physical=physical)
+    ]
+    # Prefer swapping luxury / defense / power filler
+    candidates_idx = list(range(len(path)))
+    # Rotate which index we flavor by god
+    start = _god_slot_salt(dkey, "flavor_idx", role) % len(candidates_idx)
+    order = candidates_idx[start:] + candidates_idx[:start]
+    target = None
+    for i in order:
+        if len(pen_idxs) <= 1 and i in pen_idxs:
+            continue
+        target = i
+        break
+    if target is None:
+        return path
+
+    actives = sum(1 for x in path if x.is_active_item)
+    alts = [
+        x
+        for x in pool
+        if x.name not in seen
+        and not (x.is_active_item and actives >= max_actives and not path[target].is_active_item)
+    ]
+    # Kit/type filter
+    filtered: list[ScoredItem] = []
+    for x in alts:
+        str_v = _canon_stat_value(x.stats, "str")
+        int_v = _canon_stat_value(x.stats, "int")
+        nlow = x.name.lower()
+        if mage and int_v < 25 and x.item_type not in ("Defensive", "Hybrid") and str_v > int_v + 10:
+            continue
+        if physical and str_v < 15 and x.item_type not in ("Defensive", "Hybrid") and int_v > str_v + 20:
+            continue
+        # Damage roles: skip pure aura tanks as flavor
+        if role in DAMAGE_ROLES_NEED_PEN and x.item_type == "Defensive" and item_pen_value(x) < 5:
+            if _canon_stat_value(x.stats, "cdr") < 8 and int_v + str_v < 25:
+                continue
+        # Support: no glass DPS toys / pure pen cores as "flavor"
+        if role == "Support":
+            if any(k in nlow for k in ("dreamer", "wish-granting", "parashu", "deathbringer", "tahuti", "soul reaver")):
+                continue
+            if x.item_type == "Offensive" and _canon_stat_value(x.stats, "hp") < 150:
+                continue
+        # Solo: no pure ADC crit toys
+        if role == "Solo" and any(k in nlow for k in ("deathbringer", "dreamer", "wish-granting", "parashu")):
+            continue
+        filtered.append(x)
+    if not filtered:
+        return path
+    filtered.sort(
+        key=lambda x: (
+            x.role_score
+            + _tag_signature_boost(x.name.lower(), tags, "flavor")
+            + (_god_slot_salt(dkey, "flavor", role, x.name) % 61) * 1.4
+        ),
+        reverse=True,
+    )
+    # Take god-rotated pick among top 8 so names always split
+    top = filtered[:8]
+    pick = top[_god_slot_salt(dkey, "flavor_pick", role) % len(top)]
+    # Only swap if it actually changes the set (always true if not in seen)
+    if pick.name != path[target].name:
+        path[target] = pick
+    return path
 
 
 def max_shop_actives_for_god(role: str, damage_type: str | None, bias: dict | None = None) -> int:
