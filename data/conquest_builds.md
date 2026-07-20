@@ -40,7 +40,7 @@ This is the Carry job description + common items — not a complete build. Open 
 
 Xbalanque · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, anti_cc, dot, gap_close, heal, heavy_dot, long_cd, sustained. Style burst 23%/dps 77%; patch rising (net +1.9, r5 +1.7). Patch axes (r5): damage +1.7. Scale STR 38% / INT 35%. Path exploits: Titan's Bane, Bloodforge, Avenging Blade… Pen: Titan's Bane, Avatar's Parashu. Actives 2/2 · pen ≈ 30.
 
-- **Starter:** Selflessness
+- **Starter:** Death's Toll
 - **Buy order** (actives 2/2, pen ≈ 30.0):
   1. Titan's Bane (pen, pen 20.0, 3100g)
   2. Bloodforge (power, active, 2550g)
@@ -56,7 +56,7 @@ Xbalanque · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, ant
 
 Cupid · Carry · archetype «crit_adc» (STR / physical). Kit tags: as_steroid, gap_close, hard_cc, heal, heavy_heal, long_cd, pet_zone, sustained. Style burst 42%/dps 58%; patch volatile (net +1.0, r5 +0.0). Patch axes (r5): damage +1.0, attack_speed +0.1, general -0.1. Scale STR 117% / INT 84%. Path exploits: Jotunn's Revenge, Titan's Bane, Bloodforge… Pen: Jotunn's Revenge, Titan's Bane. Actives 1/2 · pen ≈ 25.
 
-- **Starter:** Selflessness
+- **Starter:** Death's Toll
 - **Buy order** (actives 1/2, pen ≈ 25.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Titan's Bane (pen, pen 20.0, 3100g)
@@ -72,7 +72,7 @@ Cupid · Carry · archetype «crit_adc» (STR / physical). Kit tags: as_steroid,
 
 Danzaburou · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, anti_cc, burst, channel, dot, hard_cc, heal, high_cc. Style burst 72%/dps 28%; patch new (net +0.1, r5 +0.0). Patch axes (r5): general +0.0. Scale STR 113% / INT 119%. Path exploits: Titan's Bane, Bloodforge, Avenging Blade… Pen: Titan's Bane, Avatar's Parashu. Actives 2/2 · pen ≈ 30.
 
-- **Starter:** Selflessness
+- **Starter:** Death's Toll
 - **Buy order** (actives 2/2, pen ≈ 30.0):
   1. Titan's Bane (pen, pen 20.0, 3100g)
   2. Bloodforge (power, active, 2550g)
@@ -88,7 +88,7 @@ Danzaburou · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, an
 
 Princess Bari · Carry · archetype «ability_mage_adc» (INT / magical). Kit tags: burst, hard_cc, high_cc, long_cd, pet_zone, team_buff, ult_nuke. Style burst 69%/dps 31%; patch new (net +0.2, r5 +0.0). Patch axes (r5): general +0.3, cooldown -0.0, attack_speed -0.0. Scale STR 80% / INT 110%. Path exploits: Soul Gem, Gluttonous Grimoire, Spear Of The Magus… Pen: Soul Gem, Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 55.
 
-- **Starter:** Selflessness
+- **Starter:** Vampiric Shroud
 - **Buy order** (actives 1/2, pen ≈ 55.0):
   1. Soul Gem (power, pen 5.0, 2500g)
   2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
@@ -104,7 +104,7 @@ Princess Bari · Carry · archetype «ability_mage_adc» (INT / magical). Kit ta
 
 Cernunnos · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 30%/dps 70%; patch stable (net +0.5, r5 +0.0). Patch axes (r5): general +0.5, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path exploits: Jotunn's Revenge, Titan's Bane, Bloodforge… Pen: Jotunn's Revenge, Titan's Bane. Actives 1/2 · pen ≈ 25.
 
-- **Starter:** Selflessness
+- **Starter:** Death's Toll
 - **Buy order** (actives 1/2, pen ≈ 25.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Titan's Bane (pen, pen 20.0, 3100g)
@@ -120,7 +120,7 @@ Cernunnos · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, dot
 
 Anhur · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, anti_cc, dot, gap_close, hard_cc, high_cc, long_cd, pet_zone. Style burst 49%/dps 51%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.3, pen +0.0, survivability +0.0. Scale STR 121% / INT 0%. Path exploits: Jotunn's Revenge, Devourer's Gauntlet, Titan's Bane… Pen: Jotunn's Revenge, Titan's Bane. Actives 0/2 · pen ≈ 25.
 
-- **Starter:** Selflessness
+- **Starter:** Death's Toll
 - **Buy order** (actives 0/2, pen ≈ 25.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Devourer's Gauntlet (power, 2500g)
@@ -136,7 +136,7 @@ Anhur · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, anti_cc
 
 Sol · Carry · archetype «dot_mage_adc» (INT / magical). Kit tags: aa, anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd. Style burst 61%/dps 39%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path exploits: Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard… Pen: Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
 
-- **Starter:** Selflessness
+- **Starter:** Vampiric Shroud
 - **Buy order** (actives 1/2, pen ≈ 50.0):
   1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
   2. Spear Of The Magus (pen, pen 10.0, 2700g)
@@ -152,7 +152,7 @@ Sol · Carry · archetype «dot_mage_adc» (INT / magical). Kit tags: aa, anti_c
 
 Neith · Carry · archetype «crit_adc» (STR / physical). Kit tags: as_steroid, burst, channel, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 67%/dps 33%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): general +0.1, utility -0.0, attack_speed -0.0. Scale STR 63% / INT 77%. Path exploits: Devourer's Gauntlet, Titan's Bane, Runeforged Hammer… Pen: Titan's Bane, Avatar's Parashu. Actives 1/2 · pen ≈ 30.
 
-- **Starter:** Selflessness
+- **Starter:** Death's Toll
 - **Buy order** (actives 1/2, pen ≈ 30.0):
   1. Devourer's Gauntlet (power, 2500g)
   2. Titan's Bane (pen, pen 20.0, 3100g)
@@ -168,7 +168,7 @@ Neith · Carry · archetype «crit_adc» (STR / physical). Kit tags: as_steroid,
 
 Nut · Carry · archetype «aa_mage_adc» (INT / magical). Kit tags: aa, anti_cc, burst, gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 75%/dps 25%; patch falling (net -1.4, r5 +0.0). Patch axes (r5): general -0.9, damage -0.5. Scale STR 80% / INT 131%. Path exploits: Bracer of The Abyss, Gluttonous Grimoire, Spear Of The Magus… Pen: Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
 
-- **Starter:** Selflessness
+- **Starter:** Vampiric Shroud
 - **Buy order** (actives 1/2, pen ≈ 50.0):
   1. Bracer of The Abyss (power, 2500g)
   2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
@@ -184,7 +184,7 @@ Nut · Carry · archetype «aa_mage_adc» (INT / magical). Kit tags: aa, anti_cc
 
 Chiron · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, burst, channel, dot, gap_close, heal, high_cc, long_cd. Style burst 70%/dps 30%; patch new (net -0.3, r5 +0.0). Patch axes (r5): general -0.3, utility +0.0. Scale STR 100% / INT 0%. Path exploits: Titan's Bane, Bloodforge, Avenging Blade… Pen: Titan's Bane, Avatar's Parashu. Actives 2/2 · pen ≈ 30.
 
-- **Starter:** Selflessness
+- **Starter:** Death's Toll
 - **Buy order** (actives 2/2, pen ≈ 30.0):
   1. Titan's Bane (pen, pen 20.0, 3100g)
   2. Bloodforge (power, active, 2550g)
@@ -200,7 +200,7 @@ Chiron · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, burst,
 
 Izanami · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, as_steroid, dot, gap_close, hard_cc, heal, long_cd, pet_zone. Style burst 35%/dps 65%; patch new (net -0.2, r5 -0.2). Patch axes (r5): general -0.2. Scale STR 93% / INT 84%. Path exploits: Jotunn's Revenge, Titan's Bane, The Executioner… Pen: Jotunn's Revenge, Titan's Bane. Actives 1/2 · pen ≈ 25.
 
-- **Starter:** Selflessness
+- **Starter:** Death's Toll
 - **Buy order** (actives 1/2, pen ≈ 25.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Titan's Bane (pen, pen 20.0, 3100g)
@@ -216,7 +216,7 @@ Izanami · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, as_st
 
 Medusa · Carry · archetype «crit_adc» (STR / physical). Kit tags: anti_cc, as_steroid, burst, dot, gap_close, hard_cc, heal, long_cd. Style burst 76%/dps 24%; patch volatile (net +1.4, r5 +0.0). Patch axes (r5): cooldown +0.5, damage +0.5, survivability +0.3. Scale STR 64% / INT 64%. Path exploits: Titan's Bane, Bloodforge, Runeforged Hammer… Pen: Titan's Bane, Avatar's Parashu. Actives 2/2 · pen ≈ 30.
 
-- **Starter:** Selflessness
+- **Starter:** Death's Toll
 - **Buy order** (actives 2/2, pen ≈ 30.0):
   1. Titan's Bane (pen, pen 20.0, 3100g)
   2. Bloodforge (power, active, 2550g)
@@ -264,7 +264,7 @@ This is the Mid job description + common items — not a complete build. Open a 
 
 Princess Bari · Mid · archetype «zone_mage» (INT / magical). Kit tags: burst, hard_cc, high_cc, long_cd, pet_zone, team_buff, ult_nuke. Style burst 69%/dps 31%; patch new (net +0.2, r5 +0.0). Patch axes (r5): general +0.3, cooldown -0.0, attack_speed -0.0. Scale STR 80% / INT 110%. Path exploits: Soul Gem, Spear Of The Magus, The World Stone… Pen: Soul Gem, Spear Of The Magus, The World Stone, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 55.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 55.0):
   1. Soul Gem (power, pen 5.0, 2500g)
   2. Spear Of The Magus (pen, pen 10.0, 2700g)
@@ -280,7 +280,7 @@ Princess Bari · Mid · archetype «zone_mage» (INT / magical). Kit tags: burst
 
 Sol · Mid · archetype «dot_mage» (INT / magical). Kit tags: aa, anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd. Style burst 61%/dps 39%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path exploits: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus… Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 60.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 60.0):
   1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
@@ -296,7 +296,7 @@ Sol · Mid · archetype «dot_mage» (INT / magical). Kit tags: aa, anti_cc, bur
 
 Ra · Mid · archetype «zone_mage» (INT / magical). Kit tags: burst, dot, heal, long_cd, pet_zone, team_buff, ult_nuke. Style burst 69%/dps 31%; patch stable (net +0.7, r5 +0.0). Patch axes (r5): general +0.6, damage +0.1, survivability +0.0. Scale STR 0% / INT 106%. Path exploits: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus… Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 60.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 60.0):
   1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
@@ -312,7 +312,7 @@ Ra · Mid · archetype «zone_mage» (INT / magical). Kit tags: burst, dot, heal
 
 Kukulkan · Mid · archetype «mana_mage» (INT / magical). Kit tags: anti_cc, burst, dot, gap_close, high_cc, long_cd, mana_stack, pet_zone. Style burst 66%/dps 34%; patch rising (net +0.9, r5 +1.4). Patch axes (r5): damage +1.4. Scale STR 0% / INT 85%. Path exploits: Spear of Desolation, Spear Of The Magus, The World Stone… Pen: Spear of Desolation, Spear Of The Magus, The World Stone, Obsidian Shard. Actives 0/2 · pen ≈ 50.
 
-- **Starter:** Sands Of Time
+- **Starter:** Conduit Gem
 - **Buy order** (actives 0/2, pen ≈ 50.0):
   1. Spear of Desolation (pen, pen 10.0, 2650g)
   2. Spear Of The Magus (pen, pen 10.0, 2700g)
@@ -328,7 +328,7 @@ Kukulkan · Mid · archetype «mana_mage» (INT / magical). Kit tags: anti_cc, b
 
 Aphrodite · Mid · archetype «burst_mage» (INT / magical). Kit tags: anti_cc, burst, dot, gap_close, hard_cc, heal, long_cd, team_buff. Style burst 60%/dps 40%; patch volatile (net +1.1, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 0% / INT 102%. Path exploits: Spear of Desolation, Spear Of The Magus, Obsidian Shard… Pen: Spear of Desolation, Spear Of The Magus, Obsidian Shard, Rod of Tahuti, Dreamer's Idol. Actives 1/2 · pen ≈ 55.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 55.0):
   1. Spear of Desolation (pen, pen 10.0, 2650g)
   2. Spear Of The Magus (pen, pen 10.0, 2700g)
@@ -344,7 +344,7 @@ Aphrodite · Mid · archetype «burst_mage» (INT / magical). Kit tags: anti_cc,
 
 Neith · Mid · archetype «channel_mage» (STR / physical). Kit tags: as_steroid, burst, channel, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 67%/dps 33%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): general +0.1, utility -0.0, attack_speed -0.0. Scale STR 63% / INT 77%. Path exploits: Jotunn's Revenge, Pendulum Blade, Heartseeker… Pen: Jotunn's Revenge, Pendulum Blade, Heartseeker, Titan's Bane, Avatar's Parashu. Actives 2/2 · pen ≈ 55.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 2/2, pen ≈ 55.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Pendulum Blade (pen, active, pen 10.0, 2750g)
@@ -360,7 +360,7 @@ Neith · Mid · archetype «channel_mage» (STR / physical). Kit tags: as_steroi
 
 Nut · Mid · archetype «burst_mage» (INT / magical). Kit tags: aa, anti_cc, burst, gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 75%/dps 25%; patch falling (net -1.4, r5 +0.0). Patch axes (r5): general -0.9, damage -0.5. Scale STR 80% / INT 131%. Path exploits: Spear of Desolation, The World Stone, Obsidian Shard… Pen: Spear of Desolation, The World Stone, Obsidian Shard, Rod of Tahuti, Dreamer's Idol. Actives 1/2 · pen ≈ 55.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 55.0):
   1. Spear of Desolation (pen, pen 10.0, 2650g)
   2. The World Stone (pen, pen 10.0, 2800g)
@@ -376,7 +376,7 @@ Nut · Mid · archetype «burst_mage» (INT / magical). Kit tags: aa, anti_cc, b
 
 Baron Samedi · Mid · archetype «dot_mage» (INT / magical). Kit tags: burst, channel, dot, execute, hard_cc, heal, heavy_dot, high_cc. Style burst 71%/dps 29%; patch volatile (net +1.1, r5 +0.0). Patch axes (r5): heal +0.9, general +0.3, damage -0.1. Scale STR 0% / INT 70%. Path exploits: Rod Of Asclepius, Gluttonous Grimoire, Spear of Desolation… Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard. Actives 1/2 · pen ≈ 50.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 50.0):
   1. Rod Of Asclepius (power, active, 2350g)
   2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
@@ -392,7 +392,7 @@ Baron Samedi · Mid · archetype «dot_mage» (INT / magical). Kit tags: burst, 
 
 The Morrigan · Mid · archetype «zone_mage» (INT / magical). Kit tags: dot, hard_cc, long_cd, pet_zone, ult_nuke. Style burst 48%/dps 52%; patch stable (net +0.4, r5 +0.0). Patch axes (r5): utility +0.0. Scale STR 0% / INT 143%. Path exploits: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus… Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 60.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 60.0):
   1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
@@ -408,7 +408,7 @@ The Morrigan · Mid · archetype «zone_mage» (INT / magical). Kit tags: dot, h
 
 Eset · Mid · archetype «channel_mage» (INT / magical). Kit tags: aa, burst, channel, hard_cc, heal, high_cc, long_cd, shield. Style burst 86%/dps 14%; patch volatile (net +0.0, r5 +0.7). Patch axes (r5): damage +0.7. Scale STR 0% / INT 53%. Path exploits: Spear of Desolation, Spear Of The Magus, Obsidian Shard… Pen: Spear of Desolation, Spear Of The Magus, Obsidian Shard, Rod of Tahuti, Dreamer's Idol. Actives 1/2 · pen ≈ 55.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 55.0):
   1. Spear of Desolation (pen, pen 10.0, 2650g)
   2. Spear Of The Magus (pen, pen 10.0, 2700g)
@@ -424,7 +424,7 @@ Eset · Mid · archetype «channel_mage» (INT / magical). Kit tags: aa, burst, 
 
 Poseidon · Mid · archetype «zone_mage» (INT / magical). Kit tags: aa, as_steroid, burst, dot, hard_cc, high_cc, long_cd, pet_zone. Style burst 92%/dps 8%; patch volatile (net +1.3, r5 +0.0). Patch axes (r5): damage +1.3, cooldown -0.0, general +0.0. Scale STR 0% / INT 100%. Path exploits: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus… Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 60.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 60.0):
   1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
@@ -440,7 +440,7 @@ Poseidon · Mid · archetype «zone_mage» (INT / magical). Kit tags: aa, as_ste
 
 Discordia · Mid · archetype «sustain_mage» (INT / magical). Kit tags: burst, gap_close, hard_cc, heal, long_cd, self_sustain, team_buff, ult_nuke. Style burst 69%/dps 31%; patch volatile (net -1.6, r5 -0.1). Patch axes (r5): utility -0.9, cooldown +0.8. Scale STR 0% / INT 119%. Path exploits: Soul Gem, Gluttonous Grimoire, Spear Of The Magus… Pen: Soul Gem, Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 55.
 
-- **Starter:** Selflessness
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 55.0):
   1. Soul Gem (power, pen 5.0, 2500g)
   2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
@@ -487,7 +487,7 @@ This is the Jungle job description + common items — not a complete build. Open
 
 Ne Zha · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: anti_cc, as_steroid, gap_close, hard_cc, heal, long_cd, mobile, prot_shred. Style burst 44%/dps 56%; patch new (net -0.7, r5 +0.0). Patch axes (r5): damage -1.0, general +0.3, utility +0.0. Scale STR 148% / INT 0%. Path exploits: Jotunn's Revenge, Devourer's Gauntlet, Pendulum Blade… Pen: Jotunn's Revenge, Pendulum Blade, Titan's Bane. Actives 2/3 · pen ≈ 35.
 
-- **Starter:** Bumba's Cudgel
+- **Starter:** Bumba's Golden Dagger
 - **Buy order** (actives 2/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Devourer's Gauntlet (power, 2500g)
@@ -519,7 +519,7 @@ Mordred · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: 
 
 Tsukuyomi · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa, anti_cc, burst, gap_close, hard_cc, heal, long_cd, mobile. Style burst 65%/dps 35%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): general +0.2, damage -0.2, utility +0.0. Scale STR 159% / INT 119%. Path exploits: Jotunn's Revenge, Devourer's Gauntlet, Titan's Bane… Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 2/3 · pen ≈ 35.
 
-- **Starter:** Bumba's Cudgel
+- **Starter:** Bumba's Golden Dagger
 - **Buy order** (actives 2/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Devourer's Gauntlet (power, 2500g)
@@ -535,7 +535,7 @@ Tsukuyomi · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags
 
 Cernunnos · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 30%/dps 70%; patch stable (net +0.5, r5 +0.0). Patch axes (r5): general +0.5, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path exploits: Jotunn's Revenge, Devourer's Gauntlet, Titan's Bane… Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 2/3 · pen ≈ 35.
 
-- **Starter:** Bumba's Cudgel
+- **Starter:** Bumba's Golden Dagger
 - **Buy order** (actives 2/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Devourer's Gauntlet (power, 2500g)
@@ -567,7 +567,7 @@ Awilix · Jungle · archetype «bruiser_jungle» (STR / physical). Kit tags: as_
 
 Odin · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa, as_steroid, burst, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 64%/dps 36%; patch volatile (net +1.1, r5 +0.1). Patch axes (r5): damage +0.1, survivability +0.1. Scale STR 65% / INT 34%. Path exploits: Jotunn's Revenge, Titan's Bane, Bloodforge… Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 3/3 · pen ≈ 35.
 
-- **Starter:** Bumba's Cudgel
+- **Starter:** Bumba's Golden Dagger
 - **Buy order** (actives 3/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Titan's Bane (pen, pen 20.0, 3100g)
@@ -583,7 +583,7 @@ Odin · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa,
 
 Ratatoskr · Jungle · archetype «burst_assassin» (STR / physical). Kit tags: anti_cc, burst, gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 75%/dps 25%; patch rising (net +2.2, r5 +1.5). Patch axes (r5): survivability +2.2, general -0.9, cooldown -0.7. Scale STR 90% / INT 0%. Path exploits: Jotunn's Revenge, The Crusher, Heartseeker… Pen: Jotunn's Revenge, The Crusher, Heartseeker, Titan's Bane, Avatar's Parashu. Actives 1/3 · pen ≈ 55.
 
-- **Starter:** Bumba's Cudgel
+- **Starter:** Bumba's Golden Dagger
 - **Buy order** (actives 1/3, pen ≈ 55.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. The Crusher (pen, pen 10.0, 2800g)
@@ -599,7 +599,7 @@ Ratatoskr · Jungle · archetype «burst_assassin» (STR / physical). Kit tags: 
 
 Fenrir · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa, anti_cc, channel, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 20%/dps 80%; patch volatile (net -0.3, r5 +0.8). Patch axes (r5): damage +0.8. Scale STR 97% / INT 0%. Path exploits: Jotunn's Revenge, Devourer's Gauntlet, Titan's Bane… Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 2/3 · pen ≈ 35.
 
-- **Starter:** Bumba's Cudgel
+- **Starter:** Bumba's Golden Dagger
 - **Buy order** (actives 2/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Devourer's Gauntlet (power, 2500g)
@@ -615,7 +615,7 @@ Fenrir · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: a
 
 Thanatos · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: anti_cc, burst, execute, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 62%/dps 38%; patch rising (net +1.2, r5 +1.0). Patch axes (r5): general +1.0. Scale STR 56% / INT 0%. Path exploits: Jotunn's Revenge, Pendulum Blade, Titan's Bane… Pen: Jotunn's Revenge, Pendulum Blade, Titan's Bane, Avatar's Parashu. Actives 3/3 · pen ≈ 45.
 
-- **Starter:** Bumba's Cudgel
+- **Starter:** Bumba's Golden Dagger
 - **Buy order** (actives 3/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Pendulum Blade (pen, active, pen 10.0, 2750g)
@@ -647,7 +647,7 @@ Gilgamesh · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags
 
 Achilles · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 30%/dps 70%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.3, attack_speed +0.0, survivability +0.0. Scale STR 83% / INT 0%. Path exploits: Jotunn's Revenge, Titan's Bane, Bloodforge… Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 3/3 · pen ≈ 35.
 
-- **Starter:** Bumba's Golden Dagger
+- **Starter:** Bumba's Cudgel
 - **Buy order** (actives 3/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Titan's Bane (pen, pen 20.0, 3100g)

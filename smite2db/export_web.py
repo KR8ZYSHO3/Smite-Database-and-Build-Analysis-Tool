@@ -119,22 +119,39 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
 
         # Recent balance bullets (so UI can show "what patched" without full wikitext)
         try:
-            samples = [
-                dict(x)
-                for x in conn.execute(
-                    """
-                    SELECT i.direction, i.magnitude, i.sample_text, i.change_count,
-                           pn.name AS patch_name, pn.release_date
-                    FROM patch_impacts i
-                    JOIN patch_notes pn ON pn.id = i.patch_id
-                    WHERE i.entity_type = 'god' AND i.entity_name = ?
-                      AND i.direction IN ('buff', 'nerf', 'shift')
-                    ORDER BY pn.id ASC, i.magnitude DESC
-                    LIMIT 12
-                    """,
-                    (d["name"],),
-                )
+            from .metrics.patch_impact import classify_stat_axes
+
+            ab_names = [
+                (a.get("name") or "").strip()
+                for a in abs_
+                if a.get("name") and "basic" not in (a.get("slot") or "").lower()
             ]
+            ab_names = sorted({n for n in ab_names if n}, key=len, reverse=True)
+            samples = []
+            for x in conn.execute(
+                """
+                SELECT i.direction, i.magnitude, i.sample_text, i.change_count,
+                       pn.name AS patch_name, pn.release_date
+                FROM patch_impacts i
+                JOIN patch_notes pn ON pn.id = i.patch_id
+                WHERE i.entity_type = 'god' AND i.entity_name = ?
+                  AND i.direction IN ('buff', 'nerf', 'shift')
+                ORDER BY pn.id ASC, i.magnitude DESC
+                LIMIT 14
+                """,
+                (d["name"],),
+            ):
+                row = dict(x)
+                text = row.get("sample_text") or ""
+                hit = None
+                tl = text.lower()
+                for an in ab_names:
+                    if an.lower() in tl:
+                        hit = an
+                        break
+                row["ability_hint"] = hit
+                row["axes"] = classify_stat_axes(text)
+                samples.append(row)
             d["patch_samples"] = samples
         except sqlite3.OperationalError:
             d["patch_samples"] = []

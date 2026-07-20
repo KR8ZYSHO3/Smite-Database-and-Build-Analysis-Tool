@@ -614,6 +614,37 @@ tr.selected td {
   border-radius: 999px;
   border: 1px solid var(--border);
 }
+.compare-panel {
+  margin-bottom: 14px;
+}
+.compare-card h3 {
+  margin-top: 0;
+  font-family: var(--display);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 800px) {
+  .compare-grid { grid-template-columns: 1fr; }
+}
+.compare-axes {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.compare-axes th,
+.compare-axes td {
+  border-bottom: 1px solid var(--border);
+  padding: 6px 8px;
+  text-align: left;
+}
+.compare-axes .axis-up { color: var(--mint); }
+.compare-axes .axis-down { color: var(--danger); }
 .god-build-card .why {
   flex: 0 0 auto;
   font-size: 0.92rem;

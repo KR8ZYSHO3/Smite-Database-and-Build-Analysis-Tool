@@ -205,6 +205,98 @@ function setupGods() {
   };
   search.addEventListener("input", renderList);
   renderList();
+
+  // Compare dropdown
+  const cmp = $("#god-compare");
+  if (cmp) {
+    const names = [...(state.gods || [])].map((g) => g.name).sort();
+    cmp.innerHTML =
+      `<option value="">— none —</option>` +
+      names.map((n) => `<option value="${escapeAttr(n)}">${escapeHtml(n)}</option>`).join("");
+    cmp.addEventListener("change", () => {
+      renderGodCompare(state.selectedGod?.name, cmp.value);
+    });
+  }
+}
+
+function renderGodCompare(nameA, nameB) {
+  const panel = $("#god-compare-panel");
+  if (!panel) return;
+  if (!nameA || !nameB || nameA === nameB) {
+    panel.style.display = "none";
+    panel.innerHTML = "";
+    return;
+  }
+  const a = (state.gods || []).find((g) => g.name === nameA);
+  const b = (state.gods || []).find((g) => g.name === nameB);
+  if (!a || !b) {
+    panel.style.display = "none";
+    return;
+  }
+  const pathFor = (g) => {
+    const by = g.conquest_by_role || {};
+    const roles = Object.keys(by);
+    if (!roles.length) return { role: "—", items: [], starter: null, arch: null };
+    const order = ["Carry", "Mid", "Jungle", "Solo", "Support"];
+    roles.sort((x, y) => order.indexOf(x) - order.indexOf(y));
+    const role = roles[0];
+    const gb = by[role];
+    return {
+      role,
+      items: gb.items || gb.full_path || [],
+      starter: gb.starter,
+      arch: gb.archetype,
+      why: gb.why,
+    };
+  };
+  const pa = pathFor(a);
+  const pb = pathFor(b);
+  const axesA = a.patch_axes || a.recent_axes || {};
+  const axesB = b.patch_axes || b.recent_axes || {};
+  const axisKeys = [...new Set([...Object.keys(axesA), ...Object.keys(axesB)])].sort();
+  panel.style.display = "block";
+  panel.innerHTML = `
+    <div class="card compare-card">
+      <h3>Compare · ${escapeHtml(a.name)} vs ${escapeHtml(b.name)}</h3>
+      <div class="compare-grid">
+        <div>
+          <h4>${escapeHtml(a.name)}</h4>
+          <div class="muted">${escapeHtml(a.primary_damage_type || "")} · tier ${escapeHtml(a.tier || "?")} · ${escapeHtml(a.trajectory || "—")}</div>
+          <div class="build-meta" style="margin:8px 0">
+            <span class="pill">r5 ${fmt(a.recent_5_score, 1)}</span>
+            <span class="pill">kit ${fmt(a.kit_score)}</span>
+            ${pa.arch ? `<span class="pill hot">${escapeHtml(String(pa.arch).replace(/_/g, " "))}</span>` : ""}
+          </div>
+          <div><strong>${escapeHtml(pa.role)}</strong> starter: ${escapeHtml(pa.starter?.name || "—")}</div>
+          <ol class="buy-list">${pa.items.map((it, i) => buyRow(it, i + 1)).join("")}</ol>
+        </div>
+        <div>
+          <h4>${escapeHtml(b.name)}</h4>
+          <div class="muted">${escapeHtml(b.primary_damage_type || "")} · tier ${escapeHtml(b.tier || "?")} · ${escapeHtml(b.trajectory || "—")}</div>
+          <div class="build-meta" style="margin:8px 0">
+            <span class="pill">r5 ${fmt(b.recent_5_score, 1)}</span>
+            <span class="pill">kit ${fmt(b.kit_score)}</span>
+            ${pb.arch ? `<span class="pill hot">${escapeHtml(String(pb.arch).replace(/_/g, " "))}</span>` : ""}
+          </div>
+          <div><strong>${escapeHtml(pb.role)}</strong> starter: ${escapeHtml(pb.starter?.name || "—")}</div>
+          <ol class="buy-list">${pb.items.map((it, i) => buyRow(it, i + 1)).join("")}</ol>
+        </div>
+      </div>
+      ${
+        axisKeys.length
+          ? `<table class="compare-axes"><thead><tr><th>Axis</th><th>${escapeHtml(a.name)}</th><th>${escapeHtml(b.name)}</th></tr></thead>
+             <tbody>${axisKeys
+               .map((k) => {
+                 const va = Number(axesA[k] || 0);
+                 const vb = Number(axesB[k] || 0);
+                 return `<tr><td>${escapeHtml(k)}</td>
+                   <td class="${va > 0.15 ? "axis-up" : va < -0.15 ? "axis-down" : ""}">${va >= 0 ? "+" : ""}${fmt(va, 2)}</td>
+                   <td class="${vb > 0.15 ? "axis-up" : vb < -0.15 ? "axis-down" : ""}">${vb >= 0 ? "+" : ""}${fmt(vb, 2)}</td></tr>`;
+               })
+               .join("")}</tbody></table>`
+          : ""
+      }
+    </div>`;
 }
 
 function selectGod(name, switchTab) {
@@ -213,6 +305,10 @@ function selectGod(name, switchTab) {
   state.selectedGod = g;
   if (switchTab) {
     $$(".tab-btn").find((b) => b.dataset.tab === "gods")?.click();
+  }
+  const cmp = $("#god-compare");
+  if (cmp && cmp.value) {
+    renderGodCompare(g.name, cmp.value);
   }
 
   $("#god-title").textContent = g.name;
@@ -286,15 +382,17 @@ function selectGod(name, switchTab) {
         ${
           (g.patch_samples || []).length
             ? `<ul class="patch-sample-list">${(g.patch_samples || [])
-                .slice(0, 4)
-                .map(
-                  (s) =>
-                    `<li><span class="tag ${
-                      s.direction === "buff" ? "axis-up" : s.direction === "nerf" ? "axis-down" : ""
-                    }">${escapeHtml(s.direction || "")}</span> ${escapeHtml(
-                      (s.sample_text || "").slice(0, 100)
-                    )} <span class="muted">${escapeHtml(s.patch_name || "")}</span></li>`
-                )
+                .slice(0, 5)
+                .map((s) => {
+                  const ab = s.ability_hint
+                    ? `<span class="tag">${escapeHtml(s.ability_hint)}</span> `
+                    : "";
+                  return `<li><span class="tag ${
+                    s.direction === "buff" ? "axis-up" : s.direction === "nerf" ? "axis-down" : ""
+                  }">${escapeHtml(s.direction || "")}</span> ${ab}${escapeHtml(
+                    (s.sample_text || "").slice(0, 100)
+                  )} <span class="muted">${escapeHtml(s.patch_name || "")}</span></li>`;
+                })
                 .join("")}</ul>`
             : ""
         }`;

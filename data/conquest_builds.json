@@ -38,7 +38,7 @@
         "hard_max_actives": 3,
         "typical_starter": {
           "name": "Gilded Arrow",
-          "score": 27.3,
+          "score": 36.0,
           "cost": 650,
           "type": "Starter",
           "slot": "power",
@@ -56,7 +56,7 @@
         },
         "starter": {
           "name": "Gilded Arrow",
-          "score": 27.3,
+          "score": 36.0,
           "cost": 650,
           "type": "Starter",
           "slot": "power",
@@ -75,7 +75,7 @@
         "starter_alternatives": [
           {
             "name": "Death's Toll",
-            "score": 25.2,
+            "score": 33.0,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -92,7 +92,7 @@
           },
           {
             "name": "Leather Cowl",
-            "score": 23.6,
+            "score": 30.2,
             "cost": 600,
             "type": "Starter",
             "slot": "power",
@@ -473,22 +473,20 @@
           "avg_str_scaling": 38.2,
           "avg_int_scaling": 35.4,
           "starter": {
-            "name": "Selflessness",
-            "score": 40.7,
-            "cost": 550,
+            "name": "Death's Toll",
+            "score": 33.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.0,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
               "hp": 100.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
             "is_active": false
           },
           "items": [
@@ -854,22 +852,20 @@
           "avg_str_scaling": 116.6,
           "avg_int_scaling": 83.6,
           "starter": {
-            "name": "Selflessness",
-            "score": 50.3,
-            "cost": 550,
+            "name": "Death's Toll",
+            "score": 33.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.0,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
               "hp": 100.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
             "is_active": false
           },
           "items": [
@@ -1263,22 +1259,20 @@
           "avg_str_scaling": 113.4,
           "avg_int_scaling": 119.3,
           "starter": {
-            "name": "Selflessness",
-            "score": 47.5,
-            "cost": 550,
+            "name": "Death's Toll",
+            "score": 33.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.0,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
               "hp": 100.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
             "is_active": false
           },
           "items": [
@@ -1638,22 +1632,21 @@
           "avg_str_scaling": 80.1,
           "avg_int_scaling": 110.3,
           "starter": {
-            "name": "Selflessness",
-            "score": 42.7,
-            "cost": 550,
+            "name": "Vampiric Shroud",
+            "score": 13.8,
+            "cost": 600,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.35,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "hp": 100.0,
+              "ls": 4.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nAbility Hit:\n*+4 Health Heal\n*+4 Mana Recovery\nOnce per target, per Ability.\nRequires Level 20 to upgr",
             "is_active": false
           },
           "items": [
@@ -2031,22 +2024,20 @@
           "avg_str_scaling": 80.4,
           "avg_int_scaling": 51.1,
           "starter": {
-            "name": "Selflessness",
-            "score": 41.7,
-            "cost": 550,
+            "name": "Death's Toll",
+            "score": 33.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.0,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
               "hp": 100.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
             "is_active": false
           },
           "items": [
@@ -2417,22 +2408,20 @@
           "avg_str_scaling": 121.5,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Selflessness",
-            "score": 43.2,
-            "cost": 550,
+            "name": "Death's Toll",
+            "score": 33.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.0,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
               "hp": 100.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
             "is_active": false
           },
           "items": [
@@ -2805,22 +2794,21 @@
           "avg_str_scaling": 21.8,
           "avg_int_scaling": 50.7,
           "starter": {
-            "name": "Selflessness",
-            "score": 46.5,
-            "cost": 550,
+            "name": "Vampiric Shroud",
+            "score": 13.8,
+            "cost": 600,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.35,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "hp": 100.0,
+              "ls": 4.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nAbility Hit:\n*+4 Health Heal\n*+4 Mana Recovery\nOnce per target, per Ability.\nRequires Level 20 to upgr",
             "is_active": false
           },
           "items": [
@@ -3194,22 +3182,20 @@
           "avg_str_scaling": 63.3,
           "avg_int_scaling": 76.7,
           "starter": {
-            "name": "Selflessness",
-            "score": 47.2,
-            "cost": 550,
+            "name": "Death's Toll",
+            "score": 33.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.0,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
               "hp": 100.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
             "is_active": false
           },
           "items": [
@@ -3573,22 +3559,21 @@
           "avg_str_scaling": 80.3,
           "avg_int_scaling": 130.9,
           "starter": {
-            "name": "Selflessness",
-            "score": 41.9,
-            "cost": 550,
+            "name": "Vampiric Shroud",
+            "score": 13.8,
+            "cost": 600,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.35,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "hp": 100.0,
+              "ls": 4.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nAbility Hit:\n*+4 Health Heal\n*+4 Mana Recovery\nOnce per target, per Ability.\nRequires Level 20 to upgr",
             "is_active": false
           },
           "items": [
@@ -3961,22 +3946,20 @@
           "avg_str_scaling": 99.9,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Selflessness",
-            "score": 47.8,
-            "cost": 550,
+            "name": "Death's Toll",
+            "score": 33.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.0,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
               "hp": 100.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
             "is_active": false
           },
           "items": [
@@ -4344,22 +4327,20 @@
           "avg_str_scaling": 92.9,
           "avg_int_scaling": 84.5,
           "starter": {
-            "name": "Selflessness",
-            "score": 43.1,
-            "cost": 550,
+            "name": "Death's Toll",
+            "score": 33.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.0,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
               "hp": 100.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
             "is_active": false
           },
           "items": [
@@ -4725,22 +4706,20 @@
           "avg_str_scaling": 64.2,
           "avg_int_scaling": 63.9,
           "starter": {
-            "name": "Selflessness",
-            "score": 45.2,
-            "cost": 550,
+            "name": "Death's Toll",
+            "score": 33.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.0,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
               "hp": 100.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
             "is_active": false
           },
           "items": [
@@ -5113,7 +5092,7 @@
         "hard_max_actives": 3,
         "typical_starter": {
           "name": "Conduit Gem",
-          "score": 31.9,
+          "score": 43.3,
           "cost": 650,
           "type": "Starter",
           "slot": "power",
@@ -5131,7 +5110,7 @@
         },
         "starter": {
           "name": "Conduit Gem",
-          "score": 31.9,
+          "score": 43.3,
           "cost": 650,
           "type": "Starter",
           "slot": "power",
@@ -5150,7 +5129,7 @@
         "starter_alternatives": [
           {
             "name": "Sands Of Time",
-            "score": 24.2,
+            "score": 36.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -5167,22 +5146,21 @@
             "is_active": false
           },
           {
-            "name": "Selflessness",
-            "score": 22.8,
-            "cost": 550,
+            "name": "Vampiric Shroud",
+            "score": 27.7,
+            "cost": 600,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.35,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "hp": 100.0,
+              "ls": 4.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nAbility Hit:\n*+4 Health Heal\n*+4 Mana Recovery\nOnce per target, per Ability.\nRequires Level 20 to upgr",
             "is_active": false
           }
         ],
@@ -5553,22 +5531,21 @@
           "avg_str_scaling": 80.1,
           "avg_int_scaling": 110.3,
           "starter": {
-            "name": "Selflessness",
-            "score": 44.5,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -5947,22 +5924,21 @@
           "avg_str_scaling": 21.8,
           "avg_int_scaling": 50.7,
           "starter": {
-            "name": "Selflessness",
-            "score": 48.3,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -6333,22 +6309,21 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 106.2,
           "starter": {
-            "name": "Selflessness",
-            "score": 40.5,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -6722,21 +6697,21 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 85.4,
           "starter": {
-            "name": "Sands Of Time",
-            "score": 63.7,
+            "name": "Conduit Gem",
+            "score": 43.3,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": -0.65,
+            "momentum": 0.01,
             "stats": {
-              "cdr": 10.0,
-              "mpr": 2.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\n+0.4 Mana per second per 10% of missing Mana.\nRequires Level 20 to upgrade.",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -7111,22 +7086,21 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 102.0,
           "starter": {
-            "name": "Selflessness",
-            "score": 44.3,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -7500,22 +7474,21 @@
           "avg_str_scaling": 63.3,
           "avg_int_scaling": 76.7,
           "starter": {
-            "name": "Selflessness",
-            "score": 49.1,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -7916,22 +7889,21 @@
           "avg_str_scaling": 80.3,
           "avg_int_scaling": 130.9,
           "starter": {
-            "name": "Selflessness",
-            "score": 43.8,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -8313,22 +8285,21 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 69.6,
           "starter": {
-            "name": "Selflessness",
-            "score": 53.2,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -8700,22 +8671,21 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 142.6,
           "starter": {
-            "name": "Selflessness",
-            "score": 44.6,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -9089,22 +9059,21 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 52.7,
           "starter": {
-            "name": "Selflessness",
-            "score": 56.4,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -9478,22 +9447,21 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 100.4,
           "starter": {
-            "name": "Selflessness",
-            "score": 47.5,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -9865,22 +9833,21 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 118.8,
           "starter": {
-            "name": "Selflessness",
-            "score": 44.6,
-            "cost": 550,
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 1.08,
+            "momentum": 0.01,
             "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false
           },
           "items": [
@@ -10263,7 +10230,7 @@
         "hard_max_actives": 3,
         "typical_starter": {
           "name": "Bumba's Cudgel",
-          "score": 46.9,
+          "score": 44.0,
           "cost": 650,
           "type": "Starter",
           "slot": "power",
@@ -10281,7 +10248,7 @@
         },
         "starter": {
           "name": "Bumba's Cudgel",
-          "score": 46.9,
+          "score": 44.0,
           "cost": 650,
           "type": "Starter",
           "slot": "power",
@@ -10300,7 +10267,7 @@
         "starter_alternatives": [
           {
             "name": "Bumba's Golden Dagger",
-            "score": 43.8,
+            "score": 42.2,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -10318,7 +10285,7 @@
           },
           {
             "name": "Death's Toll",
-            "score": 13.0,
+            "score": 11.0,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -10687,21 +10654,21 @@
           "avg_str_scaling": 147.9,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Bumba's Cudgel",
-            "score": 59.4,
+            "name": "Bumba's Golden Dagger",
+            "score": 42.2,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": -0.25,
             "stats": {
-              "hp": 75.0,
-              "mp": 50.0
+              "hp": 50.0,
+              "as": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Used: Buff next Attack within 8s.\n*+20 True Damage (+1 Per Level) to enemies within 1.92m of t",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nOn Attack Hit: 10% bonus Physical Damage to enemies within 1.92m of the target\nRequires Level 20 to up",
             "is_active": false
           },
           "items": [
@@ -11104,7 +11071,7 @@
           "avg_int_scaling": 45.8,
           "starter": {
             "name": "Bumba's Cudgel",
-            "score": 68.9,
+            "score": 44.0,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -11491,21 +11458,21 @@
           "avg_str_scaling": 158.7,
           "avg_int_scaling": 119.2,
           "starter": {
-            "name": "Bumba's Cudgel",
-            "score": 60.2,
+            "name": "Bumba's Golden Dagger",
+            "score": 42.2,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": -0.25,
             "stats": {
-              "hp": 75.0,
-              "mp": 50.0
+              "hp": 50.0,
+              "as": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Used: Buff next Attack within 8s.\n*+20 True Damage (+1 Per Level) to enemies within 1.92m of t",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nOn Attack Hit: 10% bonus Physical Damage to enemies within 1.92m of the target\nRequires Level 20 to up",
             "is_active": false
           },
           "items": [
@@ -11875,21 +11842,21 @@
           "avg_str_scaling": 80.4,
           "avg_int_scaling": 51.1,
           "starter": {
-            "name": "Bumba's Cudgel",
-            "score": 60.6,
+            "name": "Bumba's Golden Dagger",
+            "score": 42.2,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": -0.25,
             "stats": {
-              "hp": 75.0,
-              "mp": 50.0
+              "hp": 50.0,
+              "as": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Used: Buff next Attack within 8s.\n*+20 True Damage (+1 Per Level) to enemies within 1.92m of t",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nOn Attack Hit: 10% bonus Physical Damage to enemies within 1.92m of the target\nRequires Level 20 to up",
             "is_active": false
           },
           "items": [
@@ -12258,7 +12225,7 @@
           "avg_int_scaling": 0,
           "starter": {
             "name": "Bumba's Cudgel",
-            "score": 58.9,
+            "score": 44.0,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -12676,21 +12643,21 @@
           "avg_str_scaling": 65.2,
           "avg_int_scaling": 34.1,
           "starter": {
-            "name": "Bumba's Cudgel",
-            "score": 60.6,
+            "name": "Bumba's Golden Dagger",
+            "score": 42.2,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": -0.25,
             "stats": {
-              "hp": 75.0,
-              "mp": 50.0
+              "hp": 50.0,
+              "as": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Used: Buff next Attack within 8s.\n*+20 True Damage (+1 Per Level) to enemies within 1.92m of t",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nOn Attack Hit: 10% bonus Physical Damage to enemies within 1.92m of the target\nRequires Level 20 to up",
             "is_active": false
           },
           "items": [
@@ -13056,21 +13023,21 @@
           "avg_str_scaling": 89.7,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Bumba's Cudgel",
-            "score": 66.8,
+            "name": "Bumba's Golden Dagger",
+            "score": 42.2,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": -0.25,
             "stats": {
-              "hp": 75.0,
-              "mp": 50.0
+              "hp": 50.0,
+              "as": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Used: Buff next Attack within 8s.\n*+20 True Damage (+1 Per Level) to enemies within 1.92m of t",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nOn Attack Hit: 10% bonus Physical Damage to enemies within 1.92m of the target\nRequires Level 20 to up",
             "is_active": false
           },
           "items": [
@@ -13451,21 +13418,21 @@
           "avg_str_scaling": 97.4,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Bumba's Cudgel",
-            "score": 67.6,
+            "name": "Bumba's Golden Dagger",
+            "score": 42.2,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": -0.25,
             "stats": {
-              "hp": 75.0,
-              "mp": 50.0
+              "hp": 50.0,
+              "as": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Used: Buff next Attack within 8s.\n*+20 True Damage (+1 Per Level) to enemies within 1.92m of t",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nOn Attack Hit: 10% bonus Physical Damage to enemies within 1.92m of the target\nRequires Level 20 to up",
             "is_active": false
           },
           "items": [
@@ -13835,21 +13802,21 @@
           "avg_str_scaling": 56.1,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Bumba's Cudgel",
-            "score": 56.0,
+            "name": "Bumba's Golden Dagger",
+            "score": 42.2,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": -0.25,
             "stats": {
-              "hp": 75.0,
-              "mp": 50.0
+              "hp": 50.0,
+              "as": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Used: Buff next Attack within 8s.\n*+20 True Damage (+1 Per Level) to enemies within 1.92m of t",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nOn Attack Hit: 10% bonus Physical Damage to enemies within 1.92m of the target\nRequires Level 20 to up",
             "is_active": false
           },
           "items": [
@@ -14221,7 +14188,7 @@
           "avg_int_scaling": 0,
           "starter": {
             "name": "Bumba's Cudgel",
-            "score": 55.4,
+            "score": 44.0,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -14607,21 +14574,21 @@
           "avg_str_scaling": 82.9,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Bumba's Golden Dagger",
-            "score": 60.7,
+            "name": "Bumba's Cudgel",
+            "score": 44.0,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": -0.25,
+            "momentum": 0.31,
             "stats": {
-              "hp": 50.0,
-              "as": 10.0
+              "hp": 75.0,
+              "mp": 50.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nOn Attack Hit: 10% bonus Physical Damage to enemies within 1.92m of the target\nRequires Level 20 to up",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Used: Buff next Attack within 8s.\n*+20 True Damage (+1 Per Level) to enemies within 1.92m of t",
             "is_active": false
           },
           "items": [
@@ -14992,7 +14959,7 @@
           "avg_int_scaling": 0,
           "starter": {
             "name": "Bumba's Cudgel",
-            "score": 59.7,
+            "score": 44.0,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -15412,7 +15379,7 @@
         "hard_max_actives": 3,
         "typical_starter": {
           "name": "Warrior's Axe",
-          "score": 42.1,
+          "score": 42.5,
           "cost": 650,
           "type": "Starter",
           "slot": "power",
@@ -15430,7 +15397,7 @@
         },
         "starter": {
           "name": "Warrior's Axe",
-          "score": 42.1,
+          "score": 42.5,
           "cost": 650,
           "type": "Starter",
           "slot": "power",
@@ -15449,7 +15416,7 @@
         "starter_alternatives": [
           {
             "name": "Bluestone Pendant",
-            "score": 39.3,
+            "score": 36.2,
             "cost": 600,
             "type": "Starter",
             "slot": "power",
@@ -15468,7 +15435,7 @@
           },
           {
             "name": "Vampiric Shroud",
-            "score": 11.8,
+            "score": 14.8,
             "cost": 600,
             "type": "Starter",
             "slot": "power",
@@ -15863,7 +15830,7 @@
           "avg_int_scaling": 44.1,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 67.0,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -16264,7 +16231,7 @@
           "avg_int_scaling": 45.7,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 60.2,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -16667,7 +16634,7 @@
           "avg_int_scaling": 0,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 55.4,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -17067,7 +17034,7 @@
           "avg_int_scaling": 0,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 58.7,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -17470,7 +17437,7 @@
           "avg_int_scaling": 51.4,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 64.3,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -17874,7 +17841,7 @@
           "avg_int_scaling": 57.1,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 63.5,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -18282,7 +18249,7 @@
           "avg_int_scaling": 0,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 57.9,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -18692,7 +18659,7 @@
           "avg_int_scaling": 45.8,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 73.6,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -19093,7 +19060,7 @@
           "avg_int_scaling": 51.3,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 61.4,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -19494,7 +19461,7 @@
           "avg_int_scaling": 0,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 58.7,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -19898,7 +19865,7 @@
           "avg_int_scaling": 34.1,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 59.6,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -20301,7 +20268,7 @@
           "avg_int_scaling": 51.2,
           "starter": {
             "name": "Warrior's Axe",
-            "score": 64.5,
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -20714,7 +20681,7 @@
         "hard_max_actives": 3,
         "typical_starter": {
           "name": "Selflessness",
-          "score": 65.6,
+          "score": 49.7,
           "cost": 550,
           "type": "Starter",
           "slot": "power",
@@ -20733,7 +20700,7 @@
         },
         "starter": {
           "name": "Selflessness",
-          "score": 65.6,
+          "score": 49.7,
           "cost": 550,
           "type": "Starter",
           "slot": "power",
@@ -20753,7 +20720,7 @@
         "starter_alternatives": [
           {
             "name": "War Flag",
-            "score": 39.4,
+            "score": 37.2,
             "cost": 600,
             "type": "Starter",
             "slot": "power",
@@ -20772,7 +20739,7 @@
           },
           {
             "name": "Warrior's Axe",
-            "score": 36.3,
+            "score": 35.7,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
@@ -21165,7 +21132,7 @@
           "avg_int_scaling": 51.4,
           "starter": {
             "name": "Selflessness",
-            "score": 109.2,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -21558,7 +21525,7 @@
           "avg_int_scaling": 45.0,
           "starter": {
             "name": "Selflessness",
-            "score": 119.9,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -21915,7 +21882,7 @@
           "avg_int_scaling": 57.1,
           "starter": {
             "name": "Selflessness",
-            "score": 108.3,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -22267,7 +22234,7 @@
           "role": "Support",
           "tier": "A",
           "rank": 4,
-          "model_score": 65.13294963827293,
+          "model_score": 65.1376399317191,
           "damage_type": "Magical",
           "pantheon": "Norse",
           "scaling": "Intelligence",
@@ -22291,7 +22258,7 @@
           "avg_int_scaling": 117.7,
           "starter": {
             "name": "Selflessness",
-            "score": 118.8,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -22643,7 +22610,7 @@
           "avg_int_scaling": 66.9,
           "starter": {
             "name": "Selflessness",
-            "score": 129.7,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -23001,7 +22968,7 @@
           "avg_int_scaling": 56.5,
           "starter": {
             "name": "Selflessness",
-            "score": 124.7,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -23397,7 +23364,7 @@
           "avg_int_scaling": 51.2,
           "starter": {
             "name": "Selflessness",
-            "score": 128.6,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -23756,7 +23723,7 @@
           "avg_int_scaling": 29.6,
           "starter": {
             "name": "Selflessness",
-            "score": 132.2,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -24113,7 +24080,7 @@
           "avg_int_scaling": 13.3,
           "starter": {
             "name": "Selflessness",
-            "score": 113.9,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -24468,7 +24435,7 @@
           "avg_int_scaling": 102.0,
           "starter": {
             "name": "Selflessness",
-            "score": 115.2,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -24843,7 +24810,7 @@
           "avg_int_scaling": 51.4,
           "starter": {
             "name": "Selflessness",
-            "score": 110.6,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",
@@ -25220,7 +25187,7 @@
           "avg_int_scaling": 50.0,
           "starter": {
             "name": "Selflessness",
-            "score": 100.6,
+            "score": 49.7,
             "cost": 550,
             "type": "Starter",
             "slot": "power",

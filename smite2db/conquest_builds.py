@@ -69,15 +69,20 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
         },
         "starter_prefs": {
             # name substring / category cues → weight
-            "gilded": 30,
-            "arrow": 25,
-            "death": 22,
-            "toll": 20,
-            "cowl": 18,
-            "leather": 16,
-            "shroud": 10,
-            "vampiric": 8,
-            "bluestone": 5,
+            "gilded": 40,
+            "arrow": 36,
+            "death": 32,
+            "toll": 30,
+            "cowl": 28,
+            "leather": 26,
+            "shroud": 12,
+            "vampiric": 10,
+            "bluestone": 8,
+            "selfless": -50,
+            "flag": -45,
+            "bumba": -20,
+            "warrior": -15,
+            "conduit": -10,  # mage starter — physical ADC default
         },
         "relic_prefs": {
             "beads": 25,
@@ -118,14 +123,19 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
         },
         "tag_bonus": {"offensive": 12, "passive": 8, "active": 1},
         "starter_prefs": {
-            "conduit": 28,
-            "sands": 26,
-            "pendulum": 24,
-            "vampiric": 18,
-            "shroud": 16,
-            "bluestone": 14,
-            "archmage": 20,
-            "death": 8,
+            "conduit": 42,
+            "sands": 38,
+            "pendulum": 34,
+            "archmage": 32,
+            "vampiric": 26,
+            "shroud": 22,
+            "bluestone": 16,
+            "death": 10,
+            "selfless": -55,
+            "flag": -50,
+            "bumba": -25,
+            "gilded": -15,
+            "leather": -15,
         },
         "relic_prefs": {
             "beads": 22,
@@ -734,7 +744,8 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
     )
 
 
-def score_starter(item: dict, profile: dict) -> float:
+def score_starter(item: dict, profile: dict, role: str | None = None) -> float:
+    """Rank T1 starters. Pref keys dominate — do not let tank stats steal Mid/Carry."""
     name = item["name"].lower()
     base = 0.0
     penalty = 0.0
@@ -744,9 +755,100 @@ def score_starter(item: dict, profile: dict) -> float:
                 base = max(base, w)
             else:
                 penalty += w  # e.g. Support hard-bans Vampiric / Conduit
-    # stats still matter
-    scored = score_item_for_role(item, "Support", {**profile, "stat_weights": profile["stat_weights"]})
-    return base + penalty + scored.role_score * 0.25 + item["momentum"] * 5
+    # Light stat nudge only (prefs must win). Use role when known.
+    role_for_stats = role or "Mid"
+    scored = score_item_for_role(
+        item, role_for_stats, {**profile, "stat_weights": profile["stat_weights"]}
+    )
+    return base + penalty + scored.role_score * 0.08 + (item.get("momentum") or 0) * 3
+
+
+def pick_god_starter(
+    starters: list[ScoredItem],
+    items: list[dict],
+    profile: dict,
+    bias: dict,
+    role: str,
+    damage_type: str | None,
+) -> ScoredItem | None:
+    """Choose a kit-fit T1 starter — role prefs + kit tags, not generic tank score."""
+    if not starters:
+        return None
+    dtype = (damage_type or "").lower()
+    mage = dtype == "magical" or bias.get("primary") == "Intelligence"
+    physical = (not mage) and (
+        dtype == "physical" or bias.get("primary") == "Strength"
+    )
+    tags = set(bias.get("tags") or [])
+    gname = str(bias.get("god_name") or "")
+
+    ranked: list[tuple[float, ScoredItem]] = []
+    for s in starters:
+        raw = next(i for i in items if i["name"] == s.name)
+        sc = score_starter(raw, profile, role=role)
+        n = s.name.lower()
+
+        # Hard role identity
+        if role in ("Mid", "Carry", "Jungle"):
+            if "selfless" in n or n in ("war flag",) or n.startswith("war flag"):
+                sc -= 90
+            if "war flag" in n or (n.startswith("war ") and "banner" not in n and role != "Support"):
+                if "flag" in n:
+                    sc -= 70
+        if role == "Support":
+            if any(k in n for k in ("conduit", "death", "gilded", "bumba", "vampiric", "sands")):
+                sc -= 50
+            if "selfless" in n or "flag" in n:
+                sc += 25
+        if role == "Jungle":
+            if "bumba" in n:
+                sc += 45
+            else:
+                sc -= 30
+        if role == "Solo":
+            if any(k in n for k in ("warrior", "axe", "bluestone")):
+                sc += 35
+            if "selfless" in n:
+                sc -= 40
+            if "bumba" in n:
+                sc -= 35
+
+        # Damage-type fit
+        if mage:
+            if any(k in n for k in ("conduit", "sands", "vampiric", "archmage", "pendulum")):
+                sc += 30
+            if any(k in n for k in ("gilded", "leather", "death")):
+                sc -= 20
+        if physical and role in ("Carry", "Jungle"):
+            if any(k in n for k in ("gilded", "death", "leather", "cowl", "arrow", "bluestone")):
+                sc += 28
+            if "conduit" in n or "sands" in n:
+                sc -= 18
+
+        # Kit tags
+        if "mana_stack" in tags and any(k in n for k in ("conduit", "sands")):
+            sc += 22
+        if ("aa" in tags or float(bias.get("aa_score") or 0) >= 0.55) and any(
+            k in n for k in ("gilded", "leather", "death", "cowl", "arrow")
+        ):
+            sc += 20
+        if ("heal" in tags or "self_sustain" in tags) and any(
+            k in n for k in ("vampiric", "death", "shroud")
+        ):
+            sc += 14
+        if "spam" in tags and any(k in n for k in ("sands", "pendulum", "conduit")):
+            sc += 12
+        if float(bias.get("patch_axes_r5", {}).get("mana", 0) or 0) >= 0.2 and "conduit" in n:
+            sc += 10
+
+        # Stable micro-diversity so near-ties don't all clone
+        if gname:
+            sc += (sum(ord(c) for c in (gname + s.name)) % 11) * 0.35
+
+        ranked.append((sc, s))
+
+    ranked.sort(key=lambda t: t[0], reverse=True)
+    return ranked[0][1]
 
 
 def score_relic(item: dict, profile: dict) -> float:
@@ -2134,7 +2236,7 @@ def build_role_template(items: list[dict], role: str) -> dict[str, Any]:
     # re-rank starters with starter prefs
     for s in starters:
         s.role_score = score_starter(
-            next(i for i in items if i["name"] == s.name), profile
+            next(i for i in items if i["name"] == s.name), profile, role=role
         )
     starters.sort(key=lambda x: x.role_score, reverse=True)
 
@@ -2268,21 +2370,20 @@ def build_god_build(
     scored.sort(key=lambda x: x.role_score, reverse=True)
 
     starters = [s for s in scored if is_t1_starter(next(i for i in items if i["name"] == s.name))]
-    for s in starters:
-        raw = next(i for i in items if i["name"] == s.name)
-        s.role_score = score_starter(raw, profile) + rescore_for_god(
-            s, bias, role, damage_type=dtype
-        ) * 0.2
-        # Solo: Warrior's Axe / Bluestone over pure support Selflessness when STR/INT bruiser
-        if role == "Solo" and "selfless" in s.name.lower() and bias.get("primary") != "Mixed":
-            if (bias.get("str") or 0) > 0.15 or (bias.get("int") or 0) > 0.15:
-                s.role_score -= 15
-    starters.sort(key=lambda x: x.role_score, reverse=True)
-
-    t3 = [s for s in scored if is_t3_core(next(i for i in items if i["name"] == s.name))]
     primary = bias.get("primary") or ""
     mage = primary == "Intelligence" or (dtype or "").lower() == "magical"
     physical = (primary == "Strength" or (dtype or "").lower() == "physical") and not mage
+    starter_pick = pick_god_starter(starters, items, profile, bias, role, dtype)
+    # Keep full ranked list for alts (re-score lightly for display order)
+    for s in starters:
+        raw = next(i for i in items if i["name"] == s.name)
+        s.role_score = score_starter(raw, profile, role=role)
+    starters.sort(key=lambda x: x.role_score, reverse=True)
+    if starter_pick:
+        # Pin chosen starter first
+        starters = [starter_pick] + [s for s in starters if s.name != starter_pick.name]
+
+    t3 = [s for s in scored if is_t3_core(next(i for i in items if i["name"] == s.name))]
 
     def kit_ok(s: ScoredItem) -> bool:
         str_v = _canon_stat_value(s.stats, "str")
@@ -2353,6 +2454,32 @@ def build_god_build(
         # keep frontline bulk — no trim
         pass
     items_6 = _order_buy_path(items_6, role)
+    # Avoid double luxury actives (Dreamer's + Wish-Granting) on damage roles
+    luxury = [
+        i
+        for i, x in enumerate(items_6)
+        if x.is_active_item and (x.total_cost or 0) >= 3400
+    ]
+    if len(luxury) > 1 and role in DAMAGE_ROLES_NEED_PEN:
+        # keep highest scored luxury, replace others with passive power
+        keep = max(luxury, key=lambda i: items_6[i].role_score)
+        for i in luxury:
+            if i == keep:
+                continue
+            for alt in t3:
+                if (
+                    alt.name not in {x.name for x in items_6}
+                    and not alt.is_active_item
+                    and (
+                        _canon_stat_value(alt.stats, "int")
+                        + _canon_stat_value(alt.stats, "str")
+                        >= 40
+                        or is_pen_item(alt)
+                    )
+                ):
+                    items_6[i] = alt
+                    break
+        items_6 = _order_buy_path(items_6, role)
     pen_total = sum(item_pen_value(x) for x in items_6)
     n_act = sum(1 for x in items_6 if x.is_active_item)
 
