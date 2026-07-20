@@ -1640,6 +1640,26 @@ def _item_matches_slot(
     if slot == "cdr_def":
         return cdr >= 10 and (it.item_type == "Defensive" or pprot + mprot >= 30)
     if slot == "defense":
+        # Backline: prefer light defense with CDR/power, not pure aura tanks
+        if role in ("Carry", "Mid", "Jungle"):
+            if any(
+                k in n
+                for k in (
+                    "shifter",
+                    "spectral",
+                    "thebes",
+                    "midgardian",
+                    "nemean",
+                    "heartwood",
+                    "stygian",
+                    "radiant bulwark",
+                )
+            ):
+                return False
+            return (
+                (it.item_type == "Defensive" or (hp >= 200 and pen < 15))
+                and (cdr >= 8 or int_v >= 20 or str_v >= 20 or damp >= 5 or ten >= 5)
+            )
         return it.item_type == "Defensive" or (hp >= 250 and (str_v + int_v) < 55)
     if slot == "luxury":
         if role in ("Solo", "Support"):
@@ -1735,6 +1755,12 @@ def _pick_slot_item(
             sc += 12
         if slot == "dot_core" and any(k in n for k in ("desolat", "magus", "isolation")):
             sc += 20
+        if slot == "defense" and role in ("Carry", "Mid", "Jungle"):
+            # Genji / Breastplate / Alchemist over pure HP bricks
+            if any(k in n for k in ("genji", "breastplate", "valor", "alchemist", "magi", "cloak")):
+                sc += 28
+            if _canon_stat_value(x.stats, "cdr") >= 10:
+                sc += 15
         return sc
 
     cands.sort(key=slot_rank, reverse=True)

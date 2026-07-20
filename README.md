@@ -61,6 +61,30 @@ python -m http.server 8080
 2. Drag the **`docs`** folder (or just `standalone.html`)
 3. Get a `*.netlify.app` link
 
+### Tomorrow’s deploy checklist (after Drop limit resets)
+
+```powershell
+cd path\to\Smite-Database-and-Build-Analysis-Tool
+git pull
+python -m smite2db.refresh          # optional: freshen data
+# Local preview first:
+cd docs
+python -m http.server 8080
+# open http://localhost:8080/
+```
+
+Then drag **`docs`** (or `docs/standalone.html`) onto Netlify Drop again.
+
+### Local preview (no Netlify)
+
+```powershell
+python -m smite2db.refresh
+cd docs
+python -m http.server 8080
+```
+
+Open http://localhost:8080/ — full multi-file app. Or open `standalone.html` the same way.
+
 ---
 
 ## Install & refresh data

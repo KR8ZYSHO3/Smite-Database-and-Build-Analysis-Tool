@@ -116,6 +116,29 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
             m = re.search(r"Role\.([A-Za-z]+)", s)
             role_names.append(m.group(1) if m else s)
         d["role_list"] = role_names
+
+        # Recent balance bullets (so UI can show "what patched" without full wikitext)
+        try:
+            samples = [
+                dict(x)
+                for x in conn.execute(
+                    """
+                    SELECT i.direction, i.magnitude, i.sample_text, i.change_count,
+                           pn.name AS patch_name, pn.release_date
+                    FROM patch_impacts i
+                    JOIN patch_notes pn ON pn.id = i.patch_id
+                    WHERE i.entity_type = 'god' AND i.entity_name = ?
+                      AND i.direction IN ('buff', 'nerf', 'shift')
+                    ORDER BY pn.id ASC, i.magnitude DESC
+                    LIMIT 12
+                    """,
+                    (d["name"],),
+                )
+            ]
+            d["patch_samples"] = samples
+        except sqlite3.OperationalError:
+            d["patch_samples"] = []
+
         gods.append(d)
 
     # Tier lists by scope

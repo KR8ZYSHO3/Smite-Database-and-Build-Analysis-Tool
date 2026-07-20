@@ -282,6 +282,21 @@ function selectGod(name, switchTab) {
                 exploitHints.join("; ")
               )}.</p>`
             : ""
+        }
+        ${
+          (g.patch_samples || []).length
+            ? `<ul class="patch-sample-list">${(g.patch_samples || [])
+                .slice(0, 4)
+                .map(
+                  (s) =>
+                    `<li><span class="tag ${
+                      s.direction === "buff" ? "axis-up" : s.direction === "nerf" ? "axis-down" : ""
+                    }">${escapeHtml(s.direction || "")}</span> ${escapeHtml(
+                      (s.sample_text || "").slice(0, 100)
+                    )} <span class="muted">${escapeHtml(s.patch_name || "")}</span></li>`
+                )
+                .join("")}</ul>`
+            : ""
         }`;
     }
   }
@@ -366,6 +381,12 @@ function selectGod(name, switchTab) {
   const axLines = Object.entries(axes)
     .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
     .map(([k, v]) => `  ${k}: ${Number(v) >= 0 ? "+" : ""}${fmt(v, 2)}`);
+  const samples = (g.patch_samples || [])
+    .slice(0, 8)
+    .map(
+      (s) =>
+        `  [${s.direction}] ${s.patch_name || "?"} — ${(s.sample_text || "").slice(0, 120)}`
+    );
   $("#god-patch").textContent = [
     `Trajectory: ${g.trajectory || "—"}`,
     `Net weighted: ${fmt(g.net_weighted_score, 2)}`,
@@ -375,6 +396,9 @@ function selectGod(name, switchTab) {
     "",
     "Patch axes (recent / full):",
     ...(axLines.length ? axLines : ["  (none)"]),
+    "",
+    "Recent balance lines:",
+    ...(samples.length ? samples : ["  (none attributed)"]),
     "",
     "Tier rationale:",
     g.rationale || "—",
