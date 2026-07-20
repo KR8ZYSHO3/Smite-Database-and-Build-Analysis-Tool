@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .db import DEFAULT_DB, connect
+from .aspect_kit import list_god_aspects
 from .conquest_builds import (
     ROLE_PROFILES,
     build_god_build,
@@ -281,20 +282,36 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
             if "Support" in roles and dtype == "magical" and "Mid" not in roles:
                 roles = roles + ["Mid"]  # full-damage option for mage guardians
             paths: dict = {}
+            aspect_paths: dict = {}
+            god_row = {
+                "god_id": g["id"],
+                "entity_name": g["name"],
+                "primary_damage_type": g.get("primary_damage_type"),
+                "pantheon": g.get("pantheon"),
+                "tier": g.get("tier"),
+                "rank_in_scope": g.get("rank_in_scope"),
+                "score": g.get("score"),
+            }
+            aspects = list_god_aspects(conn, g["id"])
+            g["aspects"] = [
+                {
+                    "id": a["id"],
+                    "name": a["name"],
+                    "description": a.get("description") or "",
+                }
+                for a in aspects
+            ]
             for role in roles:
                 if role not in ROLE_PROFILES:
                     continue
-                god_row = {
-                    "god_id": g["id"],
-                    "entity_name": g["name"],
-                    "primary_damage_type": g.get("primary_damage_type"),
-                    "pantheon": g.get("pantheon"),
-                    "tier": g.get("tier"),
-                    "rank_in_scope": g.get("rank_in_scope"),
-                    "score": g.get("score"),
-                }
                 paths[role] = build_god_build(conn, shop_items, role, god_row)
+                if aspects:
+                    aspect_paths[role] = build_god_build(
+                        conn, shop_items, role, god_row, use_aspect=True
+                    )
             g["conquest_by_role"] = paths
+            if aspect_paths:
+                g["conquest_by_role_aspect"] = aspect_paths
             # Drop bulky legacy lists from the main god payload confusion in UI
             # (still keep short notes + starter for tier rationale)
             if paths:

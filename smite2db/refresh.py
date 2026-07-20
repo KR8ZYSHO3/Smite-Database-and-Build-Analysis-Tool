@@ -23,7 +23,7 @@ def main(argv: list[str] | None = None) -> int:
         "--scrape",
         nargs="*",
         metavar="TARGET",
-        help="If set, scrape first. Optional targets: gods items patches (default all)",
+        help="If set, scrape first. Optional targets: gods items patches aspects (default all)",
     )
     p.add_argument("--quiet", action="store_true")
     p.add_argument("--skip-export", action="store_true")

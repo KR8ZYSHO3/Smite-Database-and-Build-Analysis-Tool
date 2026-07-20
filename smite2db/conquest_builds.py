@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Any
 
 from .db import DEFAULT_DB, connect
+from .aspect_kit import aspect_item_score_delta, build_aspect_bias, list_god_aspects
 from .kit_effects import (
     apply_kit_overrides,
     effect_labels,
@@ -1587,6 +1588,7 @@ def rescore_for_god(
     fam_boost, _ = family_score_boost(item.name, effects)
     s += fam_boost
     s += prefer_ban_adjust(item.name, bias)
+    s += aspect_item_score_delta(item.name, bias)
 
     # Deterministic per-god reordering so near-ties don't all pick the same flex.
     # Large enough to swap #1/#2 among peer items; kit tags + signatures still dominate.
@@ -2877,9 +2879,14 @@ def build_god_build(
     items: list[dict],
     role: str,
     god: dict,
+    *,
+    use_aspect: bool = False,
+    aspect_id: int | None = None,
 ) -> dict[str, Any]:
     profile = ROLE_PROFILES[role]
     bias = god_scaling_bias(conn, god["god_id"])
+    if use_aspect or aspect_id is not None:
+        bias = build_aspect_bias(conn, god["god_id"], bias, aspect_id=aspect_id)
     dtype = god.get("primary_damage_type")
     scored = []
     for it in items:
@@ -3048,6 +3055,10 @@ def build_god_build(
         "kit_tags": tags,
         "kit_effects": effect_labs,
         "kit_effect_scores": effects,
+        "is_aspect": bool(bias.get("is_aspect")),
+        "aspect_name": bias.get("aspect_name"),
+        "aspect_description": bias.get("aspect_description"),
+        "aspect_id": bias.get("aspect_id"),
         "patch_trajectory": bias.get("trajectory"),
         "avg_str_scaling": round((bias.get("str") or 0) * 100, 1),
         "avg_int_scaling": round((bias.get("int") or 0) * 100, 1),
@@ -3233,8 +3244,14 @@ def _explain_god_build(
     eff_labs = bias.get("effect_labels") or effect_labels(effects)
     eff_show = ", ".join(eff_labs[:6]) if eff_labs else "general kit"
 
+    aspect_bit = ""
+    if bias.get("is_aspect") and bias.get("aspect_name"):
+        aspect_bit = f" ASPECT «{bias.get('aspect_name')}»."
+        ad = (bias.get("aspect_description") or "")[:140]
+        if ad:
+            aspect_bit += f" {ad}"
     parts = [
-        f"{god['entity_name']} · {role} · archetype «{arch}» ({power_style}).",
+        f"{god['entity_name']} · {role} · archetype «{arch}» ({power_style}).{aspect_bit}",
         f"Kit effects: {eff_show}.",
         f"Tags: {tag_show}.",
         f"Style {style}; patch {traj} (net {psc:+.1f}, r5 {r5:+.1f}).",

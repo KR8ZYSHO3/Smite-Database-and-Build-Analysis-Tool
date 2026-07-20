@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sqlite3
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -13,6 +14,7 @@ from typing import Any
 from .db import DEFAULT_DB, connect, init_db, reset_content_tables, set_meta
 from .parsers import (
     parse_abilities,
+    parse_god_aspect,
     parse_god_infobox,
     parse_item_categories,
     parse_item_infobox,
@@ -67,7 +69,20 @@ def scrape_gods(conn, wiki: WikiClient, verbose: bool = True) -> int:
             wikitext = ""
 
         infobox = parse_god_infobox(wikitext) if wikitext else {}
-        abilities = parse_abilities(wikitext) if wikitext else []
+        # Base kit only: strip God Aspect section so enhanced abilities don't collide
+        base_wt = wikitext
+        if wikitext:
+            from .parse_util import extract_section
+
+            aspect_sec = extract_section(wikitext, "God Aspect")
+            if aspect_sec:
+                # Remove first occurrence of the aspect section body from ability parse
+                # parse_abilities still scans whole page; use text before aspect heading
+                m = re.search(r"^={2,6}\s*God Aspect\s*={2,6}", wikitext, re.I | re.M)
+                if m:
+                    base_wt = wikitext[: m.start()]
+        abilities = parse_abilities(base_wt) if base_wt else []
+        aspect = parse_god_aspect(wikitext) if wikitext else None
         lore = parse_lore(wikitext) if wikitext else ""
 
         roles = g.get("roleTags") or []
@@ -157,6 +172,61 @@ def scrape_gods(conn, wiki: WikiClient, verbose: bool = True) -> int:
                     json.dumps(ab["stats_json"]),
                 ),
             )
+
+        # God Aspect (alternate kit) — replace per god
+        try:
+            old_aspects = conn.execute(
+                "SELECT id FROM god_aspects WHERE god_id = ?", (god_id,)
+            ).fetchall()
+            for oa in old_aspects:
+                conn.execute(
+                    "DELETE FROM god_aspect_abilities WHERE aspect_id = ?", (oa["id"],)
+                )
+            conn.execute("DELETE FROM god_aspects WHERE god_id = ?", (god_id,))
+        except sqlite3.OperationalError:
+            pass
+        if aspect and (aspect.get("name") or aspect.get("description")):
+            conn.execute(
+                """
+                INSERT INTO god_aspects (god_id, name, description, image, raw_json)
+                VALUES (?,?,?,?,?)
+                """,
+                (
+                    god_id,
+                    aspect.get("name") or "God Aspect",
+                    aspect.get("description") or "",
+                    aspect.get("image") or "",
+                    json.dumps(aspect),
+                ),
+            )
+            aspect_id = conn.execute(
+                "SELECT id FROM god_aspects WHERE god_id = ? ORDER BY id DESC LIMIT 1",
+                (god_id,),
+            ).fetchone()["id"]
+            for ab in aspect.get("abilities") or []:
+                conn.execute(
+                    """
+                    INSERT INTO god_aspect_abilities (
+                        aspect_id, slot, slot_order, name, short_label, icon,
+                        description, stats_text, notes_text, stats_json
+                    ) VALUES (?,?,?,?,?,?,?,?,?,?)
+                    """,
+                    (
+                        aspect_id,
+                        ab.get("slot") or "",
+                        ab.get("slot_order") or 0,
+                        ab.get("name") or "",
+                        ab.get("short_label") or "",
+                        ab.get("icon") or "",
+                        ab.get("description") or "",
+                        ab.get("stats_text") or "",
+                        ab.get("notes_text") or "",
+                        json.dumps(ab.get("stats_json") or {}),
+                    ),
+                )
+            if verbose:
+                print(f"    Aspect: {aspect.get('name')}")
+
         count += 1
         conn.commit()
     return count
@@ -447,6 +517,81 @@ def clean_title(s: str) -> str:
     return s.strip()
 
 
+def scrape_aspects_only(conn, wiki: WikiClient, verbose: bool = True) -> int:
+    """Re-fetch God Aspect sections for gods already in the DB (faster than full god scrape)."""
+    init_db(conn)
+    gods = conn.execute("SELECT id, name FROM gods ORDER BY name").fetchall()
+    count = 0
+    for g in gods:
+        name = g["name"]
+        god_id = g["id"]
+        if verbose:
+            print(f"  Aspect: {name}")
+        try:
+            wikitext = wiki.get_wikitext(name)
+        except Exception as exc:  # noqa: BLE001
+            print(f"    WARN: {name}: {exc}", file=sys.stderr)
+            continue
+        aspect = parse_god_aspect(wikitext) if wikitext else None
+        try:
+            old = conn.execute(
+                "SELECT id FROM god_aspects WHERE god_id = ?", (god_id,)
+            ).fetchall()
+            for oa in old:
+                conn.execute(
+                    "DELETE FROM god_aspect_abilities WHERE aspect_id = ?", (oa["id"],)
+                )
+            conn.execute("DELETE FROM god_aspects WHERE god_id = ?", (god_id,))
+        except sqlite3.OperationalError:
+            init_db(conn)
+        if not aspect or not (aspect.get("name") or aspect.get("description")):
+            conn.commit()
+            continue
+        conn.execute(
+            """
+            INSERT INTO god_aspects (god_id, name, description, image, raw_json)
+            VALUES (?,?,?,?,?)
+            """,
+            (
+                god_id,
+                aspect.get("name") or "God Aspect",
+                aspect.get("description") or "",
+                aspect.get("image") or "",
+                json.dumps(aspect),
+            ),
+        )
+        aspect_id = conn.execute(
+            "SELECT id FROM god_aspects WHERE god_id = ? ORDER BY id DESC LIMIT 1",
+            (god_id,),
+        ).fetchone()["id"]
+        for ab in aspect.get("abilities") or []:
+            conn.execute(
+                """
+                INSERT INTO god_aspect_abilities (
+                    aspect_id, slot, slot_order, name, short_label, icon,
+                    description, stats_text, notes_text, stats_json
+                ) VALUES (?,?,?,?,?,?,?,?,?,?)
+                """,
+                (
+                    aspect_id,
+                    ab.get("slot") or "",
+                    ab.get("slot_order") or 0,
+                    ab.get("name") or "",
+                    ab.get("short_label") or "",
+                    ab.get("icon") or "",
+                    ab.get("description") or "",
+                    ab.get("stats_text") or "",
+                    ab.get("notes_text") or "",
+                    json.dumps(ab.get("stats_json") or {}),
+                ),
+            )
+        if verbose:
+            print(f"    → {aspect.get('name')} ({len(aspect.get('abilities') or [])} abilities)")
+        count += 1
+        conn.commit()
+    return count
+
+
 def _safe_int(v) -> int | None:
     if v is None or v == "":
         return None
@@ -480,6 +625,13 @@ def run_scrape(
     if "gods" in targets:
         results["gods"] = scrape_gods(conn, wiki, verbose=verbose)
         results["abilities"] = conn.execute("SELECT COUNT(*) AS c FROM abilities").fetchone()["c"]
+        try:
+            results["aspects"] = conn.execute("SELECT COUNT(*) AS c FROM god_aspects").fetchone()["c"]
+        except sqlite3.OperationalError:
+            results["aspects"] = 0
+    if "aspects" in targets and "gods" not in targets:
+        # Aspects-only refresh (keeps existing gods/abilities)
+        results["aspects"] = scrape_aspects_only(conn, wiki, verbose=verbose)
     if "items" in targets:
         results["items"] = scrape_items(conn, wiki, verbose=verbose)
     if "patches" in targets:
@@ -504,7 +656,7 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--only",
-        choices=["gods", "items", "patches"],
+        choices=["gods", "items", "patches", "aspects"],
         action="append",
         help="Scrape only these targets (repeatable). Default: all.",
     )
@@ -523,12 +675,16 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     targets = set(args.only) if args.only else {"gods", "items", "patches"}
+    # aspects-only must never wipe the DB
+    reset = not args.no_reset
+    if targets == {"aspects"}:
+        reset = False
     print(f"SMITE 2 scrape → {args.db}")
     print(f"Targets: {', '.join(sorted(targets))}")
     results = run_scrape(
         db_path=args.db,
         targets=targets,
-        reset=not args.no_reset,
+        reset=reset,
         delay=args.delay,
         verbose=not args.quiet,
     )

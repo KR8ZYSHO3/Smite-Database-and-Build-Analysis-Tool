@@ -76,6 +76,68 @@ def parse_abilities(wikitext: str) -> list[dict[str, Any]]:
     return abilities
 
 
+def parse_god_aspect(wikitext: str) -> dict[str, Any] | None:
+    """
+    Parse ==God Aspect== section: Achievement summary + enhanced Ability templates.
+
+    Returns None if the god has no aspect section / empty description.
+    """
+    section = extract_section(wikitext, "God Aspect")
+    if not section or len(section.strip()) < 20:
+        return None
+
+    name = ""
+    description = ""
+    image = ""
+
+    # {{Achievement |name=... |description=...}} (multi-line or single-line)
+    for block in extract_templates(section, "Achievement"):
+        body = re.sub(r"^\{\{\s*Achievement\s*", "", block, flags=re.I)
+        body = re.sub(r"\}\}\s*$", "", body)
+        # Single-line form: name=Foo|image=Bar|description=Baz
+        if "\n" not in body.strip() and body.count("|") >= 1:
+            # parse pipe fields at depth 0
+            fields: dict[str, str] = {}
+            for part in re.split(r"\|", body):
+                if "=" in part:
+                    k, v = part.split("=", 1)
+                    fields[k.strip().lower()] = v.strip()
+            name = clean_text(fields.get("name", ""))
+            description = clean_text(fields.get("description", ""))
+            image = (fields.get("image") or "").strip()
+        else:
+            fields = parse_template_fields(body)
+            # keys may be mixed case
+            fl = {k.lower(): v for k, v in fields.items()}
+            name = clean_text(fl.get("name", "") or fields.get("name", ""))
+            description = clean_text(fl.get("description", "") or fields.get("description", ""))
+            image = (fl.get("image") or fields.get("image") or "").strip()
+        if name or description:
+            break
+
+    if not name and not description:
+        # Fallback: first "Aspect of …" plain text
+        m = re.search(r"Aspect of [^\n|{]+", section, re.I)
+        if m:
+            name = clean_text(m.group(0))
+        m2 = re.search(r"description\s*=\s*(.+?)(?:\n\||\}\})", section, re.I | re.S)
+        if m2:
+            description = clean_text(m2.group(1))
+
+    # Enhanced abilities live only in this section (may share names with base kit)
+    enhanced = parse_abilities(section)
+    if not name and not description and not enhanced:
+        return None
+    if not name:
+        name = "God Aspect"
+    return {
+        "name": name,
+        "description": description,
+        "image": image,
+        "abilities": enhanced,
+    }
+
+
 def parse_lore(wikitext: str) -> str:
     section = extract_section(wikitext, "Lore")
     if not section:

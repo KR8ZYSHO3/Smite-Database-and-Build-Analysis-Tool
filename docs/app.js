@@ -446,42 +446,17 @@ function selectGod(name, switchTab) {
     // Prefer Support / listed roles first, Mid full-damage last for guardians
     const order = ["Carry", "Mid", "Jungle", "Solo", "Support"];
     roleKeys.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    const byAspect = g.conquest_by_role_aspect || {};
+    const aspectMeta = (g.aspects || [])[0];
     $("#god-build").innerHTML = roleKeys
       .map((role) => {
         const gb = byRole[role];
-        const items = gb.items || gb.full_path || [];
-        const nAct = gb.active_count ?? items.filter((i) => i.is_active).length;
-        const maxA = gb.max_shop_actives ?? 2;
-        const penG = gb.pen_total ?? items.reduce((s, it) => s + (it.pen || 0), 0);
-        const label =
-          role === "Mid" && (g.role_list || []).includes("Support") && dtype === "magical"
-            ? "Mid (full damage option)"
-            : role;
-        return `
-        <div class="card build-card god-role-build">
-          <h3>${escapeHtml(label)}</h3>
-          <div class="build-meta">
-            ${gb.archetype ? `<span class="pill hot">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
-            <span class="pill">actives ${nAct}/${maxA}</span>
-            <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
-          </div>
-          ${
-            (gb.kit_effects || []).length
-              ? `<div class="kit-effects"><span class="muted">Kit effects:</span> ${(gb.kit_effects || [])
-                  .slice(0, 6)
-                  .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
-                  .join("")}</div>`
-              : ""
-          }
-          <p class="muted why">${escapeHtml(gb.why || "")}</p>
-          <div><strong>Starter</strong> — ${escapeHtml(gb.starter?.name || "—")}${
-            gb.starter?.why ? ` <span class="item-why">— ${escapeHtml(gb.starter.why)}</span>` : ""
-          }</div>
-          <ol class="buy-list">
-            ${items.map((it, i) => buyRow(it, i + 1)).join("")}
-          </ol>
-          <div class="muted">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
-        </div>`;
+        const ga = byAspect[role];
+        const cards = [renderRolePathCard(gb, role, dtype, g, false)];
+        if (ga && aspectMeta) {
+          cards.push(renderRolePathCard(ga, role, dtype, g, true, aspectMeta));
+        }
+        return cards.join("");
       })
       .join("");
   }
@@ -514,6 +489,52 @@ function selectGod(name, switchTab) {
   ]
     .filter((x) => x !== "")
     .join("\n");
+}
+
+function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta) {
+  if (!gb) return "";
+  const items = gb.items || gb.full_path || [];
+  const nAct = gb.active_count ?? items.filter((i) => i.is_active).length;
+  const maxA = gb.max_shop_actives ?? 2;
+  const penG = gb.pen_total ?? items.reduce((s, it) => s + (it.pen || 0), 0);
+  let label =
+    role === "Mid" && (g.role_list || []).includes("Support") && dtype === "magical"
+      ? "Mid (full damage option)"
+      : role;
+  if (isAspect) {
+    label = `${role} · ${aspectMeta?.name || gb.aspect_name || "Aspect"}`;
+  }
+  return `
+    <div class="card build-card god-role-build ${isAspect ? "is-aspect" : ""}">
+      <h3>${escapeHtml(label)}</h3>
+      <div class="build-meta">
+        ${isAspect ? `<span class="pill aspect">aspect</span>` : `<span class="pill">base kit</span>`}
+        ${gb.archetype ? `<span class="pill hot">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
+        <span class="pill">actives ${nAct}/${maxA}</span>
+        <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
+      </div>
+      ${
+        isAspect && (gb.aspect_description || aspectMeta?.description)
+          ? `<p class="aspect-blurb">${escapeHtml(gb.aspect_description || aspectMeta.description)}</p>`
+          : ""
+      }
+      ${
+        (gb.kit_effects || []).length
+          ? `<div class="kit-effects"><span class="muted">Kit effects:</span> ${(gb.kit_effects || [])
+              .slice(0, 6)
+              .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
+              .join("")}</div>`
+          : ""
+      }
+      <p class="muted why">${escapeHtml(gb.why || "")}</p>
+      <div><strong>Starter</strong> — ${escapeHtml(gb.starter?.name || "—")}${
+        gb.starter?.why ? ` <span class="item-why">— ${escapeHtml(gb.starter.why)}</span>` : ""
+      }</div>
+      <ol class="buy-list">
+        ${items.map((it, i) => buyRow(it, i + 1)).join("")}
+      </ol>
+      <div class="muted">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
+    </div>`;
 }
 
 /* -------------------- Builds (god-first) -------------------- */
@@ -617,12 +638,20 @@ function godBuildCard(gb, role) {
         <div class="muted gbc-meta">#${gb.rank ?? "—"} · ${escapeHtml(gb.damage_type || "")} · ${escapeHtml(gb.scaling || "—")} scale</div>
       </header>
       <div class="build-meta">
+        ${gb.is_aspect ? `<span class="pill aspect">aspect</span>` : ""}
         ${gb.archetype ? `<span class="pill hot">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : `<span class="pill">kit-fit</span>`}
         <span class="pill">actives ${ga}/${maxG}</span>
         <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
         ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
         ${gb.patch_trajectory ? `<span class="pill ice">${escapeHtml(gb.patch_trajectory)}</span>` : ""}
       </div>
+      ${
+        gb.is_aspect && gb.aspect_name
+          ? `<div class="aspect-blurb"><strong>${escapeHtml(gb.aspect_name)}</strong>${
+              gb.aspect_description ? ` — ${escapeHtml(String(gb.aspect_description).slice(0, 160))}` : ""
+            }</div>`
+          : ""
+      }
       ${
         effects.length
           ? `<div class="kit-effects"><span class="muted">Kit effects:</span> ${effects
