@@ -573,55 +573,154 @@ function buyRow(it, n) {
 function setupItems() {
   const search = $("#item-search");
   const tier = $("#item-tier");
+  const sortSel = $("#item-sort");
   const render = () => {
     const q = (search.value || "").toLowerCase().trim();
     const t = tier.value;
-    let list = state.items || [];
+    const sort = (sortSel && sortSel.value) || "name";
+    let list = [...(state.items || [])];
     if (t !== "All") {
-      list = list.filter((it) => String(it.tier || "") === t || (t === "Starter" && (it.categories || "").includes("Starter")));
+      list = list.filter(
+        (it) =>
+          String(it.tier || "") === t ||
+          (t === "Starter" && (it.categories || "").includes("Starter"))
+      );
     }
     if (q) list = list.filter((it) => it.name.toLowerCase().includes(q));
+    list.sort((a, b) => {
+      if (sort === "hot") return (b.recent_5_score || 0) - (a.recent_5_score || 0);
+      if (sort === "cold") return (a.recent_5_score || 0) - (b.recent_5_score || 0);
+      if (sort === "ladder")
+        return (a.ladder_rank ?? 999) - (b.ladder_rank ?? 999);
+      if (sort === "cost")
+        return (a.total_cost ?? a.cost ?? 0) - (b.total_cost ?? b.cost ?? 0);
+      return a.name.localeCompare(b.name);
+    });
     const tbody = $("#item-body");
     tbody.innerHTML = list
       .slice(0, 400)
       .map((it) => {
         const cost = it.total_cost ?? it.cost ?? "";
-        const stats = (it.stats_text || "").replace(/\n/g, " · ").slice(0, 70);
+        const r5 = it.recent_5_score;
+        const r5s = r5 == null || r5 === "" ? "—" : (r5 >= 0 ? "+" : "") + fmt(r5, 1);
+        const meta = it.ladder_tier
+          ? `${it.ladder_tier}${it.ladder_rank != null ? " #" + it.ladder_rank : ""}`
+          : it.trajectory || "—";
         return `<tr data-name="${escapeAttr(it.name)}">
           <td>${escapeHtml(it.name)}</td>
           <td>${escapeHtml(String(it.tier || ""))}</td>
-          <td>${escapeHtml(it.item_type || "")}</td>
+          <td class="tier-${it.ladder_tier || ""}">${escapeHtml(String(meta))}</td>
+          <td>${escapeHtml(r5s)}</td>
           <td>${cost}</td>
-          <td class="muted">${escapeHtml(stats)}</td>
         </tr>`;
       })
       .join("");
     tbody.querySelectorAll("tr").forEach((tr) => {
       tr.addEventListener("click", () => {
+        tbody.querySelectorAll("tr").forEach((x) => x.classList.remove("selected"));
+        tr.classList.add("selected");
         const it = list.find((x) => x.name === tr.dataset.name);
-        $("#item-detail").textContent = it
-          ? [
-              it.name,
-              "=".repeat(it.name.length),
-              `Tier: ${it.tier}  Type: ${it.item_type}`,
-              `Cost: ${it.total_cost ?? it.cost ?? "—"}`,
-              "",
-              "Stats:",
-              it.stats_text || "—",
-              "",
-              "Passive:",
-              it.passive || "—",
-              "",
-              "Active:",
-              it.active || "—",
-            ].join("\n")
-          : "";
+        showItemDetail(it);
       });
     });
   };
   search.addEventListener("input", render);
   tier.addEventListener("change", render);
+  if (sortSel) sortSel.addEventListener("change", render);
   render();
+}
+
+function showItemDetail(it) {
+  const box = $("#item-patch-box");
+  if (!it) {
+    if (box) box.textContent = "Select an item.";
+    $("#item-detail").textContent = "";
+    return;
+  }
+  const axes = it.patch_axes || {};
+  const axEntries = Object.entries(axes).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
+  const hints = [];
+  if ((it.recent_5_score || 0) >= 0.8) hints.push("recently buffed — strong meta pick");
+  if ((it.recent_5_score || 0) <= -0.8) hints.push("recently nerfed — flexible swap");
+  if (Number(axes.pen || 0) > 0.2) hints.push("pen axis up");
+  if (Number(axes.survivability || 0) > 0.2) hints.push("survivability axis up");
+  if (Number(axes.damage || 0) > 0.2) hints.push("damage axis up");
+  if (box) {
+    box.innerHTML = `
+      <div class="build-meta" style="margin-bottom:8px">
+        <span class="pill ice">${escapeHtml(it.trajectory || "stable")}</span>
+        ${it.ladder_tier ? `<span class="pill hot">ladder ${escapeHtml(it.ladder_tier)} #${it.ladder_rank ?? "—"}</span>` : ""}
+        <span class="pill">r5 ${it.recent_5_score != null ? ((it.recent_5_score >= 0 ? "+" : "") + fmt(it.recent_5_score, 2)) : "—"}</span>
+        <span class="pill">net ${it.net_weighted_score != null ? ((it.net_weighted_score >= 0 ? "+" : "") + fmt(it.net_weighted_score, 2)) : "—"}</span>
+      </div>
+      <div class="kit-tags">
+        ${
+          axEntries.length
+            ? axEntries
+                .slice(0, 8)
+                .map(([k, v]) => {
+                  const n = Number(v);
+                  const cls = n > 0.15 ? "axis-up" : n < -0.15 ? "axis-down" : "";
+                  return `<span class="tag ${cls}">${escapeHtml(k)} ${n >= 0 ? "+" : ""}${fmt(n, 1)}</span>`;
+                })
+                .join("")
+            : `<span class="muted">No patch axes (unmentioned).</span>`
+        }
+      </div>
+      ${
+        hints.length
+          ? `<p class="why" style="margin-top:8px"><strong>Intel:</strong> ${escapeHtml(hints.join("; "))}.</p>`
+          : ""
+      }`;
+  }
+  $("#item-detail").textContent = [
+    it.name,
+    "=".repeat(Math.min(it.name.length, 40)),
+    `Shop tier: ${it.tier || "—"}  Type: ${it.item_type || "—"}`,
+    `Cost: ${it.total_cost ?? it.cost ?? "—"}`,
+    `Buff/Nerf events: ${it.buff_events ?? "—"} / ${it.nerf_events ?? "—"}`,
+    it.ladder_rationale ? `Ladder: ${it.ladder_rationale}` : "",
+    "",
+    "Stats:",
+    it.stats_text || "—",
+    "",
+    "Passive:",
+    it.passive || "—",
+    "",
+    "Active:",
+    it.active || "—",
+  ]
+    .filter((x) => x !== "")
+    .join("\n");
+}
+
+/* -------------------- About momentum lists -------------------- */
+function setupAboutMomentum() {
+  const fill = (sel, rows, nameKey, scoreKey) => {
+    const el = $(sel);
+    if (!el) return;
+    el.innerHTML = rows.length
+      ? rows
+          .map((r) => {
+            const sc = Number(r[scoreKey] || 0);
+            const cls = sc > 0 ? "axis-up" : sc < 0 ? "axis-down" : "";
+            return `<li><span class="tag ${cls}">${sc >= 0 ? "+" : ""}${fmt(sc, 1)}</span> ${escapeHtml(
+              r[nameKey]
+            )} <span class="muted">${escapeHtml(r.trajectory || "")}</span></li>`;
+          })
+          .join("")
+      : `<li class="muted">—</li>`;
+  };
+  const gods = [...(state.gods || [])].filter((g) => g.recent_5_score != null);
+  const items = [...(state.items || [])].filter((i) => i.recent_5_score != null);
+  const gHot = [...gods].sort((a, b) => (b.recent_5_score || 0) - (a.recent_5_score || 0)).slice(0, 6);
+  const gCold = [...gods].sort((a, b) => (a.recent_5_score || 0) - (b.recent_5_score || 0)).slice(0, 6);
+  const iHot = [...items].sort((a, b) => (b.recent_5_score || 0) - (a.recent_5_score || 0)).slice(0, 6);
+  const iCold = [...items].sort((a, b) => (a.recent_5_score || 0) - (b.recent_5_score || 0)).slice(0, 6);
+  fill("#about-gods-hot", gHot, "name", "recent_5_score");
+  fill("#about-gods-cold", gCold, "name", "recent_5_score");
+  fill("#about-items-hot", iHot, "name", "recent_5_score");
+  fill("#about-items-cold", iCold, "name", "recent_5_score");
 }
 
 /* -------------------- utils -------------------- */
@@ -657,8 +756,10 @@ async function main() {
     $("#app-main").style.display = "block";
 
     const exported = state.meta?.exported_at || state.meta?.scraped_at || "";
+    const analysis = state.meta?.analysis_last_analysis_at || state.meta?.last_analysis_at || "";
     $("#meta-line").textContent = [
-      exported ? `INTEL ${String(exported).slice(0, 10)}` : "LIVE INTEL",
+      exported ? `EXPORT ${String(exported).slice(0, 10)}` : "LIVE INTEL",
+      analysis ? `ANALYZED ${String(analysis).slice(0, 10)}` : "",
       `${(state.gods || []).length} GODS`,
       `${(state.items || []).length} ITEMS`,
       "PATCH · KIT · BUILD",
@@ -670,6 +771,7 @@ async function main() {
     setupGods();
     setupTiers();
     setupItems();
+    setupAboutMomentum();
   } catch (err) {
     loading.innerHTML = `<div class="err"><strong>Failed to load data.</strong><br>${escapeHtml(
       err.message || err

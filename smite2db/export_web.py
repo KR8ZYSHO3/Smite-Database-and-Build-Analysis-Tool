@@ -156,16 +156,64 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     except sqlite3.OperationalError:
         pass
 
-    # Items summary
-    items = [
-        dict(r)
+    # Items summary + patch intel + item tier ladder
+    item_patch: dict[str, dict] = {}
+    try:
         for r in conn.execute(
             """
-            SELECT name, tier, item_type, total_cost, cost, stats_text, passive, active, categories
-            FROM items ORDER BY name
+            SELECT entity_name, net_weighted_score, recent_5_score, trajectory,
+                   buff_events, nerf_events, axes_json, recent_axes_json
+            FROM entity_patch_summary WHERE entity_type='item'
             """
-        )
-    ]
+        ):
+            d = dict(r)
+            for jk in ("axes_json", "recent_axes_json"):
+                if d.get(jk):
+                    try:
+                        d[jk.replace("_json", "")] = json.loads(d[jk])
+                    except json.JSONDecodeError:
+                        pass
+            if d.get("recent_axes"):
+                d["patch_axes"] = d["recent_axes"]
+            elif d.get("axes"):
+                d["patch_axes"] = d["axes"]
+            item_patch[r["entity_name"]] = d
+    except sqlite3.OperationalError:
+        pass
+
+    item_tier: dict[str, dict] = {}
+    try:
+        for r in conn.execute(
+            """
+            SELECT entity_name, tier, rank_in_scope, score, patch_score, rationale
+            FROM tier_list WHERE scope='items:overall' AND entity_type='item'
+            """
+        ):
+            item_tier[r["entity_name"]] = dict(r)
+    except sqlite3.OperationalError:
+        pass
+
+    items = []
+    for r in conn.execute(
+        """
+        SELECT name, tier, item_type, total_cost, cost, stats_text, passive, active, categories
+        FROM items ORDER BY name
+        """
+    ):
+        it = dict(r)
+        p = item_patch.get(it["name"]) or {}
+        t = item_tier.get(it["name"]) or {}
+        it["net_weighted_score"] = p.get("net_weighted_score")
+        it["recent_5_score"] = p.get("recent_5_score")
+        it["trajectory"] = p.get("trajectory")
+        it["buff_events"] = p.get("buff_events")
+        it["nerf_events"] = p.get("nerf_events")
+        it["patch_axes"] = p.get("patch_axes") or {}
+        it["ladder_tier"] = t.get("tier")
+        it["ladder_rank"] = t.get("rank_in_scope")
+        it["ladder_score"] = t.get("score")
+        it["ladder_rationale"] = t.get("rationale")
+        items.append(it)
 
     builds = None
     builds_path = ROOT / "data" / "conquest_builds.json"

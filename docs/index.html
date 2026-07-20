@@ -148,18 +148,28 @@
               <option>God Specific</option>
             </select>
           </label>
+          <label>Sort
+            <select id="item-sort">
+              <option value="name">Name</option>
+              <option value="hot">Patch hot</option>
+              <option value="cold">Patch cold</option>
+              <option value="ladder">Ladder rank</option>
+              <option value="cost">Cost</option>
+            </select>
+          </label>
         </div>
         <div class="grid-2">
           <div class="card scroll">
             <table>
               <thead>
-                <tr><th>Item</th><th>Tier</th><th>Type</th><th>Cost</th><th>Stats</th></tr>
+                <tr><th>Item</th><th>Shop</th><th>Meta</th><th>r5</th><th>Cost</th></tr>
               </thead>
               <tbody id="item-body"></tbody>
             </table>
           </div>
           <div class="card">
-            <h2>Item</h2>
+            <h2>Item intel</h2>
+            <div id="item-patch-box" class="patch-axes muted" style="margin-bottom:10px">Select an item for patch axes + stats.</div>
             <pre class="detail" id="item-detail">Select an item. Look for Pen, Damp, Plat, Ten.</pre>
           </div>
         </div>
@@ -181,6 +191,21 @@
             <li><strong>Solo</strong> — unkillable frontline (prots, HP, Damp/Plat/Ten).</li>
             <li><strong>Support</strong> — peel for ADC/mid (mitigate, anti-AS/crit).</li>
           </ul>
+          <h3>Patch momentum (r5)</h3>
+          <div class="grid-2">
+            <div>
+              <h4 class="muted">Gods rising</h4>
+              <ul id="about-gods-hot" class="momentum-list"></ul>
+              <h4 class="muted">Gods falling</h4>
+              <ul id="about-gods-cold" class="momentum-list"></ul>
+            </div>
+            <div>
+              <h4 class="muted">Items hot</h4>
+              <ul id="about-items-hot" class="momentum-list"></ul>
+              <h4 class="muted">Items cold</h4>
+              <ul id="about-items-cold" class="momentum-list"></ul>
+            </div>
+          </div>
           <p class="muted">
             Model from wiki.smite2.com — not live WR. Tiers: patch 48% · kit 28% · build 14%.
             Builds and tier “build fit” share one Conquest engine. Patch r5 axes steer itemization.
@@ -188,7 +213,7 @@
           <p>
             <a href="https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool" target="_blank" rel="noopener">GitHub</a>
             · <code>python -m smite2db.refresh</code>
-            · <code>python -m smite2db.gui</code>
+            · <code>preview_local.bat</code>
           </p>
         </div>
       </section>

@@ -599,6 +599,21 @@ tr.selected td {
   margin-right: 6px;
   font-size: 0.72rem;
 }
+.momentum-list {
+  margin: 4px 0 14px;
+  padding-left: 18px;
+  font-size: 0.92rem;
+}
+.momentum-list li {
+  margin: 3px 0;
+}
+.momentum-list .tag {
+  margin-right: 6px;
+  font-size: 0.72rem;
+  padding: 1px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+}
 .god-build-card .why {
   flex: 0 0 auto;
   font-size: 0.92rem;

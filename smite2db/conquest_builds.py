@@ -1729,6 +1729,7 @@ def _pick_slot_item(
     role: str,
     max_actives: int,
     active_count: int,
+    diversify_key: str = "",
 ) -> ScoredItem | None:
     cands = [
         x
@@ -1764,6 +1765,28 @@ def _pick_slot_item(
         return sc
 
     cands.sort(key=slot_rank, reverse=True)
+    # Near-tie diversity: identity slots stay #1; flex/luxury rotate by god name
+    flex_slots = {
+        "luxury",
+        "power",
+        "sustain",
+        "cdr",
+        "defense",
+        "hybrid_bulk",
+        "aura",
+        "mitigate",
+        "gap",
+        "ls_core",
+        "as_core",
+        "crit_core",
+    }
+    if diversify_key and slot in flex_slots and len(cands) > 1:
+        best = slot_rank(cands[0])
+        margin = max(10.0, abs(best) * 0.06)
+        near = [c for c in cands[:6] if slot_rank(c) >= best - margin]
+        if len(near) > 1:
+            idx = sum(ord(ch) for ch in (diversify_key + "|" + slot + "|" + role)) % len(near)
+            return near[idx]
     return cands[0]
 
 
@@ -1779,9 +1802,19 @@ def assemble_kit_path(
     """Build a 6-item path from archetype slots + scores (not one global top-6)."""
     arch = detect_archetype(bias, role, mage, physical)
     slots = list(ARCHETYPE_SLOTS.get(arch, ARCHETYPE_SLOTS["burst_mage"]))
+    # Secondary flex: spammy kits swap last luxury for CDR if not already
+    tags = set(bias.get("tags") or [])
+    if "spam" in tags and "cdr" not in slots[:3]:
+        slots = slots[:-1] + ["cdr"] if slots[-1] == "luxury" else slots
+    if "ult_nuke" in tags and "pct_pen" not in slots[:2]:
+        # ensure shred early for nuke ults
+        if "pct_pen" in slots:
+            slots.remove("pct_pen")
+            slots.insert(1, "pct_pen")
     path: list[ScoredItem] = []
     seen: set[str] = set()
     actives = 0
+    dkey = str(bias.get("god_name") or "")
 
     for slot in slots:
         if len(path) >= 6:
@@ -1795,6 +1828,7 @@ def assemble_kit_path(
             role=role,
             max_actives=max_actives,
             active_count=actives,
+            diversify_key=dkey,
         )
         if not pick:
             continue
@@ -1808,7 +1842,9 @@ def assemble_kit_path(
         rest = [x for x in pool if x.name not in seen]
         rest.sort(
             key=lambda x: (
-                x.role_score - (100 if x.is_active_item and actives >= max_actives else 0)
+                x.role_score
+                - (100 if x.is_active_item and actives >= max_actives else 0)
+                + (sum(ord(c) for c in (dkey + x.name)) % 17) * 0.4
             ),
             reverse=True,
         )
