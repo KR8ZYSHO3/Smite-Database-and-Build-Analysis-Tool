@@ -141,22 +141,31 @@ function setupTiers() {
 function showTierDetail(row) {
   const el = $("#tier-detail");
   if (!row) {
-    el.textContent = "Select a row.";
+    el.innerHTML = "Pick a row.";
     return;
   }
-  el.textContent = [
-    `${row.entity_name}`,
-    `${"=".repeat(Math.min(row.entity_name.length, 40))}`,
-    `Type: ${row.entity_type}  ·  Tier ${row.tier}  ·  Rank #${row.rank_in_scope}`,
-    `Score ${fmt(row.score)}  Patch ${fmt(row.patch_score)}  Kit ${fmt(row.kit_score)}  Build ${fmt(row.build_score)}`,
-    `Confidence: ${row.confidence != null ? (row.confidence * 100).toFixed(0) + "%" : "—"}`,
-    "",
-    "Rationale",
-    "---------",
-    row.rationale || "—",
-    "",
-    "Double-click a god to open the Gods tab.",
-  ].join("\n");
+  const bar = (label, val) => {
+    const n = Math.max(0, Math.min(100, Number(val) || 0));
+    return `<div class="stat-bar-row"><span>${escapeHtml(label)}</span><div class="stat-bar"><i style="width:${n}%"></i></div><span class="val">${fmt(n, 0)}</span></div>`;
+  };
+  el.innerHTML = `
+    <div style="font-family:var(--display);font-size:1.1rem;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px">
+      <span class="tier-${escapeAttr(row.tier || "")}">[${escapeHtml(row.tier || "?")}]</span>
+      ${escapeHtml(row.entity_name)}
+    </div>
+    <div class="muted">#${row.rank_in_scope ?? "—"} · ${escapeHtml(row.entity_type || "")} · conf ${
+      row.confidence != null ? (row.confidence * 100).toFixed(0) + "%" : "—"
+    }</div>
+    <div class="stat-bars">
+      ${bar("Score", row.score)}
+      ${bar("Patch", row.patch_score)}
+      ${bar("Kit", row.kit_score)}
+      ${bar("Build", row.build_score)}
+    </div>
+    <p class="muted" style="margin:12px 0 6px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;font-size:0.75rem">Rationale</p>
+    <div class="detail" style="margin:0">${escapeHtml(row.rationale || "—")}</div>
+    <p class="muted" style="margin-top:10px;font-size:0.85rem">Double-click a god → Gods tab.</p>
+  `;
 }
 
 /* -------------------- Gods -------------------- */
@@ -332,17 +341,23 @@ function setupBuilds() {
     const nAct = items.filter((i) => i.is_active).length;
     const maxA = t.max_shop_actives ?? 2;
     const penT = t.pen_total ?? items.reduce((s, it) => s + (it.pen || 0), 0);
-    $("#build-desc").textContent =
-      (t.description || "") +
-      "  ·  Buy order: early power → pen → more power → defense → luxury. " +
-      "Shop actives default 2 (hard max 3; curio shares budget).";
+    const roleBlurb =
+      role === "Support"
+        ? "Support cores: dual prots, Dampening, Plating, Tenacity, anti-AS / anti-crit. Not lifesteal."
+        : "Buy order: early power → pen → power → defense → luxury. Actives default 2.";
+    $("#build-desc").textContent = `${t.description || ""}  ·  ${roleBlurb}`;
 
+    const mitT = items.reduce(
+      (s, it) => s + (it.damp || 0) + (it.plat || 0) + (it.ten || 0),
+      0
+    );
     $("#build-template").innerHTML = `
-      <h2>Role template — ${escapeHtml(role)}</h2>
+      <h2>${escapeHtml(role)} template</h2>
       <div class="build-meta">
-        <span class="pill">1 starter + 6 items</span>
+        <span class="pill">1 starter + 6</span>
         <span class="pill">actives ${nAct}/${maxA}</span>
         <span class="pill">pen ≈ ${fmt(penT, 0)}</span>
+        ${role === "Support" ? `<span class="pill">mitigate ≈ ${fmt(mitT, 0)}</span>` : ""}
       </div>
       ${t.build_notes ? `<p class="muted">${escapeHtml(t.build_notes)}</p>` : ""}
       <h3>Starter</h3>
@@ -413,11 +428,22 @@ function buyRow(it, n) {
   if (it.slot) tags.push(it.slot);
   if (it.is_active) tags.push("active");
   if (it.pen) tags.push(`pen ${it.pen}`);
-  return `<li class="buy-row ${it.is_active ? "is-active" : ""} ${it.slot === "pen" ? "is-pen" : ""}">
+  if (it.damp) tags.push(`damp ${it.damp}`);
+  if (it.plat) tags.push(`plat ${it.plat}`);
+  if (it.ten) tags.push(`ten ${it.ten}`);
+  const slotClass =
+    it.slot === "pen"
+      ? "is-pen"
+      : it.slot === "mitigate" || it.slot === "counter"
+        ? "is-mitigate"
+        : it.is_active
+          ? "is-active"
+          : "";
+  return `<li class="buy-row ${slotClass}">
     <span class="buy-n">${n}</span>
     <span class="buy-name">${escapeHtml(it.name)}</span>
     <span class="buy-tags">${tags.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")}</span>
-    <span class="buy-cost muted">${it.cost != null ? it.cost + "g" : ""}</span>
+    <span class="buy-cost">${it.cost != null ? it.cost + "g" : ""}</span>
   </li>`;
 }
 
@@ -510,14 +536,13 @@ async function main() {
 
     const exported = state.meta?.exported_at || state.meta?.scraped_at || "";
     $("#meta-line").textContent = [
-      "SMITE 2 only",
-      exported ? `data ${String(exported).slice(0, 19)}` : "",
-      `${(state.gods || []).length} gods`,
-      `${Object.keys(state.tiers || {}).length} tier scopes`,
-      "max 3 actives / 6 items",
+      exported ? `INTEL ${String(exported).slice(0, 10)}` : "LIVE INTEL",
+      `${(state.gods || []).length} GODS`,
+      `${(state.items || []).length} ITEMS`,
+      "PATCH · KIT · BUILD",
     ]
       .filter(Boolean)
-      .join(" · ");
+      .join("  //  ");
 
     setupTiers();
     setupGods();

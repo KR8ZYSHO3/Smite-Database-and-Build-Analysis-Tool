@@ -223,43 +223,62 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
     },
     "Support": {
         "description": (
-            "Conquest support: peel, aura/team utility, dual prots, HP, "
-            "CDR, and active/defensive cores over pure personal DPS."
+            "Conquest support: mitigate and counter — dual prots, HP, "
+            "Dampening / Plating / Tenacity, anti-AS, anti-crit, aura peel. "
+            "Not a lifesteal / personal-sustain carry path."
         ),
         "prefer_damage": None,
         "stat_weights": {
-            "hp": 0.18,
-            "pprot": 0.16,
-            "mprot": 0.16,
-            "cdr": 0.12,
-            "int": 0.08,
-            "str": 0.04,
-            "mp": 0.06,
-            "hpr": 0.06,
-            "pen": 0.04,
-            "as": 0.02,
-            "ls": 0.02,
-            "mpr": 0.06,
+            "hp": 0.16,
+            "pprot": 0.15,
+            "mprot": 0.15,
+            "damp": 0.12,   # reduces damage taken (esp. ability / on-hit stacks)
+            "plat": 0.10,   # plating — crit / basic mitigation
+            "ten": 0.08,    # tenacity — stay online through CC
+            "cdr": 0.10,
+            "int": 0.04,
+            "str": 0.02,
+            "mp": 0.03,
+            "hpr": 0.02,
+            "pen": 0.02,
+            "as": 0.0,      # do not chase personal AS
+            "ls": 0.0,      # supports do not core lifesteal
+            "mpr": 0.01,
         },
-        "tag_bonus": {"defensive": 14, "hybrid": 10, "passive": 6, "active": 8, "offensive": 2},
+        "tag_bonus": {
+            "defensive": 18,
+            "hybrid": 12,
+            "passive": 8,
+            "active": 4,
+            "offensive": -6,  # pure glass DPS cores are wrong here
+            "team": 10,
+            "aura": 10,
+            "antiheal": 8,
+        },
         "starter_prefs": {
-            "war": 28,
-            "flag": 28,
-            "banner": 26,
-            "selfless": 26,
-            "heroism": 24,
-            "sundering": 10,
-            "warrior": 8,
+            "selfless": 40,
+            "war": 36,
+            "flag": 36,
+            "banner": 32,
+            "heroism": 30,
+            # hard-avoid damage/sustain starters on support
+            "vampiric": -40,
+            "shroud": -30,
+            "conduit": -25,
+            "death": -30,
+            "gilded": -30,
+            "bluestone": -15,
+            "bumba": -35,
         },
         "relic_prefs": {
-            "beads": 28,
-            "purification": 26,
-            "aegis": 22,
-            "shell": 16,
-            "phantom": 14,
-            "talisman": 18,
-            "blink": 10,
-            "sundering": 8,
+            "beads": 30,
+            "purification": 28,
+            "aegis": 24,
+            "shell": 20,
+            "phantom": 16,
+            "talisman": 20,
+            "blink": 8,
+            "sundering": 6,
         },
         "build_slots": {"starter": 1, "cores": 1, "defense": 4, "flex": 1},
         "tier_scope": "role:Support",
@@ -282,6 +301,9 @@ STAT_ALIASES = {
     "mprot": ("mprot", "magical protection", "magical prot"),
     "bap": ("bap", "basic attack", "attack damage", "inhand"),
     "damp": ("damp", "dampening"),
+    "plat": ("plat", "plating", "plate"),
+    "ten": ("ten", "tenacity"),
+    "echo": ("echo",),
 }
 
 
@@ -501,7 +523,10 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
         "pprot": 70,
         "mprot": 70,
         "bap": 80,
-        "damp": 30,
+        "damp": 20,   # 15 Damp on Alchemist is huge
+        "plat": 15,   # 10–15 Plating is full value
+        "ten": 20,
+        "echo": 30,
     }
     breakdown: dict[str, float] = {}
     stat_score = 0.0
@@ -540,11 +565,34 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
     blob = (item["passive"] + " " + item["active"]).lower()
     if role == "Support":
         if any(k in blob for k in ("ally", "allies", "aura", "team")):
-            util += 18
+            util += 22
         if "cleanse" in blob or "cc immune" in blob:
-            util += 10
+            util += 12
         if "shield" in blob:
-            util += 8
+            util += 10
+        # Counter meta: anti basic-attack / crit / AS (mitigate carries)
+        if "critical" in blob or (
+            "crit" in blob
+            and any(k in blob for k in ("reduc", "mitigat", "take -", "plating", "less damage"))
+        ):
+            util += 20
+        if "attack speed" in blob and any(k in blob for k in ("reduc", "slow", "enemy", "their")):
+            util += 18
+        if "basic attack" in blob and any(k in blob for k in ("reduc", "less", "mitigat", "enemy")):
+            util += 14
+        if "heal" in blob and any(k in blob for k in ("reduc", "anti", "curse")):
+            util += 12
+        # Dampening / Plating / Tenacity are support identity stats
+        util += _canon_stat_value(item["stats"], "damp") * 1.2
+        util += _canon_stat_value(item["stats"], "plat") * 1.4
+        util += _canon_stat_value(item["stats"], "ten") * 0.9
+        # Lifesteal cores are wrong on support
+        ls_v = _canon_stat_value(item["stats"], "ls")
+        if ls_v >= 5:
+            util -= 22
+        nlow = item["name"].lower()
+        if "vampiric" in nlow or (nlow.startswith("blood") and "bound" not in nlow):
+            util -= 18
     if role == "Solo":
         if any(k in blob for k in ("shield", "protections", "heal", "mitigation")):
             util += 12
@@ -618,12 +666,16 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
 def score_starter(item: dict, profile: dict) -> float:
     name = item["name"].lower()
     base = 0.0
+    penalty = 0.0
     for key, w in profile.get("starter_prefs", {}).items():
         if key in name:
-            base = max(base, w)
+            if w >= 0:
+                base = max(base, w)
+            else:
+                penalty += w  # e.g. Support hard-bans Vampiric / Conduit
     # stats still matter
     scored = score_item_for_role(item, "Support", {**profile, "stat_weights": profile["stat_weights"]})
-    return base + scored.role_score * 0.25 + item["momentum"] * 5
+    return base + penalty + scored.role_score * 0.25 + item["momentum"] * 5
 
 
 def score_relic(item: dict, profile: dict) -> float:
@@ -780,7 +832,18 @@ def rescore_for_god(
         dtype == "physical" or primary == "Strength"
     )
 
-    if physical and not mage:
+    # Support is role-first: do not turn Ymir into a Chronos' Pendant mage.
+    if role == "Support":
+        s -= as_v * 0.8
+        s -= crit_v * 0.8
+        s -= _canon_stat_value(item.stats, "bap") * 0.6
+        s -= ls_v if (ls_v := _canon_stat_value(item.stats, "ls")) else 0
+        # mild power only if the item also tanks
+        if _canon_stat_value(item.stats, "hp") < 200 and (
+            str_v + int_v
+        ) >= 50 and item.item_type == "Offensive":
+            s -= 25
+    elif physical and not mage:
         s += str_v * 0.85
         s -= int_v * 0.55
         if int_v >= 40 and str_v < 15:
@@ -819,19 +882,30 @@ def rescore_for_god(
         if as_v > 0:
             s += 5
 
-    # Support: stay tanky even on magical guardians — power is secondary.
+    # Support: mitigate & counter — not personal LS DPS.
     if role == "Support":
-        s += (_canon_stat_value(item.stats, "hp") * 0.08
-              + _canon_stat_value(item.stats, "pprot") * 0.35
-              + _canon_stat_value(item.stats, "mprot") * 0.35)
+        s += (
+            _canon_stat_value(item.stats, "hp") * 0.1
+            + _canon_stat_value(item.stats, "pprot") * 0.4
+            + _canon_stat_value(item.stats, "mprot") * 0.4
+            + _canon_stat_value(item.stats, "damp") * 2.2
+            + _canon_stat_value(item.stats, "plat") * 2.8
+            + _canon_stat_value(item.stats, "ten") * 1.6
+        )
         if item.item_type == "Defensive" or "defensive" in item.flags:
-            s += 18
-        if item.item_type == "Offensive" and _canon_stat_value(item.stats, "hp") < 150:
-            s -= 12
-        # One aura/support utility boost
+            s += 22
+        if item.item_type == "Offensive" and _canon_stat_value(item.stats, "hp") < 200:
+            s -= 20
+        ls_v = _canon_stat_value(item.stats, "ls")
+        if ls_v >= 5:
+            s -= 35
         blob = (item.passive + " " + item.active).lower()
         if any(k in blob for k in ("ally", "allies", "aura", "team")):
-            s += 14
+            s += 16
+        if "critical" in blob or ("crit" in blob and "plating" in blob):
+            s += 18
+        if "attack speed" in blob and ("reduc" in blob or "enemy" in blob):
+            s += 16
 
     # Damage roles: pen is not optional — but only *matching* pen for the kit.
     if role in DAMAGE_ROLES_NEED_PEN:
@@ -891,6 +965,28 @@ def is_pen_item(it: ScoredItem) -> bool:
 def _slot_label(it: ScoredItem) -> str:
     if is_pen_item(it) and item_pen_value(it) >= 8:
         return "pen"
+    damp = _canon_stat_value(it.stats, "damp")
+    plat = _canon_stat_value(it.stats, "plat")
+    ten = _canon_stat_value(it.stats, "ten")
+    if damp >= 5 or plat >= 5 or ten >= 10:
+        return "mitigate"
+    blob = f"{it.passive} {it.active}".lower()
+    # Counter = mitigate enemy offense — not items that *grant* crit/AS to you.
+    if any(
+        k in blob
+        for k in (
+            "damage from critical",
+            "critical strikes are mitigated",
+            "take -",
+            "attack speed reduced",
+            "their attack speed",
+            "enemy has their attack speed",
+            "plating",
+            "dampening",
+            "healing reduction",
+        )
+    ):
+        return "counter"
     if it.item_type == "Defensive" or "defensive" in it.flags:
         return "defense"
     if _canon_stat_value(it.stats, "pprot") + _canon_stat_value(it.stats, "mprot") >= 45:
@@ -1136,24 +1232,40 @@ def build_role_template(items: list[dict], role: str) -> dict[str, Any]:
         or "defensive" in s.flags
         or _canon_stat_value(s.stats, "pprot") + _canon_stat_value(s.stats, "mprot") >= 40
         or _canon_stat_value(s.stats, "hp") >= 250
+        or _canon_stat_value(s.stats, "damp")
+        or _canon_stat_value(s.stats, "plat")
+        or _canon_stat_value(s.stats, "ten")
     ]
     hybrid = [s for s in t3 if s.item_type == "Hybrid" or "hybrid" in s.flags]
+    mitigate = [
+        s
+        for s in t3
+        if _slot_label(s) in ("mitigate", "counter", "defense")
+        or _canon_stat_value(s.stats, "damp")
+        or _canon_stat_value(s.stats, "plat")
+        or _canon_stat_value(s.stats, "ten")
+    ]
 
     slots = profile["build_slots"]
     # Pick extra candidates so we can always fill 6 non-starter slots
     core_n = max(slots["cores"], 4)
     def_n = max(slots["defense"], 2)
     flex_n = max(slots["flex"], 2)
-    cores = pick_diverse(
-        offense if role != "Support" else hybrid + defense + offense,
-        core_n,
-        "offense",
-    )
-    defs = pick_diverse(defense, def_n, "defense")
-    flex_pool = hybrid + offense + defense
-    flex_pool = [x for x in flex_pool if x.name not in {c.name for c in cores + defs}]
+    if role == "Support":
+        cores = pick_diverse(mitigate or defense, core_n, "defense")
+        defs = pick_diverse(
+            [d for d in defense if d.name not in {c.name for c in cores}],
+            def_n,
+            "defense",
+        )
+        flex_pool = [x for x in mitigate + defense if x.name not in {c.name for c in cores + defs}]
+    else:
+        cores = pick_diverse(offense, core_n, "offense")
+        defs = pick_diverse(defense, def_n, "defense")
+        flex_pool = hybrid + offense + defense
+        flex_pool = [x for x in flex_pool if x.name not in {c.name for c in cores + defs}]
     flex_pool.sort(key=lambda x: x.role_score, reverse=True)
-    flex = pick_diverse(flex_pool, flex_n, "offense")
+    flex = pick_diverse(flex_pool, flex_n, "defense" if role == "Support" else "offense")
 
     relics = [
         score_item_for_role(it, role, profile)
@@ -1245,6 +1357,14 @@ def build_god_build(
         as_v = _canon_stat_value(s.stats, "as")
         crit_v = _canon_stat_value(s.stats, "crit")
         bap = _canon_stat_value(s.stats, "bap")
+        ls_v = _canon_stat_value(s.stats, "ls")
+        if role == "Support":
+            if ls_v >= 5:
+                return False
+            # personal AS/crit toys are not support cores (unless pure aura item)
+            if (as_v >= 20 or crit_v >= 15 or bap >= 15) and _slot_label(s) == "power":
+                return False
+            return True
         if mage:
             # Reject basic-attack / STR toys on pure mages
             if str_v >= 30 and int_v < 40:
@@ -1259,12 +1379,36 @@ def build_god_build(
         return True
 
     t3 = [s for s in t3 if kit_ok(s)]
-    offense = [
-        s
-        for s in t3
-        if s.item_type != "Defensive"
-        or _canon_stat_value(s.stats, "str") + _canon_stat_value(s.stats, "int") > 45
-    ]
+    if role == "Support":
+        # Only true tank/mitigate/counter/aura — not Hybrid glass power.
+        offense = []
+        for s in t3:
+            slot = _slot_label(s)
+            if slot in ("mitigate", "counter", "defense"):
+                offense.append(s)
+                continue
+            if s.item_type == "Defensive":
+                offense.append(s)
+                continue
+            if (
+                _canon_stat_value(s.stats, "damp")
+                or _canon_stat_value(s.stats, "plat")
+                or _canon_stat_value(s.stats, "ten")
+            ):
+                offense.append(s)
+                continue
+            blob = f"{s.passive} {s.active}".lower()
+            if any(k in blob for k in ("ally", "allies", "aura", "team", "aura")):
+                offense.append(s)
+        if not offense:
+            offense = [s for s in t3 if s.item_type == "Defensive"] or t3
+    else:
+        offense = [
+            s
+            for s in t3
+            if s.item_type != "Defensive"
+            or _canon_stat_value(s.stats, "str") + _canon_stat_value(s.stats, "int") > 45
+        ]
     # Damage roles: keep defense light (1 slot) so cores aren't crowded out
     def_n = 1 if role in DAMAGE_ROLES_NEED_PEN else max(profile["build_slots"]["defense"], 2)
     defense = [
@@ -1403,7 +1547,20 @@ def _fill_six_items(
 def _item_card(it: ScoredItem | None) -> dict | None:
     if not it:
         return None
-    top_stats = sorted(it.stats.items(), key=lambda x: -abs(x[1]))[:5]
+    # Prefer showing identity stats first (pen / damp / plat / ten / prots)
+    priority = ("pen", "damp", "plat", "ten", "pprot", "mprot", "hp", "int", "str", "cdr", "ls", "as")
+    ordered = []
+    seen = set()
+    for k in priority:
+        v = _canon_stat_value(it.stats, k)
+        if v:
+            ordered.append((k, v))
+            seen.add(k)
+    for k, v in sorted(it.stats.items(), key=lambda x: -abs(x[1])):
+        if k not in seen and k not in {p for p, _ in ordered}:
+            ordered.append((k, v))
+        if len(ordered) >= 5:
+            break
     pen = item_pen_value(it)
     return {
         "name": it.name,
@@ -1412,8 +1569,11 @@ def _item_card(it: ScoredItem | None) -> dict | None:
         "type": it.item_type or it.tier,
         "slot": _slot_label(it),
         "momentum": round(it.momentum, 2),
-        "stats": {k: v for k, v in top_stats},
+        "stats": {k: v for k, v in ordered[:5]},
         "pen": round(pen, 1) if pen else 0,
+        "damp": round(_canon_stat_value(it.stats, "damp"), 1) or 0,
+        "plat": round(_canon_stat_value(it.stats, "plat"), 1) or 0,
+        "ten": round(_canon_stat_value(it.stats, "ten"), 1) or 0,
         "effect": (it.passive or it.active or "")[:180],
         "is_active": bool(it.is_active_item),
     }
