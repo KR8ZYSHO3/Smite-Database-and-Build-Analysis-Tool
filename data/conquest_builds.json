@@ -6594,437 +6594,11 @@
           "why": "Princess Bari \u00b7 Mid \u00b7 archetype \u00abzone_mage\u00bb (INT / magical). Kit effects: big ult spike, pet / deployable, hard crowd control, ally buffs / auras, lots of CC, burst combos. Tags: burst, hard_cc, high_cc, long_cd, pet_zone, team_buff, ult_nuke. Style burst 69%/dps 31%; patch new (net +0.2, r5 +0.0). Patch axes (r5): general +0.3, cooldown -0.0, attack_speed -0.0. Scale STR 80% / INT 110%. Path: Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst); Spear Of The Magus (multi-hit / shred \u2014 stacks Magus passive). Pen: Spear of Desolation, Spear Of The Magus, The World Stone, Obsidian Shard. Actives 0/2 \u00b7 pen \u2248 50."
         },
         {
-          "god": "Ra",
-          "role": "Mid",
-          "tier": "S",
-          "rank": 2,
-          "model_score": 68.99009041095012,
-          "damage_type": "Magical",
-          "pantheon": "Egyptian",
-          "scaling": "Intelligence",
-          "archetype": "zone_mage",
-          "kit_tags": [
-            "burst",
-            "dot",
-            "heal",
-            "long_cd",
-            "pet_zone",
-            "team_buff",
-            "ult_nuke"
-          ],
-          "kit_effects": [
-            "big ult spike",
-            "pet / deployable",
-            "ally buffs / auras",
-            "multi-hit / ticks",
-            "burst combos",
-            "damage over time",
-            "healing in kit",
-            "long cooldowns"
-          ],
-          "kit_effect_scores": {
-            "dot": 0.75,
-            "ult_nuke": 1.0,
-            "burst": 0.85,
-            "heal": 0.7,
-            "pet_zone": 1.0,
-            "team_buff": 1.0,
-            "long_cd": 0.7,
-            "multi_hit": 0.9,
-            "zone": 0.65
-          },
-          "patch_trajectory": "stable",
-          "avg_str_scaling": 0,
-          "avg_int_scaling": 106.2,
-          "starter": {
-            "name": "Conduit Gem",
-            "score": 43.3,
-            "cost": 650,
-            "type": "Starter",
-            "slot": "power",
-            "momentum": 0.01,
-            "stats": {
-              "mp": 100.0,
-              "mpr": 1.0
-            },
-            "pen": 0,
-            "damp": 0,
-            "plat": 0,
-            "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
-            "is_active": false,
-            "why": "Lane starter \u2014 early stats for this role"
-          },
-          "items": [
-            {
-              "name": "Divine Ruin",
-              "score": 283.9,
-              "cost": 2500,
-              "type": "Offensive",
-              "slot": "counter",
-              "momentum": -0.04,
-              "stats": {
-                "int": 85.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On God Damaged: Apply 25% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
-              "is_active": false,
-              "why": "anti-heal + pen for healing/sustain kits"
-            },
-            {
-              "name": "Soul Gem",
-              "score": 282.4,
-              "cost": 2500,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 1.12,
-              "stats": {
-                "pen": 5.0,
-                "int": 60.0,
-                "cdr": 10.0,
-                "ls": 7.5
-              },
-              "pen": 5.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit: +1 Stack.\nThree Stacks: Next Ability Hit:\n*Deals Bonus Damage (40% Intelligence)\n*+20(+6 per Level) Heal you and allies within 3.2m\n*Removes the Stacks",
-              "is_active": false,
-              "why": "ability heal/proc for mages"
-            },
-            {
-              "name": "Gluttonous Grimoire",
-              "score": 310.3,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 1.14,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 25% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 40% instead\n*Stored damage is capped to 33% of your Max Health",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
-              "name": "Spear of Desolation",
-              "score": 339.1,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.24,
-              "stats": {
-                "pen": 10.0,
-                "int": 75.0,
-                "cdr": 10.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
-              "is_active": false,
-              "why": "flat pen + CDR for ability burst"
-            },
-            {
-              "name": "The Cosmic Horror",
-              "score": 218.8,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 0.13,
-              "stats": {
-                "pen": 10.0,
-                "int": 55.0,
-                "echo": 20.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Echo > Cooldown Rate: +20% Echo Damage\nEcho +35 Intelligence\nEcho = Cooldown Rate: +20% Echo Damage & +35 Intelligence",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Obsidian Shard",
-              "score": 486.6,
-              "cost": 3050,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 0.11,
-              "stats": {
-                "pen": 20.0,
-                "int": 90.0
-              },
-              "pen": 20.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "",
-              "is_active": false,
-              "why": "% pen for magical tanks / late fights"
-            }
-          ],
-          "full_path": [
-            {
-              "name": "Divine Ruin",
-              "score": 283.9,
-              "cost": 2500,
-              "type": "Offensive",
-              "slot": "counter",
-              "momentum": -0.04,
-              "stats": {
-                "int": 85.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On God Damaged: Apply 25% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
-              "is_active": false,
-              "why": "anti-heal + pen for healing/sustain kits"
-            },
-            {
-              "name": "Soul Gem",
-              "score": 282.4,
-              "cost": 2500,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 1.12,
-              "stats": {
-                "pen": 5.0,
-                "int": 60.0,
-                "cdr": 10.0,
-                "ls": 7.5
-              },
-              "pen": 5.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit: +1 Stack.\nThree Stacks: Next Ability Hit:\n*Deals Bonus Damage (40% Intelligence)\n*+20(+6 per Level) Heal you and allies within 3.2m\n*Removes the Stacks",
-              "is_active": false,
-              "why": "ability heal/proc for mages"
-            },
-            {
-              "name": "Gluttonous Grimoire",
-              "score": 310.3,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 1.14,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 25% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 40% instead\n*Stored damage is capped to 33% of your Max Health",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
-              "name": "Spear of Desolation",
-              "score": 339.1,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.24,
-              "stats": {
-                "pen": 10.0,
-                "int": 75.0,
-                "cdr": 10.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
-              "is_active": false,
-              "why": "flat pen + CDR for ability burst"
-            },
-            {
-              "name": "The Cosmic Horror",
-              "score": 218.8,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 0.13,
-              "stats": {
-                "pen": 10.0,
-                "int": 55.0,
-                "echo": 20.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Echo > Cooldown Rate: +20% Echo Damage\nEcho +35 Intelligence\nEcho = Cooldown Rate: +20% Echo Damage & +35 Intelligence",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Obsidian Shard",
-              "score": 486.6,
-              "cost": 3050,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 0.11,
-              "stats": {
-                "pen": 20.0,
-                "int": 90.0
-              },
-              "pen": 20.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "",
-              "is_active": false,
-              "why": "% pen for magical tanks / late fights"
-            }
-          ],
-          "inventory_slots": 7,
-          "cores": [
-            {
-              "name": "Divine Ruin",
-              "score": 283.9,
-              "cost": 2500,
-              "type": "Offensive",
-              "slot": "counter",
-              "momentum": -0.04,
-              "stats": {
-                "int": 85.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On God Damaged: Apply 25% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
-              "is_active": false,
-              "why": "anti-heal + pen for healing/sustain kits"
-            },
-            {
-              "name": "Soul Gem",
-              "score": 282.4,
-              "cost": 2500,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 1.12,
-              "stats": {
-                "pen": 5.0,
-                "int": 60.0,
-                "cdr": 10.0,
-                "ls": 7.5
-              },
-              "pen": 5.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit: +1 Stack.\nThree Stacks: Next Ability Hit:\n*Deals Bonus Damage (40% Intelligence)\n*+20(+6 per Level) Heal you and allies within 3.2m\n*Removes the Stacks",
-              "is_active": false,
-              "why": "ability heal/proc for mages"
-            },
-            {
-              "name": "Gluttonous Grimoire",
-              "score": 310.3,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 1.14,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 25% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 40% instead\n*Stored damage is capped to 33% of your Max Health",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
-              "name": "Spear of Desolation",
-              "score": 339.1,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.24,
-              "stats": {
-                "pen": 10.0,
-                "int": 75.0,
-                "cdr": 10.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
-              "is_active": false,
-              "why": "flat pen + CDR for ability burst"
-            }
-          ],
-          "defense": [],
-          "relics": [
-            {
-              "name": "Purification Beads",
-              "score": 30.0,
-              "cost": 0,
-              "type": "Relic",
-              "slot": "power",
-              "momentum": 0.01,
-              "stats": {},
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Immune to Crowd Control for 2s.\nCooldown: 150s",
-              "is_active": false
-            },
-            {
-              "name": "Aegis of Acceleration",
-              "score": 30.0,
-              "cost": 0,
-              "type": "Relic",
-              "slot": "power",
-              "momentum": 0.01,
-              "stats": {},
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Become Immune (to damage and healing for 1.5s.\n*Can only Move\n*On god Damage prevented: +7% Movement Speed for 6s (Max 3x)\nCooldown: 140s",
-              "is_active": false
-            }
-          ],
-          "max_shop_actives": 2,
-          "hard_max_actives": 3,
-          "active_count": 0,
-          "pen_total": 55.0,
-          "why": "Ra \u00b7 Mid \u00b7 archetype \u00abzone_mage\u00bb (INT / magical). Kit effects: big ult spike, pet / deployable, ally buffs / auras, multi-hit / ticks, burst combos, damage over time. Tags: burst, dot, heal, long_cd, pet_zone, team_buff, ult_nuke. Style burst 69%/dps 31%; patch stable (net +0.7, r5 +0.0). Patch axes (r5): general +0.6, damage +0.1, survivability +0.0. Scale STR 0% / INT 106%. Path: Divine Ruin (anti-heal + pen for healing/sustain kits); Soul Gem (ability heal/proc for mages); Gluttonous Grimoire (sustain / omnivamp line). Pen: Soul Gem, Gluttonous Grimoire, Spear of Desolation, The Cosmic Horror, Obsidian Shard. Actives 0/2 \u00b7 pen \u2248 55."
-        },
-        {
           "god": "Kukulkan",
           "role": "Mid",
           "tier": "S",
-          "rank": 3,
-          "model_score": 68.29309041745032,
+          "rank": 2,
+          "model_score": 69.24819359890856,
           "damage_type": "Magical",
           "pantheon": "Maya",
           "scaling": "Intelligence",
@@ -7455,7 +7029,433 @@
           "hard_max_actives": 3,
           "active_count": 0,
           "pen_total": 50.0,
-          "why": "Kukulkan \u00b7 Mid \u00b7 archetype \u00abmana_mage\u00bb (INT / magical). Kit effects: big ult spike, mana \u2192 power passive, pet / deployable, dash / leap engage, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, gap_close, high_cc, long_cd, mana_stack, pet_zone. Style burst 66%/dps 34%; patch rising (net +0.9, r5 +1.4). Patch axes (r5): damage +1.4. Scale STR 0% / INT 85%. Path: Soul Gem (ability heal/proc for mages); Spear of Desolation (flat pen + CDR for ability burst; patch rising \u2014 lean damage); The World Stone (penetration required for damage role). Pen: Soul Gem, Spear of Desolation, The World Stone, Obsidian Shard, Rod of Tahuti. Actives 0/2 \u00b7 pen \u2248 50."
+          "why": "Kukulkan \u00b7 Mid \u00b7 archetype \u00abmana_mage\u00bb (INT / magical). Kit effects: big ult spike, mana \u2192 power passive, pet / deployable, dash / leap engage, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, gap_close, high_cc, long_cd, mana_stack, pet_zone. Style burst 66%/dps 34%; patch rising (net +1.2, r5 +1.4). Patch axes (r5): damage +1.4. Scale STR 0% / INT 85%. Path: Soul Gem (ability heal/proc for mages); Spear of Desolation (flat pen + CDR for ability burst; patch rising \u2014 lean damage); The World Stone (penetration required for damage role). Pen: Soul Gem, Spear of Desolation, The World Stone, Obsidian Shard, Rod of Tahuti. Actives 0/2 \u00b7 pen \u2248 50."
+        },
+        {
+          "god": "Ra",
+          "role": "Mid",
+          "tier": "S",
+          "rank": 3,
+          "model_score": 68.99009041095012,
+          "damage_type": "Magical",
+          "pantheon": "Egyptian",
+          "scaling": "Intelligence",
+          "archetype": "zone_mage",
+          "kit_tags": [
+            "burst",
+            "dot",
+            "heal",
+            "long_cd",
+            "pet_zone",
+            "team_buff",
+            "ult_nuke"
+          ],
+          "kit_effects": [
+            "big ult spike",
+            "pet / deployable",
+            "ally buffs / auras",
+            "multi-hit / ticks",
+            "burst combos",
+            "damage over time",
+            "healing in kit",
+            "long cooldowns"
+          ],
+          "kit_effect_scores": {
+            "dot": 0.75,
+            "ult_nuke": 1.0,
+            "burst": 0.85,
+            "heal": 0.7,
+            "pet_zone": 1.0,
+            "team_buff": 1.0,
+            "long_cd": 0.7,
+            "multi_hit": 0.9,
+            "zone": 0.65
+          },
+          "patch_trajectory": "stable",
+          "avg_str_scaling": 0,
+          "avg_int_scaling": 106.2,
+          "starter": {
+            "name": "Conduit Gem",
+            "score": 43.3,
+            "cost": 650,
+            "type": "Starter",
+            "slot": "power",
+            "momentum": 0.01,
+            "stats": {
+              "mp": 100.0,
+              "mpr": 1.0
+            },
+            "pen": 0,
+            "damp": 0,
+            "plat": 0,
+            "ten": 0,
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
+            "is_active": false,
+            "why": "Lane starter \u2014 early stats for this role"
+          },
+          "items": [
+            {
+              "name": "Divine Ruin",
+              "score": 283.9,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "counter",
+              "momentum": -0.04,
+              "stats": {
+                "int": 85.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On God Damaged: Apply 25% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
+              "is_active": false,
+              "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
+              "name": "Soul Gem",
+              "score": 282.4,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 1.12,
+              "stats": {
+                "pen": 5.0,
+                "int": 60.0,
+                "cdr": 10.0,
+                "ls": 7.5
+              },
+              "pen": 5.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit: +1 Stack.\nThree Stacks: Next Ability Hit:\n*Deals Bonus Damage (40% Intelligence)\n*+20(+6 per Level) Heal you and allies within 3.2m\n*Removes the Stacks",
+              "is_active": false,
+              "why": "ability heal/proc for mages"
+            },
+            {
+              "name": "Gluttonous Grimoire",
+              "score": 310.3,
+              "cost": 2600,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 1.14,
+              "stats": {
+                "pen": 10.0,
+                "hp": 150.0,
+                "int": 55.0,
+                "ls": 7.5
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Store 25% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 40% instead\n*Stored damage is capped to 33% of your Max Health",
+              "is_active": false,
+              "why": "sustain / omnivamp line"
+            },
+            {
+              "name": "Spear of Desolation",
+              "score": 339.1,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.24,
+              "stats": {
+                "pen": 10.0,
+                "int": 75.0,
+                "cdr": 10.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
+              "is_active": false,
+              "why": "flat pen + CDR for ability burst"
+            },
+            {
+              "name": "The Cosmic Horror",
+              "score": 218.8,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 0.13,
+              "stats": {
+                "pen": 10.0,
+                "int": 55.0,
+                "echo": 20.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Echo > Cooldown Rate: +20% Echo Damage\nEcho +35 Intelligence\nEcho = Cooldown Rate: +20% Echo Damage & +35 Intelligence",
+              "is_active": false,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "Obsidian Shard",
+              "score": 486.6,
+              "cost": 3050,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 0.11,
+              "stats": {
+                "pen": 20.0,
+                "int": 90.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "",
+              "is_active": false,
+              "why": "% pen for magical tanks / late fights"
+            }
+          ],
+          "full_path": [
+            {
+              "name": "Divine Ruin",
+              "score": 283.9,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "counter",
+              "momentum": -0.04,
+              "stats": {
+                "int": 85.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On God Damaged: Apply 25% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
+              "is_active": false,
+              "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
+              "name": "Soul Gem",
+              "score": 282.4,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 1.12,
+              "stats": {
+                "pen": 5.0,
+                "int": 60.0,
+                "cdr": 10.0,
+                "ls": 7.5
+              },
+              "pen": 5.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit: +1 Stack.\nThree Stacks: Next Ability Hit:\n*Deals Bonus Damage (40% Intelligence)\n*+20(+6 per Level) Heal you and allies within 3.2m\n*Removes the Stacks",
+              "is_active": false,
+              "why": "ability heal/proc for mages"
+            },
+            {
+              "name": "Gluttonous Grimoire",
+              "score": 310.3,
+              "cost": 2600,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 1.14,
+              "stats": {
+                "pen": 10.0,
+                "hp": 150.0,
+                "int": 55.0,
+                "ls": 7.5
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Store 25% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 40% instead\n*Stored damage is capped to 33% of your Max Health",
+              "is_active": false,
+              "why": "sustain / omnivamp line"
+            },
+            {
+              "name": "Spear of Desolation",
+              "score": 339.1,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.24,
+              "stats": {
+                "pen": 10.0,
+                "int": 75.0,
+                "cdr": 10.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
+              "is_active": false,
+              "why": "flat pen + CDR for ability burst"
+            },
+            {
+              "name": "The Cosmic Horror",
+              "score": 218.8,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 0.13,
+              "stats": {
+                "pen": 10.0,
+                "int": 55.0,
+                "echo": 20.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Echo > Cooldown Rate: +20% Echo Damage\nEcho +35 Intelligence\nEcho = Cooldown Rate: +20% Echo Damage & +35 Intelligence",
+              "is_active": false,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "Obsidian Shard",
+              "score": 486.6,
+              "cost": 3050,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 0.11,
+              "stats": {
+                "pen": 20.0,
+                "int": 90.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "",
+              "is_active": false,
+              "why": "% pen for magical tanks / late fights"
+            }
+          ],
+          "inventory_slots": 7,
+          "cores": [
+            {
+              "name": "Divine Ruin",
+              "score": 283.9,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "counter",
+              "momentum": -0.04,
+              "stats": {
+                "int": 85.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On God Damaged: Apply 25% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
+              "is_active": false,
+              "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
+              "name": "Soul Gem",
+              "score": 282.4,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 1.12,
+              "stats": {
+                "pen": 5.0,
+                "int": 60.0,
+                "cdr": 10.0,
+                "ls": 7.5
+              },
+              "pen": 5.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit: +1 Stack.\nThree Stacks: Next Ability Hit:\n*Deals Bonus Damage (40% Intelligence)\n*+20(+6 per Level) Heal you and allies within 3.2m\n*Removes the Stacks",
+              "is_active": false,
+              "why": "ability heal/proc for mages"
+            },
+            {
+              "name": "Gluttonous Grimoire",
+              "score": 310.3,
+              "cost": 2600,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 1.14,
+              "stats": {
+                "pen": 10.0,
+                "hp": 150.0,
+                "int": 55.0,
+                "ls": 7.5
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Store 25% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 40% instead\n*Stored damage is capped to 33% of your Max Health",
+              "is_active": false,
+              "why": "sustain / omnivamp line"
+            },
+            {
+              "name": "Spear of Desolation",
+              "score": 339.1,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.24,
+              "stats": {
+                "pen": 10.0,
+                "int": 75.0,
+                "cdr": 10.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
+              "is_active": false,
+              "why": "flat pen + CDR for ability burst"
+            }
+          ],
+          "defense": [],
+          "relics": [
+            {
+              "name": "Purification Beads",
+              "score": 30.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.01,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Immune to Crowd Control for 2s.\nCooldown: 150s",
+              "is_active": false
+            },
+            {
+              "name": "Aegis of Acceleration",
+              "score": 30.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.01,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Become Immune (to damage and healing for 1.5s.\n*Can only Move\n*On god Damage prevented: +7% Movement Speed for 6s (Max 3x)\nCooldown: 140s",
+              "is_active": false
+            }
+          ],
+          "max_shop_actives": 2,
+          "hard_max_actives": 3,
+          "active_count": 0,
+          "pen_total": 55.0,
+          "why": "Ra \u00b7 Mid \u00b7 archetype \u00abzone_mage\u00bb (INT / magical). Kit effects: big ult spike, pet / deployable, ally buffs / auras, multi-hit / ticks, burst combos, damage over time. Tags: burst, dot, heal, long_cd, pet_zone, team_buff, ult_nuke. Style burst 69%/dps 31%; patch stable (net +0.7, r5 +0.0). Patch axes (r5): general +0.6, damage +0.1, survivability +0.0. Scale STR 0% / INT 106%. Path: Divine Ruin (anti-heal + pen for healing/sustain kits); Soul Gem (ability heal/proc for mages); Gluttonous Grimoire (sustain / omnivamp line). Pen: Soul Gem, Gluttonous Grimoire, Spear of Desolation, The Cosmic Horror, Obsidian Shard. Actives 0/2 \u00b7 pen \u2248 55."
         },
         {
           "god": "Sol",
@@ -13627,10 +13627,462 @@
           "why": "Cernunnos \u00b7 Jungle \u00b7 archetype \u00absustain_assassin\u00bb (STR / physical). Kit effects: protection shred, big ult spike, basic-attack kit, self heal / drain, hard crowd control, dash / leap engage. Tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 30%/dps 70%; patch stable (net +0.5, r5 +0.0). Patch axes (r5): general +0.5, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path: Devourer's Gauntlet (lifesteal stacking); The Reaper (penetration required for damage role); The Executioner (AA prot shred). Pen: The Reaper, Avatar's Parashu. Actives 2/3 \u00b7 pen \u2248 20."
         },
         {
-          "god": "Ratatoskr",
+          "god": "Awilix",
           "role": "Jungle",
           "tier": "A",
           "rank": 5,
+          "model_score": 68.85839906656834,
+          "damage_type": "Physical",
+          "pantheon": "Maya",
+          "scaling": "Strength",
+          "archetype": "bruiser_jungle",
+          "kit_tags": [
+            "as_steroid",
+            "gap_close",
+            "hard_cc",
+            "high_cc",
+            "long_cd",
+            "mobile",
+            "pet_zone",
+            "sustained",
+            "utility"
+          ],
+          "kit_effects": [
+            "attack-speed steroid",
+            "pet / deployable",
+            "hard crowd control",
+            "dash / leap engage",
+            "lots of CC",
+            "high mobility",
+            "sustained DPS",
+            "long cooldowns"
+          ],
+          "kit_effect_scores": {
+            "as_steroid": 1.0,
+            "pet_zone": 1.0,
+            "hard_cc": 1.0,
+            "high_cc": 0.9,
+            "mobile": 0.9,
+            "gap_close": 1.0,
+            "sustained": 0.85,
+            "long_cd": 0.7,
+            "zone": 0.65
+          },
+          "patch_trajectory": "stable",
+          "avg_str_scaling": 64.0,
+          "avg_int_scaling": 0,
+          "starter": {
+            "name": "Bumba's Cudgel",
+            "score": 44.0,
+            "cost": 650,
+            "type": "Starter",
+            "slot": "power",
+            "momentum": 0.31,
+            "stats": {
+              "hp": 75.0,
+              "mp": 50.0
+            },
+            "pen": 0,
+            "damp": 0,
+            "plat": 0,
+            "ten": 0,
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Used: Buff next Attack within 8s.\n*+20 True Damage (+1 Per Level) to enemies within 1.92m of t",
+            "is_active": false,
+            "why": "Jungle starter \u2014 clear / camp sustain"
+          },
+          "items": [
+            {
+              "name": "Jotunn's Revenge",
+              "score": 343.3,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.75,
+              "stats": {
+                "pen": 5.0,
+                "str": 35.0,
+                "cdr": 25.0,
+                "mp": 250.0
+              },
+              "pen": 5.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "God Kill or Assist:\n*-1s Cooldown for Non-Ultimate Abilities\n*-5s Cooldown for Ultimate Abilities",
+              "is_active": false,
+              "why": "CDR + pen for gank/engage"
+            },
+            {
+              "name": "Pendulum Blade",
+              "score": 183.9,
+              "cost": 2750,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.41,
+              "stats": {
+                "pen": 10.0,
+                "str": 30.0,
+                "cdr": 10.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: -4s Ability Cooldowns.\nCooldown: 40s\nYou can own up to 3 active items at once",
+              "is_active": true,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "The Crusher",
+              "score": 175.4,
+              "cost": 2800,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.32,
+              "stats": {
+                "pen": 10.0,
+                "str": 45.0,
+                "echo": 25.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit: +Physical Damage.\n*Damage = 35% of your Strength\n*Damage is dealt over 1s\n*Subsequent hits on the same target deal 33% bonus Damage, over 3s.",
+              "is_active": false,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "Titan's Bane",
+              "score": 257.1,
+              "cost": 3100,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.38,
+              "stats": {
+                "pen": 20.0,
+                "str": 60.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "",
+              "is_active": false,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "Arondight",
+              "score": 276.1,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.21,
+              "stats": {
+                "str": 55.0,
+                "cdr": 15.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Reveal enemy Gods within 17.6m for 6s.\n*Reveal persists through Stealth\n*If any God is revealed, +25% Movement Speed for 6s\n*First time you damage a revealed God:\n**+50 (+5",
+              "is_active": true,
+              "why": "CDR + pen for gank/engage"
+            },
+            {
+              "name": "Genji's Guard",
+              "score": 158.1,
+              "cost": 2350,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 1.14,
+              "stats": {
+                "mprot": 60.0,
+                "cdr": 15.0,
+                "mp": 200.0,
+                "mpr": 5.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Hit by Magical Ability Damage: -3s Cooldowns.\nCooldown: 15s",
+              "is_active": false,
+              "why": "Jungle defensive slot \u2014 survive focus; kit CD nerfed \u2014 buy CDR"
+            }
+          ],
+          "full_path": [
+            {
+              "name": "Jotunn's Revenge",
+              "score": 343.3,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.75,
+              "stats": {
+                "pen": 5.0,
+                "str": 35.0,
+                "cdr": 25.0,
+                "mp": 250.0
+              },
+              "pen": 5.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "God Kill or Assist:\n*-1s Cooldown for Non-Ultimate Abilities\n*-5s Cooldown for Ultimate Abilities",
+              "is_active": false,
+              "why": "CDR + pen for gank/engage"
+            },
+            {
+              "name": "Pendulum Blade",
+              "score": 183.9,
+              "cost": 2750,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.41,
+              "stats": {
+                "pen": 10.0,
+                "str": 30.0,
+                "cdr": 10.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: -4s Ability Cooldowns.\nCooldown: 40s\nYou can own up to 3 active items at once",
+              "is_active": true,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "The Crusher",
+              "score": 175.4,
+              "cost": 2800,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.32,
+              "stats": {
+                "pen": 10.0,
+                "str": 45.0,
+                "echo": 25.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit: +Physical Damage.\n*Damage = 35% of your Strength\n*Damage is dealt over 1s\n*Subsequent hits on the same target deal 33% bonus Damage, over 3s.",
+              "is_active": false,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "Titan's Bane",
+              "score": 257.1,
+              "cost": 3100,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.38,
+              "stats": {
+                "pen": 20.0,
+                "str": 60.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "",
+              "is_active": false,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "Arondight",
+              "score": 276.1,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.21,
+              "stats": {
+                "str": 55.0,
+                "cdr": 15.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Reveal enemy Gods within 17.6m for 6s.\n*Reveal persists through Stealth\n*If any God is revealed, +25% Movement Speed for 6s\n*First time you damage a revealed God:\n**+50 (+5",
+              "is_active": true,
+              "why": "CDR + pen for gank/engage"
+            },
+            {
+              "name": "Genji's Guard",
+              "score": 158.1,
+              "cost": 2350,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 1.14,
+              "stats": {
+                "mprot": 60.0,
+                "cdr": 15.0,
+                "mp": 200.0,
+                "mpr": 5.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Hit by Magical Ability Damage: -3s Cooldowns.\nCooldown: 15s",
+              "is_active": false,
+              "why": "Jungle defensive slot \u2014 survive focus; kit CD nerfed \u2014 buy CDR"
+            }
+          ],
+          "inventory_slots": 7,
+          "cores": [
+            {
+              "name": "Jotunn's Revenge",
+              "score": 343.3,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.75,
+              "stats": {
+                "pen": 5.0,
+                "str": 35.0,
+                "cdr": 25.0,
+                "mp": 250.0
+              },
+              "pen": 5.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "God Kill or Assist:\n*-1s Cooldown for Non-Ultimate Abilities\n*-5s Cooldown for Ultimate Abilities",
+              "is_active": false,
+              "why": "CDR + pen for gank/engage"
+            },
+            {
+              "name": "Pendulum Blade",
+              "score": 183.9,
+              "cost": 2750,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.41,
+              "stats": {
+                "pen": 10.0,
+                "str": 30.0,
+                "cdr": 10.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: -4s Ability Cooldowns.\nCooldown: 40s\nYou can own up to 3 active items at once",
+              "is_active": true,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "The Crusher",
+              "score": 175.4,
+              "cost": 2800,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.32,
+              "stats": {
+                "pen": 10.0,
+                "str": 45.0,
+                "echo": 25.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit: +Physical Damage.\n*Damage = 35% of your Strength\n*Damage is dealt over 1s\n*Subsequent hits on the same target deal 33% bonus Damage, over 3s.",
+              "is_active": false,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "Titan's Bane",
+              "score": 257.1,
+              "cost": 3100,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.38,
+              "stats": {
+                "pen": 20.0,
+                "str": 60.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "",
+              "is_active": false,
+              "why": "penetration required for damage role"
+            }
+          ],
+          "defense": [
+            {
+              "name": "Genji's Guard",
+              "score": 158.1,
+              "cost": 2350,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 1.14,
+              "stats": {
+                "mprot": 60.0,
+                "cdr": 15.0,
+                "mp": 200.0,
+                "mpr": 5.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Hit by Magical Ability Damage: -3s Cooldowns.\nCooldown: 15s",
+              "is_active": false,
+              "why": "Jungle defensive slot \u2014 survive focus; kit CD nerfed \u2014 buy CDR"
+            }
+          ],
+          "relics": [
+            {
+              "name": "Purification Beads",
+              "score": 38.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.01,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Immune to Crowd Control for 2s.\nCooldown: 150s",
+              "is_active": false
+            },
+            {
+              "name": "Blink Rune",
+              "score": 32.4,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": -1.27,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Teleport up to 5.6m.\nCannot be used for 3s after dealing or taking God damage.\nCan be used while casting.\nDamage or Kill a God within 4s of use: -30s Cooldown\nCooldown: 170",
+              "is_active": false
+            }
+          ],
+          "max_shop_actives": 3,
+          "hard_max_actives": 3,
+          "active_count": 2,
+          "pen_total": 45.0,
+          "why": "Awilix \u00b7 Jungle \u00b7 archetype \u00abbruiser_jungle\u00bb (STR / physical). Kit effects: attack-speed steroid, pet / deployable, hard crowd control, dash / leap engage, lots of CC, high mobility. Tags: as_steroid, gap_close, hard_cc, high_cc, long_cd, mobile, pet_zone, sustained. Style burst 22%/dps 78%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): general +0.3, cooldown -0.3, utility +0.0. Scale STR 64% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role); The Crusher (penetration required for damage role). Pen: Jotunn's Revenge, Pendulum Blade, The Crusher, Titan's Bane. Actives 2/3 \u00b7 pen \u2248 45."
+        },
+        {
+          "god": "Ratatoskr",
+          "role": "Jungle",
+          "tier": "A",
+          "rank": 6,
           "model_score": 68.6091892929886,
           "damage_type": "Physical",
           "pantheon": "Norse",
@@ -14074,435 +14526,6 @@
           "active_count": 2,
           "pen_total": 45.0,
           "why": "Ratatoskr \u00b7 Jungle \u00b7 archetype \u00abburst_assassin\u00bb (STR / physical). Kit effects: big ult spike, hard crowd control, dash / leap engage, CC immunity in kit, lots of CC, burst combos. Tags: anti_cc, burst, gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 75%/dps 25%; patch rising (net +2.2, r5 +1.5). Patch axes (r5): survivability +2.2, general -0.9, cooldown -0.7. Scale STR 90% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role); Heartseeker (stacking pen power for assassins). Pen: Jotunn's Revenge, Pendulum Blade, Heartseeker, Titan's Bane. Actives 2/3 \u00b7 pen \u2248 45."
-        },
-        {
-          "god": "Awilix",
-          "role": "Jungle",
-          "tier": "A",
-          "rank": 6,
-          "model_score": 67.92365082248408,
-          "damage_type": "Physical",
-          "pantheon": "Maya",
-          "scaling": "Strength",
-          "archetype": "bruiser_jungle",
-          "kit_tags": [
-            "as_steroid",
-            "gap_close",
-            "hard_cc",
-            "high_cc",
-            "long_cd",
-            "mobile",
-            "pet_zone",
-            "sustained",
-            "utility"
-          ],
-          "kit_effects": [
-            "attack-speed steroid",
-            "pet / deployable",
-            "hard crowd control",
-            "dash / leap engage",
-            "lots of CC",
-            "high mobility",
-            "sustained DPS",
-            "long cooldowns"
-          ],
-          "kit_effect_scores": {
-            "as_steroid": 1.0,
-            "pet_zone": 1.0,
-            "hard_cc": 1.0,
-            "high_cc": 0.9,
-            "mobile": 0.9,
-            "gap_close": 1.0,
-            "sustained": 0.85,
-            "long_cd": 0.7,
-            "zone": 0.65
-          },
-          "patch_trajectory": "stable",
-          "avg_str_scaling": 64.0,
-          "avg_int_scaling": 0,
-          "starter": {
-            "name": "Bumba's Cudgel",
-            "score": 44.0,
-            "cost": 650,
-            "type": "Starter",
-            "slot": "power",
-            "momentum": 0.31,
-            "stats": {
-              "hp": 75.0,
-              "mp": 50.0
-            },
-            "pen": 0,
-            "damp": 0,
-            "plat": 0,
-            "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Used: Buff next Attack within 8s.\n*+20 True Damage (+1 Per Level) to enemies within 1.92m of t",
-            "is_active": false,
-            "why": "Jungle starter \u2014 clear / camp sustain"
-          },
-          "items": [
-            {
-              "name": "Jotunn's Revenge",
-              "score": 291.3,
-              "cost": 2400,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.75,
-              "stats": {
-                "pen": 5.0,
-                "str": 35.0,
-                "cdr": 25.0,
-                "mp": 250.0
-              },
-              "pen": 5.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "God Kill or Assist:\n*-1s Cooldown for Non-Ultimate Abilities\n*-5s Cooldown for Ultimate Abilities",
-              "is_active": false,
-              "why": "CDR + pen for gank/engage"
-            },
-            {
-              "name": "Pendulum Blade",
-              "score": 155.9,
-              "cost": 2750,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.41,
-              "stats": {
-                "pen": 10.0,
-                "str": 30.0,
-                "cdr": 10.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: -4s Ability Cooldowns.\nCooldown: 40s\nYou can own up to 3 active items at once",
-              "is_active": true,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Heartseeker",
-              "score": 136.9,
-              "cost": 3000,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.62,
-              "stats": {
-                "pen": 10.0,
-                "str": 45.0,
-                "mp": 250.0,
-                "mpr": 2.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit: +%Health Physical Damage.\n*Damage = 2% of your Strength, as a % of the target's Max Health.",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Titan's Bane",
-              "score": 245.1,
-              "cost": 3100,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.38,
-              "stats": {
-                "pen": 20.0,
-                "str": 60.0
-              },
-              "pen": 20.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Arondight",
-              "score": 240.1,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.21,
-              "stats": {
-                "str": 55.0,
-                "cdr": 15.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Reveal enemy Gods within 17.6m for 6s.\n*Reveal persists through Stealth\n*If any God is revealed, +25% Movement Speed for 6s\n*First time you damage a revealed God:\n**+50 (+5",
-              "is_active": true,
-              "why": "CDR + pen for gank/engage"
-            },
-            {
-              "name": "Avenging Blade",
-              "score": 179.5,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.0,
-              "stats": {
-                "hp": 200.0,
-                "str": 60.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Attack hit a God: Debuff that God.\n*-3.5% Protections\nWhen Debuffed God is in Jungle OR Heals 5% of their Health:\n*Stacks become twice as effective.\nDebuff lasts 4s, Stacks up to 3",
-              "is_active": false,
-              "why": "attack speed / crit carry core"
-            }
-          ],
-          "full_path": [
-            {
-              "name": "Jotunn's Revenge",
-              "score": 291.3,
-              "cost": 2400,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.75,
-              "stats": {
-                "pen": 5.0,
-                "str": 35.0,
-                "cdr": 25.0,
-                "mp": 250.0
-              },
-              "pen": 5.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "God Kill or Assist:\n*-1s Cooldown for Non-Ultimate Abilities\n*-5s Cooldown for Ultimate Abilities",
-              "is_active": false,
-              "why": "CDR + pen for gank/engage"
-            },
-            {
-              "name": "Pendulum Blade",
-              "score": 155.9,
-              "cost": 2750,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.41,
-              "stats": {
-                "pen": 10.0,
-                "str": 30.0,
-                "cdr": 10.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: -4s Ability Cooldowns.\nCooldown: 40s\nYou can own up to 3 active items at once",
-              "is_active": true,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Heartseeker",
-              "score": 136.9,
-              "cost": 3000,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.62,
-              "stats": {
-                "pen": 10.0,
-                "str": 45.0,
-                "mp": 250.0,
-                "mpr": 2.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit: +%Health Physical Damage.\n*Damage = 2% of your Strength, as a % of the target's Max Health.",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Titan's Bane",
-              "score": 245.1,
-              "cost": 3100,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.38,
-              "stats": {
-                "pen": 20.0,
-                "str": 60.0
-              },
-              "pen": 20.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Arondight",
-              "score": 240.1,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.21,
-              "stats": {
-                "str": 55.0,
-                "cdr": 15.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Reveal enemy Gods within 17.6m for 6s.\n*Reveal persists through Stealth\n*If any God is revealed, +25% Movement Speed for 6s\n*First time you damage a revealed God:\n**+50 (+5",
-              "is_active": true,
-              "why": "CDR + pen for gank/engage"
-            },
-            {
-              "name": "Avenging Blade",
-              "score": 179.5,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.0,
-              "stats": {
-                "hp": 200.0,
-                "str": 60.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Attack hit a God: Debuff that God.\n*-3.5% Protections\nWhen Debuffed God is in Jungle OR Heals 5% of their Health:\n*Stacks become twice as effective.\nDebuff lasts 4s, Stacks up to 3",
-              "is_active": false,
-              "why": "attack speed / crit carry core"
-            }
-          ],
-          "inventory_slots": 7,
-          "cores": [
-            {
-              "name": "Jotunn's Revenge",
-              "score": 291.3,
-              "cost": 2400,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.75,
-              "stats": {
-                "pen": 5.0,
-                "str": 35.0,
-                "cdr": 25.0,
-                "mp": 250.0
-              },
-              "pen": 5.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "God Kill or Assist:\n*-1s Cooldown for Non-Ultimate Abilities\n*-5s Cooldown for Ultimate Abilities",
-              "is_active": false,
-              "why": "CDR + pen for gank/engage"
-            },
-            {
-              "name": "Pendulum Blade",
-              "score": 155.9,
-              "cost": 2750,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.41,
-              "stats": {
-                "pen": 10.0,
-                "str": 30.0,
-                "cdr": 10.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: -4s Ability Cooldowns.\nCooldown: 40s\nYou can own up to 3 active items at once",
-              "is_active": true,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Heartseeker",
-              "score": 136.9,
-              "cost": 3000,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.62,
-              "stats": {
-                "pen": 10.0,
-                "str": 45.0,
-                "mp": 250.0,
-                "mpr": 2.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit: +%Health Physical Damage.\n*Damage = 2% of your Strength, as a % of the target's Max Health.",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Titan's Bane",
-              "score": 245.1,
-              "cost": 3100,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.38,
-              "stats": {
-                "pen": 20.0,
-                "str": 60.0
-              },
-              "pen": 20.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            }
-          ],
-          "defense": [],
-          "relics": [
-            {
-              "name": "Purification Beads",
-              "score": 38.0,
-              "cost": 0,
-              "type": "Relic",
-              "slot": "power",
-              "momentum": 0.01,
-              "stats": {},
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Immune to Crowd Control for 2s.\nCooldown: 150s",
-              "is_active": false
-            },
-            {
-              "name": "Blink Rune",
-              "score": 32.4,
-              "cost": 0,
-              "type": "Relic",
-              "slot": "power",
-              "momentum": -1.27,
-              "stats": {},
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Teleport up to 5.6m.\nCannot be used for 3s after dealing or taking God damage.\nCan be used while casting.\nDamage or Kill a God within 4s of use: -30s Cooldown\nCooldown: 170",
-              "is_active": false
-            }
-          ],
-          "max_shop_actives": 3,
-          "hard_max_actives": 3,
-          "active_count": 2,
-          "pen_total": 45.0,
-          "why": "Awilix \u00b7 Jungle \u00b7 archetype \u00abbruiser_jungle\u00bb (STR / physical). Kit effects: attack-speed steroid, pet / deployable, hard crowd control, dash / leap engage, lots of CC, high mobility. Tags: as_steroid, gap_close, hard_cc, high_cc, long_cd, mobile, pet_zone, sustained. Style burst 22%/dps 78%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.3, utility +0.0, cooldown +0.0. Scale STR 64% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role); Heartseeker (penetration required for damage role). Pen: Jotunn's Revenge, Pendulum Blade, Heartseeker, Titan's Bane. Actives 2/3 \u00b7 pen \u2248 45."
         },
         {
           "god": "Thanatos",
@@ -16268,7 +16291,7 @@
           "role": "Jungle",
           "tier": "B",
           "rank": 11,
-          "model_score": 62.68085110900511,
+          "model_score": 61.725747927546855,
           "damage_type": "Physical",
           "pantheon": "Greek",
           "scaling": "Strength",
@@ -16703,7 +16726,7 @@
           "hard_max_actives": 3,
           "active_count": 2,
           "pen_total": 35.0,
-          "why": "Achilles \u00b7 Jungle \u00b7 archetype \u00absustain_assassin\u00bb (STR / physical). Kit effects: big ult spike, basic-attack kit, self heal / drain, execute / threshold, shields, hard crowd control. Tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 30%/dps 70%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.3, attack_speed +0.0, survivability +0.0. Scale STR 83% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); Heartseeker (stacking pen power for assassins). Pen: Jotunn's Revenge, Heartseeker, Titan's Bane. Actives 2/3 \u00b7 pen \u2248 35."
+          "why": "Achilles \u00b7 Jungle \u00b7 archetype \u00absustain_assassin\u00bb (STR / physical). Kit effects: big ult spike, basic-attack kit, self heal / drain, execute / threshold, shields, hard crowd control. Tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 30%/dps 70%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): general +0.3, mana -0.2, survivability -0.2. Scale STR 83% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); Heartseeker (stacking pen power for assassins). Pen: Jotunn's Revenge, Heartseeker, Titan's Bane. Actives 2/3 \u00b7 pen \u2248 35."
         },
         {
           "god": "Nemesis",
@@ -22274,60 +22297,59 @@
           "why": "Xing Tian \u00b7 Solo \u00b7 archetype \u00abmage_solo\u00bb (INT / magical). Kit effects: damage over time, channel / cast time, basic-attack kit, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot. Style burst 65%/dps 35%; patch rising (net +1.0, r5 +1.0). Patch axes (r5): general +1.0. Scale STR 0% / INT 57%. Path: Shield of the Phoenix (shield / phoenix-style bulk); Gem of Isolation (zones & CC \u2014 Isolation slow/shred value); Gluttonous Grimoire (sustain / omnivamp line). Pen: Gluttonous Grimoire. Actives 1/2 \u00b7 pen \u2248 10."
         },
         {
-          "god": "Achilles",
+          "god": "Hades",
           "role": "Solo",
           "tier": "C",
           "rank": 12,
-          "model_score": 62.68085110900511,
-          "damage_type": "Physical",
+          "model_score": 62.13783058082027,
+          "damage_type": "Magical",
           "pantheon": "Greek",
-          "scaling": "Strength",
+          "scaling": "Intelligence",
           "archetype": "sustain_solo",
           "kit_tags": [
-            "aa",
             "anti_cc",
-            "execute",
+            "channel",
+            "dot",
             "gap_close",
             "hard_cc",
             "heal",
-            "heavy_shield",
+            "heavy_dot",
+            "high_cc",
             "long_cd",
-            "mobile",
             "self_sustain",
-            "shield",
-            "sustained",
+            "team_buff",
             "ult_nuke",
-            "utility"
+            "utility",
+            "zone"
           ],
           "kit_effects": [
+            "damage over time",
+            "channel / cast time",
             "big ult spike",
-            "basic-attack kit",
             "self heal / drain",
-            "execute / threshold",
-            "shields",
             "hard crowd control",
             "dash / leap engage",
+            "ally buffs / auras",
             "CC immunity in kit"
           ],
           "kit_effect_scores": {
+            "dot": 1.0,
+            "channel": 1.0,
             "ult_nuke": 1.0,
-            "aa": 1.0,
             "self_sustain": 1.0,
             "heal": 0.7,
-            "execute": 1.0,
-            "shield": 1.0,
+            "zone": 0.8,
             "hard_cc": 1.0,
-            "mobile": 0.9,
+            "high_cc": 0.9,
             "gap_close": 1.0,
+            "team_buff": 1.0,
             "anti_cc": 1.0,
-            "sustained": 0.85,
             "long_cd": 0.7,
-            "multi_hit": 0.9,
-            "prot_shred": 0.85
+            "multi_hit": 0.9
           },
           "patch_trajectory": "stable",
-          "avg_str_scaling": 82.9,
-          "avg_int_scaling": 0,
+          "avg_str_scaling": 0,
+          "avg_int_scaling": 83.3,
           "starter": {
             "name": "Warrior's Axe",
             "score": 42.5,
@@ -22349,70 +22371,47 @@
           },
           "items": [
             {
-              "name": "Shield of the Phoenix",
-              "score": 361.3,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.03,
+              "name": "Rod Of Asclepius",
+              "score": 337.8,
+              "cost": 2350,
+              "type": "Hybrid",
+              "slot": "power",
+              "momentum": 0.33,
               "stats": {
-                "plat": 5.0,
-                "pprot": 35.0,
                 "hp": 225.0,
-                "cdr": 10.0
+                "int": 65.0,
+                "hpr": 3.0
               },
               "pen": 0,
               "damp": 0,
-              "plat": 5.0,
-              "ten": 0,
-              "effect": "Ability Hit a God:\n*+1.5% Health Heal\n*+2% Mana Restore\nTriggers once per Ability, per god.",
-              "is_active": false,
-              "why": "shield / phoenix-style bulk"
-            },
-            {
-              "name": "Kinetic Cuirass",
-              "score": 310.9,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 0.67,
-              "stats": {
-                "plat": 5.0,
-                "pprot": 25.0,
-                "mprot": 25.0,
-                "hp": 300.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 5.0,
-              "ten": 0,
-              "effect": "Damaged by 3 Attacks from gods: Gain Kinetic. Stacks up to 2 times.\nKinetic makes your next Attack unleash a shockwave, even if it misses, dealing 40 (+4% of your Health) Physical ",
-              "is_active": false,
-              "why": "mitigation vs enemy damage types"
-            },
-            {
-              "name": "Phoenix Feather",
-              "score": 264.1,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 0.19,
-              "stats": {
-                "damp": 5.0,
-                "mprot": 35.0,
-                "hp": 300.0
-              },
-              "pen": 0,
-              "damp": 5.0,
               "plat": 0,
               "ten": 0,
-              "effect": "On Use: Fire 3 Pulses that Heal you and True Damage enemies within 3.2m.\n*Heal = +75 Health +7.5 Missing Health\n*True Damage = +3% Max Health from Items\nCooldown: 120s\nYou can own ",
+              "effect": "On Use: Heal all allies within 8.8m.\n*+10% Health Heal over 10s\n*Counts as Ability healing\nIf target has 6 debuffs:\n*+10% Health Heal instantly\n*Grants all non-damage immunities fo",
               "is_active": true,
-              "why": "shield / phoenix-style bulk"
+              "why": "heal amp / team sustain"
+            },
+            {
+              "name": "Gem of Isolation",
+              "score": 421.0,
+              "cost": 2500,
+              "type": "Hybrid",
+              "slot": "power",
+              "momentum": 0.0,
+              "stats": {
+                "hp": 250.0,
+                "int": 50.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
+              "is_active": false,
+              "why": "zones & CC \u2014 Isolation slow/shred value"
             },
             {
               "name": "Stone of Binding",
-              "score": 288.4,
+              "score": 331.7,
               "cost": 2550,
               "type": "Defensive",
               "slot": "mitigate",
@@ -22431,8 +22430,28 @@
               "why": "Stone of Binding \u2014 CC setup shred"
             },
             {
+              "name": "Doublet of Binding",
+              "score": 302.1,
+              "cost": 2700,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": -0.34,
+              "stats": {
+                "damp": 5.0,
+                "mprot": 50.0,
+                "hp": 400.0
+              },
+              "pen": 0,
+              "damp": 5.0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Gain Protective Link to a target.\nProtective Link redirects 20% of Damage they take, up to 600 Health. This Damage is mitigated by your Dampening.\nCooldown: 45s\nYou can own",
+              "is_active": true,
+              "why": "Stone of Binding \u2014 CC setup shred"
+            },
+            {
               "name": "Gauntlet of Thebes",
-              "score": 269.8,
+              "score": 262.2,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -22450,91 +22469,70 @@
               "why": "team aura / support core"
             },
             {
-              "name": "Eye of Erebus",
-              "score": 232.8,
-              "cost": 2600,
+              "name": "Shifter's Shield",
+              "score": 380.1,
+              "cost": 2650,
               "type": "Hybrid",
               "slot": "defense",
-              "momentum": 0.57,
+              "momentum": 2.53,
               "stats": {
-                "hp": 350.0,
-                "cdr": 15.0
+                "pprot": 25.0,
+                "mprot": 25.0,
+                "hp": 300.0,
+                "hpr": 4.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).",
-              "is_active": true,
-              "why": "Solo defensive slot \u2014 survive focus"
+              "effect": "Over 75% Health:+45 Strength or +55 Intelligence (whichever is higher).\nUnder 75% Health: +20 Physical and Magical Protection.",
+              "is_active": false,
+              "why": "offline hybrid tank"
             }
           ],
           "full_path": [
             {
-              "name": "Shield of the Phoenix",
-              "score": 361.3,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.03,
+              "name": "Rod Of Asclepius",
+              "score": 337.8,
+              "cost": 2350,
+              "type": "Hybrid",
+              "slot": "power",
+              "momentum": 0.33,
               "stats": {
-                "plat": 5.0,
-                "pprot": 35.0,
                 "hp": 225.0,
-                "cdr": 10.0
+                "int": 65.0,
+                "hpr": 3.0
               },
               "pen": 0,
               "damp": 0,
-              "plat": 5.0,
-              "ten": 0,
-              "effect": "Ability Hit a God:\n*+1.5% Health Heal\n*+2% Mana Restore\nTriggers once per Ability, per god.",
-              "is_active": false,
-              "why": "shield / phoenix-style bulk"
-            },
-            {
-              "name": "Kinetic Cuirass",
-              "score": 310.9,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 0.67,
-              "stats": {
-                "plat": 5.0,
-                "pprot": 25.0,
-                "mprot": 25.0,
-                "hp": 300.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 5.0,
-              "ten": 0,
-              "effect": "Damaged by 3 Attacks from gods: Gain Kinetic. Stacks up to 2 times.\nKinetic makes your next Attack unleash a shockwave, even if it misses, dealing 40 (+4% of your Health) Physical ",
-              "is_active": false,
-              "why": "mitigation vs enemy damage types"
-            },
-            {
-              "name": "Phoenix Feather",
-              "score": 264.1,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 0.19,
-              "stats": {
-                "damp": 5.0,
-                "mprot": 35.0,
-                "hp": 300.0
-              },
-              "pen": 0,
-              "damp": 5.0,
               "plat": 0,
               "ten": 0,
-              "effect": "On Use: Fire 3 Pulses that Heal you and True Damage enemies within 3.2m.\n*Heal = +75 Health +7.5 Missing Health\n*True Damage = +3% Max Health from Items\nCooldown: 120s\nYou can own ",
+              "effect": "On Use: Heal all allies within 8.8m.\n*+10% Health Heal over 10s\n*Counts as Ability healing\nIf target has 6 debuffs:\n*+10% Health Heal instantly\n*Grants all non-damage immunities fo",
               "is_active": true,
-              "why": "shield / phoenix-style bulk"
+              "why": "heal amp / team sustain"
+            },
+            {
+              "name": "Gem of Isolation",
+              "score": 421.0,
+              "cost": 2500,
+              "type": "Hybrid",
+              "slot": "power",
+              "momentum": 0.0,
+              "stats": {
+                "hp": 250.0,
+                "int": 50.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
+              "is_active": false,
+              "why": "zones & CC \u2014 Isolation slow/shred value"
             },
             {
               "name": "Stone of Binding",
-              "score": 288.4,
+              "score": 331.7,
               "cost": 2550,
               "type": "Defensive",
               "slot": "mitigate",
@@ -22553,8 +22551,28 @@
               "why": "Stone of Binding \u2014 CC setup shred"
             },
             {
+              "name": "Doublet of Binding",
+              "score": 302.1,
+              "cost": 2700,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": -0.34,
+              "stats": {
+                "damp": 5.0,
+                "mprot": 50.0,
+                "hp": 400.0
+              },
+              "pen": 0,
+              "damp": 5.0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Gain Protective Link to a target.\nProtective Link redirects 20% of Damage they take, up to 600 Health. This Damage is mitigated by your Dampening.\nCooldown: 45s\nYou can own",
+              "is_active": true,
+              "why": "Stone of Binding \u2014 CC setup shred"
+            },
+            {
               "name": "Gauntlet of Thebes",
-              "score": 269.8,
+              "score": 262.2,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -22572,89 +22590,130 @@
               "why": "team aura / support core"
             },
             {
-              "name": "Eye of Erebus",
-              "score": 232.8,
-              "cost": 2600,
+              "name": "Shifter's Shield",
+              "score": 380.1,
+              "cost": 2650,
               "type": "Hybrid",
               "slot": "defense",
-              "momentum": 0.57,
+              "momentum": 2.53,
               "stats": {
-                "hp": 350.0,
-                "cdr": 15.0
+                "pprot": 25.0,
+                "mprot": 25.0,
+                "hp": 300.0,
+                "hpr": 4.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).",
-              "is_active": true,
-              "why": "Solo defensive slot \u2014 survive focus"
+              "effect": "Over 75% Health:+45 Strength or +55 Intelligence (whichever is higher).\nUnder 75% Health: +20 Physical and Magical Protection.",
+              "is_active": false,
+              "why": "offline hybrid tank"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
-              "name": "Eye of Erebus",
-              "score": 232.8,
-              "cost": 2600,
+              "name": "Rod Of Asclepius",
+              "score": 337.8,
+              "cost": 2350,
               "type": "Hybrid",
-              "slot": "defense",
-              "momentum": 0.57,
+              "slot": "power",
+              "momentum": 0.33,
               "stats": {
-                "hp": 350.0,
-                "cdr": 15.0
+                "hp": 225.0,
+                "int": 65.0,
+                "hpr": 3.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).",
+              "effect": "On Use: Heal all allies within 8.8m.\n*+10% Health Heal over 10s\n*Counts as Ability healing\nIf target has 6 debuffs:\n*+10% Health Heal instantly\n*Grants all non-damage immunities fo",
               "is_active": true,
-              "why": "Solo defensive slot \u2014 survive focus"
+              "why": "heal amp / team sustain"
+            },
+            {
+              "name": "Gem of Isolation",
+              "score": 421.0,
+              "cost": 2500,
+              "type": "Hybrid",
+              "slot": "power",
+              "momentum": 0.0,
+              "stats": {
+                "hp": 250.0,
+                "int": 50.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
+              "is_active": false,
+              "why": "zones & CC \u2014 Isolation slow/shred value"
+            },
+            {
+              "name": "Shifter's Shield",
+              "score": 380.1,
+              "cost": 2650,
+              "type": "Hybrid",
+              "slot": "defense",
+              "momentum": 2.53,
+              "stats": {
+                "pprot": 25.0,
+                "mprot": 25.0,
+                "hp": 300.0,
+                "hpr": 4.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Over 75% Health:+45 Strength or +55 Intelligence (whichever is higher).\nUnder 75% Health: +20 Physical and Magical Protection.",
+              "is_active": false,
+              "why": "offline hybrid tank"
             }
           ],
           "defense": [
             {
-              "name": "Shield of the Phoenix",
-              "score": 361.3,
-              "cost": 2400,
+              "name": "Stone of Binding",
+              "score": 331.7,
+              "cost": 2550,
               "type": "Defensive",
               "slot": "mitigate",
-              "momentum": 1.03,
+              "momentum": 1.18,
               "stats": {
-                "plat": 5.0,
+                "damp": 5.0,
                 "pprot": 35.0,
-                "hp": 225.0,
-                "cdr": 10.0
+                "mprot": 35.0
               },
               "pen": 0,
-              "damp": 0,
-              "plat": 5.0,
+              "damp": 5.0,
+              "plat": 0,
               "ten": 0,
-              "effect": "Ability Hit a God:\n*+1.5% Health Heal\n*+2% Mana Restore\nTriggers once per Ability, per god.",
+              "effect": "Hard Crowd Control an Enemy: Apply -7 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
               "is_active": false,
-              "why": "shield / phoenix-style bulk"
+              "why": "Stone of Binding \u2014 CC setup shred"
             },
             {
-              "name": "Kinetic Cuirass",
-              "score": 310.9,
-              "cost": 2400,
+              "name": "Doublet of Binding",
+              "score": 302.1,
+              "cost": 2700,
               "type": "Defensive",
               "slot": "mitigate",
-              "momentum": 0.67,
+              "momentum": -0.34,
               "stats": {
-                "plat": 5.0,
-                "pprot": 25.0,
-                "mprot": 25.0,
-                "hp": 300.0
+                "damp": 5.0,
+                "mprot": 50.0,
+                "hp": 400.0
               },
               "pen": 0,
-              "damp": 0,
-              "plat": 5.0,
+              "damp": 5.0,
+              "plat": 0,
               "ten": 0,
-              "effect": "Damaged by 3 Attacks from gods: Gain Kinetic. Stacks up to 2 times.\nKinetic makes your next Attack unleash a shockwave, even if it misses, dealing 40 (+4% of your Health) Physical ",
-              "is_active": false,
-              "why": "mitigation vs enemy damage types"
+              "effect": "On Use: Gain Protective Link to a target.\nProtective Link redirects 20% of Damage they take, up to 600 Health. This Damage is mitigated by your Dampening.\nCooldown: 45s\nYou can own",
+              "is_active": true,
+              "why": "Stone of Binding \u2014 CC setup shred"
             }
           ],
           "relics": [
@@ -22689,11 +22748,11 @@
               "is_active": false
             }
           ],
-          "max_shop_actives": 3,
+          "max_shop_actives": 2,
           "hard_max_actives": 3,
           "active_count": 2,
           "pen_total": 0.0,
-          "why": "Achilles \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (STR / physical). Kit effects: big ult spike, basic-attack kit, self heal / drain, execute / threshold, shields, hard crowd control. Tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 30%/dps 70%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.3, attack_speed +0.0, survivability +0.0. Scale STR 83% / INT 0%. Path: Shield of the Phoenix (shield / phoenix-style bulk); Kinetic Cuirass (Solo path fit for kit profile); Phoenix Feather (shield / phoenix-style bulk). Actives 2/3 \u00b7 pen \u2248 0."
+          "why": "Hades \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot, high_cc. Style burst 45%/dps 55%; patch stable (net +0.4, r5 +0.0). Patch axes (r5): general +0.4, survivability -0.0, heal -0.0. Scale STR 0% / INT 83%. Path: Rod Of Asclepius (heal amp / team sustain); Gem of Isolation (zones & CC \u2014 Isolation slow/shred value); Stone of Binding (Stone of Binding \u2014 CC setup shred). Actives 2/2 \u00b7 pen \u2248 0."
         }
       ]
     },
@@ -24900,10 +24959,425 @@
           "why": "Yemoja \u00b7 Support \u00b7 archetype \u00abheal_support\u00bb (INT / magical). Kit effects: basic-attack kit, attack-speed steroid, heavy healing, hard crowd control, ally buffs / auras, lots of CC. Tags: aa, as_steroid, burst, dot, hard_cc, heal, heavy_heal, high_cc. Style burst 70%/dps 30%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): damage -0.1, general +0.1, survivability -0.0. Scale STR 0% / INT 56%. Path: Rod Of Asclepius (heal amp / team sustain); Shield of the Phoenix (shield / phoenix-style bulk); Doublet of Binding (Stone of Binding \u2014 CC setup shred). Actives 2/2 \u00b7 pen \u2248 0."
         },
         {
-          "god": "Xing Tian",
+          "god": "Ares",
           "role": "Support",
           "tier": "A",
           "rank": 5,
+          "model_score": 64.44708682947706,
+          "damage_type": "Magical",
+          "pantheon": "Greek",
+          "scaling": "Intelligence",
+          "archetype": "heal_support",
+          "kit_tags": [
+            "anti_cc",
+            "burst",
+            "channel",
+            "dot",
+            "hard_cc",
+            "heal",
+            "heavy_dot",
+            "long_cd",
+            "pet_zone",
+            "shield",
+            "team_buff",
+            "ult_nuke",
+            "utility"
+          ],
+          "kit_effects": [
+            "damage over time",
+            "channel / cast time",
+            "big ult spike",
+            "pet / deployable",
+            "hard crowd control",
+            "ally buffs / auras",
+            "CC immunity in kit",
+            "multi-hit / ticks"
+          ],
+          "kit_effect_scores": {
+            "dot": 1.0,
+            "channel": 1.0,
+            "ult_nuke": 1.0,
+            "burst": 0.85,
+            "heal": 0.7,
+            "shield": 0.8,
+            "pet_zone": 1.0,
+            "hard_cc": 1.0,
+            "team_buff": 1.0,
+            "anti_cc": 1.0,
+            "long_cd": 0.7,
+            "multi_hit": 0.9,
+            "zone": 0.65
+          },
+          "patch_trajectory": "stable",
+          "avg_str_scaling": 33.6,
+          "avg_int_scaling": 29.6,
+          "starter": {
+            "name": "Selflessness",
+            "score": 49.7,
+            "cost": 550,
+            "type": "Starter",
+            "slot": "power",
+            "momentum": 1.08,
+            "stats": {
+              "pprot": 10.0,
+              "mprot": 10.0,
+              "hp": 100.0
+            },
+            "pen": 0,
+            "damp": 0,
+            "plat": 0,
+            "ten": 0,
+            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
+            "is_active": false,
+            "why": "Support starter \u2014 aura gold & early bulk"
+          },
+          "items": [
+            {
+              "name": "Spectral Armor",
+              "score": 420.7,
+              "cost": 2300,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 0.27,
+              "stats": {
+                "plat": 10.0,
+                "pprot": 20.0,
+                "hp": 450.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 10.0,
+              "ten": 0,
+              "effect": "You take -30% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating.\nAllies within 8.8m: Take -15% Damage from Critical Strikes.",
+              "is_active": false,
+              "why": "mitigate enemy crit (Spectral line)"
+            },
+            {
+              "name": "Chandra's Grace",
+              "score": 413.1,
+              "cost": 2300,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 0.53,
+              "stats": {
+                "plat": 5.0,
+                "hp": 350.0,
+                "cdr": 20.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 5.0,
+              "ten": 0,
+              "effect": "Every 30s: Lowest Health ally within 8.8m gain:\n*+20 Health Regen\n*+20 Mana Regen\n*0.2s off Cooldowns, every 0.2s for 3s\nBuff lasts 3s.\nDuring Moonlight Phase: On trigger:\n*You als",
+              "is_active": false,
+              "why": "team aura / support core"
+            },
+            {
+              "name": "Obsidian Shard",
+              "score": 390.6,
+              "cost": 3050,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 0.11,
+              "stats": {
+                "pen": 20.0,
+                "int": 90.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "",
+              "is_active": false,
+              "why": "% pen for magical tanks / late fights"
+            },
+            {
+              "name": "Mantle Of Discord",
+              "score": 306.3,
+              "cost": 2600,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": -0.77,
+              "stats": {
+                "ten": 15.0,
+                "pprot": 35.0,
+                "mprot": 35.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 15.0,
+              "effect": "Damaged while below 40% Health:\n*Stuns enemies within 3.2m for 1s\n*+Crowd Control Immunity for 1s\n*+15 Dampening for 6s\nCooldown: 110s",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk"
+            },
+            {
+              "name": "Gauntlet of Thebes",
+              "score": 304.8,
+              "cost": 2200,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 1.2,
+              "stats": {
+                "hp": 200.0,
+                "mp": 150.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
+              "is_active": false,
+              "why": "team aura / support core"
+            },
+            {
+              "name": "Heartwood Charm",
+              "score": 320.0,
+              "cost": 2650,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.23,
+              "stats": {
+                "hp": 400.0,
+                "cdr": 10.0,
+                "mp": 250.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "-20% Cooldowns for your Healing Abilities.\nPassive: When you  heal with abilities, store 20% of that  healing.",
+              "is_active": true,
+              "why": "Support defensive slot \u2014 survive focus"
+            }
+          ],
+          "full_path": [
+            {
+              "name": "Spectral Armor",
+              "score": 420.7,
+              "cost": 2300,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 0.27,
+              "stats": {
+                "plat": 10.0,
+                "pprot": 20.0,
+                "hp": 450.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 10.0,
+              "ten": 0,
+              "effect": "You take -30% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating.\nAllies within 8.8m: Take -15% Damage from Critical Strikes.",
+              "is_active": false,
+              "why": "mitigate enemy crit (Spectral line)"
+            },
+            {
+              "name": "Chandra's Grace",
+              "score": 413.1,
+              "cost": 2300,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 0.53,
+              "stats": {
+                "plat": 5.0,
+                "hp": 350.0,
+                "cdr": 20.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 5.0,
+              "ten": 0,
+              "effect": "Every 30s: Lowest Health ally within 8.8m gain:\n*+20 Health Regen\n*+20 Mana Regen\n*0.2s off Cooldowns, every 0.2s for 3s\nBuff lasts 3s.\nDuring Moonlight Phase: On trigger:\n*You als",
+              "is_active": false,
+              "why": "team aura / support core"
+            },
+            {
+              "name": "Obsidian Shard",
+              "score": 390.6,
+              "cost": 3050,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 0.11,
+              "stats": {
+                "pen": 20.0,
+                "int": 90.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "",
+              "is_active": false,
+              "why": "% pen for magical tanks / late fights"
+            },
+            {
+              "name": "Mantle Of Discord",
+              "score": 306.3,
+              "cost": 2600,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": -0.77,
+              "stats": {
+                "ten": 15.0,
+                "pprot": 35.0,
+                "mprot": 35.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 15.0,
+              "effect": "Damaged while below 40% Health:\n*Stuns enemies within 3.2m for 1s\n*+Crowd Control Immunity for 1s\n*+15 Dampening for 6s\nCooldown: 110s",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk"
+            },
+            {
+              "name": "Gauntlet of Thebes",
+              "score": 304.8,
+              "cost": 2200,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 1.2,
+              "stats": {
+                "hp": 200.0,
+                "mp": 150.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
+              "is_active": false,
+              "why": "team aura / support core"
+            },
+            {
+              "name": "Heartwood Charm",
+              "score": 320.0,
+              "cost": 2650,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.23,
+              "stats": {
+                "hp": 400.0,
+                "cdr": 10.0,
+                "mp": 250.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "-20% Cooldowns for your Healing Abilities.\nPassive: When you  heal with abilities, store 20% of that  healing.",
+              "is_active": true,
+              "why": "Support defensive slot \u2014 survive focus"
+            }
+          ],
+          "inventory_slots": 7,
+          "cores": [
+            {
+              "name": "Obsidian Shard",
+              "score": 390.6,
+              "cost": 3050,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 0.11,
+              "stats": {
+                "pen": 20.0,
+                "int": 90.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "",
+              "is_active": false,
+              "why": "% pen for magical tanks / late fights"
+            }
+          ],
+          "defense": [
+            {
+              "name": "Spectral Armor",
+              "score": 420.7,
+              "cost": 2300,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 0.27,
+              "stats": {
+                "plat": 10.0,
+                "pprot": 20.0,
+                "hp": 450.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 10.0,
+              "ten": 0,
+              "effect": "You take -30% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating.\nAllies within 8.8m: Take -15% Damage from Critical Strikes.",
+              "is_active": false,
+              "why": "mitigate enemy crit (Spectral line)"
+            },
+            {
+              "name": "Chandra's Grace",
+              "score": 413.1,
+              "cost": 2300,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 0.53,
+              "stats": {
+                "plat": 5.0,
+                "hp": 350.0,
+                "cdr": 20.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 5.0,
+              "ten": 0,
+              "effect": "Every 30s: Lowest Health ally within 8.8m gain:\n*+20 Health Regen\n*+20 Mana Regen\n*0.2s off Cooldowns, every 0.2s for 3s\nBuff lasts 3s.\nDuring Moonlight Phase: On trigger:\n*You als",
+              "is_active": false,
+              "why": "team aura / support core"
+            }
+          ],
+          "relics": [
+            {
+              "name": "Purification Beads",
+              "score": 46.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.01,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Immune to Crowd Control for 2s.\nCooldown: 150s",
+              "is_active": false
+            },
+            {
+              "name": "Aegis of Acceleration",
+              "score": 32.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.01,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Become Immune (to damage and healing for 1.5s.\n*Can only Move\n*On god Damage prevented: +7% Movement Speed for 6s (Max 3x)\nCooldown: 140s",
+              "is_active": false
+            }
+          ],
+          "max_shop_actives": 2,
+          "hard_max_actives": 3,
+          "active_count": 1,
+          "pen_total": 20.0,
+          "why": "Ares \u00b7 Support \u00b7 archetype \u00abheal_support\u00bb (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, pet / deployable, hard crowd control, ally buffs / auras. Tags: anti_cc, burst, channel, dot, hard_cc, heal, heavy_dot, long_cd. Style burst 84%/dps 16%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.2, damage +0.0, survivability -0.0. Scale STR 34% / INT 30%. Path: Spectral Armor (mitigate enemy crit (Spectral line)); Chandra's Grace (team aura / support core); Obsidian Shard (% pen for magical tanks / late fights). Pen: Obsidian Shard. Actives 1/2 \u00b7 pen \u2248 20."
+        },
+        {
+          "god": "Xing Tian",
+          "role": "Support",
+          "tier": "A",
+          "rank": 6,
           "model_score": 64.30222696599466,
           "damage_type": "Magical",
           "pantheon": "Chinese",
@@ -25339,7 +25813,7 @@
           "god": "Baron Samedi",
           "role": "Support",
           "tier": "A",
-          "rank": 6,
+          "rank": 7,
           "model_score": 64.27781658223553,
           "damage_type": "Magical",
           "pantheon": "Voodoo",
@@ -25759,8 +26233,8 @@
         {
           "god": "Ymir",
           "role": "Support",
-          "tier": "A",
-          "rank": 7,
+          "tier": "B",
+          "rank": 8,
           "model_score": 63.98071545528296,
           "damage_type": "Magical",
           "pantheon": "Norse",
@@ -26191,7 +26665,7 @@
           "god": "Atlas",
           "role": "Support",
           "tier": "B",
-          "rank": 8,
+          "rank": 9,
           "model_score": 63.96158332111002,
           "damage_type": "Magical",
           "pantheon": "Greek",
@@ -26639,421 +27113,6 @@
           "active_count": 0,
           "pen_total": 10.0,
           "why": "Atlas \u00b7 Support \u00b7 archetype \u00ablockdown_support\u00bb (INT / magical). Kit effects: protection shred, pet / deployable, hard crowd control, dash / leap engage, ally buffs / auras, lots of CC. Tags: burst, dot, gap_close, hard_cc, high_cc, long_cd, pet_zone, prot_shred. Style burst 79%/dps 21%; patch new (net -0.8, r5 -0.4). Patch axes (r5): utility -0.8, general +0.7, attack_speed -0.5. Scale STR 0% / INT 51%. Path: Spectral Armor (mitigate enemy crit (Spectral line)); Gem of Isolation (zones & CC \u2014 Isolation slow/shred value); Spirit Robe (Support path fit for kit profile). Pen: Spear Of The Magus. Actives 0/2 \u00b7 pen \u2248 10."
-        },
-        {
-          "god": "Ares",
-          "role": "Support",
-          "tier": "B",
-          "rank": 9,
-          "model_score": 63.37501975607062,
-          "damage_type": "Magical",
-          "pantheon": "Greek",
-          "scaling": "Intelligence",
-          "archetype": "heal_support",
-          "kit_tags": [
-            "anti_cc",
-            "burst",
-            "channel",
-            "dot",
-            "hard_cc",
-            "heal",
-            "heavy_dot",
-            "long_cd",
-            "pet_zone",
-            "shield",
-            "team_buff",
-            "ult_nuke",
-            "utility"
-          ],
-          "kit_effects": [
-            "damage over time",
-            "channel / cast time",
-            "big ult spike",
-            "pet / deployable",
-            "hard crowd control",
-            "ally buffs / auras",
-            "CC immunity in kit",
-            "multi-hit / ticks"
-          ],
-          "kit_effect_scores": {
-            "dot": 1.0,
-            "channel": 1.0,
-            "ult_nuke": 1.0,
-            "burst": 0.85,
-            "heal": 0.7,
-            "shield": 0.8,
-            "pet_zone": 1.0,
-            "hard_cc": 1.0,
-            "team_buff": 1.0,
-            "anti_cc": 1.0,
-            "long_cd": 0.7,
-            "multi_hit": 0.9,
-            "zone": 0.65
-          },
-          "patch_trajectory": "stable",
-          "avg_str_scaling": 33.6,
-          "avg_int_scaling": 29.6,
-          "starter": {
-            "name": "Selflessness",
-            "score": 49.7,
-            "cost": 550,
-            "type": "Starter",
-            "slot": "power",
-            "momentum": 1.08,
-            "stats": {
-              "pprot": 10.0,
-              "mprot": 10.0,
-              "hp": 100.0
-            },
-            "pen": 0,
-            "damp": 0,
-            "plat": 0,
-            "ten": 0,
-            "effect": "Ally god within 8.8m is hit by Hard CC:\n*Shield them for 25+5% of your Max Health\n*Cooldown: 20s\nRequires Level 20 to upgrade",
-            "is_active": false,
-            "why": "Support starter \u2014 aura gold & early bulk"
-          },
-          "items": [
-            {
-              "name": "Spectral Armor",
-              "score": 420.7,
-              "cost": 2300,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 0.27,
-              "stats": {
-                "plat": 10.0,
-                "pprot": 20.0,
-                "hp": 450.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 10.0,
-              "ten": 0,
-              "effect": "You take -30% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating.\nAllies within 8.8m: Take -15% Damage from Critical Strikes.",
-              "is_active": false,
-              "why": "mitigate enemy crit (Spectral line)"
-            },
-            {
-              "name": "Chandra's Grace",
-              "score": 413.1,
-              "cost": 2300,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 0.53,
-              "stats": {
-                "plat": 5.0,
-                "hp": 350.0,
-                "cdr": 20.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 5.0,
-              "ten": 0,
-              "effect": "Every 30s: Lowest Health ally within 8.8m gain:\n*+20 Health Regen\n*+20 Mana Regen\n*0.2s off Cooldowns, every 0.2s for 3s\nBuff lasts 3s.\nDuring Moonlight Phase: On trigger:\n*You als",
-              "is_active": false,
-              "why": "team aura / support core"
-            },
-            {
-              "name": "Obsidian Shard",
-              "score": 390.6,
-              "cost": 3050,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 0.11,
-              "stats": {
-                "pen": 20.0,
-                "int": 90.0
-              },
-              "pen": 20.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "",
-              "is_active": false,
-              "why": "% pen for magical tanks / late fights"
-            },
-            {
-              "name": "Mantle Of Discord",
-              "score": 306.3,
-              "cost": 2600,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": -0.77,
-              "stats": {
-                "ten": 15.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 15.0,
-              "effect": "Damaged while below 40% Health:\n*Stuns enemies within 3.2m for 1s\n*+Crowd Control Immunity for 1s\n*+15 Dampening for 6s\nCooldown: 110s",
-              "is_active": false,
-              "why": "tenacity / anti-CC bulk"
-            },
-            {
-              "name": "Gauntlet of Thebes",
-              "score": 304.8,
-              "cost": 2200,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": 1.2,
-              "stats": {
-                "hp": 200.0,
-                "mp": 150.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
-              "is_active": false,
-              "why": "team aura / support core"
-            },
-            {
-              "name": "Heartwood Charm",
-              "score": 320.0,
-              "cost": 2650,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": 0.23,
-              "stats": {
-                "hp": 400.0,
-                "cdr": 10.0,
-                "mp": 250.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "-20% Cooldowns for your Healing Abilities.\nPassive: When you  heal with abilities, store 20% of that  healing.",
-              "is_active": true,
-              "why": "Support defensive slot \u2014 survive focus"
-            }
-          ],
-          "full_path": [
-            {
-              "name": "Spectral Armor",
-              "score": 420.7,
-              "cost": 2300,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 0.27,
-              "stats": {
-                "plat": 10.0,
-                "pprot": 20.0,
-                "hp": 450.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 10.0,
-              "ten": 0,
-              "effect": "You take -30% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating.\nAllies within 8.8m: Take -15% Damage from Critical Strikes.",
-              "is_active": false,
-              "why": "mitigate enemy crit (Spectral line)"
-            },
-            {
-              "name": "Chandra's Grace",
-              "score": 413.1,
-              "cost": 2300,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 0.53,
-              "stats": {
-                "plat": 5.0,
-                "hp": 350.0,
-                "cdr": 20.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 5.0,
-              "ten": 0,
-              "effect": "Every 30s: Lowest Health ally within 8.8m gain:\n*+20 Health Regen\n*+20 Mana Regen\n*0.2s off Cooldowns, every 0.2s for 3s\nBuff lasts 3s.\nDuring Moonlight Phase: On trigger:\n*You als",
-              "is_active": false,
-              "why": "team aura / support core"
-            },
-            {
-              "name": "Obsidian Shard",
-              "score": 390.6,
-              "cost": 3050,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 0.11,
-              "stats": {
-                "pen": 20.0,
-                "int": 90.0
-              },
-              "pen": 20.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "",
-              "is_active": false,
-              "why": "% pen for magical tanks / late fights"
-            },
-            {
-              "name": "Mantle Of Discord",
-              "score": 306.3,
-              "cost": 2600,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": -0.77,
-              "stats": {
-                "ten": 15.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 15.0,
-              "effect": "Damaged while below 40% Health:\n*Stuns enemies within 3.2m for 1s\n*+Crowd Control Immunity for 1s\n*+15 Dampening for 6s\nCooldown: 110s",
-              "is_active": false,
-              "why": "tenacity / anti-CC bulk"
-            },
-            {
-              "name": "Gauntlet of Thebes",
-              "score": 304.8,
-              "cost": 2200,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": 1.2,
-              "stats": {
-                "hp": 200.0,
-                "mp": 150.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
-              "is_active": false,
-              "why": "team aura / support core"
-            },
-            {
-              "name": "Heartwood Charm",
-              "score": 320.0,
-              "cost": 2650,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": 0.23,
-              "stats": {
-                "hp": 400.0,
-                "cdr": 10.0,
-                "mp": 250.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "-20% Cooldowns for your Healing Abilities.\nPassive: When you  heal with abilities, store 20% of that  healing.",
-              "is_active": true,
-              "why": "Support defensive slot \u2014 survive focus"
-            }
-          ],
-          "inventory_slots": 7,
-          "cores": [
-            {
-              "name": "Obsidian Shard",
-              "score": 390.6,
-              "cost": 3050,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 0.11,
-              "stats": {
-                "pen": 20.0,
-                "int": 90.0
-              },
-              "pen": 20.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "",
-              "is_active": false,
-              "why": "% pen for magical tanks / late fights"
-            }
-          ],
-          "defense": [
-            {
-              "name": "Spectral Armor",
-              "score": 420.7,
-              "cost": 2300,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 0.27,
-              "stats": {
-                "plat": 10.0,
-                "pprot": 20.0,
-                "hp": 450.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 10.0,
-              "ten": 0,
-              "effect": "You take -30% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating.\nAllies within 8.8m: Take -15% Damage from Critical Strikes.",
-              "is_active": false,
-              "why": "mitigate enemy crit (Spectral line)"
-            },
-            {
-              "name": "Chandra's Grace",
-              "score": 413.1,
-              "cost": 2300,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 0.53,
-              "stats": {
-                "plat": 5.0,
-                "hp": 350.0,
-                "cdr": 20.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 5.0,
-              "ten": 0,
-              "effect": "Every 30s: Lowest Health ally within 8.8m gain:\n*+20 Health Regen\n*+20 Mana Regen\n*0.2s off Cooldowns, every 0.2s for 3s\nBuff lasts 3s.\nDuring Moonlight Phase: On trigger:\n*You als",
-              "is_active": false,
-              "why": "team aura / support core"
-            }
-          ],
-          "relics": [
-            {
-              "name": "Purification Beads",
-              "score": 46.0,
-              "cost": 0,
-              "type": "Relic",
-              "slot": "power",
-              "momentum": 0.01,
-              "stats": {},
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Immune to Crowd Control for 2s.\nCooldown: 150s",
-              "is_active": false
-            },
-            {
-              "name": "Aegis of Acceleration",
-              "score": 32.0,
-              "cost": 0,
-              "type": "Relic",
-              "slot": "power",
-              "momentum": 0.01,
-              "stats": {},
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Become Immune (to damage and healing for 1.5s.\n*Can only Move\n*On god Damage prevented: +7% Movement Speed for 6s (Max 3x)\nCooldown: 140s",
-              "is_active": false
-            }
-          ],
-          "max_shop_actives": 2,
-          "hard_max_actives": 3,
-          "active_count": 1,
-          "pen_total": 20.0,
-          "why": "Ares \u00b7 Support \u00b7 archetype \u00abheal_support\u00bb (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, pet / deployable, hard crowd control, ally buffs / auras. Tags: anti_cc, burst, channel, dot, hard_cc, heal, heavy_dot, long_cd. Style burst 84%/dps 16%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): general -0.1, damage +0.0, survivability -0.0. Scale STR 34% / INT 30%. Path: Spectral Armor (mitigate enemy crit (Spectral line)); Chandra's Grace (team aura / support core); Obsidian Shard (% pen for magical tanks / late fights). Pen: Obsidian Shard. Actives 1/2 \u00b7 pen \u2248 20."
         },
         {
           "god": "Athena",

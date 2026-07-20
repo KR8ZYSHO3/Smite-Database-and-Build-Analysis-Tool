@@ -675,11 +675,13 @@ function buyRow(it, n) {
   const slotClass =
     it.slot === "pen"
       ? "is-pen"
-      : it.slot === "mitigate" || it.slot === "counter"
-        ? "is-mitigate"
-        : it.is_active
-          ? "is-active"
-          : "";
+      : it.counter || it.slot === "counter"
+        ? "is-counter"
+        : it.slot === "mitigate"
+          ? "is-mitigate"
+          : it.is_active
+            ? "is-active"
+            : "";
   const why = it.why ? `<div class="item-why">${escapeHtml(it.why)}</div>` : "";
   return `<li class="buy-row ${slotClass}" title="${escapeAttr(it.why || it.effect || "")}">
     <span class="buy-n">${n}</span>
@@ -870,6 +872,392 @@ function safeJson(s) {
   }
 }
 
+/* -------------------- Counter builds -------------------- */
+const counterState = { enemies: [] };
+
+function findGodByName(q) {
+  const s = (q || "").trim().toLowerCase();
+  if (!s) return null;
+  const gods = state.gods || [];
+  return (
+    gods.find((g) => (g.name || "").toLowerCase() === s) ||
+    gods.find((g) => (g.name || "").toLowerCase().includes(s)) ||
+    null
+  );
+}
+
+function analyzeEnemyTeamJS(enemyGods) {
+  let magical = 0;
+  let physical = 0;
+  const healers = [];
+  const ccGods = [];
+  const critGods = [];
+  const mageNames = [];
+  const physNames = [];
+
+  for (const g of enemyGods) {
+    const dtype = (g.primary_damage_type || "").toLowerCase();
+    const tags = new Set(g.kit_tags || []);
+    const scale = (g.primary_scaling || "").toLowerCase();
+    const isMage = dtype === "magical" || scale === "intelligence";
+    const isPhys = !isMage && (dtype === "physical" || scale === "strength");
+    if (isMage) {
+      magical += 1;
+      mageNames.push(g.name);
+    } else if (isPhys) {
+      physical += 1;
+      physNames.push(g.name);
+    } else {
+      magical += 0.5;
+      physical += 0.5;
+    }
+    if (tags.has("heal") || tags.has("heavy_heal") || tags.has("self_sustain")) {
+      healers.push(g.name);
+    }
+    if (tags.has("hard_cc") || tags.has("high_cc")) {
+      ccGods.push(g.name);
+    }
+    const aa = Number(g.aa_score || 0);
+    if (isPhys && (tags.has("aa") || tags.has("as_steroid") || tags.has("sustained") || aa >= 0.5)) {
+      critGods.push(g.name);
+    }
+  }
+
+  const reasons = [];
+  const need_mprot = magical >= 2 || magical > physical;
+  const need_pprot = physical >= 2 || (physical >= 1 && magical <= 1);
+  const need_anti_crit = critGods.length >= 1;
+  const need_antiheal = healers.length >= 1;
+  const need_magi = ccGods.length >= 2 || (ccGods.length >= 1 && magical >= 2);
+  const need_anti_as = need_anti_crit;
+
+  if (magical >= 3) reasons.push(`Heavy magic (${Math.floor(magical)}): Genji / Oni / mprot`);
+  else if (magical >= 2) reasons.push(`Magic pressure (${Math.floor(magical)}): magical defense`);
+  if (physical >= 2) reasons.push(`Physical front (${Math.floor(physical)}): Breastplate / Spectral`);
+  if (critGods.length) reasons.push(`Crit/AA (${critGods.join(", ")}): Spectral`);
+  if (healers.length) reasons.push(`Healing (${healers.join(", ")}): Contagion / Divine`);
+  if (ccGods.length) reasons.push(`CC (${ccGods.join(", ")}): Magi's / Beads`);
+  if (!reasons.length) reasons.push("Balanced lobby — light defense flex on kit path");
+
+  return {
+    magical_count: magical,
+    physical_count: physical,
+    healers,
+    cc_gods: ccGods,
+    crit_gods: critGods,
+    mage_names: mageNames,
+    phys_names: physNames,
+    need_mprot,
+    need_pprot,
+    need_anti_crit,
+    need_antiheal,
+    need_magi,
+    need_anti_as,
+    reasons,
+    summary: reasons.slice(0, 4).join(" · "),
+  };
+}
+
+function itemStat(it, key) {
+  const st = it.stats || it.stats_parsed || {};
+  if (st[key] != null) return Number(st[key]) || 0;
+  // stats_text fallback — wiki style "MProt: 60" / "PProt: 50"
+  const t = String(it.stats_text || "");
+  const map = {
+    mprot: /m\s*prot[^\d\n]*(\d+)|mag(?:ical)?\s*prot[^\d\n]*(\d+)/i,
+    pprot: /p\s*prot[^\d\n]*(\d+)|phys(?:ical)?\s*prot[^\d\n]*(\d+)/i,
+    pen: /pen(?:etration)?[^\d\n]*(\d+)/i,
+    hp: /(?:max\s*)?health[^\d\n]*(\d+)|hp[^\d\n]*(\d+)/i,
+    cdr: /cooldown[^\d\n]*(\d+)|cdr[^\d\n]*(\d+)/i,
+  };
+  const re = map[key];
+  if (!re) return 0;
+  const m = t.match(re);
+  return m ? Number(m[1] || m[2] || 0) : 0;
+}
+
+function isT3Item(it) {
+  const tier = String(it.tier || "");
+  const cost = Number(it.total_cost ?? it.cost ?? 0);
+  if (tier === "3" || tier === "T3") return true;
+  if (cost >= 2000 && tier !== "1" && tier !== "Starter" && tier !== "Relic") return true;
+  return false;
+}
+
+function counterItemScore(it, threat, role) {
+  const n = (it.name || "").toLowerCase();
+  let s = 0;
+  const why = [];
+  const mprot = itemStat(it, "mprot");
+  const pprot = itemStat(it, "pprot");
+  const cats = String(it.categories || "").toLowerCase();
+  const passive = `${it.passive || ""} ${it.active || ""}`.toLowerCase();
+
+  if (threat.need_mprot) {
+    if (n.includes("genji") || n.includes("oni hunter")) {
+      s += 72;
+      why.push("vs magic — Genji/Oni");
+    } else if (mprot >= 40) {
+      s += 45;
+      why.push("high mprot");
+    } else if (mprot >= 25) s += 22;
+    if (threat.magical_count >= 3 && mprot >= 30) s += 18;
+  }
+  if (threat.need_pprot) {
+    if (n.includes("breastplate") || n.includes("valor")) {
+      s += 55;
+      why.push("vs physical — Breastplate");
+    } else if (pprot >= 40) {
+      s += 40;
+      why.push("high pprot");
+    } else if (pprot >= 25) s += 18;
+  }
+  if (threat.need_anti_crit) {
+    if (n.includes("spectral") || n.includes("nemean")) {
+      s += 85;
+      why.push("anti-crit vs ADC");
+    }
+    if (n.includes("midgardian")) {
+      s += 48;
+      why.push("cut enemy AS");
+    }
+  }
+  if (threat.need_antiheal) {
+    if (
+      n.includes("contagion") ||
+      n.includes("divine ruin") ||
+      n.includes("pestilence") ||
+      n.includes("brawler")
+    ) {
+      s += 78;
+      why.push("anti-heal");
+    } else if (passive.includes("heal") && (passive.includes("reduc") || passive.includes("anti"))) {
+      s += 50;
+      why.push("healing reduction");
+    }
+  }
+  if (threat.need_magi) {
+    if (n.includes("magi") || n.includes("mantle of discord")) {
+      s += 70;
+      why.push("anti-CC");
+    } else if (n.includes("mantle")) {
+      s += 55;
+      why.push("mantle / bulk CC");
+    }
+  }
+  if (role === "Support" || role === "Solo") {
+    if ((it.item_type || "").toLowerCase() === "defensive" || cats.includes("defensive")) s += 12;
+    if (n.includes("dreamer") || n.includes("parashu") || n.includes("deathbringer")) s -= 50;
+  }
+  // Prefer full T3
+  s += Math.min(15, (Number(it.total_cost || it.cost || 0) / 300) | 0);
+  // Patch heat light bias
+  s += (Number(it.recent_5_score) || 0) * 4;
+  return { score: s, why };
+}
+
+function injectCounterCores(baselineNames, threat, role) {
+  const wanted = [];
+  if (threat.need_anti_crit) wanted.push("spectral");
+  if (threat.need_mprot && threat.magical_count >= 2) {
+    wanted.push("genji");
+    if (threat.magical_count >= 3) wanted.push("oni hunter");
+  }
+  if (threat.need_antiheal) wanted.push(role === "Support" || role === "Solo" ? "contagion" : "divine ruin");
+  if (threat.need_magi) wanted.push("magi");
+  if (threat.need_pprot && (role === "Support" || role === "Solo" || role === "Jungle")) {
+    wanted.push("breastplate");
+  }
+  if (threat.need_anti_as && (role === "Support" || role === "Solo")) wanted.push("midgardian");
+
+  const items = (state.items || []).filter(isT3Item);
+  const byName = Object.fromEntries(items.map((it) => [it.name, it]));
+  let path = baselineNames.map((n) => byName[n]).filter(Boolean);
+  if (!path.length) {
+    // No baseline — pure counter top items
+    path = [];
+  }
+  const seen = new Set(path.map((p) => p.name));
+  const maxInject = role === "Support" || role === "Solo" ? 3 : 2;
+  let injected = 0;
+
+  for (const key of wanted) {
+    if (injected >= maxInject) break;
+    if ([...seen].some((n) => n.toLowerCase().includes(key))) continue;
+    const scored = items
+      .filter((it) => it.name.toLowerCase().includes(key) && !seen.has(it.name))
+      .map((it) => ({ it, ...counterItemScore(it, threat, role) }))
+      .sort((a, b) => b.score - a.score);
+    if (!scored.length) continue;
+    const pick = scored[0].it;
+    // Drop lowest counter-score / glass
+    if (path.length >= 6) {
+      let drop = -1;
+      let worst = Infinity;
+      path.forEach((it, i) => {
+        const n = it.name.toLowerCase();
+        if (["spectral", "genji", "contagion", "magi", "divine", "oni hunter"].some((k) => n.includes(k))) {
+          return;
+        }
+        const sc = counterItemScore(it, threat, role).score;
+        if (sc < worst) {
+          worst = sc;
+          drop = i;
+        }
+      });
+      if (drop >= 0) {
+        seen.delete(path[drop].name);
+        path[drop] = pick;
+        seen.add(pick.name);
+        injected += 1;
+      }
+    } else {
+      path.push(pick);
+      seen.add(pick.name);
+      injected += 1;
+    }
+  }
+
+  // Fill to 6 with best remaining counter scores if short
+  if (path.length < 6) {
+    const rest = items
+      .filter((it) => !seen.has(it.name))
+      .map((it) => ({ it, ...counterItemScore(it, threat, role) }))
+      .filter((x) => x.score > 15)
+      .sort((a, b) => b.score - a.score);
+    for (const r of rest) {
+      if (path.length >= 6) break;
+      path.push(r.it);
+      seen.add(r.it.name);
+    }
+  }
+  return path.slice(0, 6).map((it) => {
+    const { score, why } = counterItemScore(it, threat, role);
+    return {
+      name: it.name,
+      cost: it.total_cost ?? it.cost,
+      why: why[0] || "kit / role fit",
+      counter: score >= 40,
+      score,
+      is_active: String(it.categories || "").toLowerCase().includes("active"),
+      pen: itemStat(it, "pen") || undefined,
+      slot: score >= 40 ? "counter" : it.item_type || "",
+    };
+  });
+}
+
+function getBaselinePath(god, role) {
+  const byRole = god.conquest_by_role || {};
+  if (byRole[role]?.items?.length) {
+    return byRole[role].items.map((i) => i.name);
+  }
+  // From builds.json top lists
+  const rec = state.builds?.roles?.[role]?.recommended_gods || [];
+  const hit = rec.find((g) => g.god === god.name);
+  if (hit?.items?.length) return hit.items.map((i) => i.name);
+  return [];
+}
+
+function getStarter(god, role) {
+  const byRole = god.conquest_by_role || {};
+  if (byRole[role]?.starter) return byRole[role].starter;
+  const rec = state.builds?.roles?.[role]?.recommended_gods || [];
+  const hit = rec.find((g) => g.god === god.name);
+  return hit?.starter || null;
+}
+
+function renderEnemyPicks() {
+  const box = $("#ctr-enemy-picks");
+  if (!box) return;
+  box.innerHTML = counterState.enemies
+    .map(
+      (n, i) =>
+        `<button type="button" class="enemy-chip" data-rm="${i}">${escapeHtml(n)} ×</button>`
+    )
+    .join("");
+  box.querySelectorAll("[data-rm]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      counterState.enemies.splice(Number(btn.getAttribute("data-rm")), 1);
+      renderEnemyPicks();
+    });
+  });
+}
+
+function setupCounter() {
+  const list = $("#ctr-god-list");
+  if (!list) return;
+  const names = [...(state.gods || [])].map((g) => g.name).sort();
+  list.innerHTML = names.map((n) => `<option value="${escapeAttr(n)}"></option>`).join("");
+
+  const addIn = $("#ctr-enemy-add");
+  addIn?.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    const g = findGodByName(addIn.value);
+    if (!g) return;
+    if (counterState.enemies.length >= 5) return;
+    if (counterState.enemies.includes(g.name)) {
+      addIn.value = "";
+      return;
+    }
+    counterState.enemies.push(g.name);
+    addIn.value = "";
+    renderEnemyPicks();
+  });
+
+  $("#ctr-run")?.addEventListener("click", () => {
+    const you = findGodByName($("#ctr-you")?.value);
+    const role = $("#ctr-role")?.value || "Support";
+    const threatEl = $("#ctr-threat");
+    const resultEl = $("#ctr-result");
+    if (!you) {
+      threatEl.textContent = "Pick a valid god for yourself.";
+      resultEl.innerHTML = "";
+      return;
+    }
+    if (!counterState.enemies.length) {
+      threatEl.textContent = "Add at least one enemy god (type name + Enter).";
+      resultEl.innerHTML = "";
+      return;
+    }
+    const enemyGods = counterState.enemies.map(findGodByName).filter(Boolean);
+    const threat = analyzeEnemyTeamJS(enemyGods);
+    threatEl.innerHTML = `
+      <strong>Threat</strong> — ${escapeHtml(threat.summary)}
+      <ul class="threat-list">${threat.reasons.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>
+      <div class="muted">Magic ${fmt(threat.magical_count, 0)} · Physical ${fmt(threat.physical_count, 0)}</div>
+    `;
+
+    const baseline = getBaselinePath(you, role);
+    const path = injectCounterCores(baseline, threat, role);
+    const starter = getStarter(you, role);
+    const baselineNote = baseline.length
+      ? `<p class="muted">Baseline kit path: ${baseline.map(escapeHtml).join(" → ")}</p>`
+      : `<p class="muted">No baseline path for ${escapeHtml(you.name)} ${escapeHtml(role)} — pure counter ranking.</p>`;
+
+    resultEl.innerHTML = `
+      <article class="card build-card god-build-card">
+        <header class="gbc-head">
+          <h3>${escapeHtml(you.name)} · ${escapeHtml(role)} · counter</h3>
+          <div class="muted gbc-meta">vs ${enemyGods.map((g) => escapeHtml(g.name)).join(", ")}</div>
+        </header>
+        <div class="build-meta">
+          <span class="pill hot">counter</span>
+          ${threat.need_anti_crit ? `<span class="pill">anti-crit</span>` : ""}
+          ${threat.need_mprot ? `<span class="pill">mprot</span>` : ""}
+          ${threat.need_antiheal ? `<span class="pill">antiheal</span>` : ""}
+          ${threat.need_magi ? `<span class="pill">anti-CC</span>` : ""}
+        </div>
+        ${baselineNote}
+        <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(starter?.name || "—")}</div>
+        <ol class="buy-list">
+          ${path.map((it, i) => buyRow(it, i + 1)).join("")}
+        </ol>
+      </article>
+    `;
+  });
+}
+
 async function main() {
   setupTabs();
   const loading = $("#loading");
@@ -891,6 +1279,7 @@ async function main() {
       .join("  //  ");
 
     setupBuilds();
+    setupCounter();
     setupGods();
     setupTiers();
     setupItems();

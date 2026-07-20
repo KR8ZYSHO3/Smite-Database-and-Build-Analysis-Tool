@@ -429,6 +429,61 @@ tr.selected td {
   letter-spacing: 0.02em;
   font-weight: 600;
 }
+
+/* Counter panel */
+.counter-panel h2 { margin-top: 0; }
+.counter-form {
+  display: grid;
+  gap: 12px;
+  margin: 14px 0;
+}
+.counter-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.counter-form input,
+.counter-form select {
+  font: inherit;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text);
+}
+.counter-enemies { display: flex; flex-direction: column; gap: 8px; }
+.enemy-picks { display: flex; flex-wrap: wrap; gap: 6px; min-height: 28px; }
+.enemy-chip {
+  font: inherit;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(247, 37, 133, 0.45);
+  background: rgba(247, 37, 133, 0.12);
+  color: #ffb3d0;
+  cursor: pointer;
+}
+.btn-primary {
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(76, 201, 240, 0.5);
+  background: linear-gradient(135deg, rgba(76, 201, 240, 0.25), rgba(155, 93, 229, 0.2));
+  color: var(--text);
+  cursor: pointer;
+  width: fit-content;
+}
+.btn-primary:hover { border-color: var(--accent); box-shadow: var(--glow); }
+.counter-threat { margin: 12px 0; line-height: 1.45; }
+.threat-list { margin: 6px 0 0 1.1rem; padding: 0; }
+.threat-list li { margin: 2px 0; }
+.buy-row.is-counter { border-color: rgba(247, 37, 133, 0.45); }
+.buy-row.is-counter .tag { color: #ffb3d0; border-color: rgba(247, 37, 133, 0.35); }
 .buy-row:hover {
   border-color: var(--border-glow);
   transform: translateX(2px);

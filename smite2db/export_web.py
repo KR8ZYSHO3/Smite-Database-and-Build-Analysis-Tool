@@ -14,6 +14,7 @@ from .conquest_builds import (
     ROLE_PROFILES,
     build_god_build,
     generate_all,
+    god_scaling_bias,
     load_items,
     render_markdown,
 )
@@ -155,6 +156,18 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
             d["patch_samples"] = samples
         except sqlite3.OperationalError:
             d["patch_samples"] = []
+
+        # Compact kit profile for counter-build UI (tags + effects)
+        try:
+            bias = god_scaling_bias(conn, d["id"])
+            d["kit_tags"] = sorted(bias.get("tags") or [])
+            d["kit_effects"] = bias.get("effect_labels") or []
+            d["kit_effect_scores"] = bias.get("effects") or {}
+            d["aa_score"] = bias.get("aa_score")
+            d["primary_scaling"] = bias.get("primary") or d.get("primary_scaling")
+        except Exception:  # noqa: BLE001
+            d.setdefault("kit_tags", [])
+            d.setdefault("kit_effects", [])
 
         gods.append(d)
 

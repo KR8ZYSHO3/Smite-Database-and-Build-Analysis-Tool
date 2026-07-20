@@ -32,8 +32,9 @@
 
       <nav class="tabs">
         <button class="tab-btn active" data-tab="builds">1 · Builds</button>
-        <button class="tab-btn" data-tab="gods">2 · Gods</button>
-        <button class="tab-btn" data-tab="tiers">3 · Tiers</button>
+        <button class="tab-btn" data-tab="counter">2 · Counter</button>
+        <button class="tab-btn" data-tab="gods">3 · Gods</button>
+        <button class="tab-btn" data-tab="tiers">4 · Tiers</button>
         <button class="tab-btn" data-tab="items">Items</button>
         <button class="tab-btn" data-tab="about">About</button>
       </nav>
@@ -50,6 +51,43 @@
           <span class="muted" id="build-god-count"></span>
         </div>
         <div id="build-gods" class="build-god-grid"></div>
+      </section>
+
+      <!-- COUNTER builds -->
+      <section id="panel-counter" class="panel">
+        <div class="card counter-panel">
+          <h2>Counter build</h2>
+          <p class="muted">
+            Pick <strong>your god + role</strong> and up to <strong>5 enemies</strong>.
+            We re-weight the kit path for magic/physical mix, crit ADC, healing, and CC.
+          </p>
+          <div class="counter-form">
+            <label>Your god
+              <input id="ctr-you" type="search" list="ctr-god-list" placeholder="e.g. Charon" autocomplete="off" />
+            </label>
+            <label>Your role
+              <select id="ctr-role">
+                <option>Support</option>
+                <option>Solo</option>
+                <option>Jungle</option>
+                <option>Mid</option>
+                <option>Carry</option>
+              </select>
+            </label>
+            <div class="counter-enemies">
+              <span class="muted">Enemy team (up to 5)</span>
+              <div class="enemy-picks" id="ctr-enemy-picks"></div>
+              <input id="ctr-enemy-add" type="search" list="ctr-god-list" placeholder="Add enemy god…" autocomplete="off" />
+            </div>
+            <datalist id="ctr-god-list"></datalist>
+            <button type="button" class="btn-primary" id="ctr-run">Build counter path</button>
+          </div>
+          <div id="ctr-threat" class="counter-threat muted"></div>
+          <div id="ctr-result" class="counter-result"></div>
+          <p class="muted" style="margin-top:12px;font-size:0.85rem">
+            CLI: <code>python -m smite2db.counter_builds Charon Support Discordia Merlin Ymir Artemis Ganesha</code>
+          </p>
+        </div>
       </section>
 
       <!-- GODS -->
