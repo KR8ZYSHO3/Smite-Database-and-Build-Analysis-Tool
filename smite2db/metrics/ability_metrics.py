@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import sqlite3
+import re
 from collections import defaultdict
 from typing import Any
 
@@ -59,6 +60,16 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
             r["notes_text"] or "",
             r["short_label"] or "",
         )
+        desc = (r["description"] or "").lower()
+        stats_blob = (r["stats_text"] or "").lower()
+        aa_text = bool(
+            re.search(
+                r"basic attack|basic attacks|empowered basic|next basic|"
+                r"attack speed|in-hand|on-hit|on hit",
+                desc + " " + stats_blob,
+            )
+        )
+        channel_text = bool(re.search(r"\bchannel\b|channeling", desc + " " + stats_blob))
         feat.update(
             {
                 "ability_id": r["id"],
@@ -67,6 +78,8 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                 "damage_type": r["primary_damage_type"],
                 "slot": r["slot"],
                 "name": r["name"],
+                "aa_text": aa_text,
+                "channel_text": channel_text,
             }
         )
         parsed.append(feat)
@@ -233,52 +246,60 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                 return x
             return cap + (x - cap) * 0.25
 
+        # Stance gods: many duplicate slots — use best ability per slot_order bucket
+        # so Merlin/Artio aren't double-counted into noise.
+        if stance_variants >= 2:
+            by_slot: dict[str, list] = defaultdict(list)
+            for a in non_basic_abs:
+                sk = (a.get("slot") or "x").split("(")[0].strip().lower()
+                by_slot[sk].append(a)
+            stance_pick: list = []
+            for _sk, group in by_slot.items():
+                # take highest burst_proxy stance variant per slot label
+                best = max(group, key=lambda x: (x.get("burst_proxy") or 0) + (x.get("dps_proxy") or 0))
+                stance_pick.append(best)
+            power_src = stance_pick
+        else:
+            power_src = non_basic_abs
+
         burst = 0.0
         dps = 0.0
-        for a in non_basic_abs:
+        for a in power_src:
             bw = 1.0
             if _is_ultimate(a.get("slot")):
-                bw = 0.55  # ult less than full kit spam for "kit power"
+                bw = 0.55
             if _is_passive(a.get("slot")):
                 bw = 0.35
-            burst += softcap(a.get("burst_proxy") or 0.0) * bw
-            dps += softcap(a.get("dps_proxy") or 0.0, cap=200.0) * bw
+            # Channel abilities: reliability discount on burst, keep more of DPS
+            if a.get("channel_text"):
+                burst += softcap(a.get("burst_proxy") or 0.0) * bw * 0.75
+                dps += softcap(a.get("dps_proxy") or 0.0, cap=200.0) * bw * 1.15
+            else:
+                burst += softcap(a.get("burst_proxy") or 0.0) * bw
+                dps += softcap(a.get("dps_proxy") or 0.0, cap=200.0) * bw
 
-        util = sum(a["utility_score"] for a in non_basic_abs) / max(len(non_basic_abs), 1)
+        util = sum(a["utility_score"] for a in power_src) / max(len(power_src), 1)
         power = sum(a["power_score"] for a in combat) / max(len(combat), 1) if combat else (
-            sum(a["power_score"] for a in non_basic_abs) / max(len(non_basic_abs), 1)
+            sum(a["power_score"] for a in power_src) / max(len(power_src), 1)
         )
 
-        flex = min(stance_variants * 4.0, 12.0)
+        flex = min(stance_variants * 3.0, 10.0)
 
-        # AA-kit bonus: abilities that buff basic attacks are undercounted on raw ability dmg
-        aa_hits = 0
-        for a in non_basic_abs:
-            blob = " ".join(
-                str(x)
-                for x in (
-                    a.get("name"),
-                    # features don't carry description; use power from AS-style low dmg high util
-                )
-            )
-            # Heuristic: low/no damage ability with short CD often AS steroid (Rama 2, etc.)
-            dmg = a.get("damage_rank5") or 0
-            cd = a.get("cooldown_rank5") or 12
-            if dmg < 80 and cd and cd <= 16 and not _is_ultimate(a.get("slot")):
-                # passive AS / AA packs show as utility without damage
-                if (a.get("utility_score") or 0) >= 15 or dmg == 0:
-                    aa_hits += 0.5
-        # Stronger signal from god ability text would need join; use count of zero-damage combat abs
+        # AA-kit bonus from real ability text + low-damage steroid abilities
+        aa_text_n = sum(1 for a in non_basic_abs if a.get("aa_text"))
         zero_dmg_combat = sum(
             1
             for a in combat
             if not _is_ultimate(a.get("slot")) and (a.get("damage_rank5") or 0) < 40
         )
         aa_bonus = 0.0
-        if zero_dmg_combat >= 1 and avg_str >= 40 and dtype == "physical":
-            aa_bonus = 180.0 + zero_dmg_combat * 60.0  # lifts Rama/Apollo-class kits
-        elif zero_dmg_combat >= 2 and dtype == "physical":
-            aa_bonus = 120.0
+        if aa_text_n >= 2 and dtype == "physical":
+            aa_bonus = 220.0 + aa_text_n * 40.0
+        elif aa_text_n >= 1 and zero_dmg_combat >= 1 and dtype == "physical":
+            aa_bonus = 160.0 + zero_dmg_combat * 50.0
+        elif zero_dmg_combat >= 1 and avg_str >= 40 and dtype == "physical":
+            aa_bonus = 140.0 + zero_dmg_combat * 50.0
+        channel_n = sum(1 for a in non_basic_abs if a.get("channel_text"))
 
         kit_raws.append(
             (
@@ -297,10 +318,13 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                     "mobility_count": mobility_count,
                     "burst_raw": burst + aa_bonus * 0.35,
                     "dps_raw": dps + aa_bonus,
-                    "util_raw": util + flex,
+                    "util_raw": util + flex + min(channel_n * 3.0, 8.0),
                     "power_raw": power + flex * 0.5 + (8 if aa_bonus else 0),
                     "damage_type": dtype_by_god.get(god_id),
                     "aa_bonus": aa_bonus,
+                    "aa_text_n": aa_text_n,
+                    "channel_n": channel_n,
+                    "stance_collapsed": stance_variants >= 2,
                 },
             )
         )
@@ -354,6 +378,10 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                         "primary_scaling": k["primary_scaling"],
                         "damage_type": k.get("damage_type"),
                         "normalize": "winsorized_5_95",
+                        "aa_bonus": k.get("aa_bonus"),
+                        "aa_text_n": k.get("aa_text_n"),
+                        "channel_n": k.get("channel_n"),
+                        "stance_collapsed": k.get("stance_collapsed"),
                     }
                 ),
             ),

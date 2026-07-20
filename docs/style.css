@@ -554,19 +554,37 @@ tr.selected td {
   text-transform: uppercase;
 }
 .gbc-meta { font-size: 0.9rem; margin-bottom: 6px; }
-.god-build-card .kit-tags {
+.god-build-card .kit-tags,
+.patch-axes .kit-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin: 6px 0 8px;
 }
-.god-build-card .kit-tags .tag {
+.god-build-card .kit-tags .tag,
+.patch-axes .kit-tags .tag {
   font-size: 0.78rem;
   padding: 2px 8px;
   border-radius: 999px;
   background: rgba(76, 201, 240, 0.1);
   border: 1px solid rgba(76, 201, 240, 0.28);
   color: var(--accent);
+}
+.patch-axes .tag.axis-up {
+  border-color: rgba(46, 196, 182, 0.55);
+  color: var(--mint);
+  background: rgba(46, 196, 182, 0.12);
+}
+.patch-axes .tag.axis-down {
+  border-color: rgba(255, 77, 109, 0.5);
+  color: var(--danger);
+  background: rgba(255, 77, 109, 0.1);
+}
+.patch-axes {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(16, 20, 31, 0.65);
 }
 .god-build-card .why {
   flex: 0 0 auto;

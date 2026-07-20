@@ -1322,18 +1322,52 @@ def rescore_for_god(
         if _canon_stat_value(item.stats, "ten") >= 5 or "tenacit" in blob or "magi" in nlow:
             s += 24
 
-    # --- Patch exploit: god axis vector + item momentum ---
+    # --- Patch exploit: god axis vector + item momentum (role-gated) ---
     traj = (bias.get("trajectory") or "stable").lower()
     pscore = float(bias.get("patch_score") or 0)
     r5 = float(bias.get("recent_patch") or 0)
-    # Prefer recent item momentum (last 5 patches)
-    s += (item.momentum or 0) * 8 + (item.recent_momentum or 0) * 16
+    frontline = role in ("Solo", "Support")
+    damage_backline = role in DAMAGE_ROLES_NEED_PEN
+
+    # Item momentum: strong on matching role; pure tanks don't invade Mid/Carry
+    pure_tank = (
+        item.item_type == "Defensive"
+        and pen_v < 5
+        and (str_v + int_v) < 35
+        and as_v < 10
+        and crit_v < 10
+    )
+    # Hybrid “offline tanks” that were flooding Mid via survivability momentum
+    meta_bulk = any(
+        k in nlow
+        for k in (
+            "shifter",
+            "spectral armor",
+            "gauntlet of thebes",
+            "midgardian",
+            "nemean",
+            "heartwood",
+            "radiant bulwark",
+            "stygian",
+        )
+    ) and pen_v < 8
+    mom_w = 8.0
+    r_mom_w = 14.0
+    dmg_gate = float((bias.get("patch_axes_r5") or {}).get("damage", 0) or 0)
+    if damage_backline and (pure_tank or meta_bulk):
+        mom_w = 1.5
+        r_mom_w = 2.0
+        # Only allow meta bulk if god was hard-nerfed on damage / falling hard
+        if dmg_gate > -0.8 and r5 > -1.0:
+            s -= 40  # backline stays glass + pen, not Shifter’s meta
+    elif frontline and (pure_tank or meta_bulk):
+        mom_w = 10.0
+        r_mom_w = 18.0
+    s += (item.momentum or 0) * mom_w + (item.recent_momentum or 0) * r_mom_w
 
     g_axes = bias.get("patch_axes_r5") or bias.get("patch_axes") or {}
-    # Prefer recent axes when present
     if not g_axes:
         g_axes = {}
-    # Positive damage buffs → lean pen + power; damage nerfs → bulk / CDR / efficiency
     dmg_ax = float(g_axes.get("damage", 0) or 0)
     cd_ax = float(g_axes.get("cooldown", 0) or 0)
     pen_ax = float(g_axes.get("pen", 0) or 0)
@@ -1351,26 +1385,24 @@ def rescore_for_god(
             s += 10
     elif dmg_ax <= -0.35:
         if item.item_type == "Defensive" or _canon_stat_value(item.stats, "hp") >= 250:
-            s += 22
+            s += 18 if frontline else 12
         s += cdr_v * 0.8
         if item.is_active_item and (item.total_cost or 0) >= 3200:
             s -= 14
-    # Cooldown buffed (positive) → free to stack damage; CD nerfed → buy CDR
     if cd_ax >= 0.25:
         s += pen_v * 0.4 + (10 if (int_v >= 40 or str_v >= 30) else 0)
     elif cd_ax <= -0.25:
         s += cdr_v * 1.6 + 12
     if pen_ax >= 0.15:
         s += pen_v * 1.4 + 10
-    if surv_ax >= 0.25:
+    if surv_ax >= 0.25 and frontline:
         s += (
             _canon_stat_value(item.stats, "hp") * 0.08
             + _canon_stat_value(item.stats, "pprot") * 0.25
             + _canon_stat_value(item.stats, "mprot") * 0.25
             + 8
         )
-    elif surv_ax <= -0.25 and role in DAMAGE_ROLES_NEED_PEN:
-        # survivability nerfed on a damage god → still buy some bulk
+    elif surv_ax <= -0.25 and damage_backline:
         if _canon_stat_value(item.stats, "hp") >= 200 or item.item_type == "Defensive":
             s += 12
     if heal_ax >= 0.2 and (ls_v >= 8 or "heal" in blob):
@@ -1385,12 +1417,18 @@ def rescore_for_god(
     ):
         s += 16
 
-    # Item's own recent patch axes (meta itemization)
+    # Item's own recent patch axes (meta) — role-gated
     ia = item.patch_axes_r5 or item.patch_axes or {}
     if ia:
         s += float(ia.get("damage", 0) or 0) * 12
         s += float(ia.get("pen", 0) or 0) * 16
-        s += float(ia.get("survivability", 0) or 0) * 10
+        surv_item = float(ia.get("survivability", 0) or 0)
+        if frontline:
+            s += surv_item * 12
+        elif damage_backline:
+            s += surv_item * 2  # hot tanks barely pull backline
+        else:
+            s += surv_item * 8
         s += float(ia.get("cooldown", 0) or 0) * 8
         s += float(ia.get("attack_speed", 0) or 0) * 10
         s += float(ia.get("crit", 0) or 0) * 10
@@ -1400,7 +1438,7 @@ def rescore_for_god(
             s += 10
     elif traj == "falling" or r5 <= -0.8 or pscore <= -1.5:
         if item.item_type == "Defensive" or _canon_stat_value(item.stats, "hp") >= 250:
-            s += 16
+            s += 14 if frontline else 8
         s += cdr_v * 0.4
         if item.is_active_item and (item.total_cost or 0) >= 3200:
             s -= 8

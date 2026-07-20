@@ -72,11 +72,20 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 
+# One command: analyze metrics + rebuild builds + export docs/
+python -m smite2db.refresh
+
+# Full wiki re-scrape then refresh:
+python -m smite2db.refresh --scrape
+
+# Or step by step:
 python -m smite2db.scrape
 python -m smite2db.analyze run
-python -m smite2db.conquest_builds
-python -m smite2db.export_web   # also rebuilds docs/standalone.html
+python -m smite2db.export_web
 ```
+
+**How it thinks:** patch notes (48%) + kit metrics (28%) + Conquest build fit (14%).  
+Builds and tier “build fit” share one engine. Patch **r5 axes** (damage/CD/pen/…) steer item picks.
 
 ---
 

@@ -225,6 +225,7 @@ function selectGod(name, switchTab) {
     .filter(Boolean)
     .join(" · ");
 
+  const conf = g.confidence != null ? Number(g.confidence) : null;
   $("#god-metrics").innerHTML = [
     pill(`Tier ${g.tier || "—"} #${g.rank_in_scope ?? "—"}`),
     pill(`Score ${fmt(g.score)}`),
@@ -233,7 +234,57 @@ function selectGod(name, switchTab) {
     pill(`Build ${fmt(g.build_score)}`),
     pill(`STR% ${fmt(g.avg_scaling_str, 0)} / INT% ${fmt(g.avg_scaling_int, 0)}`),
     pill(`Trajectory ${g.trajectory || "—"}`),
-  ].join(" ");
+    conf != null ? pill(`Conf ${Math.round(conf * 100)}%`) : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  // Patch exploit panel: r5 axes → how we itemize
+  const axes = g.patch_axes || g.recent_axes || g.axes || {};
+  const axEntries = Object.entries(axes).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
+  const exploitHints = [];
+  const dmgA = Number(axes.damage || 0);
+  const cdA = Number(axes.cooldown || 0);
+  const asA = Number(axes.attack_speed || 0);
+  if (dmgA >= 0.25) exploitHints.push("damage buffed → pen + power");
+  if (dmgA <= -0.35) exploitHints.push("damage nerfed → bulk / CDR / efficiency");
+  if (cdA <= -0.25) exploitHints.push("CD nerfed → stack CDR");
+  if (cdA >= 0.25) exploitHints.push("CD buffed → free to stack damage");
+  if (asA >= 0.2) exploitHints.push("AS buffed → attack-speed cores");
+  if (Number(axes.survivability || 0) >= 0.25) exploitHints.push("survivability buffed → prots / HP");
+  if (Number(axes.pen || 0) >= 0.15) exploitHints.push("pen buffed → shred items");
+  const axesEl = $("#god-patch-axes");
+  if (axesEl) {
+    if (!axEntries.length && !exploitHints.length) {
+      axesEl.innerHTML = `<span class="muted">No strong r5 patch axes (stable / unmentioned).</span>
+        <span class="pill ice">${escapeHtml(g.trajectory || "stable")}</span>
+        <span class="muted">net ${fmt(g.net_weighted_score, 2)} · r5 ${fmt(g.recent_5_score, 2)}</span>`;
+    } else {
+      axesEl.innerHTML = `
+        <div class="build-meta" style="margin-bottom:8px">
+          <span class="pill ice">${escapeHtml(g.trajectory || "stable")}</span>
+          <span class="pill">net ${fmt(g.net_weighted_score, 2)}</span>
+          <span class="pill">r5 ${fmt(g.recent_5_score, 2)}</span>
+        </div>
+        <div class="kit-tags">
+          ${axEntries
+            .slice(0, 8)
+            .map(([k, v]) => {
+              const n = Number(v);
+              const cls = n > 0.15 ? "axis-up" : n < -0.15 ? "axis-down" : "";
+              return `<span class="tag ${cls}">${escapeHtml(k)} ${n >= 0 ? "+" : ""}${fmt(n, 1)}</span>`;
+            })
+            .join("")}
+        </div>
+        ${
+          exploitHints.length
+            ? `<p class="why" style="margin-top:8px"><strong>Exploit:</strong> ${escapeHtml(
+                exploitHints.join("; ")
+              )}.</p>`
+            : ""
+        }`;
+    }
+  }
 
   const ab = $("#god-abilities");
   ab.innerHTML = (g.abilities || [])
@@ -297,6 +348,7 @@ function selectGod(name, switchTab) {
         <div class="card build-card god-role-build">
           <h3>${escapeHtml(label)}</h3>
           <div class="build-meta">
+            ${gb.archetype ? `<span class="pill hot">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
             <span class="pill">actives ${nAct}/${maxA}</span>
             <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
           </div>
@@ -311,15 +363,25 @@ function selectGod(name, switchTab) {
       .join("");
   }
 
+  const axLines = Object.entries(axes)
+    .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
+    .map(([k, v]) => `  ${k}: ${Number(v) >= 0 ? "+" : ""}${fmt(v, 2)}`);
   $("#god-patch").textContent = [
     `Trajectory: ${g.trajectory || "—"}`,
     `Net weighted: ${fmt(g.net_weighted_score, 2)}`,
     `Last 5 patches: ${fmt(g.recent_5_score, 2)}`,
     `Buff / Nerf events: ${g.buff_events ?? "—"} / ${g.nerf_events ?? "—"}`,
+    conf != null ? `Confidence: ${Math.round(conf * 100)}%` : "",
+    "",
+    "Patch axes (recent / full):",
+    ...(axLines.length ? axLines : ["  (none)"]),
     "",
     "Tier rationale:",
     g.rationale || "—",
-  ].join("\n");
+    g.build_notes ? `\nBuild notes:\n${g.build_notes}` : "",
+  ]
+    .filter((x) => x !== "")
+    .join("\n");
 }
 
 /* -------------------- Builds (god-first) -------------------- */

@@ -71,6 +71,10 @@
             <div class="muted" id="god-sub"></div>
             <div id="god-metrics" style="margin:10px 0"></div>
             <div class="god-section">
+              <h3>Patch exploit</h3>
+              <div id="god-patch-axes" class="patch-axes muted">Select a god to see r5 axes.</div>
+            </div>
+            <div class="god-section">
               <h3>Kit-fit Conquest paths</h3>
               <div class="muted" id="god-build-hint">One buy order per role this god plays.</div>
               <div id="god-build" class="god-builds"></div>
@@ -179,9 +183,11 @@
           </ul>
           <p class="muted">
             Model from wiki.smite2.com — not live WR. Tiers: patch 48% · kit 28% · build 14%.
+            Builds and tier “build fit” share one Conquest engine. Patch r5 axes steer itemization.
           </p>
           <p>
             <a href="https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool" target="_blank" rel="noopener">GitHub</a>
+            · <code>python -m smite2db.refresh</code>
             · <code>python -m smite2db.gui</code>
           </p>
         </div>
