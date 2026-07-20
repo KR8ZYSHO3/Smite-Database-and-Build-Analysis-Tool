@@ -599,7 +599,7 @@ class Smite2App(tk.Tk):
         n_act = sum(1 for it in items if it.get("is_active"))
         lines = [
             f"ROLE: {role}",
-            f"Inventory: 1 starter + 6 items  ·  Actives {n_act}/3 (max)",
+            f"Inventory: 1 starter + 6 items  ·  Actives {n_act}/2 typical (hard max 3)",
             "",
             f"STARTER: {starter.get('name', '—')}  "
             f"(score {starter.get('score')}, {starter.get('cost')}g)",
@@ -633,7 +633,7 @@ class Smite2App(tk.Tk):
             items_g = gb.get("items") or gb.get("full_path") or []
             ga = sum(1 for it in items_g if it.get("is_active"))
             gtxt.append(
-                f"  Starter: {(gb.get('starter') or {}).get('name')}  ·  actives {ga}/3"
+                f"  Starter: {(gb.get('starter') or {}).get('name')}  ·  actives {ga}/{gb.get('max_shop_actives', 2)}  ·  pen≈{gb.get('pen_total', '?')}"
             )
             for i, it in enumerate(items_g, 1):
                 star = "*" if it.get("is_active") else " "

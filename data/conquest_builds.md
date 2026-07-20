@@ -1,6 +1,6 @@
 # SMITE 2 Conquest Builds — Statistically Weighted
 
-Local statistical weighting: item flat stats (normalized) × role priority vector + passive/active utility tags + cost band + item patch momentum; per-god paths re-scored by kit STR/INT scaling from ability metrics. No external build sites.
+Local statistical weighting: item stats × role priority + utility tags + cost band + patch momentum; per-god rescoring by kit STR/INT scaling. Shop actives default max 2 (hard game max 3; melee physical may use 3). Curios share the active budget and drop at 3. Relics are separate. Damage roles (Carry/Mid/Jungle) enforce ≥10 pen and prefer passive shred (Obsidian Shard / Titan's Bane / Spears) over pure power. Items listed in buy order (early power → pen → power → defense → luxury). No external build sites.
 
 > Not scraped from websites. Derived from wiki item stats, ability scaling, and patch-note item/god momentum in `smite2.db`.
 
@@ -12,10 +12,10 @@ Conquest duo ADC: sustained basic-attack DPS, crit windows, penetration, and sel
 
 | Stat | Weight |
 |------|-------:|
-| str | 22% |
-| as | 18% |
+| str | 20% |
+| pen | 18% |
+| as | 16% |
 | crit | 14% |
-| pen | 14% |
 | ls | 10% |
 | bap | 8% |
 | hp | 5% |
@@ -26,89 +26,109 @@ Conquest duo ADC: sustained basic-attack DPS, crit windows, penetration, and sel
 
 ### Role template (best-in-role item scores)
 
-**Starter:** Gilded Arrow (score 27.9, cost 650)
-**Starter alts:** Death's Toll (24.2), Leather Cowl (22.4), Selflessness (15.4)
-**Upgrade path:** Sharpshooter's Arrow (score 62.2)
+**Starter:** Gilded Arrow (score 28.8, cost 650)
+**Starter alts:** Death's Toll (25.2), Leather Cowl (23.4)
+**Upgrade path:** Sharpshooter's Arrow (score 65.0)
 
-**Inventory: 1 starter + 6 items** (starter is separate)
+**Inventory: 1 starter + 6 items** · shop actives **≤2** typical / **3** hard max (curios share active budget; relics separate)
 
-| Starter | **Gilded Arrow** | `27.9` | 650g |
+| Starter | **Gilded Arrow** | `28.8` | 650g |
 
-| # | Item | Score | Cost | Stats |
-|--:|------|------:|-----:|-------|
-| 1 | **Lernaean Bow** | `82.9` | 2500g | str 40.0, as 30.0 |
-| 2 | **Musashi's Dual Swords** | `81.1` | 2700g | str 35.0, crit 30.0 |
-| 3 | **Death Metal** | `75.0` | 2600g | int 40.0, str 35.0, crit 20.0 |
-| 4 | **Avatar's Parashu** | `67.1` | 3700g | str 90.0, pen 10.0 |
-| 5 | **Runeforged Hammer** | `46.5` | 2550g | hp 350.0, str 45.0, hpr 3.0 |
-| 6 | **Freya's Tears** | `31.9` | 2600g | mprot 35.0, pprot 30.0, cdr 20.0 |
+| Buy# | Item | Slot | Active | Pen | Cost |
+|-----:|------|------|:------:|----:|-----:|
+| 1 | **Jotunn's Revenge** | power |  | 5.0 | 2400g |
+| 2 | **Riptalon** | pen |  | 10.0 | 2700g |
+| 3 | **Titan's Bane** | pen |  | 20.0 | 3100g |
+| 4 | **Runeforged Hammer** | power |  | — | 2550g |
+| 5 | **Avenging Blade** | power |  | — | 2650g |
+| 6 | **Freya's Tears** | defense |  | — | 2600g |
 
-**Relics (scored):** Purification Beads (33.0), Aegis of Acceleration (28.0), Sundering Arc (22.7)
+*Actives 0/2 · pen ≈ 35.0*
 
-### Top gods in this role (model) + tailored paths
+Buy order: early power → penetration → more power → defense → luxury. Shop actives 0/2 (hard game max 3; curios share that budget). Build pen ≈ 35.
+
+**Relics:** Purification Beads, Aegis of Acceleration
+
+### Top gods in this role + buy paths
 
 #### Xbalanque — S-tier (role rank #1, model 72.3)
 
 *Physical · Hybrid scaling (STR 37.5% / INT 35.0%)*
 
-Xbalanque as Carry: primary scaling Hybrid (STR 38% / INT 35% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #1).
+Xbalanque (Carry): Hybrid scaling (STR 38% / INT 35%). Buy order early→late. Pen total ≈ 25. Shop actives 1/2 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, Titan's Bane. CC-heavy kit → CDR/peel valued. Model tier S (#1).
 
-- **Starter:** Gilded Arrow (`35.8`)
-- **6 items:**
-  1. Death Metal (`113.7` · 2600g)
-  2. Avatar's Parashu (`103.1` · 3700g)
-  3. Avenging Blade (`102.7` · 2650g)
-  4. Lernaean Bow (`98.9` · 2500g)
-  5. Triton's Conch (`66.6` · 2700g)
-  6. Freya's Tears (`53.9` · 2600g)
+- **Starter:** Gilded Arrow
+- **Buy order** (actives 1/2, pen ≈ 25.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. Lernaean Bow (power, active, 2500g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Avenging Blade (power, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Neith — S-tier (role rank #2, model 68.6)
 
 *Physical · Hybrid scaling (STR 67.5% / INT 66.0%)*
 
-Neith as Carry: primary scaling Hybrid (STR 68% / INT 66% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #2).
+Neith (Carry): Hybrid scaling (STR 68% / INT 66%). Buy order early→late. Pen total ≈ 25. Shop actives 1/2 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, Titan's Bane. CC-heavy kit → CDR/peel valued. Model tier S (#2).
 
-- **Starter:** Gilded Arrow (`35.8`)
-- **6 items:**
-  1. Death Metal (`113.7` · 2600g)
-  2. Avatar's Parashu (`103.1` · 3700g)
-  3. Avenging Blade (`102.7` · 2650g)
-  4. Lernaean Bow (`98.9` · 2500g)
-  5. Triton's Conch (`66.6` · 2700g)
-  6. Freya's Tears (`53.9` · 2600g)
+- **Starter:** Gilded Arrow
+- **Buy order** (actives 1/2, pen ≈ 25.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. Lernaean Bow (power, active, 2500g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Avenging Blade (power, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Danzaburou — S-tier (role rank #3, model 67.9)
 
 *Physical · Hybrid scaling (STR 78.8% / INT 61.0%)*
 
-Danzaburou as Carry: primary scaling Hybrid (STR 79% / INT 61% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #3).
+Danzaburou (Carry): Hybrid scaling (STR 79% / INT 61%). Buy order early→late. Pen total ≈ 25. Shop actives 1/2 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, Titan's Bane. CC-heavy kit → CDR/peel valued. Model tier S (#3).
 
-- **Starter:** Gilded Arrow (`35.8`)
-- **6 items:**
-  1. Death Metal (`113.7` · 2600g)
-  2. Avatar's Parashu (`103.1` · 3700g)
-  3. Avenging Blade (`102.7` · 2650g)
-  4. Lernaean Bow (`98.9` · 2500g)
-  5. Triton's Conch (`66.6` · 2700g)
-  6. Freya's Tears (`53.9` · 2600g)
+- **Starter:** Gilded Arrow
+- **Buy order** (actives 1/2, pen ≈ 25.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. Lernaean Bow (power, active, 2500g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Avenging Blade (power, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Princess Bari — A-tier (role rank #4, model 65.8)
 
 *Magical · Hybrid scaling (STR 43.8% / INT 62.5%)*
 
-Princess Bari as Carry: primary scaling Hybrid (STR 44% / INT 62% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Role model tier A (rank #4).
+Princess Bari (Carry): Hybrid scaling (STR 44% / INT 62%). Buy order early→late. Pen total ≈ 60. Shop actives 0/2 (game hard max 3; curio shares budget). Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, The World Stone, Obsidian Shard. CC-heavy kit → CDR/peel valued. Model tier A (#4).
 
-- **Starter:** Gilded Arrow (`31.0`)
-- **6 items:**
-  1. Death Metal (`113.7` · 2600g)
-  2. Avatar's Parashu (`78.1` · 3700g)
-  3. Lernaean Bow (`73.9` · 2500g)
-  4. Musashi's Dual Swords (`70.1` · 2700g)
-  5. Triton's Conch (`66.6` · 2700g)
-  6. Freya's Tears (`41.9` · 2600g)
+- **Starter:** Death's Toll
+- **Buy order** (actives 0/2, pen ≈ 60.0):
+  1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
+  2. Spear of Desolation (pen, pen 10.0, 2650g)
+  3. Spear Of The Magus (pen, pen 10.0, 2700g)
+  4. The World Stone (pen, pen 10.0, 2800g)
+  5. Obsidian Shard (pen, pen 20.0, 3050g)
+  6. Alchemist Coat (defense, 2350g)
+- **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
+
+#### Medusa — A-tier (role rank #5, model 64.2)
+
+*Physical · Hybrid scaling (STR 57.0% / INT 55.8%)*
+
+Medusa (Carry): Hybrid scaling (STR 57% / INT 56%). Buy order early→late. Pen total ≈ 25. Shop actives 1/2 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, Titan's Bane. CC-heavy kit → CDR/peel valued. Model tier A (#5).
+
+- **Starter:** Gilded Arrow
+- **Buy order** (actives 1/2, pen ≈ 25.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. Lernaean Bow (power, active, 2500g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Avenging Blade (power, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 ---
@@ -121,104 +141,124 @@ Conquest mid: ability burst and wave clear, intelligence or hybrid power, penetr
 
 | Stat | Weight |
 |------|-------:|
-| int | 26% |
-| pen | 16% |
+| int | 24% |
+| pen | 22% |
 | cdr | 14% |
-| str | 8% |
 | mp | 8% |
-| hp | 8% |
-| mpr | 6% |
-| ls | 6% |
-| as | 4% |
+| hp | 7% |
+| str | 6% |
+| mpr | 5% |
+| ls | 5% |
+| as | 3% |
 | pprot | 2% |
 | mprot | 2% |
 
 ### Role template (best-in-role item scores)
 
-**Starter:** Conduit Gem (score 31.2, cost 650)
-**Starter alts:** Sands Of Time (23.9), Vampiric Shroud (22.1), Bluestone Pendant (19.0)
-**Upgrade path:** Heroism (score 23.1)
+**Starter:** Conduit Gem (score 31.9, cost 650)
+**Starter alts:** Sands Of Time (23.9), Vampiric Shroud (22.0)
+**Upgrade path:** Heroism (score 24.4)
 
-**Inventory: 1 starter + 6 items** (starter is separate)
+**Inventory: 1 starter + 6 items** · shop actives **≤2** typical / **3** hard max (curios share active budget; relics separate)
 
-| Starter | **Conduit Gem** | `31.2` | 650g |
+| Starter | **Conduit Gem** | `31.9` | 650g |
 
-| # | Item | Score | Cost | Stats |
-|--:|------|------:|-----:|-------|
-| 1 | **Jade Scepter** | `106.5` | 2750g | hp 250.0, int 100.0 |
-| 2 | **Dreamer's Idol** | `103.6` | 3500g | int 130.0, pen 10.0 |
-| 3 | **Death Metal** | `62.3` | 2600g | int 40.0, str 35.0, crit 20.0 |
-| 4 | **Jotunn's Revenge** | `56.4` | 2400g | mp 250.0, str 35.0, cdr 25.0, pen 5.0 |
-| 5 | **Helm of Darkness** | `53.4` | 2700g | int 40.0, mprot 25.0, pprot 20.0 |
-| 6 | **Spear Of The Magus** | `102.3` | 2700g | int 95.0, pen 10.0 |
+| Buy# | Item | Slot | Active | Pen | Cost |
+|-----:|------|------|:------:|----:|-----:|
+| 1 | **Jotunn's Revenge** | power |  | 5.0 | 2400g |
+| 2 | **Gluttonous Grimoire** | pen |  | 10.0 | 2600g |
+| 3 | **Spear Of The Magus** | pen |  | 10.0 | 2700g |
+| 4 | **The Executioner** | power |  | — | 2550g |
+| 5 | **Jade Scepter** | power | A | — | 2750g |
+| 6 | **Sphere of Negation** | defense |  | — | 2750g |
 
-**Relics (scored):** Purification Beads (30.0), Aegis of Acceleration (30.0), Sundering Arc (21.7)
+*Actives 1/2 · pen ≈ 25.0*
 
-### Top gods in this role (model) + tailored paths
+Buy order: early power → penetration → more power → defense → luxury. Shop actives 1/2 (hard game max 3; curios share that budget). Build pen ≈ 25.
+
+**Relics:** Purification Beads, Aegis of Acceleration
+
+### Top gods in this role + buy paths
 
 #### Kukulkan — S-tier (role rank #1, model 75.2)
 
 *Magical · Intelligence scaling (STR 0% / INT 77.5%)*
 
-Kukulkan as Mid: primary scaling Intelligence (STR 0% / INT 78% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Role model tier S (rank #1).
+Kukulkan (Mid): Intelligence scaling (STR 0% / INT 78%). Buy order early→late. Pen total ≈ 50. Shop actives 1/2 (game hard max 3; curio shares budget). Pen: Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. CC-heavy kit → CDR/peel valued. Model tier S (#1).
 
-- **Starter:** Conduit Gem (`33.6`)
-- **6 items:**
-  1. Dreamer's Idol (`214.1` · 3500g)
-  2. Wish-Granting Pearl (`192.6` · 3550g)
-  3. Helm of Darkness (`87.4` · 2700g)
-  4. Death Metal (`77.1` · 2600g)
-  5. Jade Scepter (`191.5` · 2750g)
-  6. Freya's Tears (`59.6` · 2600g)
+- **Starter:** Conduit Gem
+- **Buy order** (actives 1/2, pen ≈ 50.0):
+  1. Spear of Desolation (pen, pen 10.0, 2650g)
+  2. Spear Of The Magus (pen, pen 10.0, 2700g)
+  3. Obsidian Shard (pen, pen 20.0, 3050g)
+  4. Sphere of Negation (defense, 2750g)
+  5. Dreamer's Idol (pen, active, pen 10.0, 3500g)
+  6. Wish-Granting Pearl (power, 3550g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Neith — S-tier (role rank #2, model 68.6)
 
 *Physical · Hybrid scaling (STR 67.5% / INT 66.0%)*
 
-Neith as Mid: primary scaling Hybrid (STR 68% / INT 66% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #2).
+Neith (Mid): Hybrid scaling (STR 68% / INT 66%). Buy order early→late. Pen total ≈ 35. Shop actives 0/2 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, Riptalon, Titan's Bane. CC-heavy kit → CDR/peel valued. Model tier S (#2).
 
-- **Starter:** Conduit Gem (`33.6`)
-- **6 items:**
-  1. Dreamer's Idol (`130.6` · 3500g)
-  2. Jade Scepter (`121.5` · 2750g)
-  3. Death Metal (`101.1` · 2600g)
-  4. Jotunn's Revenge (`80.4` · 2400g)
-  5. Wish-Granting Pearl (`113.6` · 3550g)
-  6. Freya's Tears (`71.6` · 2600g)
+- **Starter:** Conduit Gem
+- **Buy order** (actives 0/2, pen ≈ 35.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. Riptalon (pen, pen 10.0, 2700g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Avenging Blade (power, 2650g)
+  5. Musashi's Dual Swords (power, 2700g)
+  6. Freya's Tears (defense, 2600g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Scylla — S-tier (role rank #3, model 67.3)
 
 *Magical · Intelligence scaling (STR 0% / INT 83.8%)*
 
-Scylla as Mid: primary scaling Intelligence (STR 0% / INT 84% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Role model tier S (rank #3).
+Scylla (Mid): Intelligence scaling (STR 0% / INT 84%). Buy order early→late. Pen total ≈ 50. Shop actives 1/2 (game hard max 3; curio shares budget). Pen: Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. CC-heavy kit → CDR/peel valued. Model tier S (#3).
 
-- **Starter:** Conduit Gem (`33.6`)
-- **6 items:**
-  1. Dreamer's Idol (`214.1` · 3500g)
-  2. Wish-Granting Pearl (`192.6` · 3550g)
-  3. Helm of Darkness (`87.4` · 2700g)
-  4. Death Metal (`77.1` · 2600g)
-  5. Jade Scepter (`191.5` · 2750g)
-  6. Freya's Tears (`59.6` · 2600g)
+- **Starter:** Conduit Gem
+- **Buy order** (actives 1/2, pen ≈ 50.0):
+  1. Spear of Desolation (pen, pen 10.0, 2650g)
+  2. Spear Of The Magus (pen, pen 10.0, 2700g)
+  3. Obsidian Shard (pen, pen 20.0, 3050g)
+  4. Sphere of Negation (defense, 2750g)
+  5. Dreamer's Idol (pen, active, pen 10.0, 3500g)
+  6. Wish-Granting Pearl (power, 3550g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Hecate — A-tier (role rank #4, model 66.9)
 
 *Magical · Intelligence scaling (STR 0% / INT 70.0%)*
 
-Hecate as Mid: primary scaling Intelligence (STR 0% / INT 70% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier A (rank #4).
+Hecate (Mid): Intelligence scaling (STR 0% / INT 70%). Buy order early→late. Pen total ≈ 60. Shop actives 1/2 (game hard max 3; curio shares budget). Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. CC-heavy kit → CDR/peel valued. Model tier A (#4).
 
-- **Starter:** Conduit Gem (`33.6`)
-- **6 items:**
-  1. Dreamer's Idol (`214.1` · 3500g)
-  2. Wish-Granting Pearl (`192.6` · 3550g)
-  3. Helm of Darkness (`99.4` · 2700g)
-  4. Death Metal (`77.1` · 2600g)
-  5. Jade Scepter (`191.5` · 2750g)
-  6. Freya's Tears (`71.6` · 2600g)
+- **Starter:** Conduit Gem
+- **Buy order** (actives 1/2, pen ≈ 60.0):
+  1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
+  2. Spear of Desolation (pen, pen 10.0, 2650g)
+  3. Spear Of The Magus (pen, pen 10.0, 2700g)
+  4. Obsidian Shard (pen, pen 20.0, 3050g)
+  5. Sphere of Negation (defense, 2750g)
+  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
+
+#### Vulcan — A-tier (role rank #5, model 66.5)
+
+*Magical · Intelligence scaling (STR 0% / INT 80.0%)*
+
+Vulcan (Mid): Intelligence scaling (STR 0% / INT 80%). Buy order early→late. Pen total ≈ 50. Shop actives 1/2 (game hard max 3; curio shares budget). Pen: Spear Of The Magus, The World Stone, Obsidian Shard, Dreamer's Idol. Model tier A (#5).
+
+- **Starter:** Conduit Gem
+- **Buy order** (actives 1/2, pen ≈ 50.0):
+  1. Spear Of The Magus (pen, pen 10.0, 2700g)
+  2. The World Stone (pen, pen 10.0, 2800g)
+  3. Obsidian Shard (pen, pen 20.0, 3050g)
+  4. Sphere of Negation (defense, 2750g)
+  5. Dreamer's Idol (pen, active, pen 10.0, 3500g)
+  6. Wish-Granting Pearl (power, 3550g)
+- **Relics:** Purification Beads (30.0), Aegis of Acceleration (30.0)
 
 ---
 
@@ -230,102 +270,122 @@ Conquest jungle: early clear, gank threat, mobility/CDR, burst penetration, and 
 
 | Stat | Weight |
 |------|-------:|
+| pen | 20% |
 | str | 16% |
-| pen | 16% |
 | int | 12% |
 | cdr | 12% |
 | hp | 12% |
 | as | 10% |
-| ls | 8% |
-| pprot | 5% |
-| mprot | 5% |
+| ls | 6% |
 | crit | 4% |
+| pprot | 4% |
+| mprot | 4% |
 
 ### Role template (best-in-role item scores)
 
-**Starter:** Bumba's Cudgel (score 39.9, cost 650)
-**Starter alts:** Bumba's Golden Dagger (36.4), Selflessness (16.0), Death's Toll (14.8)
-**Upgrade path:** War Banner (score 29.6)
+**Starter:** Bumba's Cudgel (score 40.4, cost 650)
+**Starter alts:** Bumba's Golden Dagger (36.9), Selflessness (16.0)
+**Upgrade path:** War Banner (score 30.7)
 
-**Inventory: 1 starter + 6 items** (starter is separate)
+**Inventory: 1 starter + 6 items** · shop actives **≤2** typical / **3** hard max (curios share active budget; relics separate)
 
-| Starter | **Bumba's Cudgel** | `39.9` | 650g |
+| Starter | **Bumba's Cudgel** | `40.4` | 650g |
 
-| # | Item | Score | Cost | Stats |
-|--:|------|------:|-----:|-------|
-| 1 | **Transcendence** | `54.2` | 2400g | mp 250.0, str 35.0, mpr 4.0 |
-| 2 | **Gluttonous Grimoire** | `51.5` | 2600g | hp 150.0, int 55.0, pen 10.0, ls 7.5 |
-| 3 | **Jotunn's Revenge** | `49.2` | 2400g | mp 250.0, str 35.0, cdr 25.0, pen 5.0 |
-| 4 | **Soul Gem** | `48.9` | 2500g | int 60.0, cdr 10.0, ls 7.5, pen 5.0 |
-| 5 | **Jade Scepter** | `47.0` | 2750g | hp 250.0, int 100.0 |
-| 6 | **Freya's Tears** | `42.6` | 2600g | mprot 35.0, pprot 30.0, cdr 20.0 |
+| Buy# | Item | Slot | Active | Pen | Cost |
+|-----:|------|------|:------:|----:|-----:|
+| 1 | **Jotunn's Revenge** | power |  | 5.0 | 2400g |
+| 2 | **Gluttonous Grimoire** | pen |  | 10.0 | 2600g |
+| 3 | **Doom Orb** | pen |  | 10.0 | 2700g |
+| 4 | **Titan's Bane** | pen |  | 20.0 | 3100g |
+| 5 | **Void Stone** | defense |  | — | 2550g |
+| 6 | **Freya's Tears** | defense |  | — | 2600g |
 
-**Relics (scored):** Purification Beads (28.0), Sundering Arc (25.7), Agility Relic (22.5)
+*Actives 0/2 · pen ≈ 45.0*
 
-### Top gods in this role (model) + tailored paths
+Buy order: early power → penetration → more power → defense → luxury. Shop actives 0/2 (hard game max 3; curios share that budget). Build pen ≈ 45.
+
+**Relics:** Purification Beads, Sundering Arc
+
+### Top gods in this role + buy paths
 
 #### Mordred — S-tier (role rank #1, model 69.0)
 
 *Physical · Hybrid scaling (STR 65.0% / INT 61.7%)*
 
-Mordred as Jungle: primary scaling Hybrid (STR 65% / INT 62% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #1).
+Mordred (Jungle): Hybrid scaling (STR 65% / INT 62%). Buy order early→late. Pen total ≈ 35. Shop actives 0/3 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, Riptalon, Titan's Bane. CC-heavy kit → CDR/peel valued. Model tier S (#1).
 
-- **Starter:** Bumba's Cudgel (`42.6`)
-- **6 items:**
-  1. Avenging Blade (`84.5` · 2650g)
-  2. Death Metal (`81.0` · 2600g)
-  3. Arondight (`75.4` · 2650g)
-  4. Soul Gem (`69.9` · 2500g)
-  5. Freya's Tears (`64.6` · 2600g)
-  6. Triton's Conch (`63.0` · 2700g)
+- **Starter:** Bumba's Cudgel
+- **Buy order** (actives 0/3, pen ≈ 35.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. Riptalon (pen, pen 10.0, 2700g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Avenging Blade (power, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (36.0), Sundering Arc (25.7)
 
 #### Tsukuyomi — S-tier (role rank #2, model 65.7)
 
 *Physical · Hybrid scaling (STR 32.5% / INT 36.0%)*
 
-Tsukuyomi as Jungle: primary scaling Hybrid (STR 32% / INT 36% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #2).
+Tsukuyomi (Jungle): Hybrid scaling (STR 32% / INT 36%). Buy order early→late. Pen total ≈ 35. Shop actives 0/3 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, Riptalon, Titan's Bane. CC-heavy kit → CDR/peel valued. Model tier S (#2).
 
-- **Starter:** Bumba's Cudgel (`42.6`)
-- **6 items:**
-  1. Avenging Blade (`84.5` · 2650g)
-  2. Death Metal (`81.0` · 2600g)
-  3. Arondight (`75.4` · 2650g)
-  4. Soul Gem (`69.9` · 2500g)
-  5. Freya's Tears (`64.6` · 2600g)
-  6. Triton's Conch (`63.0` · 2700g)
+- **Starter:** Bumba's Cudgel
+- **Buy order** (actives 0/3, pen ≈ 35.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. Riptalon (pen, pen 10.0, 2700g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Avenging Blade (power, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (36.0), Sundering Arc (25.7)
 
 #### Thanatos — S-tier (role rank #3, model 62.4)
 
 *Physical · Strength scaling (STR 81.7% / INT 0%)*
 
-Thanatos as Jungle: primary scaling Strength (STR 82% / INT 0% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #3).
+Thanatos (Jungle): Strength scaling (STR 82% / INT 0%). Buy order early→late. Pen total ≈ 35. Shop actives 0/3 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, Riptalon, Titan's Bane. CC-heavy kit → CDR/peel valued. Model tier S (#3).
 
-- **Starter:** Bumba's Cudgel (`42.6`)
-- **6 items:**
-  1. Avenging Blade (`111.5` · 2650g)
-  2. Avatar's Parashu (`103.1` · 3700g)
-  3. Jotunn's Revenge (`88.9` · 2400g)
-  4. Lernaean Bow (`82.2` · 2500g)
-  5. Runeforged Hammer (`69.7` · 2550g)
-  6. Freya's Tears (`64.6` · 2600g)
+- **Starter:** Bumba's Cudgel
+- **Buy order** (actives 0/3, pen ≈ 35.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. Riptalon (pen, pen 10.0, 2700g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Avenging Blade (power, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (36.0), Sundering Arc (25.7)
 
 #### Ratatoskr — A-tier (role rank #4, model 60.0)
 
 *Physical · Strength scaling (STR 60.0% / INT 0%)*
 
-Ratatoskr as Jungle: primary scaling Strength (STR 60% / INT 0% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Role model tier A (rank #4).
+Ratatoskr (Jungle): Strength scaling (STR 60% / INT 0%). Buy order early→late. Pen total ≈ 25. Shop actives 0/3 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, Titan's Bane. CC-heavy kit → CDR/peel valued. Model tier A (#4).
 
-- **Starter:** Bumba's Cudgel (`42.6`)
-- **6 items:**
-  1. Avatar's Parashu (`103.1` · 3700g)
-  2. Avenging Blade (`99.5` · 2650g)
-  3. Jotunn's Revenge (`88.9` · 2400g)
-  4. Lernaean Bow (`82.2` · 2500g)
-  5. Runeforged Hammer (`69.7` · 2550g)
-  6. Freya's Tears (`52.6` · 2600g)
+- **Starter:** Bumba's Cudgel
+- **Buy order** (actives 0/3, pen ≈ 25.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. Titan's Bane (pen, pen 20.0, 3100g)
+  3. The Executioner (power, 2550g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Avenging Blade (power, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
+- **Relics:** Purification Beads (36.0), Sundering Arc (25.7)
+
+#### Cernunnos — A-tier (role rank #5, model 59.1)
+
+*Physical · Hybrid scaling (STR 58.8% / INT 51.7%)*
+
+Cernunnos (Jungle): Hybrid scaling (STR 59% / INT 52%). Buy order early→late. Pen total ≈ 35. Shop actives 0/3 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, Riptalon, Titan's Bane. CC-heavy kit → CDR/peel valued. Model tier A (#5).
+
+- **Starter:** Bumba's Cudgel
+- **Buy order** (actives 0/3, pen ≈ 35.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. Riptalon (pen, pen 10.0, 2700g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Avenging Blade (power, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (36.0), Sundering Arc (25.7)
 
 ---
@@ -353,88 +413,108 @@ Conquest solo: lane sustain, hybrid damage, protections, HP, and items that win 
 ### Role template (best-in-role item scores)
 
 **Starter:** Warrior's Axe (score 37.8, cost 650)
-**Starter alts:** Bluestone Pendant (36.8), Selflessness (26.9), Vampiric Shroud (18.6)
+**Starter alts:** Bluestone Pendant (36.8), Selflessness (26.9)
 **Upgrade path:** Heroism (score 46.1)
 
-**Inventory: 1 starter + 6 items** (starter is separate)
+**Inventory: 1 starter + 6 items** · shop actives **≤2** typical / **3** hard max (curios share active budget; relics separate)
 
 | Starter | **Warrior's Axe** | `37.8` | 650g |
 
-| # | Item | Score | Cost | Stats |
-|--:|------|------:|-----:|-------|
-| 1 | **Runeforged Hammer** | `63.4` | 2550g | hp 350.0, str 45.0, hpr 3.0 |
-| 2 | **Soul Gem** | `53.9` | 2500g | int 60.0, cdr 10.0, ls 7.5, pen 5.0 |
-| 3 | **Shield Splitter** | `43.8` | 2400g | str 40.0, pprot 15.0, mprot 15.0 |
-| 4 | **Jotunn's Revenge** | `42.6` | 2400g | mp 250.0, str 35.0, cdr 25.0, pen 5.0 |
-| 5 | **Shifter's Shield** | `80.6` | 2650g | hp 300.0, pprot 25.0, mprot 25.0, hpr 4.0 |
-| 6 | **Freya's Tears** | `71.9` | 2600g | mprot 35.0, pprot 30.0, cdr 20.0 |
+| Buy# | Item | Slot | Active | Pen | Cost |
+|-----:|------|------|:------:|----:|-----:|
+| 1 | **Jotunn's Revenge** | power |  | 5.0 | 2400g |
+| 2 | **Soul Gem** | power |  | 5.0 | 2500g |
+| 3 | **Runeforged Hammer** | power |  | — | 2550g |
+| 4 | **The Executioner** | power |  | — | 2550g |
+| 5 | **Freya's Tears** | defense |  | — | 2600g |
+| 6 | **Shifter's Shield** | defense |  | — | 2650g |
 
-**Relics (scored):** Purification Beads (32.0), Aegis of Acceleration (26.0), Sundering Arc (21.7)
+*Actives 0/2 · pen ≈ 10.0*
 
-### Top gods in this role (model) + tailored paths
+Buy order: early power → penetration → more power → defense → luxury. Shop actives 0/2 (hard game max 3; curios share that budget). Build pen ≈ 10.
+
+**Relics:** Purification Beads, Aegis of Acceleration
+
+### Top gods in this role + buy paths
 
 #### Chaac — S-tier (role rank #1, model 69.9)
 
 *Physical · Hybrid scaling (STR 88.3% / INT 43.8%)*
 
-Chaac as Solo: primary scaling Hybrid (STR 88% / INT 44% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #1).
+Chaac (Solo): Hybrid scaling (STR 88% / INT 44%). Buy order early→late. Pen total ≈ 15. Shop actives 1/3 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, The Reaper. CC-heavy kit → CDR/peel valued. Model tier S (#1).
 
-- **Starter:** Warrior's Axe (`46.1`)
-- **6 items:**
-  1. Shifter's Shield (`92.6` · 2650g)
-  2. Soul Gem (`74.9` · 2500g)
-  3. The Reaper (`67.8` · 2600g)
-  4. Sanguine Lash (`67.7` · 2650g)
-  5. Freya's Tears (`93.9` · 2600g)
-  6. Shield of the Phoenix (`84.8` · 2400g)
+- **Starter:** Warrior's Axe
+- **Buy order** (actives 1/3, pen ≈ 15.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. The Reaper (pen, pen 10.0, 2600g)
+  3. Runeforged Hammer (power, 2550g)
+  4. Avenging Blade (power, 2650g)
+  5. Sanguine Lash (power, active, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (40.0), Aegis of Acceleration (26.0)
 
 #### Mordred — S-tier (role rank #2, model 69.0)
 
 *Physical · Hybrid scaling (STR 65.0% / INT 61.7%)*
 
-Mordred as Solo: primary scaling Hybrid (STR 65% / INT 62% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #2).
+Mordred (Solo): Hybrid scaling (STR 65% / INT 62%). Buy order early→late. Pen total ≈ 15. Shop actives 1/3 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, The Reaper. CC-heavy kit → CDR/peel valued. Model tier S (#2).
 
-- **Starter:** Warrior's Axe (`46.1`)
-- **6 items:**
-  1. Shifter's Shield (`92.6` · 2650g)
-  2. Soul Gem (`74.9` · 2500g)
-  3. The Reaper (`67.8` · 2600g)
-  4. Sanguine Lash (`67.7` · 2650g)
-  5. Freya's Tears (`93.9` · 2600g)
-  6. Shield of the Phoenix (`84.8` · 2400g)
+- **Starter:** Warrior's Axe
+- **Buy order** (actives 1/3, pen ≈ 15.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. The Reaper (pen, pen 10.0, 2600g)
+  3. Runeforged Hammer (power, 2550g)
+  4. Avenging Blade (power, 2650g)
+  5. Sanguine Lash (power, active, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (40.0), Aegis of Acceleration (26.0)
 
 #### Xing Tian — S-tier (role rank #3, model 66.6)
 
 *Magical · Intelligence scaling (STR 0% / INT 37.5%)*
 
-Xing Tian as Solo: primary scaling Intelligence (STR 0% / INT 38% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #3).
+Xing Tian (Solo): Intelligence scaling (STR 0% / INT 38%). Buy order early→late. Pen total ≈ 5. Shop actives 0/2 (game hard max 3; curio shares budget). Pen: Soul Gem. CC-heavy kit → CDR/peel valued. Model tier S (#3).
 
-- **Starter:** Warrior's Axe (`46.1`)
-- **6 items:**
-  1. Jade Scepter (`134.7` · 2750g)
-  2. Soul Gem (`126.9` · 2500g)
-  3. Sphere of Negation (`96.1` · 2750g)
-  4. Brawler’s Beat Stick (`57.1` · 2550g)
-  5. Wish-Granting Pearl (`133.4` · 3550g)
-  6. Freya's Tears (`93.9` · 2600g)
+- **Starter:** Warrior's Axe
+- **Buy order** (actives 0/2, pen ≈ 5.0):
+  1. Divine Ruin (power, 2500g)
+  2. Soul Gem (power, pen 5.0, 2500g)
+  3. Soul Reaver (power, 2950g)
+  4. Freya's Tears (defense, 2600g)
+  5. Sphere of Negation (defense, 2750g)
+  6. Wish-Granting Pearl (power, 3550g)
 - **Relics:** Purification Beads (40.0), Aegis of Acceleration (26.0)
 
 #### Jormungandr — A-tier (role rank #4, model 65.9)
 
 *Magical · Hybrid scaling (STR 53.8% / INT 42.5%)*
 
-Jormungandr as Solo: primary scaling Hybrid (STR 54% / INT 42% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier A (rank #4).
+Jormungandr (Solo): Hybrid scaling (STR 54% / INT 42%). Buy order early→late. Pen total ≈ 5. Shop actives 0/2 (game hard max 3; curio shares budget). Pen: Soul Gem. CC-heavy kit → CDR/peel valued. Model tier A (#4).
 
-- **Starter:** Warrior's Axe (`46.1`)
-- **6 items:**
-  1. Soul Gem (`99.9` · 2500g)
-  2. Shifter's Shield (`92.6` · 2650g)
-  3. Sphere of Negation (`78.1` · 2750g)
-  4. Death Metal (`65.5` · 2600g)
-  5. Freya's Tears (`93.9` · 2600g)
-  6. Jade Scepter (`89.7` · 2750g)
+- **Starter:** Warrior's Axe
+- **Buy order** (actives 0/2, pen ≈ 5.0):
+  1. Divine Ruin (power, 2500g)
+  2. Soul Gem (power, pen 5.0, 2500g)
+  3. Soul Reaver (power, 2950g)
+  4. Freya's Tears (defense, 2600g)
+  5. Sphere of Negation (defense, 2750g)
+  6. Wish-Granting Pearl (power, 3550g)
+- **Relics:** Purification Beads (40.0), Aegis of Acceleration (26.0)
+
+#### Sun Wukong — A-tier (role rank #5, model 64.9)
+
+*Physical · Hybrid scaling (STR 71.2% / INT 36.2%)*
+
+Sun Wukong (Solo): Hybrid scaling (STR 71% / INT 36%). Buy order early→late. Pen total ≈ 15. Shop actives 1/3 (game hard max 3; curio shares budget). Pen: Jotunn's Revenge, The Reaper. CC-heavy kit → CDR/peel valued. Model tier A (#5).
+
+- **Starter:** Warrior's Axe
+- **Buy order** (actives 1/3, pen ≈ 15.0):
+  1. Jotunn's Revenge (power, pen 5.0, 2400g)
+  2. The Reaper (pen, pen 10.0, 2600g)
+  3. Runeforged Hammer (power, 2550g)
+  4. Avenging Blade (power, 2650g)
+  5. Sanguine Lash (power, active, 2650g)
+  6. Musashi's Dual Swords (power, 2700g)
 - **Relics:** Purification Beads (40.0), Aegis of Acceleration (26.0)
 
 ---
@@ -463,88 +543,108 @@ Conquest support: peel, aura/team utility, dual prots, HP, CDR, and active/defen
 ### Role template (best-in-role item scores)
 
 **Starter:** Selflessness (score 44.7, cost 550)
-**Starter alts:** War Flag (32.5), Warrior's Axe (29.5), Bumba's Cudgel (5.6)
+**Starter alts:** War Flag (32.5), Warrior's Axe (29.5)
 **Upgrade path:** Heroism (score 72.8)
 
-**Inventory: 1 starter + 6 items** (starter is separate)
+**Inventory: 1 starter + 6 items** · shop actives **≤2** typical / **3** hard max (curios share active budget; relics separate)
 
 | Starter | **Selflessness** | `44.7` | 550g |
 
-| # | Item | Score | Cost | Stats |
-|--:|------|------:|-----:|-------|
-| 1 | **Shifter's Shield** | `78.8` | 2650g | hp 300.0, pprot 25.0, mprot 25.0, hpr 4.0 |
-| 2 | **Sphere of Negation** | `53.8` | 2750g | mprot 50.0, int 40.0 |
-| 3 | **Sanguine Lash** | `46.0` | 2650g | mprot 30.0, str 25.0, ls 5.0 |
-| 4 | **Shield Splitter** | `44.8` | 2400g | str 40.0, pprot 15.0, mprot 15.0 |
-| 5 | **Heartwood Charm** | `81.3` | 2650g | hp 400.0, mp 250.0, cdr 10.0 |
-| 6 | **Freya's Tears** | `76.0` | 2600g | mprot 35.0, pprot 30.0, cdr 20.0 |
+| Buy# | Item | Slot | Active | Pen | Cost |
+|-----:|------|------|:------:|----:|-----:|
+| 1 | **Helm of Radiance** | power |  | — | 2500g |
+| 2 | **Brawler’s Beat Stick** | power |  | — | 2550g |
+| 3 | **Genji's Guard** | defense |  | — | 2350g |
+| 4 | **Freya's Tears** | defense |  | — | 2600g |
+| 5 | **Shifter's Shield** | defense |  | — | 2650g |
+| 6 | **Sphere of Negation** | defense |  | — | 2750g |
 
-**Relics (scored):** Purification Beads (36.0), Aegis of Acceleration (30.0), Phantom Shell (24.0)
+*Actives 0/2 · pen ≈ 0*
 
-### Top gods in this role (model) + tailored paths
+Buy order: early power → penetration → more power → defense → luxury. Shop actives 0/2 (hard game max 3; curios share that budget). Build pen ≈ 0.
+
+**Relics:** Purification Beads, Aegis of Acceleration
+
+### Top gods in this role + buy paths
 
 #### Ymir — S-tier (role rank #1, model 79.4)
 
 *Magical · Hybrid scaling (STR 110.0% / INT 80.0%)*
 
-Ymir as Support: primary scaling Hybrid (STR 110% / INT 80% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Role model tier S (rank #1).
+Ymir (Support): Hybrid scaling (STR 110% / INT 80%). Buy order early→late. Pen total ≈ 15. Shop actives 2/2 (game hard max 3; curio shares budget). Pen: Soul Gem, Spear Of The Magus. CC-heavy kit → CDR/peel valued. Model tier S (#1).
 
-- **Starter:** Selflessness (`55.3`)
-- **6 items:**
-  1. Jade Scepter (`90.5` · 2750g)
-  2. Soul Gem (`88.0` · 2500g)
-  3. Sphere of Negation (`69.8` · 2750g)
-  4. Death Metal (`65.5` · 2600g)
-  5. Heartwood Charm (`91.3` · 2650g)
-  6. Freya's Tears (`86.0` · 2600g)
+- **Starter:** Selflessness
+- **Buy order** (actives 2/2, pen ≈ 15.0):
+  1. Lifebinder (power, active, 2400g)
+  2. Soul Gem (power, pen 5.0, 2500g)
+  3. Spear Of The Magus (pen, pen 10.0, 2700g)
+  4. Jade Scepter (power, active, 2750g)
+  5. Sphere of Negation (defense, 2750g)
+  6. Wish-Granting Pearl (power, 3550g)
 - **Relics:** Purification Beads (44.0), Aegis of Acceleration (30.0)
 
 #### Charon — S-tier (role rank #2, model 77.0)
 
 *Magical · Intelligence scaling (STR 0% / INT 43.8%)*
 
-Charon as Support: primary scaling Intelligence (STR 0% / INT 44% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #2).
+Charon (Support): Intelligence scaling (STR 0% / INT 44%). Buy order early→late. Pen total ≈ 5. Shop actives 2/2 (game hard max 3; curio shares budget). Pen: Soul Gem. CC-heavy kit → CDR/peel valued. Model tier S (#2).
 
-- **Starter:** Selflessness (`60.1`)
-- **6 items:**
-  1. Jade Scepter (`135.5` · 2750g)
-  2. Soul Gem (`127.0` · 2500g)
-  3. Sphere of Negation (`99.8` · 2750g)
-  4. Brawler’s Beat Stick (`52.7` · 2550g)
-  5. Wish-Granting Pearl (`133.3` · 3550g)
-  6. Freya's Tears (`98.0` · 2600g)
+- **Starter:** Selflessness
+- **Buy order** (actives 2/2, pen ≈ 5.0):
+  1. Lifebinder (power, active, 2400g)
+  2. Soul Gem (power, pen 5.0, 2500g)
+  3. Jade Scepter (power, active, 2750g)
+  4. Soul Reaver (power, 2950g)
+  5. Sphere of Negation (defense, 2750g)
+  6. Wish-Granting Pearl (power, 3550g)
 - **Relics:** Purification Beads (44.0), Aegis of Acceleration (30.0)
 
 #### Xing Tian — S-tier (role rank #3, model 66.6)
 
 *Magical · Intelligence scaling (STR 0% / INT 37.5%)*
 
-Xing Tian as Support: primary scaling Intelligence (STR 0% / INT 38% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier S (rank #3).
+Xing Tian (Support): Intelligence scaling (STR 0% / INT 38%). Buy order early→late. Pen total ≈ 5. Shop actives 2/2 (game hard max 3; curio shares budget). Pen: Soul Gem. CC-heavy kit → CDR/peel valued. Model tier S (#3).
 
-- **Starter:** Selflessness (`60.1`)
-- **6 items:**
-  1. Jade Scepter (`135.5` · 2750g)
-  2. Soul Gem (`127.0` · 2500g)
-  3. Sphere of Negation (`99.8` · 2750g)
-  4. Brawler’s Beat Stick (`52.7` · 2550g)
-  5. Wish-Granting Pearl (`133.3` · 3550g)
-  6. Freya's Tears (`98.0` · 2600g)
+- **Starter:** Selflessness
+- **Buy order** (actives 2/2, pen ≈ 5.0):
+  1. Lifebinder (power, active, 2400g)
+  2. Soul Gem (power, pen 5.0, 2500g)
+  3. Jade Scepter (power, active, 2750g)
+  4. Soul Reaver (power, 2950g)
+  5. Sphere of Negation (defense, 2750g)
+  6. Wish-Granting Pearl (power, 3550g)
 - **Relics:** Purification Beads (44.0), Aegis of Acceleration (30.0)
 
 #### Sobek — A-tier (role rank #4, model 66.4)
 
 *Magical · Intelligence scaling (STR 0% / INT 50.0%)*
 
-Sobek as Support: primary scaling Intelligence (STR 0% / INT 50% kit avg). Path ordered by combined role-stat score × god scaling bias × patch momentum. High CC kit → CDR and defensive/peel options weighted up. Self-heal in kit → lifesteal / heal-amp items favored. Role model tier A (rank #4).
+Sobek (Support): Intelligence scaling (STR 0% / INT 50%). Buy order early→late. Pen total ≈ 5. Shop actives 2/2 (game hard max 3; curio shares budget). Pen: Soul Gem. CC-heavy kit → CDR/peel valued. Model tier A (#4).
 
-- **Starter:** Selflessness (`60.1`)
-- **6 items:**
-  1. Jade Scepter (`135.5` · 2750g)
-  2. Soul Gem (`127.0` · 2500g)
-  3. Sphere of Negation (`99.8` · 2750g)
-  4. Brawler’s Beat Stick (`52.7` · 2550g)
-  5. Wish-Granting Pearl (`133.3` · 3550g)
-  6. Freya's Tears (`98.0` · 2600g)
+- **Starter:** Selflessness
+- **Buy order** (actives 2/2, pen ≈ 5.0):
+  1. Lifebinder (power, active, 2400g)
+  2. Soul Gem (power, pen 5.0, 2500g)
+  3. Jade Scepter (power, active, 2750g)
+  4. Soul Reaver (power, 2950g)
+  5. Sphere of Negation (defense, 2750g)
+  6. Wish-Granting Pearl (power, 3550g)
+- **Relics:** Purification Beads (44.0), Aegis of Acceleration (30.0)
+
+#### Baron Samedi — A-tier (role rank #5, model 66.3)
+
+*Magical · Intelligence scaling (STR 0% / INT 51.7%)*
+
+Baron Samedi (Support): Intelligence scaling (STR 0% / INT 52%). Buy order early→late. Pen total ≈ 5. Shop actives 2/2 (game hard max 3; curio shares budget). Pen: Soul Gem. CC-heavy kit → CDR/peel valued. Model tier A (#5).
+
+- **Starter:** Selflessness
+- **Buy order** (actives 2/2, pen ≈ 5.0):
+  1. Lifebinder (power, active, 2400g)
+  2. Soul Gem (power, pen 5.0, 2500g)
+  3. Jade Scepter (power, active, 2750g)
+  4. Soul Reaver (power, 2950g)
+  5. Sphere of Negation (defense, 2750g)
+  6. Wish-Granting Pearl (power, 3550g)
 - **Relics:** Purification Beads (44.0), Aegis of Acceleration (30.0)
 
 ---

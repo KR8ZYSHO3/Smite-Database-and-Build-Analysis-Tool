@@ -268,15 +268,19 @@ function selectGod(name, switchTab) {
     for (const gb of data.recommended_gods || []) {
       if (gb.god === g.name) {
         const items = gb.items || gb.full_path || [];
-        const nAct = items.filter((i) => i.is_active).length;
+        const nAct = gb.active_count ?? items.filter((i) => i.is_active).length;
+        const maxA = gb.max_shop_actives ?? 2;
         buildText.push(
           "",
-          `--- Conquest ${role} (1 starter + 6 · actives ${nAct}/3) ---`,
+          `--- Conquest ${role} (actives ${nAct}/${maxA}, pen ≈ ${gb.pen_total ?? "?"}) ---`,
           `Starter: ${gb.starter?.name || "—"}`,
-          ...items.map(
-            (it, i) =>
-              `  ${i + 1}. ${it.is_active ? "*" : " "} ${it.name} (${it.cost}g)`
-          )
+          "Buy order:",
+          ...items.map((it, i) => {
+            const bits = [it.slot || "", it.is_active ? "active" : "", it.pen ? `pen ${it.pen}` : "", `${it.cost}g`]
+              .filter(Boolean)
+              .join(", ");
+            return `  ${i + 1}. ${it.name} (${bits})`;
+          })
         );
       }
     }
@@ -311,46 +315,62 @@ function setupBuilds() {
     const t = data.template;
     const items = t.items || t.full_path || [];
     const nAct = items.filter((i) => i.is_active).length;
-    $("#build-desc").textContent = t.description || "";
+    const maxA = t.max_shop_actives ?? 2;
+    const penT = t.pen_total ?? items.reduce((s, it) => s + (it.pen || 0), 0);
+    $("#build-desc").textContent =
+      (t.description || "") +
+      "  ·  Buy order: early power → pen → more power → defense → luxury. " +
+      "Shop actives default 2 (hard max 3; curio shares budget).";
 
     $("#build-template").innerHTML = `
-      <div class="muted">1 starter + 6 items · actives ${nAct}/3 · * = Active item</div>
+      <h2>Role template — ${escapeHtml(role)}</h2>
+      <div class="build-meta">
+        <span class="pill">1 starter + 6 items</span>
+        <span class="pill">actives ${nAct}/${maxA}</span>
+        <span class="pill">pen ≈ ${fmt(penT, 0)}</span>
+      </div>
+      ${t.build_notes ? `<p class="muted">${escapeHtml(t.build_notes)}</p>` : ""}
       <h3>Starter</h3>
-      <div class="build-line">
-        ${chip(t.starter, "S")}
-      </div>
-      <h3>Six items</h3>
-      <div class="build-line">
-        ${items.map((it, i) => chip(it, String(i + 1))).join("")}
-      </div>
-      <h3>Relics (separate slot)</h3>
-      <div class="build-line">
-        ${(t.relics || []).map((it) => chip(it, "R")).join("")}
-      </div>
-      <h3>Starter alts</h3>
-      <div class="build-line">
-        ${(t.starter_alternatives || []).map((it) => chip(it, "A")).join("")}
-      </div>
+      <div class="build-line">${chip(t.starter, "S")}</div>
+      <h3>Buy order (full build)</h3>
+      <ol class="buy-list">
+        ${items.map((it, i) => buyRow(it, i + 1)).join("")}
+      </ol>
+      <h3>Relics <span class="muted">(separate slot — not actives)</span></h3>
+      <div class="build-line">${(t.relics || []).map((it) => chip(it, "R")).join("")}</div>
+      ${(t.starter_alternatives || []).length
+        ? `<details class="alts"><summary>Starter alternatives</summary>
+           <div class="build-line">${(t.starter_alternatives || []).map((it) => chip(it, "A")).join("")}</div>
+           </details>`
+        : ""}
     `;
 
-    $("#build-gods").innerHTML = (data.recommended_gods || [])
+    const gods = [...(data.recommended_gods || [])].sort(
+      (a, b) => (a.rank ?? 99) - (b.rank ?? 99)
+    );
+    $("#build-gods").innerHTML = gods
       .map((gb) => {
         const itemsG = gb.items || gb.full_path || [];
-        const ga = itemsG.filter((i) => i.is_active).length;
+        const ga = gb.active_count ?? itemsG.filter((i) => i.is_active).length;
+        const maxG = gb.max_shop_actives ?? 2;
+        const penG = gb.pen_total ?? itemsG.reduce((s, it) => s + (it.pen || 0), 0);
         return `
-        <div class="card" style="margin-bottom:10px">
+        <div class="card build-card">
           <h3>
             <span class="tier-${gb.tier || ""}">[${gb.tier || "?"}]</span>
             ${escapeHtml(gb.god)}
-            <span class="muted"> · ${escapeHtml(gb.damage_type || "")} · ${escapeHtml(gb.scaling || "")}
-            · actives ${ga}/3</span>
+            <span class="muted">#${gb.rank ?? "—"} · ${escapeHtml(gb.damage_type || "")} · ${escapeHtml(gb.scaling || "")}</span>
           </h3>
-          <div class="muted" style="margin-bottom:6px">${escapeHtml(gb.why || "")}</div>
-          <div><strong>Starter:</strong> ${escapeHtml(gb.starter?.name || "—")}</div>
-          <div class="build-line">
-            ${itemsG.map((it, i) => chip(it, String(i + 1))).join("")}
+          <div class="build-meta">
+            <span class="pill">actives ${ga}/${maxG}</span>
+            <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
           </div>
-          <div class="muted">Relics: ${(gb.relics || []).map((r) => r.name).join(", ")}</div>
+          <p class="muted why">${escapeHtml(gb.why || "")}</p>
+          <div class="muted"><strong>Starter</strong> — ${escapeHtml(gb.starter?.name || "—")}</div>
+          <ol class="buy-list">
+            ${itemsG.map((it, i) => buyRow(it, i + 1)).join("")}
+          </ol>
+          <div class="muted">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
         </div>`;
       })
       .join("");
@@ -363,12 +383,27 @@ function setupBuilds() {
 function chip(it, n) {
   if (!it) return "";
   const active = it.is_active;
-  return `<span class="item-chip ${active ? "active" : ""}" title="${escapeAttr(
+  const pen = it.pen ? ` pen ${it.pen}` : "";
+  return `<span class="item-chip ${active ? "active" : ""} ${it.slot === "pen" ? "pen" : ""}" title="${escapeAttr(
     it.effect || ""
   )}">
-    <span class="n">${n}${active ? "*" : ""}</span>${escapeHtml(it.name)}
-    <span class="muted"> ${it.cost != null ? it.cost + "g" : ""}</span>
+    <span class="n">${n}${active ? "A" : ""}</span>${escapeHtml(it.name)}
+    <span class="muted"> ${it.cost != null ? it.cost + "g" : ""}${pen}</span>
   </span>`;
+}
+
+function buyRow(it, n) {
+  if (!it) return "";
+  const tags = [];
+  if (it.slot) tags.push(it.slot);
+  if (it.is_active) tags.push("active");
+  if (it.pen) tags.push(`pen ${it.pen}`);
+  return `<li class="buy-row ${it.is_active ? "is-active" : ""} ${it.slot === "pen" ? "is-pen" : ""}">
+    <span class="buy-n">${n}</span>
+    <span class="buy-name">${escapeHtml(it.name)}</span>
+    <span class="buy-tags">${tags.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")}</span>
+    <span class="buy-cost muted">${it.cost != null ? it.cost + "g" : ""}</span>
+  </li>`;
 }
 
 /* -------------------- Items -------------------- */

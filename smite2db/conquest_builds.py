@@ -22,10 +22,19 @@ from typing import Any
 
 from .db import DEFAULT_DB, connect
 
-# SMITE 2 rule: max 3 shop "Active" items in the 6-item inventory.
-# Relics are a separate slot and do NOT count toward this cap.
-# Curios also use an active slot in-game (auto-removed at 3 actives) — not part of our 6.
-MAX_ACTIVE_ITEMS = 3
+# SMITE 2 active-item rules (shop T3 On-Use items in the 6-item grid):
+# - Hard game limit is 3 (item text + curios share this budget; curios auto-drop at 3).
+# - Practical default is 2 shop actives so you can keep your free Curio + 1 relic.
+# - Melee physical kits (Solo/Jungle warriors, etc.) may fill the 3rd active slot.
+HARD_MAX_ACTIVE_ITEMS = 3
+DEFAULT_MAX_SHOP_ACTIVES = 2
+# Back-compat alias used in reports / older call sites
+MAX_ACTIVE_ITEMS = DEFAULT_MAX_SHOP_ACTIVES
+
+# Roles that must ship real penetration in the final 6 (not just raw power).
+DAMAGE_ROLES_NEED_PEN = frozenset({"Carry", "Mid", "Jungle"})
+# Minimum pen stat total (flat or %) across the 6 items for those roles.
+MIN_BUILD_PEN = 10.0
 
 
 # ---------------------------------------------------------------------------
@@ -40,11 +49,11 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
         ),
         "prefer_damage": "Physical",  # soft preference; Magical carries still allowed
         "stat_weights": {
-            "str": 0.22,
+            "str": 0.20,
             "int": 0.04,
-            "as": 0.18,
+            "as": 0.16,
             "crit": 0.14,
-            "pen": 0.14,
+            "pen": 0.18,
             "ls": 0.10,
             "bap": 0.08,
             "hp": 0.05,
@@ -54,8 +63,8 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
         },
         "tag_bonus": {
             "offensive": 12,
-            "passive": 4,
-            "active": 2,
+            "passive": 8,
+            "active": 1,
             "starter": 0,
         },
         "starter_prefs": {
@@ -95,19 +104,19 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
         ),
         "prefer_damage": "Magical",
         "stat_weights": {
-            "int": 0.26,
-            "str": 0.08,
-            "pen": 0.16,
+            "int": 0.24,
+            "str": 0.06,
+            "pen": 0.22,  # mages need Obsidian/Spear pen — not pure INT stacks
             "cdr": 0.14,
             "mp": 0.08,
-            "mpr": 0.06,
-            "hp": 0.08,
-            "ls": 0.06,
-            "as": 0.04,
+            "mpr": 0.05,
+            "hp": 0.07,
+            "ls": 0.05,
+            "as": 0.03,
             "pprot": 0.02,
             "mprot": 0.02,
         },
-        "tag_bonus": {"offensive": 12, "passive": 5, "active": 4},
+        "tag_bonus": {"offensive": 12, "passive": 8, "active": 1},
         "starter_prefs": {
             "conduit": 28,
             "sands": 26,
@@ -138,16 +147,16 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
         "stat_weights": {
             "str": 0.16,
             "int": 0.12,
-            "pen": 0.16,
+            "pen": 0.20,
             "cdr": 0.12,
             "as": 0.10,
             "hp": 0.12,
-            "ls": 0.08,
+            "ls": 0.06,
             "crit": 0.04,
-            "pprot": 0.05,
-            "mprot": 0.05,
+            "pprot": 0.04,
+            "mprot": 0.04,
         },
-        "tag_bonus": {"offensive": 10, "passive": 5, "active": 5},
+        "tag_bonus": {"offensive": 10, "passive": 7, "active": 2},
         "starter_prefs": {
             "bumba": 35,
             "dagger": 28,
@@ -486,7 +495,7 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
         "mpr": 10,
         "as": 40,
         "crit": 40,
-        "pen": 40,
+        "pen": 25,  # 20% shard already near full value; reward pen items hard
         "ls": 25,
         "cdr": 30,
         "pprot": 70,
@@ -545,10 +554,21 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
         if str_v > 0 and (_canon_stat_value(item["stats"], "pprot") > 0 or _canon_stat_value(item["stats"], "hp") > 0):
             util += 6
     if role in ("Carry", "Mid", "Jungle"):
-        if "penetrat" in blob or ("prot" in blob and "reduc" in blob):
+        pen_v = _canon_stat_value(item["stats"], "pen")
+        if pen_v >= 15:
+            util += 22  # dedicated shred (Obsidian / Titan's)
+        elif pen_v >= 8:
+            util += 14
+        elif "penetrat" in blob or "penetration" in (item.get("categories") or "").lower():
             util += 10
+        if "prot" in blob and "reduc" in blob:
+            util += 8
         if "crit" in blob or "basic attack" in blob:
             util += 10 if role == "Carry" else 2
+        # Prefer passive pen cores over luxury On-Use power+pen (Dreamer's Idol)
+        cats = (item.get("categories") or "").lower()
+        if "penetration" in cats and not item.get("is_active_item"):
+            util += 12
     if role == "Jungle" and any(k in blob for k in ("jungle", "monster", "minion")):
         util += 8
     breakdown["utility_text"] = util
@@ -567,13 +587,13 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
     elif 2800 < cost <= 3200:
         cost_part = 4
     elif cost > 3400:
-        cost_part = -8
+        cost_part = -12  # luxury actives like Dreamer's/Parashu — late only
     breakdown["cost"] = cost_part
 
-    # Mild passive bias: free active slots are precious (max 3)
+    # Actives are expensive budget: default path only wants ~2 shop actives.
     active_tax = 0.0
     if item.get("is_active_item"):
-        active_tax = -4.0  # still pickable if strong; fill algorithm enforces hard cap
+        active_tax = -16.0
         breakdown["active_tax"] = active_tax
     else:
         breakdown["active_tax"] = 0.0
@@ -753,29 +773,37 @@ def rescore_for_god(
     dtype = (damage_type or "").lower()
 
     # Hard scaling alignment (dominant signal for per-god paths)
-    if primary == "Strength" or (primary == "Mixed" and dtype == "physical"):
+    mage = primary == "Intelligence" or (primary == "Mixed" and dtype == "magical") or dtype == "magical"
+    physical = primary == "Strength" or (primary == "Mixed" and dtype == "physical") or dtype == "physical"
+
+    if physical and not mage:
         s += str_v * 0.85
         s -= int_v * 0.55
         if int_v >= 40 and str_v < 15:
-            s -= 40  # pure mage item on STR kit
+            s -= 55  # pure mage item on STR kit
         if as_v or crit_v:
             s += as_v * 0.25 + crit_v * 0.3
-    elif primary == "Intelligence" or (primary == "Mixed" and dtype == "magical"):
-        s += int_v * 0.85
-        s -= str_v * 0.55
-        if str_v >= 40 and int_v < 15:
-            s -= 40
+    elif mage:
+        s += int_v * 0.95
+        s -= str_v * 0.75
+        s -= as_v * 0.45  # basic-attack toys (Riptalon etc.) are not mage cores
+        s -= crit_v * 0.5
+        s -= _canon_stat_value(item.stats, "bap") * 0.4
+        if str_v >= 25 and int_v < 30:
+            s -= 50
+        if str_v >= 40 and int_v < 20:
+            s -= 70
     elif primary == "Hybrid":
         s += (str_v + int_v) * 0.4
         s += min(str_v, int_v) * 0.25  # reward true hybrid stats
     else:
         s += max(str_v, int_v) * 0.45
 
-    # Damage-type soft filter
+    # Damage-type hard filter
     if dtype == "physical" and int_v > str_v + 20:
-        s -= 25
-    if dtype == "magical" and str_v > int_v + 20:
-        s -= 25
+        s -= 35
+    if dtype == "magical" and str_v > int_v + 15:
+        s -= 40
 
     if bias.get("cc", 0) >= 2 and _canon_stat_value(item.stats, "cdr") > 0:
         s += 10
@@ -783,10 +811,225 @@ def rescore_for_god(
         _canon_stat_value(item.stats, "ls") > 0 or "heal" in (item.passive + item.active).lower()
     ):
         s += 12
-    if bias.get("mobility", 0) == 0 and role in ("Jungle", "Carry"):
+    if bias.get("mobility", 0) == 0 and role in ("Jungle", "Carry") and not mage:
         if as_v > 0:
             s += 5
+
+    # Damage roles: pen is not optional — but only *matching* pen for the kit.
+    if role in DAMAGE_ROLES_NEED_PEN:
+        pen_v = _canon_stat_value(item.stats, "pen")
+        # Mage: Obsidian / Magus / Deso / Soul Gem style
+        if mage:
+            if int_v >= 30 and pen_v >= 8:
+                s += pen_v * 1.6 + 12
+            elif pen_v >= 8 and int_v < 25:
+                s -= 25  # physical pen item on mage
+            if pen_v >= 15 and int_v >= 50 and not item.is_active_item:
+                s += 22  # Obsidian Shard
+        elif physical:
+            if str_v >= 25 and pen_v >= 8:
+                s += pen_v * 1.5 + 10
+            elif pen_v >= 15 and str_v >= 40 and not item.is_active_item:
+                s += 20  # Titan's Bane
+            elif pen_v >= 8 and str_v < 20 and int_v >= 40:
+                s -= 25  # mage pen on physical
+        else:
+            s += pen_v * 1.2
+        if pen_v >= 8 and item.is_active_item and (item.total_cost or 0) >= 3200:
+            s -= 8  # Dreamer's/Parashu = luxury, not the pen plan
     return s
+
+
+def max_shop_actives_for_god(role: str, damage_type: str | None, bias: dict | None = None) -> int:
+    """
+    Practical active budget for the 6-item grid.
+
+    Most builds: 2 (leave room for free Curio which also eats the active budget).
+    Melee-leaning physical Solo/Jungle: up to hard cap 3.
+    """
+    dtype = (damage_type or "").lower()
+    primary = (bias or {}).get("primary") or ""
+    melee_role = role in ("Solo", "Jungle", "Support")
+    physical = dtype == "physical" or primary == "Strength"
+    if melee_role and physical:
+        return HARD_MAX_ACTIVE_ITEMS
+    return DEFAULT_MAX_SHOP_ACTIVES
+
+
+def item_pen_value(it: ScoredItem) -> float:
+    return _canon_stat_value(it.stats, "pen")
+
+
+def is_pen_item(it: ScoredItem) -> bool:
+    if item_pen_value(it) >= 5:
+        return True
+    blob = f"{it.name} {it.passive} {it.active}".lower()
+    return "penetrat" in blob or "shattering" in blob
+
+
+def _slot_label(it: ScoredItem) -> str:
+    if is_pen_item(it) and item_pen_value(it) >= 8:
+        return "pen"
+    if it.item_type == "Defensive" or "defensive" in it.flags:
+        return "defense"
+    if _canon_stat_value(it.stats, "pprot") + _canon_stat_value(it.stats, "mprot") >= 45:
+        return "defense"
+    if _canon_stat_value(it.stats, "hp") >= 300 and (
+        _canon_stat_value(it.stats, "str") + _canon_stat_value(it.stats, "int")
+    ) < 40:
+        return "defense"
+    return "power"
+
+
+def _trim_excess_defense(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    max_defense: int = 1,
+    max_actives: int = 2,
+) -> list[ScoredItem]:
+    """Damage builds keep at most one pure defense item."""
+    defs = [i for i, it in enumerate(path) if _slot_label(it) == "defense"]
+    if len(defs) <= max_defense:
+        return path
+    # Drop lowest-scored extra defense, replace with best offense from pool
+    extras = sorted(defs, key=lambda i: path[i].role_score)
+    new_path = list(path)
+    seen = {x.name for x in new_path}
+    for idx in extras[:-max_defense] if max_defense else extras:
+        replacement = None
+        for cand in sorted(pool, key=lambda x: x.role_score, reverse=True):
+            if cand.name in seen:
+                continue
+            if _slot_label(cand) == "defense":
+                continue
+            if cand.is_active_item and sum(1 for x in new_path if x.is_active_item) >= max_actives:
+                continue
+            replacement = cand
+            break
+        if replacement:
+            seen.discard(new_path[idx].name)
+            new_path[idx] = replacement
+            seen.add(replacement.name)
+    return new_path
+
+
+def _order_buy_path(path: list[ScoredItem], role: str) -> list[ScoredItem]:
+    """
+    Present items in an intuitive buy order, not pure score rank:
+      1) early affordable power  2) pen  3) more power/CDR  4) defense  5) luxury
+    """
+    if not path:
+        return path
+
+    def sort_key(it: ScoredItem) -> tuple:
+        pen = item_pen_value(it)
+        cost = it.total_cost or 2500
+        slot = _slot_label(it)
+        luxury = 1 if cost >= 3200 or (it.is_active_item and pen >= 8 and cost >= 3000) else 0
+        # phase: early power (0), pen (1), mid power (2), defense (3), luxury (4)
+        if luxury:
+            phase = 4
+        elif slot == "pen":
+            phase = 1
+        elif slot == "defense":
+            phase = 3
+        elif cost <= 2500:
+            phase = 0
+        else:
+            phase = 2
+        # within phase: cheaper first, then higher score
+        return (phase, cost, -it.role_score)
+
+    return sorted(path, key=sort_key)
+
+
+def _pen_matches_kit(it: ScoredItem, *, mage: bool, physical: bool) -> bool:
+    """True if this pen item is for the right damage type."""
+    pen = item_pen_value(it)
+    if pen < 5:
+        return False
+    str_v = _canon_stat_value(it.stats, "str")
+    int_v = _canon_stat_value(it.stats, "int")
+    if mage:
+        return int_v >= 30 or (int_v >= str_v and int_v >= 20)
+    if physical:
+        return str_v >= 25 or (str_v >= int_v and str_v >= 20)
+    return True
+
+
+def _ensure_pen_in_path(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    role: str,
+    max_actives: int,
+    *,
+    mage: bool = False,
+    physical: bool = False,
+) -> list[ScoredItem]:
+    """Guarantee damage roles get real *matching* pen (prefer passive shred)."""
+    if role not in DAMAGE_ROLES_NEED_PEN:
+        return path
+
+    matching = [x for x in path if _pen_matches_kit(x, mage=mage, physical=physical)]
+    total_pen = sum(item_pen_value(x) for x in matching)
+    if total_pen >= MIN_BUILD_PEN and matching:
+        # Also strip wrong-type pen if we already have enough matching pen
+        return path
+
+    seen = {x.name for x in path}
+    candidates = [
+        x
+        for x in pool
+        if x.name not in seen
+        and _pen_matches_kit(x, mage=mage, physical=physical)
+        and item_pen_value(x) >= 8
+    ]
+    candidates.sort(
+        key=lambda x: (
+            0 if not x.is_active_item else 1,
+            -item_pen_value(x),
+            -x.role_score,
+        )
+    )
+    if not candidates:
+        return path
+
+    pick = candidates[0]
+    # Prefer replacing wrong-type pen or a low-value non-pen / active
+    drop_idx = None
+    for i, it in enumerate(path):
+        if is_pen_item(it) and not _pen_matches_kit(it, mage=mage, physical=physical):
+            drop_idx = i
+            break
+    if drop_idx is None:
+        for i, it in enumerate(path):
+            if it.is_active_item and not _pen_matches_kit(it, mage=mage, physical=physical):
+                drop_idx = i
+                break
+    if drop_idx is None:
+        scored = [
+            (i, it)
+            for i, it in enumerate(path)
+            if not _pen_matches_kit(it, mage=mage, physical=physical)
+        ]
+        if scored:
+            drop_idx = min(scored, key=lambda t: t[1].role_score)[0]
+    if drop_idx is None:
+        return path
+
+    new_path = list(path)
+    new_path[drop_idx] = pick
+    while sum(1 for x in new_path if x.is_active_item) > max_actives:
+        for i, it in enumerate(new_path):
+            if it.is_active_item and not _pen_matches_kit(it, mage=mage, physical=physical):
+                for alt in pool:
+                    if alt.name not in {x.name for x in new_path} and not alt.is_active_item:
+                        new_path[i] = alt
+                        break
+                break
+        else:
+            break
+    return new_path
 
 
 def top_gods_for_role(conn: sqlite3.Connection, role: str, limit: int = 5) -> list[dict]:
@@ -901,23 +1144,44 @@ def build_role_template(items: list[dict], role: str) -> dict[str, Any]:
     relics.sort(key=lambda x: x.role_score, reverse=True)
 
     # Conquest: starter is separate; fill exactly 6 non-starter items
-    items_6 = _fill_six_items(cores, defs, flex, t3)
+    max_act = DEFAULT_MAX_SHOP_ACTIVES
+    items_6 = _fill_six_items(cores, defs, flex, t3, max_actives=max_act)
+    prefer = profile.get("prefer_damage")
+    items_6 = _ensure_pen_in_path(
+        items_6,
+        t3,
+        role,
+        max_act,
+        mage=(prefer == "Magical"),
+        physical=(prefer == "Physical"),
+    )
+    items_6 = _order_buy_path(items_6, role)
+    pen_total = sum(item_pen_value(x) for x in items_6)
+    n_act = sum(1 for x in items_6 if x.is_active_item)
 
     return {
         "role": role,
         "description": profile["description"],
         "stat_priorities": profile["stat_weights"],
+        "build_notes": (
+            f"Buy order: early power → penetration → more power → defense → luxury. "
+            f"Shop actives {n_act}/{max_act} (hard game max {HARD_MAX_ACTIVE_ITEMS}; "
+            f"curios share that budget). Build pen ≈ {pen_total:.0f}."
+        ),
+        "max_shop_actives": max_act,
+        "hard_max_actives": HARD_MAX_ACTIVE_ITEMS,
+        "pen_total": round(pen_total, 1),
         "starter": _item_card(starters[0]) if starters else None,
-        "starter_alternatives": [_item_card(s) for s in starters[1:4]],
+        "starter_alternatives": [_item_card(s) for s in starters[1:3]],
         "upgraded_starter": _item_card(upgraded[0]) if upgraded else None,
-        "core_items": [_item_card(c) for c in cores],
-        "defense_items": [_item_card(d) for d in defs],
-        "flex_items": [_item_card(f) for f in flex],
-        "items": [_item_card(p) for p in items_6],  # exactly 6
-        "full_path": [_item_card(p) for p in items_6],  # alias: 6 items only
+        "core_items": [_item_card(c) for c in cores[:4]],
+        "defense_items": [_item_card(d) for d in defs[:2]],
+        "flex_items": [_item_card(f) for f in flex[:2]],
+        "items": [_item_card(p) for p in items_6],  # exactly 6, buy-order sorted
+        "full_path": [_item_card(p) for p in items_6],
         "inventory_slots": 7,  # 1 starter + 6 items
-        "relics": [_item_card(r) for r in relics[:3]],
-        "top_scored_items": [_item_card(s) for s in t3[:12]],
+        "relics": [_item_card(r) for r in relics[:2]],
+        "top_scored_items": [_item_card(s) for s in t3[:8]],
     }
 
 
@@ -950,30 +1214,68 @@ def build_god_build(
     starters.sort(key=lambda x: x.role_score, reverse=True)
 
     t3 = [s for s in scored if is_t3_core(next(i for i in items if i["name"] == s.name))]
+    primary = bias.get("primary") or ""
+    mage = primary == "Intelligence" or (dtype or "").lower() == "magical"
+    physical = (primary == "Strength" or (dtype or "").lower() == "physical") and not mage
+
+    def kit_ok(s: ScoredItem) -> bool:
+        str_v = _canon_stat_value(s.stats, "str")
+        int_v = _canon_stat_value(s.stats, "int")
+        as_v = _canon_stat_value(s.stats, "as")
+        crit_v = _canon_stat_value(s.stats, "crit")
+        bap = _canon_stat_value(s.stats, "bap")
+        if mage:
+            # Reject basic-attack / STR toys on pure mages
+            if str_v >= 30 and int_v < 40:
+                return False
+            if (as_v >= 15 or crit_v >= 15 or bap >= 15) and int_v < 50:
+                return False
+            return int_v >= 25 or s.item_type == "Defensive" or _canon_stat_value(s.stats, "hp") >= 250
+        if physical:
+            if int_v >= 40 and str_v < 25:
+                return False
+            return str_v >= 20 or as_v > 0 or s.item_type == "Defensive" or _canon_stat_value(s.stats, "hp") >= 250
+        return True
+
+    t3 = [s for s in t3 if kit_ok(s)]
     offense = [
         s
         for s in t3
         if s.item_type != "Defensive"
         or _canon_stat_value(s.stats, "str") + _canon_stat_value(s.stats, "int") > 45
     ]
+    # Damage roles: keep defense light (1 slot) so cores aren't crowded out
+    def_n = 1 if role in DAMAGE_ROLES_NEED_PEN else max(profile["build_slots"]["defense"], 2)
     defense = [
         s
         for s in t3
         if s.item_type == "Defensive"
         or "defensive" in s.flags
-        or _canon_stat_value(s.stats, "hp") >= 250
+        or (
+            _canon_stat_value(s.stats, "hp") >= 250
+            and _canon_stat_value(s.stats, "str") + _canon_stat_value(s.stats, "int") < 50
+        )
     ]
     slots = profile["build_slots"]
-    cores = pick_diverse(offense, max(slots["cores"], 4), "offense")
+    cores = pick_diverse(offense, max(slots["cores"], 5), "offense")
     defs = pick_diverse(
         [d for d in defense if d.name not in {c.name for c in cores}],
-        max(slots["defense"], 2),
+        def_n,
         "defense",
     )
     flex_pool = [x for x in t3 if x.name not in {c.name for c in cores + defs}]
     flex = pick_diverse(flex_pool, max(slots["flex"], 2), "offense")
 
-    items_6 = _fill_six_items(cores, defs, flex, t3)
+    max_act = max_shop_actives_for_god(role, dtype, bias)
+    items_6 = _fill_six_items(cores, defs, flex, t3, max_actives=max_act)
+    items_6 = _ensure_pen_in_path(
+        items_6, t3, role, max_act, mage=mage, physical=physical
+    )
+    if role in DAMAGE_ROLES_NEED_PEN:
+        items_6 = _trim_excess_defense(items_6, t3, max_defense=1, max_actives=max_act)
+    items_6 = _order_buy_path(items_6, role)
+    pen_total = sum(item_pen_value(x) for x in items_6)
+    n_act = sum(1 for x in items_6 if x.is_active_item)
 
     relics = [s for s in scored if is_base_relic(next(i for i in items if i["name"] == s.name))]
     for r in relics:
@@ -999,10 +1301,14 @@ def build_god_build(
         "items": [_item_card(p) for p in items_6],
         "full_path": [_item_card(p) for p in items_6],
         "inventory_slots": 7,
-        "cores": [_item_card(c) for c in cores],
-        "defense": [_item_card(d) for d in defs],
+        "cores": [_item_card(c) for c in cores[:4]],
+        "defense": [_item_card(d) for d in defs[:2]],
         "relics": [_item_card(r) for r in relics[:2]],
-        "why": _explain_god_build(god, bias, role, items_6, starters),
+        "max_shop_actives": max_act,
+        "hard_max_actives": HARD_MAX_ACTIVE_ITEMS,
+        "active_count": n_act,
+        "pen_total": round(pen_total, 1),
+        "why": _explain_god_build(god, bias, role, items_6, starters, pen_total, n_act, max_act),
     }
 
 
@@ -1077,31 +1383,37 @@ def _item_card(it: ScoredItem | None) -> dict | None:
     if not it:
         return None
     top_stats = sorted(it.stats.items(), key=lambda x: -abs(x[1]))[:5]
+    pen = item_pen_value(it)
     return {
         "name": it.name,
         "score": round(it.role_score, 1),
         "cost": it.total_cost,
         "type": it.item_type or it.tier,
+        "slot": _slot_label(it),
         "momentum": round(it.momentum, 2),
         "stats": {k: v for k, v in top_stats},
-        "effect": (it.active or it.passive or "")[:180],
+        "pen": round(pen, 1) if pen else 0,
+        "effect": (it.passive or it.active or "")[:180],
         "is_active": bool(it.is_active_item),
     }
 
 
-def _explain_god_build(god, bias, role, path, starters) -> str:
+def _explain_god_build(god, bias, role, path, starters, pen_total=0.0, n_act=0, max_act=2) -> str:
     parts = [
-        f"{god['entity_name']} as {role}: primary scaling {bias.get('primary')} "
-        f"(STR { (bias.get('str') or 0)*100:.0f}% / INT {(bias.get('int') or 0)*100:.0f}% kit avg).",
+        f"{god['entity_name']} ({role}): {bias.get('primary')} scaling "
+        f"(STR {(bias.get('str') or 0)*100:.0f}% / INT {(bias.get('int') or 0)*100:.0f}%).",
+        f"Buy order early→late. Pen total ≈ {pen_total:.0f}. "
+        f"Shop actives {n_act}/{max_act} (game hard max {HARD_MAX_ACTIVE_ITEMS}; curio shares budget).",
     ]
-    if path:
-        parts.append("Path ordered by combined role-stat score × god scaling bias × patch momentum.")
+    pens = [p.name for p in path if is_pen_item(p)]
+    if pens:
+        parts.append("Pen: " + ", ".join(pens) + ".")
+    elif role in DAMAGE_ROLES_NEED_PEN:
+        parts.append("Warning: low pen — check Obsidian Shard / Spear / Titan's.")
     if bias.get("cc", 0) >= 2:
-        parts.append("High CC kit → CDR and defensive/peel options weighted up.")
-    if bias.get("heal", 0) >= 1:
-        parts.append("Self-heal in kit → lifesteal / heal-amp items favored.")
+        parts.append("CC-heavy kit → CDR/peel valued.")
     if god.get("tier"):
-        parts.append(f"Role model tier {god.get('tier')} (rank #{god.get('rank_in_scope')}).")
+        parts.append(f"Model tier {god.get('tier')} (#{god.get('rank_in_scope')}).")
     return " ".join(parts)
 
 
@@ -1111,14 +1423,20 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 4) -> dict[str, 
         "game": "SMITE 2",
         "mode": "Conquest",
         "method": (
-            "Local statistical weighting: item flat stats (normalized) × role priority vector "
-            "+ passive/active utility tags + cost band + item patch momentum; "
-            "per-god paths re-scored by kit STR/INT scaling from ability metrics. "
-            f"Hard constraint: max {MAX_ACTIVE_ITEMS} shop Active items in the 6-item grid "
-            "(relics separate; curios not included). "
+            "Local statistical weighting: item stats × role priority + utility tags + "
+            "cost band + patch momentum; per-god rescoring by kit STR/INT scaling. "
+            f"Shop actives default max {DEFAULT_MAX_SHOP_ACTIVES} "
+            f"(hard game max {HARD_MAX_ACTIVE_ITEMS}; melee physical may use 3). "
+            "Curios share the active budget and drop at 3. Relics are separate. "
+            f"Damage roles (Carry/Mid/Jungle) enforce ≥{MIN_BUILD_PEN:.0f} pen and "
+            "prefer passive shred (Obsidian Shard / Titan's Bane / Spears) over pure power. "
+            "Items listed in buy order (early power → pen → power → defense → luxury). "
             "No external build sites."
         ),
-        "max_active_items": MAX_ACTIVE_ITEMS,
+        "max_active_items": DEFAULT_MAX_SHOP_ACTIVES,
+        "hard_max_active_items": HARD_MAX_ACTIVE_ITEMS,
+        "default_max_shop_actives": DEFAULT_MAX_SHOP_ACTIVES,
+        "min_build_pen": MIN_BUILD_PEN,
         "roles": {},
     }
     for role in ("Carry", "Mid", "Jungle", "Solo", "Support"):
@@ -1172,8 +1490,9 @@ def render_markdown(report: dict[str, Any]) -> str:
             )
         lines.append("")
         lines.append(
-            f"**Inventory: 1 starter + 6 items** · **max {MAX_ACTIVE_ITEMS} Active items** "
-            "(relics do not count)"
+            f"**Inventory: 1 starter + 6 items** · shop actives "
+            f"**≤{DEFAULT_MAX_SHOP_ACTIVES}** typical / **{HARD_MAX_ACTIVE_ITEMS}** hard max "
+            "(curios share active budget; relics separate)"
         )
         lines.append("")
         if t["starter"]:
@@ -1181,24 +1500,28 @@ def render_markdown(report: dict[str, Any]) -> str:
                 f"| Starter | **{t['starter']['name']}** | `{t['starter']['score']}` | {t['starter']['cost']}g |"
             )
         lines.append("")
-        lines.append("| # | Item | Active? | Score | Cost | Stats |")
-        lines.append("|--:|------|:-------:|------:|-----:|-------|")
+        lines.append("| Buy# | Item | Slot | Active | Pen | Cost |")
+        lines.append("|-----:|------|------|:------:|----:|-----:|")
         items6 = t.get("items") or t["full_path"]
         n_act = sum(1 for it in items6 if it.get("is_active"))
+        pen_t = t.get("pen_total") or sum(it.get("pen") or 0 for it in items6)
         for i, it in enumerate(items6, 1):
-            stats = ", ".join(f"{k} {v}" for k, v in (it.get("stats") or {}).items())
-            act = "YES" if it.get("is_active") else "no"
+            act = "A" if it.get("is_active") else ""
+            pen = it.get("pen") or "—"
             lines.append(
-                f"| {i} | **{it['name']}** | {act} | `{it['score']}` | {it['cost']}g | {stats} |"
+                f"| {i} | **{it['name']}** | {it.get('slot', '')} | {act} | {pen} | {it['cost']}g |"
             )
         lines.append("")
-        lines.append(f"*Active count: {n_act}/{MAX_ACTIVE_ITEMS}*")
+        lines.append(
+            f"*Actives {n_act}/{t.get('max_shop_actives', DEFAULT_MAX_SHOP_ACTIVES)} · pen ≈ {pen_t}*"
+        )
+        if t.get("build_notes"):
+            lines.append("")
+            lines.append(t["build_notes"])
         lines.append("")
-        lines.append("**Relics (scored):** " + ", ".join(
-            f"{r['name']} ({r['score']})" for r in t["relics"]
-        ))
+        lines.append("**Relics:** " + ", ".join(r["name"] for r in t["relics"]))
         lines.append("")
-        lines.append("### Top gods in this role (model) + tailored paths")
+        lines.append("### Top gods in this role + buy paths")
         lines.append("")
         for gb in data["recommended_gods"]:
             lines.append(
@@ -1214,15 +1537,21 @@ def render_markdown(report: dict[str, Any]) -> str:
             lines.append(gb["why"])
             lines.append("")
             if gb.get("starter"):
-                lines.append(f"- **Starter:** {gb['starter']['name']} (`{gb['starter']['score']}`)")
+                lines.append(f"- **Starter:** {gb['starter']['name']}")
             items_g = gb.get("items") or gb["full_path"]
             n_act = sum(1 for it in items_g if it.get("is_active"))
-            lines.append(f"- **6 items** (actives {n_act}/{MAX_ACTIVE_ITEMS}):")
+            max_a = gb.get("max_shop_actives", DEFAULT_MAX_SHOP_ACTIVES)
+            lines.append(
+                f"- **Buy order** (actives {n_act}/{max_a}, pen ≈ {gb.get('pen_total', '?')}):"
+            )
             for i, it in enumerate(items_g, 1):
-                tag = " [ACTIVE]" if it.get("is_active") else ""
-                lines.append(
-                    f"  {i}. {it['name']}{tag} (`{it['score']}` · {it['cost']}g)"
-                )
+                bits = [it.get("slot") or ""]
+                if it.get("is_active"):
+                    bits.append("active")
+                if it.get("pen"):
+                    bits.append(f"pen {it['pen']}")
+                bits.append(f"{it['cost']}g")
+                lines.append(f"  {i}. {it['name']} ({', '.join(b for b in bits if b)})")
             if gb.get("relics"):
                 lines.append(
                     "- **Relics:** "
@@ -1273,9 +1602,13 @@ def main(argv: list[str] | None = None) -> int:
         n_act = sum(1 for p in items6 if p.get("is_active"))
         print(f"  Starter: {t['starter']['name'] if t['starter'] else '—'}")
         print(
-            f"  6 items ({len(items6)}, actives {n_act}/{MAX_ACTIVE_ITEMS}): "
+            f"  Buy order ({len(items6)}, A{n_act}/{t.get('max_shop_actives', DEFAULT_MAX_SHOP_ACTIVES)}, "
+            f"pen≈{t.get('pen_total', '?')}): "
             + " → ".join(
-                p["name"] + ("*" if p.get("is_active") else "") for p in items6
+                p["name"]
+                + ("*" if p.get("is_active") else "")
+                + (f"[pen{p.get('pen')}]" if p.get("pen") else "")
+                for p in items6
             )
         )
         print("  Relics:  " + ", ".join(r["name"] for r in t["relics"]))
@@ -1283,8 +1616,9 @@ def main(argv: list[str] | None = None) -> int:
         for gb in data["recommended_gods"]:
             path = gb.get("items") or gb["full_path"]
             ga = sum(1 for p in path if p.get("is_active"))
+            max_a = gb.get("max_shop_actives", DEFAULT_MAX_SHOP_ACTIVES)
             print(
-                f"    [{gb.get('tier')}] {gb['god']} (A{ga}/{MAX_ACTIVE_ITEMS}): "
+                f"    [{gb.get('tier')}] {gb['god']} (A{ga}/{max_a} pen≈{gb.get('pen_total', '?')}): "
                 f"[{gb['starter']['name'] if gb.get('starter') else '?'}] + "
                 + " → ".join(
                     p["name"] + ("*" if p.get("is_active") else "") for p in path[:6]
