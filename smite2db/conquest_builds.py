@@ -805,9 +805,20 @@ def _stat_similarity(a: ScoredItem, b: ScoredItem) -> float:
     return dot / (na * nb)
 
 
-def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, float]:
+def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, Any]:
+    """
+    Full per-god kit profile used for itemization.
+
+    Combines ability metrics (burst/dps/dot/shield/cc), ability text cues,
+    and patch trajectory so builds diverge across gods in the same role.
+    """
     row = conn.execute(
-        "SELECT primary_scaling, avg_scaling_str, avg_scaling_int, kit_power_score, cc_count, heal_count, mobility_count FROM god_kit_metrics WHERE god_id=?",
+        """
+        SELECT primary_scaling, avg_scaling_str, avg_scaling_int, kit_power_score,
+               kit_burst_score, kit_dps_score, kit_utility_score,
+               cc_count, heal_count, mobility_count, min_ability_cd, ult_cooldown
+        FROM god_kit_metrics WHERE god_id=?
+        """,
         (god_id,),
     ).fetchone()
     if not row:
@@ -821,8 +832,21 @@ def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, float]:
             "burst": 0.5,
             "ult_scale": 0.0,
             "ability_power": 40.0,
+            "tags": set(),
+            "style_burst": 0.5,
+            "style_dps": 0.5,
+            "style_utility": 0.3,
+            "kit_burst": 20.0,
+            "kit_dps": 20.0,
+            "dots": 0,
+            "shields": 0,
+            "patch_score": 0.0,
+            "trajectory": "stable",
+            "god_name": "",
+            "aa_score": 0.0,
+            "avg_cd": 12.0,
         }
-    # Ability-level kit texture (for itemization that matches *this* god)
+
     ab = conn.execute(
         """
         SELECT
@@ -831,33 +855,192 @@ def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, float]:
           MAX(CASE WHEN UPPER(a.slot) LIKE '%ULT%' OR a.slot_order >= 4
               THEN COALESCE(m.scaling_int_pct, 0) + COALESCE(m.scaling_str_pct, 0)
               ELSE 0 END) AS ult_scale,
-          AVG(COALESCE(m.cooldown_rank5, 12)) AS avg_cd,
+          AVG(CASE WHEN m.cooldown_rank5 IS NOT NULL AND m.cooldown_rank5 > 0
+              THEN m.cooldown_rank5 END) AS avg_cd,
           SUM(CASE WHEN COALESCE(m.has_cc, 0) THEN 1 ELSE 0 END) AS ab_cc,
-          SUM(CASE WHEN COALESCE(m.has_mobility, 0) THEN 1 ELSE 0 END) AS ab_mob
+          SUM(CASE WHEN COALESCE(m.has_mobility, 0) THEN 1 ELSE 0 END) AS ab_mob,
+          SUM(CASE WHEN COALESCE(m.has_dot, 0) THEN 1 ELSE 0 END) AS ab_dot,
+          SUM(CASE WHEN COALESCE(m.has_shield, 0) THEN 1 ELSE 0 END) AS ab_shield,
+          SUM(CASE WHEN COALESCE(m.has_heal, 0) THEN 1 ELSE 0 END) AS ab_heal,
+          AVG(COALESCE(m.burst_proxy, 0)) AS avg_burst_px,
+          AVG(COALESCE(m.dps_proxy, 0)) AS avg_dps_px
         FROM abilities a
         LEFT JOIN ability_metrics m ON m.ability_id = a.id
         WHERE a.god_id = ?
         """,
         (god_id,),
     ).fetchone()
+
+    # Ability text for keyword tags — exclude Basic Attack rows (they all say "basic attack")
+    texts = conn.execute(
+        """
+        SELECT a.slot, a.name, a.description, a.stats_text, a.notes_text, a.slot_order
+        FROM abilities a WHERE a.god_id = ?
+        """,
+        (god_id,),
+    ).fetchall()
+    kit_texts = []
+    basic_texts = []
+    for t in texts:
+        slot_l = (t["slot"] or "").lower()
+        chunk = (
+            f"{t['slot'] or ''} {t['name'] or ''} {t['description'] or ''} "
+            f"{t['stats_text'] or ''} {t['notes_text'] or ''}"
+        ).lower()
+        if "basic" in slot_l:
+            basic_texts.append(chunk)
+        else:
+            kit_texts.append(chunk)
+    blob = " ".join(kit_texts)  # kit only
+    full_blob = " ".join(kit_texts + basic_texts)
+
+    gname_row = conn.execute("SELECT name FROM gods WHERE id=?", (god_id,)).fetchone()
+    god_name = gname_row["name"] if gname_row else ""
+
+    patch = conn.execute(
+        """
+        SELECT net_weighted_score, recent_5_score, trajectory
+        FROM entity_patch_summary
+        WHERE entity_type='god' AND entity_name=?
+        """,
+        (god_name,),
+    ).fetchone()
+    patch_score = float(patch["net_weighted_score"] or 0) if patch else 0.0
+    trajectory = (patch["trajectory"] if patch else None) or "stable"
+
     avg_pwr = float(ab["avg_pwr"] or 40) if ab else 40.0
     max_pwr = float(ab["max_pwr"] or 40) if ab else 40.0
     ult_scale = float(ab["ult_scale"] or 0) if ab else 0.0
-    avg_cd = float(ab["avg_cd"] or 12) if ab else 12.0
-    # burst = spike damage kits (high max vs avg ability power)
-    burst = min(1.5, max(0.2, max_pwr / max(avg_pwr, 1.0) - 0.4))
+    # Non-ult average CD for spam detection
+    cd_row = conn.execute(
+        """
+        SELECT AVG(m.cooldown_rank5) AS avg_cd
+        FROM abilities a
+        JOIN ability_metrics m ON m.ability_id = a.id
+        WHERE a.god_id = ?
+          AND m.cooldown_rank5 IS NOT NULL AND m.cooldown_rank5 > 0
+          AND UPPER(COALESCE(a.slot,'')) NOT LIKE '%ULT%'
+          AND COALESCE(a.slot_order, 0) < 4
+        """,
+        (god_id,),
+    ).fetchone()
+    avg_cd = float(cd_row["avg_cd"] or 12) if cd_row and cd_row["avg_cd"] else (
+        float(ab["avg_cd"] or 12) if ab and ab["avg_cd"] else 12.0
+    )
+    dots = int(ab["ab_dot"] or 0) if ab else 0
+    shields = int(ab["ab_shield"] or 0) if ab else 0
+    ab_heal = int(ab["ab_heal"] or 0) if ab else 0
+
+    kit_burst = float(row["kit_burst_score"] or 0)
+    kit_dps = float(row["kit_dps_score"] or 0)
+    kit_util = float(row["kit_utility_score"] or 0)
+    total_style = max(kit_burst + kit_dps, 1.0)
+    style_burst = kit_burst / total_style
+    style_dps = kit_dps / total_style
+    # Secondary burst ratio from ability power shape
+    spike = min(1.5, max(0.2, max_pwr / max(avg_pwr, 1.0) - 0.35))
+
+    tags: set[str] = set()
+    # metric-driven tags
+    if dots >= 1:
+        tags.add("dot")
+    if dots >= 2:
+        tags.add("heavy_dot")
+    if shields >= 1:
+        tags.add("shield")
+    if shields >= 2:
+        tags.add("heavy_shield")
+    if max(row["heal_count"] or 0, ab_heal) >= 1:
+        tags.add("heal")
+    if max(row["heal_count"] or 0, ab_heal) >= 3:
+        tags.add("heavy_heal")
+    if max(row["cc_count"] or 0, int(ab["ab_cc"] or 0) if ab else 0) >= 3:
+        tags.add("high_cc")
+    if max(row["mobility_count"] or 0, int(ab["ab_mob"] or 0) if ab else 0) == 0:
+        tags.add("immobile")
+    if max(row["mobility_count"] or 0, int(ab["ab_mob"] or 0) if ab else 0) >= 3:
+        tags.add("mobile")
+    if avg_cd <= 8.0:
+        tags.add("spam")
+    if avg_cd >= 14:
+        tags.add("long_cd")
+    if ult_scale >= 100:
+        tags.add("ult_nuke")
+    if style_burst >= 0.55 and kit_burst >= 25:
+        tags.add("burst")
+    if style_dps >= 0.55 and kit_dps >= 25:
+        tags.add("sustained")
+    if kit_util >= 55:
+        tags.add("utility")
+
+    # text-driven tags (non-basic ability descriptions only)
+    aa_hits = len(re.findall(r"basic attack", blob))
+    if aa_hits >= 2 or re.search(
+        r"while active.{0,40}basic|basic attacks deal|your basic attacks|empowered basic|next basic",
+        blob,
+    ):
+        tags.add("aa")
+    # True mana-stacking passives only (e.g. Kukulkan: build Mana items → INT)
+    if re.search(
+        r"items that provide mana|build items that provide mana|"
+        r"as you build.{0,40}mana.{0,40}intelligence|"
+        r"mana items|from (?:your )?mana\b",
+        blob,
+    ):
+        tags.add("mana_stack")
+    if re.search(r"penetrat|protection.?reduc|shred|decompose|voids? their", blob):
+        tags.add("prot_shred")
+    if re.search(r"execut|low health|below \d|threshold|harvest|killing blow", blob):
+        tags.add("execute")
+    if re.search(r"\bchannel\b|channeling", blob):
+        tags.add("channel")
+    if re.search(r"\bpet\b|summon|deploy|create a wall|totem|minion", blob):
+        tags.add("pet_zone")
+    if re.search(r"damage over time|poison|burn|blight|frostbite|whirlwind", blob):
+        tags.add("zone")
+    if re.search(r"\broot\b|\bstun\b|silence|knock(?:\s|-)?back|cripple|mesmerize|\bfear\b", blob):
+        tags.add("hard_cc")
+    if re.search(r"gain.{0,20}attack speed|increased attack speed|attack speed for", blob):
+        tags.add("as_steroid")
+    if re.search(r"lifesteal|heal yourself|heals? you\b|restor(?:e|es) your|drain(?:s|ing)? life", blob):
+        tags.add("self_sustain")
+    if re.search(r"\ballies\b|\bally\b|\baura\b|nearby (?:friendly|allied)", blob):
+        tags.add("team_buff")
+    if re.search(r"slow immune|cc immune|crowd control immun", blob):
+        tags.add("anti_cc")
+    if re.search(r"\bdash\b|\bleap\b|teleport|fly into", blob):
+        tags.add("gap_close")
+
+    aa_score = min(1.0, aa_hits / 4.0)
+    if "aa" in tags:
+        aa_score = max(aa_score, 0.7)
+
     return {
         "str": (row["avg_scaling_str"] or 0) / 100.0,
         "int": (row["avg_scaling_int"] or 0) / 100.0,
         "primary": row["primary_scaling"] or "Mixed",
         "cc": max(row["cc_count"] or 0, int(ab["ab_cc"] or 0) if ab else 0),
-        "heal": row["heal_count"] or 0,
+        "heal": max(row["heal_count"] or 0, ab_heal),
         "mobility": max(row["mobility_count"] or 0, int(ab["ab_mob"] or 0) if ab else 0),
         "kit": row["kit_power_score"] or 40,
-        "burst": burst,
+        "burst": spike,  # legacy key
         "ult_scale": ult_scale,
         "ability_power": avg_pwr,
         "avg_cd": avg_cd,
+        "tags": tags,
+        "style_burst": style_burst,
+        "style_dps": style_dps,
+        "style_utility": min(1.0, kit_util / 100.0),
+        "kit_burst": kit_burst,
+        "kit_dps": kit_dps,
+        "dots": dots,
+        "shields": shields,
+        "patch_score": patch_score,
+        "trajectory": trajectory,
+        "god_name": god_name,
+        "aa_score": aa_score,
+        "ability_blob": blob[:4000],
+        "full_blob": full_blob[:2000],
     }
 
 
@@ -867,182 +1050,563 @@ def rescore_for_god(
     role: str,
     damage_type: str | None = None,
 ) -> float:
-    s = item.role_score
+    """Role base score + large per-god kit affinity (must move rankings)."""
+    s = item.role_score * 0.55  # shrink generic role signal so kit can win
     str_v = _canon_stat_value(item.stats, "str")
     int_v = _canon_stat_value(item.stats, "int")
     as_v = _canon_stat_value(item.stats, "as")
     crit_v = _canon_stat_value(item.stats, "crit")
+    pen_v = _canon_stat_value(item.stats, "pen")
+    cdr_v = _canon_stat_value(item.stats, "cdr")
+    ls_v = _canon_stat_value(item.stats, "ls")
+    mp_v = _canon_stat_value(item.stats, "mp")
     primary = bias.get("primary", "Mixed")
     dtype = (damage_type or "").lower()
+    tags: set[str] = set(bias.get("tags") or [])
+    nlow = item.name.lower()
+    blob = f"{item.passive} {item.active} {item.name}".lower()
 
-    # Hard scaling alignment (dominant signal for per-god paths)
-    # Magical damage type always itemizes as mage — even if kit avg shows Hybrid STR
-    # from basics/passives (common on guardians like Ymir).
     mage = dtype == "magical" or primary == "Intelligence"
-    physical = (not mage) and (
-        dtype == "physical" or primary == "Strength"
-    )
+    physical = (not mage) and (dtype == "physical" or primary == "Strength")
 
-    # Support is role-first: peel for backline, not Chronos' Pendant glass.
+    # --- Damage-type alignment (hard) ---
+    if mage:
+        s += int_v * 1.15
+        s -= str_v * 0.9
+        s -= as_v * 0.55
+        s -= crit_v * 0.65
+        s -= _canon_stat_value(item.stats, "bap") * 0.5
+        if str_v >= 30 and int_v < 35:
+            s -= 60
+        if str_v >= 40 and int_v < 25:
+            s -= 80
+    elif physical:
+        s += str_v * 1.05
+        s -= int_v * 0.7
+        if int_v >= 40 and str_v < 25:
+            s -= 60
+        if role == "Carry":
+            s += as_v * 0.55 + crit_v * 0.65 + ls_v * 0.4
+    else:  # hybrid
+        s += (str_v + int_v) * 0.45
+        s += min(str_v, int_v) * 0.35
+
+    if dtype == "physical" and int_v > str_v + 20:
+        s -= 40
+    if dtype == "magical" and str_v > int_v + 15:
+        s -= 45
+
+    # --- Role shells ---
     if role == "Support":
-        s -= as_v * 0.8
-        s -= crit_v * 0.8
-        s -= _canon_stat_value(item.stats, "bap") * 0.6
-        s -= ls_v if (ls_v := _canon_stat_value(item.stats, "ls")) else 0
-        if _canon_stat_value(item.stats, "hp") < 200 and (
-            str_v + int_v
-        ) >= 50 and item.item_type == "Offensive":
-            s -= 25
-    # Solo is unkillable frontline — stack mitigate, not full DPS carry items.
-    elif role == "Solo":
         s += (
             _canon_stat_value(item.stats, "hp") * 0.12
-            + _canon_stat_value(item.stats, "pprot") * 0.45
-            + _canon_stat_value(item.stats, "mprot") * 0.45
-            + _canon_stat_value(item.stats, "damp") * 2.0
-            + _canon_stat_value(item.stats, "plat") * 2.2
-            + _canon_stat_value(item.stats, "ten") * 1.5
+            + _canon_stat_value(item.stats, "pprot") * 0.5
+            + _canon_stat_value(item.stats, "mprot") * 0.5
+            + _canon_stat_value(item.stats, "damp") * 2.5
+            + _canon_stat_value(item.stats, "plat") * 3.0
+            + _canon_stat_value(item.stats, "ten") * 1.8
         )
-        if item.item_type == "Defensive" or "defensive" in item.flags:
-            s += 20
-        if item.item_type == "Hybrid":
-            s += 10
-        # mild offline damage OK if item still tanks
+        s -= as_v * 1.0 + crit_v * 1.0
+        if ls_v >= 5:
+            s -= 45
         if item.item_type == "Offensive" and _canon_stat_value(item.stats, "hp") < 200:
-            s -= 28
-        s -= as_v * 0.5
-        s -= crit_v * 0.6
-        blob_s = (item.passive + " " + item.active).lower()
-        if any(k in blob_s for k in ("shield", "protections", "mitigat", "heal")):
-            s += 12
-    # Jungle: gank threat — burst + pen + CDR, not full tank.
-    elif role == "Jungle":
-        pen_v = _canon_stat_value(item.stats, "pen")
-        cdr_v = _canon_stat_value(item.stats, "cdr")
-        s += pen_v * 1.1
-        s += cdr_v * 0.55
-        blob_j = (item.passive + " " + item.active).lower()
-        if any(k in blob_j for k in ("jungle", "monster", "minion", "gank")):
-            s += 14
-        if any(k in blob_j for k in ("movement", "slow", "stun", "root", "leap")):
-            s += 8
-        # one defense is fine; pure full-tank path is solo's job
-        if item.item_type == "Defensive" and pen_v < 5 and (str_v + int_v) < 20:
-            s -= 8
-        if physical and not mage:
-            s += str_v * 0.5
-            s -= int_v * 0.35
-        elif mage:
-            s += int_v * 0.5
-            s -= str_v * 0.35
-    elif physical and not mage:
-        s += str_v * 0.85
-        s -= int_v * 0.55
-        if int_v >= 40 and str_v < 15:
-            s -= 55  # pure mage item on STR kit
-        if as_v or crit_v:
-            s += as_v * 0.25 + crit_v * 0.3
-    elif mage:
-        s += int_v * 0.95
-        s -= str_v * 0.75
-        s -= as_v * 0.45  # basic-attack toys (Riptalon etc.) are not mage cores
-        s -= crit_v * 0.5
-        s -= _canon_stat_value(item.stats, "bap") * 0.4
-        if str_v >= 25 and int_v < 30:
-            s -= 50
-        if str_v >= 40 and int_v < 20:
-            s -= 70
-    elif primary == "Hybrid":
-        s += (str_v + int_v) * 0.4
-        s += min(str_v, int_v) * 0.25  # reward true hybrid stats
-    else:
-        s += max(str_v, int_v) * 0.45
-
-    # Damage-type hard filter
-    if dtype == "physical" and int_v > str_v + 20:
-        s -= 35
-    if dtype == "magical" and str_v > int_v + 15:
-        s -= 40
-
-    if bias.get("cc", 0) >= 2 and _canon_stat_value(item.stats, "cdr") > 0:
-        s += 14
-    if bias.get("heal", 0) >= 1 and (
-        _canon_stat_value(item.stats, "ls") > 0 or "heal" in (item.passive + item.active).lower()
-    ):
-        s += 14
-    # Burst kits want pen + high power spikes; sustained kits like CDR/AS more
-    burst = float(bias.get("burst") or 0.5)
-    if burst >= 0.9 and role in ("Mid", "Jungle", "Carry"):
-        s += _canon_stat_value(item.stats, "pen") * 0.45
-        if (item.total_cost or 0) >= 3000 and (
-            _canon_stat_value(item.stats, "int") >= 70 or _canon_stat_value(item.stats, "str") >= 50
-        ):
-            s += 10  # luxury power for nuke kits
-    elif burst <= 0.55 and role in ("Mid", "Carry"):
-        s += _canon_stat_value(item.stats, "cdr") * 0.35
-        s += as_v * 0.2
-    if float(bias.get("ult_scale") or 0) >= 100 and role in ("Mid", "Jungle"):
-        s += _canon_stat_value(item.stats, "pen") * 0.35
-        s += 6 if "pen" in " ".join(item.stats.keys()).lower() or item_pen_value(item) >= 8 else 0
-    if float(bias.get("avg_cd") or 12) <= 8 and _canon_stat_value(item.stats, "cdr") > 0:
-        s += 8  # spammy kits love CDR
-    if bias.get("mobility", 0) == 0 and role in ("Jungle", "Carry", "Mid"):
-        # immobile → slightly value defense / beads-style survival items
-        if _canon_stat_value(item.stats, "hp") >= 250 or item.item_type == "Defensive":
-            s += 6
-        if role == "Carry" and not mage and as_v > 0:
-            s += 5
-    if bias.get("mobility", 0) >= 2 and role == "Jungle":
-        s += 5 if _canon_stat_value(item.stats, "pen") >= 8 else 0
-
-    # Support: mitigate & counter — not personal LS DPS.
-    if role == "Support":
+            s -= 35
+        if item.item_type == "Defensive":
+            s += 28
+        if any(k in blob for k in ("ally", "allies", "aura", "team")):
+            s += 28
+        if "critical" in blob or ("crit" in blob and "plating" in blob):
+            s += 24
+        if "attack speed" in blob and any(k in blob for k in ("reduc", "enemy", "their")):
+            s += 22
+        # Support should not core pure antiheal DPS
+        if any(k in nlow for k in ("divine ruin", "brawler", "titan", "obsi", "deathbringer")):
+            s -= 30
+    elif role == "Solo":
         s += (
-            _canon_stat_value(item.stats, "hp") * 0.1
-            + _canon_stat_value(item.stats, "pprot") * 0.4
-            + _canon_stat_value(item.stats, "mprot") * 0.4
+            _canon_stat_value(item.stats, "hp") * 0.14
+            + _canon_stat_value(item.stats, "pprot") * 0.5
+            + _canon_stat_value(item.stats, "mprot") * 0.5
             + _canon_stat_value(item.stats, "damp") * 2.2
-            + _canon_stat_value(item.stats, "plat") * 2.8
+            + _canon_stat_value(item.stats, "plat") * 2.4
             + _canon_stat_value(item.stats, "ten") * 1.6
         )
-        if item.item_type == "Defensive" or "defensive" in item.flags:
-            s += 22
+        if item.item_type == "Defensive":
+            s += 24
+        if item.item_type == "Hybrid":
+            s += 14
         if item.item_type == "Offensive" and _canon_stat_value(item.stats, "hp") < 200:
-            s -= 20
-        ls_v = _canon_stat_value(item.stats, "ls")
-        if ls_v >= 5:
-            s -= 35
-        blob = (item.passive + " " + item.active).lower()
-        if any(k in blob for k in ("ally", "allies", "aura", "team")):
+            s -= 32
+        s -= as_v * 0.55 + crit_v * 0.7
+        if any(k in blob for k in ("shield", "protections", "mitigat", "heal")):
             s += 16
-        if "critical" in blob or ("crit" in blob and "plating" in blob):
+    elif role == "Jungle":
+        s += pen_v * 1.3 + cdr_v * 0.65
+        if any(k in blob for k in ("jungle", "monster", "minion")):
             s += 18
-        if "attack speed" in blob and ("reduc" in blob or "enemy" in blob):
-            s += 16
+        if item.item_type == "Defensive" and pen_v < 5 and (str_v + int_v) < 20:
+            s -= 12
 
-    # Damage roles: pen is not optional — but only *matching* pen for the kit.
+    # --- Kit tag affinities (LARGE — this is what diversifies gods) ---
+    if "mana_stack" in tags:
+        if mp_v >= 200 or "mana" in blob or any(
+            k in nlow for k in ("thoth", "book", "doom orb", "pendant", "transcend")
+        ):
+            s += 55
+        if "intelligence" in blob and "mana" in blob:
+            s += 20
+    if "dot" in tags or "heavy_dot" in tags:
+        if any(k in nlow for k in ("desolat", "magus", "divine", "soul reaver", "contagion", "gem of isolation")):
+            s += 42
+        if "heavy_dot" in tags:
+            s += pen_v * 0.8 + 12
+        if "over time" in blob or "burn" in blob or "poison" in blob:
+            s += 18
+    if "aa" in tags or float(bias.get("aa_score") or 0) >= 0.55:
+        s += as_v * 1.2 + crit_v * 1.1 + _canon_stat_value(item.stats, "bap") * 0.7
+        if any(k in nlow for k in ("riptalon", "deathbringer", "demon", "qins", "ichival", "wind", "musashi", "avenging", "eros")):
+            s += 38
+        if mage and (as_v >= 15 or crit_v >= 15):
+            s += 20  # AA mages are rare — reward AS hybrids
+    if "burst" in tags or float(bias.get("style_burst") or 0) >= 0.55:
+        s += pen_v * 0.9
+        if (item.total_cost or 0) >= 2800 and (int_v >= 60 or str_v >= 45):
+            s += 28
+        if any(k in nlow for k in ("obsi", "titan", "soul reaver", "tahuti", "parashu", "dreamer", "rod of")):
+            s += 22
+    if "sustained" in tags or float(bias.get("style_dps") or 0) >= 0.55:
+        s += cdr_v * 1.4
+        if any(k in nlow for k in ("chronos", "pendant", "breastplate", "genji", "valor", "focus")):
+            s += 30
+        if ls_v >= 10:
+            s += 18
+    if "spam" in tags or float(bias.get("avg_cd") or 12) <= 8.5:
+        s += cdr_v * 1.8 + 18
+    if "channel" in tags:
+        s += pen_v * 1.1 + 15
+        if any(k in nlow for k in ("obsi", "titan", "desolat", "magus")):
+            s += 25
+        # channel gods need bulk mid-fight
+        if _canon_stat_value(item.stats, "hp") >= 250 or item.item_type == "Defensive":
+            s += 16
+    if "heal" in tags or "heavy_heal" in tags or "self_sustain" in tags:
+        if ls_v >= 8 or any(k in nlow for k in ("bancroft", "blood", "gluttonous", "asclepius", "lifebinder", "devourer", "sanguine")):
+            s += 40
+        if "heavy_heal" in tags and ("heal" in blob or "lifesteal" in blob):
+            s += 18
+    if "execute" in tags:
+        s += pen_v * 1.2
+        if any(k in nlow for k in ("titan", "obsi", "soul reaver", "deathbringer", "bloodforge")):
+            s += 32
+    if "prot_shred" in tags:
+        if pen_v >= 8 or "penetrat" in blob or "protection" in blob:
+            s += 28
+        if any(k in nlow for k in ("magus", "executioner", "desolat", "void", "obsi", "titan")):
+            s += 20
+    if "shield" in tags or "heavy_shield" in tags:
+        if item.item_type in ("Defensive", "Hybrid") or "shield" in blob:
+            s += 30
+        if any(k in nlow for k in ("pridwen", "phoenix", "shifter", "spectral", "thebes")):
+            s += 18
+    if "high_cc" in tags or "hard_cc" in tags:
+        s += cdr_v * 1.3 + 12
+        if role == "Support" and item.item_type == "Defensive":
+            s += 10
+    if "immobile" in tags:
+        if item.item_type == "Defensive" or _canon_stat_value(item.stats, "hp") >= 250:
+            s += 22
+        if any(k in nlow for k in ("alchemist", "magi", "cloak", "mantle", "spectral")):
+            s += 16
+    if "mobile" in tags or "gap_close" in tags:
+        if role == "Jungle":
+            s += pen_v * 0.5 + 8
+        if any(k in nlow for k in ("jotunn", "hydras", "arondight", "heartseeker")):
+            s += 14
+    if "pet_zone" in tags or "zone" in tags:
+        if any(k in nlow for k in ("magus", "gem of isolation", "divine", "soul gem", "grimoire")):
+            s += 26
+        s += cdr_v * 0.4
+    if "ult_nuke" in tags:
+        s += pen_v * 1.0 + 14
+        if any(k in nlow for k in ("obsi", "titan", "tahuti", "soul reaver", "dreamer")):
+            s += 20
+    if "team_buff" in tags and role in ("Support", "Solo"):
+        if any(k in blob for k in ("ally", "allies", "aura", "team")):
+            s += 32
+    if "anti_cc" in tags:
+        if _canon_stat_value(item.stats, "ten") >= 5 or "tenacit" in blob or "magi" in nlow:
+            s += 24
+
+    # Patch trajectory: rising gods lean aggressive; falling lean safer
+    traj = (bias.get("trajectory") or "stable").lower()
+    pscore = float(bias.get("patch_score") or 0)
+    if traj == "rising" or pscore >= 1.0:
+        s += item.momentum * 14
+        if item.item_type == "Offensive":
+            s += 12
+    elif traj == "falling" or pscore <= -1.5:
+        if item.item_type == "Defensive" or _canon_stat_value(item.stats, "hp") >= 250:
+            s += 20
+        s += cdr_v * 0.5
+        if item.is_active_item and (item.total_cost or 0) >= 3200:
+            s -= 10  # skip glass luxury while nerfed
+    else:
+        s += item.momentum * 6
+
+    # Damage-role pen requirement (matching type)
     if role in DAMAGE_ROLES_NEED_PEN:
-        pen_v = _canon_stat_value(item.stats, "pen")
-        # Mage: Obsidian / Magus / Deso / Soul Gem style
         if mage:
             if int_v >= 30 and pen_v >= 8:
-                s += pen_v * 1.6 + 12
+                s += pen_v * 1.8 + 14
             elif pen_v >= 8 and int_v < 25:
-                s -= 25  # physical pen item on mage
-            if pen_v >= 15 and int_v >= 50 and not item.is_active_item:
-                s += 22  # Obsidian Shard
+                s -= 30
+            if pen_v >= 15 and int_v >= 45 and not item.is_active_item:
+                s += 26
         elif physical:
             if str_v >= 25 and pen_v >= 8:
-                s += pen_v * 1.5 + 10
-            elif pen_v >= 15 and str_v >= 40 and not item.is_active_item:
-                s += 20  # Titan's Bane
+                s += pen_v * 1.7 + 12
+            elif pen_v >= 15 and str_v >= 35 and not item.is_active_item:
+                s += 24
             elif pen_v >= 8 and str_v < 20 and int_v >= 40:
-                s -= 25  # mage pen on physical
+                s -= 30
         else:
-            s += pen_v * 1.2
+            s += pen_v * 1.3
         if pen_v >= 8 and item.is_active_item and (item.total_cost or 0) >= 3200:
-            s -= 8  # Dreamer's/Parashu = luxury, not the pen plan
+            s -= 10
+
+    # Deterministic micro-jitter from god name so near-ties don't all pick the same flex
+    # (small; kit tags still dominate)
+    g = bias.get("god_name") or ""
+    if g:
+        h = sum(ord(c) for c in (g + item.name)) % 17
+        s += h * 0.35
+
     return s
+
+
+# ---------------------------------------------------------------------------
+# Archetype recipes — force different slot patterns per kit identity
+# ---------------------------------------------------------------------------
+
+def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
+    tags: set[str] = set(bias.get("tags") or [])
+    sb = float(bias.get("style_burst") or 0.5)
+    sd = float(bias.get("style_dps") or 0.5)
+    aa = float(bias.get("aa_score") or 0)
+
+    if role == "Support":
+        if "heavy_heal" in tags or "heal" in tags and "team_buff" in tags:
+            return "heal_support"
+        if "heavy_shield" in tags or "shield" in tags:
+            return "shield_support"
+        if "high_cc" in tags or "hard_cc" in tags:
+            return "lockdown_support"
+        if "team_buff" in tags:
+            return "aura_support"
+        return "peel_support"
+
+    if role == "Solo":
+        # Frontline first — only pure mage tanks use mage_solo
+        if "heavy_heal" in tags or ("heal" in tags and "self_sustain" in tags):
+            return "sustain_solo"
+        if "heavy_shield" in tags or "shield" in tags:
+            return "shield_solo"
+        if mage and float(bias.get("int") or 0) >= float(bias.get("str") or 0) + 0.2:
+            return "mage_solo"
+        if sb >= 0.55 and float(bias.get("kit_burst") or 0) >= 30:
+            return "bruiser_solo"
+        return "tank_solo"
+
+    if role == "Jungle":
+        if mage:
+            return "mage_jungle"
+        if "execute" in tags or "heal" in tags:
+            return "sustain_assassin"
+        if "aa" in tags or aa >= 0.55:
+            return "aa_assassin"
+        if sb >= sd + 0.08:
+            return "burst_assassin"
+        return "bruiser_jungle"
+
+    if role == "Carry":
+        if mage:
+            if "dot" in tags:
+                return "dot_mage_adc"
+            if "aa" in tags or aa >= 0.5:
+                return "aa_mage_adc"
+            return "ability_mage_adc"
+        if "aa" in tags or aa >= 0.55 or "as_steroid" in tags:
+            return "crit_adc"
+        if sd > sb:
+            return "onhit_adc"
+        return "power_adc"
+
+    # Mid — most specific kit identity first
+    if "mana_stack" in tags:
+        return "mana_mage"
+    if "heavy_dot" in tags or ("dot" in tags and "zone" in tags):
+        return "dot_mage"
+    if "channel" in tags and sb >= 0.45:
+        return "channel_mage"
+    if ("aa" in tags or aa >= 0.55) and float(bias.get("int") or 0) < 0.9:
+        return "aa_mage"
+    if "self_sustain" in tags or ("heal" in tags and "heavy_heal" in tags):
+        return "sustain_mage"
+    if "spam" in tags or (sd >= sb + 0.12 and float(bias.get("avg_cd") or 12) <= 9.0):
+        return "spam_mage"
+    if "pet_zone" in tags:
+        return "zone_mage"
+    if "ult_nuke" in tags or (sb >= 0.55 and float(bias.get("kit_burst") or 0) >= 20):
+        return "burst_mage"
+    if "dot" in tags:
+        return "dot_mage"
+    return "burst_mage"
+
+
+# Slot recipes: ordered identity of the 6-item grid (pen still enforced later)
+ARCHETYPE_SLOTS: dict[str, list[str]] = {
+    # Mid / mage
+    "burst_mage": ["power", "flat_pen", "pct_pen", "cdr", "defense", "luxury"],
+    "dot_mage": ["flat_pen", "dot_core", "pct_pen", "sustain", "cdr", "defense"],
+    "mana_mage": ["mana_stack", "flat_pen", "pct_pen", "cdr", "power", "defense"],
+    "channel_mage": ["pct_pen", "flat_pen", "power", "defense", "cdr", "luxury"],
+    "spam_mage": ["cdr", "flat_pen", "pct_pen", "power", "sustain", "defense"],
+    "sustain_mage": ["sustain", "flat_pen", "pct_pen", "cdr", "power", "defense"],
+    "aa_mage": ["aa_core", "flat_pen", "pct_pen", "as_core", "power", "defense"],
+    "zone_mage": ["flat_pen", "zone_core", "pct_pen", "cdr", "power", "defense"],
+    # Carry
+    "crit_adc": ["as_core", "crit_core", "pct_pen", "ls_core", "power", "defense"],
+    "onhit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "power", "defense"],
+    "power_adc": ["power", "pct_pen", "as_core", "ls_core", "crit_core", "defense"],
+    "dot_mage_adc": ["dot_core", "flat_pen", "pct_pen", "sustain", "power", "defense"],
+    "aa_mage_adc": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "defense"],
+    "ability_mage_adc": ["power", "flat_pen", "pct_pen", "cdr", "sustain", "defense"],
+    # Jungle
+    "burst_assassin": ["power", "flat_pen", "pct_pen", "cdr", "gap", "defense"],
+    "sustain_assassin": ["sustain", "flat_pen", "pct_pen", "power", "cdr", "defense"],
+    "aa_assassin": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "defense"],
+    "bruiser_jungle": ["power", "flat_pen", "pct_pen", "hybrid_bulk", "cdr", "defense"],
+    "mage_jungle": ["power", "flat_pen", "pct_pen", "cdr", "sustain", "defense"],
+    # Solo
+    "tank_solo": ["mitigate", "defense", "hybrid_bulk", "antiheal", "aura", "cdr_def"],
+    "sustain_solo": ["sustain_tank", "defense", "hybrid_bulk", "mitigate", "antiheal", "aura"],
+    "shield_solo": ["shield_item", "defense", "hybrid_bulk", "mitigate", "antiheal", "cdr_def"],
+    "bruiser_solo": ["hybrid_bulk", "defense", "power_bruiser", "mitigate", "antiheal", "cdr_def"],
+    "mage_solo": ["hybrid_bulk", "defense", "mitigate", "flat_pen", "cdr_def", "antiheal"],
+    # Support
+    "peel_support": ["mitigate", "counter", "aura", "defense", "cdr_def", "tenacity"],
+    "lockdown_support": ["cdr_def", "mitigate", "aura", "defense", "counter", "tenacity"],
+    "shield_support": ["shield_item", "aura", "mitigate", "defense", "cdr_def", "counter"],
+    "heal_support": ["heal_aura", "aura", "mitigate", "defense", "cdr_def", "counter"],
+    "aura_support": ["aura", "mitigate", "defense", "cdr_def", "counter", "tenacity"],
+}
+
+
+def _item_matches_slot(
+    it: ScoredItem,
+    slot: str,
+    *,
+    mage: bool,
+    physical: bool,
+    role: str,
+) -> bool:
+    n = it.name.lower()
+    blob = f"{it.passive} {it.active}".lower()
+    str_v = _canon_stat_value(it.stats, "str")
+    int_v = _canon_stat_value(it.stats, "int")
+    pen = item_pen_value(it)
+    as_v = _canon_stat_value(it.stats, "as")
+    crit_v = _canon_stat_value(it.stats, "crit")
+    ls_v = _canon_stat_value(it.stats, "ls")
+    cdr = _canon_stat_value(it.stats, "cdr")
+    hp = _canon_stat_value(it.stats, "hp")
+    damp = _canon_stat_value(it.stats, "damp")
+    plat = _canon_stat_value(it.stats, "plat")
+    ten = _canon_stat_value(it.stats, "ten")
+    pprot = _canon_stat_value(it.stats, "pprot")
+    mprot = _canon_stat_value(it.stats, "mprot")
+    mp = _canon_stat_value(it.stats, "mp")
+
+    def power_ok() -> bool:
+        if mage:
+            return int_v >= 40 and str_v < 40
+        if physical:
+            return str_v >= 30 and int_v < 45
+        return (str_v + int_v) >= 40
+
+    if slot == "power":
+        # pure power — not shield/defense hybrids that snuck in
+        if it.item_type == "Defensive":
+            return False
+        if any(k in n for k in ("phoenix", "pridwen", "thebes", "spectral")):
+            return False
+        return power_ok() and it.item_type in ("Offensive", "Hybrid") and pen < 15
+    if slot == "flat_pen":
+        return pen >= 8 and pen < 18 and _pen_matches_kit(it, mage=mage, physical=physical)
+    if slot == "pct_pen":
+        return pen >= 15 and _pen_matches_kit(it, mage=mage, physical=physical) and not it.is_active_item
+    if slot == "cdr":
+        return cdr >= 10 and (power_ok() or it.item_type != "Defensive")
+    if slot == "cdr_def":
+        return cdr >= 10 and (it.item_type == "Defensive" or pprot + mprot >= 30)
+    if slot == "defense":
+        return it.item_type == "Defensive" or (hp >= 250 and (str_v + int_v) < 55)
+    if slot == "luxury":
+        if role in ("Solo", "Support"):
+            return False
+        return (it.total_cost or 0) >= 3000 and power_ok() and it.item_type == "Offensive"
+    if slot == "sustain":
+        return ls_v >= 8 or any(k in n for k in ("bancroft", "gluttonous", "blood", "lifebinder", "asclepius", "devourer", "sanguine"))
+    if slot == "ls_core":
+        return ls_v >= 8 or any(k in n for k in ("bloodforge", "devourer", "gluttonous", "bancroft"))
+    if slot == "mana_stack":
+        return (
+            mp >= 250
+            or any(k in n for k in ("thoth", "book of", "doom orb", "transcend"))
+            or (mp >= 150 and "pendant" in n)
+        )
+    if slot == "dot_core":
+        return any(k in n for k in ("desolat", "magus", "divine", "soul reaver", "gem of isolation", "contagion", "grimoire"))
+    if slot == "zone_core":
+        return any(k in n for k in ("magus", "isolation", "divine", "soul gem", "grimoire", "gem of focus"))
+    if slot == "aa_core" or slot == "as_core":
+        return as_v >= 15 or any(k in n for k in ("riptalon", "ichival", "demon", "wind demon", "golden blade", "avenging", "musashi", "eros", "qins"))
+    if slot == "crit_core":
+        return crit_v >= 15 or any(k in n for k in ("deathbringer", "demon blade", "rage", "wind"))
+    if slot == "onhit":
+        return as_v >= 10 and (pen >= 5 or "basic" in blob or any(k in n for k in ("riptalon", "executioner", "qins", "silverbranch")))
+    if slot == "gap":
+        return any(k in n for k in ("jotunn", "arondight", "hydra", "heartseeker", "transcend")) or (cdr >= 10 and power_ok())
+    if slot == "hybrid_bulk":
+        return it.item_type == "Hybrid" or (hp >= 200 and (str_v >= 20 or int_v >= 20) and (pprot + mprot) >= 15)
+    if slot == "power_bruiser":
+        return power_ok() and (hp >= 150 or pprot + mprot >= 20 or it.item_type == "Hybrid")
+    if slot == "mitigate":
+        return damp >= 5 or plat >= 5 or ten >= 5 or any(k in n for k in ("alchemist", "spectral", "nemean", "mantle", "magi"))
+    if slot == "counter":
+        return (
+            ("critical" in blob or "attack speed" in blob)
+            and any(k in blob for k in ("reduc", "enemy", "less", "plating"))
+        ) or any(k in n for k in ("spectral", "nemean", "midgardian", "witchblade"))
+    if slot == "aura":
+        return any(k in blob for k in ("ally", "allies", "aura", "team")) or any(
+            k in n for k in ("thebes", "sovereignty", "heartward", "chandra", "providence", "contagion")
+        )
+    if slot == "tenacity":
+        return ten >= 5 or "magi" in n or "tenacit" in blob
+    if slot == "antiheal":
+        return any(k in n for k in ("divine", "brawler", "pestilence", "contagion", "toxic")) or (
+            "heal" in blob and any(k in blob for k in ("reduc", "anti", "curse"))
+        )
+    if slot == "shield_item":
+        return "shield" in blob or any(k in n for k in ("pridwen", "phoenix", "shifter", "spectral"))
+    if slot == "heal_aura":
+        return any(k in n for k in ("asclepius", "chandra", "thebes", "sovereignty")) or (
+            "heal" in blob and any(k in blob for k in ("ally", "allies", "aura"))
+        )
+    if slot == "sustain_tank":
+        return (ls_v >= 5 and hp >= 150) or any(k in n for k in ("sanguine", "gladiator", "ancile", "shifter"))
+    return power_ok()
+
+
+def _pick_slot_item(
+    pool: list[ScoredItem],
+    slot: str,
+    seen: set[str],
+    *,
+    mage: bool,
+    physical: bool,
+    role: str,
+    max_actives: int,
+    active_count: int,
+) -> ScoredItem | None:
+    cands = [
+        x
+        for x in pool
+        if x.name not in seen
+        and _item_matches_slot(x, slot, mage=mage, physical=physical, role=role)
+        and not (x.is_active_item and active_count >= max_actives)
+    ]
+    if not cands:
+        return None
+
+    def slot_rank(x: ScoredItem) -> float:
+        sc = x.role_score
+        n = x.name.lower()
+        # prefer true identity items inside a slot
+        if slot == "mana_stack":
+            if any(k in n for k in ("thoth", "book of", "doom orb", "transcend")):
+                sc += 40
+            elif "pendant" in n:
+                sc += 10
+        if slot == "pct_pen" and not x.is_active_item:
+            sc += 15
+        if slot in ("mitigate", "counter", "aura") and x.item_type == "Defensive":
+            sc += 12
+        if slot == "dot_core" and any(k in n for k in ("desolat", "magus", "isolation")):
+            sc += 20
+        return sc
+
+    cands.sort(key=slot_rank, reverse=True)
+    return cands[0]
+
+
+def assemble_kit_path(
+    pool: list[ScoredItem],
+    bias: dict,
+    role: str,
+    *,
+    mage: bool,
+    physical: bool,
+    max_actives: int,
+) -> tuple[list[ScoredItem], str]:
+    """Build a 6-item path from archetype slots + scores (not one global top-6)."""
+    arch = detect_archetype(bias, role, mage, physical)
+    slots = list(ARCHETYPE_SLOTS.get(arch, ARCHETYPE_SLOTS["burst_mage"]))
+    path: list[ScoredItem] = []
+    seen: set[str] = set()
+    actives = 0
+
+    for slot in slots:
+        if len(path) >= 6:
+            break
+        pick = _pick_slot_item(
+            pool,
+            slot,
+            seen,
+            mage=mage,
+            physical=physical,
+            role=role,
+            max_actives=max_actives,
+            active_count=actives,
+        )
+        if not pick:
+            continue
+        path.append(pick)
+        seen.add(pick.name)
+        if pick.is_active_item:
+            actives += 1
+
+    # Fill remaining from highest kit score, prefer passives if active-capped
+    if len(path) < 6:
+        rest = [x for x in pool if x.name not in seen]
+        rest.sort(
+            key=lambda x: (
+                x.role_score - (100 if x.is_active_item and actives >= max_actives else 0)
+            ),
+            reverse=True,
+        )
+        for x in rest:
+            if len(path) >= 6:
+                break
+            if x.is_active_item and actives >= max_actives:
+                continue
+            path.append(x)
+            seen.add(x.name)
+            if x.is_active_item:
+                actives += 1
+
+    return path[:6], arch
 
 
 def max_shop_actives_for_god(role: str, damage_type: str | None, bias: dict | None = None) -> int:
@@ -1483,12 +2047,17 @@ def build_god_build(
                 return False
             return True
         if role == "Solo":
-            # frontline: skip pure glass AS/crit carries
+            nlow = s.name.lower()
+            # frontline: skip pure glass AS/crit carries and luxury mage toys
             if (as_v >= 25 or crit_v >= 20) and _canon_stat_value(s.stats, "hp") < 200:
                 return False
             if s.item_type == "Offensive" and _canon_stat_value(s.stats, "hp") < 150 and (
                 _canon_stat_value(s.stats, "pprot") + _canon_stat_value(s.stats, "mprot") < 20
             ):
+                return False
+            if any(k in nlow for k in ("wish-granting", "dreamer", "parashu", "tahuti", "deathbringer")):
+                return False
+            if (s.total_cost or 0) >= 3400 and s.item_type == "Offensive":
                 return False
             return True
         if role == "Jungle":
@@ -1498,10 +2067,16 @@ def build_god_build(
                 pass
             return True
         if mage:
+            nlow = s.name.lower()
             # Reject basic-attack / STR toys on pure mages
             if str_v >= 30 and int_v < 40:
                 return False
             if (as_v >= 15 or crit_v >= 15 or bap >= 15) and int_v < 50:
+                return False
+            # Mid/Carry mages: no frontline shield cores as "power"
+            if role in ("Mid", "Carry") and any(
+                k in nlow for k in ("phoenix", "pridwen", "thebes", "spectral armor", "midgardian")
+            ):
                 return False
             return int_v >= 25 or s.item_type == "Defensive" or _canon_stat_value(s.stats, "hp") >= 250
         if physical:
@@ -1511,109 +2086,26 @@ def build_god_build(
         return True
 
     t3 = [s for s in t3 if kit_ok(s)]
-    if role == "Support":
-        # Peel package only — not Hybrid glass power.
-        offense = []
-        for s in t3:
-            slot = _slot_label(s)
-            if slot in ("mitigate", "counter", "defense"):
-                offense.append(s)
-                continue
-            if s.item_type == "Defensive":
-                offense.append(s)
-                continue
-            if (
-                _canon_stat_value(s.stats, "damp")
-                or _canon_stat_value(s.stats, "plat")
-                or _canon_stat_value(s.stats, "ten")
-            ):
-                offense.append(s)
-                continue
-            blob = f"{s.passive} {s.active}".lower()
-            if any(k in blob for k in ("ally", "allies", "aura", "team")):
-                offense.append(s)
-        if not offense:
-            offense = [s for s in t3 if s.item_type == "Defensive"] or t3
-    elif role == "Solo":
-        # Frontline: defense + hybrid offline; reject pure glass.
-        offense = []
-        for s in t3:
-            if s.item_type in ("Defensive", "Hybrid"):
-                offense.append(s)
-                continue
-            if _slot_label(s) in ("mitigate", "counter", "defense"):
-                offense.append(s)
-                continue
-            if (
-                _canon_stat_value(s.stats, "damp")
-                or _canon_stat_value(s.stats, "plat")
-                or _canon_stat_value(s.stats, "ten")
-                or _canon_stat_value(s.stats, "hp") >= 250
-            ):
-                offense.append(s)
-                continue
-            # allow one offline damage hybrid-ish offensive if it still has bulk
-            if s.item_type == "Offensive" and (
-                _canon_stat_value(s.stats, "hp") >= 200
-                or _canon_stat_value(s.stats, "pprot")
-                or _canon_stat_value(s.stats, "mprot")
-            ):
-                offense.append(s)
-        if not offense:
-            offense = [s for s in t3 if s.item_type != "Offensive"] or t3
-    elif role == "Jungle":
-        # Gank package: offense + pen first; light defense only.
-        offense = [
-            s
-            for s in t3
-            if s.item_type in ("Offensive", "Hybrid")
-            or is_pen_item(s)
-            or _canon_stat_value(s.stats, "cdr") >= 10
-        ]
-        if not offense:
-            offense = t3
-    else:
-        offense = [
-            s
-            for s in t3
-            if s.item_type != "Defensive"
-            or _canon_stat_value(s.stats, "str") + _canon_stat_value(s.stats, "int") > 45
-        ]
-    # Damage roles / jungle: light defense; Solo/Support: heavy bulk
-    if role in DAMAGE_ROLES_NEED_PEN:
-        def_n = 1
-    else:
-        def_n = max(profile["build_slots"]["defense"], 2)
-    defense = [
-        s
-        for s in t3
-        if s.item_type == "Defensive"
-        or "defensive" in s.flags
-        or (
-            _canon_stat_value(s.stats, "hp") >= 250
-            and _canon_stat_value(s.stats, "str") + _canon_stat_value(s.stats, "int") < 50
-        )
-    ]
-    slots = profile["build_slots"]
-    cores = pick_diverse(offense, max(slots["cores"], 5), "offense")
-    defs = pick_diverse(
-        [d for d in defense if d.name not in {c.name for c in cores}],
-        def_n,
-        "defense",
-    )
-    flex_pool = [x for x in t3 if x.name not in {c.name for c in cores + defs}]
-    flex = pick_diverse(flex_pool, max(slots["flex"], 2), "offense")
-
     max_act = max_shop_actives_for_god(role, dtype, bias)
-    items_6 = _fill_six_items(cores, defs, flex, t3, max_actives=max_act)
+
+    # Slot-based path from kit archetype (primary differentiator across gods)
+    items_6, archetype = assemble_kit_path(
+        t3, bias, role, mage=mage, physical=physical, max_actives=max_act
+    )
     items_6 = _ensure_pen_in_path(
         items_6, t3, role, max_act, mage=mage, physical=physical
     )
     if role in DAMAGE_ROLES_NEED_PEN:
         items_6 = _trim_excess_defense(items_6, t3, max_defense=1, max_actives=max_act)
+    elif role in ("Solo", "Support"):
+        # keep frontline bulk — no trim
+        pass
     items_6 = _order_buy_path(items_6, role)
     pen_total = sum(item_pen_value(x) for x in items_6)
     n_act = sum(1 for x in items_6 if x.is_active_item)
+
+    cores = [x for x in items_6 if x.item_type in ("Offensive", "Hybrid") or is_pen_item(x)][:4]
+    defs = [x for x in items_6 if x.item_type == "Defensive"][:2]
 
     relics = [s for s in scored if is_base_relic(next(i for i in items if i["name"] == s.name))]
     for r in relics:
@@ -1622,8 +2114,11 @@ def build_god_build(
             r.role_score += 12
         if bias.get("cc", 0) >= 2 and "bead" in r.name.lower():
             r.role_score += 8
+        if "immobile" in set(bias.get("tags") or []) and "aegis" in r.name.lower():
+            r.role_score += 10
     relics.sort(key=lambda x: x.role_score, reverse=True)
 
+    tags = sorted(bias.get("tags") or [])
     return {
         "god": god["entity_name"],
         "role": role,
@@ -1633,6 +2128,9 @@ def build_god_build(
         "damage_type": god.get("primary_damage_type"),
         "pantheon": god.get("pantheon"),
         "scaling": bias.get("primary"),
+        "archetype": archetype,
+        "kit_tags": tags,
+        "patch_trajectory": bias.get("trajectory"),
         "avg_str_scaling": round((bias.get("str") or 0) * 100, 1),
         "avg_int_scaling": round((bias.get("int") or 0) * 100, 1),
         "starter": _item_card(starters[0]) if starters else None,
@@ -1646,7 +2144,9 @@ def build_god_build(
         "hard_max_actives": HARD_MAX_ACTIVE_ITEMS,
         "active_count": n_act,
         "pen_total": round(pen_total, 1),
-        "why": _explain_god_build(god, bias, role, items_6, starters, pen_total, n_act, max_act),
+        "why": _explain_god_build(
+            god, bias, role, items_6, starters, pen_total, n_act, max_act, archetype=archetype
+        ),
     }
 
 
@@ -1752,7 +2252,9 @@ def _item_card(it: ScoredItem | None) -> dict | None:
     }
 
 
-def _explain_god_build(god, bias, role, path, starters, pen_total=0.0, n_act=0, max_act=2) -> str:
+def _explain_god_build(
+    god, bias, role, path, starters, pen_total=0.0, n_act=0, max_act=2, archetype: str | None = None
+) -> str:
     dtype = god.get("primary_damage_type") or god.get("damage_type") or ""
     power_style = (
         "INT / magical"
@@ -1761,28 +2263,30 @@ def _explain_god_build(god, bias, role, path, starters, pen_total=0.0, n_act=0, 
         if str(dtype).lower() == "physical"
         else f"{bias.get('primary')}"
     )
-    kit_bits = []
-    if float(bias.get("burst") or 0) >= 0.9:
-        kit_bits.append("burst kit → pen + spike power")
-    elif float(bias.get("burst") or 0) <= 0.55:
-        kit_bits.append("sustained kit → CDR / uptime")
-    if bias.get("cc", 0) >= 2:
-        kit_bits.append("high CC → CDR")
-    if bias.get("heal", 0) >= 1:
-        kit_bits.append("self-heal → LS / heal amp")
-    if bias.get("mobility", 0) == 0:
-        kit_bits.append("immobile → bulk/relics")
-    elif bias.get("mobility", 0) >= 2:
-        kit_bits.append("mobile")
-    if float(bias.get("ult_scale") or 0) >= 100:
-        kit_bits.append("huge ult scaling → pen")
+    tags = sorted(bias.get("tags") or [])
+    tag_show = ", ".join(tags[:8]) if tags else "generic"
+    arch = archetype or detect_archetype(
+        bias,
+        role,
+        mage=str(dtype).lower() == "magical" or bias.get("primary") == "Intelligence",
+        physical=str(dtype).lower() == "physical" or bias.get("primary") == "Strength",
+    )
+    style = (
+        f"burst {float(bias.get('style_burst') or 0):.0%}/"
+        f"dps {float(bias.get('style_dps') or 0):.0%}"
+    )
+    traj = bias.get("trajectory") or "stable"
+    psc = float(bias.get("patch_score") or 0)
 
     parts = [
-        f"Built for {god['entity_name']}'s kit ({role}, {dtype or '—'}): {power_style}.",
+        f"{god['entity_name']} · {role} · archetype «{arch}» ({power_style}).",
+        f"Kit tags: {tag_show}.",
+        f"Style {style}; patch {traj} ({psc:+.1f}).",
         f"Scale STR {(bias.get('str') or 0)*100:.0f}% / INT {(bias.get('int') or 0)*100:.0f}%.",
     ]
-    if kit_bits:
-        parts.append("Kit cues: " + "; ".join(kit_bits) + ".")
+    # Link first items to tags
+    if path:
+        parts.append("Path exploits: " + ", ".join(p.name for p in path[:3]) + "…")
     pens = [p.name for p in path if is_pen_item(p)]
     if pens:
         parts.append("Pen: " + ", ".join(pens) + ".")
@@ -1796,8 +2300,9 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 10) -> dict[str,
         "game": "SMITE 2",
         "mode": "Conquest",
         "method": (
-            "God-first Conquest builds: each path is rescored to that god's kit "
-            "(damage type, ability burst/CC/heal/mobility, ult scaling) inside a role job. "
+            "God-first Conquest builds: each path is assembled from that god's ability kit "
+            "(metrics + ability text tags + burst/dps style) and patch trajectory, "
+            "using archetype slot recipes so gods in the same role diverge. "
             "Role cards explain the job only — they are NOT a full build. "
             "Carry/Mid backline + pen; Jungle ganks; Solo frontline bulk; Support peels. "
             f"Shop actives ≤{DEFAULT_MAX_SHOP_ACTIVES} default "

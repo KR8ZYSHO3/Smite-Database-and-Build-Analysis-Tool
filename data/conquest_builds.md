@@ -1,6 +1,6 @@
 # SMITE 2 Conquest Builds — Statistically Weighted
 
-God-first Conquest builds: each path is rescored to that god's kit (damage type, ability burst/CC/heal/mobility, ult scaling) inside a role job. Role cards explain the job only — they are NOT a full build. Carry/Mid backline + pen; Jungle ganks; Solo frontline bulk; Support peels. Shop actives ≤2 default (hard max 3). Damage roles enforce ≥10 matching pen.
+God-first Conquest builds: each path is assembled from that god's ability kit (metrics + ability text tags + burst/dps style) and patch trajectory, using archetype slot recipes so gods in the same role diverge. Role cards explain the job only — they are NOT a full build. Carry/Mid backline + pen; Jungle ganks; Solo frontline bulk; Support peels. Shop actives ≤2 default (hard max 3). Damage roles enforce ≥10 matching pen.
 
 > Not scraped from websites. Derived from wiki item stats, ability scaling, and patch-note item/god momentum in `smite2.db`.
 
@@ -38,192 +38,192 @@ This is the Carry job description + common items — not a complete build. Open 
 
 *Magical · Hybrid scaling (STR 43.8% / INT 62.5%)*
 
-Built for Princess Bari's kit (Carry, Magical): INT / magical. Scale STR 44% / INT 62%. Kit cues: burst kit → pen + spike power; high CC → CDR; mobile; huge ult scaling → pen. Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard. Actives 0/2 · pen ≈ 50.
+Princess Bari · Carry · archetype «ability_mage_adc» (INT / magical). Kit tags: hard_cc, high_cc, long_cd, pet_zone, sustained, team_buff, ult_nuke. Style burst 36%/dps 64%; patch new (+0.2). Scale STR 44% / INT 62%. Path exploits: Chronos' Pendant, Gluttonous Grimoire, Spear Of The Magus… Pen: Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 50.0):
-  1. Alchemist Coat (mitigate, 2350g)
+- **Buy order** (actives 1/2, pen ≈ 50.0):
+  1. Chronos' Pendant (power, 2400g)
   2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  3. Spear of Desolation (pen, pen 10.0, 2650g)
-  4. Spear Of The Magus (pen, pen 10.0, 2700g)
-  5. Obsidian Shard (pen, pen 20.0, 3050g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Spear Of The Magus (pen, pen 10.0, 2700g)
+  4. Obsidian Shard (pen, pen 20.0, 3050g)
+  5. Breastplate of Valor (defense, 2400g)
+  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Xbalanque — S-tier (role rank #2, model 62.6)
 
 *Physical · Hybrid scaling (STR 37.5% / INT 35.0%)*
 
-Built for Xbalanque's kit (Carry, Physical): STR / physical. Scale STR 38% / INT 35%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 35.
+Xbalanque · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, anti_cc, dot, gap_close, heal, long_cd, sustained, zone. Style burst 23%/dps 77%; patch rising (+1.9). Scale STR 38% / INT 35%. Path exploits: Devourer's Gauntlet, Titan's Bane, Musashi's Dual Swords… Pen: Titan's Bane. Actives 1/2 · pen ≈ 20.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 35.0):
-  1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Runeforged Hammer (power, 2550g)
-  5. Avenging Blade (power, 2650g)
-  6. Musashi's Dual Swords (power, 2700g)
+- **Buy order** (actives 1/2, pen ≈ 20.0):
+  1. Devourer's Gauntlet (power, 2500g)
+  2. Titan's Bane (pen, pen 20.0, 3100g)
+  3. Musashi's Dual Swords (power, 2700g)
+  4. Demon Blade (power, 2750g)
+  5. Deathbringer (power, 2900g)
+  6. Eros' Bow (defense, active, 2300g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Sol — S-tier (role rank #3, model 59.7)
 
 *Magical · Hybrid scaling (STR 20.0% / INT 26.0%)*
 
-Built for Sol's kit (Carry, Magical): INT / magical. Scale STR 20% / INT 26%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp. Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, The World Stone, Obsidian Shard. Actives 0/2 · pen ≈ 60.
+Sol · Carry · archetype «dot_mage_adc» (INT / magical). Kit tags: aa, anti_cc, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 34%/dps 66%; patch volatile (+1.2). Scale STR 20% / INT 26%. Path exploits: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus… Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 60.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 60.0):
+- **Buy order** (actives 1/2, pen ≈ 60.0):
   1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
   3. Spear Of The Magus (pen, pen 10.0, 2700g)
-  4. The World Stone (pen, pen 10.0, 2800g)
-  5. Obsidian Shard (pen, pen 20.0, 3050g)
-  6. Sphere of Negation (defense, 2750g)
+  4. Obsidian Shard (pen, pen 20.0, 3050g)
+  5. Genji's Guard (defense, 2350g)
+  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Neith — A-tier (role rank #4, model 59.0)
 
 *Physical · Hybrid scaling (STR 67.5% / INT 66.0%)*
 
-Built for Neith's kit (Carry, Physical): STR / physical. Scale STR 68% / INT 66%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 35.
+Neith · Carry · archetype «crit_adc» (STR / physical). Kit tags: as_steroid, channel, gap_close, hard_cc, heal, high_cc, long_cd, sustained. Style burst 41%/dps 59%; patch stable (+0.1). Scale STR 68% / INT 66%. Path exploits: Jotunn's Revenge, Devourer's Gauntlet, Tekko-Kagi… Pen: Jotunn's Revenge, Tekko-Kagi, Titan's Bane. Actives 0/2 · pen ≈ 35.
 
 - **Starter:** Gilded Arrow
 - **Buy order** (actives 0/2, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Runeforged Hammer (power, 2550g)
-  5. Avenging Blade (power, 2650g)
-  6. Musashi's Dual Swords (power, 2700g)
+  2. Devourer's Gauntlet (power, 2500g)
+  3. Tekko-Kagi (pen, pen 10.0, 2700g)
+  4. Titan's Bane (pen, pen 20.0, 3100g)
+  5. Musashi's Dual Swords (power, 2700g)
+  6. Breastplate of Valor (defense, 2400g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Danzaburou — A-tier (role rank #5, model 58.2)
 
 *Physical · Hybrid scaling (STR 78.8% / INT 61.0%)*
 
-Built for Danzaburou's kit (Carry, Physical): STR / physical. Scale STR 79% / INT 61%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 35.
+Danzaburou · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, anti_cc, channel, dot, hard_cc, heal, high_cc, long_cd. Style burst 48%/dps 52%; patch new (+0.1). Scale STR 79% / INT 61%. Path exploits: Devourer's Gauntlet, Titan's Bane, Musashi's Dual Swords… Pen: Titan's Bane, Avatar's Parashu. Actives 2/2 · pen ≈ 30.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 35.0):
-  1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Runeforged Hammer (power, 2550g)
-  5. Avenging Blade (power, 2650g)
-  6. Musashi's Dual Swords (power, 2700g)
+- **Buy order** (actives 2/2, pen ≈ 30.0):
+  1. Devourer's Gauntlet (power, 2500g)
+  2. Titan's Bane (pen, pen 20.0, 3100g)
+  3. Musashi's Dual Swords (power, 2700g)
+  4. Demon Blade (power, 2750g)
+  5. Eros' Bow (defense, active, 2300g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Medusa — A-tier (role rank #6, model 54.6)
 
 *Physical · Hybrid scaling (STR 57.0% / INT 55.8%)*
 
-Built for Medusa's kit (Carry, Physical): STR / physical. Scale STR 57% / INT 56%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 35.
+Medusa · Carry · archetype «crit_adc» (STR / physical). Kit tags: anti_cc, as_steroid, dot, gap_close, hard_cc, heal, long_cd, shield. Style burst 51%/dps 49%; patch volatile (+1.4). Scale STR 57% / INT 56%. Path exploits: Jotunn's Revenge, Lernaean Bow, Titan's Bane… Pen: Jotunn's Revenge, Titan's Bane. Actives 2/2 · pen ≈ 25.
 
-- **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 35.0):
+- **Starter:** Selflessness
+- **Buy order** (actives 2/2, pen ≈ 25.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
+  2. Lernaean Bow (power, active, 2500g)
   3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Runeforged Hammer (power, 2550g)
-  5. Avenging Blade (power, 2650g)
-  6. Musashi's Dual Swords (power, 2700g)
+  4. Bloodforge (power, active, 2550g)
+  5. Musashi's Dual Swords (power, 2700g)
+  6. Freya's Tears (defense, 2600g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Chiron — A-tier (role rank #7, model 54.2)
 
 *Physical · Strength scaling (STR 66.2% / INT 0%)*
 
-Built for Chiron's kit (Carry, Physical): STR / physical. Scale STR 66% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 35.
+Chiron · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, channel, dot, gap_close, heal, high_cc, long_cd, mobile. Style burst 42%/dps 58%; patch new (-0.3). Scale STR 66% / INT 0%. Path exploits: Jotunn's Revenge, Tekko-Kagi, Titan's Bane… Pen: Jotunn's Revenge, Tekko-Kagi, Titan's Bane, Avatar's Parashu. Actives 1/2 · pen ≈ 45.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 35.0):
+- **Buy order** (actives 1/2, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
+  2. Tekko-Kagi (pen, pen 10.0, 2700g)
   3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Runeforged Hammer (power, 2550g)
-  5. Avenging Blade (power, 2650g)
-  6. Musashi's Dual Swords (power, 2700g)
+  4. Musashi's Dual Swords (power, 2700g)
+  5. Freya's Tears (defense, 2600g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Nut — B-tier (role rank #8, model 50.8)
 
 *Magical · Hybrid scaling (STR 46.9% / INT 56.2%)*
 
-Built for Nut's kit (Carry, Magical): INT / magical. Scale STR 47% / INT 56%. Kit cues: burst kit → pen + spike power; high CC → CDR; huge ult scaling → pen. Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard. Actives 0/2 · pen ≈ 50.
+Nut · Carry · archetype «aa_mage_adc» (INT / magical). Kit tags: aa, anti_cc, gap_close, hard_cc, high_cc, long_cd, shield, sustained. Style burst 41%/dps 59%; patch falling (-2.5). Scale STR 47% / INT 56%. Path exploits: Bracer of The Abyss, Gluttonous Grimoire, Spear of Desolation… Pen: Gluttonous Grimoire, Spear of Desolation, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 50.0):
-  1. Alchemist Coat (mitigate, 2350g)
+- **Buy order** (actives 1/2, pen ≈ 50.0):
+  1. Bracer of The Abyss (power, 2500g)
   2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
   3. Spear of Desolation (pen, pen 10.0, 2650g)
-  4. Spear Of The Magus (pen, pen 10.0, 2700g)
-  5. Obsidian Shard (pen, pen 20.0, 3050g)
-  6. Sphere of Negation (defense, 2750g)
+  4. Obsidian Shard (pen, pen 20.0, 3050g)
+  5. Breastplate of Valor (defense, 2400g)
+  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Cupid — B-tier (role rank #9, model 49.9)
 
 *Physical · Hybrid scaling (STR 81.7% / INT 55.0%)*
 
-Built for Cupid's kit (Carry, Physical): STR / physical. Scale STR 82% / INT 55%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 35.
+Cupid · Carry · archetype «crit_adc» (STR / physical). Kit tags: as_steroid, gap_close, hard_cc, heal, heavy_heal, long_cd, pet_zone, team_buff. Style burst 54%/dps 46%; patch volatile (+1.0). Scale STR 82% / INT 55%. Path exploits: Titan's Bane, Bloodforge, Avenging Blade… Pen: Titan's Bane, Avatar's Parashu. Actives 2/2 · pen ≈ 30.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 35.0):
-  1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Runeforged Hammer (power, 2550g)
-  5. Avenging Blade (power, 2650g)
-  6. Musashi's Dual Swords (power, 2700g)
+- **Buy order** (actives 2/2, pen ≈ 30.0):
+  1. Titan's Bane (pen, pen 20.0, 3100g)
+  2. Bloodforge (power, active, 2550g)
+  3. Avenging Blade (power, 2650g)
+  4. Musashi's Dual Swords (power, 2700g)
+  5. Freya's Tears (defense, 2600g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Ullr — B-tier (role rank #10, model 49.5)
 
 *Physical · Strength scaling (STR 78.8% / INT 0%)*
 
-Built for Ullr's kit (Carry, Physical): STR / physical. Scale STR 79% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 35.
+Ullr · Carry · archetype «crit_adc» (STR / physical). Kit tags: as_steroid, gap_close, hard_cc, heal, high_cc, mobile, pet_zone, self_sustain. Style burst 34%/dps 66%; patch stable (-0.6). Scale STR 79% / INT 0%. Path exploits: Jotunn's Revenge, Tekko-Kagi, Titan's Bane… Pen: Jotunn's Revenge, Tekko-Kagi, Titan's Bane. Actives 1/2 · pen ≈ 35.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 35.0):
+- **Buy order** (actives 1/2, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
+  2. Tekko-Kagi (pen, pen 10.0, 2700g)
   3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Runeforged Hammer (power, 2550g)
-  5. Avenging Blade (power, 2650g)
-  6. Musashi's Dual Swords (power, 2700g)
+  4. Bloodforge (power, active, 2550g)
+  5. Musashi's Dual Swords (power, 2700g)
+  6. Breastplate of Valor (defense, 2400g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Cernunnos — B-tier (role rank #11, model 49.5)
 
 *Physical · Hybrid scaling (STR 58.8% / INT 51.7%)*
 
-Built for Cernunnos's kit (Carry, Physical): STR / physical. Scale STR 59% / INT 52%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 35.
+Cernunnos · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, burst, dot, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 60%/dps 40%; patch stable (+0.5). Scale STR 59% / INT 52%. Path exploits: Devourer's Gauntlet, Tekko-Kagi, Titan's Bane… Pen: Tekko-Kagi, Titan's Bane, Avatar's Parashu. Actives 2/2 · pen ≈ 40.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 35.0):
-  1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
+- **Buy order** (actives 2/2, pen ≈ 40.0):
+  1. Devourer's Gauntlet (power, 2500g)
+  2. Tekko-Kagi (pen, pen 10.0, 2700g)
   3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Runeforged Hammer (power, 2550g)
-  5. Avenging Blade (power, 2650g)
-  6. Musashi's Dual Swords (power, 2700g)
+  4. Deathbringer (power, 2900g)
+  5. Eros' Bow (defense, active, 2300g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Anhur — B-tier (role rank #12, model 48.9)
 
 *Physical · Strength scaling (STR 70.0% / INT 0%)*
 
-Built for Anhur's kit (Carry, Physical): STR / physical. Scale STR 70% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR. Pen: Jotunn's Revenge, Titan's Bane. Actives 1/2 · pen ≈ 25.
+Anhur · Carry · archetype «crit_adc» (STR / physical). Kit tags: aa, anti_cc, dot, gap_close, hard_cc, high_cc, long_cd, pet_zone. Style burst 33%/dps 67%; patch stable (+0.3). Scale STR 70% / INT 0%. Path exploits: Jotunn's Revenge, Titan's Bane, Bloodforge… Pen: Jotunn's Revenge, Titan's Bane. Actives 1/2 · pen ≈ 25.
 
 - **Starter:** Gilded Arrow
 - **Buy order** (actives 1/2, pen ≈ 25.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Lernaean Bow (power, active, 2500g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Runeforged Hammer (power, 2550g)
-  5. Avenging Blade (power, 2650g)
-  6. Musashi's Dual Swords (power, 2700g)
+  2. Titan's Bane (pen, pen 20.0, 3100g)
+  3. Bloodforge (power, active, 2550g)
+  4. Musashi's Dual Swords (power, 2700g)
+  5. Demon Blade (power, 2750g)
+  6. Breastplate of Valor (defense, 2400g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 ---
@@ -262,31 +262,31 @@ This is the Mid job description + common items — not a complete build. Open a 
 
 *Magical · Intelligence scaling (STR 0% / INT 77.5%)*
 
-Built for Kukulkan's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 78%. Kit cues: burst kit → pen + spike power; high CC → CDR; huge ult scaling → pen. Pen: Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
+Kukulkan · Mid · archetype «mana_mage» (INT / magical). Kit tags: anti_cc, dot, gap_close, heavy_dot, high_cc, long_cd, mana_stack, pet_zone. Style burst 44%/dps 56%; patch rising (+1.2). Scale STR 0% / INT 78%. Path exploits: Spear of Desolation, Spear Of The Magus, Doom Orb… Pen: Spear of Desolation, Spear Of The Magus, Doom Orb, Obsidian Shard. Actives 0/2 · pen ≈ 50.
 
-- **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 50.0):
-  1. Alchemist Coat (mitigate, 2350g)
-  2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  3. Spear Of The Magus (pen, pen 10.0, 2700g)
+- **Starter:** Sands Of Time
+- **Buy order** (actives 0/2, pen ≈ 50.0):
+  1. Spear of Desolation (pen, pen 10.0, 2650g)
+  2. Spear Of The Magus (pen, pen 10.0, 2700g)
+  3. Doom Orb (pen, pen 10.0, 2700g)
   4. Obsidian Shard (pen, pen 20.0, 3050g)
-  5. Sphere of Negation (defense, 2750g)
-  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
+  5. Soul Reaver (power, 2950g)
+  6. Genji's Guard (defense, 2350g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Scylla — S-tier (role rank #2, model 67.3)
 
 *Magical · Intelligence scaling (STR 0% / INT 83.8%)*
 
-Built for Scylla's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 84%. Kit cues: burst kit → pen + spike power; high CC → CDR; mobile; huge ult scaling → pen. Pen: Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
+Scylla · Mid · archetype «aa_mage» (INT / magical). Kit tags: aa, anti_cc, burst, gap_close, hard_cc, long_cd, pet_zone, prot_shred. Style burst 57%/dps 43%; patch volatile (+1.5). Scale STR 0% / INT 84%. Path exploits: Bracer of The Abyss, Spear of Desolation, Spear Of The Magus… Pen: Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
 
-- **Starter:** Conduit Gem
+- **Starter:** Selflessness
 - **Buy order** (actives 1/2, pen ≈ 50.0):
-  1. Alchemist Coat (mitigate, 2350g)
-  2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
+  1. Bracer of The Abyss (power, 2500g)
+  2. Spear of Desolation (pen, pen 10.0, 2650g)
   3. Spear Of The Magus (pen, pen 10.0, 2700g)
   4. Obsidian Shard (pen, pen 20.0, 3050g)
-  5. Sphere of Negation (defense, 2750g)
+  5. Freya's Tears (defense, 2600g)
   6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
@@ -294,15 +294,15 @@ Built for Scylla's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 84%. Ki
 
 *Magical · Intelligence scaling (STR 0% / INT 70.0%)*
 
-Built for Hecate's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 70%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 60.
+Hecate · Mid · archetype «burst_mage» (INT / magical). Kit tags: channel, gap_close, hard_cc, heal, long_cd, shield, sustained, team_buff. Style burst 36%/dps 64%; patch stable (-0.4). Scale STR 0% / INT 70%. Path exploits: Chronos' Pendant, Spear of Desolation, Spear Of The Magus… Pen: Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 60.0):
-  1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
+- **Buy order** (actives 1/2, pen ≈ 50.0):
+  1. Chronos' Pendant (power, 2400g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
   3. Spear Of The Magus (pen, pen 10.0, 2700g)
   4. Obsidian Shard (pen, pen 20.0, 3050g)
-  5. Sphere of Negation (defense, 2750g)
+  5. Genji's Guard (defense, 2350g)
   6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
@@ -310,15 +310,15 @@ Built for Hecate's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 70%. Ki
 
 *Magical · Intelligence scaling (STR 0% / INT 80.0%)*
 
-Built for Vulcan's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 80%. Kit cues: burst kit → pen + spike power; mobile; huge ult scaling → pen. Pen: Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
+Vulcan · Mid · archetype «burst_mage» (INT / magical). Kit tags: gap_close, long_cd, mobile, prot_shred, sustained, ult_nuke. Style burst 39%/dps 61%; patch stable (-0.2). Scale STR 0% / INT 80%. Path exploits: Spear of Desolation, Spear Of The Magus, Obsidian Shard… Pen: Spear of Desolation, Spear Of The Magus, Obsidian Shard, Rod of Tahuti, Dreamer's Idol. Actives 1/2 · pen ≈ 55.
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 50.0):
-  1. Alchemist Coat (mitigate, 2350g)
-  2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  3. Spear Of The Magus (pen, pen 10.0, 2700g)
-  4. Obsidian Shard (pen, pen 20.0, 3050g)
-  5. Sphere of Negation (defense, 2750g)
+- **Buy order** (actives 1/2, pen ≈ 55.0):
+  1. Spear of Desolation (pen, pen 10.0, 2650g)
+  2. Spear Of The Magus (pen, pen 10.0, 2700g)
+  3. Obsidian Shard (pen, pen 20.0, 3050g)
+  4. Rod of Tahuti (power, pen 5.0, 3000g)
+  5. Freya's Tears (defense, 2600g)
   6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (30.0), Aegis of Acceleration (30.0)
 
@@ -326,47 +326,47 @@ Built for Vulcan's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 80%. Ki
 
 *Magical · Intelligence scaling (STR 0% / INT 51.7%)*
 
-Built for Baron Samedi's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 52%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp. Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 60.
+Baron Samedi · Mid · archetype «dot_mage» (INT / magical). Kit tags: channel, dot, execute, hard_cc, heal, heavy_dot, heavy_shield, high_cc. Style burst 29%/dps 71%; patch volatile (+1.1). Scale STR 0% / INT 52%. Path exploits: Soul Gem, Gem of Isolation, Gluttonous Grimoire… Pen: Soul Gem, Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard. Actives 0/2 · pen ≈ 55.
 
-- **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 60.0):
-  1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  2. Spear of Desolation (pen, pen 10.0, 2650g)
-  3. Spear Of The Magus (pen, pen 10.0, 2700g)
-  4. Obsidian Shard (pen, pen 20.0, 3050g)
-  5. Sphere of Negation (defense, 2750g)
-  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
+- **Starter:** Selflessness
+- **Buy order** (actives 0/2, pen ≈ 55.0):
+  1. Soul Gem (power, pen 5.0, 2500g)
+  2. Gem of Isolation (power, 2500g)
+  3. Gluttonous Grimoire (pen, pen 10.0, 2600g)
+  4. Spear of Desolation (pen, pen 10.0, 2650g)
+  5. Spear Of The Magus (pen, pen 10.0, 2700g)
+  6. Obsidian Shard (pen, pen 20.0, 3050g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Merlin — A-tier (role rank #6, model 66.1)
 
 *Magical · Intelligence scaling (STR 0% / INT 33.8%)*
 
-Built for Merlin's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 34%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 60.
+Merlin · Mid · archetype «dot_mage» (INT / magical). Kit tags: channel, dot, gap_close, heal, heavy_dot, high_cc, mobile, pet_zone. Style burst 23%/dps 77%; patch stable (+0.7). Scale STR 0% / INT 34%. Path exploits: Chronos' Pendant, Gem of Isolation, Gluttonous Grimoire… Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard. Actives 0/2 · pen ≈ 50.
 
-- **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 60.0):
-  1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  2. Spear of Desolation (pen, pen 10.0, 2650g)
-  3. Spear Of The Magus (pen, pen 10.0, 2700g)
-  4. Obsidian Shard (pen, pen 20.0, 3050g)
-  5. Sphere of Negation (defense, 2750g)
-  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
+- **Starter:** Sands Of Time
+- **Buy order** (actives 0/2, pen ≈ 50.0):
+  1. Chronos' Pendant (power, 2400g)
+  2. Gem of Isolation (power, 2500g)
+  3. Gluttonous Grimoire (pen, pen 10.0, 2600g)
+  4. Spear of Desolation (pen, pen 10.0, 2650g)
+  5. Spear Of The Magus (pen, pen 10.0, 2700g)
+  6. Obsidian Shard (pen, pen 20.0, 3050g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Princess Bari — A-tier (role rank #7, model 65.8)
 
 *Magical · Hybrid scaling (STR 43.8% / INT 62.5%)*
 
-Built for Princess Bari's kit (Mid, Magical): INT / magical. Scale STR 44% / INT 62%. Kit cues: burst kit → pen + spike power; high CC → CDR; mobile; huge ult scaling → pen. Pen: Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
+Princess Bari · Mid · archetype «zone_mage» (INT / magical). Kit tags: hard_cc, high_cc, long_cd, pet_zone, sustained, team_buff, ult_nuke. Style burst 36%/dps 64%; patch new (+0.2). Scale STR 44% / INT 62%. Path exploits: Spear of Desolation, Spear Of The Magus, Obsidian Shard… Pen: Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 50.
 
 - **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 50.0):
-  1. Alchemist Coat (mitigate, 2350g)
-  2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  3. Spear Of The Magus (pen, pen 10.0, 2700g)
-  4. Obsidian Shard (pen, pen 20.0, 3050g)
-  5. Sphere of Negation (defense, 2750g)
+  1. Spear of Desolation (pen, pen 10.0, 2650g)
+  2. Spear Of The Magus (pen, pen 10.0, 2700g)
+  3. Obsidian Shard (pen, pen 20.0, 3050g)
+  4. Gem of Focus (power, 2550g)
+  5. Breastplate of Valor (defense, 2400g)
   6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
@@ -374,80 +374,80 @@ Built for Princess Bari's kit (Mid, Magical): INT / magical. Scale STR 44% / INT
 
 *Magical · Intelligence scaling (STR 0% / INT 64.0%)*
 
-Built for Janus's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 64%. Kit cues: burst kit → pen + spike power; high CC → CDR. Pen: Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 40.
+Janus · Mid · archetype «burst_mage» (INT / magical). Kit tags: anti_cc, execute, long_cd, sustained, team_buff. Style burst 41%/dps 59%; patch stable (-0.1). Scale STR 0% / INT 64%. Path exploits: Gem of Isolation, Spear of Desolation, Spear Of The Magus… Pen: Spear of Desolation, Spear Of The Magus, Obsidian Shard, Rod of Tahuti, Dreamer's Idol. Actives 1/2 · pen ≈ 55.
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 40.0):
-  1. Alchemist Coat (mitigate, 2350g)
-  2. Spear Of The Magus (pen, pen 10.0, 2700g)
-  3. Obsidian Shard (pen, pen 20.0, 3050g)
-  4. Sphere of Negation (defense, 2750g)
-  5. Dreamer's Idol (pen, active, pen 10.0, 3500g)
-  6. Wish-Granting Pearl (power, 3550g)
+- **Buy order** (actives 1/2, pen ≈ 55.0):
+  1. Gem of Isolation (power, 2500g)
+  2. Spear of Desolation (pen, pen 10.0, 2650g)
+  3. Spear Of The Magus (pen, pen 10.0, 2700g)
+  4. Obsidian Shard (pen, pen 20.0, 3050g)
+  5. Rod of Tahuti (power, pen 5.0, 3000g)
+  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Zeus — B-tier (role rank #9, model 61.2)
 
 *Magical · Intelligence scaling (STR 0% / INT 60.0%)*
 
-Built for Zeus's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 60%. Kit cues: burst kit → pen + spike power; high CC → CDR. Pen: Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 40.
+Zeus · Mid · archetype «burst_mage» (INT / magical). Kit tags: as_steroid, hard_cc, long_cd, sustained. Style burst 33%/dps 67%; patch stable (+0.3). Scale STR 0% / INT 60%. Path exploits: Spear of Desolation, Spear Of The Magus, Obsidian Shard… Pen: Spear of Desolation, Spear Of The Magus, Obsidian Shard, Rod of Tahuti, Dreamer's Idol. Actives 1/2 · pen ≈ 55.
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 40.0):
-  1. Alchemist Coat (mitigate, 2350g)
+- **Buy order** (actives 1/2, pen ≈ 55.0):
+  1. Spear of Desolation (pen, pen 10.0, 2650g)
   2. Spear Of The Magus (pen, pen 10.0, 2700g)
   3. Obsidian Shard (pen, pen 20.0, 3050g)
-  4. Sphere of Negation (defense, 2750g)
-  5. Dreamer's Idol (pen, active, pen 10.0, 3500g)
-  6. Wish-Granting Pearl (power, 3550g)
+  4. Rod of Tahuti (power, pen 5.0, 3000g)
+  5. Breastplate of Valor (defense, 2400g)
+  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Aphrodite — B-tier (role rank #10, model 59.9)
 
 *Magical · Intelligence scaling (STR 0% / INT 44.2%)*
 
-Built for Aphrodite's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 44%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 60.
+Aphrodite · Mid · archetype «dot_mage» (INT / magical). Kit tags: anti_cc, dot, gap_close, hard_cc, heal, heavy_shield, long_cd, shield. Style burst 22%/dps 78%; patch volatile (+1.1). Scale STR 0% / INT 44%. Path exploits: Chronos' Pendant, Gem of Isolation, Gluttonous Grimoire… Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard. Actives 0/2 · pen ≈ 50.
 
-- **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 60.0):
-  1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  2. Spear of Desolation (pen, pen 10.0, 2650g)
-  3. Spear Of The Magus (pen, pen 10.0, 2700g)
-  4. Obsidian Shard (pen, pen 20.0, 3050g)
-  5. Sphere of Negation (defense, 2750g)
-  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
+- **Starter:** Selflessness
+- **Buy order** (actives 0/2, pen ≈ 50.0):
+  1. Chronos' Pendant (power, 2400g)
+  2. Gem of Isolation (power, 2500g)
+  3. Gluttonous Grimoire (pen, pen 10.0, 2600g)
+  4. Spear of Desolation (pen, pen 10.0, 2650g)
+  5. Spear Of The Magus (pen, pen 10.0, 2700g)
+  6. Obsidian Shard (pen, pen 20.0, 3050g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Sol — B-tier (role rank #11, model 59.7)
 
 *Magical · Hybrid scaling (STR 20.0% / INT 26.0%)*
 
-Built for Sol's kit (Mid, Magical): INT / magical. Scale STR 20% / INT 26%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp. Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 60.
+Sol · Mid · archetype «dot_mage» (INT / magical). Kit tags: aa, anti_cc, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 34%/dps 66%; patch volatile (+1.2). Scale STR 20% / INT 26%. Path exploits: Chronos' Pendant, Gem of Isolation, Gluttonous Grimoire… Pen: Gluttonous Grimoire, Spear of Desolation, Spear Of The Magus, Obsidian Shard. Actives 0/2 · pen ≈ 50.
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 60.0):
-  1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  2. Spear of Desolation (pen, pen 10.0, 2650g)
-  3. Spear Of The Magus (pen, pen 10.0, 2700g)
-  4. Obsidian Shard (pen, pen 20.0, 3050g)
-  5. Sphere of Negation (defense, 2750g)
-  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
+- **Buy order** (actives 0/2, pen ≈ 50.0):
+  1. Chronos' Pendant (power, 2400g)
+  2. Gem of Isolation (power, 2500g)
+  3. Gluttonous Grimoire (pen, pen 10.0, 2600g)
+  4. Spear of Desolation (pen, pen 10.0, 2650g)
+  5. Spear Of The Magus (pen, pen 10.0, 2700g)
+  6. Obsidian Shard (pen, pen 20.0, 3050g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Poseidon — B-tier (role rank #12, model 59.3)
 
 *Magical · Intelligence scaling (STR 0% / INT 38.8%)*
 
-Built for Poseidon's kit (Mid, Magical): INT / magical. Scale STR 0% / INT 39%. Kit cues: burst kit → pen + spike power; high CC → CDR; mobile. Pen: Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 40.
+Poseidon · Mid · archetype «aa_mage» (INT / magical). Kit tags: aa, as_steroid, hard_cc, high_cc, long_cd, pet_zone. Style burst 35%/dps 65%; patch volatile (+1.3). Scale STR 0% / INT 39%. Path exploits: Chronos' Pendant, Bracer of The Abyss, Spear Of The Magus… Pen: Spear Of The Magus, Obsidian Shard, Dreamer's Idol. Actives 1/2 · pen ≈ 40.
 
 - **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 40.0):
-  1. Alchemist Coat (mitigate, 2350g)
-  2. Spear Of The Magus (pen, pen 10.0, 2700g)
-  3. Obsidian Shard (pen, pen 20.0, 3050g)
-  4. Sphere of Negation (defense, 2750g)
-  5. Dreamer's Idol (pen, active, pen 10.0, 3500g)
-  6. Wish-Granting Pearl (power, 3550g)
+  1. Chronos' Pendant (power, 2400g)
+  2. Bracer of The Abyss (power, 2500g)
+  3. Spear Of The Magus (pen, pen 10.0, 2700g)
+  4. Obsidian Shard (pen, pen 20.0, 3050g)
+  5. Freya's Tears (defense, 2600g)
+  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 ---
@@ -485,31 +485,31 @@ This is the Jungle job description + common items — not a complete build. Open
 
 *Physical · Strength scaling (STR 60.0% / INT 0%)*
 
-Built for Ratatoskr's kit (Jungle, Physical): STR / physical. Scale STR 60% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; mobile. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Ratatoskr · Jungle · archetype «bruiser_jungle» (STR / physical). Kit tags: anti_cc, gap_close, hard_cc, high_cc, long_cd, shield. Style burst 51%/dps 49%; patch rising (+2.2). Scale STR 60% / INT 0%. Path exploits: Jotunn's Revenge, Heartseeker, Titan's Bane… Pen: Jotunn's Revenge, Heartseeker, Titan's Bane, Avatar's Parashu. Actives 2/3 · pen ≈ 45.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
+  2. Heartseeker (pen, pen 10.0, 3000g)
   3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Freya's Tears (defense, 2600g)
+  4. Arondight (power, active, 2650g)
+  5. Freya's Tears (defense, 2600g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 #### Thanatos — S-tier (role rank #2, model 60.0)
 
 *Physical · Strength scaling (STR 81.7% / INT 0%)*
 
-Built for Thanatos's kit (Jungle, Physical): STR / physical. Scale STR 82% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Thanatos · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: anti_cc, execute, gap_close, hard_cc, heal, heavy_heal, high_cc, long_cd. Style burst 35%/dps 65%; patch rising (+1.2). Scale STR 82% / INT 0%. Path exploits: Jotunn's Revenge, Pendulum Blade, Heartseeker… Pen: Jotunn's Revenge, Pendulum Blade, Heartseeker, Titan's Bane. Actives 2/3 · pen ≈ 45.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
+  2. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  3. Heartseeker (pen, pen 10.0, 3000g)
+  4. Titan's Bane (pen, pen 20.0, 3100g)
+  5. Bloodforge (power, active, 2550g)
   6. Freya's Tears (defense, 2600g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
@@ -517,63 +517,63 @@ Built for Thanatos's kit (Jungle, Physical): STR / physical. Scale STR 82% / INT
 
 *Physical · Hybrid scaling (STR 65.0% / INT 61.7%)*
 
-Built for Mordred's kit (Jungle, Physical): STR / physical. Scale STR 65% / INT 62%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Mordred · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: anti_cc, as_steroid, channel, dot, gap_close, hard_cc, heal, heavy_dot. Style burst 34%/dps 66%; patch stable (+0.0). Scale STR 65% / INT 62%. Path exploits: Jotunn's Revenge, Pendulum Blade, Heartseeker… Pen: Jotunn's Revenge, Pendulum Blade, Heartseeker, Titan's Bane. Actives 2/3 · pen ≈ 45.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Freya's Tears (defense, 2600g)
+  2. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  3. Heartseeker (pen, pen 10.0, 3000g)
+  4. Titan's Bane (pen, pen 20.0, 3100g)
+  5. Bloodforge (power, active, 2550g)
+  6. Breastplate of Valor (defense, 2400g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 #### Tsukuyomi — A-tier (role rank #4, model 51.7)
 
 *Physical · Hybrid scaling (STR 32.5% / INT 36.0%)*
 
-Built for Tsukuyomi's kit (Jungle, Physical): STR / physical. Scale STR 32% / INT 36%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Tsukuyomi · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa, anti_cc, gap_close, hard_cc, heal, long_cd, mobile, shield. Style burst 34%/dps 66%; patch rising (+1.0). Scale STR 32% / INT 36%. Path exploits: Jotunn's Revenge, Titan's Bane, Bloodforge… Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 3/3 · pen ≈ 35.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 3/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Freya's Tears (defense, 2600g)
+  2. Titan's Bane (pen, pen 20.0, 3100g)
+  3. Bloodforge (power, active, 2550g)
+  4. Arondight (power, active, 2650g)
+  5. Freya's Tears (defense, 2600g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 #### Awilix — A-tier (role rank #5, model 51.5)
 
 *Physical · Strength scaling (STR 55.0% / INT 0%)*
 
-Built for Awilix's kit (Jungle, Physical): STR / physical. Scale STR 55% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; mobile. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Awilix · Jungle · archetype «bruiser_jungle» (STR / physical). Kit tags: as_steroid, gap_close, hard_cc, high_cc, long_cd, mobile, pet_zone, sustained. Style burst 38%/dps 62%; patch stable (+0.3). Scale STR 55% / INT 0%. Path exploits: Jotunn's Revenge, Heartseeker, Titan's Bane… Pen: Jotunn's Revenge, Heartseeker, Titan's Bane, Avatar's Parashu. Actives 2/3 · pen ≈ 45.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
+  2. Heartseeker (pen, pen 10.0, 3000g)
   3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Freya's Tears (defense, 2600g)
+  4. Arondight (power, active, 2650g)
+  5. Breastplate of Valor (defense, 2400g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 #### Achilles — A-tier (role rank #6, model 50.8)
 
 *Physical · Strength scaling (STR 75.0% / INT 0%)*
 
-Built for Achilles's kit (Jungle, Physical): STR / physical. Scale STR 75% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Achilles · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_heal, heavy_shield. Style burst 51%/dps 49%; patch stable (-0.0). Scale STR 75% / INT 0%. Path exploits: Jotunn's Revenge, Heartseeker, Titan's Bane… Pen: Jotunn's Revenge, Heartseeker, Titan's Bane. Actives 1/3 · pen ≈ 35.
 
-- **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Starter:** Bumba's Golden Dagger
+- **Buy order** (actives 1/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
+  2. Heartseeker (pen, pen 10.0, 3000g)
   3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
+  4. Bloodforge (power, active, 2550g)
+  5. Avenging Blade (power, 2650g)
   6. Freya's Tears (defense, 2600g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
@@ -581,96 +581,96 @@ Built for Achilles's kit (Jungle, Physical): STR / physical. Scale STR 75% / INT
 
 *Physical · Strength scaling (STR 40.0% / INT 0%)*
 
-Built for Gilgamesh's kit (Jungle, Physical): STR / physical. Scale STR 40% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Gilgamesh · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: gap_close, hard_cc, heal, high_cc, long_cd, pet_zone, team_buff. Style burst 39%/dps 61%; patch new (-0.3). Scale STR 40% / INT 0%. Path exploits: Jotunn's Revenge, Devourer's Gauntlet, Titan's Bane… Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 2/3 · pen ≈ 35.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
+  2. Devourer's Gauntlet (power, 2500g)
   3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Freya's Tears (defense, 2600g)
+  4. Arondight (power, active, 2650g)
+  5. Breastplate of Valor (defense, 2400g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 #### Cernunnos — B-tier (role rank #8, model 49.5)
 
 *Physical · Hybrid scaling (STR 58.8% / INT 51.7%)*
 
-Built for Cernunnos's kit (Jungle, Physical): STR / physical. Scale STR 59% / INT 52%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Cernunnos · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa, burst, dot, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 60%/dps 40%; patch stable (+0.5). Scale STR 59% / INT 52%. Path exploits: Jotunn's Revenge, Devourer's Gauntlet, Heartseeker… Pen: Jotunn's Revenge, Heartseeker, Titan's Bane, Avatar's Parashu. Actives 1/3 · pen ≈ 45.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 1/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Freya's Tears (defense, 2600g)
+  2. Devourer's Gauntlet (power, 2500g)
+  3. Heartseeker (pen, pen 10.0, 3000g)
+  4. Titan's Bane (pen, pen 20.0, 3100g)
+  5. Runeforged Hammer (power, 2550g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 #### Odin — B-tier (role rank #9, model 48.6)
 
 *Physical · Hybrid scaling (STR 63.3% / INT 55.0%)*
 
-Built for Odin's kit (Jungle, Physical): STR / physical. Scale STR 63% / INT 55%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Odin · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa, as_steroid, gap_close, hard_cc, heal, heavy_shield, long_cd, shield. Style burst 43%/dps 57%; patch volatile (+1.2). Scale STR 63% / INT 55%. Path exploits: Jotunn's Revenge, Titan's Bane, Bloodforge… Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 3/3 · pen ≈ 35.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 3/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Freya's Tears (defense, 2600g)
+  2. Titan's Bane (pen, pen 20.0, 3100g)
+  3. Bloodforge (power, active, 2550g)
+  4. Arondight (power, active, 2650g)
+  5. Freya's Tears (defense, 2600g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 #### Fenrir — B-tier (role rank #10, model 48.1)
 
 *Physical · Strength scaling (STR 80.0% / INT 0%)*
 
-Built for Fenrir's kit (Jungle, Physical): STR / physical. Scale STR 80% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Fenrir · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: aa, anti_cc, burst, channel, gap_close, hard_cc, heal, heavy_shield. Style burst 55%/dps 45%; patch volatile (-0.3). Scale STR 80% / INT 0%. Path exploits: Jotunn's Revenge, Heartseeker, Titan's Bane… Pen: Jotunn's Revenge, Heartseeker, Titan's Bane, Avatar's Parashu. Actives 2/3 · pen ≈ 45.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
+  2. Heartseeker (pen, pen 10.0, 3000g)
   3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Freya's Tears (defense, 2600g)
+  4. Bloodforge (power, active, 2550g)
+  5. Runeforged Hammer (power, 2550g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 #### Hun Batz — B-tier (role rank #11, model 48.0)
 
 *Physical · Strength scaling (STR 50.0% / INT 0%)*
 
-Built for Hun Batz's kit (Jungle, Physical): STR / physical. Scale STR 50% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; mobile. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Hun Batz · Jungle · archetype «aa_assassin» (STR / physical). Kit tags: aa, channel, dot, gap_close, hard_cc, long_cd, pet_zone, shield. Style burst 28%/dps 72%; patch stable (-0.2). Scale STR 50% / INT 0%. Path exploits: Jotunn's Revenge, Titan's Bane, Bloodforge… Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 2/3 · pen ≈ 35.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
+  2. Titan's Bane (pen, pen 20.0, 3100g)
+  3. Bloodforge (power, active, 2550g)
   4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Freya's Tears (defense, 2600g)
+  5. Breastplate of Valor (defense, 2400g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 #### Ne Zha — B-tier (role rank #12, model 47.9)
 
 *Physical · Strength scaling (STR 68.3% / INT 0%)*
 
-Built for Ne Zha's kit (Jungle, Physical): STR / physical. Scale STR 68% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Pen: Jotunn's Revenge, Riptalon, Titan's Bane. Actives 0/3 · pen ≈ 35.
+Ne Zha · Jungle · archetype «sustain_assassin» (STR / physical). Kit tags: anti_cc, as_steroid, gap_close, hard_cc, heal, long_cd, mobile, prot_shred. Style burst 35%/dps 65%; patch new (-0.7). Scale STR 68% / INT 0%. Path exploits: Jotunn's Revenge, Pendulum Blade, Titan's Bane… Pen: Jotunn's Revenge, Pendulum Blade, Titan's Bane, Avatar's Parashu. Actives 3/3 · pen ≈ 45.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 35.0):
+- **Buy order** (actives 3/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Riptalon (pen, pen 10.0, 2700g)
+  2. Pendulum Blade (pen, active, pen 10.0, 2750g)
   3. Titan's Bane (pen, pen 20.0, 3100g)
-  4. Avenging Blade (power, 2650g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Freya's Tears (defense, 2600g)
+  4. Bloodforge (power, active, 2550g)
+  5. Freya's Tears (defense, 2600g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 ---
@@ -712,192 +712,192 @@ This is the Solo job description + common items — not a complete build. Open a
 
 *Magical · Hybrid scaling (STR 53.8% / INT 42.5%)*
 
-Built for Jormungandr's kit (Solo, Magical): INT / magical. Scale STR 54% / INT 42%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Actives 1/2 · pen ≈ 0.
+Jormungandr · Solo · archetype «sustain_solo» (INT / magical). Kit tags: anti_cc, channel, dot, hard_cc, heal, heavy_heal, high_cc, long_cd. Style burst 39%/dps 61%; patch stable (-0.1). Scale STR 54% / INT 42%. Path exploits: Chandra's Grace, Rod Of Asclepius, Shield of the Phoenix… Actives 1/2 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 1/2, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Helm of Radiance (power, 2500g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Rod Of Asclepius (power, active, 2350g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Ethereal Staff (mitigate, 2550g)
+  5. Contagion (defense, 2400g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Artio — S-tier (role rank #2, model 68.1)
 
 *Magical · Hybrid scaling (STR 57.5% / INT 35.0%)*
 
-Built for Artio's kit (Solo, Magical): INT / magical. Scale STR 57% / INT 35%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Actives 1/2 · pen ≈ 0.
+Artio · Solo · archetype «sustain_solo» (INT / magical). Kit tags: channel, hard_cc, heal, heavy_heal, heavy_shield, high_cc, long_cd, mobile. Style burst 46%/dps 54%; patch stable (-0.1). Scale STR 57% / INT 35%. Path exploits: Spectral Armor, Chandra's Grace, Rod Of Asclepius… Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 1/2, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Helm of Radiance (power, 2500g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+- **Buy order** (actives 2/2, pen ≈ 0.0):
+  1. Spectral Armor (mitigate, 2300g)
+  2. Chandra's Grace (mitigate, 2300g)
+  3. Rod Of Asclepius (power, active, 2350g)
+  4. Lifebinder (power, active, 2400g)
+  5. Contagion (defense, 2400g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Xing Tian — S-tier (role rank #3, model 66.6)
 
 *Magical · Intelligence scaling (STR 0% / INT 37.5%)*
 
-Built for Xing Tian's kit (Solo, Magical): INT / magical. Scale STR 0% / INT 38%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Actives 1/2 · pen ≈ 0.
+Xing Tian · Solo · archetype «shield_solo» (INT / magical). Kit tags: aa, anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot. Style burst 29%/dps 71%; patch rising (+1.0). Scale STR 0% / INT 38%. Path exploits: Chandra's Grace, Shield of the Phoenix, Ethereal Staff… Actives 0/2 · pen ≈ 0.
 
-- **Starter:** Warrior's Axe
-- **Buy order** (actives 1/2, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Helm of Radiance (power, 2500g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+- **Starter:** Bluestone Pendant
+- **Buy order** (actives 0/2, pen ≈ 0.0):
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Shield of the Phoenix (mitigate, 2400g)
+  3. Ethereal Staff (mitigate, 2550g)
+  4. Breastplate of Valor (defense, 2400g)
+  5. Contagion (defense, 2400g)
+  6. Freya's Tears (defense, 2600g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Hades — A-tier (role rank #4, model 62.1)
 
 *Magical · Intelligence scaling (STR 0% / INT 61.7%)*
 
-Built for Hades's kit (Solo, Magical): INT / magical. Scale STR 0% / INT 62%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp. Actives 1/2 · pen ≈ 0.
+Hades · Solo · archetype «sustain_solo» (INT / magical). Kit tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_shield, high_cc. Style burst 23%/dps 77%; patch stable (+0.4). Scale STR 0% / INT 62%. Path exploits: Chandra's Grace, Spectral Armor, Rod Of Asclepius… Actives 1/2 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 1/2, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Helm of Radiance (power, 2500g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Spectral Armor (mitigate, 2300g)
+  3. Rod Of Asclepius (power, active, 2350g)
+  4. Ethereal Staff (mitigate, 2550g)
+  5. Contagion (defense, 2400g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Chaac — A-tier (role rank #5, model 60.3)
 
 *Physical · Hybrid scaling (STR 88.3% / INT 43.8%)*
 
-Built for Chaac's kit (Solo, Physical): STR / physical. Scale STR 88% / INT 44%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Actives 2/3 · pen ≈ 0.
+Chaac · Solo · archetype «sustain_solo» (STR / physical). Kit tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 43%/dps 57%; patch stable (+0.8). Scale STR 88% / INT 44%. Path exploits: Chandra's Grace, Spectral Armor, Shield of the Phoenix… Actives 0/3 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 2/3, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Shield Splitter (power, active, 2400g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+- **Buy order** (actives 0/3, pen ≈ 0.0):
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Spectral Armor (mitigate, 2300g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Contagion (defense, 2400g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Mordred — A-tier (role rank #6, model 59.3)
 
 *Physical · Hybrid scaling (STR 65.0% / INT 61.7%)*
 
-Built for Mordred's kit (Solo, Physical): STR / physical. Scale STR 65% / INT 62%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Actives 2/3 · pen ≈ 0.
+Mordred · Solo · archetype «sustain_solo» (STR / physical). Kit tags: anti_cc, as_steroid, channel, dot, gap_close, hard_cc, heal, heavy_dot. Style burst 34%/dps 66%; patch stable (+0.0). Scale STR 65% / INT 62%. Path exploits: Chandra's Grace, Spectral Armor, Shield of the Phoenix… Actives 1/3 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 2/3, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Shield Splitter (power, active, 2400g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+- **Buy order** (actives 1/3, pen ≈ 0.0):
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Spectral Armor (mitigate, 2300g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Contagion (defense, 2400g)
+  5. Eye of Erebus (defense, active, 2600g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Osiris — B-tier (role rank #7, model 57.3)
 
 *Physical · Strength scaling (STR 66.7% / INT 0%)*
 
-Built for Osiris's kit (Solo, Physical): STR / physical. Scale STR 67% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Actives 2/3 · pen ≈ 0.
+Osiris · Solo · archetype «shield_solo» (STR / physical). Kit tags: aa, as_steroid, gap_close, hard_cc, heal, heavy_shield, high_cc, long_cd. Style burst 35%/dps 65%; patch stable (-0.3). Scale STR 67% / INT 0%. Path exploits: Chandra's Grace, Spectral Armor, Shield of the Phoenix… Actives 1/3 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 2/3, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Shield Splitter (power, active, 2400g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+- **Buy order** (actives 1/3, pen ≈ 0.0):
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Spectral Armor (mitigate, 2300g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Amanita Charm (defense, active, 2350g)
+  5. Freya's Tears (defense, 2600g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Sun Wukong — B-tier (role rank #8, model 55.2)
 
 *Physical · Hybrid scaling (STR 71.2% / INT 36.2%)*
 
-Built for Sun Wukong's kit (Solo, Physical): STR / physical. Scale STR 71% / INT 36%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; huge ult scaling → pen. Actives 2/3 · pen ≈ 0.
+Sun Wukong · Solo · archetype «shield_solo» (STR / physical). Kit tags: anti_cc, dot, execute, hard_cc, heal, high_cc, long_cd, shield. Style burst 42%/dps 58%; patch stable (+0.3). Scale STR 71% / INT 36%. Path exploits: Chandra's Grace, Spectral Armor, Shield of the Phoenix… Actives 0/3 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 2/3, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Shield Splitter (power, active, 2400g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+- **Buy order** (actives 0/3, pen ≈ 0.0):
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Spectral Armor (mitigate, 2300g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Breastplate of Valor (defense, 2400g)
+  5. Contagion (defense, 2400g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Cabrakan — B-tier (role rank #9, model 53.9)
 
 *Magical · Hybrid scaling (STR 85.0% / INT 51.2%)*
 
-Built for Cabrakan's kit (Solo, Magical): INT / magical. Scale STR 85% / INT 51%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; huge ult scaling → pen. Actives 1/2 · pen ≈ 0.
+Cabrakan · Solo · archetype «shield_solo» (INT / magical). Kit tags: aa, channel, hard_cc, heal, heavy_shield, high_cc, long_cd, shield. Style burst 45%/dps 55%; patch falling (-2.2). Scale STR 85% / INT 51%. Path exploits: Chandra's Grace, Spectral Armor, Lifebinder… Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 1/2, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Helm of Radiance (power, 2500g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+- **Buy order** (actives 2/2, pen ≈ 0.0):
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Spectral Armor (mitigate, 2300g)
+  3. Lifebinder (power, active, 2400g)
+  4. Shield of the Phoenix (mitigate, 2400g)
+  5. Amanita Charm (defense, active, 2350g)
+  6. Breastplate of Valor (defense, 2400g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Achilles — B-tier (role rank #10, model 50.8)
 
 *Physical · Strength scaling (STR 75.0% / INT 0%)*
 
-Built for Achilles's kit (Solo, Physical): STR / physical. Scale STR 75% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Actives 2/3 · pen ≈ 0.
+Achilles · Solo · archetype «sustain_solo» (STR / physical). Kit tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_heal, heavy_shield. Style burst 51%/dps 49%; patch stable (-0.0). Scale STR 75% / INT 0%. Path exploits: Spectral Armor, Shield of the Phoenix, Runeforged Hammer… Actives 1/3 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 2/3, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Shield Splitter (power, active, 2400g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+- **Buy order** (actives 1/3, pen ≈ 0.0):
+  1. Spectral Armor (mitigate, 2300g)
+  2. Shield of the Phoenix (mitigate, 2400g)
+  3. Runeforged Hammer (power, 2550g)
+  4. Resolute Mantle (mitigate, 2750g)
+  5. Amanita Charm (defense, active, 2350g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Bellona — B-tier (role rank #11, model 50.6)
 
 *Physical · Strength scaling (STR 46.2% / INT 0%)*
 
-Built for Bellona's kit (Solo, Physical): STR / physical. Scale STR 46% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Actives 2/3 · pen ≈ 0.
+Bellona · Solo · archetype «sustain_solo» (STR / physical). Kit tags: aa, anti_cc, gap_close, hard_cc, heal, heavy_shield, high_cc, long_cd. Style burst 46%/dps 54%; patch volatile (+0.4). Scale STR 46% / INT 0%. Path exploits: Spectral Armor, Chandra's Grace, Shield of the Phoenix… Actives 1/3 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 2/3, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Shield Splitter (power, active, 2400g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+- **Buy order** (actives 1/3, pen ≈ 0.0):
+  1. Spectral Armor (mitigate, 2300g)
+  2. Chandra's Grace (mitigate, 2300g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Runeforged Hammer (power, 2550g)
+  5. Amanita Charm (defense, active, 2350g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Gilgamesh — C-tier (role rank #12, model 50.5)
 
 *Physical · Strength scaling (STR 40.0% / INT 0%)*
 
-Built for Gilgamesh's kit (Solo, Physical): STR / physical. Scale STR 40% / INT 0%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Actives 2/3 · pen ≈ 0.
+Gilgamesh · Solo · archetype «tank_solo» (STR / physical). Kit tags: gap_close, hard_cc, heal, high_cc, long_cd, pet_zone, team_buff. Style burst 39%/dps 61%; patch new (-0.3). Scale STR 40% / INT 0%. Path exploits: Chandra's Grace, Spectral Armor, Amanita Charm… Actives 2/3 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 2/3, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
-  2. Shield Splitter (power, active, 2400g)
-  3. Brawler’s Beat Stick (counter, 2550g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Spectral Armor (mitigate, 2300g)
+  3. Amanita Charm (defense, active, 2350g)
+  4. Breastplate of Valor (defense, 2400g)
+  5. Heartwood Charm (defense, active, 2650g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 ---
@@ -940,192 +940,192 @@ This is the Support job description + common items — not a complete build. Ope
 
 *Magical · Hybrid scaling (STR 110.0% / INT 80.0%)*
 
-Built for Ymir's kit (Support, Magical): INT / magical. Scale STR 110% / INT 80%. Kit cues: burst kit → pen + spike power; high CC → CDR; huge ult scaling → pen. Actives 0/2 · pen ≈ 0.
+Ymir · Support · archetype «shield_support» (INT / magical). Kit tags: aa, anti_cc, channel, dot, hard_cc, heavy_shield, high_cc, long_cd. Style burst 50%/dps 50%; patch volatile (+1.8). Scale STR 110% / INT 80%. Path exploits: Spectral Armor, Chandra's Grace, Alchemist Coat… Actives 0/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Alchemist Coat (mitigate, 2350g)
+  4. Shield of the Phoenix (mitigate, 2400g)
+  5. Midgardian Mail (counter, 2400g)
+  6. Hussar's Wings (defense, 3500g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Charon — S-tier (role rank #2, model 77.0)
 
 *Magical · Intelligence scaling (STR 0% / INT 43.8%)*
 
-Built for Charon's kit (Support, Magical): INT / magical. Scale STR 0% / INT 44%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Actives 0/2 · pen ≈ 0.
+Charon · Support · archetype «heal_support» (INT / magical). Kit tags: anti_cc, dot, gap_close, hard_cc, heal, heavy_shield, high_cc, long_cd. Style burst 48%/dps 52%; patch rising (+2.6). Scale STR 0% / INT 44%. Path exploits: Spectral Armor, Chandra's Grace, Lifebinder… Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 0.0):
+- **Buy order** (actives 2/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Lifebinder (power, active, 2400g)
+  4. Shield of the Phoenix (mitigate, 2400g)
+  5. Midgardian Mail (counter, 2400g)
+  6. Radiant Bulwark (mitigate, active, 2750g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Jormungandr — S-tier (role rank #3, model 70.2)
 
 *Magical · Hybrid scaling (STR 53.8% / INT 42.5%)*
 
-Built for Jormungandr's kit (Support, Magical): INT / magical. Scale STR 54% / INT 42%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Actives 0/2 · pen ≈ 0.
+Jormungandr · Support · archetype «heal_support» (INT / magical). Kit tags: anti_cc, channel, dot, hard_cc, heal, heavy_heal, high_cc, long_cd. Style burst 39%/dps 61%; patch stable (-0.1). Scale STR 54% / INT 42%. Path exploits: Spectral Armor, Chandra's Grace, Shield of the Phoenix… Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 0.0):
+- **Buy order** (actives 2/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Lifebinder (power, active, 2400g)
+  5. Stygian Anchor (counter, 2550g)
+  6. Heartwood Charm (defense, active, 2650g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Artio — A-tier (role rank #4, model 68.1)
 
 *Magical · Hybrid scaling (STR 57.5% / INT 35.0%)*
 
-Built for Artio's kit (Support, Magical): INT / magical. Scale STR 57% / INT 35%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Actives 0/2 · pen ≈ 0.
+Artio · Support · archetype «heal_support» (INT / magical). Kit tags: channel, hard_cc, heal, heavy_heal, heavy_shield, high_cc, long_cd, mobile. Style burst 46%/dps 54%; patch stable (-0.1). Scale STR 57% / INT 35%. Path exploits: Spectral Armor, Chandra's Grace, Lifebinder… Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 0.0):
+- **Buy order** (actives 2/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Lifebinder (power, active, 2400g)
+  4. Stygian Anchor (counter, 2550g)
+  5. Radiant Bulwark (mitigate, active, 2750g)
+  6. Freya's Tears (defense, 2600g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Athena — A-tier (role rank #5, model 66.9)
 
 *Magical · Hybrid scaling (STR 90.0% / INT 56.2%)*
 
-Built for Athena's kit (Support, Magical): INT / magical. Scale STR 90% / INT 56%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile; huge ult scaling → pen. Actives 0/2 · pen ≈ 0.
+Athena · Support · archetype «heal_support» (INT / magical). Kit tags: aa, anti_cc, channel, gap_close, heal, heavy_shield, high_cc, long_cd. Style burst 50%/dps 50%; patch stable (+0.2). Scale STR 90% / INT 56%. Path exploits: Spectral Armor, Chandra's Grace, Lifebinder… Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 0.0):
+- **Buy order** (actives 2/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Lifebinder (power, active, 2400g)
+  4. Midgardian Mail (counter, 2400g)
+  5. Shogun's Ofuda (mitigate, 2500g)
+  6. Heartwood Charm (defense, active, 2650g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Xing Tian — A-tier (role rank #6, model 66.6)
 
 *Magical · Intelligence scaling (STR 0% / INT 37.5%)*
 
-Built for Xing Tian's kit (Support, Magical): INT / magical. Scale STR 0% / INT 38%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Actives 0/2 · pen ≈ 0.
+Xing Tian · Support · archetype «shield_support» (INT / magical). Kit tags: aa, anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot. Style burst 29%/dps 71%; patch rising (+1.0). Scale STR 0% / INT 38%. Path exploits: Spectral Armor, Chandra's Grace, Shield of the Phoenix… Actives 0/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Midgardian Mail (counter, 2400g)
+  5. Genji's Guard (defense, 2350g)
+  6. Freya's Tears (defense, 2600g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Sobek — A-tier (role rank #7, model 66.4)
 
 *Magical · Intelligence scaling (STR 0% / INT 50.0%)*
 
-Built for Sobek's kit (Support, Magical): INT / magical. Scale STR 0% / INT 50%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp. Actives 0/2 · pen ≈ 0.
+Sobek · Support · archetype «shield_support» (INT / magical). Kit tags: anti_cc, burst, dot, execute, gap_close, hard_cc, heal, heavy_shield. Style burst 55%/dps 45%; patch stable (+0.4). Scale STR 0% / INT 50%. Path exploits: Spectral Armor, Chandra's Grace, Rod Of Asclepius… Actives 1/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 0.0):
+- **Buy order** (actives 1/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Rod Of Asclepius (power, active, 2350g)
+  4. Alchemist Coat (mitigate, 2350g)
+  5. Shield of the Phoenix (mitigate, 2400g)
+  6. Midgardian Mail (counter, 2400g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Baron Samedi — B-tier (role rank #8, model 66.3)
 
 *Magical · Intelligence scaling (STR 0% / INT 51.7%)*
 
-Built for Baron Samedi's kit (Support, Magical): INT / magical. Scale STR 0% / INT 52%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp. Actives 0/2 · pen ≈ 0.
+Baron Samedi · Support · archetype «heal_support» (INT / magical). Kit tags: channel, dot, execute, hard_cc, heal, heavy_dot, heavy_shield, high_cc. Style burst 29%/dps 71%; patch volatile (+1.1). Scale STR 0% / INT 52%. Path exploits: Spectral Armor, Chandra's Grace, Shield of the Phoenix… Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 0.0):
+- **Buy order** (actives 2/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Midgardian Mail (counter, 2400g)
+  5. Radiant Bulwark (mitigate, active, 2750g)
+  6. Heartwood Charm (defense, active, 2650g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Yemoja — B-tier (role rank #9, model 65.3)
 
 *Magical · Intelligence scaling (STR 0% / INT 42.5%)*
 
-Built for Yemoja's kit (Support, Magical): INT / magical. Scale STR 0% / INT 42%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp. Actives 0/2 · pen ≈ 0.
+Yemoja · Support · archetype «heal_support» (INT / magical). Kit tags: aa, as_steroid, dot, hard_cc, heal, heavy_heal, heavy_shield, high_cc. Style burst 49%/dps 51%; patch stable (-0.1). Scale STR 0% / INT 42%. Path exploits: Spectral Armor, Chandra's Grace, Lifebinder… Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 0.0):
+- **Buy order** (actives 2/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Lifebinder (power, active, 2400g)
+  4. Shogun's Ofuda (mitigate, 2500g)
+  5. Stygian Anchor (counter, 2550g)
+  6. Heartwood Charm (defense, active, 2650g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Khepri — B-tier (role rank #10, model 64.3)
 
 *Magical · Intelligence scaling (STR 0% / INT 25.0%)*
 
-Built for Khepri's kit (Support, Magical): INT / magical. Scale STR 0% / INT 25%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp; mobile. Actives 0/2 · pen ≈ 0.
+Khepri · Support · archetype «heal_support» (INT / magical). Kit tags: anti_cc, dot, execute, gap_close, hard_cc, heal, heavy_shield, high_cc. Style burst 21%/dps 79%; patch new (+0.6). Scale STR 0% / INT 25%. Path exploits: Spectral Armor, Chandra's Grace, Shield of the Phoenix… Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 0.0):
+- **Buy order** (actives 2/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Midgardian Mail (counter, 2400g)
+  5. Radiant Bulwark (mitigate, active, 2750g)
+  6. Heartwood Charm (defense, active, 2650g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Bacchus — B-tier (role rank #11, model 62.4)
 
 *Magical · Hybrid scaling (STR 75.0% / INT 41.2%)*
 
-Built for Bacchus's kit (Support, Magical): INT / magical. Scale STR 75% / INT 41%. Kit cues: burst kit → pen + spike power; high CC → CDR; self-heal → LS / heal amp. Actives 0/2 · pen ≈ 0.
+Bacchus · Support · archetype «shield_support» (INT / magical). Kit tags: aa, channel, dot, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 49%/dps 51%; patch stable (+0.3). Scale STR 75% / INT 41%. Path exploits: Spectral Armor, Chandra's Grace, Alchemist Coat… Actives 0/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Alchemist Coat (mitigate, 2350g)
+  4. Shield of the Phoenix (mitigate, 2400g)
+  5. Midgardian Mail (counter, 2400g)
+  6. Shogun's Ofuda (mitigate, 2500g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Ganesha — B-tier (role rank #12, model 60.9)
 
 *Magical · Intelligence scaling (STR 0% / INT 54.7%)*
 
-Built for Ganesha's kit (Support, Magical): INT / magical. Scale STR 0% / INT 55%. Kit cues: burst kit → pen + spike power; high CC → CDR. Actives 0/2 · pen ≈ 0.
+Ganesha · Support · archetype «shield_support» (INT / magical). Kit tags: channel, dot, execute, gap_close, hard_cc, heavy_shield, high_cc, long_cd. Style burst 36%/dps 64%; patch stable (-0.1). Scale STR 0% / INT 55%. Path exploits: Spectral Armor, Chandra's Grace, Shield of the Phoenix… Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 0.0):
+- **Buy order** (actives 2/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
   2. Chandra's Grace (mitigate, 2300g)
-  3. Divine Ruin (counter, 2500g)
-  4. Brawler’s Beat Stick (counter, 2550g)
-  5. Shifter's Shield (defense, 2650g)
-  6. Sphere of Negation (defense, 2750g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Midgardian Mail (counter, 2400g)
+  5. Radiant Bulwark (mitigate, active, 2750g)
+  6. Heartwood Charm (defense, active, 2650g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 ---

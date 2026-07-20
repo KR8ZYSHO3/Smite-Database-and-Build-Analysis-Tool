@@ -422,11 +422,20 @@ function godBuildCard(gb, role) {
         <div class="muted gbc-meta">#${gb.rank ?? "—"} · ${escapeHtml(gb.damage_type || "")} · ${escapeHtml(gb.scaling || "—")} scale</div>
       </header>
       <div class="build-meta">
-        <span class="pill">kit-fit</span>
+        ${gb.archetype ? `<span class="pill hot">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : `<span class="pill">kit-fit</span>`}
         <span class="pill">actives ${ga}/${maxG}</span>
         <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
         ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
+        ${gb.patch_trajectory ? `<span class="pill ice">${escapeHtml(gb.patch_trajectory)}</span>` : ""}
       </div>
+      ${
+        (gb.kit_tags || []).length
+          ? `<div class="kit-tags">${(gb.kit_tags || [])
+              .slice(0, 8)
+              .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
+              .join("")}</div>`
+          : ""
+      }
       <p class="why">${escapeHtml(gb.why || "")}</p>
       <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(gb.starter?.name || "—")}</div>
       <ol class="buy-list">
