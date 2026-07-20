@@ -266,6 +266,10 @@ tr.selected td { background: rgba(110, 168, 255, 0.12); }
 .alts { margin-top: 8px; color: var(--muted); }
 .alts summary { cursor: pointer; }
 
+.god-builds { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+.god-role-build h3 { margin: 0 0 4px; font-size: 1rem; }
+#god-build-hint { margin-bottom: 6px; }
+
 .footer {
   margin-top: 28px;
   padding-top: 12px;

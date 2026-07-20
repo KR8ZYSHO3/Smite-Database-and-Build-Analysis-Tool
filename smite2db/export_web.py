@@ -4,12 +4,19 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 
 from .db import DEFAULT_DB, connect
-from .conquest_builds import generate_all, render_markdown
+from .conquest_builds import (
+    ROLE_PROFILES,
+    build_god_build,
+    generate_all,
+    load_items,
+    render_markdown,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 WEB_DATA = ROOT / "docs" / "data"
@@ -85,6 +92,19 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
             )
         ]
         d["abilities"] = abs_
+        # Normalize roles list for UI
+        roles_raw = d.get("roles")
+        if isinstance(roles_raw, str):
+            try:
+                roles_raw = json.loads(roles_raw)
+            except json.JSONDecodeError:
+                roles_raw = []
+        role_names: list[str] = []
+        for rr in roles_raw or []:
+            s = str(rr)
+            m = re.search(r"Role\.([A-Za-z]+)", s)
+            role_names.append(m.group(1) if m else s)
+        d["role_list"] = role_names
         gods.append(d)
 
     # Tier lists by scope
@@ -126,6 +146,38 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
             print(f"WARN: could not rebuild builds: {exc}")
     if builds is None and builds_path.exists():
         builds = json.loads(builds_path.read_text(encoding="utf-8"))
+
+    # Attach per-god Conquest paths for every role they play (not only top-5 lists).
+    # Magical supports also get a Mid full-damage path.
+    try:
+        shop_items = load_items(conn)
+        by_name = {g["name"]: g for g in gods}
+        for g in gods:
+            roles = list(g.get("role_list") or [])
+            dtype = (g.get("primary_damage_type") or "").lower()
+            if "Support" in roles and dtype == "magical" and "Mid" not in roles:
+                roles = roles + ["Mid"]  # full-damage option for mage guardians
+            paths: dict = {}
+            for role in roles:
+                if role not in ROLE_PROFILES:
+                    continue
+                god_row = {
+                    "god_id": g["id"],
+                    "entity_name": g["name"],
+                    "primary_damage_type": g.get("primary_damage_type"),
+                    "pantheon": g.get("pantheon"),
+                    "tier": g.get("tier"),
+                    "rank_in_scope": g.get("rank_in_scope"),
+                    "score": g.get("score"),
+                }
+                paths[role] = build_god_build(conn, shop_items, role, god_row)
+            g["conquest_by_role"] = paths
+            # Drop bulky legacy lists from the main god payload confusion in UI
+            # (still keep short notes + starter for tier rationale)
+            if paths:
+                g["build_display"] = "conquest"
+    except Exception as exc:  # noqa: BLE001
+        print(f"WARN: per-god conquest attach failed: {exc}")
 
     payload = {
         "meta": meta,

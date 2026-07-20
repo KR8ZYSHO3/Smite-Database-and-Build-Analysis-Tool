@@ -242,50 +242,65 @@ function selectGod(name, switchTab) {
     )
     .join("");
 
-  const cores = g.core_items || safeJson(g.core_items_json) || [];
-  const defs = g.defense_items || safeJson(g.defense_items_json) || [];
-  const relics = g.relic_suggestions || safeJson(g.relic_suggestions) || [];
+  // One clear Conquest path per role (no separate Cores/Defense dump).
+  const byRole = g.conquest_by_role || {};
+  let roleKeys = Object.keys(byRole);
+  if (!roleKeys.length) {
+    // Fallback: hunt role lists in builds export
+    for (const [role, data] of Object.entries(state.builds?.roles || {})) {
+      for (const gb of data.recommended_gods || []) {
+        if (gb.god === g.name) {
+          byRole[role] = gb;
+        }
+      }
+    }
+    roleKeys = Object.keys(byRole);
+  }
 
-  let buildText = [
-    `Scaling: ${g.primary_scaling || "—"} (${g.primary_damage_type || ""})`,
-    `Starter: ${g.recommended_starter || "—"}`,
-    "",
-    "Cores:",
-    ...cores.map((x) => `  · ${x}`),
-    "",
-    "Defense:",
-    ...defs.map((x) => `  · ${x}`),
-    "",
-    "Relics:",
-    ...relics.map((x) => `  · ${x}`),
-    "",
-    g.build_notes || "",
-  ];
+  const dtype = (g.primary_damage_type || "").toLowerCase();
+  const powerHint =
+    dtype === "magical"
+      ? "Magical damage → INT / magical items (ignore inflated basic-attack STR%)."
+      : dtype === "physical"
+        ? "Physical damage → STR / physical items."
+        : `Kit scaling: ${g.primary_scaling || "—"}.`;
 
-  // Conquest tailored if present
-  const roles = state.builds?.roles || {};
-  for (const [role, data] of Object.entries(roles)) {
-    for (const gb of data.recommended_gods || []) {
-      if (gb.god === g.name) {
+  $("#god-build-hint").textContent = powerHint;
+
+  if (!roleKeys.length) {
+    $("#god-build").innerHTML = `<p class="muted">${escapeHtml(g.build_notes || "No conquest path exported for this god yet.")}</p>`;
+  } else {
+    // Prefer Support / listed roles first, Mid full-damage last for guardians
+    const order = ["Carry", "Mid", "Jungle", "Solo", "Support"];
+    roleKeys.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    $("#god-build").innerHTML = roleKeys
+      .map((role) => {
+        const gb = byRole[role];
         const items = gb.items || gb.full_path || [];
         const nAct = gb.active_count ?? items.filter((i) => i.is_active).length;
         const maxA = gb.max_shop_actives ?? 2;
-        buildText.push(
-          "",
-          `--- Conquest ${role} (actives ${nAct}/${maxA}, pen ≈ ${gb.pen_total ?? "?"}) ---`,
-          `Starter: ${gb.starter?.name || "—"}`,
-          "Buy order:",
-          ...items.map((it, i) => {
-            const bits = [it.slot || "", it.is_active ? "active" : "", it.pen ? `pen ${it.pen}` : "", `${it.cost}g`]
-              .filter(Boolean)
-              .join(", ");
-            return `  ${i + 1}. ${it.name} (${bits})`;
-          })
-        );
-      }
-    }
+        const penG = gb.pen_total ?? items.reduce((s, it) => s + (it.pen || 0), 0);
+        const label =
+          role === "Mid" && (g.role_list || []).includes("Support") && dtype === "magical"
+            ? "Mid (full damage option)"
+            : role;
+        return `
+        <div class="card build-card god-role-build">
+          <h3>${escapeHtml(label)}</h3>
+          <div class="build-meta">
+            <span class="pill">actives ${nAct}/${maxA}</span>
+            <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
+          </div>
+          <p class="muted why">${escapeHtml(gb.why || "")}</p>
+          <div><strong>Starter</strong> — ${escapeHtml(gb.starter?.name || "—")}</div>
+          <ol class="buy-list">
+            ${items.map((it, i) => buyRow(it, i + 1)).join("")}
+          </ol>
+          <div class="muted">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
+        </div>`;
+      })
+      .join("");
   }
-  $("#god-build").textContent = buildText.join("\n");
 
   $("#god-patch").textContent = [
     `Trajectory: ${g.trajectory || "—"}`,

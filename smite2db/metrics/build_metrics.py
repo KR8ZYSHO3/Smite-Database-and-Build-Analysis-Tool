@@ -169,9 +169,25 @@ def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
 
     for g in gods:
         scaling = g["primary_scaling"] or "Mixed"
-        dtype = g["primary_damage_type"] or ""
-        prefer_str = scaling == "Strength" or (scaling == "Hybrid" and (g["avg_scaling_str"] or 0) >= (g["avg_scaling_int"] or 0))
-        prefer_int = scaling == "Intelligence" or (scaling == "Hybrid" and (g["avg_scaling_int"] or 0) > (g["avg_scaling_str"] or 0))
+        dtype = (g["primary_damage_type"] or "").strip()
+        # Damage type is the itemization truth. Basics can inflate STR% on magical
+        # guardians (e.g. Ymir Hybrid numbers) without meaning physical cores.
+        if dtype.lower() == "magical":
+            prefer_int, prefer_str = True, False
+        elif dtype.lower() == "physical":
+            prefer_str, prefer_int = True, False
+        else:
+            prefer_str = scaling == "Strength" or (
+                scaling in ("Hybrid", "Mixed")
+                and (g["avg_scaling_str"] or 0) > (g["avg_scaling_int"] or 0)
+            )
+            prefer_int = scaling == "Intelligence" or (
+                scaling in ("Hybrid", "Mixed")
+                and (g["avg_scaling_int"] or 0) >= (g["avg_scaling_str"] or 0)
+            )
+            if prefer_str and prefer_int:
+                prefer_int = (g["avg_scaling_int"] or 0) >= (g["avg_scaling_str"] or 0)
+                prefer_str = not prefer_int
 
         def score_item(it: dict, role: str) -> float:
             s = 0.0
@@ -183,9 +199,14 @@ def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                 if prefer_int and "int" in tags:
                     s += 25
                 if prefer_str and "int" in tags and "str" not in tags:
-                    s -= 10
+                    s -= 25
                 if prefer_int and "str" in tags and "int" not in tags:
-                    s -= 10
+                    s -= 25
+                # Magical gods should never rank Avatar's Parashu / pure STR actives as cores
+                if prefer_int and "str" in tags and "int" not in tags:
+                    s -= 30
+                if prefer_str and "int" in tags and "str" not in tags:
+                    s -= 30
                 if "pen" in tags:
                     s += 12
                 if "cdr" in tags:
@@ -282,13 +303,22 @@ def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
         meta_score_raw = meta + synergy * 0.02
 
         notes = []
-        notes.append(f"Primary scaling: {scaling} ({dtype} damage).")
-        if prefer_str:
-            notes.append("Build toward Strength / physical cores.")
-        elif prefer_int:
-            notes.append("Build toward Intelligence / magical cores.")
+        if dtype.lower() == "magical":
+            notes.append(
+                f"Magical damage god — itemize Intelligence / magical cores "
+                f"(kit label {scaling}; basic-attack STR% does not mean physical items)."
+            )
+        elif dtype.lower() == "physical":
+            notes.append(
+                f"Physical damage god — itemize Strength / physical cores "
+                f"(kit label {scaling})."
+            )
         else:
-            notes.append("Flexible or hybrid itemization.")
+            notes.append(f"Scaling label: {scaling}. Flexible itemization.")
+        if prefer_int and not prefer_str:
+            notes.append("Prefer INT power, magical pen (Obsidian / Spears), CDR.")
+        elif prefer_str and not prefer_int:
+            notes.append("Prefer STR power, physical pen (Titan's), AS/crit as role fits.")
         if g["cc_count"] and g["cc_count"] >= 2:
             notes.append("High CC kit — CDR and survival items valuable.")
         if g["mobility_count"] == 0:

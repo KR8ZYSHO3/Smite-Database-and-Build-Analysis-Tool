@@ -773,8 +773,12 @@ def rescore_for_god(
     dtype = (damage_type or "").lower()
 
     # Hard scaling alignment (dominant signal for per-god paths)
-    mage = primary == "Intelligence" or (primary == "Mixed" and dtype == "magical") or dtype == "magical"
-    physical = primary == "Strength" or (primary == "Mixed" and dtype == "physical") or dtype == "physical"
+    # Magical damage type always itemizes as mage — even if kit avg shows Hybrid STR
+    # from basics/passives (common on guardians like Ymir).
+    mage = dtype == "magical" or primary == "Intelligence"
+    physical = (not mage) and (
+        dtype == "physical" or primary == "Strength"
+    )
 
     if physical and not mage:
         s += str_v * 0.85
@@ -815,6 +819,20 @@ def rescore_for_god(
         if as_v > 0:
             s += 5
 
+    # Support: stay tanky even on magical guardians — power is secondary.
+    if role == "Support":
+        s += (_canon_stat_value(item.stats, "hp") * 0.08
+              + _canon_stat_value(item.stats, "pprot") * 0.35
+              + _canon_stat_value(item.stats, "mprot") * 0.35)
+        if item.item_type == "Defensive" or "defensive" in item.flags:
+            s += 18
+        if item.item_type == "Offensive" and _canon_stat_value(item.stats, "hp") < 150:
+            s -= 12
+        # One aura/support utility boost
+        blob = (item.passive + " " + item.active).lower()
+        if any(k in blob for k in ("ally", "allies", "aura", "team")):
+            s += 14
+
     # Damage roles: pen is not optional — but only *matching* pen for the kit.
     if role in DAMAGE_ROLES_NEED_PEN:
         pen_v = _canon_stat_value(item.stats, "pen")
@@ -846,10 +864,13 @@ def max_shop_actives_for_god(role: str, damage_type: str | None, bias: dict | No
 
     Most builds: 2 (leave room for free Curio which also eats the active budget).
     Melee-leaning physical Solo/Jungle: up to hard cap 3.
+    Magical gods never get the melee-3 exception.
     """
     dtype = (damage_type or "").lower()
+    if dtype == "magical":
+        return DEFAULT_MAX_SHOP_ACTIVES
     primary = (bias or {}).get("primary") or ""
-    melee_role = role in ("Solo", "Jungle", "Support")
+    melee_role = role in ("Solo", "Jungle")
     physical = dtype == "physical" or primary == "Strength"
     if melee_role and physical:
         return HARD_MAX_ACTIVE_ITEMS
@@ -1399,11 +1420,19 @@ def _item_card(it: ScoredItem | None) -> dict | None:
 
 
 def _explain_god_build(god, bias, role, path, starters, pen_total=0.0, n_act=0, max_act=2) -> str:
+    dtype = god.get("primary_damage_type") or god.get("damage_type") or ""
+    power_style = (
+        "INT / magical items"
+        if str(dtype).lower() == "magical"
+        else "STR / physical items"
+        if str(dtype).lower() == "physical"
+        else f"{bias.get('primary')} scaling items"
+    )
     parts = [
-        f"{god['entity_name']} ({role}): {bias.get('primary')} scaling "
-        f"(STR {(bias.get('str') or 0)*100:.0f}% / INT {(bias.get('int') or 0)*100:.0f}%).",
-        f"Buy order early→late. Pen total ≈ {pen_total:.0f}. "
-        f"Shop actives {n_act}/{max_act} (game hard max {HARD_MAX_ACTIVE_ITEMS}; curio shares budget).",
+        f"{god['entity_name']} as {role} ({dtype or '—'} damage) — build {power_style}.",
+        f"Kit tag {bias.get('primary')} (STR avg {(bias.get('str') or 0)*100:.0f}% / "
+        f"INT avg {(bias.get('int') or 0)*100:.0f}% — itemize by damage type, not basic-attack %).",
+        f"Buy order early→late · pen ≈ {pen_total:.0f} · shop actives {n_act}/{max_act}.",
     ]
     pens = [p.name for p in path if is_pen_item(p)]
     if pens:
