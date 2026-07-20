@@ -322,96 +322,119 @@ function selectGod(name, switchTab) {
   ].join("\n");
 }
 
-/* -------------------- Builds -------------------- */
+/* -------------------- Builds (god-first) -------------------- */
+const ROLE_JOB = {
+  Carry: { title: "Carry — backline ADC", blurb: "AS, crit, pen, lifesteal. Support peels so you free-hit." },
+  Mid: { title: "Mid — backline burst", blurb: "INT power, pen, CDR. Support peels for combos." },
+  Jungle: { title: "Jungle — ganks", blurb: "Bumba clear, burst pen, CDR, Blink. Not full-tank solo." },
+  Solo: { title: "Solo — unkillable frontline", blurb: "Dual prots, HP, Damp/Plat/Ten, hybrid offline damage." },
+  Support: { title: "Support — peel for ADC & mid", blurb: "Mitigate, anti-AS/crit, auras. Not personal lifesteal DPS." },
+};
+
 function setupBuilds() {
-  const roleSel = $("#build-role");
-  const roles = Object.keys(state.builds?.roles || {});
-  roleSel.innerHTML = roles.map((r) => `<option value="${r}">${r}</option>`).join("");
+  const roles = ["Carry", "Mid", "Jungle", "Solo", "Support"].filter(
+    (r) => state.builds?.roles?.[r]
+  );
+  const pills = $("#role-pills");
+  const search = $("#build-god-search");
+  let activeRole = roles[0] || "Mid";
+
+  pills.innerHTML = roles
+    .map(
+      (r) =>
+        `<button type="button" class="role-pill ${r === activeRole ? "active" : ""}" data-role="${r}">${r}</button>`
+    )
+    .join("");
 
   const render = () => {
-    const role = roleSel.value;
-    const data = state.builds?.roles?.[role];
-    if (!data) {
-      $("#build-template").textContent = "No build data.";
-      $("#build-gods").textContent = "";
-      return;
-    }
-    const t = data.template;
-    const items = t.items || t.full_path || [];
-    const nAct = items.filter((i) => i.is_active).length;
-    const maxA = t.max_shop_actives ?? 2;
-    const penT = t.pen_total ?? items.reduce((s, it) => s + (it.pen || 0), 0);
-    const roleBlurb = {
-      Support: "Peel for ADC & mid — Damp/Plat/Ten, anti-AS/crit, auras. Not lifesteal DPS.",
-      Solo: "Unkillable frontline — dual prots, HP, mitigate. Offline damage only.",
-      Jungle: "Gank threat — Bumba, burst pen, CDR, Blink. Not full-tank solo.",
-      Carry: "Backline ADC — AS/crit/pen. Support peels so you free-hit.",
-      Mid: "Backline burst — INT + pen + CDR. Support peels for combos.",
-    }[role] || "Buy order role-aware. Actives default 2.";
-    $("#build-desc").textContent = `${t.description || ""}  ·  ${roleBlurb}`;
+    const data = state.builds?.roles?.[activeRole];
+    const t = data?.template || {};
+    const job = ROLE_JOB[activeRole] || { title: activeRole, blurb: t.description || "" };
+    const pri = t.priority_stats || Object.keys(t.stat_priorities || {}).slice(0, 5);
+    const commons = t.common_items || t.top_scored_items || [];
+    const st = t.typical_starter || t.starter;
 
-    const mitT = items.reduce(
-      (s, it) => s + (it.damp || 0) + (it.plat || 0) + (it.ten || 0),
-      0
-    );
-    const showMit = role === "Support" || role === "Solo";
-    $("#build-template").innerHTML = `
-      <h2>${escapeHtml(role)} template</h2>
-      <div class="build-meta">
-        <span class="pill">1 starter + 6</span>
-        <span class="pill">actives ${nAct}/${maxA}</span>
-        <span class="pill">pen ≈ ${fmt(penT, 0)}</span>
-        ${showMit ? `<span class="pill">mitigate ≈ ${fmt(mitT, 0)}</span>` : ""}
+    $("#role-job").innerHTML = `
+      <div class="role-job-head">
+        <h2>${escapeHtml(job.title)}</h2>
+        <span class="pill hot">Job only — not a full build</span>
       </div>
-      ${t.build_notes ? `<p class="muted">${escapeHtml(t.build_notes)}</p>` : ""}
-      <h3>Starter</h3>
-      <div class="build-line">${chip(t.starter, "S")}</div>
-      <h3>Buy order (full build)</h3>
-      <ol class="buy-list">
-        ${items.map((it, i) => buyRow(it, i + 1)).join("")}
-      </ol>
-      <h3>Relics <span class="muted">(separate slot — not actives)</span></h3>
-      <div class="build-line">${(t.relics || []).map((it) => chip(it, "R")).join("")}</div>
-      ${(t.starter_alternatives || []).length
-        ? `<details class="alts"><summary>Starter alternatives</summary>
-           <div class="build-line">${(t.starter_alternatives || []).map((it) => chip(it, "A")).join("")}</div>
-           </details>`
-        : ""}
+      <p class="role-job-blurb">${escapeHtml(job.blurb || t.description || "")}</p>
+      <div class="build-meta">
+        ${pri.map((p) => `<span class="pill">${escapeHtml(p)}</span>`).join("")}
+        ${st ? `<span class="pill ice">Typical starter: ${escapeHtml(st.name)}</span>` : ""}
+      </div>
+      ${
+        commons.length
+          ? `<p class="muted common-label">Items this role often likes (unordered — use a god card for buy order):</p>
+             <div class="build-line">${commons
+               .slice(0, 8)
+               .map((it, i) => chip(it, String(i + 1)))
+               .join("")}</div>`
+          : ""
+      }
+      <p class="muted" style="margin:0"><strong>Next:</strong> pick a god below — each path is scored to that god’s kit.</p>
     `;
 
-    const gods = [...(data.recommended_gods || [])].sort(
+    const q = (search.value || "").toLowerCase().trim();
+    let gods = [...(data?.recommended_gods || [])].sort(
       (a, b) => (a.rank ?? 99) - (b.rank ?? 99)
     );
-    $("#build-gods").innerHTML = gods
-      .map((gb) => {
-        const itemsG = gb.items || gb.full_path || [];
-        const ga = gb.active_count ?? itemsG.filter((i) => i.is_active).length;
-        const maxG = gb.max_shop_actives ?? 2;
-        const penG = gb.pen_total ?? itemsG.reduce((s, it) => s + (it.pen || 0), 0);
-        return `
-        <div class="card build-card">
-          <h3>
-            <span class="tier-${gb.tier || ""}">[${gb.tier || "?"}]</span>
-            ${escapeHtml(gb.god)}
-            <span class="muted">#${gb.rank ?? "—"} · ${escapeHtml(gb.damage_type || "")} · ${escapeHtml(gb.scaling || "")}</span>
-          </h3>
-          <div class="build-meta">
-            <span class="pill">actives ${ga}/${maxG}</span>
-            <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
-          </div>
-          <p class="muted why">${escapeHtml(gb.why || "")}</p>
-          <div class="muted"><strong>Starter</strong> — ${escapeHtml(gb.starter?.name || "—")}</div>
-          <ol class="buy-list">
-            ${itemsG.map((it, i) => buyRow(it, i + 1)).join("")}
-          </ol>
-          <div class="muted">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
-        </div>`;
-      })
-      .join("");
+    if (q) gods = gods.filter((g) => (g.god || "").toLowerCase().includes(q));
+    $("#build-god-count").textContent = `${gods.length} kit-fit builds · ${activeRole}`;
+
+    $("#build-gods").innerHTML = gods.length
+      ? gods.map((gb) => godBuildCard(gb, activeRole)).join("")
+      : `<div class="card muted">No gods for this filter.</div>`;
   };
 
-  roleSel.addEventListener("change", render);
+  pills.querySelectorAll(".role-pill").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      activeRole = btn.dataset.role;
+      pills.querySelectorAll(".role-pill").forEach((b) => b.classList.toggle("active", b === btn));
+      search.value = "";
+      render();
+    });
+  });
+  search.addEventListener("input", render);
+  $("#build-gods").addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-open-god]");
+    if (!btn) return;
+    selectGod(btn.getAttribute("data-open-god"), true);
+  });
   render();
+}
+
+function godBuildCard(gb, role) {
+  const itemsG = gb.items || gb.full_path || [];
+  const ga = gb.active_count ?? itemsG.filter((i) => i.is_active).length;
+  const maxG = gb.max_shop_actives ?? 2;
+  const penG = gb.pen_total ?? itemsG.reduce((s, it) => s + (it.pen || 0), 0);
+  const mitG = itemsG.reduce((s, it) => s + (it.damp || 0) + (it.plat || 0) + (it.ten || 0), 0);
+  const showMit = role === "Support" || role === "Solo";
+  return `
+    <article class="card build-card god-build-card">
+      <header class="gbc-head">
+        <h3>
+          <span class="tier-${gb.tier || ""}">[${gb.tier || "?"}]</span>
+          ${escapeHtml(gb.god)}
+        </h3>
+        <div class="muted gbc-meta">#${gb.rank ?? "—"} · ${escapeHtml(gb.damage_type || "")} · ${escapeHtml(gb.scaling || "—")} scale</div>
+      </header>
+      <div class="build-meta">
+        <span class="pill">kit-fit</span>
+        <span class="pill">actives ${ga}/${maxG}</span>
+        <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
+        ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
+      </div>
+      <p class="why">${escapeHtml(gb.why || "")}</p>
+      <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(gb.starter?.name || "—")}</div>
+      <ol class="buy-list">
+        ${itemsG.map((it, i) => buyRow(it, i + 1)).join("")}
+      </ol>
+      <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
+      <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">Open full god page →</button>
+    </article>`;
 }
 
 function chip(it, n) {
@@ -548,9 +571,9 @@ async function main() {
       .filter(Boolean)
       .join("  //  ");
 
-    setupTiers();
-    setupGods();
     setupBuilds();
+    setupGods();
+    setupTiers();
     setupItems();
   } catch (err) {
     loading.innerHTML = `<div class="err"><strong>Failed to load data.</strong><br>${escapeHtml(

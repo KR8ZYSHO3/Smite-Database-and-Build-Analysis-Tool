@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SMITE 2 — Arena Intel</title>
-  <meta name="description" content="SMITE 2 patch-weighted tier lists, kit metrics, and Conquest builds with real pen, actives, dampening & plating." />
+  <meta name="description" content="SMITE 2 kit-fit Conquest builds, patch-weighted tiers, dampening & plating." />
   <meta name="theme-color" content="#0a0c14" />
   <link rel="stylesheet" href="./style.css" />
 </head>
@@ -13,29 +13,86 @@
     <header class="top">
       <div>
         <h1>SMITE 2 · Arena Intel</h1>
-        <div class="sub" id="meta-line">Loading battlefield data…</div>
+        <div class="sub" id="meta-line">Loading…</div>
       </div>
       <div class="badge-row">
-        <span class="badge ice">SMITE 2 only</span>
-        <span class="badge hot">Patch-weighted</span>
-        <span class="badge">≤2 shop actives</span>
-        <span class="badge">Damp · Plat · Pen</span>
+        <span class="badge ice">God-first builds</span>
+        <span class="badge hot">Patch tiers</span>
+        <span class="badge">≤2 actives</span>
       </div>
     </header>
 
-    <div id="loading" class="loading">Syncing gods · items · patches</div>
+    <div id="loading" class="loading">Loading gods · builds · patches</div>
 
     <div id="app-main" style="display:none">
+      <p class="flow-hint" id="flow-hint">
+        <strong>Start here:</strong> pick a <em>role</em>, then open a <em>god</em> for a kit-specific buy order.
+        Role cards are job notes only — not full builds.
+      </p>
+
       <nav class="tabs">
-        <button class="tab-btn active" data-tab="tiers">Tiers</button>
-        <button class="tab-btn" data-tab="gods">Gods</button>
-        <button class="tab-btn" data-tab="builds">Builds</button>
+        <button class="tab-btn active" data-tab="builds">1 · Builds</button>
+        <button class="tab-btn" data-tab="gods">2 · Gods</button>
+        <button class="tab-btn" data-tab="tiers">3 · Tiers</button>
         <button class="tab-btn" data-tab="items">Items</button>
-        <button class="tab-btn" data-tab="about">Intel</button>
+        <button class="tab-btn" data-tab="about">About</button>
       </nav>
 
-      <!-- Tiers -->
-      <section id="panel-tiers" class="panel active">
+      <!-- BUILDS first -->
+      <section id="panel-builds" class="panel active">
+        <div class="toolbar role-pills" id="role-pills"></div>
+        <div class="card role-job" id="role-job">
+          <h2>Pick a role above</h2>
+          <p class="muted">You’ll see that role’s job, then kit-fit builds for real gods.</p>
+        </div>
+        <div class="toolbar">
+          <input id="build-god-search" type="search" placeholder="Filter gods in this role…" style="min-width:240px" />
+          <span class="muted" id="build-god-count"></span>
+        </div>
+        <div id="build-gods" class="build-god-grid"></div>
+      </section>
+
+      <!-- GODS -->
+      <section id="panel-gods" class="panel">
+        <div class="toolbar">
+          <input id="god-search" type="search" placeholder="Search any god…" style="min-width:240px" />
+        </div>
+        <div class="grid-2">
+          <div class="card scroll">
+            <table>
+              <thead>
+                <tr><th>God</th><th>Pantheon</th><th>Dmg</th><th>Tier</th><th>#</th></tr>
+              </thead>
+              <tbody id="god-list-body"></tbody>
+            </table>
+          </div>
+          <div class="card scroll god-dossier">
+            <h2 id="god-title">Select a god</h2>
+            <div class="muted" id="god-sub"></div>
+            <div id="god-metrics" style="margin:10px 0"></div>
+            <div class="god-section">
+              <h3>Kit-fit Conquest paths</h3>
+              <div class="muted" id="god-build-hint">One buy order per role this god plays.</div>
+              <div id="god-build" class="god-builds"></div>
+            </div>
+            <details class="god-more">
+              <summary>Abilities &amp; patch notes</summary>
+              <div class="scroll" style="max-height:220px;margin-top:10px">
+                <table>
+                  <thead>
+                    <tr><th>Slot</th><th>Name</th><th>Dmg5</th><th>STR%</th><th>INT%</th><th>CD</th></tr>
+                  </thead>
+                  <tbody id="god-abilities"></tbody>
+                </table>
+              </div>
+              <pre class="detail" id="god-patch" style="margin-top:10px"></pre>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- TIERS -->
+      <section id="panel-tiers" class="panel">
         <div class="toolbar">
           <label>Scope
             <select id="tier-scope"></select>
@@ -64,63 +121,13 @@
             </table>
           </div>
           <div class="card">
-            <h2>Target lock</h2>
-            <div class="detail" id="tier-detail">Pick a row. Scope <strong>overall</strong> for full S-tier (~11). Role scopes only crown ~top 12%.</div>
+            <h2>Why this rank</h2>
+            <div id="tier-detail">Pick a row. Use scope <strong>overall</strong> for the full ladder.</div>
           </div>
         </div>
       </section>
 
-      <!-- Gods -->
-      <section id="panel-gods" class="panel">
-        <div class="toolbar">
-          <input id="god-search" type="search" placeholder="Search gods…" style="min-width:220px" />
-        </div>
-        <div class="grid-2">
-          <div class="card scroll">
-            <table>
-              <thead>
-                <tr><th>God</th><th>Pantheon</th><th>Dmg</th><th>Tier</th><th>Rank</th></tr>
-              </thead>
-              <tbody id="god-list-body"></tbody>
-            </table>
-          </div>
-          <div class="card scroll">
-            <h2 id="god-title">Select a god</h2>
-            <div class="muted" id="god-sub"></div>
-            <div id="god-metrics" style="margin:10px 0"></div>
-            <h3>Abilities</h3>
-            <div class="scroll" style="max-height:200px">
-              <table>
-                <thead>
-                  <tr><th>Slot</th><th>Name</th><th>Dmg5</th><th>STR%</th><th>INT%</th><th>CD</th><th>Pwr</th></tr>
-                </thead>
-                <tbody id="god-abilities"></tbody>
-              </table>
-            </div>
-            <h3>Conquest paths</h3>
-            <div class="muted" id="god-build-hint">One buy order per role. Supports mitigate &amp; counter — not lifesteal stacks.</div>
-            <div id="god-build" class="god-builds"></div>
-            <h3>Patch pulse</h3>
-            <pre class="detail" id="god-patch"></pre>
-          </div>
-        </div>
-      </section>
-
-      <!-- Builds -->
-      <section id="panel-builds" class="panel">
-        <div class="toolbar">
-          <label>Role
-            <select id="build-role"></select>
-          </label>
-        </div>
-        <p class="muted" id="build-desc"></p>
-        <div class="grid-2">
-          <div class="card" id="build-template"></div>
-          <div id="build-gods"></div>
-        </div>
-      </section>
-
-      <!-- Items -->
+      <!-- ITEMS -->
       <section id="panel-items" class="panel">
         <div class="toolbar">
           <input id="item-search" type="search" placeholder="Search items…" style="min-width:220px" />
@@ -148,41 +155,41 @@
             </table>
           </div>
           <div class="card">
-            <h2>Item dossier</h2>
-            <pre class="detail" id="item-detail">Select an item. Watch for Damp, Plat, Pen, Ten.</pre>
+            <h2>Item</h2>
+            <pre class="detail" id="item-detail">Select an item. Look for Pen, Damp, Plat, Ten.</pre>
           </div>
         </div>
       </section>
 
-      <!-- About -->
+      <!-- ABOUT -->
       <section id="panel-about" class="panel">
         <div class="card">
-          <h2>How this works</h2>
-          <p>
-            Statistical <strong>SMITE 2</strong> intel from wiki.smite2.com — not Smite 1, not guide sites.
-          </p>
+          <h2>How to use this</h2>
+          <ol class="how-list">
+            <li><strong>Builds</strong> — pick role → open a god card (kit-fit buy order).</li>
+            <li><strong>Gods</strong> — search any god; paths for each role they play.</li>
+            <li><strong>Tiers</strong> — patch-weighted ladder (not the same as builds).</li>
+          </ol>
+          <h3>Role jobs</h3>
           <ul>
-            <li><strong>Tiers</strong> — patch momentum 48% · kit 28% · build fit 14% · novelty/stability.</li>
-            <li><strong>Carry / Mid</strong> — backline damage + pen; Support peels for them.</li>
-            <li><strong>Jungle</strong> — ganks: Bumba, burst pen, CDR, Blink/mobility.</li>
-            <li><strong>Solo</strong> — unkillable frontline: dual prots, HP, Damp/Plat/Ten, hybrid offline damage.</li>
-            <li><strong>Support</strong> — peel for ADC/mid: mitigate, anti-AS/crit, auras — not personal DPS.</li>
-            <li><strong>Buy order</strong> — role-aware (frontline bulk vs gank burst vs backline pen).</li>
+            <li><strong>Carry / Mid</strong> — backline damage + pen; Support peels.</li>
+            <li><strong>Jungle</strong> — ganks (Bumba, pen, CDR, Blink).</li>
+            <li><strong>Solo</strong> — unkillable frontline (prots, HP, Damp/Plat/Ten).</li>
+            <li><strong>Support</strong> — peel for ADC/mid (mitigate, anti-AS/crit).</li>
           </ul>
           <p class="muted">
-            Model, not live WR. Scope <code>overall</code> for full S-tier; role scopes only ~top 12%.
+            Model from wiki.smite2.com — not live WR. Tiers: patch 48% · kit 28% · build 14%.
           </p>
           <p>
             <a href="https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool" target="_blank" rel="noopener">GitHub</a>
-            · Desktop: <code>python -m smite2db.gui</code>
-            · Refresh: scrape → analyze → <code>python -m smite2db.export_web</code>
+            · <code>python -m smite2db.gui</code>
           </p>
         </div>
       </section>
     </div>
 
     <footer class="footer">
-      SMITE 2 Arena Intel · community model from wiki.smite2.com · not affiliated with Hi-Rez / Titan Forge
+      SMITE 2 Arena Intel · wiki.smite2.com model · not affiliated with Hi-Rez
     </footer>
   </div>
   <script src="./app.js"></script>

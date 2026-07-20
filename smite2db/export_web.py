@@ -137,7 +137,7 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     builds_path = ROOT / "data" / "conquest_builds.json"
     if rebuild_builds:
         try:
-            builds = generate_all(conn, gods_per_role=5)
+            builds = generate_all(conn, gods_per_role=12)
             builds_path.write_text(json.dumps(builds, indent=2), encoding="utf-8")
             (ROOT / "data" / "conquest_builds.md").write_text(
                 render_markdown(builds), encoding="utf-8"

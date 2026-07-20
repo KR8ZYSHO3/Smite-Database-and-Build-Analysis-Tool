@@ -464,6 +464,156 @@ tr.selected td {
   border-radius: 0 8px 8px 0;
 }
 
+/* Flow */
+.flow-hint {
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  border: 1px solid rgba(76, 201, 240, 0.35);
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(76, 201, 240, 0.1), rgba(247, 37, 133, 0.06));
+  color: #cfe9f5;
+  font-size: 1.02rem;
+  line-height: 1.45;
+}
+.flow-hint strong { color: var(--gold); }
+.flow-hint em { color: var(--accent); font-style: normal; font-weight: 700; }
+
+.role-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.role-pill {
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--muted);
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+.role-pill:hover { border-color: var(--accent); color: var(--text); }
+.role-pill.active {
+  color: #041018;
+  background: linear-gradient(135deg, var(--accent), #7b61ff);
+  border-color: transparent;
+  box-shadow: var(--glow);
+}
+
+.role-job {
+  margin-bottom: 16px;
+  border-color: rgba(255, 214, 10, 0.25);
+}
+.role-job-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.role-job-head h2 {
+  margin: 0;
+  color: var(--gold);
+  font-size: 0.95rem;
+}
+.role-job-blurb {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: var(--text);
+}
+.common-label { margin: 4px 0 6px; font-size: 0.88rem; }
+.pill.ice {
+  border-color: rgba(76, 201, 240, 0.45);
+  color: #9ae7ff;
+}
+
+.build-god-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+}
+.god-build-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.gbc-head h3 {
+  margin: 0 0 4px;
+  font-family: var(--display);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  text-transform: uppercase;
+}
+.gbc-meta { font-size: 0.9rem; margin-bottom: 6px; }
+.god-build-card .why {
+  flex: 0 0 auto;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: #aebad4;
+  margin: 0 0 10px;
+}
+.starter-line {
+  margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.tag-start {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(255, 214, 10, 0.12);
+  border: 1px solid rgba(255, 214, 10, 0.35);
+  color: var(--gold);
+}
+.gbc-relics { margin-top: 4px; font-size: 0.88rem; }
+.linkish {
+  margin-top: 10px;
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 0;
+}
+.linkish:hover { color: #9ae7ff; text-decoration: underline; }
+
+.god-section { margin-top: 14px; }
+.god-more {
+  margin-top: 14px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+.god-more summary {
+  cursor: pointer;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+.how-list {
+  padding-left: 1.2rem;
+  line-height: 1.55;
+}
+.how-list li { margin-bottom: 6px; }
+
 /* Role accent strip on build template */
 #build-template h2 {
   color: var(--gold);
