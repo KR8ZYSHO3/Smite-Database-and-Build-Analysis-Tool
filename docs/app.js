@@ -67,7 +67,9 @@ function loadoutRail(items) {
   const parts = [];
   list.forEach((it, i) => {
     const kind = slotKind(it);
-    parts.push(`<div class="loadout-slot is-${escapeAttr(kind)}" title="${escapeAttr(it.name || "")}">
+    parts.push(`<div class="loadout-slot is-${escapeAttr(kind)}${
+      it.is_diff ? " is-diff" : ""
+    }" title="${escapeAttr(it.name || "")}${it.is_diff ? " · lobby swap" : ""}">
       <span class="ls-n">${i + 1}</span>
       <span class="ls-icon">${escapeHtml(itemInitials(it.name))}</span>
       <span class="ls-name">${escapeHtml(it.name || "—")}</span>
@@ -84,9 +86,25 @@ function registerShare(data) {
 }
 
 function shareBar(data) {
+  if (!data.deeplink) data.deeplink = deeplinkForShare(data);
   const id = registerShare(data);
   return `<div class="card-actions">
     <button type="button" class="btn-share" data-share-id="${id}">Share intel card</button>
+  </div>`;
+}
+
+function trustLine(extra) {
+  return `<p class="trust-line">Patch-weighted model · not live WR · ≤2 shop actives${
+    extra ? ` · ${escapeHtml(extra)}` : ""
+  }</p>`;
+}
+
+function emptyHud(title, body) {
+  return `<div class="empty-hud card hud">
+    <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
+    <div class="empty-hud-kicker">ARENA INTEL</div>
+    <div class="empty-hud-title">${escapeHtml(title)}</div>
+    <p class="muted">${escapeHtml(body)}</p>
   </div>`;
 }
 
@@ -340,6 +358,41 @@ function wrapCanvasText(ctx, text, x, y, maxW, lineH) {
   if (line) ctx.fillText(line, x, yy);
 }
 
+function deeplinkForShare(data) {
+  const mode = data.mode || "base";
+  if (mode === "counter" && data.god) {
+    const vs = (data.enemies || []).map(encodeURIComponent).join(",");
+    return `#counter/${encodeURIComponent(data.god)}/${encodeURIComponent(data.role || "Support")}${
+      vs ? `/${vs}` : ""
+    }`;
+  }
+  if (mode === "troll" && data.god) {
+    let h = `#troll/${encodeURIComponent(data.god)}/${encodeURIComponent(data.role || "Support")}`;
+    const flags = [];
+    if (data.aspect !== false && data.aspect !== 0) flags.push("aspect");
+    if (data.chaos) flags.push("chaos");
+    if (flags.length) h += `/${flags.join(",")}`;
+    return h;
+  }
+  if (data.god) return `#gods/${encodeURIComponent(data.god)}`;
+  if (data.role) return `#builds/${encodeURIComponent(data.role)}`;
+  return "#builds";
+}
+
+function absoluteShareUrl(data) {
+  const hash = data.deeplink || deeplinkForShare(data);
+  return `${location.origin}${location.pathname}${location.search}${hash}`;
+}
+
+async function copyText(text, okMsg) {
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast(okMsg || "Copied");
+  } catch {
+    showToast("Copy failed");
+  }
+}
+
 function setupShareUi() {
   document.addEventListener("click", (e) => {
     const btn = e.target.closest("[data-share-id]");
@@ -353,21 +406,29 @@ function setupShareUi() {
   $("#intel-modal")?.addEventListener("click", (e) => {
     if (e.target === $("#intel-modal")) closeIntelModal();
   });
-  $("#intel-copy-text")?.addEventListener("click", async () => {
+  $("#intel-copy-text")?.addEventListener("click", () => {
     if (!activeShare) return;
-    try {
-      await navigator.clipboard.writeText(intelPathText(activeShare));
-      showToast("Path copied");
-    } catch {
-      showToast("Copy failed");
-    }
+    copyText(intelPathText(activeShare), "Path copied");
+  });
+  $("#intel-copy-link")?.addEventListener("click", () => {
+    if (!activeShare) return;
+    copyText(absoluteShareUrl(activeShare), "Link copied");
   });
   $("#intel-dl-png")?.addEventListener("click", () => {
     if (!activeShare) return;
     downloadIntelPng(activeShare);
   });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && $("#intel-modal")?.classList.contains("open")) closeIntelModal();
+    if (e.key === "Escape") {
+      if ($("#intel-modal")?.classList.contains("open")) {
+        closeIntelModal();
+        return;
+      }
+      const sheet = $("#mobile-more-sheet");
+      if (sheet && !sheet.hidden) {
+        sheet.hidden = true;
+      }
+    }
   });
 }
 
@@ -377,6 +438,200 @@ function itemsForShare(items) {
     cost: it.cost ?? it.total_cost ?? null,
     slot: it.slot || null,
   }));
+}
+
+/* -------------------- Routing / deep links -------------------- */
+const VALID_TABS = new Set(["builds", "counter", "troll", "gods", "tiers", "items", "about"]);
+const routeState = {
+  suppressHash: false,
+  build: null, // { getRole, setRole }
+};
+
+function activateTab(tab, { updateHash = true } = {}) {
+  if (!VALID_TABS.has(tab)) tab = "builds";
+  $$(".tab-btn").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
+  $$(".mobile-tab").forEach((b) => {
+    if (b.dataset.tab === "more") {
+      b.classList.toggle("active", ["tiers", "items", "about"].includes(tab));
+    } else {
+      b.classList.toggle("active", b.dataset.tab === tab);
+    }
+  });
+  $$(".panel").forEach((p) => p.classList.toggle("active", p.id === `panel-${tab}`));
+  const sheet = $("#mobile-more-sheet");
+  if (sheet) sheet.hidden = true;
+  if (updateHash) syncHashFromUi(tab);
+  return tab;
+}
+
+function setupTabs() {
+  const onTab = (tab) => {
+    if (tab === "more") {
+      const sheet = $("#mobile-more-sheet");
+      if (sheet) sheet.hidden = !sheet.hidden;
+      return;
+    }
+    activateTab(tab, { updateHash: true });
+  };
+  $$(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => onTab(btn.dataset.tab));
+  });
+  $$(".mobile-tab, .mobile-sheet-btn").forEach((btn) => {
+    btn.addEventListener("click", () => onTab(btn.dataset.tab));
+  });
+}
+
+function setupFlowHint() {
+  const el = $("#flow-hint");
+  const btn = $("#flow-hint-dismiss");
+  if (!el) return;
+  try {
+    if (localStorage.getItem("arena_intel_hint_v1") === "1") {
+      el.hidden = true;
+      return;
+    }
+  } catch (_) {}
+  btn?.addEventListener("click", () => {
+    el.hidden = true;
+    try {
+      localStorage.setItem("arena_intel_hint_v1", "1");
+    } catch (_) {}
+  });
+}
+
+function currentHash() {
+  return (location.hash || "").replace(/^#/, "");
+}
+
+function parseRoute(hash) {
+  const raw = (hash || "").replace(/^#/, "").trim();
+  if (!raw) return { tab: "builds" };
+  const segs = raw.split("/").map((s) => {
+    try {
+      return decodeURIComponent(s);
+    } catch {
+      return s;
+    }
+  });
+  const tab = (segs[0] || "builds").toLowerCase();
+  if (!VALID_TABS.has(tab)) return { tab: "builds" };
+  if (tab === "builds") {
+    return { tab, role: segs[1] || null };
+  }
+  if (tab === "gods") {
+    return { tab, god: segs[1] || null };
+  }
+  if (tab === "counter") {
+    return {
+      tab,
+      god: segs[1] || null,
+      role: segs[2] || null,
+      enemies: segs[3] ? segs[3].split(",").map((x) => x.trim()).filter(Boolean) : [],
+    };
+  }
+  if (tab === "troll") {
+    const flags = (segs[3] || "").toLowerCase();
+    return {
+      tab,
+      god: segs[1] || null,
+      role: segs[2] || null,
+      aspect: !flags || flags.includes("aspect"),
+      chaos: flags.includes("chaos"),
+    };
+  }
+  return { tab };
+}
+
+function writeHash(hash) {
+  const next = hash.startsWith("#") ? hash : `#${hash}`;
+  if ((location.hash || "") === next) return;
+  // replaceState keeps the URL shareable without re-firing hashchange loops
+  history.replaceState(null, "", `${location.pathname}${location.search}${next}`);
+}
+
+function syncHashFromUi(tab) {
+  if (routeState.suppressHash) return;
+  let hash = tab || "builds";
+  if (hash === "builds" && routeState.build?.getRole) {
+    hash = `builds/${encodeURIComponent(routeState.build.getRole())}`;
+  } else if (hash === "gods" && state.selectedGod?.name) {
+    hash = `gods/${encodeURIComponent(state.selectedGod.name)}`;
+  } else if (hash === "counter") {
+    const you = ($("#ctr-you")?.value || "").trim();
+    const role = $("#ctr-role")?.value || "Support";
+    if (you) {
+      const vs = (counterState.enemies || []).map(encodeURIComponent).join(",");
+      hash = `counter/${encodeURIComponent(you)}/${encodeURIComponent(role)}${vs ? `/${vs}` : ""}`;
+    }
+  } else if (hash === "troll") {
+    const god = ($("#troll-god")?.value || "").trim();
+    const role = $("#troll-role")?.value || "Support";
+    if (god) {
+      const flags = [];
+      if ($("#troll-aspect")?.checked) flags.push("aspect");
+      if ($("#troll-chaos")?.checked) flags.push("chaos");
+      hash = `troll/${encodeURIComponent(god)}/${encodeURIComponent(role)}${
+        flags.length ? `/${flags.join(",")}` : ""
+      }`;
+    }
+  }
+  writeHash(hash);
+}
+
+function applyRoute(route) {
+  if (!route) return;
+  routeState.suppressHash = true;
+  activateTab(route.tab, { updateHash: false });
+
+  if (route.tab === "builds" && route.role && routeState.build?.setRole) {
+    routeState.build.setRole(route.role, { updateHash: false });
+  }
+  if (route.tab === "gods" && route.god) {
+    selectGod(route.god, false);
+  }
+  if (route.tab === "counter") {
+    if (route.god && $("#ctr-you")) $("#ctr-you").value = route.god;
+    if (route.role && $("#ctr-role")) {
+      const opt = [...($("#ctr-role").options || [])].find(
+        (o) => o.value.toLowerCase() === String(route.role).toLowerCase()
+      );
+      if (opt) $("#ctr-role").value = opt.value;
+    }
+    if (route.enemies?.length) {
+      counterState.enemies = route.enemies
+        .map((n) => findGodByName(n)?.name)
+        .filter(Boolean)
+        .slice(0, 5);
+      renderEnemyPicks();
+    }
+    if (route.god && route.enemies?.length) {
+      runCounterFromForm({ updateHash: false });
+    }
+  }
+  if (route.tab === "troll") {
+    if (route.god && $("#troll-god")) $("#troll-god").value = route.god;
+    if (route.role && $("#troll-role")) {
+      const opt = [...($("#troll-role").options || [])].find(
+        (o) => o.value.toLowerCase() === String(route.role).toLowerCase()
+      );
+      if (opt) $("#troll-role").value = opt.value;
+    }
+    if ($("#troll-aspect")) $("#troll-aspect").checked = route.aspect !== false;
+    if ($("#troll-chaos")) $("#troll-chaos").checked = !!route.chaos;
+    if (route.god) runTrollFromForm({ updateHash: false });
+  }
+
+  queueMicrotask(() => {
+    routeState.suppressHash = false;
+  });
+}
+
+function setupRouting() {
+  window.addEventListener("hashchange", () => {
+    if (routeState.suppressHash) return;
+    applyRoute(parseRoute(currentHash()));
+  });
+  applyRoute(parseRoute(currentHash()));
 }
 
 function applyPayload(payload) {
@@ -420,17 +675,6 @@ async function loadData() {
     fetchJson(new URL("items.json", base)),
   ]);
   applyPayload({ meta, tiers, builds, gods, items });
-}
-
-function setupTabs() {
-  $$(".tab-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      $$(".tab-btn").forEach((b) => b.classList.remove("active"));
-      $$(".panel").forEach((p) => p.classList.remove("active"));
-      btn.classList.add("active");
-      $(`#panel-${btn.dataset.tab}`).classList.add("active");
-    });
-  });
 }
 
 /* -------------------- Tiers -------------------- */
@@ -664,7 +908,14 @@ function selectGod(name, switchTab) {
   if (!g) return;
   state.selectedGod = g;
   if (switchTab) {
-    $$(".tab-btn").find((b) => b.dataset.tab === "gods")?.click();
+    activateTab("gods", { updateHash: false });
+  }
+  if (!routeState.suppressHash && switchTab) {
+    writeHash(`gods/${encodeURIComponent(g.name)}`);
+  } else if (!routeState.suppressHash && !switchTab) {
+    // Stay on current tab (e.g. tiers) but still allow share links when on gods
+    const active = $$(".tab-btn").find((b) => b.classList.contains("active"))?.dataset.tab;
+    if (active === "gods") writeHash(`gods/${encodeURIComponent(g.name)}`);
   }
   const cmp = $("#god-compare");
   if (cmp && cmp.value) {
@@ -892,6 +1143,7 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta) {
       `actives ${nAct}/${maxA}`,
     ].filter(Boolean),
     footerLeft: `PATCH · KIT · ${role.toUpperCase()}`,
+    deeplink: `#gods/${encodeURIComponent(g.name)}`,
   };
   return `
     <div class="card build-card god-role-build ${roleClass(role)} ${isAspect ? "is-aspect" : ""}">
@@ -925,6 +1177,7 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta) {
         ${items.map((it, i) => buyRow(it, i + 1)).join("")}
       </ol>
       <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
+      ${trustLine(isAspect ? "aspect path" : "base kit path")}
       ${shareBar(shareData)}
     </div>`;
 }
@@ -952,6 +1205,19 @@ function setupBuilds() {
         `<button type="button" class="role-pill ${r === activeRole ? "active" : ""}" data-role="${r}">${r}</button>`
     )
     .join("");
+
+  const setRole = (role, { updateHash = true } = {}) => {
+    const hit = roles.find((r) => r.toLowerCase() === String(role || "").toLowerCase());
+    if (!hit) return false;
+    activeRole = hit;
+    pills.querySelectorAll(".role-pill").forEach((b) =>
+      b.classList.toggle("active", b.dataset.role === activeRole)
+    );
+    if (search) search.value = "";
+    render();
+    if (updateHash) syncHashFromUi("builds");
+    return true;
+  };
 
   const render = () => {
     const data = state.builds?.roles?.[activeRole];
@@ -985,6 +1251,7 @@ function setupBuilds() {
           : ""
       }
       <p class="muted" style="margin:0"><strong>Next:</strong> pick a god below — each path is scored to that god’s kit.</p>
+      ${trustLine("role job only")}
     `;
 
     const q = (search.value || "").toLowerCase().trim();
@@ -996,16 +1263,16 @@ function setupBuilds() {
 
     $("#build-gods").innerHTML = gods.length
       ? gods.map((gb) => godBuildCard(gb, activeRole)).join("")
-      : `<div class="card muted">No gods for this filter.</div>`;
+      : emptyHud(
+          "No gods match",
+          q
+            ? `Nothing in ${activeRole} matches “${q}”. Clear the filter or try another role.`
+            : `No kit-fit builds exported for ${activeRole} yet.`
+        );
   };
 
   pills.querySelectorAll(".role-pill").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      activeRole = btn.dataset.role;
-      pills.querySelectorAll(".role-pill").forEach((b) => b.classList.toggle("active", b === btn));
-      search.value = "";
-      render();
-    });
+    btn.addEventListener("click", () => setRole(btn.dataset.role));
   });
   search.addEventListener("input", render);
   $("#build-gods").addEventListener("click", (e) => {
@@ -1013,6 +1280,11 @@ function setupBuilds() {
     if (!btn) return;
     selectGod(btn.getAttribute("data-open-god"), true);
   });
+
+  routeState.build = {
+    getRole: () => activeRole,
+    setRole,
+  };
   render();
 }
 
@@ -1040,6 +1312,7 @@ function godBuildCard(gb, role) {
       gb.patch_trajectory || null,
     ].filter(Boolean),
     footerLeft: `CONQUEST // ${role.toUpperCase()}`,
+    deeplink: `#gods/${encodeURIComponent(gb.god)}`,
   };
   return `
     <article class="card build-card god-build-card ${roleClass(role)}">
@@ -1091,6 +1364,7 @@ function godBuildCard(gb, role) {
         ${itemsG.map((it, i) => buyRow(it, i + 1)).join("")}
       </ol>
       <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
+      ${trustLine("kit-fit path")}
       <div class="card-actions">
         <button type="button" class="btn-share" data-share-id="${registerShare(shareData)}">Share intel card</button>
         <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">Open full god page →</button>
@@ -1122,7 +1396,7 @@ function buyRow(it, n) {
   if (it.ten) tags.push({ t: `ten ${it.ten}`, metal: "mitigate" });
   if (it.troll) tags.push({ t: "troll", metal: "troll" });
   if (it.counter) tags.push({ t: "counter", metal: "counter" });
-  const slotClass = `is-${kind}`;
+  const slotClass = `is-${kind}${it.is_diff ? " is-diff" : ""}`;
   const why = it.why
     ? `<details class="item-why-details"><summary>Why this?</summary><div class="item-why">${escapeHtml(
         it.why
@@ -1594,14 +1868,15 @@ function injectCounterCores(baselineNames, threat, role) {
 }
 
 function getBaselinePath(god, role) {
+  return getBaselineItems(god, role).map((i) => i.name);
+}
+
+function getBaselineItems(god, role) {
   const byRole = god.conquest_by_role || {};
-  if (byRole[role]?.items?.length) {
-    return byRole[role].items.map((i) => i.name);
-  }
-  // From builds.json top lists
+  if (byRole[role]?.items?.length) return byRole[role].items;
   const rec = state.builds?.roles?.[role]?.recommended_gods || [];
   const hit = rec.find((g) => g.god === god.name);
-  if (hit?.items?.length) return hit.items.map((i) => i.name);
+  if (hit?.items?.length) return hit.items;
   return [];
 }
 
@@ -1611,6 +1886,45 @@ function getStarter(god, role) {
   const rec = state.builds?.roles?.[role]?.recommended_gods || [];
   const hit = rec.find((g) => g.god === god.name);
   return hit?.starter || null;
+}
+
+function markPathDiffs(baselineItems, counterItems) {
+  const baseSet = new Set((baselineItems || []).map((i) => i.name));
+  return (counterItems || []).map((it) => ({
+    ...it,
+    is_diff: !baseSet.has(it.name),
+    counter: it.counter || !baseSet.has(it.name),
+  }));
+}
+
+function pathCompareHtml(baselineItems, counterItems, starter) {
+  const base = baselineItems || [];
+  const ctr = markPathDiffs(base, counterItems || []);
+  const baseBuy = base.length
+    ? base.map((it, i) => buyRow(it, i + 1)).join("")
+    : `<li class="muted" style="list-style:none;padding:8px">No kit baseline for this role.</li>`;
+  const ctrBuy = ctr.map((it, i) => buyRow(it, i + 1)).join("");
+  return `
+    <div class="path-compare">
+      <div class="path-col">
+        <h4 class="path-col-title">Kit path</h4>
+        <p class="muted path-col-sub">Default kit-fit buy order</p>
+        <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(
+          starter?.name || "—"
+        )}</div>
+        ${base.length ? loadoutRail(base) : ""}
+        <ol class="buy-list">${baseBuy}</ol>
+      </div>
+      <div class="path-col path-col-counter">
+        <h4 class="path-col-title">Lobby path</h4>
+        <p class="muted path-col-sub">Re-weighted vs enemy 5 · <span class="diff-legend">highlighted = swap</span></p>
+        <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(
+          starter?.name || "—"
+        )}</div>
+        ${loadoutRail(ctr)}
+        <ol class="buy-list">${ctrBuy}</ol>
+      </div>
+    </div>`;
 }
 
 function renderEnemyPicks() {
@@ -1916,59 +2230,162 @@ function buildTrollPathJS(god, role, useAspect, chaos) {
   };
 }
 
+function runTrollFromForm({ updateHash = true } = {}) {
+  const god = findGodByName($("#troll-god")?.value);
+  const role = $("#troll-role")?.value || "Support";
+  const useAspect = !!$("#troll-aspect")?.checked;
+  const chaos = !!$("#troll-chaos")?.checked;
+  const box = $("#troll-result");
+  if (!box) return;
+  if (!god) {
+    box.innerHTML = emptyHud("Pick a god", "Type a valid god name, then generate a kit-true troll path.");
+    return;
+  }
+  const t = buildTrollPathJS(god, role, useAspect, chaos);
+  const shareData = {
+    mode: "troll",
+    god: god.name,
+    role,
+    title: t.title,
+    subtitle: `${god.name} · ${role}${t.aspect ? ` · ${t.aspect.name}` : ""} · troll path`,
+    why: t.monologue || t.disclaimer || "",
+    starter: t.starter?.name || "",
+    items: itemsForShare(t.items),
+    tags: ["TROLL", t.primary.replace(/_/g, " "), t.secondary.replace(/_/g, " ")],
+    footerLeft: "TROLL / MEME — NOT RANKED",
+    aspect: useAspect,
+    chaos,
+    deeplink: `#troll/${encodeURIComponent(god.name)}/${encodeURIComponent(role)}/${[
+      useAspect ? "aspect" : null,
+      chaos ? "chaos" : null,
+    ]
+      .filter(Boolean)
+      .join(",") || "base"}`,
+  };
+  box.innerHTML = `
+    <article class="card build-card god-build-card is-troll ${roleClass(role)}">
+      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
+      <header class="gbc-head">
+        <h3>😈 ${escapeHtml(t.title)}</h3>
+        <div class="muted gbc-meta">${escapeHtml(god.name)} · ${escapeHtml(role)}</div>
+      </header>
+      <div class="build-meta">
+        <span class="pill troll-pill">TROLL</span>
+        <span class="pill hot">${escapeHtml(t.primary.replace(/_/g, " "))}</span>
+        <span class="pill">${escapeHtml(t.secondary.replace(/_/g, " "))}</span>
+        ${t.aspect ? `<span class="pill aspect">${escapeHtml(t.aspect.name)}</span>` : ""}
+      </div>
+      <p class="aspect-blurb troll-blurb">${escapeHtml(t.disclaimer)}</p>
+      <p class="why">${escapeHtml(t.monologue)}</p>
+      <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(t.starter?.name || "—")}</div>
+      ${loadoutRail(t.items)}
+      <ol class="buy-list">
+        ${t.items.map((it, i) => buyRow(it, i + 1)).join("")}
+      </ol>
+      ${
+        t.baseline?.length
+          ? `<p class="muted">Serious baseline (for contrast): ${t.baseline.map(escapeHtml).join(" → ")}</p>`
+          : ""
+      }
+      ${trustLine("meme only — not ranked advice")}
+      ${shareBar(shareData)}
+    </article>
+  `;
+  if (updateHash) syncHashFromUi("troll");
+}
+
 function setupTroll() {
-  $("#troll-run")?.addEventListener("click", () => {
-    const god = findGodByName($("#troll-god")?.value);
-    const role = $("#troll-role")?.value || "Support";
-    const useAspect = !!$("#troll-aspect")?.checked;
-    const chaos = !!$("#troll-chaos")?.checked;
-    const box = $("#troll-result");
-    if (!god) {
-      box.innerHTML = `<p class="muted">Pick a valid god.</p>`;
-      return;
-    }
-    const t = buildTrollPathJS(god, role, useAspect, chaos);
-    const shareData = {
-      mode: "troll",
-      god: god.name,
-      role,
-      title: t.title,
-      subtitle: `${god.name} · ${role}${t.aspect ? ` · ${t.aspect.name}` : ""} · troll path`,
-      why: t.monologue || t.disclaimer || "",
-      starter: t.starter?.name || "",
-      items: itemsForShare(t.items),
-      tags: ["TROLL", t.primary.replace(/_/g, " "), t.secondary.replace(/_/g, " ")],
-      footerLeft: "TROLL / MEME — NOT RANKED",
-    };
-    box.innerHTML = `
-      <article class="card build-card god-build-card is-troll ${roleClass(role)}">
-        <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
-        <header class="gbc-head">
-          <h3>😈 ${escapeHtml(t.title)}</h3>
-          <div class="muted gbc-meta">${escapeHtml(god.name)} · ${escapeHtml(role)}</div>
-        </header>
-        <div class="build-meta">
-          <span class="pill troll-pill">TROLL</span>
-          <span class="pill hot">${escapeHtml(t.primary.replace(/_/g, " "))}</span>
-          <span class="pill">${escapeHtml(t.secondary.replace(/_/g, " "))}</span>
-          ${t.aspect ? `<span class="pill aspect">${escapeHtml(t.aspect.name)}</span>` : ""}
-        </div>
-        <p class="aspect-blurb troll-blurb">${escapeHtml(t.disclaimer)}</p>
-        <p class="why">${escapeHtml(t.monologue)}</p>
-        <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(t.starter?.name || "—")}</div>
-        ${loadoutRail(t.items)}
-        <ol class="buy-list">
-          ${t.items.map((it, i) => buyRow(it, i + 1)).join("")}
-        </ol>
-        ${
-          t.baseline?.length
-            ? `<p class="muted">Serious baseline (for contrast): ${t.baseline.map(escapeHtml).join(" → ")}</p>`
-            : ""
-        }
-        ${shareBar(shareData)}
-      </article>
-    `;
-  });
+  const box = $("#troll-result");
+  if (box && !box.innerHTML.trim()) {
+    box.innerHTML = emptyHud(
+      "Troll path standby",
+      "Pick a god + role. We build a kit-true off-meta path designed to be frustrating — not ranked advice."
+    );
+  }
+  $("#troll-run")?.addEventListener("click", () => runTrollFromForm({ updateHash: true }));
+}
+
+function runCounterFromForm({ updateHash = true } = {}) {
+  const you = findGodByName($("#ctr-you")?.value);
+  const role = $("#ctr-role")?.value || "Support";
+  const threatEl = $("#ctr-threat");
+  const resultEl = $("#ctr-result");
+  if (!threatEl || !resultEl) return;
+
+  if (!you) {
+    threatEl.innerHTML = "";
+    resultEl.innerHTML = emptyHud("Pick your god", "Choose your god + role, then fill enemy lobby slots (type name + Enter).");
+    return;
+  }
+  if (!counterState.enemies.length) {
+    threatEl.innerHTML = "";
+    resultEl.innerHTML = emptyHud(
+      "Enemy lobby empty",
+      "Add at least one enemy (up to 5). Threat meters and the lobby path unlock after that."
+    );
+    return;
+  }
+
+  const enemyGods = counterState.enemies.map(findGodByName).filter(Boolean);
+  const threat = analyzeEnemyTeamJS(enemyGods);
+  threatEl.innerHTML = `
+    <strong>Threat</strong> — ${escapeHtml(threat.summary)}
+    ${threatMetersHtml(threat)}
+    <ul class="threat-list">${threat.reasons.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>
+    <div class="muted">Magic ${fmt(threat.magical_count, 0)} · Physical ${fmt(threat.physical_count, 0)}</div>
+  `;
+
+  const baselineItems = getBaselineItems(you, role);
+  const baselineNames = baselineItems.map((i) => i.name);
+  const path = markPathDiffs(baselineItems, injectCounterCores(baselineNames, threat, role));
+  const starter = getStarter(you, role);
+
+  const vsList = enemyGods.map((g) => g.name);
+  const vs = vsList.join(", ");
+  const shareData = {
+    mode: "counter",
+    god: you.name,
+    role,
+    enemies: vsList,
+    title: `${you.name} · ${role} · counter`,
+    subtitle: `vs ${vs}`,
+    why: threat.summary || "",
+    starter: starter?.name || "",
+    items: itemsForShare(path),
+    tags: [
+      "counter",
+      threat.need_anti_crit ? "anti-crit" : null,
+      threat.need_mprot ? "mprot" : null,
+      threat.need_antiheal ? "antiheal" : null,
+      threat.need_magi ? "anti-CC" : null,
+    ].filter(Boolean),
+    footerLeft: "COUNTER PATH · LOBBY INTEL",
+    deeplink: `#counter/${encodeURIComponent(you.name)}/${encodeURIComponent(role)}/${vsList
+      .map(encodeURIComponent)
+      .join(",")}`,
+  };
+
+  resultEl.innerHTML = `
+    <article class="card build-card god-build-card ${roleClass(role)}">
+      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
+      <header class="gbc-head">
+        <h3>${escapeHtml(you.name)} · ${escapeHtml(role)} · counter</h3>
+        <div class="muted gbc-meta">vs ${enemyGods.map((g) => escapeHtml(g.name)).join(", ")}</div>
+      </header>
+      <div class="build-meta">
+        <span class="pill hot">counter</span>
+        ${threat.need_anti_crit ? `<span class="pill">anti-crit</span>` : ""}
+        ${threat.need_mprot ? `<span class="pill">mprot</span>` : ""}
+        ${threat.need_antiheal ? `<span class="pill">antiheal</span>` : ""}
+        ${threat.need_magi ? `<span class="pill">anti-CC</span>` : ""}
+        ${path.some((p) => p.is_diff) ? `<span class="pill ice">swaps highlighted</span>` : ""}
+      </div>
+      ${pathCompareHtml(baselineItems, path, starter)}
+      ${trustLine("lobby re-weight · not live WR")}
+      ${shareBar(shareData)}
+    </article>
+  `;
+  if (updateHash) syncHashFromUi("counter");
 }
 
 function setupCounter() {
@@ -1976,6 +2393,14 @@ function setupCounter() {
   if (!list) return;
   const names = [...(state.gods || [])].map((g) => g.name).sort();
   list.innerHTML = names.map((n) => `<option value="${escapeAttr(n)}"></option>`).join("");
+
+  const resultEl = $("#ctr-result");
+  if (resultEl && !resultEl.innerHTML.trim()) {
+    resultEl.innerHTML = emptyHud(
+      "Counter lobby standby",
+      "Your god + up to 5 enemies → kit path vs lobby path side-by-side."
+    );
+  }
 
   const addIn = $("#ctr-enemy-add");
   addIn?.addEventListener("keydown", (e) => {
@@ -1993,86 +2418,13 @@ function setupCounter() {
     renderEnemyPicks();
   });
 
-  $("#ctr-run")?.addEventListener("click", () => {
-    const you = findGodByName($("#ctr-you")?.value);
-    const role = $("#ctr-role")?.value || "Support";
-    const threatEl = $("#ctr-threat");
-    const resultEl = $("#ctr-result");
-    if (!you) {
-      threatEl.textContent = "Pick a valid god for yourself.";
-      resultEl.innerHTML = "";
-      return;
-    }
-    if (!counterState.enemies.length) {
-      threatEl.textContent = "Add at least one enemy god (type name + Enter).";
-      resultEl.innerHTML = "";
-      return;
-    }
-    const enemyGods = counterState.enemies.map(findGodByName).filter(Boolean);
-    const threat = analyzeEnemyTeamJS(enemyGods);
-    threatEl.innerHTML = `
-      <strong>Threat</strong> — ${escapeHtml(threat.summary)}
-      ${threatMetersHtml(threat)}
-      <ul class="threat-list">${threat.reasons.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>
-      <div class="muted">Magic ${fmt(threat.magical_count, 0)} · Physical ${fmt(threat.physical_count, 0)}</div>
-    `;
-
-    const baseline = getBaselinePath(you, role);
-    const path = injectCounterCores(baseline, threat, role);
-    const starter = getStarter(you, role);
-    const baselineNote = baseline.length
-      ? `<p class="muted">Baseline kit path: ${baseline.map(escapeHtml).join(" → ")}</p>`
-      : `<p class="muted">No baseline path for ${escapeHtml(you.name)} ${escapeHtml(role)} — pure counter ranking.</p>`;
-
-    const vs = enemyGods.map((g) => g.name).join(", ");
-    const shareData = {
-      mode: "counter",
-      god: you.name,
-      role,
-      title: `${you.name} · ${role} · counter`,
-      subtitle: `vs ${vs}`,
-      why: threat.summary || "",
-      starter: starter?.name || "",
-      items: itemsForShare(path),
-      tags: [
-        "counter",
-        threat.need_anti_crit ? "anti-crit" : null,
-        threat.need_mprot ? "mprot" : null,
-        threat.need_antiheal ? "antiheal" : null,
-        threat.need_magi ? "anti-CC" : null,
-      ].filter(Boolean),
-      footerLeft: "COUNTER PATH · LOBBY INTEL",
-    };
-
-    resultEl.innerHTML = `
-      <article class="card build-card god-build-card ${roleClass(role)}">
-        <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
-        <header class="gbc-head">
-          <h3>${escapeHtml(you.name)} · ${escapeHtml(role)} · counter</h3>
-          <div class="muted gbc-meta">vs ${enemyGods.map((g) => escapeHtml(g.name)).join(", ")}</div>
-        </header>
-        <div class="build-meta">
-          <span class="pill hot">counter</span>
-          ${threat.need_anti_crit ? `<span class="pill">anti-crit</span>` : ""}
-          ${threat.need_mprot ? `<span class="pill">mprot</span>` : ""}
-          ${threat.need_antiheal ? `<span class="pill">antiheal</span>` : ""}
-          ${threat.need_magi ? `<span class="pill">anti-CC</span>` : ""}
-        </div>
-        ${baselineNote}
-        <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(starter?.name || "—")}</div>
-        ${loadoutRail(path)}
-        <ol class="buy-list">
-          ${path.map((it, i) => buyRow(it, i + 1)).join("")}
-        </ol>
-        ${shareBar(shareData)}
-      </article>
-    `;
-  });
+  $("#ctr-run")?.addEventListener("click", () => runCounterFromForm({ updateHash: true }));
 }
 
 async function main() {
   setupTabs();
   setupShareUi();
+  setupFlowHint();
   const loading = $("#loading");
   try {
     await loadData();
@@ -2099,6 +2451,7 @@ async function main() {
     setupItems();
     setupAboutMomentum();
     renderEnemyPicks();
+    setupRouting();
   } catch (err) {
     loading.innerHTML = `<div class="err"><strong>Failed to load data.</strong><br>${escapeHtml(
       err.message || err

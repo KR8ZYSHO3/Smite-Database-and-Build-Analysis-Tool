@@ -28,9 +28,10 @@
       <p class="flow-hint" id="flow-hint">
         <strong>Start here:</strong> pick a <em>role</em>, then open a <em>god</em> for a kit-specific buy order.
         Role cards are job notes only — not full builds.
+        <button type="button" class="hint-dismiss" id="flow-hint-dismiss" aria-label="Dismiss tip">Got it</button>
       </p>
 
-      <nav class="tabs">
+      <nav class="tabs" aria-label="Primary">
         <button class="tab-btn active" data-tab="builds">1 · Builds</button>
         <button class="tab-btn" data-tab="counter">2 · Counter</button>
         <button class="tab-btn" data-tab="troll">3 · Troll</button>
@@ -309,8 +310,21 @@
     </div>
 
     <footer class="footer">
-      SMITE 2 Arena Intel · wiki.smite2.com model · not affiliated with Hi-Rez
+      SMITE 2 Arena Intel · wiki.smite2.com model · not live WR · not affiliated with Hi-Rez
     </footer>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Mobile primary">
+    <button type="button" class="mobile-tab active" data-tab="builds"><span class="mn-icon">⚔</span><span>Builds</span></button>
+    <button type="button" class="mobile-tab" data-tab="counter"><span class="mn-icon">◎</span><span>Counter</span></button>
+    <button type="button" class="mobile-tab" data-tab="troll"><span class="mn-icon">😈</span><span>Troll</span></button>
+    <button type="button" class="mobile-tab" data-tab="gods"><span class="mn-icon">◆</span><span>Gods</span></button>
+    <button type="button" class="mobile-tab" data-tab="more" id="mobile-more" aria-haspopup="true"><span class="mn-icon">···</span><span>More</span></button>
+  </nav>
+  <div class="mobile-more-sheet" id="mobile-more-sheet" hidden>
+    <button type="button" class="mobile-sheet-btn" data-tab="tiers">Tiers</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="items">Items</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="about">About</button>
   </div>
 
   <!-- Shareable intel card modal -->
@@ -320,6 +334,7 @@
         <h3 id="intel-modal-title">Intel card</h3>
         <div class="intel-modal-actions">
           <button type="button" class="btn-share" id="intel-dl-png">Download PNG</button>
+          <button type="button" class="btn-ghost" id="intel-copy-link">Copy link</button>
           <button type="button" class="btn-ghost" id="intel-copy-text">Copy path</button>
           <button type="button" class="btn-ghost" id="intel-close">Close</button>
         </div>
