@@ -7,7 +7,28 @@ import sqlite3
 from collections import defaultdict
 from typing import Any
 
-from .stat_parse import clamp, normalize_minmax, parse_ability_features, safe_div
+from .stat_parse import clamp, normalize_winsorized, parse_ability_features
+
+
+def _is_basic(slot: str | None) -> bool:
+    return bool(slot and "basic" in slot.lower())
+
+
+def _is_passive(slot: str | None) -> bool:
+    return bool(slot and "passive" in slot.lower())
+
+
+def _is_ultimate(slot: str | None) -> bool:
+    return bool(slot and "ultimate" in slot.lower())
+
+
+def _is_combat_ability(slot: str | None) -> bool:
+    """Non-basic, non-passive (active kit + ults)."""
+    if not slot:
+        return False
+    if _is_basic(slot) or _is_passive(slot):
+        return False
+    return True
 
 
 def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
@@ -17,7 +38,8 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
     rows = conn.execute(
         """
         SELECT a.id, a.god_id, a.slot, a.name, a.short_label, a.description,
-               a.stats_text, a.notes_text, a.stats_json, g.name AS god_name
+               a.stats_text, a.notes_text, a.stats_json, g.name AS god_name,
+               g.primary_damage_type
         FROM abilities a
         JOIN gods g ON g.id = a.god_id
         ORDER BY a.god_id, a.slot_order
@@ -42,25 +64,24 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                 "ability_id": r["id"],
                 "god_id": r["god_id"],
                 "god_name": r["god_name"],
+                "damage_type": r["primary_damage_type"],
                 "slot": r["slot"],
                 "name": r["name"],
             }
         )
         parsed.append(feat)
 
-    # Normalize power across all non-basic abilities
-    power_raws = [p["power_raw"] for p in parsed if p["slot"] and "basic" not in p["slot"].lower()]
-    # map ability_id -> normalized
-    non_basic = [p for p in parsed if p["slot"] and "basic" not in p["slot"].lower()]
-    norms = normalize_minmax([p["power_raw"] for p in non_basic]) if non_basic else []
+    # Normalize power across all non-basic abilities (winsorized)
+    non_basic = [p for p in parsed if p["slot"] and not _is_basic(p["slot"])]
+    norms = normalize_winsorized([p["power_raw"] for p in non_basic]) if non_basic else []
     norm_map = {p["ability_id"]: norms[i] for i, p in enumerate(non_basic)} if norms else {}
 
     for p in parsed:
         power_score = norm_map.get(p["ability_id"])
         if power_score is None:
-            # basic attacks: modest score from scaling
+            # basic attacks: modest score from scaling only (don't dominate kit)
             power_score = clamp(
-                (p["scaling_str_pct"] + p["scaling_int_pct"]) * 0.4 + 20
+                (p["scaling_str_pct"] + p["scaling_int_pct"]) * 0.25 + 15
             )
         p["power_score"] = power_score
         conn.execute(
@@ -97,7 +118,16 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                 p["burst_proxy"],
                 p["utility_score"],
                 p["power_score"],
-                json.dumps({"name": p["name"], "power_raw": p["power_raw"]}),
+                json.dumps(
+                    {
+                        "name": p["name"],
+                        "power_raw": p["power_raw"],
+                        "tick_mult": p.get("tick_mult"),
+                        "has_hard_cc": p.get("has_hard_cc"),
+                        "has_prot_buff": p.get("has_prot_buff"),
+                        "damage_parts": p.get("damage_parts") or [],
+                    }
+                ),
             ),
         )
 
@@ -106,47 +136,119 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
     for p in parsed:
         by_god[p["god_id"]].append(p)
 
+    # damage type lookup
+    dtype_by_god = {
+        r["id"]: (r["primary_damage_type"] or "").strip()
+        for r in conn.execute("SELECT id, primary_damage_type FROM gods")
+    }
+
     kit_raws: list[tuple[int, dict[str, float]]] = []
     for god_id, abs_ in by_god.items():
-        combat = [a for a in abs_ if a["slot"] and "basic" not in a["slot"].lower()]
+        # Full non-basic set for counts / stance
+        non_basic_abs = [a for a in abs_ if a["slot"] and not _is_basic(a["slot"])]
+        combat = [a for a in non_basic_abs if _is_combat_ability(a["slot"])]
+        # Damaging abilities for scaling (combat + damaging passives)
+        scaling_src = [
+            a
+            for a in non_basic_abs
+            if (a.get("damage_rank5") or 0) > 0
+            or (a.get("scaling_str_pct") or 0) + (a.get("scaling_int_pct") or 0) > 0
+        ]
+        # Prefer combat abilities for scaling when available
+        if any(_is_combat_ability(a["slot"]) and (a.get("damage_rank5") or 0) > 0 for a in scaling_src):
+            scaling_src = [
+                a
+                for a in scaling_src
+                if _is_combat_ability(a["slot"]) and (a.get("damage_rank5") or 0) > 0
+            ]
+
         ability_count = len(abs_)
-        # stance variants: more than 6 total abilities often means stances
         stance_variants = max(0, ability_count - 6)
 
         total_dmg = sum(a["damage_rank5"] or 0 for a in combat)
-        str_scales = [a["scaling_str_pct"] for a in combat if a["scaling_str_pct"]]
-        int_scales = [a["scaling_int_pct"] for a in combat if a["scaling_int_pct"]]
-        avg_str = sum(str_scales) / len(str_scales) if str_scales else 0.0
-        avg_int = sum(int_scales) / len(int_scales) if int_scales else 0.0
 
-        if avg_str > 15 and avg_int > 15:
-            primary = "Hybrid"
-        elif avg_str >= avg_int and avg_str > 5:
-            primary = "Strength"
-        elif avg_int > avg_str and avg_int > 5:
-            primary = "Intelligence"
+        # Weight scaling by damage contribution so small side scalings don't flip Hybrid
+        w_str = 0.0
+        w_int = 0.0
+        w_tot = 0.0
+        for a in scaling_src:
+            w = max(a.get("damage_rank5") or 0.0, 1.0)
+            # Ult counts half for primary scaling identity
+            if _is_ultimate(a.get("slot")):
+                w *= 0.5
+            w_str += (a.get("scaling_str_pct") or 0.0) * w
+            w_int += (a.get("scaling_int_pct") or 0.0) * w
+            w_tot += w
+        if w_tot > 0:
+            avg_str = w_str / w_tot
+            avg_int = w_int / w_tot
         else:
-            primary = "Mixed"
+            str_scales = [a["scaling_str_pct"] for a in combat if a["scaling_str_pct"]]
+            int_scales = [a["scaling_int_pct"] for a in combat if a["scaling_int_pct"]]
+            avg_str = sum(str_scales) / len(str_scales) if str_scales else 0.0
+            avg_int = sum(int_scales) / len(int_scales) if int_scales else 0.0
 
-        cds = [a["cooldown_rank5"] for a in combat if a["cooldown_rank5"]]
-        min_cd = min(cds) if cds else None
-        ults = [
-            a
+        dtype = (dtype_by_god.get(god_id) or "").lower()
+        # Damage type is itemization truth; only allow Hybrid when both scales matter
+        if dtype == "magical":
+            if avg_int >= 15 and avg_str >= avg_int * 0.85 and avg_str >= 40:
+                primary = "Hybrid"
+            elif avg_int > 5 or avg_str > 5:
+                primary = "Intelligence"
+            else:
+                primary = "Intelligence"
+        elif dtype == "physical":
+            if avg_str >= 15 and avg_int >= avg_str * 0.85 and avg_int >= 40:
+                primary = "Hybrid"
+            elif avg_str > 5 or avg_int > 5:
+                primary = "Strength"
+            else:
+                primary = "Strength"
+        else:
+            if avg_str > 15 and avg_int > 15 and min(avg_str, avg_int) / max(avg_str, avg_int, 1) > 0.55:
+                primary = "Hybrid"
+            elif avg_str >= avg_int and avg_str > 5:
+                primary = "Strength"
+            elif avg_int > avg_str and avg_int > 5:
+                primary = "Intelligence"
+            else:
+                primary = "Mixed"
+
+        cds = [
+            a["cooldown_rank5"]
             for a in combat
-            if a["slot"] and "ultimate" in a["slot"].lower()
+            if a["cooldown_rank5"] and not _is_ultimate(a.get("slot"))
         ]
+        min_cd = min(cds) if cds else None
+        ults = [a for a in combat if _is_ultimate(a.get("slot"))]
         ult_cd = ults[0]["cooldown_rank5"] if ults and ults[0]["cooldown_rank5"] else None
 
-        cc_count = sum(1 for a in combat if a["has_cc"])
-        heal_count = sum(1 for a in combat if a["has_heal"])
-        mobility_count = sum(1 for a in combat if a["has_mobility"])
+        cc_count = sum(1 for a in non_basic_abs if a["has_cc"])
+        heal_count = sum(1 for a in non_basic_abs if a["has_heal"])
+        mobility_count = sum(1 for a in non_basic_abs if a["has_mobility"])
 
-        burst = sum(a["burst_proxy"] for a in combat)
-        dps = sum(a["dps_proxy"] for a in combat)
-        util = sum(a["utility_score"] for a in combat) / max(len(combat), 1)
-        power = sum(a["power_score"] for a in combat) / max(len(combat), 1)
+        # Soft-cap each ability before summing so one ult doesn't dominate the roster
+        def softcap(x: float, cap: float = 2500.0) -> float:
+            if x <= cap:
+                return x
+            return cap + (x - cap) * 0.25
 
-        # stance bonus: flexibility
+        burst = 0.0
+        dps = 0.0
+        for a in non_basic_abs:
+            bw = 1.0
+            if _is_ultimate(a.get("slot")):
+                bw = 0.55  # ult less than full kit spam for "kit power"
+            if _is_passive(a.get("slot")):
+                bw = 0.35
+            burst += softcap(a.get("burst_proxy") or 0.0) * bw
+            dps += softcap(a.get("dps_proxy") or 0.0, cap=200.0) * bw
+
+        util = sum(a["utility_score"] for a in non_basic_abs) / max(len(non_basic_abs), 1)
+        power = sum(a["power_score"] for a in combat) / max(len(combat), 1) if combat else (
+            sum(a["power_score"] for a in non_basic_abs) / max(len(non_basic_abs), 1)
+        )
+
         flex = min(stance_variants * 4.0, 12.0)
 
         kit_raws.append(
@@ -168,20 +270,20 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                     "dps_raw": dps,
                     "util_raw": util + flex,
                     "power_raw": power + flex * 0.5,
+                    "damage_type": dtype_by_god.get(god_id),
                 },
             )
         )
 
-    burst_n = normalize_minmax([k[1]["burst_raw"] for k in kit_raws])
-    dps_n = normalize_minmax([k[1]["dps_raw"] for k in kit_raws])
-    util_n = normalize_minmax([k[1]["util_raw"] for k in kit_raws])
-    power_n = normalize_minmax([k[1]["power_raw"] for k in kit_raws])
+    burst_n = normalize_winsorized([k[1]["burst_raw"] for k in kit_raws])
+    dps_n = normalize_winsorized([k[1]["dps_raw"] for k in kit_raws])
+    util_n = normalize_winsorized([k[1]["util_raw"] for k in kit_raws])
+    power_n = normalize_winsorized([k[1]["power_raw"] for k in kit_raws])
 
     for i, (god_id, k) in enumerate(kit_raws):
         kit_burst = burst_n[i]
         kit_dps = dps_n[i]
         kit_util = util_n[i]
-        # Kit power: blend of burst, sustained, utility, average ability power
         kit_power = clamp(
             0.35 * kit_burst
             + 0.30 * kit_dps
@@ -220,6 +322,8 @@ def compute_ability_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                         "burst_raw": k["burst_raw"],
                         "dps_raw": k["dps_raw"],
                         "primary_scaling": k["primary_scaling"],
+                        "damage_type": k.get("damage_type"),
+                        "normalize": "winsorized_5_95",
                     }
                 ),
             ),

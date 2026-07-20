@@ -253,6 +253,18 @@ def parse_patch_wikitext_entities(
             elif re.search(r"\bnerf", section, re.I):
                 direction = "nerf"
 
+        # Drop pure noise still attached to an entity (cosmetics, store, quests)
+        if direction == "neutral" and (
+            COSMETIC_RE.search(text)
+            or re.search(
+                r"\b(traveler page|daily quest|premium|unlocked after|"
+                r"character model|cross-gen|loading frame)\b",
+                text,
+                re.I,
+            )
+        ):
+            continue
+
         mag = change_magnitude(text, direction)
         events.append(
             {
@@ -294,6 +306,33 @@ def _resolve_name(
     return None
 
 
+def _name_boundary_pattern(name: str) -> re.Pattern[str]:
+    """
+    Word-boundary match for entity names.
+
+    Short names (Ra, Sol, Geb, Nut) must not match inside traveler/absolute/etc.
+    Multi-word names (Nu Wa, Baron Samedi) allow flexible whitespace.
+    """
+    parts = [re.escape(p) for p in name.split() if p]
+    if not parts:
+        return re.compile(r"(?!)")  # never matches
+    body = r"[\s'\-]+".join(parts)
+    # Word boundary: not mid-token. Allow start/end and non-alnum flanks.
+    return re.compile(rf"(?<![A-Za-z0-9]){body}(?![A-Za-z0-9])", re.I)
+
+
+# Prebuild avoided — patterns built per call is fine for batch; cache on module for hot path
+_NAME_PAT_CACHE: dict[str, re.Pattern[str]] = {}
+
+
+def _cached_name_pat(name: str) -> re.Pattern[str]:
+    p = _NAME_PAT_CACHE.get(name)
+    if p is None:
+        p = _name_boundary_pattern(name)
+        _NAME_PAT_CACHE[name] = p
+    return p
+
+
 def _find_name_in_text(
     text: str,
     god_names: list[str],
@@ -301,16 +340,49 @@ def _find_name_in_text(
     god_index: dict[str, str],
     item_index: dict[str, str],
 ) -> tuple[str, str] | None:
-    tl = text.lower()
+    """
+    Find a god/item mention in free text.
+
+    Uses word-boundary matching (not substring) so 'Ra' ≠ 'traveler' / 'Rage'.
+    Prefers longer names when multiple match.
+    Short free-text hits (< 4 chars) require a wiki link style or bold context.
+    """
+    if not text:
+        return None
+    # Prefer explicit wiki links first
+    for m in re.finditer(r"\[\[([^\]|#]+)(?:\|[^\]]*)?\]\]", text):
+        resolved = _resolve_name(m.group(1), god_index, item_index)
+        if resolved:
+            return resolved
+
+    hits: list[tuple[int, str, str]] = []  # (len, type, name)
     for g in god_names:
-        if g.lower() in tl:
-            return "god", g
+        if _cached_name_pat(g).search(text):
+            # Short names in free text only if the line is basically just the name
+            # or looks like a balance bullet about that god
+            if len(g) <= 3:
+                stripped = re.sub(r"[^A-Za-z0-9\s]", "", text).strip().lower()
+                if stripped != g.lower() and not re.search(
+                    r"\b(damage|cooldown|scaling|health|mana|buff|nerf|reduced|increased|"
+                    r"ability|ultimate|passive|range|protections?)\b",
+                    text,
+                    re.I,
+                ):
+                    continue
+                # still reject if name only appears as part of another word (boundary already)
+            hits.append((len(g), "god", g))
     for it in item_names:
-        if len(it) < 4:
+        # Short item names ("Rage") false-positive inside ability titles
+        if len(it) < 5:
             continue
-        if it.lower() in tl:
-            return "item", it
-    return None
+        if _cached_name_pat(it).search(text):
+            hits.append((len(it), "item", it))
+
+    if not hits:
+        return None
+    # Longest match wins (Baron Samedi before Baron if both existed)
+    hits.sort(key=lambda x: x[0], reverse=True)
+    return hits[0][1], hits[0][2]
 
 
 def compute_patch_impacts(conn: sqlite3.Connection) -> dict[str, int]:
