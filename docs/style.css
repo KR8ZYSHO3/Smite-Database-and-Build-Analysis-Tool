@@ -504,6 +504,38 @@ tr.selected td {
   background: rgba(180, 83, 9, 0.12);
   border: 1px solid rgba(251, 191, 36, 0.2);
 }
+
+/* Troll panel */
+.troll-panel h2 { color: #f9a8d4; }
+.troll-check {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+  font-weight: 600;
+  color: var(--muted);
+}
+.troll-check input { width: auto; }
+.btn-troll {
+  border-color: rgba(244, 114, 182, 0.55) !important;
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.28), rgba(168, 85, 247, 0.22)) !important;
+}
+.btn-troll:hover { box-shadow: 0 0 20px rgba(244, 114, 182, 0.25); }
+.pill.troll-pill {
+  color: #fbcfe8;
+  border-color: rgba(244, 114, 182, 0.55);
+  background: rgba(157, 23, 77, 0.35);
+}
+.god-build-card.is-troll {
+  border-color: rgba(244, 114, 182, 0.4);
+  box-shadow: 0 0 24px rgba(244, 114, 182, 0.1);
+}
+.troll-blurb {
+  background: rgba(157, 23, 77, 0.18) !important;
+  border-color: rgba(244, 114, 182, 0.35) !important;
+  color: #fce7f3 !important;
+}
+.buy-row.is-troll { border-color: rgba(244, 114, 182, 0.45); }
+.buy-row.is-troll .tag { color: #f9a8d4; border-color: rgba(244, 114, 182, 0.4); }
 .buy-row:hover {
   border-color: var(--border-glow);
   transform: translateX(2px);

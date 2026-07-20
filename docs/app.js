@@ -704,13 +704,15 @@ function buyRow(it, n) {
   const slotClass =
     it.slot === "pen"
       ? "is-pen"
-      : it.counter || it.slot === "counter"
-        ? "is-counter"
-        : it.slot === "mitigate"
-          ? "is-mitigate"
-          : it.is_active
-            ? "is-active"
-            : "";
+      : it.troll
+        ? "is-troll"
+        : it.counter || it.slot === "counter"
+          ? "is-counter"
+          : it.slot === "mitigate"
+            ? "is-mitigate"
+            : it.is_active
+              ? "is-active"
+              : "";
   const why = it.why ? `<div class="item-why">${escapeHtml(it.why)}</div>` : "";
   return `<li class="buy-row ${slotClass}" title="${escapeAttr(it.why || it.effect || "")}">
     <span class="buy-n">${n}</span>
@@ -1212,6 +1214,207 @@ function renderEnemyPicks() {
   });
 }
 
+/* -------------------- Troll builds (client) -------------------- */
+const TROLL_AXIS_KEYS = {
+  unkillable: ["shifter", "hussar", "freya", "spectral", "magi", "mantle", "alchemist", "phoenix", "pridwen", "bancroft", "asclepius", "lifebinder", "heartwood", "draconic", "oni hunter", "gladiator"],
+  peel_prison: ["stygian", "binding", "isolation", "midgardian", "spectral", "magi", "mantle", "contagion", "genji", "breastplate", "chronos"],
+  antiheal_tax: ["contagion", "divine ruin", "pestilence", "brawler", "toxic"],
+  infinite_poke: ["chronos", "pendant", "gem of focus", "breastplate", "genji", "thoth", "doom orb", "isolation", "magus", "soul gem", "myrddin"],
+  aa_clown: ["deathbringer", "demon", "riptalon", "avenging", "musashi", "qins", "ichival", "wind", "executioner", "bloodforge", "devourer"],
+  aura_tax: ["thebes", "chandra", "sovereign", "heartward", "providence", "contagion", "spectral", "midgardian"],
+  active_toybox: ["dreamer", "wish-granting", "parashu", "arondight", "pridwen"],
+};
+const TROLL_TITLES = {
+  unkillable: ["Please Report Simulator", "Unkillable Clown Fiesta", "I Am A Raid Boss", "Your Ult Was A Suggestion"],
+  peel_prison: ["Nobody Gets To Hit Anything", "Peel Prison Warden", "ADC Timeout Corner", "Crowd Control Tax Office"],
+  antiheal_tax: ["Healing? In THIS Economy?", "Contagion Enjoyer", "Your Bancroft Is Decorative", "Anti-Fun Pharmacy"],
+  infinite_poke: ["Death By A Thousand Ticks", "Cooldown Rate Menace", "Zone Tax Forever", "We Do Not Fight — We Annoy"],
+  aa_clown: ["Basics Were A Mistake", "On-Hit Menace", "This God Shouldn't Auto Like This", "Crit Is A Lifestyle"],
+  aura_tax: ["I Get Paid To Exist", "Aura Farmer Supreme", "Free Stats For Standing", "Thebes And Chill"],
+  active_toybox: ["Button Mashing Menace", "On-Use Toybox", "Ultimate? We Have Actives At Home", "Cooldown For Chaos"],
+};
+const TROLL_BLURBS = {
+  unkillable: "Maximize time-on-screen and soft sustain. Waste their cooldowns.",
+  peel_prison: "Deny free hits. Slow, anti-crit, and bulk so their backline feels trapped.",
+  antiheal_tax: "If they heal, they tilt. Stack reduction and sit on their face.",
+  infinite_poke: "CDR + zone/tick pressure. Chip and leave — never a fair fight.",
+  aa_clown: "Lean into basic-attack identity the ranked path ignores. Wrong, but sticky.",
+  aura_tax: "Bodyblock, auras, and free team value for existing.",
+  active_toybox: "Splashy On-Use chaos within the active budget.",
+};
+
+function hashStr(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function detectTrollAxesJS(god, role, useAspect) {
+  const tags = new Set(god.kit_tags || []);
+  const aspect = useAspect && (god.aspects || [])[0] ? god.aspects[0] : null;
+  const blob = ((aspect && aspect.description) || "").toLowerCase();
+  const aa = Number(god.aa_score || 0);
+  const scores = {
+    unkillable: 0,
+    peel_prison: 0,
+    antiheal_tax: 0,
+    infinite_poke: 0,
+    aa_clown: 0,
+    aura_tax: 0,
+    active_toybox: 0,
+  };
+  if (role === "Support" || role === "Solo") {
+    scores.unkillable += 1.2;
+    scores.peel_prison += 1.4;
+    scores.aura_tax += 1.3;
+  }
+  if (role === "Mid" || role === "Carry") {
+    scores.infinite_poke += 1.0;
+    scores.aa_clown += 0.5;
+  }
+  if (role === "Jungle") {
+    scores.aa_clown += 0.6;
+    scores.antiheal_tax += 0.7;
+  }
+  if (tags.has("heal") || tags.has("heavy_heal") || tags.has("self_sustain")) scores.unkillable += 1.5;
+  if (tags.has("hard_cc") || tags.has("high_cc")) scores.peel_prison += 1.8;
+  if (tags.has("dot") || tags.has("heavy_dot") || tags.has("zone") || tags.has("pet_zone") || tags.has("channel"))
+    scores.infinite_poke += 1.6;
+  if (tags.has("aa") || tags.has("as_steroid") || aa >= 0.55) scores.aa_clown += 1.7;
+  if (tags.has("spam")) scores.infinite_poke += 1.0;
+  if (tags.has("team_buff") || role === "Support") scores.aura_tax += 1.2;
+  if (tags.has("shield") || tags.has("immobile")) scores.unkillable += 1.0;
+  if (tags.has("burst") || tags.has("ult_nuke") || tags.has("execute")) scores.active_toybox += 0.8;
+  if (aspect) {
+    scores.aa_clown += 0.5;
+    if (/no scaling|base damage with no scaling/i.test(blob)) {
+      scores.unkillable += 1.2;
+      scores.aura_tax += 0.8;
+    }
+    if (/ranged|on-hit|crit|attack speed/i.test(blob)) scores.aa_clown += 1.5;
+    if (/cooldown rate|reduced cooldown/i.test(blob)) scores.infinite_poke += 1.0;
+  }
+  return Object.entries(scores).sort((a, b) => b[1] - a[1]);
+}
+
+function buildTrollPathJS(god, role, useAspect, chaos) {
+  let ranked = detectTrollAxesJS(god, role, useAspect);
+  let primary = ranked[0][0];
+  let secondary = ranked[1] ? ranked[1][0] : primary;
+  if (chaos && secondary !== primary) {
+    const t = primary;
+    primary = secondary;
+    secondary = t;
+  }
+  const salt = hashStr(`${god.name}|${role}|${primary}|${useAspect}`);
+  const titles = TROLL_TITLES[primary] || ["Certified Troll Path"];
+  const title = titles[salt % titles.length];
+  const aspect = useAspect && (god.aspects || [])[0] ? god.aspects[0] : null;
+
+  const keys = [...(TROLL_AXIS_KEYS[primary] || [])];
+  for (const k of TROLL_AXIS_KEYS[secondary] || []) {
+    if (!keys.includes(k)) keys.push(k);
+  }
+  const pool = (state.items || []).filter(isT3Item);
+  const picked = [];
+  const seen = new Set();
+  for (const key of keys) {
+    if (picked.length >= 6) break;
+    const hits = pool
+      .filter((it) => !seen.has(it.name) && it.name.toLowerCase().includes(key))
+      .sort((a, b) => (b.total_cost || 0) - (a.total_cost || 0));
+    if (!hits.length) continue;
+    const it = hits[salt % Math.min(hits.length, 3)];
+    picked.push(it);
+    seen.add(it.name);
+  }
+  // fill
+  if (picked.length < 6) {
+    const rest = pool
+      .filter((it) => !seen.has(it.name))
+      .sort((a, b) => (b.total_cost || b.cost || 0) - (a.total_cost || a.cost || 0));
+    for (const it of rest) {
+      if (picked.length >= 6) break;
+      // prefer defensive for unkillable/peel
+      const n = it.name.toLowerCase();
+      if (primary === "unkillable" || primary === "peel_prison" || primary === "aura_tax") {
+        if ((it.item_type || "").toLowerCase() === "offensive" && !keys.some((k) => n.includes(k))) continue;
+      }
+      picked.push(it);
+      seen.add(it.name);
+    }
+  }
+
+  const baseline = getBaselinePath(god, role);
+  const starter = getStarter(god, role);
+  const items = picked.slice(0, 6).map((it) => ({
+    name: it.name,
+    cost: it.total_cost ?? it.cost,
+    why: `😈 troll ${primary.replace(/_/g, " ")}`,
+    troll: true,
+    slot: "counter",
+    is_active: String(it.categories || "").toLowerCase().includes("active"),
+  }));
+
+  let monologue = `${title}. ${TROLL_BLURBS[primary] || "Be annoying on purpose."} Primary annoyance: ${primary.replace(
+    /_/g,
+    " "
+  )}; backup bit: ${secondary.replace(/_/g, " ")}.`;
+  if (aspect) monologue += ` Running ${aspect.name} because the bit is better.`;
+
+  return {
+    title,
+    primary,
+    secondary,
+    monologue,
+    disclaimer: "TROLL / MEME — not ranked advice. Legal items, illegal vibes.",
+    aspect,
+    starter,
+    items,
+    baseline,
+  };
+}
+
+function setupTroll() {
+  $("#troll-run")?.addEventListener("click", () => {
+    const god = findGodByName($("#troll-god")?.value);
+    const role = $("#troll-role")?.value || "Support";
+    const useAspect = !!$("#troll-aspect")?.checked;
+    const chaos = !!$("#troll-chaos")?.checked;
+    const box = $("#troll-result");
+    if (!god) {
+      box.innerHTML = `<p class="muted">Pick a valid god.</p>`;
+      return;
+    }
+    const t = buildTrollPathJS(god, role, useAspect, chaos);
+    box.innerHTML = `
+      <article class="card build-card god-build-card is-troll">
+        <header class="gbc-head">
+          <h3>😈 ${escapeHtml(t.title)}</h3>
+          <div class="muted gbc-meta">${escapeHtml(god.name)} · ${escapeHtml(role)}</div>
+        </header>
+        <div class="build-meta">
+          <span class="pill troll-pill">TROLL</span>
+          <span class="pill hot">${escapeHtml(t.primary.replace(/_/g, " "))}</span>
+          <span class="pill">${escapeHtml(t.secondary.replace(/_/g, " "))}</span>
+          ${t.aspect ? `<span class="pill aspect">${escapeHtml(t.aspect.name)}</span>` : ""}
+        </div>
+        <p class="aspect-blurb troll-blurb">${escapeHtml(t.disclaimer)}</p>
+        <p class="why">${escapeHtml(t.monologue)}</p>
+        <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(t.starter?.name || "—")}</div>
+        <ol class="buy-list">
+          ${t.items.map((it, i) => buyRow(it, i + 1)).join("")}
+        </ol>
+        ${
+          t.baseline?.length
+            ? `<p class="muted">Serious baseline (for contrast): ${t.baseline.map(escapeHtml).join(" → ")}</p>`
+            : ""
+        }
+      </article>
+    `;
+  });
+}
+
 function setupCounter() {
   const list = $("#ctr-god-list");
   if (!list) return;
@@ -1309,6 +1512,7 @@ async function main() {
 
     setupBuilds();
     setupCounter();
+    setupTroll();
     setupGods();
     setupTiers();
     setupItems();

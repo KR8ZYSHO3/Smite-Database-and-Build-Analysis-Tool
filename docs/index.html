@@ -33,8 +33,9 @@
       <nav class="tabs">
         <button class="tab-btn active" data-tab="builds">1 · Builds</button>
         <button class="tab-btn" data-tab="counter">2 · Counter</button>
-        <button class="tab-btn" data-tab="gods">3 · Gods</button>
-        <button class="tab-btn" data-tab="tiers">4 · Tiers</button>
+        <button class="tab-btn" data-tab="troll">3 · Troll</button>
+        <button class="tab-btn" data-tab="gods">4 · Gods</button>
+        <button class="tab-btn" data-tab="tiers">5 · Tiers</button>
         <button class="tab-btn" data-tab="items">Items</button>
         <button class="tab-btn" data-tab="about">About</button>
       </nav>
@@ -86,6 +87,46 @@
           <div id="ctr-result" class="counter-result"></div>
           <p class="muted" style="margin-top:12px;font-size:0.85rem">
             CLI: <code>python -m smite2db.counter_builds Charon Support Discordia Merlin Ymir Artemis Ganesha</code>
+          </p>
+        </div>
+      </section>
+
+      <!-- TROLL builds -->
+      <section id="panel-troll" class="panel">
+        <div class="card counter-panel troll-panel">
+          <h2>😈 Troll build</h2>
+          <p class="muted">
+            Kit-true, <strong>off-meta</strong> paths designed to be
+            <em>frustrating and funny</em> — not ranked advice.
+            Unkillable clowns, peel prisons, antiheal tax, AA on the wrong gods, aura farmers.
+          </p>
+          <div class="counter-form">
+            <label>God
+              <input id="troll-god" type="search" list="ctr-god-list" placeholder="e.g. Geb" autocomplete="off" />
+            </label>
+            <label>Role
+              <select id="troll-role">
+                <option>Support</option>
+                <option>Solo</option>
+                <option>Jungle</option>
+                <option>Mid</option>
+                <option>Carry</option>
+              </select>
+            </label>
+            <label class="troll-check">
+              <input type="checkbox" id="troll-aspect" checked />
+              Use aspect kit if available
+            </label>
+            <label class="troll-check">
+              <input type="checkbox" id="troll-chaos" />
+              Chaos mode (lean into the secondary bit)
+            </label>
+            <button type="button" class="btn-primary btn-troll" id="troll-run">Generate troll path</button>
+          </div>
+          <div id="troll-result" class="counter-result"></div>
+          <p class="muted" style="margin-top:12px;font-size:0.85rem">
+            CLI: <code>python -m smite2db.troll_builds Geb Solo --aspect</code>
+            · add <code>--chaos</code> for maximum crime
           </p>
         </div>
       </section>
@@ -225,7 +266,9 @@
           <h2>How to use this</h2>
           <ol class="how-list">
             <li><strong>Builds</strong> — pick role → open a god card (kit-fit buy order).</li>
-            <li><strong>Gods</strong> — search any god; paths for each role they play.</li>
+            <li><strong>Counter</strong> — your god + enemy 5 → anti-crit / mprot / antiheal path.</li>
+            <li><strong>Troll</strong> — kit-true meme paths that maximize frustration (not ranked advice).</li>
+            <li><strong>Gods</strong> — search any god; base + aspect paths for each role.</li>
             <li><strong>Tiers</strong> — patch-weighted ladder (not the same as builds).</li>
           </ol>
           <h3>Role jobs</h3>
