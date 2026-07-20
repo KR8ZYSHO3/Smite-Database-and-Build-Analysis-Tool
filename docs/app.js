@@ -341,23 +341,27 @@ function setupBuilds() {
     const nAct = items.filter((i) => i.is_active).length;
     const maxA = t.max_shop_actives ?? 2;
     const penT = t.pen_total ?? items.reduce((s, it) => s + (it.pen || 0), 0);
-    const roleBlurb =
-      role === "Support"
-        ? "Support cores: dual prots, Dampening, Plating, Tenacity, anti-AS / anti-crit. Not lifesteal."
-        : "Buy order: early power → pen → power → defense → luxury. Actives default 2.";
+    const roleBlurb = {
+      Support: "Peel for ADC & mid — Damp/Plat/Ten, anti-AS/crit, auras. Not lifesteal DPS.",
+      Solo: "Unkillable frontline — dual prots, HP, mitigate. Offline damage only.",
+      Jungle: "Gank threat — Bumba, burst pen, CDR, Blink. Not full-tank solo.",
+      Carry: "Backline ADC — AS/crit/pen. Support peels so you free-hit.",
+      Mid: "Backline burst — INT + pen + CDR. Support peels for combos.",
+    }[role] || "Buy order role-aware. Actives default 2.";
     $("#build-desc").textContent = `${t.description || ""}  ·  ${roleBlurb}`;
 
     const mitT = items.reduce(
       (s, it) => s + (it.damp || 0) + (it.plat || 0) + (it.ten || 0),
       0
     );
+    const showMit = role === "Support" || role === "Solo";
     $("#build-template").innerHTML = `
       <h2>${escapeHtml(role)} template</h2>
       <div class="build-meta">
         <span class="pill">1 starter + 6</span>
         <span class="pill">actives ${nAct}/${maxA}</span>
         <span class="pill">pen ≈ ${fmt(penT, 0)}</span>
-        ${role === "Support" ? `<span class="pill">mitigate ≈ ${fmt(mitT, 0)}</span>` : ""}
+        ${showMit ? `<span class="pill">mitigate ≈ ${fmt(mitT, 0)}</span>` : ""}
       </div>
       ${t.build_notes ? `<p class="muted">${escapeHtml(t.build_notes)}</p>` : ""}
       <h3>Starter</h3>

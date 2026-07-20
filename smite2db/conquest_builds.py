@@ -44,8 +44,8 @@ MIN_BUILD_PEN = 10.0
 ROLE_PROFILES: dict[str, dict[str, Any]] = {
     "Carry": {
         "description": (
-            "Conquest duo ADC: sustained basic-attack DPS, crit windows, "
-            "penetration, and self-heal to stay in lane/fights."
+            "Conquest duo ADC (backline): sustained basic-attack DPS, crit, "
+            "penetration, and lifesteal. Support peels so you can free-hit."
         ),
         "prefer_damage": "Physical",  # soft preference; Magical carries still allowed
         "stat_weights": {
@@ -99,8 +99,8 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
     },
     "Mid": {
         "description": (
-            "Conquest mid: ability burst and wave clear, intelligence or hybrid "
-            "power, penetration, cooldown, and mana sustain."
+            "Conquest mid (backline): ability burst, wave clear, INT power, "
+            "penetration, CDR. Support peels so you can unload combos."
         ),
         "prefer_damage": "Magical",
         "stat_weights": {
@@ -140,92 +140,105 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
     },
     "Jungle": {
         "description": (
-            "Conquest jungle: early clear, gank threat, mobility/CDR, "
-            "burst penetration, and enough HP to invade."
+            "Conquest jungle — job is ganks: Bumba clear, burst pen, CDR, "
+            "Blink/mobility relics, enough HP to invade. Not a full-tank solo."
         ),
         "prefer_damage": None,
         "stat_weights": {
-            "str": 0.16,
+            "str": 0.14,
             "int": 0.12,
-            "pen": 0.20,
-            "cdr": 0.12,
-            "as": 0.10,
-            "hp": 0.12,
+            "pen": 0.22,   # shred tanks so ganks stick
+            "cdr": 0.16,   # ability uptime for multi-gank
+            "hp": 0.10,
+            "as": 0.08,
             "ls": 0.06,
             "crit": 0.04,
             "pprot": 0.04,
             "mprot": 0.04,
         },
-        "tag_bonus": {"offensive": 10, "passive": 7, "active": 2},
+        "tag_bonus": {"offensive": 14, "passive": 6, "active": 3, "ms": 8, "cc": 6},
         "starter_prefs": {
-            "bumba": 35,
-            "dagger": 28,
-            "cudgel": 26,
-            "spear": 24,
-            "hammer": 22,
-            "death": 12,
-            "bluestone": 10,
-            "conduit": 8,
+            "bumba": 42,
+            "dagger": 32,
+            "cudgel": 30,
+            "spear": 28,
+            "hammer": 26,
+            "death": 10,
+            "bluestone": 8,
+            "conduit": 6,
+            "selfless": -20,
+            "flag": -20,
+            "warrior": -10,
         },
         "relic_prefs": {
-            "beads": 20,
-            "blink": 22,
-            "aegis": 14,
-            "sundering": 18,
-            "agility": 16,
-            "phantom": 8,
+            "blink": 32,       # gank setup
+            "beads": 22,
+            "sundering": 20,   # execute / shell break
+            "agility": 18,
+            "aegis": 12,
+            "phantom": 10,
         },
         "build_slots": {"starter": 1, "cores": 4, "defense": 1, "flex": 1},
         "tier_scope": "role:Jungle",
     },
     "Solo": {
         "description": (
-            "Conquest solo: lane sustain, hybrid damage, protections, "
-            "HP, and items that win extended trades / rotate first."
+            "Conquest solo — unkillable frontliner: dual prots, HP, Dampening/"
+            "Plating/Tenacity, hybrid offline damage. Absorb pressure so mid/ADC free-hit."
         ),
         "prefer_damage": None,
         "stat_weights": {
-            "hp": 0.16,
-            "pprot": 0.14,
-            "mprot": 0.14,
-            "str": 0.12,
-            "int": 0.10,
-            "cdr": 0.10,
-            "ls": 0.08,
-            "pen": 0.08,
-            "hpr": 0.04,
-            "as": 0.02,
-            "mp": 0.02,
+            "hp": 0.18,
+            "pprot": 0.16,
+            "mprot": 0.16,
+            "damp": 0.10,
+            "plat": 0.08,
+            "ten": 0.08,
+            "cdr": 0.08,
+            "str": 0.06,   # offline damage only — not glass
+            "int": 0.05,
+            "ls": 0.03,
+            "pen": 0.02,
+            "hpr": 0.0,
+            "as": 0.0,
+            "mp": 0.0,
         },
-        "tag_bonus": {"defensive": 10, "hybrid": 12, "offensive": 6, "passive": 5},
+        "tag_bonus": {
+            "defensive": 18,
+            "hybrid": 14,
+            "passive": 8,
+            "offensive": -4,  # pure glass cores wrong for frontline
+            "shield": 8,
+        },
         "starter_prefs": {
-            "warrior": 38,
-            "axe": 36,
-            "bluestone": 32,
-            "sundering": 28,
-            "selfless": 10,
-            "shroud": 14,
-            "vampiric": 14,
-            "conduit": 10,
-            "flag": 6,
+            "warrior": 42,
+            "axe": 40,
+            "bluestone": 34,
+            "sundering": 30,
+            "shroud": 12,
+            "vampiric": 10,
+            "selfless": -15,  # support starter — not solo identity
+            "flag": -20,
+            "bumba": -25,
+            "gilded": -30,
+            "conduit": -15,
         },
         "relic_prefs": {
-            "beads": 24,
-            "aegis": 18,
-            "blink": 12,
-            "sundering": 14,
-            "phantom": 12,
-            "shell": 10,
-            "agility": 8,
+            "beads": 26,
+            "aegis": 24,
+            "shell": 16,
+            "phantom": 14,
+            "blink": 10,
+            "sundering": 12,
+            "agility": 6,
         },
         "build_slots": {"starter": 1, "cores": 2, "defense": 3, "flex": 1},
         "tier_scope": "role:Solo",
     },
     "Support": {
         "description": (
-            "Conquest support: mitigate and counter — dual prots, HP, "
-            "Dampening / Plating / Tenacity, anti-AS, anti-crit, aura peel. "
-            "Not a lifesteal / personal-sustain carry path."
+            "Conquest support — peel for ADC & mid: dual prots, Damp/Plat/Ten, "
+            "anti-AS, anti-crit, aura/team utility. Body-block & counter, not personal DPS."
         ),
         "prefer_damage": None,
         "stat_weights": {
@@ -832,17 +845,58 @@ def rescore_for_god(
         dtype == "physical" or primary == "Strength"
     )
 
-    # Support is role-first: do not turn Ymir into a Chronos' Pendant mage.
+    # Support is role-first: peel for backline, not Chronos' Pendant glass.
     if role == "Support":
         s -= as_v * 0.8
         s -= crit_v * 0.8
         s -= _canon_stat_value(item.stats, "bap") * 0.6
         s -= ls_v if (ls_v := _canon_stat_value(item.stats, "ls")) else 0
-        # mild power only if the item also tanks
         if _canon_stat_value(item.stats, "hp") < 200 and (
             str_v + int_v
         ) >= 50 and item.item_type == "Offensive":
             s -= 25
+    # Solo is unkillable frontline — stack mitigate, not full DPS carry items.
+    elif role == "Solo":
+        s += (
+            _canon_stat_value(item.stats, "hp") * 0.12
+            + _canon_stat_value(item.stats, "pprot") * 0.45
+            + _canon_stat_value(item.stats, "mprot") * 0.45
+            + _canon_stat_value(item.stats, "damp") * 2.0
+            + _canon_stat_value(item.stats, "plat") * 2.2
+            + _canon_stat_value(item.stats, "ten") * 1.5
+        )
+        if item.item_type == "Defensive" or "defensive" in item.flags:
+            s += 20
+        if item.item_type == "Hybrid":
+            s += 10
+        # mild offline damage OK if item still tanks
+        if item.item_type == "Offensive" and _canon_stat_value(item.stats, "hp") < 200:
+            s -= 28
+        s -= as_v * 0.5
+        s -= crit_v * 0.6
+        blob_s = (item.passive + " " + item.active).lower()
+        if any(k in blob_s for k in ("shield", "protections", "mitigat", "heal")):
+            s += 12
+    # Jungle: gank threat — burst + pen + CDR, not full tank.
+    elif role == "Jungle":
+        pen_v = _canon_stat_value(item.stats, "pen")
+        cdr_v = _canon_stat_value(item.stats, "cdr")
+        s += pen_v * 1.1
+        s += cdr_v * 0.55
+        blob_j = (item.passive + " " + item.active).lower()
+        if any(k in blob_j for k in ("jungle", "monster", "minion", "gank")):
+            s += 14
+        if any(k in blob_j for k in ("movement", "slow", "stun", "root", "leap")):
+            s += 8
+        # one defense is fine; pure full-tank path is solo's job
+        if item.item_type == "Defensive" and pen_v < 5 and (str_v + int_v) < 20:
+            s -= 8
+        if physical and not mage:
+            s += str_v * 0.5
+            s -= int_v * 0.35
+        elif mage:
+            s += int_v * 0.5
+            s -= str_v * 0.35
     elif physical and not mage:
         s += str_v * 0.85
         s -= int_v * 0.55
@@ -1251,21 +1305,32 @@ def build_role_template(items: list[dict], role: str) -> dict[str, Any]:
     core_n = max(slots["cores"], 4)
     def_n = max(slots["defense"], 2)
     flex_n = max(slots["flex"], 2)
-    if role == "Support":
-        cores = pick_diverse(mitigate or defense, core_n, "defense")
+    if role in ("Support", "Solo"):
+        pool = mitigate or defense
+        if role == "Solo":
+            pool = list({x.name: x for x in (mitigate + defense + hybrid)}.values())
+            pool.sort(key=lambda x: x.role_score, reverse=True)
+        cores = pick_diverse(pool, core_n, "defense")
         defs = pick_diverse(
             [d for d in defense if d.name not in {c.name for c in cores}],
             def_n,
             "defense",
         )
-        flex_pool = [x for x in mitigate + defense if x.name not in {c.name for c in cores + defs}]
+        flex_pool = [x for x in pool if x.name not in {c.name for c in cores + defs}]
+        flex = pick_diverse(flex_pool, flex_n, "defense")
+    elif role == "Jungle":
+        cores = pick_diverse(offense, core_n, "offense")
+        defs = pick_diverse(defense, 1, "defense")
+        flex_pool = [x for x in offense + hybrid if x.name not in {c.name for c in cores + defs}]
+        flex_pool.sort(key=lambda x: x.role_score, reverse=True)
+        flex = pick_diverse(flex_pool, flex_n, "offense")
     else:
         cores = pick_diverse(offense, core_n, "offense")
         defs = pick_diverse(defense, def_n, "defense")
         flex_pool = hybrid + offense + defense
         flex_pool = [x for x in flex_pool if x.name not in {c.name for c in cores + defs}]
-    flex_pool.sort(key=lambda x: x.role_score, reverse=True)
-    flex = pick_diverse(flex_pool, flex_n, "defense" if role == "Support" else "offense")
+        flex_pool.sort(key=lambda x: x.role_score, reverse=True)
+        flex = pick_diverse(flex_pool, flex_n, "offense")
 
     relics = [
         score_item_for_role(it, role, profile)
@@ -1361,9 +1426,24 @@ def build_god_build(
         if role == "Support":
             if ls_v >= 5:
                 return False
-            # personal AS/crit toys are not support cores (unless pure aura item)
+            # personal AS/crit toys are not support cores
             if (as_v >= 20 or crit_v >= 15 or bap >= 15) and _slot_label(s) == "power":
                 return False
+            return True
+        if role == "Solo":
+            # frontline: skip pure glass AS/crit carries
+            if (as_v >= 25 or crit_v >= 20) and _canon_stat_value(s.stats, "hp") < 200:
+                return False
+            if s.item_type == "Offensive" and _canon_stat_value(s.stats, "hp") < 150 and (
+                _canon_stat_value(s.stats, "pprot") + _canon_stat_value(s.stats, "mprot") < 20
+            ):
+                return False
+            return True
+        if role == "Jungle":
+            # keep gank items; drop pure aura-support tanks without damage
+            if s.item_type == "Defensive" and not is_pen_item(s) and (str_v + int_v) < 15:
+                # still allow one via pool; don't hard-ban all
+                pass
             return True
         if mage:
             # Reject basic-attack / STR toys on pure mages
@@ -1380,7 +1460,7 @@ def build_god_build(
 
     t3 = [s for s in t3 if kit_ok(s)]
     if role == "Support":
-        # Only true tank/mitigate/counter/aura — not Hybrid glass power.
+        # Peel package only — not Hybrid glass power.
         offense = []
         for s in t3:
             slot = _slot_label(s)
@@ -1398,10 +1478,48 @@ def build_god_build(
                 offense.append(s)
                 continue
             blob = f"{s.passive} {s.active}".lower()
-            if any(k in blob for k in ("ally", "allies", "aura", "team", "aura")):
+            if any(k in blob for k in ("ally", "allies", "aura", "team")):
                 offense.append(s)
         if not offense:
             offense = [s for s in t3 if s.item_type == "Defensive"] or t3
+    elif role == "Solo":
+        # Frontline: defense + hybrid offline; reject pure glass.
+        offense = []
+        for s in t3:
+            if s.item_type in ("Defensive", "Hybrid"):
+                offense.append(s)
+                continue
+            if _slot_label(s) in ("mitigate", "counter", "defense"):
+                offense.append(s)
+                continue
+            if (
+                _canon_stat_value(s.stats, "damp")
+                or _canon_stat_value(s.stats, "plat")
+                or _canon_stat_value(s.stats, "ten")
+                or _canon_stat_value(s.stats, "hp") >= 250
+            ):
+                offense.append(s)
+                continue
+            # allow one offline damage hybrid-ish offensive if it still has bulk
+            if s.item_type == "Offensive" and (
+                _canon_stat_value(s.stats, "hp") >= 200
+                or _canon_stat_value(s.stats, "pprot")
+                or _canon_stat_value(s.stats, "mprot")
+            ):
+                offense.append(s)
+        if not offense:
+            offense = [s for s in t3 if s.item_type != "Offensive"] or t3
+    elif role == "Jungle":
+        # Gank package: offense + pen first; light defense only.
+        offense = [
+            s
+            for s in t3
+            if s.item_type in ("Offensive", "Hybrid")
+            or is_pen_item(s)
+            or _canon_stat_value(s.stats, "cdr") >= 10
+        ]
+        if not offense:
+            offense = t3
     else:
         offense = [
             s
@@ -1409,8 +1527,11 @@ def build_god_build(
             if s.item_type != "Defensive"
             or _canon_stat_value(s.stats, "str") + _canon_stat_value(s.stats, "int") > 45
         ]
-    # Damage roles: keep defense light (1 slot) so cores aren't crowded out
-    def_n = 1 if role in DAMAGE_ROLES_NEED_PEN else max(profile["build_slots"]["defense"], 2)
+    # Damage roles / jungle: light defense; Solo/Support: heavy bulk
+    if role in DAMAGE_ROLES_NEED_PEN:
+        def_n = 1
+    else:
+        def_n = max(profile["build_slots"]["defense"], 2)
     defense = [
         s
         for s in t3
@@ -1612,14 +1733,14 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 4) -> dict[str, 
         "game": "SMITE 2",
         "mode": "Conquest",
         "method": (
-            "Local statistical weighting: item stats × role priority + utility tags + "
-            "cost band + patch momentum; per-god rescoring by kit STR/INT scaling. "
-            f"Shop actives default max {DEFAULT_MAX_SHOP_ACTIVES} "
-            f"(hard game max {HARD_MAX_ACTIVE_ITEMS}; melee physical may use 3). "
-            "Curios share the active budget and drop at 3. Relics are separate. "
-            f"Damage roles (Carry/Mid/Jungle) enforce ≥{MIN_BUILD_PEN:.0f} pen and "
-            "prefer passive shred (Obsidian Shard / Titan's Bane / Spears) over pure power. "
-            "Items listed in buy order (early power → pen → power → defense → luxury). "
+            "Role-identity Conquest model from local wiki stats + patch momentum. "
+            "Carry/Mid = backline damage + pen (Support peels). "
+            "Jungle = ganks (Bumba, burst pen, CDR, Blink). "
+            "Solo = unkillable frontline (prots, HP, Damp/Plat/Ten, hybrid offline). "
+            "Support = peel for ADC/mid (mitigate, anti-AS/crit, auras — not LS DPS). "
+            f"Shop actives default ≤{DEFAULT_MAX_SHOP_ACTIVES} "
+            f"(hard max {HARD_MAX_ACTIVE_ITEMS}; curios share budget). "
+            f"Damage roles enforce ≥{MIN_BUILD_PEN:.0f} matching pen. "
             "No external build sites."
         ),
         "max_active_items": DEFAULT_MAX_SHOP_ACTIVES,
