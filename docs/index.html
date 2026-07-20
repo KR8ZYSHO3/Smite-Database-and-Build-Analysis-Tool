@@ -10,7 +10,7 @@
 </head>
 <body>
   <div class="app">
-    <header class="top">
+    <header class="top hud-frame">
       <div>
         <h1>SMITE 2 · Arena Intel</h1>
         <div class="sub" id="meta-line">Loading…</div>
@@ -76,8 +76,8 @@
               </select>
             </label>
             <div class="counter-enemies">
-              <span class="muted">Enemy team (up to 5)</span>
-              <div class="enemy-picks" id="ctr-enemy-picks"></div>
+              <span class="muted">Enemy team (up to 5) — click filled slot to remove</span>
+              <div class="enemy-lobby" id="ctr-enemy-picks" aria-label="Enemy lobby slots"></div>
               <input id="ctr-enemy-add" type="search" list="ctr-god-list" placeholder="Add enemy god…" autocomplete="off" />
             </div>
             <datalist id="ctr-god-list"></datalist>
@@ -312,6 +312,22 @@
       SMITE 2 Arena Intel · wiki.smite2.com model · not affiliated with Hi-Rez
     </footer>
   </div>
+
+  <!-- Shareable intel card modal -->
+  <div class="intel-modal" id="intel-modal" role="dialog" aria-modal="true" aria-labelledby="intel-modal-title" hidden>
+    <div class="intel-modal-inner">
+      <div class="intel-modal-toolbar">
+        <h3 id="intel-modal-title">Intel card</h3>
+        <div class="intel-modal-actions">
+          <button type="button" class="btn-share" id="intel-dl-png">Download PNG</button>
+          <button type="button" class="btn-ghost" id="intel-copy-text">Copy path</button>
+          <button type="button" class="btn-ghost" id="intel-close">Close</button>
+        </div>
+      </div>
+      <div class="intel-card-preview" id="intel-card-preview"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="./app.js"></script>
 </body>
 </html>

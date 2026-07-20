@@ -19,6 +19,366 @@ function fmt(v, d = 1) {
   return n.toFixed(d);
 }
 
+/* -------------------- Visual / share helpers (Package D) -------------------- */
+const ROLE_THEME = {
+  Carry: "role-carry",
+  Mid: "role-mid",
+  Jungle: "role-jungle",
+  Solo: "role-solo",
+  Support: "role-support",
+};
+
+const shareStore = new Map();
+let shareSeq = 0;
+let activeShare = null;
+
+function roleClass(role) {
+  return ROLE_THEME[role] || "role-mid";
+}
+
+function setActiveRoleTheme(role) {
+  document.body.classList.remove("role-carry", "role-mid", "role-jungle", "role-solo", "role-support");
+  if (role && ROLE_THEME[role]) document.body.classList.add(ROLE_THEME[role]);
+}
+
+function slotKind(it) {
+  if (!it) return "core";
+  if (it.troll) return "troll";
+  if (it.counter || it.slot === "counter") return "counter";
+  if (it.is_active) return "active";
+  if (it.slot === "pen") return "pen";
+  if (it.slot === "mitigate") return "mitigate";
+  if (it.slot === "luxury" || /luxury/i.test(String(it.slot || ""))) return "luxury";
+  return it.slot || "core";
+}
+
+function itemInitials(name) {
+  const parts = String(name || "?")
+    .replace(/[''"]/g, "")
+    .split(/[\s\-–—/]+/)
+    .filter(Boolean);
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return String(name || "?").slice(0, 2).toUpperCase();
+}
+
+function loadoutRail(items) {
+  const list = items || [];
+  if (!list.length) return "";
+  const parts = [];
+  list.forEach((it, i) => {
+    const kind = slotKind(it);
+    parts.push(`<div class="loadout-slot is-${escapeAttr(kind)}" title="${escapeAttr(it.name || "")}">
+      <span class="ls-n">${i + 1}</span>
+      <span class="ls-icon">${escapeHtml(itemInitials(it.name))}</span>
+      <span class="ls-name">${escapeHtml(it.name || "—")}</span>
+    </div>`);
+    if (i < list.length - 1) parts.push(`<span class="loadout-conn" aria-hidden="true"></span>`);
+  });
+  return `<div class="loadout-rail" role="list" aria-label="Buy order">${parts.join("")}</div>`;
+}
+
+function registerShare(data) {
+  const id = `s${++shareSeq}`;
+  shareStore.set(id, data);
+  return id;
+}
+
+function shareBar(data) {
+  const id = registerShare(data);
+  return `<div class="card-actions">
+    <button type="button" class="btn-share" data-share-id="${id}">Share intel card</button>
+  </div>`;
+}
+
+function showToast(msg) {
+  const el = $("#toast");
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add("show");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => el.classList.remove("show"), 2200);
+}
+
+function closeIntelModal() {
+  const modal = $("#intel-modal");
+  if (!modal) return;
+  modal.classList.remove("open");
+  modal.hidden = true;
+  activeShare = null;
+}
+
+function intelPreviewHtml(data) {
+  const mode = data.mode || "base";
+  const items = data.items || [];
+  const tags = (data.tags || []).map((t) => `<span class="pill">${escapeHtml(t)}</span>`).join("");
+  const path = items
+    .map(
+      (it, i) =>
+        `<li><span class="n">${i + 1}</span><span>${escapeHtml(it.name || "—")}</span><span class="cost">${
+          it.cost != null ? it.cost + "g" : ""
+        }</span></li>`
+    )
+    .join("");
+  const starter = data.starter
+    ? `<li><span class="n">S</span><span>${escapeHtml(data.starter)}</span><span class="cost">start</span></li>`
+    : "";
+  return `
+    <div class="ic-brand">SMITE 2 · Arena Intel</div>
+    ${mode === "troll" ? `<div class="ic-stamp">Not ranked</div>` : ""}
+    <h2 class="ic-title">${escapeHtml(data.title || data.god || "Intel")}</h2>
+    <p class="ic-sub">${escapeHtml(data.subtitle || "")}</p>
+    ${tags ? `<div class="ic-tags">${tags}</div>` : ""}
+    ${data.why ? `<p class="ic-why">${escapeHtml(data.why)}</p>` : ""}
+    <ul class="ic-path">${starter}${path}</ul>
+    <div class="ic-footer">
+      <span>${escapeHtml(data.footerLeft || "kit · patch · build")}</span>
+      <span>${escapeHtml(data.footerRight || "smitebuilddatabase.netlify.app")}</span>
+    </div>`;
+}
+
+function openIntelModal(data) {
+  activeShare = data;
+  const modal = $("#intel-modal");
+  const preview = $("#intel-card-preview");
+  if (!modal || !preview) return;
+  preview.className = `intel-card-preview mode-${escapeAttr(data.mode || "base")}`;
+  preview.innerHTML = intelPreviewHtml(data);
+  modal.hidden = false;
+  modal.classList.add("open");
+}
+
+function intelPathText(data) {
+  const lines = [
+    `SMITE 2 Arena Intel — ${data.title || data.god || ""}`,
+    data.subtitle || "",
+    data.why ? `Why: ${data.why}` : "",
+    data.starter ? `Starter: ${data.starter}` : "",
+    ...(data.items || []).map((it, i) => `${i + 1}. ${it.name}${it.cost != null ? ` (${it.cost}g)` : ""}`),
+    data.mode === "troll" ? "TROLL / MEME — not ranked advice." : "",
+    "smitebuilddatabase.netlify.app",
+  ].filter(Boolean);
+  return lines.join("\n");
+}
+
+function downloadIntelPng(data) {
+  const W = 900;
+  const H = 520;
+  const canvas = document.createElement("canvas");
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext("2d");
+  const mode = data.mode || "base";
+
+  // bg
+  const bg = ctx.createLinearGradient(0, 0, W, H);
+  bg.addColorStop(0, "#0a0c14");
+  bg.addColorStop(0.5, "#10141f");
+  bg.addColorStop(1, "#080a12");
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // radial accents
+  const r1 = ctx.createRadialGradient(80, 40, 10, 80, 40, 320);
+  r1.addColorStop(0, mode === "troll" ? "rgba(244,114,182,0.22)" : "rgba(247,37,133,0.18)");
+  r1.addColorStop(1, "transparent");
+  ctx.fillStyle = r1;
+  ctx.fillRect(0, 0, W, H);
+  const r2 = ctx.createRadialGradient(W - 60, 60, 10, W - 60, 60, 280);
+  r2.addColorStop(0, "rgba(76,201,240,0.16)");
+  r2.addColorStop(1, "transparent");
+  ctx.fillStyle = r2;
+  ctx.fillRect(0, 0, W, H);
+
+  // top stripe
+  const stripe = ctx.createLinearGradient(0, 0, W, 0);
+  if (mode === "troll") {
+    stripe.addColorStop(0, "#f472b6");
+    stripe.addColorStop(0.5, "#a855f7");
+    stripe.addColorStop(1, "#22d3ee");
+  } else if (mode === "counter") {
+    stripe.addColorStop(0, "#ff4d6d");
+    stripe.addColorStop(0.5, "#f72585");
+    stripe.addColorStop(1, "#4cc9f0");
+  } else if (mode === "aspect") {
+    stripe.addColorStop(0, "#fbbf24");
+    stripe.addColorStop(1, "#ffd60a");
+  } else {
+    stripe.addColorStop(0, "#f72585");
+    stripe.addColorStop(0.5, "#ffd60a");
+    stripe.addColorStop(1, "#4cc9f0");
+  }
+  ctx.fillStyle = stripe;
+  ctx.fillRect(0, 0, W, 4);
+
+  // border
+  ctx.strokeStyle = "rgba(76,201,240,0.35)";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(12, 12, W - 24, H - 24);
+
+  ctx.fillStyle = "#6b7a99";
+  ctx.font = "600 14px Consolas, monospace";
+  ctx.fillText("SMITE 2  ·  ARENA INTEL", 36, 48);
+
+  ctx.fillStyle = "#eef2ff";
+  ctx.font = "800 36px Orbitron, Rajdhani, sans-serif";
+  const title = String(data.title || data.god || "Intel").slice(0, 42);
+  ctx.fillText(title, 36, 96);
+
+  ctx.fillStyle = "#8b97b3";
+  ctx.font = "600 18px Rajdhani, sans-serif";
+  const sub = String(data.subtitle || "").slice(0, 80);
+  ctx.fillText(sub, 36, 126);
+
+  if (data.why) {
+    ctx.fillStyle = "rgba(76,201,240,0.08)";
+    ctx.fillRect(36, 144, W - 72, 48);
+    ctx.fillStyle = "#c5d0e8";
+    ctx.font = "500 16px Rajdhani, sans-serif";
+    wrapCanvasText(ctx, String(data.why).slice(0, 160), 48, 166, W - 96, 18);
+  }
+
+  let y = 220;
+  if (data.starter) {
+    drawItemLine(ctx, "S", data.starter, "", y);
+    y += 36;
+  }
+  (data.items || []).slice(0, 6).forEach((it, i) => {
+    drawItemLine(ctx, String(i + 1), it.name || "—", it.cost != null ? `${it.cost}g` : "", y);
+    y += 36;
+  });
+
+  if (mode === "troll") {
+    ctx.save();
+    ctx.translate(W - 120, 90);
+    ctx.rotate(0.2);
+    ctx.strokeStyle = "rgba(244,114,182,0.7)";
+    ctx.lineWidth = 2;
+    ctx.strokeRect(-70, -16, 140, 32);
+    ctx.fillStyle = "rgba(249,168,212,0.9)";
+    ctx.font = "700 14px Orbitron, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("NOT RANKED", 0, 6);
+    ctx.restore();
+  }
+
+  ctx.fillStyle = "#5a6a88";
+  ctx.font = "500 12px Consolas, monospace";
+  ctx.textAlign = "left";
+  ctx.fillText(String(data.footerLeft || "KIT · PATCH · BUILD"), 36, H - 36);
+  ctx.textAlign = "right";
+  ctx.fillText(String(data.footerRight || "smitebuilddatabase.netlify.app"), W - 36, H - 36);
+
+  canvas.toBlob((blob) => {
+    if (!blob) {
+      showToast("PNG export failed");
+      return;
+    }
+    const a = document.createElement("a");
+    const safe = String(data.god || data.title || "intel")
+      .replace(/[^\w\-]+/g, "_")
+      .slice(0, 40);
+    a.href = URL.createObjectURL(blob);
+    a.download = `arena-intel-${safe}.png`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    showToast("PNG downloaded");
+  }, "image/png");
+}
+
+function drawItemLine(ctx, n, name, cost, y) {
+  ctx.fillStyle = "rgba(0,0,0,0.35)";
+  ctx.strokeStyle = "rgba(42,53,80,0.85)";
+  ctx.lineWidth = 1;
+  roundRect(ctx, 36, y - 22, 828, 32, 8);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = "#4cc9f0";
+  ctx.font = "800 14px Orbitron, sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText(n, 56, y);
+  ctx.fillStyle = "#eef2ff";
+  ctx.font = "700 17px Rajdhani, sans-serif";
+  ctx.textAlign = "left";
+  ctx.fillText(String(name).slice(0, 48), 78, y);
+  if (cost) {
+    ctx.fillStyle = "#8b97b3";
+    ctx.font = "500 13px Consolas, monospace";
+    ctx.textAlign = "right";
+    ctx.fillText(cost, 848, y);
+  }
+  ctx.textAlign = "left";
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function wrapCanvasText(ctx, text, x, y, maxW, lineH) {
+  const words = text.split(/\s+/);
+  let line = "";
+  let yy = y;
+  let lines = 0;
+  for (const w of words) {
+    const test = line ? `${line} ${w}` : w;
+    if (ctx.measureText(test).width > maxW && line) {
+      ctx.fillText(line, x, yy);
+      line = w;
+      yy += lineH;
+      lines++;
+      if (lines >= 2) {
+        ctx.fillText(line.slice(0, 60) + "…", x, yy);
+        return;
+      }
+    } else line = test;
+  }
+  if (line) ctx.fillText(line, x, yy);
+}
+
+function setupShareUi() {
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-share-id]");
+    if (btn) {
+      const data = shareStore.get(btn.getAttribute("data-share-id"));
+      if (data) openIntelModal(data);
+      return;
+    }
+  });
+  $("#intel-close")?.addEventListener("click", closeIntelModal);
+  $("#intel-modal")?.addEventListener("click", (e) => {
+    if (e.target === $("#intel-modal")) closeIntelModal();
+  });
+  $("#intel-copy-text")?.addEventListener("click", async () => {
+    if (!activeShare) return;
+    try {
+      await navigator.clipboard.writeText(intelPathText(activeShare));
+      showToast("Path copied");
+    } catch {
+      showToast("Copy failed");
+    }
+  });
+  $("#intel-dl-png")?.addEventListener("click", () => {
+    if (!activeShare) return;
+    downloadIntelPng(activeShare);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && $("#intel-modal")?.classList.contains("open")) closeIntelModal();
+  });
+}
+
+function itemsForShare(items) {
+  return (items || []).map((it) => ({
+    name: it.name,
+    cost: it.cost ?? it.total_cost ?? null,
+    slot: it.slot || null,
+  }));
+}
+
 function applyPayload(payload) {
   if (!payload || typeof payload !== "object") {
     throw new Error("Invalid data payload");
@@ -321,6 +681,15 @@ function selectGod(name, switchTab) {
     .filter(Boolean)
     .join(" · ");
 
+  // Ambient pantheon glow on dossier
+  const dossierEl = document.querySelector(".god-dossier");
+  if (dossierEl) {
+    const pan = String(g.pantheon || "")
+      .toLowerCase()
+      .replace(/\s+/g, "-");
+    dossierEl.dataset.pantheon = pan;
+  }
+
   // Compact banner — only the essentials (full stats live in patch/abilities details)
   $("#god-metrics").innerHTML = [
     pill(`${g.tier || "—"} #${g.rank_in_scope ?? "—"}`),
@@ -472,6 +841,7 @@ function selectGod(name, switchTab) {
       (s) =>
         `  [${s.direction}] ${s.patch_name || "?"} — ${(s.sample_text || "").slice(0, 120)}`
     );
+  const conf = g.confidence;
   $("#god-patch").textContent = [
     `Trajectory: ${g.trajectory || "—"}`,
     `Net weighted: ${fmt(g.net_weighted_score, 2)}`,
@@ -506,8 +876,26 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta) {
   if (isAspect) {
     label = `${role} · ${aspectMeta?.name || gb.aspect_name || "Aspect"}`;
   }
+  const shareData = {
+    mode: isAspect ? "aspect" : "base",
+    god: g.name,
+    role,
+    title: `${g.name} · ${label}`,
+    subtitle: `${role} · ${isAspect ? "aspect path" : "base kit"} · ${g.primary_damage_type || ""} · tier ${g.tier || "?"}`,
+    why: gb.why || "",
+    starter: gb.starter?.name || "",
+    items: itemsForShare(items),
+    tags: [
+      isAspect ? "aspect" : "base",
+      role,
+      gb.archetype ? String(gb.archetype).replace(/_/g, " ") : null,
+      `actives ${nAct}/${maxA}`,
+    ].filter(Boolean),
+    footerLeft: `PATCH · KIT · ${role.toUpperCase()}`,
+  };
   return `
-    <div class="card build-card god-role-build ${isAspect ? "is-aspect" : ""}">
+    <div class="card build-card god-role-build ${roleClass(role)} ${isAspect ? "is-aspect" : ""}">
+      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
       <h3>${escapeHtml(label)}</h3>
       <div class="build-meta">
         ${isAspect ? `<span class="pill aspect">aspect</span>` : `<span class="pill">base kit</span>`}
@@ -529,13 +917,15 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta) {
           : ""
       }
       <p class="muted why">${escapeHtml(gb.why || "")}</p>
-      <div><strong>Starter</strong> — ${escapeHtml(gb.starter?.name || "—")}${
+      <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(gb.starter?.name || "—")}${
         gb.starter?.why ? ` <span class="item-why">— ${escapeHtml(gb.starter.why)}</span>` : ""
       }</div>
+      ${loadoutRail(items)}
       <ol class="buy-list">
         ${items.map((it, i) => buyRow(it, i + 1)).join("")}
       </ol>
-      <div class="muted">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
+      <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
+      ${shareBar(shareData)}
     </div>`;
 }
 
@@ -571,7 +961,11 @@ function setupBuilds() {
     const commons = t.common_items || t.top_scored_items || [];
     const st = t.typical_starter || t.starter;
 
-    $("#role-job").innerHTML = `
+    setActiveRoleTheme(activeRole);
+    const rj = $("#role-job");
+    rj.className = `card role-job ${roleClass(activeRole)}`;
+    rj.innerHTML = `
+      <div class="breadcrumb-bar">CONQUEST // <strong>${escapeHtml(activeRole.toUpperCase())}</strong> // ROLE JOB</div>
       <div class="role-job-head">
         <h2>${escapeHtml(job.title)}</h2>
         <span class="pill hot">Job only — not a full build</span>
@@ -630,8 +1024,26 @@ function godBuildCard(gb, role) {
   const mitG = itemsG.reduce((s, it) => s + (it.damp || 0) + (it.plat || 0) + (it.ten || 0), 0);
   const showMit = role === "Support" || role === "Solo";
   const effects = gb.kit_effects || [];
+  const shareData = {
+    mode: gb.is_aspect ? "aspect" : "base",
+    god: gb.god,
+    role,
+    title: `${gb.god} · ${role}`,
+    subtitle: `Tier ${gb.tier || "?"} · #${gb.rank ?? "—"} · ${gb.damage_type || ""} · ${gb.is_aspect ? gb.aspect_name || "aspect" : "base kit"}`,
+    why: gb.why || "",
+    starter: gb.starter?.name || "",
+    items: itemsForShare(itemsG),
+    tags: [
+      gb.is_aspect ? "aspect" : "kit-fit",
+      role,
+      gb.archetype ? String(gb.archetype).replace(/_/g, " ") : null,
+      gb.patch_trajectory || null,
+    ].filter(Boolean),
+    footerLeft: `CONQUEST // ${role.toUpperCase()}`,
+  };
   return `
-    <article class="card build-card god-build-card">
+    <article class="card build-card god-build-card ${roleClass(role)}">
+      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
       <header class="gbc-head">
         <h3>
           <span class="tier-${gb.tier || ""}">[${gb.tier || "?"}]</span>
@@ -674,11 +1086,15 @@ function godBuildCard(gb, role) {
       <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(gb.starter?.name || "—")}${
         gb.starter?.why ? ` <span class="item-why">— ${escapeHtml(gb.starter.why)}</span>` : ""
       }</div>
+      ${loadoutRail(itemsG)}
       <ol class="buy-list">
         ${itemsG.map((it, i) => buyRow(it, i + 1)).join("")}
       </ol>
       <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
-      <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">Open full god page →</button>
+      <div class="card-actions">
+        <button type="button" class="btn-share" data-share-id="${registerShare(shareData)}">Share intel card</button>
+        <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">Open full god page →</button>
+      </div>
     </article>`;
 }
 
@@ -696,33 +1112,31 @@ function chip(it, n) {
 
 function buyRow(it, n) {
   if (!it) return "";
+  const kind = slotKind(it);
   const tags = [];
-  if (it.slot) tags.push(it.slot);
-  if (it.is_active) tags.push("active");
-  if (it.pen) tags.push(`pen ${it.pen}`);
-  if (it.damp) tags.push(`damp ${it.damp}`);
-  if (it.plat) tags.push(`plat ${it.plat}`);
-  if (it.ten) tags.push(`ten ${it.ten}`);
-  const slotClass =
-    it.slot === "pen"
-      ? "is-pen"
-      : it.troll
-        ? "is-troll"
-        : it.counter || it.slot === "counter"
-          ? "is-counter"
-          : it.slot === "mitigate"
-            ? "is-mitigate"
-            : it.is_active
-              ? "is-active"
-              : "";
-  const why = it.why ? `<div class="item-why">${escapeHtml(it.why)}</div>` : "";
+  if (it.slot) tags.push({ t: it.slot, metal: kind });
+  if (it.is_active) tags.push({ t: "active", metal: "active" });
+  if (it.pen) tags.push({ t: `pen ${it.pen}`, metal: "pen" });
+  if (it.damp) tags.push({ t: `damp ${it.damp}`, metal: "mitigate" });
+  if (it.plat) tags.push({ t: `plat ${it.plat}`, metal: "mitigate" });
+  if (it.ten) tags.push({ t: `ten ${it.ten}`, metal: "mitigate" });
+  if (it.troll) tags.push({ t: "troll", metal: "troll" });
+  if (it.counter) tags.push({ t: "counter", metal: "counter" });
+  const slotClass = `is-${kind}`;
+  const why = it.why
+    ? `<details class="item-why-details"><summary>Why this?</summary><div class="item-why">${escapeHtml(
+        it.why
+      )}</div></details>`
+    : "";
   return `<li class="buy-row ${slotClass}" title="${escapeAttr(it.why || it.effect || "")}">
     <span class="buy-n">${n}</span>
     <div class="buy-main">
       <span class="buy-name">${escapeHtml(it.name)}</span>
       ${why}
     </div>
-    <span class="buy-tags">${tags.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")}</span>
+    <span class="buy-tags">${tags
+      .map((x) => `<span class="tag metal-${escapeAttr(x.metal)}">${escapeHtml(x.t)}</span>`)
+      .join("")}</span>
     <span class="buy-cost">${it.cost != null ? it.cost + "g" : ""}</span>
   </li>`;
 }
@@ -1202,18 +1616,45 @@ function getStarter(god, role) {
 function renderEnemyPicks() {
   const box = $("#ctr-enemy-picks");
   if (!box) return;
-  box.innerHTML = counterState.enemies
-    .map(
-      (n, i) =>
-        `<button type="button" class="enemy-chip" data-rm="${i}">${escapeHtml(n)} ×</button>`
-    )
-    .join("");
+  const slots = [];
+  for (let i = 0; i < 5; i++) {
+    const n = counterState.enemies[i];
+    if (n) {
+      slots.push(
+        `<button type="button" class="lobby-slot filled" data-rm="${i}" title="Remove ${escapeAttr(
+          n
+        )}">${escapeHtml(n)}</button>`
+      );
+    } else {
+      slots.push(`<div class="lobby-slot">Slot ${i + 1}</div>`);
+    }
+  }
+  box.innerHTML = slots.join("");
   box.querySelectorAll("[data-rm]").forEach((btn) => {
     btn.addEventListener("click", () => {
       counterState.enemies.splice(Number(btn.getAttribute("data-rm")), 1);
       renderEnemyPicks();
     });
   });
+}
+
+function threatMetersHtml(threat) {
+  const meters = [
+    { key: "magic", label: "Magic", val: Math.min(1, (threat.magical_count || 0) / 5) },
+    { key: "phys", label: "Physical", val: Math.min(1, (threat.physical_count || 0) / 5) },
+    { key: "crit", label: "Crit", val: threat.need_anti_crit ? 0.85 : 0.15 },
+    { key: "heal", label: "Heal", val: threat.need_antiheal ? 0.9 : 0.1 },
+    { key: "cc", label: "CC", val: threat.need_magi ? 0.8 : 0.2 },
+  ];
+  return `<div class="threat-meters">${meters
+    .map(
+      (m) => `<div class="threat-meter">
+      <span class="label">${m.label}</span>
+      <div class="track"><div class="fill" style="width:${Math.round(m.val * 100)}%"></div></div>
+      <span class="val">${Math.round(m.val * 100)}</span>
+    </div>`
+    )
+    .join("")}</div>`;
 }
 
 /* -------------------- Troll builds (client) -------------------- */
@@ -1487,8 +1928,21 @@ function setupTroll() {
       return;
     }
     const t = buildTrollPathJS(god, role, useAspect, chaos);
+    const shareData = {
+      mode: "troll",
+      god: god.name,
+      role,
+      title: t.title,
+      subtitle: `${god.name} · ${role}${t.aspect ? ` · ${t.aspect.name}` : ""} · troll path`,
+      why: t.monologue || t.disclaimer || "",
+      starter: t.starter?.name || "",
+      items: itemsForShare(t.items),
+      tags: ["TROLL", t.primary.replace(/_/g, " "), t.secondary.replace(/_/g, " ")],
+      footerLeft: "TROLL / MEME — NOT RANKED",
+    };
     box.innerHTML = `
-      <article class="card build-card god-build-card is-troll">
+      <article class="card build-card god-build-card is-troll ${roleClass(role)}">
+        <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
         <header class="gbc-head">
           <h3>😈 ${escapeHtml(t.title)}</h3>
           <div class="muted gbc-meta">${escapeHtml(god.name)} · ${escapeHtml(role)}</div>
@@ -1502,6 +1956,7 @@ function setupTroll() {
         <p class="aspect-blurb troll-blurb">${escapeHtml(t.disclaimer)}</p>
         <p class="why">${escapeHtml(t.monologue)}</p>
         <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(t.starter?.name || "—")}</div>
+        ${loadoutRail(t.items)}
         <ol class="buy-list">
           ${t.items.map((it, i) => buyRow(it, i + 1)).join("")}
         </ol>
@@ -1510,6 +1965,7 @@ function setupTroll() {
             ? `<p class="muted">Serious baseline (for contrast): ${t.baseline.map(escapeHtml).join(" → ")}</p>`
             : ""
         }
+        ${shareBar(shareData)}
       </article>
     `;
   });
@@ -1556,6 +2012,7 @@ function setupCounter() {
     const threat = analyzeEnemyTeamJS(enemyGods);
     threatEl.innerHTML = `
       <strong>Threat</strong> — ${escapeHtml(threat.summary)}
+      ${threatMetersHtml(threat)}
       <ul class="threat-list">${threat.reasons.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>
       <div class="muted">Magic ${fmt(threat.magical_count, 0)} · Physical ${fmt(threat.physical_count, 0)}</div>
     `;
@@ -1567,8 +2024,29 @@ function setupCounter() {
       ? `<p class="muted">Baseline kit path: ${baseline.map(escapeHtml).join(" → ")}</p>`
       : `<p class="muted">No baseline path for ${escapeHtml(you.name)} ${escapeHtml(role)} — pure counter ranking.</p>`;
 
+    const vs = enemyGods.map((g) => g.name).join(", ");
+    const shareData = {
+      mode: "counter",
+      god: you.name,
+      role,
+      title: `${you.name} · ${role} · counter`,
+      subtitle: `vs ${vs}`,
+      why: threat.summary || "",
+      starter: starter?.name || "",
+      items: itemsForShare(path),
+      tags: [
+        "counter",
+        threat.need_anti_crit ? "anti-crit" : null,
+        threat.need_mprot ? "mprot" : null,
+        threat.need_antiheal ? "antiheal" : null,
+        threat.need_magi ? "anti-CC" : null,
+      ].filter(Boolean),
+      footerLeft: "COUNTER PATH · LOBBY INTEL",
+    };
+
     resultEl.innerHTML = `
-      <article class="card build-card god-build-card">
+      <article class="card build-card god-build-card ${roleClass(role)}">
+        <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
         <header class="gbc-head">
           <h3>${escapeHtml(you.name)} · ${escapeHtml(role)} · counter</h3>
           <div class="muted gbc-meta">vs ${enemyGods.map((g) => escapeHtml(g.name)).join(", ")}</div>
@@ -1582,9 +2060,11 @@ function setupCounter() {
         </div>
         ${baselineNote}
         <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(starter?.name || "—")}</div>
+        ${loadoutRail(path)}
         <ol class="buy-list">
           ${path.map((it, i) => buyRow(it, i + 1)).join("")}
         </ol>
+        ${shareBar(shareData)}
       </article>
     `;
   });
@@ -1592,6 +2072,7 @@ function setupCounter() {
 
 async function main() {
   setupTabs();
+  setupShareUi();
   const loading = $("#loading");
   try {
     await loadData();
@@ -1617,6 +2098,7 @@ async function main() {
     setupTiers();
     setupItems();
     setupAboutMomentum();
+    renderEnemyPicks();
   } catch (err) {
     loading.innerHTML = `<div class="err"><strong>Failed to load data.</strong><br>${escapeHtml(
       err.message || err
