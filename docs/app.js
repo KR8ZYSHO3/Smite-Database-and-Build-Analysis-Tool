@@ -461,6 +461,15 @@ function selectGod(name, switchTab) {
       .join("");
   }
 
+  // Bring builds into view with room to read a full path
+  requestAnimationFrame(() => {
+    const dossier = document.querySelector(".god-dossier");
+    const builds = $("#god-builds-section");
+    if (dossier && builds) {
+      dossier.scrollTop = Math.max(0, builds.offsetTop - 12);
+    }
+  });
+
   const axLines = Object.entries(axes)
     .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
     .map(([k, v]) => `  ${k}: ${Number(v) >= 0 ? "+" : ""}${fmt(v, 2)}`);

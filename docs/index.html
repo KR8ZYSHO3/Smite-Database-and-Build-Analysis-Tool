@@ -142,8 +142,8 @@
           </label>
         </div>
         <div id="god-compare-panel" class="compare-panel" style="display:none"></div>
-        <div class="grid-2">
-          <div class="card scroll">
+        <div class="gods-layout">
+          <div class="card scroll god-list-pane">
             <table>
               <thead>
                 <tr><th>God</th><th>Pantheon</th><th>Dmg</th><th>Tier</th><th>#</th></tr>
@@ -151,22 +151,24 @@
               <tbody id="god-list-body"></tbody>
             </table>
           </div>
-          <div class="card scroll god-dossier">
-            <h2 id="god-title">Select a god</h2>
-            <div class="muted" id="god-sub"></div>
-            <div id="god-metrics" style="margin:10px 0"></div>
-            <div class="god-section">
-              <h3>Patch exploit</h3>
-              <div id="god-patch-axes" class="patch-axes muted">Select a god to see r5 axes.</div>
+          <div class="card god-dossier">
+            <div class="god-dossier-head">
+              <h2 id="god-title">Select a god</h2>
+              <div class="muted" id="god-sub"></div>
+              <div id="god-metrics" class="god-metrics-row"></div>
             </div>
-            <div class="god-section">
+            <div class="god-section god-section-builds" id="god-builds-section">
               <h3>Kit-fit Conquest paths</h3>
-              <div class="muted" id="god-build-hint">One buy order per role this god plays.</div>
+              <div class="muted" id="god-build-hint">One buy order per role this god plays (base + aspect when available).</div>
               <div id="god-build" class="god-builds"></div>
             </div>
             <details class="god-more">
+              <summary>Patch exploit</summary>
+              <div id="god-patch-axes" class="patch-axes muted" style="margin-top:10px">Select a god to see r5 axes.</div>
+            </details>
+            <details class="god-more">
               <summary>Abilities &amp; patch notes</summary>
-              <div class="scroll" style="max-height:220px;margin-top:10px">
+              <div class="god-abilities-scroll">
                 <table>
                   <thead>
                     <tr><th>Slot</th><th>Name</th><th>Dmg5</th><th>STR%</th><th>INT%</th><th>CD</th></tr>
