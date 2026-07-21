@@ -1660,6 +1660,7 @@ function analyzeEnemyTeamJS(enemyGods) {
   const healers = [];
   const ccGods = [];
   const critGods = [];
+  const divers = [];
   const mageNames = [];
   const physNames = [];
 
@@ -1689,6 +1690,12 @@ function analyzeEnemyTeamJS(enemyGods) {
     if (isPhys && (tags.has("aa") || tags.has("as_steroid") || tags.has("sustained") || aa >= 0.5)) {
       critGods.push(g.name);
     }
+    if (
+      isPhys &&
+      (tags.has("gap_close") || tags.has("mobile") || tags.has("execute") || tags.has("heavy_shield"))
+    ) {
+      divers.push(g.name);
+    }
   }
 
   const reasons = [];
@@ -1698,10 +1705,14 @@ function analyzeEnemyTeamJS(enemyGods) {
   const need_antiheal = healers.length >= 1;
   const need_magi = ccGods.length >= 2 || (ccGods.length >= 1 && magical >= 2);
   const need_anti_as = need_anti_crit;
+  const need_dive_shell = divers.length >= 1 && physical >= 2;
 
   if (magical >= 3) reasons.push(`Heavy magic (${Math.floor(magical)}): Genji / Oni / mprot`);
   else if (magical >= 2) reasons.push(`Magic pressure (${Math.floor(magical)}): magical defense`);
   if (physical >= 2) reasons.push(`Physical front (${Math.floor(physical)}): Breastplate / Spectral`);
+  if (need_dive_shell) {
+    reasons.push(`Dive (${divers.join(", ")}): shell first before antiheal greed`);
+  }
   if (critGods.length) reasons.push(`Crit/AA (${critGods.join(", ")}): Spectral`);
   if (healers.length) reasons.push(`Healing (${healers.join(", ")}): Contagion / Divine`);
   if (ccGods.length) reasons.push(`CC (${ccGods.join(", ")}): Magi's / Beads`);
@@ -1713,6 +1724,7 @@ function analyzeEnemyTeamJS(enemyGods) {
     healers,
     cc_gods: ccGods,
     crit_gods: critGods,
+    divers,
     mage_names: mageNames,
     phys_names: physNames,
     need_mprot,
@@ -1721,6 +1733,7 @@ function analyzeEnemyTeamJS(enemyGods) {
     need_antiheal,
     need_magi,
     need_anti_as,
+    need_dive_shell,
     reasons,
     summary: reasons.slice(0, 4).join(" · "),
   };
@@ -1772,11 +1785,12 @@ function counterItemScore(it, threat, role) {
     if (threat.magical_count >= 3 && mprot >= 30) s += 18;
   }
   if (threat.need_pprot) {
+    const boost = threat.need_dive_shell ? 70 : 55;
     if (n.includes("breastplate") || n.includes("valor")) {
-      s += 55;
+      s += boost;
       why.push("vs physical — Breastplate");
     } else if (pprot >= 40) {
-      s += 40;
+      s += 40 + (threat.need_dive_shell ? 15 : 0);
       why.push("high pprot");
     } else if (pprot >= 25) s += 18;
   }
@@ -1786,21 +1800,23 @@ function counterItemScore(it, threat, role) {
       why.push("anti-crit vs ADC");
     }
     if (n.includes("midgardian")) {
-      s += 48;
+      s += threat.need_dive_shell ? 62 : 48;
       why.push("cut enemy AS");
     }
   }
   if (threat.need_antiheal) {
+    const ah =
+      threat.need_dive_shell && (role === "Support" || role === "Solo") ? 52 : 78;
     if (
       n.includes("contagion") ||
       n.includes("divine ruin") ||
       n.includes("pestilence") ||
       n.includes("brawler")
     ) {
-      s += 78;
+      s += ah;
       why.push("anti-heal");
     } else if (passive.includes("heal") && (passive.includes("reduc") || passive.includes("anti"))) {
-      s += 50;
+      s += threat.need_dive_shell ? 28 : 50;
       why.push("healing reduction");
     }
   }
@@ -1825,18 +1841,25 @@ function counterItemScore(it, threat, role) {
 }
 
 function injectCounterCores(baselineNames, threat, role) {
+  // Shell (dive + turrets) before antiheal greed — matches CLI counter engine
   const wanted = [];
-  if (threat.need_anti_crit) wanted.push("spectral");
+  const dive = !!threat.need_dive_shell;
+  if (threat.need_pprot && (role === "Support" || role === "Solo" || role === "Jungle")) {
+    wanted.push("breastplate");
+  }
   if (threat.need_mprot && threat.magical_count >= 2) {
     wanted.push("genji");
     if (threat.magical_count >= 3) wanted.push("oni hunter");
   }
-  if (threat.need_antiheal) wanted.push(role === "Support" || role === "Solo" ? "contagion" : "divine ruin");
-  if (threat.need_magi) wanted.push("magi");
-  if (threat.need_pprot && (role === "Support" || role === "Solo" || role === "Jungle")) {
-    wanted.push("breastplate");
+  if (dive && (role === "Support" || role === "Solo")) wanted.push("midgardian");
+  if (threat.need_anti_crit) wanted.push("spectral");
+  if (threat.need_anti_as && (role === "Support" || role === "Solo") && !wanted.includes("midgardian")) {
+    wanted.push("midgardian");
   }
-  if (threat.need_anti_as && (role === "Support" || role === "Solo")) wanted.push("midgardian");
+  if (threat.need_antiheal) {
+    wanted.push(role === "Support" || role === "Solo" ? "contagion" : "divine ruin");
+  }
+  if (threat.need_magi) wanted.push("magi");
 
   const items = (state.items || []).filter(isT3Item);
   const byName = Object.fromEntries(items.map((it) => [it.name, it]));
@@ -1846,7 +1869,8 @@ function injectCounterCores(baselineNames, threat, role) {
     path = [];
   }
   const seen = new Set(path.map((p) => p.name));
-  const maxInject = role === "Support" || role === "Solo" ? 3 : 2;
+  const maxInject =
+    (role === "Support" || role === "Solo") && dive ? 4 : role === "Support" || role === "Solo" ? 3 : 2;
   let injected = 0;
 
   for (const key of wanted) {

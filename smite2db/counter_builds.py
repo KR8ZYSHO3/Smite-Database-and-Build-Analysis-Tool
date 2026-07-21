@@ -139,6 +139,14 @@ def analyze_enemy_team(
     need_antiheal = len(healers) >= 1
     need_magi = len(cc_gods) >= 2 or (len(cc_gods) >= 1 and magical >= 2)
     need_anti_as = need_anti_crit  # Midgardian when ADC present
+    # Dive / frontline pressure — shell before antiheal greed (Achilles-class)
+    divers = [
+        e["name"]
+        for e in gods
+        if set(e.get("tags") or []) & {"gap_close", "mobile", "execute", "heavy_shield"}
+        and (e.get("damage_type") or "").lower() == "physical"
+    ]
+    need_dive_shell = len(divers) >= 1 and physical >= 2
 
     reasons: list[str] = []
     if magical >= 3:
@@ -147,10 +155,14 @@ def analyze_enemy_team(
         reasons.append(f"Magic pressure ({int(magical)}): prioritize magical defense")
     if physical >= 2:
         reasons.append(f"Physical front ({int(physical)}): Breastplate / Spectral / pprot")
+    if need_dive_shell:
+        reasons.append(
+            f"Dive pressure ({', '.join(divers)}): shell first (Breastplate / Midgardian) before antiheal greed"
+        )
     if crit_gods:
         reasons.append(f"Crit/AA threat ({', '.join(crit_gods)}): Spectral (+ Midgardian)")
     if healers:
-        reasons.append(f"Healing ({', '.join(healers)}): Contagion / Divine Ruin")
+        reasons.append(f"Healing ({', '.join(healers)}): Contagion / Divine Ruin (after shell if diving)")
     if cc_gods:
         reasons.append(f"CC setup ({', '.join(cc_gods)}): Magi's / Mantle / Beads")
     if not reasons:
@@ -166,12 +178,14 @@ def analyze_enemy_team(
         "healers": healers,
         "cc_gods": cc_gods,
         "crit_gods": crit_gods,
+        "divers": divers,
         "need_mprot": need_mprot,
         "need_pprot": need_pprot,
         "need_anti_crit": need_anti_crit,
         "need_antiheal": need_antiheal,
         "need_magi": need_magi,
         "need_anti_as": need_anti_as,
+        "need_dive_shell": need_dive_shell,
         "magic_ratio": round(magical / total, 2),
         "phys_ratio": round(physical / total, 2),
         "tags_union": sorted(tags_all),
@@ -208,11 +222,12 @@ def counter_score_delta(item: ScoredItem, threat: dict[str, Any], role: str) -> 
             delta += 18
 
     if threat.get("need_pprot"):
+        boost = 70 if threat.get("need_dive_shell") else 55
         if fam in ("cdr_def",) or has_key("breastplate", "valor"):
-            delta += 55
+            delta += boost
             why.append("vs physical — Breastplate line")
         elif pprot >= 40:
-            delta += 40
+            delta += 40 + (15 if threat.get("need_dive_shell") else 0)
             why.append("high physical protection")
         elif pprot >= 25:
             delta += 18
@@ -222,17 +237,20 @@ def counter_score_delta(item: ScoredItem, threat: dict[str, Any], role: str) -> 
             delta += 85
             why.append("anti-crit vs enemy ADC")
         if fam == "anti_as" or has_key("midgardian", "witchblade"):
-            delta += 48
+            # Stronger when divers are autoing you down
+            delta += 62 if threat.get("need_dive_shell") else 48
             why.append("cut enemy attack speed")
 
     if threat.get("need_antiheal"):
+        # Soften antiheal priority when dive shell is required — survive first
+        ah = 52 if threat.get("need_dive_shell") and role in ("Support", "Solo") else 78
         if fam in ("antiheal", "divine", "contagion") or has_key(
             "contagion", "divine ruin", "pestilence", "brawler", "toxic"
         ):
-            delta += 78
+            delta += ah
             why.append("anti-heal vs enemy sustain")
         elif "heal" in blob and any(k in blob for k in ("reduc", "anti", "curse")):
-            delta += 50
+            delta += 50 if not threat.get("need_dive_shell") else 28
             why.append("healing reduction passive")
 
     if threat.get("need_magi"):
@@ -426,21 +444,26 @@ def _inject_counter_cores(
     seen = {x.name for x in path}
     actives = sum(1 for x in path if x.is_active_item)
 
+    # Priority order: survive dive + turret poke BEFORE antiheal greed.
+    # Lesson: Contagion-first loses to Achilles dive + Vulcan turrets.
     wanted: list[str] = []  # family or name keys in priority order
-    if threat.get("need_anti_crit"):
-        wanted.append("spectral")
+    dive = bool(threat.get("need_dive_shell"))
+    if threat.get("need_pprot") and role in ("Support", "Solo", "Jungle"):
+        wanted.append("breastplate")
     if threat.get("need_mprot") and threat.get("magical_count", 0) >= 2:
         wanted.append("genji")
         if threat.get("magical_count", 0) >= 3:
             wanted.append("oni")
+    if dive and role in ("Support", "Solo"):
+        wanted.append("midgardian")
+    if threat.get("need_anti_crit"):
+        wanted.append("spectral")
+    if threat.get("need_anti_as") and role in ("Support", "Solo") and "midgardian" not in wanted:
+        wanted.append("midgardian")
     if threat.get("need_antiheal"):
         wanted.append("contagion" if role in ("Support", "Solo") else "divine")
     if threat.get("need_magi"):
         wanted.append("magi")
-    if threat.get("need_pprot") and role in ("Support", "Solo", "Jungle"):
-        wanted.append("breastplate")
-    if threat.get("need_anti_as") and role in ("Support", "Solo"):
-        wanted.append("midgardian")
 
     # Deduplicate keys
     seen_keys: list[str] = []
@@ -448,7 +471,8 @@ def _inject_counter_cores(
         if k not in seen_keys:
             seen_keys.append(k)
 
-    max_inject = 3 if role in ("Support", "Solo") else 2
+    # Frontline can take more counter cores when diving + magic
+    max_inject = 4 if role in ("Support", "Solo") and dive else (3 if role in ("Support", "Solo") else 2)
     injected = 0
     for key in seen_keys:
         if injected >= max_inject:
