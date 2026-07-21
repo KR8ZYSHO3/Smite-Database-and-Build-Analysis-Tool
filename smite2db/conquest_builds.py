@@ -1298,6 +1298,58 @@ def rescore_for_god(
     if dtype == "magical" and str_v > int_v + 15:
         s -= 45
 
+    # --- Hard cross-type bans (fixes Bancroft-on-physical / Titan-on-mage) ---
+    mage_only_names = (
+        "bancroft",
+        "typhon",
+        "soul gem",
+        "soul reaver",
+        "gluttonous",
+        "tahuti",
+        "chronos' pendant",
+        "chronos pendant",
+        "book of thoth",
+        "doom orb",
+        "obsidian shard",
+        "spear of the magus",
+        "spear of desolation",
+        "rod of asclepius",
+        "divine ruin",
+        "gem of focus",
+        "the world stone",
+        "cosmic horror",
+        "jade scepter",
+    )
+    phys_only_names = (
+        "titan's bane",
+        "titan’s bane",
+        "bloodforge",
+        "deathbringer",
+        "demon blade",
+        "riptalon",
+        "musashi",
+        "avenging blade",
+        "executioner",
+        "qin's",
+        "qins",
+        "jotunn",
+        "hydra's",
+        "heartseeker",
+        "tekko",
+        "death metal",
+        "runeforged",
+    )
+    if physical:
+        if any(k in nlow for k in mage_only_names):
+            s -= 140
+        if int_v >= 35 and str_v < 28:
+            s -= 100
+    if mage:
+        if any(k in nlow for k in phys_only_names):
+            s -= 140
+        if str_v >= 35 and int_v < 28:
+            s -= 100
+
     # --- Role shells ---
     if role == "Support":
         s += (
@@ -1321,9 +1373,32 @@ def rescore_for_god(
             s += 24
         if "attack speed" in blob and any(k in blob for k in ("reduc", "enemy", "their")):
             s += 22
-        # Support should not core pure antiheal DPS
-        if any(k in nlow for k in ("divine ruin", "brawler", "titan", "obsi", "deathbringer")):
-            s -= 30
+        # Support should not core pure DPS / mid-mage toys
+        if any(
+            k in nlow
+            for k in (
+                "divine ruin",
+                "brawler",
+                "titan",
+                "obsi",
+                "deathbringer",
+                "soul reaver",
+                "tahuti",
+                "desolat",
+                "chronos",
+                "gem of focus",
+                "spear of desolation",
+                "spear of the magus",
+                "dreamer",
+                "wish-granting",
+            )
+        ):
+            s -= 55
+        # Greedy pure power without bulk
+        if int_v >= 50 and _canon_stat_value(item.stats, "hp") < 200 and (
+            _canon_stat_value(item.stats, "pprot") + _canon_stat_value(item.stats, "mprot") < 25
+        ):
+            s -= 45
     elif role == "Solo":
         s += (
             _canon_stat_value(item.stats, "hp") * 0.14
@@ -1342,12 +1417,43 @@ def rescore_for_god(
         s -= as_v * 0.55 + crit_v * 0.7
         if any(k in blob for k in ("shield", "protections", "mitigat", "heal")):
             s += 16
+        # Offline hybrid damage for solos (not full ADC)
+        if physical and pen_v >= 8 and _canon_stat_value(item.stats, "hp") >= 150:
+            s += 12
     elif role == "Jungle":
-        s += pen_v * 1.3 + cdr_v * 0.65
+        s += pen_v * 1.5 + cdr_v * 0.7
         if any(k in blob for k in ("jungle", "monster", "minion")):
-            s += 18
+            s += 22
         if item.item_type == "Defensive" and pen_v < 5 and (str_v + int_v) < 20:
-            s -= 12
+            s -= 28
+        # Spectral / aura peel is Support identity — not jungle core
+        if any(k in nlow for k in ("spectral", "midgardian", "thebes", "chandra", "contagion")):
+            s -= 50
+        if physical:
+            s += str_v * 0.35 + pen_v * 0.4
+    elif role == "Carry":
+        # AA carries: AS/crit/LS first-class; ability hunters stay secondary
+        aaish = "aa" in tags or float(bias.get("aa_score") or 0) >= 0.5 or "as_steroid" in tags
+        if aaish and physical:
+            s += as_v * 0.9 + crit_v * 1.0 + ls_v * 0.45
+            if any(k in nlow for k in ("jotunn", "hydra")):
+                s -= 35  # gap/ability items, not ADC cores
+            if any(
+                k in nlow
+                for k in (
+                    "riptalon",
+                    "deathbringer",
+                    "demon",
+                    "musashi",
+                    "avenging",
+                    "qins",
+                    "ichival",
+                    "wind",
+                    "eros",
+                    "death metal",
+                )
+            ):
+                s += 28
 
     # --- Kit tag affinities (LARGE — this is what diversifies gods) ---
     if "mana_stack" in tags:
@@ -1358,62 +1464,104 @@ def rescore_for_god(
         if "intelligence" in blob and "mana" in blob:
             s += 20
     if "dot" in tags or "heavy_dot" in tags:
-        if any(k in nlow for k in ("desolat", "magus", "divine", "soul reaver", "contagion", "gem of isolation")):
+        if mage and any(
+            k in nlow
+            for k in ("desolat", "magus", "divine", "soul reaver", "contagion", "gem of isolation")
+        ):
             s += 42
+        if physical and any(k in nlow for k in ("crusher", "serpentine", "toxic", "brawler")):
+            s += 28
         if "heavy_dot" in tags:
             s += pen_v * 0.8 + 12
         if "over time" in blob or "burn" in blob or "poison" in blob:
             s += 18
     if "aa" in tags or float(bias.get("aa_score") or 0) >= 0.55:
-        s += as_v * 1.2 + crit_v * 1.1 + _canon_stat_value(item.stats, "bap") * 0.7
-        if any(k in nlow for k in ("riptalon", "deathbringer", "demon", "qins", "ichival", "wind", "musashi", "avenging", "eros")):
-            s += 38
+        s += as_v * 1.35 + crit_v * 1.25 + _canon_stat_value(item.stats, "bap") * 0.75
+        if any(
+            k in nlow
+            for k in ("riptalon", "deathbringer", "demon", "qins", "ichival", "wind", "musashi", "avenging", "eros")
+        ):
+            s += 42
         if mage and (as_v >= 15 or crit_v >= 15):
             s += 20  # AA mages are rare — reward AS hybrids
+        if physical and any(k in nlow for k in ("jotunn", "bancroft", "soul gem")):
+            s -= 40
     if "burst" in tags or float(bias.get("style_burst") or 0) >= 0.55:
         s += pen_v * 0.9
         if (item.total_cost or 0) >= 2800 and (int_v >= 60 or str_v >= 45):
             s += 28
-        if any(k in nlow for k in ("obsi", "titan", "soul reaver", "tahuti", "parashu", "dreamer", "rod of")):
+        if mage and any(k in nlow for k in ("obsi", "soul reaver", "tahuti", "parashu", "dreamer", "rod of")):
+            s += 22
+        if physical and any(k in nlow for k in ("titan", "heartseeker", "parashu", "bloodforge")):
             s += 22
     if "sustained" in tags or float(bias.get("style_dps") or 0) >= 0.55:
         s += cdr_v * 1.4
-        if any(k in nlow for k in ("chronos", "pendant", "breastplate", "genji", "valor", "focus")):
+        if mage and any(k in nlow for k in ("chronos", "pendant", "focus")):
             s += 30
+        if physical and any(k in nlow for k in ("breastplate", "genji", "valor", "bloodforge", "devourer")):
+            s += 22
         if ls_v >= 10:
             s += 18
     if "spam" in tags or float(bias.get("avg_cd") or 12) <= 8.5:
         s += cdr_v * 1.8 + 18
     if "channel" in tags:
         s += pen_v * 1.1 + 15
-        if any(k in nlow for k in ("obsi", "titan", "desolat", "magus")):
+        if mage and any(k in nlow for k in ("obsi", "desolat", "magus", "chronos")):
             s += 25
+        if physical and any(k in nlow for k in ("titan", "jotunn", "hydra")):
+            s += 20
         # channel gods need bulk mid-fight
         if _canon_stat_value(item.stats, "hp") >= 250 or item.item_type == "Defensive":
             s += 16
     if "heal" in tags or "heavy_heal" in tags or "self_sustain" in tags:
-        if ls_v >= 8 or any(k in nlow for k in ("bancroft", "blood", "gluttonous", "asclepius", "lifebinder", "devourer", "sanguine")):
+        # Damage-type-correct sustain only
+        if mage and (
+            ls_v >= 8
+            or any(k in nlow for k in ("bancroft", "typhon", "gluttonous", "asclepius", "lifebinder", "soul gem"))
+        ):
+            s += 40
+        if physical and (
+            ls_v >= 8 or any(k in nlow for k in ("bloodforge", "devourer", "sanguine", "gladiator"))
+        ):
             s += 40
         if "heavy_heal" in tags and ("heal" in blob or "lifesteal" in blob):
             s += 18
+        # Don't let heal tags pull mage LS onto physical (or reverse)
+        if physical and any(k in nlow for k in ("bancroft", "typhon", "gluttonous", "soul gem")):
+            s -= 90
+        if mage and any(k in nlow for k in ("bloodforge", "devourer")) and int_v < 20:
+            s -= 90
     if "execute" in tags:
         s += pen_v * 1.2
-        if any(k in nlow for k in ("titan", "obsi", "soul reaver", "deathbringer", "bloodforge")):
+        if physical and any(k in nlow for k in ("titan", "deathbringer", "bloodforge")):
+            s += 32
+        if mage and any(k in nlow for k in ("obsi", "soul reaver", "desolat")):
             s += 32
     if "prot_shred" in tags:
         if pen_v >= 8 or "penetrat" in blob or "protection" in blob:
             s += 28
-        if any(k in nlow for k in ("magus", "executioner", "desolat", "void", "obsi", "titan")):
+        if mage and any(k in nlow for k in ("magus", "desolat", "void stone", "obsi")):
+            s += 20
+        if physical and any(k in nlow for k in ("executioner", "void shield", "titan", "crusher")):
             s += 20
     if "shield" in tags or "heavy_shield" in tags:
-        if item.item_type in ("Defensive", "Hybrid") or "shield" in blob:
+        if role in ("Solo", "Support") and (
+            item.item_type in ("Defensive", "Hybrid") or "shield" in blob
+        ):
             s += 30
-        if any(k in nlow for k in ("pridwen", "phoenix", "shifter", "spectral", "thebes")):
+        if role in ("Solo", "Support") and any(
+            k in nlow for k in ("pridwen", "phoenix", "shifter", "spectral", "thebes")
+        ):
             s += 18
+        # Jungle/Carry shields are not Spectral-first
+        if role in ("Jungle", "Carry", "Mid") and "spectral" in nlow:
+            s -= 25
     if "high_cc" in tags or "hard_cc" in tags:
         s += cdr_v * 1.3 + 12
         if role == "Support" and item.item_type == "Defensive":
             s += 10
+        if role == "Support" and any(k in nlow for k in ("isolation", "binding", "stygian")):
+            s += 16
     if "immobile" in tags:
         if item.item_type == "Defensive" or _canon_stat_value(item.stats, "hp") >= 250:
             s += 22
@@ -1422,15 +1570,19 @@ def rescore_for_god(
     if "mobile" in tags or "gap_close" in tags:
         if role == "Jungle":
             s += pen_v * 0.5 + 8
-        if any(k in nlow for k in ("jotunn", "hydras", "arondight", "heartseeker")):
-            s += 14
+        if physical and any(k in nlow for k in ("jotunn", "hydras", "arondight", "heartseeker")):
+            s += 18
+        if mage and any(k in nlow for k in ("blink", "spear of desolation")):
+            s += 8
     if "pet_zone" in tags or "zone" in tags:
-        if any(k in nlow for k in ("magus", "gem of isolation", "divine", "soul gem", "grimoire")):
+        if mage and any(k in nlow for k in ("magus", "gem of isolation", "divine", "soul gem", "grimoire")):
             s += 26
         s += cdr_v * 0.4
     if "ult_nuke" in tags:
         s += pen_v * 1.0 + 14
-        if any(k in nlow for k in ("obsi", "titan", "tahuti", "soul reaver", "dreamer")):
+        if mage and any(k in nlow for k in ("obsi", "tahuti", "soul reaver", "dreamer")):
+            s += 20
+        if physical and any(k in nlow for k in ("titan", "parashu", "heartseeker", "bloodforge")):
             s += 20
     if "team_buff" in tags and role in ("Support", "Solo"):
         if any(k in blob for k in ("ally", "allies", "aura", "team")):
@@ -1638,10 +1790,11 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
     if role == "Jungle":
         if mage:
             return "mage_jungle"
-        if "execute" in tags or "heal" in tags:
-            return "sustain_assassin"
-        if "aa" in tags or aa >= 0.55:
+        # AA identity first — don't let heal/shield tags force soft Spectral sustain
+        if "aa" in tags or aa >= 0.55 or "as_steroid" in tags:
             return "aa_assassin"
+        if "execute" in tags or ("self_sustain" in tags and "gap_close" in tags):
+            return "sustain_assassin"
         if sb >= sd + 0.08:
             return "burst_assassin"
         return "bruiser_jungle"
@@ -1653,9 +1806,9 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
             if "aa" in tags or aa >= 0.5:
                 return "aa_mage_adc"
             return "ability_mage_adc"
-        if "aa" in tags or aa >= 0.55 or "as_steroid" in tags:
+        if "aa" in tags or aa >= 0.5 or "as_steroid" in tags:
             return "crit_adc"
-        if sd > sb:
+        if sd > sb and ("prot_shred" in tags or aa >= 0.35):
             return "onhit_adc"
         return "power_adc"
 
@@ -1758,6 +1911,13 @@ def _item_matches_slot(
             return False
         if any(k in n for k in ("phoenix", "pridwen", "thebes", "spectral")):
             return False
+        # ADC power is not Jotunn (hunter CDR lives in gap)
+        if role == "Carry" and physical and any(k in n for k in ("jotunn",)):
+            return False
+        if physical and int_v >= 40 and str_v < 28:
+            return False
+        if mage and str_v >= 40 and int_v < 28:
+            return False
         return power_ok() and it.item_type in ("Offensive", "Hybrid") and pen < 15
     if slot == "flat_pen":
         return pen >= 8 and pen < 18 and _pen_matches_kit(it, mage=mage, physical=physical)
@@ -1794,9 +1954,23 @@ def _item_matches_slot(
             return False
         return (it.total_cost or 0) >= 3000 and power_ok() and it.item_type == "Offensive"
     if slot == "sustain":
-        return ls_v >= 8 or any(k in n for k in ("bancroft", "gluttonous", "blood", "lifebinder", "asclepius", "devourer", "sanguine"))
+        # Damage-type-correct sustain only
+        if physical:
+            return ls_v >= 8 or any(
+                k in n for k in ("bloodforge", "devourer", "sanguine", "gladiator")
+            )
+        if mage:
+            return ls_v >= 8 or any(
+                k in n
+                for k in ("bancroft", "gluttonous", "lifebinder", "asclepius", "typhon", "soul gem")
+            )
+        return ls_v >= 8
     if slot == "ls_core":
-        return ls_v >= 8 or any(k in n for k in ("bloodforge", "devourer", "gluttonous", "bancroft"))
+        if physical:
+            return ls_v >= 8 or any(k in n for k in ("bloodforge", "devourer"))
+        if mage:
+            return ls_v >= 8 or any(k in n for k in ("bancroft", "typhon", "gluttonous", "soul gem"))
+        return ls_v >= 8
     if slot == "mana_stack":
         return (
             mp >= 250
@@ -1804,23 +1978,56 @@ def _item_matches_slot(
             or (mp >= 150 and "pendant" in n)
         )
     if slot == "dot_core":
-        return any(k in n for k in ("desolat", "magus", "divine", "soul reaver", "gem of isolation", "contagion", "grimoire"))
+        if physical:
+            return any(k in n for k in ("crusher", "serpentine", "toxic", "brawler", "contagion"))
+        return any(
+            k in n
+            for k in ("desolat", "magus", "divine", "soul reaver", "gem of isolation", "contagion", "grimoire")
+        )
     if slot == "zone_core":
         return any(k in n for k in ("magus", "isolation", "divine", "soul gem", "grimoire", "gem of focus"))
     if slot == "aa_core" or slot == "as_core":
-        return as_v >= 15 or any(k in n for k in ("riptalon", "ichival", "demon", "wind demon", "golden blade", "avenging", "musashi", "eros", "qins"))
+        if mage and any(k in n for k in ("titan", "bloodforge", "jotunn")):
+            return False
+        return as_v >= 15 or any(
+            k in n
+            for k in (
+                "riptalon",
+                "ichival",
+                "demon",
+                "wind demon",
+                "golden blade",
+                "avenging",
+                "musashi",
+                "eros",
+                "qins",
+                "death metal",
+            )
+        )
     if slot == "crit_core":
-        return crit_v >= 15 or any(k in n for k in ("deathbringer", "demon blade", "rage", "wind"))
+        return crit_v >= 15 or any(k in n for k in ("deathbringer", "demon blade", "rage", "wind", "death metal"))
     if slot == "onhit":
-        return as_v >= 10 and (pen >= 5 or "basic" in blob or any(k in n for k in ("riptalon", "executioner", "qins", "silverbranch")))
+        return as_v >= 10 and (
+            pen >= 5
+            or "basic" in blob
+            or any(k in n for k in ("riptalon", "executioner", "qins", "silverbranch"))
+        )
     if slot == "gap":
-        return any(k in n for k in ("jotunn", "arondight", "hydra", "heartseeker", "transcend")) or (cdr >= 10 and power_ok())
+        if mage:
+            return cdr >= 10 and power_ok()
+        return any(k in n for k in ("jotunn", "arondight", "hydra", "heartseeker", "transcend")) or (
+            cdr >= 10 and power_ok()
+        )
     if slot == "hybrid_bulk":
-        return it.item_type == "Hybrid" or (hp >= 200 and (str_v >= 20 or int_v >= 20) and (pprot + mprot) >= 15)
+        return it.item_type == "Hybrid" or (
+            hp >= 200 and (str_v >= 20 or int_v >= 20) and (pprot + mprot) >= 15
+        )
     if slot == "power_bruiser":
         return power_ok() and (hp >= 150 or pprot + mprot >= 20 or it.item_type == "Hybrid")
     if slot == "mitigate":
-        return damp >= 5 or plat >= 5 or ten >= 5 or any(k in n for k in ("alchemist", "spectral", "nemean", "mantle", "magi"))
+        return damp >= 5 or plat >= 5 or ten >= 5 or any(
+            k in n for k in ("alchemist", "spectral", "nemean", "mantle", "magi")
+        )
     if slot == "counter":
         return (
             ("critical" in blob or "attack speed" in blob)
@@ -1833,10 +2040,17 @@ def _item_matches_slot(
     if slot == "tenacity":
         return ten >= 5 or "magi" in n or "tenacit" in blob
     if slot == "antiheal":
+        if role == "Support":
+            return any(k in n for k in ("contagion", "pestilence", "brawler")) or (
+                "heal" in blob and any(k in blob for k in ("reduc", "anti", "curse", "aura"))
+            )
         return any(k in n for k in ("divine", "brawler", "pestilence", "contagion", "toxic")) or (
             "heal" in blob and any(k in blob for k in ("reduc", "anti", "curse"))
         )
     if slot == "shield_item":
+        # Frontline only — jungle must not open Spectral via shield_item
+        if role in ("Jungle", "Carry", "Mid"):
+            return False
         return "shield" in blob or any(k in n for k in ("pridwen", "phoenix", "shifter", "spectral"))
     if slot == "heal_aura":
         return any(k in n for k in ("asclepius", "chandra", "thebes", "sovereignty")) or (
@@ -1861,21 +2075,21 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     "zone": ["isolation", "magus", "soul gem", "divine"],
     "aa": ["riptalon", "demon", "deathbringer", "qins", "ichival", "wind", "avenging", "musashi"],
     "as_steroid": ["riptalon", "demon", "ichival", "avenging", "wind"],
-    "heal": ["bancroft", "soul gem", "typhon", "asclepius", "lifebinder", "gluttonous"],
-    "heavy_heal": ["asclepius", "bancroft", "typhon", "lifebinder"],
-    "self_sustain": ["bancroft", "typhon", "gluttonous", "bloodforge", "devourer"],
-    "execute": ["soul reaver", "bloodforge", "titan", "obsi", "desolat"],
-    "prot_shred": ["magus", "executioner", "desolat", "void", "obsi", "titan"],
-    "shield": ["pridwen", "phoenix", "shifter", "spectral"],
-    "heavy_shield": ["pridwen", "phoenix", "spectral", "shifter"],
-    "high_cc": ["isolation", "binding", "chronos", "breastplate", "genji"],
+    "heal": ["asclepius", "lifebinder", "chandra", "bloodforge", "devourer", "bancroft", "soul gem"],
+    "heavy_heal": ["asclepius", "lifebinder", "chandra", "bancroft", "typhon"],
+    "self_sustain": ["bloodforge", "devourer", "sanguine", "bancroft", "typhon", "gluttonous"],
+    "execute": ["bloodforge", "titan", "soul reaver", "deathbringer", "desolat", "obsi"],
+    "prot_shred": ["executioner", "titan", "magus", "desolat", "void", "obsi", "crusher"],
+    "shield": ["pridwen", "phoenix", "shifter"],
+    "heavy_shield": ["pridwen", "phoenix", "shifter"],
+    "high_cc": ["isolation", "binding", "breastplate", "genji", "stygian"],
     "hard_cc": ["isolation", "binding", "stygian"],
-    "immobile": ["alchemist", "magi", "cloak", "mantle", "spectral", "oni"],
+    "immobile": ["alchemist", "magi", "cloak", "mantle", "oni", "genji"],
     "mobile": ["jotunn", "hydra", "arondight", "heartseeker"],
     "gap_close": ["jotunn", "hydra", "arondight", "heartseeker", "transcend"],
     "team_buff": ["thebes", "sovereign", "heartward", "chandra", "providence"],
     "anti_cc": ["magi", "mantle", "alchemist", "prophetic"],
-    "sustained": ["chronos", "pendant", "bloodforge", "devourer", "qins"],
+    "sustained": ["bloodforge", "devourer", "qins", "chronos", "pendant", "breastplate"],
 }
 
 
@@ -2585,28 +2799,60 @@ def _trim_excess_defense(
 def _order_buy_path(path: list[ScoredItem], role: str) -> list[ScoredItem]:
     """
     Present items in an intuitive buy order, not pure score rank:
-      1) early affordable power  2) pen  3) more power/CDR  4) defense  5) luxury
+      Damage roles: power → pen → more damage → light defense → luxury
+      Frontline: shell/aura first, then flex, then greed
     """
     if not path:
         return path
 
+    damage = role in DAMAGE_ROLES_NEED_PEN
+    frontline = role in ("Solo", "Support")
+
     def sort_key(it: ScoredItem) -> tuple:
         pen = item_pen_value(it)
         cost = it.total_cost or 2500
-        slot = _slot_label(it)
+        nlow = it.name.lower()
+        str_v = _canon_stat_value(it.stats, "str")
+        int_v = _canon_stat_value(it.stats, "int")
+        as_v = _canon_stat_value(it.stats, "as")
+        crit_v = _canon_stat_value(it.stats, "crit")
+        powerish = (str_v + int_v) >= 25 or as_v >= 15 or crit_v >= 15 or pen >= 8
+        pure_shell = (
+            it.item_type == "Defensive"
+            or any(
+                k in nlow
+                for k in (
+                    "spectral",
+                    "alchemist",
+                    "phoenix",
+                    "midgardian",
+                    "thebes",
+                    "nemean",
+                    "magi",
+                    "contagion",
+                    "chandra",
+                    "gauntlet of thebes",
+                )
+            )
+        ) and pen < 8 and as_v < 15 and crit_v < 15
         luxury = 1 if cost >= 3200 or (it.is_active_item and pen >= 8 and cost >= 3000) else 0
-        # phase: early power (0), pen (1), mid power (2), defense (3), luxury (4)
+        # phase: early cores (0), pen (1), mid damage (2), shell (3), luxury (4)
         if luxury:
             phase = 4
-        elif slot == "pen":
-            phase = 1
-        elif slot == "defense":
-            phase = 3
-        elif cost <= 2500:
+        elif damage and pure_shell:
+            phase = 3  # never open ADC/Jungle/Mid with Alchemist/Phoenix
+        elif frontline and pure_shell:
             phase = 0
+        elif pen >= 10 and powerish:
+            phase = 1
+        elif powerish and cost <= 2700:
+            phase = 0
+        elif powerish:
+            phase = 2
+        elif pure_shell:
+            phase = 3 if damage else 0
         else:
             phase = 2
-        # within phase: cheaper first, then higher score
         return (phase, cost, -it.role_score)
 
     return sorted(path, key=sort_key)
@@ -2911,6 +3157,9 @@ def build_god_build(
 
     t3 = [s for s in scored if is_t3_core(next(i for i in items if i["name"] == s.name))]
 
+    tags_kit = set(bias.get("tags") or [])
+    aaish = "aa" in tags_kit or float(bias.get("aa_score") or 0) >= 0.5 or "as_steroid" in tags_kit
+
     def kit_ok(s: ScoredItem) -> bool:
         str_v = _canon_stat_value(s.stats, "str")
         int_v = _canon_stat_value(s.stats, "int")
@@ -2918,15 +3167,79 @@ def build_god_build(
         crit_v = _canon_stat_value(s.stats, "crit")
         bap = _canon_stat_value(s.stats, "bap")
         ls_v = _canon_stat_value(s.stats, "ls")
+        nlow = s.name.lower()
+        # Cross-type hard bans
+        if physical and any(
+            k in nlow
+            for k in (
+                "bancroft",
+                "typhon",
+                "soul gem",
+                "soul reaver",
+                "gluttonous",
+                "tahuti",
+                "obsidian shard",
+                "spear of the magus",
+                "spear of desolation",
+                "book of thoth",
+                "doom orb",
+                "chronos' pendant",
+                "gem of focus",
+                "divine ruin",
+                "rod of asclepius",
+            )
+        ):
+            return False
+        if mage and any(
+            k in nlow
+            for k in (
+                "titan's bane",
+                "bloodforge",
+                "deathbringer",
+                "demon blade",
+                "riptalon",
+                "musashi",
+                "avenging blade",
+                "executioner",
+                "heartseeker",
+                "jotunn",
+                "hydra's",
+                "tekko",
+            )
+        ):
+            return False
+        if physical and int_v >= 40 and str_v < 25:
+            return False
+        if mage and str_v >= 40 and int_v < 25:
+            return False
         if role == "Support":
             if ls_v >= 5:
                 return False
             # personal AS/crit toys are not support cores
             if (as_v >= 20 or crit_v >= 15 or bap >= 15) and _slot_label(s) == "power":
                 return False
+            if any(
+                k in nlow
+                for k in (
+                    "chronos",
+                    "gem of focus",
+                    "soul reaver",
+                    "tahuti",
+                    "desolat",
+                    "obsidian",
+                    "spear of desolation",
+                    "dreamer",
+                    "wish-granting",
+                    "deathbringer",
+                )
+            ):
+                return False
+            if int_v >= 55 and _canon_stat_value(s.stats, "hp") < 200 and (
+                _canon_stat_value(s.stats, "pprot") + _canon_stat_value(s.stats, "mprot") < 20
+            ):
+                return False
             return True
         if role == "Solo":
-            nlow = s.name.lower()
             # frontline: skip pure glass AS/crit carries and luxury mage toys
             if (as_v >= 25 or crit_v >= 20) and _canon_stat_value(s.stats, "hp") < 200:
                 return False
@@ -2940,13 +3253,27 @@ def build_god_build(
                 return False
             return True
         if role == "Jungle":
-            # keep gank items; drop pure aura-support tanks without damage
-            if s.item_type == "Defensive" and not is_pen_item(s) and (str_v + int_v) < 15:
-                # still allow one via pool; don't hard-ban all
-                pass
+            if any(
+                k in nlow
+                for k in (
+                    "spectral",
+                    "midgardian",
+                    "thebes",
+                    "chandra",
+                    "phoenix",
+                    "alchemist",
+                    "pridwen",
+                    "contagion",
+                )
+            ):
+                return False
             return True
+        if role == "Carry":
+            if any(k in nlow for k in ("alchemist", "spectral", "phoenix", "thebes", "midgardian")):
+                return False
+            if physical and aaish and any(k in nlow for k in ("jotunn", "hydra")):
+                return False
         if mage:
-            nlow = s.name.lower()
             # Reject basic-attack / STR toys on pure mages
             if str_v >= 30 and int_v < 40:
                 return False
@@ -2959,8 +3286,6 @@ def build_god_build(
                 return False
             return int_v >= 25 or s.item_type == "Defensive" or _canon_stat_value(s.stats, "hp") >= 250
         if physical:
-            if int_v >= 40 and str_v < 25:
-                return False
             return str_v >= 20 or as_v > 0 or s.item_type == "Defensive" or _canon_stat_value(s.stats, "hp") >= 250
         return True
 
@@ -3322,7 +3647,7 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
     return summary
 
 
-def generate_all(conn: sqlite3.Connection, gods_per_role: int = 10) -> dict[str, Any]:
+def generate_all(conn: sqlite3.Connection, gods_per_role: int = 24) -> dict[str, Any]:
     items = load_items(conn)
     report: dict[str, Any] = {
         "game": "SMITE 2",
@@ -3331,6 +3656,7 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 10) -> dict[str,
             "God-first Conquest builds: each path is assembled from that god's ability kit "
             "(structured effects + tags + metrics + patch axes), archetype slot recipes, "
             "item-family matching, and per-item why lines. "
+            "Hard damage-type bans (no mage toys on physical / no hunter toys on mages). "
             "Optional data/kit_overrides.json force tags / prefer / ban items. "
             "Role cards explain the job only — they are NOT a full build. "
             "Carry/Mid backline + pen; Jungle ganks; Solo frontline bulk; Support peels. "

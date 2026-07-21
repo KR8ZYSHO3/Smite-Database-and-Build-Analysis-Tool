@@ -1,0 +1,157 @@
+{
+  "n_builds": 106,
+  "empty": 0,
+  "pen_fail": 0,
+  "active_over": 0,
+  "clone_groups": 0,
+  "clones_detail": [],
+  "avg_pairwise_jaccard_sample": 0.183,
+  "top_items": [
+    [
+      "Titan's Bane",
+      34
+    ],
+    [
+      "Gem of Isolation",
+      25
+    ],
+    [
+      "Chandra's Grace",
+      24
+    ],
+    [
+      "Obsidian Shard",
+      21
+    ],
+    [
+      "Avenging Blade",
+      20
+    ],
+    [
+      "Stone of Binding",
+      19
+    ],
+    [
+      "Soul Gem",
+      18
+    ],
+    [
+      "Heartseeker",
+      17
+    ],
+    [
+      "Breastplate of Valor",
+      16
+    ],
+    [
+      "Bloodforge",
+      14
+    ],
+    [
+      "Arondight",
+      14
+    ],
+    [
+      "Gluttonous Grimoire",
+      14
+    ],
+    [
+      "Shifter's Shield",
+      14
+    ],
+    [
+      "Contagion",
+      14
+    ],
+    [
+      "Spectral Armor",
+      14
+    ]
+  ],
+  "top_starters": [
+    [
+      "Conduit Gem",
+      22
+    ],
+    [
+      "Selflessness",
+      21
+    ],
+    [
+      "Warrior's Axe",
+      19
+    ],
+    [
+      "Bumba's Cudgel",
+      14
+    ],
+    [
+      "Death's Toll",
+      10
+    ],
+    [
+      "Bumba's Golden Dagger",
+      8
+    ],
+    [
+      "Vampiric Shroud",
+      6
+    ],
+    [
+      "Gilded Arrow",
+      6
+    ]
+  ],
+  "top_archetypes": [
+    [
+      "crit_adc",
+      15
+    ],
+    [
+      "aa_assassin",
+      12
+    ],
+    [
+      "sustain_solo",
+      10
+    ],
+    [
+      "heal_support",
+      9
+    ],
+    [
+      "lockdown_support",
+      8
+    ],
+    [
+      "zone_mage",
+      6
+    ],
+    [
+      "dot_mage",
+      6
+    ],
+    [
+      "burst_mage",
+      6
+    ],
+    [
+      "burst_assassin",
+      4
+    ],
+    [
+      "sustain_assassin",
+      4
+    ],
+    [
+      "shield_support",
+      4
+    ],
+    [
+      "channel_mage",
+      3
+    ]
+  ],
+  "issue_count": 0,
+  "issues_sample": []
+}
