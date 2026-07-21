@@ -2267,3 +2267,34 @@ body.landing-compact .site-tagline {
   .landing-ctas .btn-primary { flex: 1 1 auto; }
   .site-tagline { font-size: 0.98rem; }
 }
+
+/* About — scoring explain */
+.score-explain {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0 0 18px;
+}
+.score-explain-block {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.22);
+}
+.score-explain-block h3 {
+  margin: 0 0 8px;
+  font-family: var(--display);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.score-list {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+.score-note {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}

@@ -2277,6 +2277,37 @@ body.landing-compact .site-tagline {
   .site-tagline { font-size: 0.98rem; }
 }
 
+/* About — scoring explain */
+.score-explain {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0 0 18px;
+}
+.score-explain-block {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.22);
+}
+.score-explain-block h3 {
+  margin: 0 0 8px;
+  font-family: var(--display);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.score-list {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+.score-note {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
   </style>
 </head>
 <body>
@@ -2596,6 +2627,55 @@ body.landing-compact .site-tagline {
             <li><strong>Gods</strong> — search any god; base + aspect paths for each role.</li>
             <li><strong>Tiers</strong> — patch-weighted ladder (ranking, not the same as a full build guide).</li>
           </ol>
+
+          <h2>How builds are weighted</h2>
+          <p class="about-blurb">
+            Nothing here is <strong>live win rate</strong>. Paths come from wiki stats, ability text, and
+            patch-note impact we score locally — not from pro sites.
+          </p>
+          <div class="score-explain">
+            <div class="score-explain-block">
+              <h3>Two different systems</h3>
+              <ul class="how-list score-list">
+                <li><strong>Builds</strong> answer: “What should <em>this god</em> buy in <em>this role</em>?”</li>
+                <li><strong>Tiers</strong> answer: “Who looks strong this patch overall?”</li>
+              </ul>
+              <p class="muted score-note">
+                A god can be high tier and still have a different buy order than another god in the same role.
+              </p>
+            </div>
+            <div class="score-explain-block">
+              <h3>Build pipeline (god-first)</h3>
+              <ol class="how-list">
+                <li><strong>Role score</strong> — each role has stat weights (e.g. Carry: AS/crit/pen; Support: prots/auras/anti-crit). Items also get utility, cost, active tax, and item patch momentum.</li>
+                <li><strong>God re-score</strong> — role score is reduced (~55%), then kit affinity is added hard: STR vs INT, physical vs magical, tags (DoT, AA, heal, CC…), kit effects, and that god’s recent patch axes.</li>
+                <li><strong>Assemble a path</strong> — not “global top 6.” We fill archetype slots (power / pen / CDR / defense…), diversify so gods don’t clone each other, inject signature items, cap luxury actives (usually ≤2 shop actives), and enforce pen on damage roles.</li>
+                <li><strong>Explain</strong> — path “why” + per-item “Why this?” from the signals that picked the item.</li>
+              </ol>
+            </div>
+            <div class="score-explain-block">
+              <h3>Tiers (separate ladder)</h3>
+              <ul class="how-list score-list">
+                <li><strong>Patch ~48%</strong> — note momentum (recent patches count more)</li>
+                <li><strong>Kit ~28%</strong> — how strong/flexible the kit metrics look</li>
+                <li><strong>Build fit ~14%</strong> — how well the Conquest engine can itemize them</li>
+                <li><strong>Novelty / stability ~5% each</strong></li>
+              </ul>
+              <p class="muted score-note">
+                S/A/B/C/D are percentiles inside a scope (overall, role, damage type) — not “pro letter grades.”
+                Tier letters on build cards are ranking context, not “buy this because S-tier.”
+              </p>
+            </div>
+            <div class="score-explain-block">
+              <h3>Counter &amp; Troll</h3>
+              <ul class="how-list score-list">
+                <li><strong>Counter</strong> — starts from the kit path, then re-weights for the enemy 5 (magic/phys mix, crit ADC, healing, CC).</li>
+                <li><strong>Troll</strong> — kit-true off-meta paths for frustration/fun. Not ranked advice.</li>
+                <li><strong>Aspects</strong> — same pipeline, different kit input (separate base vs aspect paths when available).</li>
+              </ul>
+            </div>
+          </div>
+
           <h3>Role jobs</h3>
           <ul>
             <li><strong>Carry / Mid</strong> — backline damage + pen; Support peels.</li>
