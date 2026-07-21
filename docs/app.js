@@ -391,8 +391,17 @@ async function copyText(text, okMsg) {
 
 function setupShareUi() {
   document.addEventListener("click", (e) => {
+    const copyBtn = e.target.closest("[data-copy-path]");
+    if (copyBtn) {
+      e.preventDefault();
+      e.stopPropagation();
+      copyText(copyBtn.getAttribute("data-copy-path") || "", "List copied");
+      return;
+    }
     const btn = e.target.closest("[data-share-id]");
     if (btn) {
+      e.preventDefault();
+      e.stopPropagation();
       const data = shareStore.get(btn.getAttribute("data-share-id"));
       if (data) openIntelModal(data);
       return;
@@ -729,6 +738,43 @@ function setupTiers() {
     let rows = state.tiers[scope] || [];
     rows = rows.filter((r) => r.entity_type === "god" || scope.startsWith("items"));
     if (filt !== "All") rows = rows.filter((r) => r.tier === filt);
+
+    // Visual tier board (gods only)
+    const board = $("#tier-board");
+    if (board) {
+      const godRows = rows.filter((r) => r.entity_type === "god" || !scope.startsWith("items"));
+      if (scope.startsWith("items")) {
+        board.innerHTML = `<p class="muted" style="margin:0">Item ladder — use the table below.</p>`;
+      } else {
+        const bands = ["S", "A", "B", "C", "D"];
+        board.innerHTML = bands
+          .map((t) => {
+            const chips = godRows
+              .filter((r) => r.tier === t)
+              .slice(0, t === "S" || t === "A" ? 24 : 18)
+              .map(
+                (r) =>
+                  `<button type="button" class="tier-chip tier-${t}" data-tier-god="${escapeAttr(
+                    r.entity_name
+                  )}">${escapeHtml(r.entity_name)}</button>`
+              )
+              .join("");
+            return `<div class="tier-band">
+              <div class="tier-band-label tier-${t}">${t}</div>
+              <div class="tier-band-chips">${chips || `<span class="muted">—</span>`}</div>
+            </div>`;
+          })
+          .join("");
+        board.querySelectorAll("[data-tier-god]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const name = btn.getAttribute("data-tier-god");
+            const row = godRows.find((r) => r.entity_name === name);
+            if (row) showTierDetail(row);
+            selectGod(name, true);
+          });
+        });
+      }
+    }
 
     const tbody = $("#tier-body");
     tbody.innerHTML = rows
@@ -1303,10 +1349,17 @@ function setupBuilds() {
   render();
 }
 
+function copyPathText(starter, items, god, role) {
+  const lines = [
+    `${god} · ${role}`,
+    starter ? `Start: ${starter}` : "",
+    ...(items || []).map((it, i) => `${i + 1}. ${it.name || it}`),
+  ].filter(Boolean);
+  return lines.join("\n");
+}
+
 function godBuildCard(gb, role) {
   const itemsG = gb.items || gb.full_path || [];
-  const ga = gb.active_count ?? itemsG.filter((i) => i.is_active).length;
-  const maxG = gb.max_shop_actives ?? 2;
   const penG = gb.pen_total ?? itemsG.reduce((s, it) => s + (it.pen || 0), 0);
   const mitG = itemsG.reduce((s, it) => s + (it.damp || 0) + (it.plat || 0) + (it.ten || 0), 0);
   const showMit = role === "Support" || role === "Solo";
@@ -1330,46 +1383,59 @@ function godBuildCard(gb, role) {
     deeplink: `#gods/${encodeURIComponent(gb.god)}`,
   };
   const shortWhy = String(gb.why || "").split(".")[0];
+  const preview = itemsG
+    .slice(0, 3)
+    .map((it) => it.name)
+    .join(" → ");
+  const copyPayload = copyPathText(gb.starter?.name, itemsG, gb.god, role);
   return `
-    <article class="card build-card god-build-card simple-build ${roleClass(role)}">
-      <header class="gbc-head">
-        <h3>
-          ${escapeHtml(gb.god)}
+    <details class="card build-card god-build-card simple-build build-expand ${roleClass(role)}">
+      <summary class="build-expand-summary">
+        <span class="bes-main">
+          <span class="bes-name">${escapeHtml(gb.god)}</span>
           <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
-        </h3>
+        </span>
+        <span class="bes-sub muted">
+          Start <strong>${escapeHtml(gb.starter?.name || "—")}</strong>
+          ${preview ? ` · ${escapeHtml(preview)}${itemsG.length > 3 ? "…" : ""}` : ""}
+        </span>
+        <span class="bes-cta">Show buy order ▾</span>
+      </summary>
+      <div class="build-expand-body">
         <p class="card-plain-what">
-          <strong>${escapeHtml(role)}</strong> buy order — top first${gb.is_aspect ? " · aspect path" : ""}
+          <strong>${escapeHtml(role)}</strong> — buy top first${gb.is_aspect ? " · aspect" : ""}
         </p>
-      </header>
-      ${shortWhy ? `<p class="why simple-why">${escapeHtml(shortWhy)}.</p>` : ""}
-      <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>
-      ${loadoutRail(itemsG)}
-      <ol class="buy-list simple-buy">
-        ${itemsG.map((it, i) => buyRow(it, i + 1, { simple: true })).join("")}
-      </ol>
-      <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
-      <details class="extra-details">
-        <summary>More detail</summary>
-        <div class="build-meta">
-          ${gb.archetype ? `<span class="pill">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
-          <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
-          ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
+        ${shortWhy ? `<p class="why simple-why">${escapeHtml(shortWhy)}.</p>` : ""}
+        <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>
+        ${loadoutRail(itemsG)}
+        <ol class="buy-list simple-buy">
+          ${itemsG.map((it, i) => buyRow(it, i + 1, { simple: true })).join("")}
+        </ol>
+        <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
+        <details class="extra-details">
+          <summary>More detail</summary>
+          <div class="build-meta">
+            ${gb.archetype ? `<span class="pill">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
+            <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
+            ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
+          </div>
+          ${
+            effects.length
+              ? `<div class="kit-effects">${effects
+                  .slice(0, 6)
+                  .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
+                  .join("")}</div>`
+              : ""
+          }
+          <p class="why">${escapeHtml(gb.why || "")}</p>
+        </details>
+        <div class="card-actions">
+          <button type="button" class="btn-ghost btn-copy-path" data-copy-path="${escapeAttr(copyPayload)}">Copy list</button>
+          <button type="button" class="btn-share" data-share-id="${registerShare(shareData)}">Share card</button>
+          <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">All roles →</button>
         </div>
-        ${
-          effects.length
-            ? `<div class="kit-effects">${effects
-                .slice(0, 6)
-                .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
-                .join("")}</div>`
-            : ""
-        }
-        <p class="why">${escapeHtml(gb.why || "")}</p>
-      </details>
-      <div class="card-actions">
-        <button type="button" class="btn-share" data-share-id="${registerShare(shareData)}">Share</button>
-        <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">All roles for this god →</button>
       </div>
-    </article>`;
+    </details>`;
 }
 
 function chip(it, n) {
@@ -1598,7 +1664,7 @@ function safeJson(s) {
 }
 
 /* -------------------- Counter builds -------------------- */
-const counterState = { enemies: [] };
+const counterState = { enemies: [], allies: [] };
 
 function findGodByName(q) {
   const s = (q || "").trim().toLowerCase();
@@ -1797,10 +1863,42 @@ function counterItemScore(it, threat, role) {
   return { score: s, why };
 }
 
+function analyzeAllyTeamJS(allyGods) {
+  const peelAdc = [];
+  const peelMage = [];
+  const allies = [];
+  for (const g of allyGods || []) {
+    if (!g) continue;
+    allies.push(g.name);
+    const dtype = (g.primary_damage_type || "").toLowerCase();
+    const tags = new Set(g.kit_tags || []);
+    const scale = (g.primary_scaling || "").toLowerCase();
+    const isMage = dtype === "magical" || scale === "intelligence";
+    const isPhys = !isMage && (dtype === "physical" || scale === "strength");
+    const aa = Number(g.aa_score || 0);
+    const aaish = tags.has("aa") || tags.has("as_steroid") || tags.has("sustained") || aa >= 0.45;
+    if (isPhys && aaish) peelAdc.push(g.name);
+    if (isMage) peelMage.push(g.name);
+  }
+  const reasons = [];
+  if (peelAdc.length) reasons.push(`Peel for ADC (${peelAdc.join(", ")}): Spectral / Midgardian`);
+  if (peelMage.length) reasons.push(`Peel for mage (${peelMage.join(", ")})`);
+  return {
+    allies,
+    peel_adc: peelAdc,
+    peel_mage: peelMage,
+    need_peel_adc: peelAdc.length >= 1,
+    need_peel_mage: peelMage.length >= 1,
+    reasons,
+    summary: reasons.slice(0, 3).join(" · "),
+  };
+}
+
 function injectCounterCores(baselineNames, threat, role) {
   // Shell (dive + turrets) before antiheal greed — matches CLI counter engine
   const wanted = [];
   const dive = !!threat.need_dive_shell;
+  const peelAdc = !!threat.need_peel_adc;
   if (threat.need_pprot && (role === "Support" || role === "Solo" || role === "Jungle")) {
     wanted.push("breastplate");
   }
@@ -1808,8 +1906,8 @@ function injectCounterCores(baselineNames, threat, role) {
     wanted.push("genji");
     if (threat.magical_count >= 3) wanted.push("oni hunter");
   }
-  if (dive && (role === "Support" || role === "Solo")) wanted.push("midgardian");
-  if (threat.need_anti_crit) wanted.push("spectral");
+  if ((dive || peelAdc) && (role === "Support" || role === "Solo")) wanted.push("midgardian");
+  if (threat.need_anti_crit || peelAdc) wanted.push("spectral");
   if (threat.need_anti_as && (role === "Support" || role === "Solo") && !wanted.includes("midgardian")) {
     wanted.push("midgardian");
   }
@@ -1955,12 +2053,12 @@ function pathCompareHtml(baselineItems, counterItems, starter) {
     </div>`;
 }
 
-function renderEnemyPicks() {
-  const box = $("#ctr-enemy-picks");
+function renderLobbySlots(boxSel, list, maxN, onRemove) {
+  const box = $(boxSel);
   if (!box) return;
   const slots = [];
-  for (let i = 0; i < 5; i++) {
-    const n = counterState.enemies[i];
+  for (let i = 0; i < maxN; i++) {
+    const n = list[i];
     if (n) {
       slots.push(
         `<button type="button" class="lobby-slot filled" data-rm="${i}" title="Remove ${escapeAttr(
@@ -1973,10 +2071,21 @@ function renderEnemyPicks() {
   }
   box.innerHTML = slots.join("");
   box.querySelectorAll("[data-rm]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      counterState.enemies.splice(Number(btn.getAttribute("data-rm")), 1);
-      renderEnemyPicks();
-    });
+    btn.addEventListener("click", () => onRemove(Number(btn.getAttribute("data-rm"))));
+  });
+}
+
+function renderEnemyPicks() {
+  renderLobbySlots("#ctr-enemy-picks", counterState.enemies, 5, (i) => {
+    counterState.enemies.splice(i, 1);
+    renderEnemyPicks();
+  });
+}
+
+function renderAllyPicks() {
+  renderLobbySlots("#ctr-ally-picks", counterState.allies, 4, (i) => {
+    counterState.allies.splice(i, 1);
+    renderAllyPicks();
   });
 }
 
@@ -2355,12 +2464,26 @@ function runCounterFromForm({ updateHash = true } = {}) {
   }
 
   const enemyGods = counterState.enemies.map(findGodByName).filter(Boolean);
+  const allyGods = counterState.allies.map(findGodByName).filter(Boolean);
   const threat = analyzeEnemyTeamJS(enemyGods);
+  const allies = analyzeAllyTeamJS(allyGods);
+  if (allies.need_peel_adc && (role === "Support" || role === "Solo")) {
+    threat.need_anti_crit = true;
+    threat.need_anti_as = true;
+    threat.need_peel_adc = true;
+  }
+  if (allies.need_peel_mage) threat.need_peel_mage = true;
+  const allReasons = [...(threat.reasons || []), ...(allies.reasons || [])];
+  threat.reasons = allReasons;
+  threat.summary = allReasons.slice(0, 4).join(" · ");
+
   threatEl.innerHTML = `
     <strong>Threat</strong> — ${escapeHtml(threat.summary)}
     ${threatMetersHtml(threat)}
-    <ul class="threat-list">${threat.reasons.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>
-    <div class="muted">Magic ${fmt(threat.magical_count, 0)} · Physical ${fmt(threat.physical_count, 0)}</div>
+    <ul class="threat-list">${allReasons.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>
+    <div class="muted">Magic ${fmt(threat.magical_count, 0)} · Physical ${fmt(threat.physical_count, 0)}${
+      allies.allies.length ? ` · Allies ${allies.allies.map(escapeHtml).join(", ")}` : ""
+    }</div>
   `;
 
   const baselineItems = getBaselineItems(you, role);
@@ -2376,7 +2499,7 @@ function runCounterFromForm({ updateHash = true } = {}) {
     role,
     enemies: vsList,
     title: `${you.name} · ${role} · counter`,
-    subtitle: `vs ${vs}`,
+    subtitle: `vs ${vs}${allies.allies.length ? ` · with ${allies.allies.join(", ")}` : ""}`,
     why: threat.summary || "",
     starter: starter?.name || "",
     items: itemsForShare(path),
@@ -2386,6 +2509,7 @@ function runCounterFromForm({ updateHash = true } = {}) {
       threat.need_mprot ? "mprot" : null,
       threat.need_antiheal ? "antiheal" : null,
       threat.need_magi ? "anti-CC" : null,
+      allies.need_peel_adc ? "peel ADC" : null,
     ].filter(Boolean),
     footerLeft: "COUNTER PATH · LOBBY INTEL",
     deeplink: `#counter/${encodeURIComponent(you.name)}/${encodeURIComponent(role)}/${vsList
@@ -2393,9 +2517,9 @@ function runCounterFromForm({ updateHash = true } = {}) {
       .join(",")}`,
   };
 
+  const copyTxt = copyPathText(starter?.name, path, you.name, `${role} counter`);
   resultEl.innerHTML = `
-    <article class="card build-card god-build-card ${roleClass(role)}">
-      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
+    <article class="card build-card god-build-card simple-build ${roleClass(role)}">
       <header class="gbc-head">
         <h3>${escapeHtml(you.name)} · ${escapeHtml(role)} · counter</h3>
         <div class="muted gbc-meta">vs ${enemyGods.map((g) => escapeHtml(g.name)).join(", ")}</div>
@@ -2406,11 +2530,15 @@ function runCounterFromForm({ updateHash = true } = {}) {
         ${threat.need_mprot ? `<span class="pill">mprot</span>` : ""}
         ${threat.need_antiheal ? `<span class="pill">antiheal</span>` : ""}
         ${threat.need_magi ? `<span class="pill">anti-CC</span>` : ""}
-        ${path.some((p) => p.is_diff) ? `<span class="pill ice">swaps highlighted</span>` : ""}
+        ${allies.need_peel_adc ? `<span class="pill ice">peel ADC</span>` : ""}
+        ${path.some((p) => p.is_diff) ? `<span class="pill">swaps highlighted</span>` : ""}
       </div>
       ${pathCompareHtml(baselineItems, path, starter)}
-      ${trustLine("lobby re-weight · not live WR")}
-      ${shareBar(shareData)}
+      ${trustLine("not live win rates")}
+      <div class="card-actions">
+        <button type="button" class="btn-ghost btn-copy-path" data-copy-path="${escapeAttr(copyTxt)}">Copy list</button>
+        ${shareBar(shareData)}
+      </div>
     </article>
   `;
   if (updateHash) syncHashFromUi("counter");
@@ -2426,27 +2554,32 @@ function setupCounter() {
   if (resultEl && !resultEl.innerHTML.trim()) {
     resultEl.innerHTML = emptyHud(
       "Counter lobby standby",
-      "Your god + up to 5 enemies → kit path vs lobby path side-by-side."
+      "Your god + enemies (optional allies) → kit path vs lobby path."
     );
   }
 
-  const addIn = $("#ctr-enemy-add");
-  addIn?.addEventListener("keydown", (e) => {
-    if (e.key !== "Enter") return;
-    e.preventDefault();
-    const g = findGodByName(addIn.value);
-    if (!g) return;
-    if (counterState.enemies.length >= 5) return;
-    if (counterState.enemies.includes(g.name)) {
+  const wireAdd = (inputSel, arr, maxN, renderFn) => {
+    const addIn = $(inputSel);
+    addIn?.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter") return;
+      e.preventDefault();
+      const g = findGodByName(addIn.value);
+      if (!g) return;
+      if (arr.length >= maxN) return;
+      if (arr.includes(g.name)) {
+        addIn.value = "";
+        return;
+      }
+      arr.push(g.name);
       addIn.value = "";
-      return;
-    }
-    counterState.enemies.push(g.name);
-    addIn.value = "";
-    renderEnemyPicks();
-  });
+      renderFn();
+    });
+  };
+  wireAdd("#ctr-enemy-add", counterState.enemies, 5, renderEnemyPicks);
+  wireAdd("#ctr-ally-add", counterState.allies, 4, renderAllyPicks);
 
   $("#ctr-run")?.addEventListener("click", () => runCounterFromForm({ updateHash: true }));
+  renderAllyPicks();
 }
 
 async function main() {

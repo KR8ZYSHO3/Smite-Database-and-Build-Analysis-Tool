@@ -68,6 +68,65 @@ def resolve_god(conn: sqlite3.Connection, name: str) -> dict[str, Any] | None:
     return dict(row) if row else None
 
 
+def analyze_ally_team(
+    conn: sqlite3.Connection,
+    ally_names: list[str],
+) -> dict[str, Any]:
+    """
+    Optional allies — shapes Support/Solo peel priorities (protect ADC/mid).
+    """
+    gods: list[dict[str, Any]] = []
+    missing: list[str] = []
+    peel_adc: list[str] = []
+    peel_mage: list[str] = []
+    for raw in ally_names or []:
+        g = resolve_god(conn, raw)
+        if not g:
+            missing.append(raw)
+            continue
+        bias = god_scaling_bias(conn, g["god_id"])
+        dtype = (g.get("primary_damage_type") or "").lower()
+        tags = set(bias.get("tags") or [])
+        name = g["entity_name"]
+        gods.append(
+            {
+                "name": name,
+                "damage_type": g.get("primary_damage_type"),
+                "tags": sorted(tags),
+                "scaling": bias.get("primary"),
+            }
+        )
+        is_mage = dtype == "magical" or bias.get("primary") == "Intelligence"
+        is_phys = (not is_mage) and (dtype == "physical" or bias.get("primary") == "Strength")
+        aaish = bool(tags & {"aa", "as_steroid", "sustained"}) or float(bias.get("aa_score") or 0) >= 0.45
+        if is_phys and aaish:
+            peel_adc.append(name)
+        if is_mage:
+            peel_mage.append(name)
+        # Role-list hint from wiki roles string if present
+        if not peel_adc and is_phys and "carry" in str(g).lower():
+            peel_adc.append(name)
+
+    reasons: list[str] = []
+    if peel_adc:
+        reasons.append(f"Peel for ADC ({', '.join(peel_adc)}): prioritize Spectral / Midgardian")
+    if peel_mage:
+        reasons.append(f"Peel for mage ({', '.join(peel_mage)}): keep them alive vs divers / magic")
+    if not reasons and gods:
+        reasons.append("Allies noted — light peel flex")
+
+    return {
+        "allies": gods,
+        "missing": missing,
+        "peel_adc": peel_adc,
+        "peel_mage": peel_mage,
+        "need_peel_adc": len(peel_adc) >= 1,
+        "need_peel_mage": len(peel_mage) >= 1,
+        "reasons": reasons,
+        "summary": " · ".join(reasons[:3]) if reasons else "",
+    }
+
+
 def analyze_enemy_team(
     conn: sqlite3.Connection,
     enemy_names: list[str],
@@ -195,8 +254,13 @@ def analyze_enemy_team(
     }
 
 
-def counter_score_delta(item: ScoredItem, threat: dict[str, Any], role: str) -> tuple[float, list[str]]:
-    """Score bonus (and why fragments) for countering the enemy team."""
+def counter_score_delta(
+    item: ScoredItem,
+    threat: dict[str, Any],
+    role: str,
+    allies: dict[str, Any] | None = None,
+) -> tuple[float, list[str]]:
+    """Score bonus (and why fragments) for countering the enemy team (+ optional allies)."""
     n = item.name.lower()
     fam = item_family(item.name) or ""
     blob = f"{item.passive} {item.active}".lower()
@@ -205,6 +269,7 @@ def counter_score_delta(item: ScoredItem, threat: dict[str, Any], role: str) -> 
     mprot = _canon_stat_value(item.stats, "mprot")
     pprot = _canon_stat_value(item.stats, "pprot")
     pen = item_pen_value(item)
+    allies = allies or {}
 
     def has_key(*keys: str) -> bool:
         return any(k in n for k in keys)
@@ -236,7 +301,7 @@ def counter_score_delta(item: ScoredItem, threat: dict[str, Any], role: str) -> 
         if fam == "anti_crit" or has_key("spectral", "nemean"):
             delta += 85
             why.append("anti-crit vs enemy ADC")
-        if fam == "anti_as" or has_key("midgardian", "witchblade"):
+        if fam == "anti_as" or has_key("midgardian", "fixblade"):
             # Stronger when divers are autoing you down
             delta += 62 if threat.get("need_dive_shell") else 48
             why.append("cut enemy attack speed")
@@ -266,6 +331,29 @@ def counter_score_delta(item: ScoredItem, threat: dict[str, Any], role: str) -> 
             if "tenacity" not in " ".join(why).lower():
                 why.append("tenacity")
 
+    # Ally peel: protect YOUR ADC / mid (Support & Solo primarily)
+    if role in ("Support", "Solo") and allies:
+        if allies.get("need_peel_adc"):
+            if fam == "anti_crit" or has_key("spectral", "nemean"):
+                delta += 38
+                why.append("peel for ally ADC — anti-crit aura")
+            if fam == "anti_as" or has_key("midgardian"):
+                delta += 32
+                why.append("peel for ally ADC — cut enemy AS")
+            if has_key("chandra", "thebes", "sovereign", "providence") or (
+                "ally" in blob or "allies" in blob or "aura" in blob
+            ):
+                delta += 18
+        if allies.get("need_peel_mage"):
+            if fam in ("defense_cdr", "mprot") or has_key("genji", "oni"):
+                delta += 22
+            if threat.get("need_dive_shell") and (
+                fam in ("cdr_def",) or has_key("breastplate", "midgardian")
+            ):
+                delta += 16
+                if "peel" not in " ".join(why).lower():
+                    why.append("peel shell so ally mage freecasts")
+
     # Support/Solo: lean harder into pure counter defense
     if role in ("Support", "Solo"):
         if item.item_type == "Defensive":
@@ -290,13 +378,32 @@ def build_counter_build(
     role: str,
     god: dict,
     enemy_names: list[str],
+    ally_names: list[str] | None = None,
 ) -> dict[str, Any]:
     """
-    Full god build re-scored and assembled against an enemy team.
+    Full god build re-scored and assembled against an enemy team (+ optional allies).
     """
     if items is None:
         items = load_items(conn)
     threat = analyze_enemy_team(conn, enemy_names)
+    allies = analyze_ally_team(conn, ally_names or [])
+    # Peel allies amplify anti-crit / AS needs even if enemy ADC is soft-flagged
+    if allies.get("need_peel_adc") and role in ("Support", "Solo"):
+        threat = dict(threat)
+        threat["need_anti_crit"] = True
+        threat["need_anti_as"] = True
+        extra = list(threat.get("reasons") or [])
+        extra.extend(allies.get("reasons") or [])
+        threat["reasons"] = extra
+        threat["summary"] = " · ".join(extra[:4])
+        threat["allies"] = allies
+    else:
+        threat = dict(threat)
+        threat["allies"] = allies
+        if allies.get("summary"):
+            threat["reasons"] = list(threat.get("reasons") or []) + list(allies.get("reasons") or [])
+            threat["summary"] = " · ".join(threat["reasons"][:4])
+
     profile = ROLE_PROFILES[role]
     bias = god_scaling_bias(conn, god["god_id"])
     dtype = god.get("primary_damage_type")
@@ -307,6 +414,7 @@ def build_counter_build(
     # Stash counter reasons on bias for item why lines
     bias = dict(bias)
     bias["counter_threat"] = threat
+    bias["counter_allies"] = allies
     bias["counter_mode"] = True
 
     scored: list[ScoredItem] = []
@@ -314,7 +422,7 @@ def build_counter_build(
     for it in items:
         base = score_item_for_role(it, role, profile)
         base.role_score = rescore_for_god(base, bias, role, damage_type=dtype)
-        cdelta, cwhy = counter_score_delta(base, threat, role)
+        cdelta, cwhy = counter_score_delta(base, threat, role, allies=allies)
         base.role_score += cdelta
         if cwhy:
             counter_whys[base.name] = cwhy
@@ -344,7 +452,9 @@ def build_counter_build(
     path, archetype = assemble_kit_path(
         t3, bias, role, mage=mage, physical=physical, max_actives=max_act
     )
-    path = _inject_counter_cores(path, t3, threat, role, max_act, mage=mage, physical=physical)
+    path = _inject_counter_cores(
+        path, t3, threat, role, max_act, mage=mage, physical=physical, allies=allies
+    )
     path = _ensure_pen_in_path(path, t3, role, max_act, mage=mage, physical=physical)
     if role in DAMAGE_ROLES_NEED_PEN:
         # allow 2 defense when hard-countering ADC+mages
@@ -370,7 +480,7 @@ def build_counter_build(
         cbits = counter_whys.get(it.name) or []
         # Recompute counter why if missing (injected items)
         if not cbits:
-            _, cbits = counter_score_delta(it, threat, role)
+            _, cbits = counter_score_delta(it, threat, role, allies=allies)
         if cbits:
             why = f"{cbits[0]}" + (f"; {base_why}" if base_why and cbits[0] not in base_why else "")
         else:
@@ -412,6 +522,7 @@ def build_counter_build(
         "damage_type": dtype,
         "scaling": bias.get("primary"),
         "threat": threat,
+        "allies": allies,
         "starter": starter_card,
         "items": path_cards,
         "full_path": path_cards,
@@ -438,25 +549,28 @@ def _inject_counter_cores(
     *,
     mage: bool,
     physical: bool,
+    allies: dict[str, Any] | None = None,
 ) -> list[ScoredItem]:
     """Force 1–3 highest-priority counter items into the path."""
     path = list(path)
     seen = {x.name for x in path}
     actives = sum(1 for x in path if x.is_active_item)
+    allies = allies or threat.get("allies") or {}
 
     # Priority order: survive dive + turret poke BEFORE antiheal greed.
     # Lesson: Contagion-first loses to Achilles dive + Vulcan turrets.
     wanted: list[str] = []  # family or name keys in priority order
     dive = bool(threat.get("need_dive_shell"))
+    peel_adc = bool(allies.get("need_peel_adc"))
     if threat.get("need_pprot") and role in ("Support", "Solo", "Jungle"):
         wanted.append("breastplate")
     if threat.get("need_mprot") and threat.get("magical_count", 0) >= 2:
         wanted.append("genji")
         if threat.get("magical_count", 0) >= 3:
             wanted.append("oni")
-    if dive and role in ("Support", "Solo"):
+    if (dive or peel_adc) and role in ("Support", "Solo"):
         wanted.append("midgardian")
-    if threat.get("need_anti_crit"):
+    if threat.get("need_anti_crit") or peel_adc:
         wanted.append("spectral")
     if threat.get("need_anti_as") and role in ("Support", "Solo") and "midgardian" not in wanted:
         wanted.append("midgardian")
@@ -529,7 +643,7 @@ def _inject_counter_cores(
 
 
 def counter_cli(argv: list[str] | None = None) -> int:
-    """python -m smite2db.counter_builds Charon Support Discordia Merlin Ymir Artemis Ganesha"""
+    """python -m smite2db.counter_builds Charon Support Discordia Merlin Ymir Artemis Ganesha --allies Medusa Poseidon"""
     import argparse
     import json
     from .db import connect
@@ -538,6 +652,12 @@ def counter_cli(argv: list[str] | None = None) -> int:
     p.add_argument("god", help="Your god name")
     p.add_argument("role", choices=["Carry", "Mid", "Jungle", "Solo", "Support"])
     p.add_argument("enemies", nargs="+", help="Enemy god names (up to 5)")
+    p.add_argument(
+        "--allies",
+        nargs="*",
+        default=[],
+        help="Optional ally god names (peel priorities for Support/Solo)",
+    )
     p.add_argument("--json", action="store_true")
     args = p.parse_args(argv)
 
@@ -548,7 +668,9 @@ def counter_cli(argv: list[str] | None = None) -> int:
         print(f"God not found: {args.god}")
         return 1
     enemies = args.enemies[:5]
-    result = build_counter_build(conn, items, args.role, god, enemies)
+    result = build_counter_build(
+        conn, items, args.role, god, enemies, ally_names=list(args.allies or [])
+    )
     conn.close()
 
     if args.json:

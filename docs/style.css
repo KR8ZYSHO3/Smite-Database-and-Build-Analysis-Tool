@@ -2538,3 +2538,113 @@ body.ui-simple .loadout-rail {
   .simple-tabs { display: none; }
   body.ui-simple .app { padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
 }
+
+/* Compact expand builds */
+details.build-expand {
+  padding: 0;
+  overflow: hidden;
+}
+details.build-expand > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  user-select: none;
+}
+details.build-expand > summary::-webkit-details-marker { display: none; }
+details.build-expand > summary:hover {
+  background: rgba(76, 201, 240, 0.06);
+}
+.bes-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.bes-name {
+  font-family: var(--display);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.bes-sub { font-size: 0.88rem; }
+.bes-sub strong { color: var(--gold); font-weight: 700; }
+.bes-cta {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 2px;
+}
+details.build-expand[open] .bes-cta { color: var(--muted); }
+details.build-expand[open] .bes-cta::after { content: ""; }
+.build-expand-body {
+  padding: 0 16px 14px;
+  border-top: 1px solid rgba(42, 53, 80, 0.55);
+}
+
+/* Ally lobby tint */
+.ally-lobby .lobby-slot {
+  border-color: rgba(76, 201, 240, 0.35);
+  background: rgba(76, 201, 240, 0.04);
+  color: #4a6a80;
+}
+.ally-lobby .lobby-slot.filled {
+  border-color: rgba(76, 201, 240, 0.5);
+  background: linear-gradient(145deg, rgba(76, 201, 240, 0.16), rgba(155, 93, 229, 0.08));
+  color: #9ae7ff;
+}
+
+/* Tier board poster */
+.tier-board {
+  margin-bottom: 14px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tier-band {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+.tier-band-label {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: center;
+}
+.tier-band-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tier-chip {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.3);
+  color: var(--text);
+  cursor: pointer;
+}
+.tier-chip:hover { border-color: var(--accent); box-shadow: var(--glow); }
+.tier-chip.tier-S { border-color: rgba(255,214,10,0.45); color: var(--s); }
+.tier-chip.tier-A { border-color: rgba(46,196,182,0.45); color: var(--a); }
+.tier-chip.tier-B { border-color: rgba(76,201,240,0.4); color: var(--b); }
+.tier-chip.tier-C { border-color: rgba(199,125,255,0.4); color: var(--c); }
+.tier-chip.tier-D { color: var(--d); }
+
+.card-actions .card-actions {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
