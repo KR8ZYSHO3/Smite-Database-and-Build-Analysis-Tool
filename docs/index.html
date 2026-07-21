@@ -125,18 +125,46 @@
           <h2>Troll / meme builds</h2>
           <p class="muted">
             Off-meta paths that are funny and annoying — <strong>not ranked advice</strong>.
+            Roll again for a brand-new path. Max-stat modes pure greed one number.
           </p>
-          <div class="counter-form">
+          <div class="counter-form troll-form">
             <label>God
-              <input id="troll-god" type="search" list="ctr-god-list" placeholder="e.g. Geb" autocomplete="off" />
+              <span class="troll-god-row">
+                <input id="troll-god" type="search" list="ctr-god-list" placeholder="e.g. Geb" autocomplete="off" />
+                <button type="button" class="btn-ghost" id="troll-rand-god" title="Random god">🎲</button>
+              </span>
             </label>
             <label>Role
-              <select id="troll-role">
-                <option>Support</option>
-                <option>Solo</option>
-                <option>Jungle</option>
-                <option>Mid</option>
-                <option>Carry</option>
+              <span class="troll-god-row">
+                <select id="troll-role">
+                  <option>Support</option>
+                  <option>Solo</option>
+                  <option>Jungle</option>
+                  <option>Mid</option>
+                  <option>Carry</option>
+                </select>
+                <button type="button" class="btn-ghost" id="troll-rand-role" title="Random role">🎲</button>
+              </span>
+            </label>
+            <label>Mode
+              <select id="troll-mode">
+                <option value="annoy">Annoyance (kit troll)</option>
+                <option value="maxstat">Max stat greed</option>
+                <option value="surprise">Surprise me (random mode)</option>
+              </select>
+            </label>
+            <label id="troll-maxstat-wrap" hidden>Greed target
+              <select id="troll-maxstat">
+                <option value="random">🎲 Random max-stat</option>
+                <option value="max_int">Max magic power (INT)</option>
+                <option value="max_str">Max physical power (STR)</option>
+                <option value="max_hp">Max health</option>
+                <option value="max_as">Max attack speed</option>
+                <option value="max_prots">Max protections</option>
+                <option value="max_pen">Max penetration</option>
+                <option value="max_crit">Max crit</option>
+                <option value="max_cdr">Max cooldown rate</option>
+                <option value="max_ls">Max lifesteal</option>
               </select>
             </label>
             <label class="troll-check">
@@ -147,7 +175,12 @@
               <input type="checkbox" id="troll-chaos" />
               Chaos mode
             </label>
-            <button type="button" class="btn-primary btn-troll" id="troll-run">Generate troll path</button>
+            <div class="troll-actions">
+              <button type="button" class="btn-primary btn-troll" id="troll-run">Generate troll path</button>
+              <button type="button" class="btn-secondary btn-troll-roll" id="troll-full-random" title="Random god, role, mode, and path">
+                🎰 Full random
+              </button>
+            </div>
           </div>
           <div id="troll-result" class="counter-result"></div>
         </div>

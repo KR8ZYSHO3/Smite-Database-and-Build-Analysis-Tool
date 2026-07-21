@@ -600,11 +600,76 @@ tr.selected td {
   color: var(--muted);
 }
 .troll-check input { width: auto; }
+.troll-god-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.troll-god-row input,
+.troll-god-row select { flex: 1; min-width: 0; }
+.troll-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  grid-column: 1 / -1;
+}
+.troll-form .btn-ghost {
+  flex-shrink: 0;
+  min-width: 40px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(244, 114, 182, 0.35);
+  background: rgba(157, 23, 77, 0.2);
+  color: #fbcfe8;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.troll-form .btn-ghost:hover {
+  border-color: rgba(244, 114, 182, 0.65);
+  background: rgba(157, 23, 77, 0.35);
+}
 .btn-troll {
   border-color: rgba(244, 114, 182, 0.55) !important;
   background: linear-gradient(135deg, rgba(244, 114, 182, 0.28), rgba(168, 85, 247, 0.22)) !important;
 }
 .btn-troll:hover { box-shadow: 0 0 20px rgba(244, 114, 182, 0.25); }
+.btn-secondary,
+.btn-troll-roll {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  background: rgba(88, 28, 135, 0.35);
+  color: #f3e8ff;
+  font-weight: 650;
+  cursor: pointer;
+  font: inherit;
+}
+.btn-secondary:hover,
+.btn-troll-roll:hover {
+  border-color: rgba(192, 132, 252, 0.75);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
+}
+.troll-stat-total {
+  margin: 8px 0 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  color: #e9d5ff;
+  font-size: 0.95rem;
+}
+.troll-reroll-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 8px;
+}
 .pill.troll-pill {
   color: #fbcfe8;
   border-color: rgba(244, 114, 182, 0.55);

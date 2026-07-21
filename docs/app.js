@@ -1765,19 +1765,41 @@ function analyzeEnemyTeamJS(enemyGods) {
 function itemStat(it, key) {
   const st = it.stats || it.stats_parsed || {};
   if (st[key] != null) return Number(st[key]) || 0;
-  // stats_text fallback — wiki style "MProt: 60" / "PProt: 50"
+  // stats_text fallback — wiki style "Str: 45" / "MProt: 60"
   const t = String(it.stats_text || "");
   const map = {
-    mprot: /m\s*prot[^\d\n]*(\d+)|mag(?:ical)?\s*prot[^\d\n]*(\d+)/i,
-    pprot: /p\s*prot[^\d\n]*(\d+)|phys(?:ical)?\s*prot[^\d\n]*(\d+)/i,
-    pen: /pen(?:etration)?[^\d\n]*(\d+)/i,
-    hp: /(?:max\s*)?health[^\d\n]*(\d+)|hp[^\d\n]*(\d+)/i,
-    cdr: /cooldown[^\d\n]*(\d+)|cdr[^\d\n]*(\d+)/i,
+    mprot: /m\s*prot[^\d\n]*(\d+(?:\.\d+)?)|mag(?:ical)?\s*prot[^\d\n]*(\d+(?:\.\d+)?)/i,
+    pprot: /p\s*prot[^\d\n]*(\d+(?:\.\d+)?)|phys(?:ical)?\s*prot[^\d\n]*(\d+(?:\.\d+)?)/i,
+    pen: /pen(?:etration)?[^\d\n]*(\d+(?:\.\d+)?)/i,
+    hp: /(?:^|\n)\s*(?:max\s*)?(?:health|hp)\s*[:=]?\s*(\d+(?:\.\d+)?)/im,
+    cdr: /(?:^|\n)\s*(?:cooldown(?:\s*rate)?|cdr)\s*[:=]?\s*(\d+(?:\.\d+)?)/im,
+    str: /(?:^|\n)\s*str(?:ength)?\s*[:=]?\s*(\d+(?:\.\d+)?)/im,
+    int: /(?:^|\n)\s*int(?:elligence)?\s*[:=]?\s*(\d+(?:\.\d+)?)/im,
+    as: /(?:^|\n)\s*(?:attack\s*speed|as)\s*[:=]?\s*(\d+(?:\.\d+)?)/im,
+    crit: /(?:^|\n)\s*crit(?:ical)?(?:\s*chance)?\s*[:=]?\s*(\d+(?:\.\d+)?)/im,
+    ls: /(?:^|\n)\s*(?:lifesteal|ls)\s*[:=]?\s*(\d+(?:\.\d+)?)/im,
+    mp: /(?:^|\n)\s*(?:mana|mp)\s*[:=]?\s*(\d+(?:\.\d+)?)/im,
   };
   const re = map[key];
   if (!re) return 0;
   const m = t.match(re);
   return m ? Number(m[1] || m[2] || 0) : 0;
+}
+
+/** Mulberry32 — deterministic PRNG from a seed (new seed each "Roll" click). */
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a |= 0;
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function pickRandomSeed() {
+  return (Math.random() * 0xffffffff) >>> 0;
 }
 
 function isT3Item(it) {
@@ -2110,7 +2132,7 @@ function threatMetersHtml(threat) {
 
 /* -------------------- Troll builds (client) -------------------- */
 const TROLL_AXIS_KEYS = {
-  unkillable: ["shifter", "hussar", "freya", "spectral", "magi", "mantle", "alchemist", "phoenix", "pridwen", "bancroft", "asclepius", "lifebinder", "heartwood", "draconic", "oni hunter", "gladiator"],
+  unkillable: ["shifter", "hussar", "freya", "spectral", "magi", "mantle", "alchemist", "phoenix", "pridwen", "bancroft", "heartwood", "draconic", "oni hunter", "gladiator"],
   peel_prison: ["stygian", "binding", "isolation", "midgardian", "spectral", "magi", "mantle", "contagion", "genji", "breastplate", "chronos"],
   antiheal_tax: ["contagion", "divine ruin", "pestilence", "brawler", "toxic"],
   infinite_poke: ["chronos", "pendant", "gem of focus", "breastplate", "genji", "thoth", "doom orb", "isolation", "magus", "soul gem", "myrddin"],
@@ -2137,13 +2159,129 @@ const TROLL_BLURBS = {
   active_toybox: "Splashy On-Use chaos within the active budget.",
 };
 
+/** Pure-greed max-stat modes — stack one number, ignore "good" builds. */
+const MAX_STAT_MODES = {
+  max_int: {
+    label: "Magic power (INT)",
+    unit: "INT",
+    score: (it) => itemStat(it, "int"),
+    titles: [
+      "Big Brain Energy Only",
+      "Intelligence Is My Personality",
+      "Book Club With Extra Steps",
+      "I Cast… Numbers",
+    ],
+    blurb: "Every slot chases Intelligence. Real builds optional; spreadsheet mandatory.",
+  },
+  max_str: {
+    label: "Physical power (STR)",
+    unit: "STR",
+    score: (it) => itemStat(it, "str"),
+    titles: [
+      "Gym Membership Build",
+      "Strength Stacking Sim",
+      "Punch The Meta In The Face",
+      "Bench Press The Fire Giant",
+    ],
+    blurb: "All Strength, all the time. Subtlety left in draft.",
+  },
+  max_hp: {
+    label: "Health",
+    unit: "HP",
+    score: (it) => itemStat(it, "hp"),
+    titles: [
+      "HP Bar Cosplay",
+      "I Am A Walking Objective",
+      "Health Pool Tourist",
+      "Please Focus The Tank (It's Me)",
+    ],
+    blurb: "Greedy max Health. You are not a damage threat — you are a time tax.",
+  },
+  max_as: {
+    label: "Attack speed",
+    unit: "AS",
+    score: (it) => itemStat(it, "as"),
+    titles: [
+      "Click Faster Than Thought",
+      "Attack Speed Is A Personality",
+      "Windmill Of Pain",
+      "My Mouse Has PTSD",
+    ],
+    blurb: "Stack attack speed like it's a religion. Crit optional, vibes required.",
+  },
+  max_prots: {
+    label: "Protections",
+    unit: "prots",
+    score: (it) => itemStat(it, "pprot") + itemStat(it, "mprot"),
+    titles: [
+      "Armor Fashion Week",
+      "Prot Stacking Menace",
+      "Your Pen Was A Suggestion",
+      "Dual Prot Disco",
+    ],
+    blurb: "PProt + MProt greed. Damage can wait; surviving the report form cannot.",
+  },
+  max_pen: {
+    label: "Penetration",
+    unit: "pen",
+    score: (it) => itemStat(it, "pen"),
+    titles: [
+      "Shred Everything Always",
+      "Pen Over Personality",
+      "Their Armor Is Decorative",
+      "Math Class, But Mean",
+    ],
+    blurb: "Maximize pen numbers. Soft stats are for people who read patch notes.",
+  },
+  max_crit: {
+    label: "Crit",
+    unit: "crit",
+    score: (it) => itemStat(it, "crit"),
+    titles: [
+      "Yellow Numbers Or Bust",
+      "Crit Or AFK",
+      "50/50 Trauma Build",
+      "RNGesus Take The Wheel",
+    ],
+    blurb: "Crit chance stacking. Consistency is for ranked tryhards.",
+  },
+  max_cdr: {
+    label: "Cooldown rate",
+    unit: "CDR",
+    score: (it) => itemStat(it, "cdr"),
+    titles: [
+      "Ultimate Every Fight",
+      "CDR Tax Evasion",
+      "Ability Spam Speedrun",
+      "Cooldowns Are Optional",
+    ],
+    blurb: "Push cooldown rate as high as the shop allows. Fair fights are cancelled.",
+  },
+  max_ls: {
+    label: "Lifesteal",
+    unit: "LS",
+    score: (it) => itemStat(it, "ls"),
+    titles: [
+      "Vampire Cosplay",
+      "Lifesteal Is Self-Care",
+      "Bite The Wave",
+      "HP5 Who?",
+    ],
+    blurb: "Stack lifesteal like a cartoon villain. Supports will hate you.",
+  },
+};
+const MAX_STAT_KEYS = Object.keys(MAX_STAT_MODES);
+
+// Last roll seed so UI can show "roll #…" and re-roll is always fresh
+let trollRollState = { seed: 0, kind: "annoy" };
+
 function hashStr(s) {
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
   return Math.abs(h);
 }
 
-function detectTrollAxesJS(god, role, useAspect) {
+function detectTrollAxesJS(god, role, useAspect, rng) {
   const tags = new Set(god.kit_tags || []);
   const aspect = useAspect && (god.aspects || [])[0] ? god.aspects[0] : null;
   const blob = ((aspect && aspect.description) || "").toLowerCase();
@@ -2166,6 +2304,7 @@ function detectTrollAxesJS(god, role, useAspect) {
   if (role === "Mid" || role === "Carry") {
     scores.infinite_poke += 0.9;
     scores.aa_clown += 0.4;
+    scores.active_toybox += 0.35;
   }
   if (role === "Jungle") {
     scores.aa_clown += 0.5;
@@ -2191,43 +2330,195 @@ function detectTrollAxesJS(god, role, useAspect) {
     if (/basics? are ranged|on-hit|crit|attack speed/i.test(blob)) scores.aa_clown += 2.0;
     if (/cooldown rate|reduced cooldown/i.test(blob)) scores.infinite_poke += 1.3;
   }
-  // Per-god micro bias
+  // Fresh roll noise so the same god isn't always the same axis
   for (const ax of Object.keys(scores)) {
-    scores[ax] += (hashStr(god.name + ax) % 17) * 0.06;
+    scores[ax] += (rng ? rng() : Math.random()) * 1.1;
+    scores[ax] += (hashStr(god.name + ax) % 11) * 0.04;
   }
   return Object.entries(scores).sort((a, b) => b[1] - a[1]);
 }
 
-function buildTrollPathJS(god, role, useAspect, chaos) {
-  let ranked = detectTrollAxesJS(god, role, useAspect);
-  // God-salt among top-3 close axes (not always global #1)
+function sumPathStat(items, modeKey) {
+  const mode = MAX_STAT_MODES[modeKey];
+  if (!mode) return 0;
+  return items.reduce((s, it) => s + mode.score(it), 0);
+}
+
+function buildMaxStatPathJS(god, role, useAspect, modeKey, rng) {
+  const mode = MAX_STAT_MODES[modeKey];
+  if (!mode) return null;
+  const pool = (state.items || []).filter(isT3Item);
+  const dtype = (god.primary_damage_type || "").toLowerCase();
+  const isMagical = dtype === "magical";
+  const isPhysical = dtype === "physical";
+
+  // Soft type filter so max INT doesn't load full STR toys on mages (unless chaos later)
+  const typed = pool.filter((it) => {
+    const str = itemStat(it, "str");
+    const int = itemStat(it, "int");
+    const type = (it.item_type || "").toLowerCase();
+    if (modeKey === "max_int" && isPhysical && int < 15 && str >= 30) return false;
+    if (modeKey === "max_str" && isMagical && str < 15 && int >= 30) return false;
+    if (modeKey === "max_as" || modeKey === "max_crit") {
+      // AS/crit memes still allow hybrid bulk
+      return true;
+    }
+    if (modeKey === "max_hp" || modeKey === "max_prots") return true;
+    // Prefer items that actually have the stat
+    return mode.score(it) > 0 || type === "defensive" || type === "hybrid";
+  });
+
+  const scored = typed
+    .map((it) => {
+      let s = mode.score(it);
+      // Tiny noise so re-rolls aren't identical when ties exist
+      s += (rng() - 0.5) * 4;
+      // Prefer denser stacks (stat per gold-ish)
+      const cost = Number(it.total_cost || it.cost || 2500) || 2500;
+      s += mode.score(it) / Math.max(cost / 1000, 1) * 0.15;
+      return { it, s };
+    })
+    .filter((x) => mode.score(x.it) > 0 || x.s > 2)
+    .sort((a, b) => b.s - a.s);
+
+  const picked = [];
+  const seen = new Set();
+  let actives = 0;
+  const maxAct = 2;
+  // Greedy top by score with light diversify among near-ties
+  for (let pass = 0; pass < 2 && picked.length < 6; pass++) {
+    const cands = scored.filter((x) => !seen.has(x.it.name));
+    for (const { it, s } of cands) {
+      if (picked.length >= 6) break;
+      if (it.is_active_item || String(it.categories || "").toLowerCase().includes("active")) {
+        if (actives >= maxAct) continue;
+      }
+      // Among top cluster, sometimes skip to diversify
+      if (pass === 0 && picked.length >= 2 && rng() < 0.12) continue;
+      picked.push(it);
+      seen.add(it.name);
+      if (it.is_active_item || String(it.categories || "").toLowerCase().includes("active")) actives++;
+      it._trollWhy = `😈 max ${mode.unit}: +${fmt(mode.score(it), 0)}`;
+    }
+  }
+
+  // If still short, fill highest remaining stat
+  for (const { it } of scored) {
+    if (picked.length >= 6) break;
+    if (seen.has(it.name)) continue;
+    it._trollWhy = `😈 max ${mode.unit} fill`;
+    picked.push(it);
+    seen.add(it.name);
+  }
+
+  // Sort buy order: cheaper high-stat cores first, luxury last
+  picked.sort((a, b) => {
+    const ca = Number(a.total_cost || a.cost || 0);
+    const cb = Number(b.total_cost || b.cost || 0);
+    const sa = mode.score(a);
+    const sb = mode.score(b);
+    // High density early
+    const da = sa / Math.max(ca, 1);
+    const db = sb / Math.max(cb, 1);
+    if (Math.abs(db - da) > 0.002) return db - da;
+    return ca - cb;
+  });
+
+  // One random flavor swap among near-best leftovers
+  if (picked.length >= 3 && scored.length > 8) {
+    const fi = Math.floor(rng() * picked.length);
+    const alts = scored.filter((x) => !seen.has(x.it.name)).slice(0, 6);
+    if (alts.length) {
+      const alt = alts[Math.floor(rng() * alts.length)].it;
+      seen.delete(picked[fi].name);
+      alt._trollWhy = `😈 max ${mode.unit} chaos swap`;
+      picked[fi] = alt;
+    }
+  }
+
+  const total = sumPathStat(picked.slice(0, 6), modeKey);
+  const titles = mode.titles;
+  const title = titles[Math.floor(rng() * titles.length)];
+  const aspect = useAspect && (god.aspects || [])[0] ? god.aspects[0] : null;
+  const starter = useAspect
+    ? god.conquest_by_role_aspect?.[role]?.starter || getStarter(god, role)
+    : getStarter(god, role);
+  const baselineNames = useAspect
+    ? (god.conquest_by_role_aspect?.[role]?.items || []).map((i) => i.name)
+    : getBaselinePath(god, role);
+
+  const items = picked.slice(0, 6).map((it) => ({
+    name: it.name,
+    cost: it.total_cost ?? it.cost,
+    why: it._trollWhy || `😈 max ${mode.unit}`,
+    troll: true,
+    slot: "troll",
+    is_active: String(it.categories || "").toLowerCase().includes("active"),
+    stat_value: mode.score(it),
+  }));
+
+  let monologue = `${title}. ${mode.blurb} Pure greed: maximize ${mode.label} (path total ≈ ${fmt(total, 0)} ${mode.unit}). ${god.name} did not ask for this.`;
+  if (aspect) monologue += ` Aspect: ${aspect.name} for extra nonsense.`;
+
+  return {
+    title,
+    primary: modeKey,
+    secondary: "max_stat",
+    kind: "maxstat",
+    monologue,
+    disclaimer: "TROLL / MEME — max-stat greed. Not ranked advice. Legal items, illegal vibes.",
+    aspect,
+    starter,
+    items,
+    baseline: baselineNames,
+    stat_total: total,
+    stat_unit: mode.unit,
+    stat_label: mode.label,
+  };
+}
+
+function buildAnnoyPathJS(god, role, useAspect, chaos, rng) {
+  let ranked = detectTrollAxesJS(god, role, useAspect, rng);
   const best = ranked[0][1];
-  const axisPool = ranked.filter(([, s], i) => i === 0 || s >= best - 0.9).slice(0, 3);
-  const salt = hashStr(`${god.name}|${role}|asp=${useAspect}|${(god.aspects || [])[0]?.name || ""}`);
-  let primary = axisPool[salt % axisPool.length][0];
+  const axisPool = ranked.filter(([, s], i) => i === 0 || s >= best - 1.0).slice(0, 4);
+  let primary = axisPool[Math.floor(rng() * axisPool.length)][0];
   let secondary = ranked.find(([a]) => a !== primary)?.[0] || primary;
-  if (chaos && secondary !== primary) {
+  // Occasionally pick pure random secondary for variety
+  if (rng() < 0.25) {
+    const rest = ranked.filter(([a]) => a !== primary);
+    if (rest.length) secondary = rest[Math.floor(rng() * Math.min(rest.length, 4))][0];
+  }
+  if (chaos && secondary !== primary && rng() < 0.7) {
     const t = primary;
     primary = secondary;
     secondary = t;
   }
   const titles = TROLL_TITLES[primary] || ["Certified Troll Path"];
-  const title = titles[salt % titles.length];
+  const title = titles[Math.floor(rng() * titles.length)];
   const aspect = useAspect && (god.aspects || [])[0] ? god.aspects[0] : null;
 
-  // Kit baseline first (god-specific serious path)
   const baselineNames = useAspect
     ? (god.conquest_by_role_aspect?.[role]?.items || []).map((i) => i.name)
     : getBaselinePath(god, role);
   const pool = (state.items || []).filter(isT3Item);
   const byName = Object.fromEntries(pool.map((it) => [it.name, it]));
-  let picked = baselineNames.map((n) => byName[n]).filter(Boolean);
+  // Start from 2–4 baseline items (not full path) so troll can dominate
+  const baseTake = 2 + Math.floor(rng() * 3);
+  let picked = baselineNames
+    .map((n) => byName[n])
+    .filter(Boolean)
+    .slice(0, baseTake);
+  // Shuffle baseline slice with rng
+  for (let i = picked.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [picked[i], picked[j]] = [picked[j], picked[i]];
+  }
   const seen = new Set(picked.map((p) => p.name));
+  picked.forEach((it) => {
+    it._trollWhy = `😈 kit baseline`;
+  });
 
-  // Kit tag signature keys (god tags)
   const tagKeys = {
-    heal: ["asclepius", "lifebinder", "bancroft", "soul gem"],
-    heavy_heal: ["asclepius", "lifebinder"],
     hard_cc: ["isolation", "binding", "stygian"],
     high_cc: ["isolation", "binding"],
     dot: ["magus", "desolat", "isolation", "contagion"],
@@ -2247,24 +2538,25 @@ function buildTrollPathJS(god, role, useAspect, chaos) {
     for (const k of tagKeys[t] || []) if (!sigKeys.includes(k)) sigKeys.push(k);
   }
   if (sigKeys.length) {
-    const rot = salt % sigKeys.length;
-    sigKeys = sigKeys.slice(rot).concat(sigKeys.slice(0, rot));
+    // Fisher-Yates with rng
+    for (let i = sigKeys.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [sigKeys[i], sigKeys[j]] = [sigKeys[j], sigKeys[i]];
+    }
   }
 
-  function injectKey(key, why, maxN) {
-    if (picked.length >= 6 && maxN <= 0) return false;
+  function injectKey(key, why) {
     if ([...seen].some((n) => n.toLowerCase().includes(key))) return false;
     const hits = pool
       .filter((it) => !seen.has(it.name) && it.name.toLowerCase().includes(key))
       .sort((a, b) => (b.total_cost || 0) - (a.total_cost || 0));
     if (!hits.length) return false;
-    const it = hits[salt % Math.min(hits.length, 4)];
+    const it = hits[Math.floor(rng() * Math.min(hits.length, 5))];
     it._trollWhy = why;
     if (picked.length < 6) {
       picked.push(it);
     } else {
-      // replace lowest-cost non-signature-ish
-      let drop = 0;
+      let drop = Math.floor(rng() * picked.length);
       for (let i = 0; i < picked.length; i++) {
         const n = picked[i].name.toLowerCase();
         if (!sigKeys.some((k) => n.includes(k))) {
@@ -2279,36 +2571,34 @@ function buildTrollPathJS(god, role, useAspect, chaos) {
     return true;
   }
 
-  // Pin up to 2 kit signatures
   let sigN = 0;
   for (const k of sigKeys) {
     if (sigN >= 2) break;
-    if (injectKey(k, `😈 kit:${k}`, 2)) sigN++;
+    if (injectKey(k, `😈 kit:${k}`)) sigN++;
   }
 
-  // Rotate troll axis keys by god salt
   let keys = [...(TROLL_AXIS_KEYS[primary] || [])];
   for (const k of TROLL_AXIS_KEYS[secondary] || []) {
     if (!keys.includes(k)) keys.push(k);
   }
-  if (keys.length) {
-    const rot = salt % keys.length;
-    keys = keys.slice(rot).concat(keys.slice(0, rot));
+  for (let i = keys.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [keys[i], keys[j]] = [keys[j], keys[i]];
   }
   let trollN = 0;
+  const maxTroll = chaos ? 4 : 3;
   for (const key of keys) {
-    if (trollN >= 3) break;
-    if (injectKey(key, `😈 troll ${primary.replace(/_/g, " ")}`, 3)) trollN++;
+    if (trollN >= maxTroll) break;
+    if (injectKey(key, `😈 troll ${primary.replace(/_/g, " ")}`)) trollN++;
   }
 
-  // Fill from baseline leftovers / pool diversify
   if (picked.length < 6) {
     const rest = pool
       .filter((it) => !seen.has(it.name))
       .sort((a, b) => {
-        const ha = hashStr(god.name + a.name) % 40;
-        const hb = hashStr(god.name + b.name) % 40;
-        return (b.total_cost || 0) + hb - ((a.total_cost || 0) + ha);
+        const ha = rng();
+        const hb = rng();
+        return (b.total_cost || 0) * 0.01 + hb - ((a.total_cost || 0) * 0.01 + ha);
       });
     for (const it of rest) {
       if (picked.length >= 6) break;
@@ -2323,17 +2613,17 @@ function buildTrollPathJS(god, role, useAspect, chaos) {
     }
   }
 
-  // Final god flavor swap
-  if (picked.length >= 4) {
-    const fi = salt % picked.length;
+  // Always flavor-swap 1–2 slots for variety
+  const swaps = chaos ? 2 : 1;
+  for (let s = 0; s < swaps && picked.length >= 3; s++) {
+    const fi = Math.floor(rng() * picked.length);
     const alts = pool.filter((it) => !seen.has(it.name));
-    if (alts.length) {
-      const alt = alts[hashStr(god.name + "flex") % Math.min(alts.length, 8)];
-      seen.delete(picked[fi].name);
-      alt._trollWhy = `😈 ${god.name} flavor`;
-      picked[fi] = alt;
-      seen.add(alt.name);
-    }
+    if (!alts.length) break;
+    const alt = alts[Math.floor(rng() * Math.min(alts.length, 12))];
+    seen.delete(picked[fi].name);
+    alt._trollWhy = `😈 ${god.name} chaos flavor`;
+    picked[fi] = alt;
+    seen.add(alt.name);
   }
 
   const starter = useAspect
@@ -2344,20 +2634,22 @@ function buildTrollPathJS(god, role, useAspect, chaos) {
     cost: it.total_cost ?? it.cost,
     why: it._trollWhy || `😈 troll ${primary.replace(/_/g, " ")}`,
     troll: true,
-    slot: "counter",
+    slot: "troll",
     is_active: String(it.categories || "").toLowerCase().includes("active"),
   }));
 
   let monologue = `${title}. ${TROLL_BLURBS[primary] || "Be annoying on purpose."} Primary annoyance: ${primary.replace(
     /_/g,
     " "
-  )}; backup bit: ${secondary.replace(/_/g, " ")}. Kit-first troll for ${god.name}.`;
+  )}; backup bit: ${secondary.replace(/_/g, " ")}. Kit-aware troll for ${god.name}.`;
   if (aspect) monologue += ` Running ${aspect.name} because the bit is better.`;
+  if (chaos) monologue += " Chaos mode: secondary axis got the wheel.";
 
   return {
     title,
     primary,
     secondary,
+    kind: "annoy",
     monologue,
     disclaimer: "TROLL / MEME — not ranked advice. Legal items, illegal vibes.",
     aspect,
@@ -2367,53 +2659,133 @@ function buildTrollPathJS(god, role, useAspect, chaos) {
   };
 }
 
-function runTrollFromForm({ updateHash = true } = {}) {
+function buildTrollPathJS(god, role, useAspect, chaos, opts = {}) {
+  const seed = opts.seed != null ? opts.seed : pickRandomSeed();
+  const rng = mulberry32(seed);
+  let kind = opts.kind || "annoy"; // annoy | maxstat
+  let maxStatKey = opts.maxStatKey || null;
+
+  if (kind === "surprise") {
+    kind = rng() < 0.45 ? "maxstat" : "annoy";
+  }
+  if (kind === "maxstat") {
+    if (!maxStatKey || maxStatKey === "random" || !MAX_STAT_MODES[maxStatKey]) {
+      maxStatKey = MAX_STAT_KEYS[Math.floor(rng() * MAX_STAT_KEYS.length)];
+    }
+    const path = buildMaxStatPathJS(god, role, useAspect, maxStatKey, rng);
+    if (path) {
+      path.seed = seed;
+      path.kind = "maxstat";
+      return path;
+    }
+    kind = "annoy";
+  }
+  const path = buildAnnoyPathJS(god, role, useAspect, chaos, rng);
+  path.seed = seed;
+  path.kind = "annoy";
+  return path;
+}
+
+function randomGodFromPool() {
+  const gods = state.gods || [];
+  if (!gods.length) return null;
+  return gods[Math.floor(Math.random() * gods.length)];
+}
+
+function randomRole() {
+  const roles = ["Support", "Solo", "Jungle", "Mid", "Carry"];
+  return roles[Math.floor(Math.random() * roles.length)];
+}
+
+function syncTrollModeUi() {
+  const mode = $("#troll-mode")?.value || "annoy";
+  const wrap = $("#troll-maxstat-wrap");
+  if (wrap) wrap.hidden = mode !== "maxstat";
+}
+
+function runTrollFromForm({ updateHash = true, seed = null } = {}) {
   const god = findGodByName($("#troll-god")?.value);
   const role = $("#troll-role")?.value || "Support";
   const useAspect = !!$("#troll-aspect")?.checked;
   const chaos = !!$("#troll-chaos")?.checked;
+  let kind = $("#troll-mode")?.value || "annoy";
+  let maxStatKey = $("#troll-maxstat")?.value || "random";
   const box = $("#troll-result");
   if (!box) return;
   if (!god) {
-    box.innerHTML = emptyHud("Pick a god", "Type a valid god name, then generate a kit-true troll path.");
+    box.innerHTML = emptyHud(
+      "Pick a god",
+      "Type a god, hit 🎲 for random, or 🎰 Full random — then generate."
+    );
     return;
   }
-  const t = buildTrollPathJS(god, role, useAspect, chaos);
+  const rollSeed = seed != null ? seed : pickRandomSeed();
+  trollRollState = { seed: rollSeed, kind };
+  const t = buildTrollPathJS(god, role, useAspect, chaos, {
+    seed: rollSeed,
+    kind,
+    maxStatKey,
+  });
+  const axisLabel =
+    t.kind === "maxstat"
+      ? `max ${t.stat_label || t.primary}`
+      : String(t.primary || "").replace(/_/g, " ");
   const shareData = {
     mode: "troll",
     god: god.name,
     role,
     title: t.title,
-    subtitle: `${god.name} · ${role}${t.aspect ? ` · ${t.aspect.name}` : ""} · troll path`,
+    subtitle: `${god.name} · ${role}${t.aspect ? ` · ${t.aspect.name}` : ""} · troll`,
     why: t.monologue || t.disclaimer || "",
     starter: t.starter?.name || "",
     items: itemsForShare(t.items),
-    tags: ["TROLL", t.primary.replace(/_/g, " "), t.secondary.replace(/_/g, " ")],
+    tags: [
+      "TROLL",
+      t.kind === "maxstat" ? "MAX STAT" : "ANNOY",
+      axisLabel,
+      t.secondary && t.secondary !== "max_stat" ? String(t.secondary).replace(/_/g, " ") : null,
+    ].filter(Boolean),
     footerLeft: "TROLL / MEME — NOT RANKED",
     aspect: useAspect,
     chaos,
     deeplink: `#troll/${encodeURIComponent(god.name)}/${encodeURIComponent(role)}/${[
       useAspect ? "aspect" : null,
       chaos ? "chaos" : null,
+      t.kind === "maxstat" ? `max:${t.primary}` : null,
+      `r${rollSeed.toString(16)}`,
     ]
       .filter(Boolean)
       .join(",") || "base"}`,
   };
+  const statLine =
+    t.kind === "maxstat" && t.stat_total != null
+      ? `<div class="troll-stat-total">Greed total: <strong>${escapeHtml(fmt(t.stat_total, 0))} ${escapeHtml(
+          t.stat_unit || ""
+        )}</strong> <span class="muted">(${escapeHtml(t.stat_label || "")})</span></div>`
+      : "";
   box.innerHTML = `
     <article class="card build-card god-build-card is-troll ${roleClass(role)}">
       <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
       <header class="gbc-head">
         <h3>😈 ${escapeHtml(t.title)}</h3>
-        <div class="muted gbc-meta">${escapeHtml(god.name)} · ${escapeHtml(role)}</div>
+        <div class="muted gbc-meta">${escapeHtml(god.name)} · ${escapeHtml(role)} · roll ${escapeHtml(
+    rollSeed.toString(16)
+  )}</div>
       </header>
       <div class="build-meta">
         <span class="pill troll-pill">TROLL</span>
-        <span class="pill hot">${escapeHtml(t.primary.replace(/_/g, " "))}</span>
-        <span class="pill">${escapeHtml(t.secondary.replace(/_/g, " "))}</span>
+        <span class="pill hot">${escapeHtml(t.kind === "maxstat" ? "max stat" : "annoy")}</span>
+        <span class="pill">${escapeHtml(axisLabel)}</span>
+        ${
+          t.secondary && t.secondary !== "max_stat"
+            ? `<span class="pill">${escapeHtml(String(t.secondary).replace(/_/g, " "))}</span>`
+            : ""
+        }
         ${t.aspect ? `<span class="pill aspect">${escapeHtml(t.aspect.name)}</span>` : ""}
       </div>
       <p class="aspect-blurb troll-blurb">${escapeHtml(t.disclaimer)}</p>
       <p class="why">${escapeHtml(t.monologue)}</p>
+      ${statLine}
       <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(t.starter?.name || "—")}</div>
       ${loadoutRail(t.items)}
       <ol class="buy-list">
@@ -2424,10 +2796,15 @@ function runTrollFromForm({ updateHash = true } = {}) {
           ? `<p class="muted">Serious baseline (for contrast): ${t.baseline.map(escapeHtml).join(" → ")}</p>`
           : ""
       }
+      <div class="troll-reroll-row">
+        <button type="button" class="btn-secondary" id="troll-reroll">🎲 Re-roll this setup</button>
+        <span class="muted">Same god/role/mode — new random path</span>
+      </div>
       ${trustLine("meme only — not ranked advice")}
       ${shareBar(shareData)}
     </article>
   `;
+  $("#troll-reroll")?.addEventListener("click", () => runTrollFromForm({ updateHash: true }));
   if (updateHash) syncHashFromUi("troll");
 }
 
@@ -2436,10 +2813,40 @@ function setupTroll() {
   if (box && !box.innerHTML.trim()) {
     box.innerHTML = emptyHud(
       "Troll path standby",
-      "Pick a god + role. We build a kit-true off-meta path designed to be frustrating — not ranked advice."
+      "Pick a god + mode, hit Generate — or 🎰 Full random for chaos. Each roll is different."
     );
   }
+  syncTrollModeUi();
+  $("#troll-mode")?.addEventListener("change", syncTrollModeUi);
   $("#troll-run")?.addEventListener("click", () => runTrollFromForm({ updateHash: true }));
+  $("#troll-rand-god")?.addEventListener("click", () => {
+    const g = randomGodFromPool();
+    if (g && $("#troll-god")) {
+      $("#troll-god").value = g.name;
+      runTrollFromForm({ updateHash: true });
+    }
+  });
+  $("#troll-rand-role")?.addEventListener("click", () => {
+    if ($("#troll-role")) {
+      $("#troll-role").value = randomRole();
+      if (findGodByName($("#troll-god")?.value)) runTrollFromForm({ updateHash: true });
+    }
+  });
+  $("#troll-full-random")?.addEventListener("click", () => {
+    const g = randomGodFromPool();
+    if (!g) return;
+    if ($("#troll-god")) $("#troll-god").value = g.name;
+    if ($("#troll-role")) $("#troll-role").value = randomRole();
+    const modes = ["annoy", "maxstat", "surprise"];
+    if ($("#troll-mode")) {
+      $("#troll-mode").value = modes[Math.floor(Math.random() * modes.length)];
+      syncTrollModeUi();
+    }
+    if ($("#troll-maxstat")) $("#troll-maxstat").value = "random";
+    if ($("#troll-chaos")) $("#troll-chaos").checked = Math.random() < 0.35;
+    if ($("#troll-aspect")) $("#troll-aspect").checked = Math.random() < 0.7;
+    runTrollFromForm({ updateHash: true });
+  });
 }
 
 function runCounterFromForm({ updateHash = true } = {}) {

@@ -51,6 +51,118 @@ TROLL_AXES = (
     "active_toybox",   # expensive On-Use memes
 )
 
+# Pure-greed max-stat modes (CLI / parity with web troll tab)
+MAX_STAT_MODES: dict[str, dict[str, Any]] = {
+    "max_int": {
+        "label": "Magic power (INT)",
+        "unit": "INT",
+        "stat": "int",
+        "titles": [
+            "Big Brain Energy Only",
+            "Intelligence Is My Personality",
+            "Book Club With Extra Steps",
+            "I Cast… Numbers",
+        ],
+        "blurb": "Every slot chases Intelligence. Real builds optional; spreadsheet mandatory.",
+    },
+    "max_str": {
+        "label": "Physical power (STR)",
+        "unit": "STR",
+        "stat": "str",
+        "titles": [
+            "Gym Membership Build",
+            "Strength Stacking Sim",
+            "Punch The Meta In The Face",
+            "Bench Press The Fire Giant",
+        ],
+        "blurb": "All Strength, all the time. Subtlety left in draft.",
+    },
+    "max_hp": {
+        "label": "Health",
+        "unit": "HP",
+        "stat": "hp",
+        "titles": [
+            "HP Bar Cosplay",
+            "I Am A Walking Objective",
+            "Health Pool Tourist",
+            "Please Focus The Tank (It's Me)",
+        ],
+        "blurb": "Greedy max Health. You are a time tax.",
+    },
+    "max_as": {
+        "label": "Attack speed",
+        "unit": "AS",
+        "stat": "as",
+        "titles": [
+            "Click Faster Than Thought",
+            "Attack Speed Is A Personality",
+            "Windmill Of Pain",
+            "My Mouse Has PTSD",
+        ],
+        "blurb": "Stack attack speed like it's a religion.",
+    },
+    "max_prots": {
+        "label": "Protections",
+        "unit": "prots",
+        "stat": "prots",  # pprot + mprot
+        "titles": [
+            "Armor Fashion Week",
+            "Prot Stacking Menace",
+            "Your Pen Was A Suggestion",
+            "Dual Prot Disco",
+        ],
+        "blurb": "PProt + MProt greed. Damage can wait.",
+    },
+    "max_pen": {
+        "label": "Penetration",
+        "unit": "pen",
+        "stat": "pen",
+        "titles": [
+            "Shred Everything Always",
+            "Pen Over Personality",
+            "Their Armor Is Decorative",
+            "Math Class, But Mean",
+        ],
+        "blurb": "Maximize pen numbers.",
+    },
+    "max_crit": {
+        "label": "Crit",
+        "unit": "crit",
+        "stat": "crit",
+        "titles": [
+            "Yellow Numbers Or Bust",
+            "Crit Or AFK",
+            "50/50 Trauma Build",
+            "RNGesus Take The Wheel",
+        ],
+        "blurb": "Crit chance stacking. Consistency is for tryhards.",
+    },
+    "max_cdr": {
+        "label": "Cooldown rate",
+        "unit": "CDR",
+        "stat": "cdr",
+        "titles": [
+            "Ultimate Every Fight",
+            "CDR Tax Evasion",
+            "Ability Spam Speedrun",
+            "Cooldowns Are Optional",
+        ],
+        "blurb": "Push cooldown rate as high as the shop allows.",
+    },
+    "max_ls": {
+        "label": "Lifesteal",
+        "unit": "LS",
+        "stat": "ls",
+        "titles": [
+            "Vampire Cosplay",
+            "Lifesteal Is Self-Care",
+            "Bite The Wave",
+            "HP5 Who?",
+        ],
+        "blurb": "Stack lifesteal like a cartoon villain.",
+    },
+}
+
 # Axis → preferred item name keys (substring match)
 AXIS_ITEM_KEYS: dict[str, list[str]] = {
     "unkillable": [
@@ -454,6 +566,152 @@ def _pick_from_pool_god(
     return near[idx]
 
 
+def _item_stat_value(item: ScoredItem | dict, stat: str) -> float:
+    if isinstance(item, ScoredItem):
+        stats = item.stats
+    else:
+        stats = item.get("stats") or {}
+    if stat == "prots":
+        return _canon_stat_value(stats, "pprot") + _canon_stat_value(stats, "mprot")
+    return _canon_stat_value(stats, stat)
+
+
+def build_max_stat_troll(
+    conn: sqlite3.Connection,
+    items: list[dict] | None,
+    role: str,
+    god: dict,
+    mode_key: str,
+    *,
+    use_aspect: bool = False,
+    aspect_id: int | None = None,
+    seed: int | None = None,
+) -> dict[str, Any]:
+    """Pure-greed max-stat path — stack one number, silly title."""
+    if items is None:
+        items = load_items(conn)
+    if mode_key not in MAX_STAT_MODES:
+        mode_key = random.choice(list(MAX_STAT_MODES.keys()))
+    mode = MAX_STAT_MODES[mode_key]
+    rng = random.Random(seed if seed is not None else random.randrange(1 << 30))
+
+    profile = ROLE_PROFILES.get(role) or ROLE_PROFILES["Mid"]
+    bias = god_scaling_bias(conn, god["god_id"])
+    if use_aspect or aspect_id is not None:
+        aspects = list_god_aspects(conn, god["god_id"])
+        if aspects:
+            bias = build_aspect_bias(conn, god["god_id"], bias, aspect_id=aspect_id)
+
+    dtype = god.get("primary_damage_type")
+    primary = bias.get("primary") or ""
+    mage = primary == "Intelligence" or (dtype or "").lower() == "magical"
+    physical = (primary == "Strength" or (dtype or "").lower() == "physical") and not mage
+
+    scored: list[ScoredItem] = []
+    for it in items:
+        if not is_t3_core(it):
+            continue
+        base = score_item_for_role(it, role, profile)
+        val = _item_stat_value(base, mode["stat"])
+        if val <= 0:
+            continue
+        # Soft type filter
+        str_v = _canon_stat_value(base.stats, "str")
+        int_v = _canon_stat_value(base.stats, "int")
+        if mode_key == "max_int" and physical and int_v < 15 and str_v >= 30:
+            continue
+        if mode_key == "max_str" and mage and str_v < 15 and int_v >= 30:
+            continue
+        base.role_score = val * 10 + rng.random() * 3
+        scored.append(base)
+    scored.sort(key=lambda x: x.role_score, reverse=True)
+
+    path: list[ScoredItem] = []
+    seen: set[str] = set()
+    actives = 0
+    max_act = 2
+    for s in scored:
+        if len(path) >= 6:
+            break
+        if s.name in seen:
+            continue
+        if s.is_active_item and actives >= max_act:
+            continue
+        path.append(s)
+        seen.add(s.name)
+        if s.is_active_item:
+            actives += 1
+
+    # Density sort for buy order
+    def density(it: ScoredItem) -> float:
+        cost = max(it.total_cost or 2500, 1)
+        return _item_stat_value(it, mode["stat"]) / cost
+
+    path = sorted(path[:6], key=lambda x: (-density(x), x.total_cost or 0))
+    total = sum(_item_stat_value(x, mode["stat"]) for x in path)
+    titles = mode["titles"]
+    title = titles[rng.randrange(len(titles))]
+    unit = mode["unit"]
+
+    path_cards = []
+    for it in path:
+        v = _item_stat_value(it, mode["stat"])
+        card = _item_card(it, why=f"😈 max {unit}: +{v:g}")
+        if card:
+            card["troll"] = True
+            path_cards.append(card)
+
+    # Starter still role-normal
+    all_scored = []
+    for it in items:
+        base = score_item_for_role(it, role, profile)
+        all_scored.append(base)
+    starters = [s for s in all_scored if is_t1_starter(next(i for i in items if i["name"] == s.name))]
+    starter_pick = pick_god_starter(starters, items, profile, bias, role, dtype) if starters else None
+    starter_card = _item_card(starter_pick, why="😈 meme starter") if starter_pick else None
+
+    monologue = (
+        f"{title}. {mode['blurb']} Pure greed: maximize {mode['label']} "
+        f"(path total ≈ {total:g} {unit}). "
+        f"{god.get('entity_name') or god.get('name')} did not ask for this."
+    )
+    if bias.get("aspect_name"):
+        monologue += f" Aspect: {bias['aspect_name']} for extra nonsense."
+
+    return {
+        "god": god.get("entity_name") or god.get("name"),
+        "role": role,
+        "mode": "troll_maxstat",
+        "kind": "maxstat",
+        "disclaimer": "TROLL / MEME — max-stat greed. Not ranked advice.",
+        "troll_title": title,
+        "troll_blurb": mode["blurb"],
+        "primary_axis": mode_key,
+        "secondary_axis": "max_stat",
+        "stat_total": round(total, 1),
+        "stat_unit": unit,
+        "stat_label": mode["label"],
+        "is_aspect": bool(bias.get("is_aspect")),
+        "aspect_name": bias.get("aspect_name"),
+        "aspect_description": bias.get("aspect_description"),
+        "kit_tags": sorted(bias.get("tags") or []),
+        "damage_type": dtype,
+        "scaling": bias.get("primary"),
+        "starter": starter_card,
+        "items": path_cards,
+        "full_path": path_cards,
+        "relics": [],
+        "max_shop_actives": max_act,
+        "hard_max_actives": HARD_MAX_ACTIVE_ITEMS,
+        "active_count": sum(1 for x in path if x.is_active_item),
+        "pen_total": round(sum(item_pen_value(x) for x in path), 1),
+        "chaos": False,
+        "seed": seed,
+        "why": monologue,
+        "monologue": monologue,
+    }
+
+
 def build_troll_build(
     conn: sqlite3.Connection,
     items: list[dict] | None,
@@ -463,11 +721,28 @@ def build_troll_build(
     use_aspect: bool = False,
     aspect_id: int | None = None,
     chaos: bool = False,
+    max_stat: str | None = None,
+    seed: int | None = None,
 ) -> dict[str, Any]:
     """
     Assemble a kit-true troll path for god × role.
     chaos=True amplifies secondary axis and active toys.
+    max_stat=max_int|max_hp|… for pure greed mode; 'random' picks one.
+    seed=None uses fresh randomness for axis/title/picks when provided.
     """
+    if max_stat:
+        key = max_stat if max_stat != "random" else random.choice(list(MAX_STAT_MODES.keys()))
+        return build_max_stat_troll(
+            conn,
+            items,
+            role,
+            god,
+            key,
+            use_aspect=use_aspect,
+            aspect_id=aspect_id,
+            seed=seed,
+        )
+
     if items is None:
         items = load_items(conn)
     profile = ROLE_PROFILES.get(role) or ROLE_PROFILES["Mid"]
@@ -478,7 +753,30 @@ def build_troll_build(
             bias = build_aspect_bias(conn, god["god_id"], bias, aspect_id=aspect_id)
             use_aspect = True
 
-    identity = pick_troll_identity(bias, role, use_aspect=use_aspect)
+    # Optional fresh RNG so re-rolls differ (web seeds this; CLI uses time by default)
+    if seed is not None:
+        rng = random.Random(seed)
+        # Nudge god salt via temporary name suffix is heavy-handed; re-pick identity pool with rng
+        ranked = detect_troll_axes(bias, role, use_aspect=use_aspect)
+        pool = [ranked[0]]
+        best = ranked[0][1]
+        for a, s in ranked[1:4]:
+            if s >= best - 0.85:
+                pool.append((a, s))
+        primary = pool[rng.randrange(len(pool))][0]
+        rest = [a for a, _ in ranked if a != primary]
+        secondary = rest[rng.randrange(min(3, len(rest)))] if rest else primary
+        titles = TROLL_TITLES.get(primary) or ["Certified Troll Path"]
+        identity = {
+            "primary_axis": primary,
+            "secondary_axis": secondary,
+            "axes_ranked": ranked[:5],
+            "title": titles[rng.randrange(len(titles))],
+            "blurb": AXIS_BLURBS.get(primary, "Be annoying on purpose."),
+            "disclaimer": "TROLL / MEME — not ranked advice. Legal items, illegal vibes.",
+        }
+    else:
+        identity = pick_troll_identity(bias, role, use_aspect=use_aspect)
     if chaos and identity["secondary_axis"] != identity["primary_axis"]:
         # Swap weight: lean harder into secondary meme
         identity = dict(identity)
@@ -875,6 +1173,14 @@ def troll_cli(argv: list[str] | None = None) -> int:
     )
     p.add_argument("--aspect", action="store_true", help="Use god aspect kit if available")
     p.add_argument("--chaos", action="store_true", help="Lean into secondary meme harder")
+    p.add_argument(
+        "--max-stat",
+        choices=["random", *sorted(MAX_STAT_MODES.keys())],
+        default=None,
+        help="Pure greed max-stat mode (max_int, max_hp, max_prots, …)",
+    )
+    p.add_argument("--seed", type=int, default=None, help="RNG seed (omit for fresh each run)")
+    p.add_argument("--random-god", action="store_true", help="Ignore god arg; pick a random god")
     p.add_argument("--json", action="store_true")
     args = p.parse_args(argv)
 
@@ -882,10 +1188,21 @@ def troll_cli(argv: list[str] | None = None) -> int:
 
     conn = connect()
     items = load_items(conn)
-    god = resolve_god(conn, args.god)
-    if not god:
-        print(f"God not found: {args.god}")
-        return 1
+    if args.random_god:
+        rows = conn.execute(
+            "SELECT id AS god_id, name AS entity_name, primary_damage_type, pantheon FROM gods"
+        ).fetchall()
+        if not rows:
+            print("No gods in DB")
+            return 1
+        r = random.choice(rows)
+        god = dict(r)
+    else:
+        god = resolve_god(conn, args.god)
+        if not god:
+            print(f"God not found: {args.god}")
+            return 1
+    seed = args.seed if args.seed is not None else random.randrange(1 << 30)
     result = build_troll_build(
         conn,
         items,
@@ -893,6 +1210,8 @@ def troll_cli(argv: list[str] | None = None) -> int:
         god,
         use_aspect=args.aspect,
         chaos=args.chaos,
+        max_stat=args.max_stat,
+        seed=seed,
     )
     conn.close()
 
@@ -902,6 +1221,11 @@ def troll_cli(argv: list[str] | None = None) -> int:
 
     print(f"=== 😈 {result['troll_title']} ===")
     print(f"{result['god']} · {result['role']} · {result['disclaimer']}")
+    if result.get("kind") == "maxstat" or result.get("mode") == "troll_maxstat":
+        print(
+            f"Max-stat: {result.get('stat_label')} ≈ {result.get('stat_total')} "
+            f"{result.get('stat_unit')}"
+        )
     if result.get("aspect_name"):
         print(f"Aspect: {result['aspect_name']}")
     print(result.get("monologue") or result.get("why"))
