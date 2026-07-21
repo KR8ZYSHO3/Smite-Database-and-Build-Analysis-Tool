@@ -25,7 +25,8 @@ EFFECT_META: dict[str, dict[str, Any]] = {
     "as_steroid": {"label": "attack-speed steroid", "families": ["as_crit", "onhit"]},
     "mana_stack": {"label": "mana → power passive", "families": ["mana"]},
     "self_sustain": {"label": "self heal / drain", "families": ["lifesteal", "bancroft"]},
-    "heal": {"label": "healing in kit", "families": ["heal_item", "lifesteal", "antiheal"]},
+    # Generic heal (noisy) must NOT pull Bancroft — only self_sustain / true healers do
+    "heal": {"label": "healing in kit", "families": ["heal_item", "antiheal"]},
     "heavy_heal": {"label": "heavy healing", "families": ["heal_item", "antiheal"]},
     "execute": {"label": "execute / threshold", "families": ["soul_reaver", "bloodforge", "obsidian"]},
     "shield": {"label": "shields", "families": ["shield_item", "hybrid_bulk"]},

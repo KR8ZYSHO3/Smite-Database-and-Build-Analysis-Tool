@@ -48,13 +48,28 @@ MIN_BUILD_PEN = 10.0
 # Pure heal-amp / team-heal actives — only real heal kits should buy these early.
 # Chandra / Thebes / etc. stay available as normal support auras.
 HEAL_CORE_KEYS = ("asclepius", "lifebinder")
-# Primary SMITE 2 healers (user-confirmed). heavy_heal kit tag is a secondary allow.
+# Primary SMITE 2 healers (user-confirmed).
 TRUE_HEALER_NAMES = frozenset({"aphrodite", "guan yu", "yemoja"})
+
+# Mage lifesteal power cores — NOT default mid items (need real self-sustain).
+MAGE_LS_CORE_KEYS = ("bancroft", "typhon", "gluttonous")
+# Starters that lead into mage LS / sustain stacking.
+VAMP_STARTER_KEYS = ("vampiric", "shroud")
 
 
 def _is_heal_core_item(name: str) -> bool:
     n = (name or "").lower()
     return any(k in n for k in HEAL_CORE_KEYS)
+
+
+def _is_mage_ls_core_item(name: str) -> bool:
+    n = (name or "").lower()
+    return any(k in n for k in MAGE_LS_CORE_KEYS)
+
+
+def _is_vamp_starter_name(name: str) -> bool:
+    n = (name or "").lower()
+    return any(k in n for k in VAMP_STARTER_KEYS)
 
 
 def _is_true_healer(bias: dict | None) -> bool:
@@ -67,6 +82,23 @@ def _is_true_healer(bias: dict | None) -> bool:
         return False
     name = (bias.get("god_name") or "").lower().strip()
     return name in TRUE_HEALER_NAMES
+
+
+def _wants_mage_lifesteal(bias: dict | None) -> bool:
+    """
+    Bancroft / Typhon / Gluttonous / Vampiric Shroud only when the kit actually
+    self-heals or drains — not every mage with a noisy heal_count flag.
+    """
+    if not bias:
+        return False
+    tags = set(bias.get("tags") or [])
+    # Real self-heal / drain language from kit (not team heal, not ally buffs)
+    if "self_sustain" in tags:
+        return True
+    # Dedicated heal gods sometimes sit in the LS line
+    if _is_true_healer(bias):
+        return True
+    return False
 
 
 # ---------------------------------------------------------------------------
@@ -851,15 +883,24 @@ def pick_god_starter(
 
         # Damage-type fit
         if mage:
-            if any(k in n for k in ("conduit", "sands", "vampiric", "archmage", "pendulum")):
+            if any(k in n for k in ("conduit", "sands", "archmage", "pendulum")):
                 sc += 30
             if any(k in n for k in ("gilded", "leather", "death")):
                 sc -= 20
+            # Vampiric Shroud only for real self-sustain kits (not every mid mage)
+            if _is_vamp_starter_name(n):
+                if _wants_mage_lifesteal(bias):
+                    sc += 42
+                else:
+                    sc -= 70
         if physical and role in ("Carry", "Jungle"):
             if any(k in n for k in ("gilded", "death", "leather", "cowl", "arrow", "bluestone")):
                 sc += 28
             if "conduit" in n or "sands" in n:
                 sc -= 18
+            # Physical ADC death's-toll style is fine; don't treat as mage vamp
+            if _is_vamp_starter_name(n) and not mage:
+                sc -= 40
 
         # Kit tags
         if "mana_stack" in tags and any(k in n for k in ("conduit", "sands")):
@@ -868,10 +909,9 @@ def pick_god_starter(
             k in n for k in ("gilded", "leather", "death", "cowl", "arrow")
         ):
             sc += 20
-        if ("heal" in tags or "self_sustain" in tags) and any(
-            k in n for k in ("vampiric", "death", "shroud")
-        ):
-            sc += 14
+        # Only real self_sustain boosts vamp shroud — noisy "heal" tags do not
+        if _wants_mage_lifesteal(bias) and _is_vamp_starter_name(n):
+            sc += 18
         if "spam" in tags and any(k in n for k in ("sands", "pendulum", "conduit")):
             sc += 12
         if float(bias.get("patch_axes_r5", {}).get("mana", 0) or 0) >= 0.2 and "conduit" in n:
@@ -1540,14 +1580,19 @@ def rescore_for_god(
         # channel gods need bulk mid-fight
         if _canon_stat_value(item.stats, "hp") >= 250 or item.item_type == "Defensive":
             s += 16
+    wants_ls = _wants_mage_lifesteal(bias)
+    true_healer = _is_true_healer(bias)
     if "heal" in tags or "heavy_heal" in tags or "self_sustain" in tags:
-        # Damage-type-correct sustain only
-        true_healer = _is_true_healer(bias)
-        if mage and (
+        # Damage-type-correct sustain only — Bancroft line needs real self_sustain
+        if mage and wants_ls and (
             ls_v >= 8
             or any(k in nlow for k in ("bancroft", "typhon", "gluttonous", "soul gem"))
-            or (true_healer and any(k in nlow for k in ("asclepius", "lifebinder")))
         ):
+            s += 40
+        elif mage and not wants_ls and any(k in nlow for k in ("soul gem",)):
+            # Soul Gem is ability-proc; still fine on many mages without full LS path
+            s += 12
+        if mage and true_healer and any(k in nlow for k in ("asclepius", "lifebinder")):
             s += 40
         if physical and (
             ls_v >= 8 or any(k in nlow for k in ("bloodforge", "devourer", "sanguine", "gladiator"))
@@ -1565,6 +1610,12 @@ def rescore_for_god(
             s -= 200
         elif _is_heal_core_item(item.name) and true_healer:
             s += 55  # real healers actually want these early
+    # Hard: Bancroft / Typhon / Gluttonous only on self-sustain mages
+    if _is_mage_ls_core_item(item.name):
+        if wants_ls and mage:
+            s += 50
+        else:
+            s -= 200
     if "execute" in tags:
         s += pen_v * 1.2
         if physical and any(k in nlow for k in ("titan", "deathbringer", "bloodforge")):
@@ -1862,7 +1913,8 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
         return "channel_mage"
     if ("aa" in tags or aa >= 0.55) and float(bias.get("int") or 0) < 0.9:
         return "aa_mage"
-    if "self_sustain" in tags or ("heal" in tags and "heavy_heal" in tags):
+    # Sustain mage only for real self-heal kits — not noisy heal_count flags
+    if "self_sustain" in tags:
         return "sustain_mage"
     if "spam" in tags or (sd >= sb + 0.12 and float(bias.get("avg_cd") or 12) <= 9.0):
         return "spam_mage"
@@ -2001,15 +2053,14 @@ def _item_matches_slot(
                 k in n for k in ("bloodforge", "devourer", "sanguine", "gladiator")
             )
         if mage:
-            # Asclepius/Lifebinder are heal-support cores, not generic mage sustain
-            return ls_v >= 8 or any(
-                k in n for k in ("bancroft", "gluttonous", "typhon", "soul gem")
-            )
+            # Soul Gem is general mage sustain; Bancroft-line only via kit_ok + self_sustain
+            return ls_v >= 8 or any(k in n for k in ("soul gem",))
         return ls_v >= 8
     if slot == "ls_core":
         if physical:
             return ls_v >= 8 or any(k in n for k in ("bloodforge", "devourer"))
         if mage:
+            # ls_core on mages = Soul Gem path; Bancroft gated out of pool unless self_sustain
             return ls_v >= 8 or any(k in n for k in ("bancroft", "typhon", "gluttonous", "soul gem"))
         return ls_v >= 8
     if slot == "mana_stack":
@@ -2122,9 +2173,10 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     "aa": ["riptalon", "demon", "deathbringer", "qins", "ichival", "wind", "avenging", "musashi"],
     "as_steroid": ["riptalon", "demon", "ichival", "avenging", "wind"],
     # asclepius/lifebinder only land on true healers via kit_ok; chandra is safe aura
-    "heal": ["chandra", "bloodforge", "devourer", "bancroft", "soul gem", "asclepius", "lifebinder"],
-    "heavy_heal": ["asclepius", "lifebinder", "chandra", "bancroft", "typhon"],
-    "self_sustain": ["bloodforge", "devourer", "sanguine", "bancroft", "typhon", "gluttonous"],
+    # bancroft only injects when self_sustain (kit_ok) — keep off generic heal signatures
+    "heal": ["chandra", "soul gem", "asclepius", "lifebinder"],
+    "heavy_heal": ["asclepius", "lifebinder", "chandra"],
+    "self_sustain": ["bancroft", "typhon", "gluttonous", "bloodforge", "devourer", "sanguine", "soul gem"],
     "execute": ["bloodforge", "titan", "soul reaver", "deathbringer", "desolat", "obsi"],
     "prot_shred": ["executioner", "titan", "magus", "desolat", "void", "obsi", "crusher"],
     "shield": ["pridwen", "phoenix", "shifter"],
@@ -3225,6 +3277,9 @@ def build_god_build(
         nlow = s.name.lower()
         # Global: Asclepius / Lifebinder only on real heal kits
         if _is_heal_core_item(s.name) and not _is_true_healer(bias):
+            return False
+        # Bancroft / Typhon / Gluttonous only on self-sustain mage kits
+        if _is_mage_ls_core_item(s.name) and not _wants_mage_lifesteal(bias):
             return False
         # Cross-type hard bans
         if physical and any(
