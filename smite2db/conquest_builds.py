@@ -45,6 +45,29 @@ DAMAGE_ROLES_NEED_PEN = frozenset({"Carry", "Mid", "Jungle"})
 # Minimum pen stat total (flat or %) across the 6 items for those roles.
 MIN_BUILD_PEN = 10.0
 
+# Pure heal-amp / team-heal actives — only real heal kits should buy these early.
+# Chandra / Thebes / etc. stay available as normal support auras.
+HEAL_CORE_KEYS = ("asclepius", "lifebinder")
+# Primary SMITE 2 healers (user-confirmed). heavy_heal kit tag is a secondary allow.
+TRUE_HEALER_NAMES = frozenset({"aphrodite", "guan yu", "yemoja"})
+
+
+def _is_heal_core_item(name: str) -> bool:
+    n = (name or "").lower()
+    return any(k in n for k in HEAL_CORE_KEYS)
+
+
+def _is_true_healer(bias: dict | None) -> bool:
+    """
+    Hard gate for Asclepius / Lifebinder class items.
+    Name allowlist only (Aphrodite / Guan Yu / Yemoja) — kit heal_count is noisy
+    and was putting heal cores on non-heal supports like Athena/Artio.
+    """
+    if not bias:
+        return False
+    name = (bias.get("god_name") or "").lower().strip()
+    return name in TRUE_HEALER_NAMES
+
 
 # ---------------------------------------------------------------------------
 # Role frameworks — weights sum to ~1.0 for primary stat axes
@@ -638,7 +661,11 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
     util = 0.0
     blob = (item["passive"] + " " + item["active"]).lower()
     if role == "Support":
-        if any(k in blob for k in ("ally", "allies", "aura", "team")):
+        nlow_sup = (item.get("name") or "").lower()
+        # Ally-heal actives look like auras in text but are not peel cores
+        if _is_heal_core_item(nlow_sup):
+            util -= 8  # base role score: real healers re-score these up later
+        elif any(k in blob for k in ("ally", "allies", "aura", "team")):
             util += 22
         if "cleanse" in blob or "cc immune" in blob:
             util += 12
@@ -1515,22 +1542,29 @@ def rescore_for_god(
             s += 16
     if "heal" in tags or "heavy_heal" in tags or "self_sustain" in tags:
         # Damage-type-correct sustain only
+        true_healer = _is_true_healer(bias)
         if mage and (
             ls_v >= 8
-            or any(k in nlow for k in ("bancroft", "typhon", "gluttonous", "asclepius", "lifebinder", "soul gem"))
+            or any(k in nlow for k in ("bancroft", "typhon", "gluttonous", "soul gem"))
+            or (true_healer and any(k in nlow for k in ("asclepius", "lifebinder")))
         ):
             s += 40
         if physical and (
             ls_v >= 8 or any(k in nlow for k in ("bloodforge", "devourer", "sanguine", "gladiator"))
         ):
             s += 40
-        if "heavy_heal" in tags and ("heal" in blob or "lifesteal" in blob):
+        if true_healer and "heavy_heal" in tags and ("heal" in blob or "lifesteal" in blob):
             s += 18
         # Don't let heal tags pull mage LS onto physical (or reverse)
         if physical and any(k in nlow for k in ("bancroft", "typhon", "gluttonous", "soul gem")):
             s -= 90
         if mage and any(k in nlow for k in ("bloodforge", "devourer")) and int_v < 20:
             s -= 90
+        # Hard: Asclepius/Lifebinder are dead weight on non-heal kits
+        if _is_heal_core_item(item.name) and not true_healer:
+            s -= 200
+        elif _is_heal_core_item(item.name) and true_healer:
+            s += 55  # real healers actually want these early
     if "execute" in tags:
         s += pen_v * 1.2
         if physical and any(k in nlow for k in ("titan", "deathbringer", "bloodforge")):
@@ -1675,7 +1709,11 @@ def rescore_for_god(
         if _canon_stat_value(item.stats, "hp") >= 200 or item.item_type == "Defensive":
             s += 12
     if heal_ax >= 0.2 and (ls_v >= 8 or "heal" in blob):
-        s += 18
+        # Patch heal axis only boosts true heal cores on real healers
+        if _is_heal_core_item(item.name) and not _is_true_healer(bias):
+            pass
+        else:
+            s += 18
     if as_ax >= 0.2:
         s += as_v * 1.1 + 10
     if crit_ax >= 0.15:
@@ -1765,7 +1803,10 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
     aa = float(bias.get("aa_score") or 0)
 
     if role == "Support":
-        if "heavy_heal" in tags or "heal" in tags and "team_buff" in tags:
+        # Heal cores (Asclepius/Lifebinder) only for real heal kits — not every team_buff support
+        if _is_true_healer(bias) and (
+            "heavy_heal" in tags or "heal" in tags or "team_buff" in tags
+        ):
             return "heal_support"
         if "heavy_shield" in tags or "shield" in tags:
             return "shield_support"
@@ -1960,9 +2001,9 @@ def _item_matches_slot(
                 k in n for k in ("bloodforge", "devourer", "sanguine", "gladiator")
             )
         if mage:
+            # Asclepius/Lifebinder are heal-support cores, not generic mage sustain
             return ls_v >= 8 or any(
-                k in n
-                for k in ("bancroft", "gluttonous", "lifebinder", "asclepius", "typhon", "soul gem")
+                k in n for k in ("bancroft", "gluttonous", "typhon", "soul gem")
             )
         return ls_v >= 8
     if slot == "ls_core":
@@ -2034,6 +2075,10 @@ def _item_matches_slot(
             and any(k in blob for k in ("reduc", "enemy", "less", "plating"))
         ) or any(k in n for k in ("spectral", "nemean", "midgardian", "witchblade"))
     if slot == "aura":
+        # Pure heal actives must not fill generic aura slots (they have "ally" in text).
+        # Heal gods pick them via heal_aura only.
+        if _is_heal_core_item(it.name):
+            return False
         return any(k in blob for k in ("ally", "allies", "aura", "team")) or any(
             k in n for k in ("thebes", "sovereignty", "heartward", "chandra", "providence", "contagion")
         )
@@ -2053,7 +2098,8 @@ def _item_matches_slot(
             return False
         return "shield" in blob or any(k in n for k in ("pridwen", "phoenix", "shifter", "spectral"))
     if slot == "heal_aura":
-        return any(k in n for k in ("asclepius", "chandra", "thebes", "sovereignty")) or (
+        # Asclepius / Lifebinder / Chandra-class team sustain (heal_support archetype only)
+        return any(k in n for k in ("asclepius", "lifebinder", "chandra", "thebes", "sovereignty")) or (
             "heal" in blob and any(k in blob for k in ("ally", "allies", "aura"))
         )
     if slot == "sustain_tank":
@@ -2075,7 +2121,8 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     "zone": ["isolation", "magus", "soul gem", "divine"],
     "aa": ["riptalon", "demon", "deathbringer", "qins", "ichival", "wind", "avenging", "musashi"],
     "as_steroid": ["riptalon", "demon", "ichival", "avenging", "wind"],
-    "heal": ["asclepius", "lifebinder", "chandra", "bloodforge", "devourer", "bancroft", "soul gem"],
+    # asclepius/lifebinder only land on true healers via kit_ok; chandra is safe aura
+    "heal": ["chandra", "bloodforge", "devourer", "bancroft", "soul gem", "asclepius", "lifebinder"],
     "heavy_heal": ["asclepius", "lifebinder", "chandra", "bancroft", "typhon"],
     "self_sustain": ["bloodforge", "devourer", "sanguine", "bancroft", "typhon", "gluttonous"],
     "execute": ["bloodforge", "titan", "soul reaver", "deathbringer", "desolat", "obsi"],
@@ -2196,6 +2243,14 @@ def _pick_slot_item(
                 sc -= 35
         if slot in ("mitigate", "counter", "aura") and x.item_type == "Defensive":
             sc += 12
+        if slot == "heal_aura":
+            # Keep heal_support identity — don't diversify into plain Thebes/bulk
+            if any(k in n for k in ("asclepius", "lifebinder")):
+                sc += 70
+            elif "chandra" in n:
+                sc += 40
+            elif any(k in n for k in ("thebes", "sovereignty")):
+                sc -= 15
         if slot == "dot_core" and any(k in n for k in ("desolat", "magus", "isolation", "divine")):
             sc += 28
         if slot == "zone_core" and any(k in n for k in ("isolation", "magus", "soul gem", "grimoire")):
@@ -3168,6 +3223,9 @@ def build_god_build(
         bap = _canon_stat_value(s.stats, "bap")
         ls_v = _canon_stat_value(s.stats, "ls")
         nlow = s.name.lower()
+        # Global: Asclepius / Lifebinder only on real heal kits
+        if _is_heal_core_item(s.name) and not _is_true_healer(bias):
+            return False
         # Cross-type hard bans
         if physical and any(
             k in nlow
@@ -3233,6 +3291,9 @@ def build_god_build(
                     "deathbringer",
                 )
             ):
+                return False
+            # Asclepius / Lifebinder only on real heal supports
+            if _is_heal_core_item(s.name) and not _is_true_healer(bias):
                 return False
             if int_v >= 55 and _canon_stat_value(s.stats, "hp") < 200 and (
                 _canon_stat_value(s.stats, "pprot") + _canon_stat_value(s.stats, "mprot") < 20

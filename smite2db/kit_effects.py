@@ -36,7 +36,8 @@ EFFECT_META: dict[str, dict[str, Any]] = {
     "immobile": {"label": "low mobility", "families": ["bulk", "magi", "defense_cdr"]},
     "mobile": {"label": "high mobility", "families": ["gap", "pen"]},
     "gap_close": {"label": "dash / leap engage", "families": ["gap", "pen"]},
-    "team_buff": {"label": "ally buffs / auras", "families": ["aura", "heal_item"]},
+    # team_buff alone must NOT pull heal amp (Asclepius/Lifebinder) — only real heal kits do
+    "team_buff": {"label": "ally buffs / auras", "families": ["aura"]},
     "anti_cc": {"label": "CC immunity in kit", "families": ["magi", "tenacity"]},
     "sustained": {"label": "sustained DPS", "families": ["cdr_def", "chronos", "ls"]},
     "long_cd": {"label": "long cooldowns", "families": ["power", "pen", "ult_finisher"]},
