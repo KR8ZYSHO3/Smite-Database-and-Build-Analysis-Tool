@@ -3,46 +3,85 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SMITE 2 — Arena Intel</title>
-  <meta name="description" content="SMITE 2 kit-fit Conquest builds, patch-weighted tiers, dampening & plating." />
+  <title>SMITE 2 Conquest Builds — Arena Intel</title>
+  <meta name="description" content="SMITE 2 Conquest build helper: pick your role and god for a kit-specific buy order. Not a generic tier-list copy." />
   <meta name="theme-color" content="#0a0c14" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
   <div class="app">
-    <header class="top hud-frame">
-      <div>
-        <h1>SMITE 2 · Arena Intel</h1>
-        <div class="sub" id="meta-line">Loading…</div>
+    <header class="top hud-frame site-header">
+      <div class="site-header-main">
+        <p class="site-kicker">SMITE 2 · Conquest</p>
+        <h1>God-first build helper</h1>
+        <p class="site-tagline" id="site-tagline">
+          Pick your <strong>role</strong> and <strong>god</strong> → get a <strong>numbered buy order</strong> built for that kit
+          (not a cookie-cutter pro site copy).
+        </p>
+        <div class="sub meta-telemetry" id="meta-line">Loading…</div>
       </div>
       <div class="badge-row">
-        <span class="badge ice">God-first builds</span>
-        <span class="badge hot">Patch tiers</span>
-        <span class="badge">≤2 actives</span>
+        <span class="badge ice">Kit-fit paths</span>
+        <span class="badge hot">Patch-aware</span>
+        <span class="badge">Free tool</span>
       </div>
     </header>
 
     <div id="loading" class="loading">Loading gods · builds · patches</div>
 
     <div id="app-main" style="display:none">
-      <p class="flow-hint" id="flow-hint">
-        <strong>Start here:</strong> pick a <em>role</em>, then open a <em>god</em> for a kit-specific buy order.
-        Role cards are job notes only — not full builds.
-        <button type="button" class="hint-dismiss" id="flow-hint-dismiss" aria-label="Dismiss tip">Got it</button>
+      <!-- Friend-proof front door -->
+      <section class="landing-hero" id="landing-hero" aria-label="How to use this site">
+        <div class="landing-hero-inner">
+          <h2 class="landing-title">What is this?</h2>
+          <p class="landing-lead">
+            A <strong>SMITE 2 Conquest build helper</strong>. You choose the role you queue,
+            open a god, and get a <strong>buy order made for that god’s abilities</strong> —
+            with a short “why” under items. Also: counter paths for the enemy team, and meme troll builds.
+          </p>
+          <ol class="landing-steps">
+            <li><span class="step-n">1</span><span><strong>Pick a role</strong> (Support, Mid, Jungle…)</span></li>
+            <li><span class="step-n">2</span><span><strong>Open a god</strong> in that role</span></li>
+            <li><span class="step-n">3</span><span><strong>Buy top → bottom</strong> — expand “Why this?” if you want detail</span></li>
+          </ol>
+          <div class="landing-ctas" id="landing-ctas">
+            <button type="button" class="btn-primary landing-cta" data-landing-role="Support">Show Support builds</button>
+            <button type="button" class="btn-primary landing-cta" data-landing-role="Mid">Show Mid builds</button>
+            <button type="button" class="btn-primary landing-cta" data-landing-role="Carry">Show Carry builds</button>
+            <button type="button" class="btn-ghost landing-cta" data-landing-role="Jungle">Jungle</button>
+            <button type="button" class="btn-ghost landing-cta" data-landing-role="Solo">Solo</button>
+          </div>
+          <p class="landing-note muted">
+            Role cards at the top are <em>job notes only</em> — the real builds are the god cards below.
+          </p>
+          <button type="button" class="hint-dismiss landing-dismiss" id="landing-dismiss">Got it — hide this</button>
+        </div>
+      </section>
+
+      <p class="flow-hint compact-hint" id="flow-hint" hidden>
+        <strong>Quick:</strong> role → god → numbered path.
+        <button type="button" class="hint-dismiss" id="flow-hint-show-landing">What is this?</button>
       </p>
 
       <nav class="tabs" aria-label="Primary">
-        <button class="tab-btn active" data-tab="builds">1 · Builds</button>
-        <button class="tab-btn" data-tab="counter">2 · Counter</button>
-        <button class="tab-btn" data-tab="troll">3 · Troll</button>
-        <button class="tab-btn" data-tab="gods">4 · Gods</button>
-        <button class="tab-btn" data-tab="tiers">5 · Tiers</button>
-        <button class="tab-btn" data-tab="items">Items</button>
-        <button class="tab-btn" data-tab="about">About</button>
+        <button class="tab-btn active" data-tab="builds" title="Kit-fit buy orders">Builds</button>
+        <button class="tab-btn tab-advanced" data-tab="counter" title="Re-weight path vs enemy 5">Counter</button>
+        <button class="tab-btn tab-advanced" data-tab="troll" title="Off-meta meme paths">Troll</button>
+        <button class="tab-btn" data-tab="gods" title="Search any god">Gods</button>
+        <button class="tab-btn tab-advanced" data-tab="tiers" title="Patch-weighted ladder">Tiers</button>
+        <button class="tab-btn tab-advanced" data-tab="items">Items</button>
+        <button class="tab-btn tab-advanced" data-tab="about">About</button>
       </nav>
+      <p class="tabs-legend muted" id="tabs-legend">
+        <strong>Start on Builds.</strong>
+        Counter / Troll / Tiers are optional extras once you know the basics.
+      </p>
 
       <!-- BUILDS first -->
       <section id="panel-builds" class="panel active">
+        <div class="panel-plain-intro" id="builds-intro">
+          <strong>Builds</strong> — choose the Conquest role you queue, then open a god for that role’s buy order.
+        </div>
         <div class="toolbar role-pills" id="role-pills"></div>
         <div class="card role-job" id="role-job">
           <h2>Pick a role above</h2>
@@ -58,6 +97,9 @@
       <!-- COUNTER builds -->
       <section id="panel-counter" class="panel">
         <div class="card counter-panel">
+          <div class="panel-plain-intro">
+            <strong>Counter</strong> — optional. After you know your base path, re-weight it for the enemy team of 5.
+          </div>
           <h2>Counter build</h2>
           <p class="muted">
             Pick <strong>your god + role</strong> and up to <strong>5 enemies</strong>.
@@ -95,6 +137,9 @@
       <!-- TROLL builds -->
       <section id="panel-troll" class="panel">
         <div class="card counter-panel troll-panel">
+          <div class="panel-plain-intro">
+            <strong>Troll</strong> — meme only. Legal items, illegal vibes. Not ranked advice.
+          </div>
           <h2>😈 Troll build</h2>
           <p class="muted">
             Kit-true, <strong>off-meta</strong> paths designed to be
@@ -266,13 +311,19 @@
       <!-- ABOUT -->
       <section id="panel-about" class="panel">
         <div class="card">
+          <h2>What this website is for</h2>
+          <p class="about-blurb">
+            <strong>SMITE 2 Conquest build helper.</strong>
+            Open a role, pick a god, and follow a numbered buy order built around
+            <em>that god’s kit</em> and recent patch signals — not a one-size-fits-all pro site copy.
+          </p>
           <h2>How to use this</h2>
           <ol class="how-list">
-            <li><strong>Builds</strong> — pick role → open a god card (kit-fit buy order).</li>
-            <li><strong>Counter</strong> — your god + enemy 5 → anti-crit / mprot / antiheal path.</li>
-            <li><strong>Troll</strong> — kit-true meme paths that maximize frustration (not ranked advice).</li>
+            <li><strong>Builds</strong> — start here: pick role → open a god card (kit-fit buy order).</li>
+            <li><strong>Counter</strong> — optional: your god + enemy 5 → lobby-adjusted path.</li>
+            <li><strong>Troll</strong> — optional: kit-true meme paths (not ranked advice).</li>
             <li><strong>Gods</strong> — search any god; base + aspect paths for each role.</li>
-            <li><strong>Tiers</strong> — patch-weighted ladder (not the same as builds).</li>
+            <li><strong>Tiers</strong> — patch-weighted ladder (ranking, not the same as a full build guide).</li>
           </ol>
           <h3>Role jobs</h3>
           <ul>

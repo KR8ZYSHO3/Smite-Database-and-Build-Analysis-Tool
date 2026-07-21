@@ -481,21 +481,57 @@ function setupTabs() {
   });
 }
 
-function setupFlowHint() {
-  const el = $("#flow-hint");
-  const btn = $("#flow-hint-dismiss");
-  if (!el) return;
+function landingDismissed() {
   try {
-    if (localStorage.getItem("arena_intel_hint_v1") === "1") {
-      el.hidden = true;
-      return;
-    }
+    return localStorage.getItem("arena_intel_landing_v2") === "1";
+  } catch {
+    return false;
+  }
+}
+
+function setLandingDismissed(v) {
+  try {
+    localStorage.setItem("arena_intel_landing_v2", v ? "1" : "0");
   } catch (_) {}
-  btn?.addEventListener("click", () => {
-    el.hidden = true;
-    try {
-      localStorage.setItem("arena_intel_hint_v1", "1");
-    } catch (_) {}
+}
+
+function applyLandingVisibility() {
+  const hero = $("#landing-hero");
+  const compact = $("#flow-hint");
+  const legend = $("#tabs-legend");
+  const gone = landingDismissed();
+  if (hero) hero.hidden = gone;
+  if (compact) compact.hidden = !gone;
+  if (legend) legend.hidden = gone;
+  document.body.classList.toggle("landing-compact", gone);
+}
+
+function setupLanding() {
+  applyLandingVisibility();
+  $("#landing-dismiss")?.addEventListener("click", () => {
+    setLandingDismissed(true);
+    applyLandingVisibility();
+    showToast("Tip hidden — use What is this? anytime");
+  });
+  $("#flow-hint-show-landing")?.addEventListener("click", () => {
+    setLandingDismissed(false);
+    applyLandingVisibility();
+    $("#landing-hero")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  $("#landing-ctas")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-landing-role]");
+    if (!btn) return;
+    const role = btn.getAttribute("data-landing-role");
+    activateTab("builds", { updateHash: false });
+    if (routeState.build?.setRole) {
+      routeState.build.setRole(role, { updateHash: true });
+    }
+    setLandingDismissed(true);
+    applyLandingVisibility();
+    requestAnimationFrame(() => {
+      $("#role-pills")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    showToast(`${role} builds — pick a god below`);
   });
 }
 
@@ -1148,6 +1184,10 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta) {
   return `
     <div class="card build-card god-role-build ${roleClass(role)} ${isAspect ? "is-aspect" : ""}">
       <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
+      <p class="card-plain-what">
+        <strong>${escapeHtml(g.name)}</strong> · ${escapeHtml(label)} —
+        buy top → bottom${isAspect ? " (aspect kit path)" : " (base kit path)"}.
+      </p>
       <h3>${escapeHtml(label)}</h3>
       <div class="build-meta">
         ${isAspect ? `<span class="pill aspect">aspect</span>` : `<span class="pill">base kit</span>`}
@@ -1250,7 +1290,10 @@ function setupBuilds() {
                .join("")}</div>`
           : ""
       }
-      <p class="muted" style="margin:0"><strong>Next:</strong> pick a god below — each path is scored to that god’s kit.</p>
+      <p class="muted" style="margin:0">
+        <strong>Next:</strong> scroll down and open a <strong>god card</strong> —
+        that card is the real build (this box is only the role’s job description).
+      </p>
       ${trustLine("role job only")}
     `;
 
@@ -1317,6 +1360,10 @@ function godBuildCard(gb, role) {
   return `
     <article class="card build-card god-build-card ${roleClass(role)}">
       <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
+      <p class="card-plain-what">
+        <strong>${escapeHtml(gb.god)}</strong> · ${escapeHtml(role)} —
+        buy in this order (top → bottom). Made for this god’s kit${gb.is_aspect ? " + aspect" : ""}.
+      </p>
       <header class="gbc-head">
         <h3>
           <span class="tier-${gb.tier || ""}">[${gb.tier || "?"}]</span>
@@ -2424,7 +2471,7 @@ function setupCounter() {
 async function main() {
   setupTabs();
   setupShareUi();
-  setupFlowHint();
+  setupLanding();
   const loading = $("#loading");
   try {
     await loadData();
@@ -2434,14 +2481,13 @@ async function main() {
     const exported = state.meta?.exported_at || state.meta?.scraped_at || "";
     const analysis = state.meta?.analysis_last_analysis_at || state.meta?.last_analysis_at || "";
     $("#meta-line").textContent = [
-      exported ? `EXPORT ${String(exported).slice(0, 10)}` : "LIVE INTEL",
-      analysis ? `ANALYZED ${String(analysis).slice(0, 10)}` : "",
-      `${(state.gods || []).length} GODS`,
-      `${(state.items || []).length} ITEMS`,
-      "PATCH · KIT · BUILD",
+      `${(state.gods || []).length} gods`,
+      `${(state.items || []).length} items`,
+      exported ? `data ${String(exported).slice(0, 10)}` : "live data",
+      "model: kit + patch — not live win rate",
     ]
       .filter(Boolean)
-      .join("  //  ");
+      .join(" · ");
 
     setupBuilds();
     setupCounter();

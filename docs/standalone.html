@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SMITE 2 — Arena Intel</title>
-  <meta name="description" content="SMITE 2 kit-fit Conquest builds, patch-weighted tiers, dampening & plating." />
+  <title>SMITE 2 Conquest Builds — Arena Intel</title>
+  <meta name="description" content="SMITE 2 Conquest build helper: pick your role and god for a kit-specific buy order. Not a generic tier-list copy." />
   <meta name="theme-color" content="#0a0c14" />
   <style>
 /* SMITE 2 — Obsidian Arena UI */
@@ -2061,43 +2061,298 @@ header.top .sub {
   gap: 6px;
 }
 
+/* ==========================================================================
+   FRIEND-PROOF LANDING — plain English front door
+   ========================================================================== */
+
+.site-header {
+  align-items: flex-start;
+}
+.site-header-main {
+  min-width: 0;
+  flex: 1;
+}
+.site-kicker {
+  margin: 0 0 4px;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+header.top h1 {
+  font-size: clamp(1.15rem, 2.8vw, 1.55rem);
+  letter-spacing: 0.04em;
+}
+.site-tagline {
+  margin: 8px 0 6px;
+  max-width: 52ch;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  color: #c5d0e8;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.site-tagline strong {
+  color: var(--text);
+  font-weight: 700;
+}
+.meta-telemetry {
+  margin-top: 4px !important;
+  opacity: 0.85;
+}
+
+/* Landing hero */
+.landing-hero {
+  margin: 0 0 16px;
+  padding: 0;
+  border: 1px solid rgba(76, 201, 240, 0.35);
+  border-radius: calc(var(--radius) + 4px);
+  background:
+    radial-gradient(600px 220px at 0% 0%, rgba(76, 201, 240, 0.12), transparent 55%),
+    radial-gradient(500px 200px at 100% 0%, rgba(247, 37, 133, 0.1), transparent 50%),
+    linear-gradient(180deg, rgba(16, 20, 31, 0.95), var(--bg2));
+  box-shadow: var(--glow), inset 0 1px 0 rgba(255,255,255,0.04);
+  position: relative;
+  overflow: hidden;
+}
+.landing-hero[hidden] { display: none !important; }
+.landing-hero::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent2), var(--gold), var(--accent));
+}
+.landing-hero-inner {
+  padding: 18px 18px 16px;
+  position: relative;
+}
+.landing-title {
+  margin: 0 0 8px;
+  font-family: var(--display);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.landing-lead {
+  margin: 0 0 14px;
+  font-size: 1.08rem;
+  line-height: 1.5;
+  color: #dce4f5;
+  max-width: 60ch;
+}
+.landing-lead strong { color: #fff; }
+.landing-steps {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.landing-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 1.02rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+.landing-steps .step-n {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: var(--display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #041018;
+  background: linear-gradient(135deg, var(--accent), #7b61ff);
+  box-shadow: var(--glow);
+}
+.landing-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.landing-cta {
+  min-height: 42px;
+}
+.landing-note {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+.landing-dismiss {
+  position: static;
+  margin: 0;
+}
+
+.compact-hint {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-right: 14px;
+}
+.compact-hint .hint-dismiss {
+  position: static;
+}
+.compact-hint[hidden] { display: none !important; }
+
+.tabs-legend {
+  margin: -6px 0 14px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+}
+.tabs-legend[hidden] { display: none !important; }
+.tab-btn.tab-advanced {
+  opacity: 0.78;
+  font-weight: 600;
+}
+.tab-btn.tab-advanced.active {
+  opacity: 1;
+  font-weight: 700;
+}
+
+.panel-plain-intro {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+  background: rgba(76, 201, 240, 0.07);
+  color: #cfe0f5;
+  font-size: 0.98rem;
+  line-height: 1.4;
+}
+.panel-plain-intro strong {
+  color: var(--gold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  margin-right: 6px;
+}
+
+.card-plain-what {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(76, 201, 240, 0.08);
+  border: 1px solid rgba(76, 201, 240, 0.22);
+  font-size: 0.92rem;
+  line-height: 1.35;
+  color: #c5d4ef;
+}
+.card-plain-what strong {
+  color: var(--text);
+  font-family: var(--display);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.about-blurb {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: #d0daf0;
+  margin: 0 0 16px;
+  max-width: 58ch;
+}
+
+body.landing-compact .site-tagline {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 860px) {
+  .landing-hero-inner { padding: 14px 14px 12px; }
+  .landing-lead { font-size: 1rem; }
+  .landing-ctas .btn-primary { flex: 1 1 auto; }
+  .site-tagline { font-size: 0.98rem; }
+}
+
   </style>
 </head>
 <body>
   <div class="app">
-    <header class="top hud-frame">
-      <div>
-        <h1>SMITE 2 · Arena Intel</h1>
-        <div class="sub" id="meta-line">Loading…</div>
+    <header class="top hud-frame site-header">
+      <div class="site-header-main">
+        <p class="site-kicker">SMITE 2 · Conquest</p>
+        <h1>God-first build helper</h1>
+        <p class="site-tagline" id="site-tagline">
+          Pick your <strong>role</strong> and <strong>god</strong> → get a <strong>numbered buy order</strong> built for that kit
+          (not a cookie-cutter pro site copy).
+        </p>
+        <div class="sub meta-telemetry" id="meta-line">Loading…</div>
       </div>
       <div class="badge-row">
-        <span class="badge ice">God-first builds</span>
-        <span class="badge hot">Patch tiers</span>
-        <span class="badge">≤2 actives</span>
+        <span class="badge ice">Kit-fit paths</span>
+        <span class="badge hot">Patch-aware</span>
+        <span class="badge">Free tool</span>
       </div>
     </header>
 
     <div id="loading" class="loading">Loading gods · builds · patches</div>
 
     <div id="app-main" style="display:none">
-      <p class="flow-hint" id="flow-hint">
-        <strong>Start here:</strong> pick a <em>role</em>, then open a <em>god</em> for a kit-specific buy order.
-        Role cards are job notes only — not full builds.
-        <button type="button" class="hint-dismiss" id="flow-hint-dismiss" aria-label="Dismiss tip">Got it</button>
+      <!-- Friend-proof front door -->
+      <section class="landing-hero" id="landing-hero" aria-label="How to use this site">
+        <div class="landing-hero-inner">
+          <h2 class="landing-title">What is this?</h2>
+          <p class="landing-lead">
+            A <strong>SMITE 2 Conquest build helper</strong>. You choose the role you queue,
+            open a god, and get a <strong>buy order made for that god’s abilities</strong> —
+            with a short “why” under items. Also: counter paths for the enemy team, and meme troll builds.
+          </p>
+          <ol class="landing-steps">
+            <li><span class="step-n">1</span><span><strong>Pick a role</strong> (Support, Mid, Jungle…)</span></li>
+            <li><span class="step-n">2</span><span><strong>Open a god</strong> in that role</span></li>
+            <li><span class="step-n">3</span><span><strong>Buy top → bottom</strong> — expand “Why this?” if you want detail</span></li>
+          </ol>
+          <div class="landing-ctas" id="landing-ctas">
+            <button type="button" class="btn-primary landing-cta" data-landing-role="Support">Show Support builds</button>
+            <button type="button" class="btn-primary landing-cta" data-landing-role="Mid">Show Mid builds</button>
+            <button type="button" class="btn-primary landing-cta" data-landing-role="Carry">Show Carry builds</button>
+            <button type="button" class="btn-ghost landing-cta" data-landing-role="Jungle">Jungle</button>
+            <button type="button" class="btn-ghost landing-cta" data-landing-role="Solo">Solo</button>
+          </div>
+          <p class="landing-note muted">
+            Role cards at the top are <em>job notes only</em> — the real builds are the god cards below.
+          </p>
+          <button type="button" class="hint-dismiss landing-dismiss" id="landing-dismiss">Got it — hide this</button>
+        </div>
+      </section>
+
+      <p class="flow-hint compact-hint" id="flow-hint" hidden>
+        <strong>Quick:</strong> role → god → numbered path.
+        <button type="button" class="hint-dismiss" id="flow-hint-show-landing">What is this?</button>
       </p>
 
       <nav class="tabs" aria-label="Primary">
-        <button class="tab-btn active" data-tab="builds">1 · Builds</button>
-        <button class="tab-btn" data-tab="counter">2 · Counter</button>
-        <button class="tab-btn" data-tab="troll">3 · Troll</button>
-        <button class="tab-btn" data-tab="gods">4 · Gods</button>
-        <button class="tab-btn" data-tab="tiers">5 · Tiers</button>
-        <button class="tab-btn" data-tab="items">Items</button>
-        <button class="tab-btn" data-tab="about">About</button>
+        <button class="tab-btn active" data-tab="builds" title="Kit-fit buy orders">Builds</button>
+        <button class="tab-btn tab-advanced" data-tab="counter" title="Re-weight path vs enemy 5">Counter</button>
+        <button class="tab-btn tab-advanced" data-tab="troll" title="Off-meta meme paths">Troll</button>
+        <button class="tab-btn" data-tab="gods" title="Search any god">Gods</button>
+        <button class="tab-btn tab-advanced" data-tab="tiers" title="Patch-weighted ladder">Tiers</button>
+        <button class="tab-btn tab-advanced" data-tab="items">Items</button>
+        <button class="tab-btn tab-advanced" data-tab="about">About</button>
       </nav>
+      <p class="tabs-legend muted" id="tabs-legend">
+        <strong>Start on Builds.</strong>
+        Counter / Troll / Tiers are optional extras once you know the basics.
+      </p>
 
       <!-- BUILDS first -->
       <section id="panel-builds" class="panel active">
+        <div class="panel-plain-intro" id="builds-intro">
+          <strong>Builds</strong> — choose the Conquest role you queue, then open a god for that role’s buy order.
+        </div>
         <div class="toolbar role-pills" id="role-pills"></div>
         <div class="card role-job" id="role-job">
           <h2>Pick a role above</h2>
@@ -2113,6 +2368,9 @@ header.top .sub {
       <!-- COUNTER builds -->
       <section id="panel-counter" class="panel">
         <div class="card counter-panel">
+          <div class="panel-plain-intro">
+            <strong>Counter</strong> — optional. After you know your base path, re-weight it for the enemy team of 5.
+          </div>
           <h2>Counter build</h2>
           <p class="muted">
             Pick <strong>your god + role</strong> and up to <strong>5 enemies</strong>.
@@ -2150,6 +2408,9 @@ header.top .sub {
       <!-- TROLL builds -->
       <section id="panel-troll" class="panel">
         <div class="card counter-panel troll-panel">
+          <div class="panel-plain-intro">
+            <strong>Troll</strong> — meme only. Legal items, illegal vibes. Not ranked advice.
+          </div>
           <h2>😈 Troll build</h2>
           <p class="muted">
             Kit-true, <strong>off-meta</strong> paths designed to be
@@ -2321,13 +2582,19 @@ header.top .sub {
       <!-- ABOUT -->
       <section id="panel-about" class="panel">
         <div class="card">
+          <h2>What this website is for</h2>
+          <p class="about-blurb">
+            <strong>SMITE 2 Conquest build helper.</strong>
+            Open a role, pick a god, and follow a numbered buy order built around
+            <em>that god’s kit</em> and recent patch signals — not a one-size-fits-all pro site copy.
+          </p>
           <h2>How to use this</h2>
           <ol class="how-list">
-            <li><strong>Builds</strong> — pick role → open a god card (kit-fit buy order).</li>
-            <li><strong>Counter</strong> — your god + enemy 5 → anti-crit / mprot / antiheal path.</li>
-            <li><strong>Troll</strong> — kit-true meme paths that maximize frustration (not ranked advice).</li>
+            <li><strong>Builds</strong> — start here: pick role → open a god card (kit-fit buy order).</li>
+            <li><strong>Counter</strong> — optional: your god + enemy 5 → lobby-adjusted path.</li>
+            <li><strong>Troll</strong> — optional: kit-true meme paths (not ranked advice).</li>
             <li><strong>Gods</strong> — search any god; base + aspect paths for each role.</li>
-            <li><strong>Tiers</strong> — patch-weighted ladder (not the same as builds).</li>
+            <li><strong>Tiers</strong> — patch-weighted ladder (ranking, not the same as a full build guide).</li>
           </ol>
           <h3>Role jobs</h3>
           <ul>
@@ -2883,21 +3150,57 @@ function setupTabs() {
   });
 }
 
-function setupFlowHint() {
-  const el = $("#flow-hint");
-  const btn = $("#flow-hint-dismiss");
-  if (!el) return;
+function landingDismissed() {
   try {
-    if (localStorage.getItem("arena_intel_hint_v1") === "1") {
-      el.hidden = true;
-      return;
-    }
+    return localStorage.getItem("arena_intel_landing_v2") === "1";
+  } catch {
+    return false;
+  }
+}
+
+function setLandingDismissed(v) {
+  try {
+    localStorage.setItem("arena_intel_landing_v2", v ? "1" : "0");
   } catch (_) {}
-  btn?.addEventListener("click", () => {
-    el.hidden = true;
-    try {
-      localStorage.setItem("arena_intel_hint_v1", "1");
-    } catch (_) {}
+}
+
+function applyLandingVisibility() {
+  const hero = $("#landing-hero");
+  const compact = $("#flow-hint");
+  const legend = $("#tabs-legend");
+  const gone = landingDismissed();
+  if (hero) hero.hidden = gone;
+  if (compact) compact.hidden = !gone;
+  if (legend) legend.hidden = gone;
+  document.body.classList.toggle("landing-compact", gone);
+}
+
+function setupLanding() {
+  applyLandingVisibility();
+  $("#landing-dismiss")?.addEventListener("click", () => {
+    setLandingDismissed(true);
+    applyLandingVisibility();
+    showToast("Tip hidden — use What is this? anytime");
+  });
+  $("#flow-hint-show-landing")?.addEventListener("click", () => {
+    setLandingDismissed(false);
+    applyLandingVisibility();
+    $("#landing-hero")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  $("#landing-ctas")?.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-landing-role]");
+    if (!btn) return;
+    const role = btn.getAttribute("data-landing-role");
+    activateTab("builds", { updateHash: false });
+    if (routeState.build?.setRole) {
+      routeState.build.setRole(role, { updateHash: true });
+    }
+    setLandingDismissed(true);
+    applyLandingVisibility();
+    requestAnimationFrame(() => {
+      $("#role-pills")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    showToast(`${role} builds — pick a god below`);
   });
 }
 
@@ -3550,6 +3853,10 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta) {
   return `
     <div class="card build-card god-role-build ${roleClass(role)} ${isAspect ? "is-aspect" : ""}">
       <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
+      <p class="card-plain-what">
+        <strong>${escapeHtml(g.name)}</strong> · ${escapeHtml(label)} —
+        buy top → bottom${isAspect ? " (aspect kit path)" : " (base kit path)"}.
+      </p>
       <h3>${escapeHtml(label)}</h3>
       <div class="build-meta">
         ${isAspect ? `<span class="pill aspect">aspect</span>` : `<span class="pill">base kit</span>`}
@@ -3652,7 +3959,10 @@ function setupBuilds() {
                .join("")}</div>`
           : ""
       }
-      <p class="muted" style="margin:0"><strong>Next:</strong> pick a god below — each path is scored to that god’s kit.</p>
+      <p class="muted" style="margin:0">
+        <strong>Next:</strong> scroll down and open a <strong>god card</strong> —
+        that card is the real build (this box is only the role’s job description).
+      </p>
       ${trustLine("role job only")}
     `;
 
@@ -3719,6 +4029,10 @@ function godBuildCard(gb, role) {
   return `
     <article class="card build-card god-build-card ${roleClass(role)}">
       <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
+      <p class="card-plain-what">
+        <strong>${escapeHtml(gb.god)}</strong> · ${escapeHtml(role)} —
+        buy in this order (top → bottom). Made for this god’s kit${gb.is_aspect ? " + aspect" : ""}.
+      </p>
       <header class="gbc-head">
         <h3>
           <span class="tier-${gb.tier || ""}">[${gb.tier || "?"}]</span>
@@ -4826,7 +5140,7 @@ function setupCounter() {
 async function main() {
   setupTabs();
   setupShareUi();
-  setupFlowHint();
+  setupLanding();
   const loading = $("#loading");
   try {
     await loadData();
@@ -4836,14 +5150,13 @@ async function main() {
     const exported = state.meta?.exported_at || state.meta?.scraped_at || "";
     const analysis = state.meta?.analysis_last_analysis_at || state.meta?.last_analysis_at || "";
     $("#meta-line").textContent = [
-      exported ? `EXPORT ${String(exported).slice(0, 10)}` : "LIVE INTEL",
-      analysis ? `ANALYZED ${String(analysis).slice(0, 10)}` : "",
-      `${(state.gods || []).length} GODS`,
-      `${(state.items || []).length} ITEMS`,
-      "PATCH · KIT · BUILD",
+      `${(state.gods || []).length} gods`,
+      `${(state.items || []).length} items`,
+      exported ? `data ${String(exported).slice(0, 10)}` : "live data",
+      "model: kit + patch — not live win rate",
     ]
       .filter(Boolean)
-      .join("  //  ");
+      .join(" · ");
 
     setupBuilds();
     setupCounter();
