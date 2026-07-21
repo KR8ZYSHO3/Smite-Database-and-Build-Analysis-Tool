@@ -3,107 +3,90 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SMITE 2 Conquest Builds — Arena Intel</title>
-  <meta name="description" content="SMITE 2 Conquest build helper: pick your role and god for a kit-specific buy order. Not a generic tier-list copy." />
+  <title>SMITE 2 Builds — pick a role, get a buy order</title>
+  <meta name="description" content="SMITE 2 Conquest builds: pick your role and god, get a numbered item buy order for that kit." />
   <meta name="theme-color" content="#0a0c14" />
   <link rel="stylesheet" href="./style.css" />
 </head>
-<body>
+<body class="ui-simple">
   <div class="app">
-    <header class="top hud-frame site-header">
+    <header class="top site-header simple-header">
       <div class="site-header-main">
-        <p class="site-kicker">SMITE 2 · Conquest</p>
-        <h1>God-first build helper</h1>
-        <p class="site-tagline" id="site-tagline">
-          Pick your <strong>role</strong> and <strong>god</strong> → get a <strong>numbered buy order</strong> built for that kit
-          (not a cookie-cutter pro site copy).
+        <h1>SMITE 2 Builds</h1>
+        <p class="site-tagline">
+          Pick your <strong>lane role</strong>, open a <strong>god</strong>, buy items <strong>top → bottom</strong>.
         </p>
-        <div class="sub meta-telemetry" id="meta-line">Loading…</div>
       </div>
-      <div class="badge-row">
-        <span class="badge ice">Kit-fit paths</span>
-        <span class="badge hot">Patch-aware</span>
-        <span class="badge">Free tool</span>
-      </div>
+      <button type="button" class="btn-ghost help-btn" id="btn-help" title="How this works">?</button>
     </header>
 
-    <div id="loading" class="loading">Loading gods · builds · patches</div>
+    <div id="loading" class="loading">Loading builds…</div>
 
     <div id="app-main" style="display:none">
-      <!-- Friend-proof front door -->
-      <section class="landing-hero" id="landing-hero" aria-label="How to use this site">
-        <div class="landing-hero-inner">
-          <h2 class="landing-title">What is this?</h2>
-          <p class="landing-lead">
-            A <strong>SMITE 2 Conquest build helper</strong>. You choose the role you queue,
-            open a god, and get a <strong>buy order made for that god’s abilities</strong> —
-            with a short “why” under items. Also: counter paths for the enemy team, and meme troll builds.
-          </p>
-          <ol class="landing-steps">
-            <li><span class="step-n">1</span><span><strong>Pick a role</strong> (Support, Mid, Jungle…)</span></li>
-            <li><span class="step-n">2</span><span><strong>Open a god</strong> in that role</span></li>
-            <li><span class="step-n">3</span><span><strong>Buy top → bottom</strong> — expand “Why this?” if you want detail</span></li>
+      <!-- Simple help modal / panel -->
+      <section class="help-panel" id="help-panel" hidden>
+        <div class="help-panel-inner">
+          <h2>How to use this</h2>
+          <ol class="help-steps">
+            <li>Tap a <strong>role</strong> (Support, Mid, Carry…)</li>
+            <li>Tap a <strong>god</strong> below</li>
+            <li>Buy the items in order — top first, bottom last</li>
           </ol>
-          <div class="landing-ctas" id="landing-ctas">
-            <button type="button" class="btn-primary landing-cta" data-landing-role="Support">Show Support builds</button>
-            <button type="button" class="btn-primary landing-cta" data-landing-role="Mid">Show Mid builds</button>
-            <button type="button" class="btn-primary landing-cta" data-landing-role="Carry">Show Carry builds</button>
-            <button type="button" class="btn-ghost landing-cta" data-landing-role="Jungle">Jungle</button>
-            <button type="button" class="btn-ghost landing-cta" data-landing-role="Solo">Solo</button>
-          </div>
-          <p class="landing-note muted">
-            Role cards at the top are <em>job notes only</em> — the real builds are the god cards below.
+          <p class="muted">
+            Paths are made for each god’s abilities (not a one-size-fits-all guide).
+            Not live win rates. Free fan tool.
           </p>
-          <button type="button" class="hint-dismiss landing-dismiss" id="landing-dismiss">Got it — hide this</button>
+          <p class="muted help-extra">
+            <strong>More tools</strong> (top right / bottom nav): Counter the enemy team, meme Troll builds,
+            tier ladder, item search.
+          </p>
+          <button type="button" class="btn-primary" id="help-close">Got it</button>
         </div>
       </section>
 
-      <p class="flow-hint compact-hint" id="flow-hint" hidden>
-        <strong>Quick:</strong> role → god → numbered path.
-        <button type="button" class="hint-dismiss" id="flow-hint-show-landing">What is this?</button>
-      </p>
-
-      <nav class="tabs" aria-label="Primary">
-        <button class="tab-btn active" data-tab="builds" title="Kit-fit buy orders">Builds</button>
-        <button class="tab-btn tab-advanced" data-tab="counter" title="Re-weight path vs enemy 5">Counter</button>
-        <button class="tab-btn tab-advanced" data-tab="troll" title="Off-meta meme paths">Troll</button>
-        <button class="tab-btn" data-tab="gods" title="Search any god">Gods</button>
-        <button class="tab-btn tab-advanced" data-tab="tiers" title="Patch-weighted ladder">Tiers</button>
-        <button class="tab-btn tab-advanced" data-tab="items">Items</button>
-        <button class="tab-btn tab-advanced" data-tab="about">About</button>
+      <nav class="tabs simple-tabs" aria-label="Main">
+        <button class="tab-btn active" data-tab="builds">Get a build</button>
+        <button class="tab-btn" data-tab="gods">Find a god</button>
+        <div class="more-wrap">
+          <button type="button" class="tab-btn more-trigger" id="more-tools-btn" aria-expanded="false" aria-haspopup="true">
+            More tools ▾
+          </button>
+          <div class="more-menu" id="more-menu" hidden>
+            <button type="button" class="more-item" data-tab="counter">Counter enemy team</button>
+            <button type="button" class="more-item" data-tab="troll">Troll / meme builds</button>
+            <button type="button" class="more-item" data-tab="tiers">Tier list</button>
+            <button type="button" class="more-item" data-tab="items">Item search</button>
+            <button type="button" class="more-item" data-tab="about">About &amp; scoring</button>
+          </div>
+        </div>
       </nav>
-      <p class="tabs-legend muted" id="tabs-legend">
-        <strong>Start on Builds.</strong>
-        Counter / Troll / Tiers are optional extras once you know the basics.
-      </p>
 
-      <!-- BUILDS first -->
+      <!-- BUILDS — primary experience -->
       <section id="panel-builds" class="panel active">
-        <div class="panel-plain-intro" id="builds-intro">
-          <strong>Builds</strong> — choose the Conquest role you queue, then open a god for that role’s buy order.
-        </div>
+        <p class="step-label"><span class="step-badge">1</span> What role are you playing?</p>
         <div class="toolbar role-pills" id="role-pills"></div>
-        <div class="card role-job" id="role-job">
-          <h2>Pick a role above</h2>
-          <p class="muted">You’ll see that role’s job, then kit-fit builds for real gods.</p>
-        </div>
+
+        <details class="role-job-details" id="role-job-wrap">
+          <summary>What does this role do? <span class="muted">(optional)</span></summary>
+          <div class="card role-job" id="role-job">
+            <h2>Pick a role above</h2>
+            <p class="muted">Short job notes — not the full build.</p>
+          </div>
+        </details>
+
+        <p class="step-label"><span class="step-badge">2</span> Pick a god <span class="muted" id="build-god-count"></span></p>
         <div class="toolbar">
-          <input id="build-god-search" type="search" placeholder="Filter gods in this role…" style="min-width:240px" />
-          <span class="muted" id="build-god-count"></span>
+          <input id="build-god-search" type="search" placeholder="Search gods…" style="min-width:220px" />
         </div>
         <div id="build-gods" class="build-god-grid"></div>
       </section>
 
-      <!-- COUNTER builds -->
+      <!-- COUNTER -->
       <section id="panel-counter" class="panel">
         <div class="card counter-panel">
-          <div class="panel-plain-intro">
-            <strong>Counter</strong> — optional. After you know your base path, re-weight it for the enemy team of 5.
-          </div>
-          <h2>Counter build</h2>
+          <h2>Counter the enemy team</h2>
           <p class="muted">
-            Pick <strong>your god + role</strong> and up to <strong>5 enemies</strong>.
-            We re-weight the kit path for magic/physical mix, crit ADC, healing, and CC.
+            Your god + up to 5 enemies → a buy order adjusted for their damage, crit, healing, and CC.
           </p>
           <div class="counter-form">
             <label>Your god
@@ -119,7 +102,7 @@
               </select>
             </label>
             <div class="counter-enemies">
-              <span class="muted">Enemy team (up to 5) — click filled slot to remove</span>
+              <span class="muted">Enemy team (up to 5) — click a name to remove</span>
               <div class="enemy-lobby" id="ctr-enemy-picks" aria-label="Enemy lobby slots"></div>
               <input id="ctr-enemy-add" type="search" list="ctr-god-list" placeholder="Add enemy god…" autocomplete="off" />
             </div>
@@ -128,23 +111,15 @@
           </div>
           <div id="ctr-threat" class="counter-threat muted"></div>
           <div id="ctr-result" class="counter-result"></div>
-          <p class="muted" style="margin-top:12px;font-size:0.85rem">
-            CLI: <code>python -m smite2db.counter_builds Charon Support Discordia Merlin Ymir Artemis Ganesha</code>
-          </p>
         </div>
       </section>
 
-      <!-- TROLL builds -->
+      <!-- TROLL -->
       <section id="panel-troll" class="panel">
         <div class="card counter-panel troll-panel">
-          <div class="panel-plain-intro">
-            <strong>Troll</strong> — meme only. Legal items, illegal vibes. Not ranked advice.
-          </div>
-          <h2>😈 Troll build</h2>
+          <h2>Troll / meme builds</h2>
           <p class="muted">
-            Kit-true, <strong>off-meta</strong> paths designed to be
-            <em>frustrating and funny</em> — not ranked advice.
-            Unkillable clowns, peel prisons, antiheal tax, AA on the wrong gods, aura farmers.
+            Off-meta paths that are funny and annoying — <strong>not ranked advice</strong>.
           </p>
           <div class="counter-form">
             <label>God
@@ -165,23 +140,20 @@
             </label>
             <label class="troll-check">
               <input type="checkbox" id="troll-chaos" />
-              Chaos mode (lean into the secondary bit)
+              Chaos mode
             </label>
             <button type="button" class="btn-primary btn-troll" id="troll-run">Generate troll path</button>
           </div>
           <div id="troll-result" class="counter-result"></div>
-          <p class="muted" style="margin-top:12px;font-size:0.85rem">
-            CLI: <code>python -m smite2db.troll_builds Geb Solo --aspect</code>
-            · add <code>--chaos</code> for maximum crime
-          </p>
         </div>
       </section>
 
       <!-- GODS -->
       <section id="panel-gods" class="panel">
+        <p class="step-label">Search any god for their buy orders (by role)</p>
         <div class="toolbar">
-          <input id="god-search" type="search" placeholder="Search any god…" style="min-width:240px" />
-          <label>Compare
+          <input id="god-search" type="search" placeholder="Search gods…" style="min-width:240px" />
+          <label class="compare-label">Compare
             <select id="god-compare">
               <option value="">— none —</option>
             </select>
@@ -204,16 +176,16 @@
               <div id="god-metrics" class="god-metrics-row"></div>
             </div>
             <div class="god-section god-section-builds" id="god-builds-section">
-              <h3>Kit-fit Conquest paths</h3>
-              <div class="muted" id="god-build-hint">One buy order per role this god plays (base + aspect when available).</div>
+              <h3>Buy orders by role</h3>
+              <div class="muted" id="god-build-hint">Base kit + aspect path when available.</div>
               <div id="god-build" class="god-builds"></div>
             </div>
             <details class="god-more">
-              <summary>Patch exploit</summary>
-              <div id="god-patch-axes" class="patch-axes muted" style="margin-top:10px">Select a god to see r5 axes.</div>
+              <summary>Patch notes (optional)</summary>
+              <div id="god-patch-axes" class="patch-axes muted" style="margin-top:10px">Select a god.</div>
             </details>
             <details class="god-more">
-              <summary>Abilities &amp; patch notes</summary>
+              <summary>Abilities (optional)</summary>
               <div class="god-abilities-scroll">
                 <table>
                   <thead>
@@ -230,6 +202,7 @@
 
       <!-- TIERS -->
       <section id="panel-tiers" class="panel">
+        <p class="step-label">Tier list — who looks strong this patch (not the same as a full build)</p>
         <div class="toolbar">
           <label>Scope
             <select id="tier-scope"></select>
@@ -259,13 +232,14 @@
           </div>
           <div class="card">
             <h2>Why this rank</h2>
-            <div id="tier-detail">Pick a row. Use scope <strong>overall</strong> for the full ladder.</div>
+            <div id="tier-detail">Pick a row.</div>
           </div>
         </div>
       </section>
 
       <!-- ITEMS -->
       <section id="panel-items" class="panel">
+        <p class="step-label">Search items</p>
         <div class="toolbar">
           <input id="item-search" type="search" placeholder="Search items…" style="min-width:220px" />
           <label>Tier
@@ -301,9 +275,9 @@
             </table>
           </div>
           <div class="card">
-            <h2>Item intel</h2>
-            <div id="item-patch-box" class="patch-axes muted" style="margin-bottom:10px">Select an item for patch axes + stats.</div>
-            <pre class="detail" id="item-detail">Select an item. Look for Pen, Damp, Plat, Ten.</pre>
+            <h2>Item details</h2>
+            <div id="item-patch-box" class="patch-axes muted" style="margin-bottom:10px">Select an item.</div>
+            <pre class="detail" id="item-detail">Select an item.</pre>
           </div>
         </div>
       </section>
@@ -315,73 +289,47 @@
           <p class="about-blurb">
             <strong>SMITE 2 Conquest build helper.</strong>
             Open a role, pick a god, and follow a numbered buy order built around
-            <em>that god’s kit</em> and recent patch signals — not a one-size-fits-all pro site copy.
+            that god’s kit — not a one-size-fits-all pro site copy.
           </p>
           <h2>How to use this</h2>
           <ol class="how-list">
-            <li><strong>Builds</strong> — start here: pick role → open a god card (kit-fit buy order).</li>
-            <li><strong>Counter</strong> — optional: your god + enemy 5 → lobby-adjusted path.</li>
-            <li><strong>Troll</strong> — optional: kit-true meme paths (not ranked advice).</li>
-            <li><strong>Gods</strong> — search any god; base + aspect paths for each role.</li>
-            <li><strong>Tiers</strong> — patch-weighted ladder (ranking, not the same as a full build guide).</li>
+            <li><strong>Get a build</strong> — role → god → buy top to bottom.</li>
+            <li><strong>Find a god</strong> — search anyone; see all their roles.</li>
+            <li><strong>Counter</strong> — optional: adjust for the enemy 5.</li>
+            <li><strong>Troll</strong> — meme only, not ranked advice.</li>
+            <li><strong>Tiers</strong> — patch ladder (not a full build guide).</li>
           </ol>
 
           <h2>How builds are weighted</h2>
           <p class="about-blurb">
             Nothing here is <strong>live win rate</strong>. Paths come from wiki stats, ability text, and
-            patch-note impact we score locally — not from pro sites.
+            patch-note impact — not from pro sites.
           </p>
           <div class="score-explain">
             <div class="score-explain-block">
               <h3>Two different systems</h3>
               <ul class="how-list score-list">
-                <li><strong>Builds</strong> answer: “What should <em>this god</em> buy in <em>this role</em>?”</li>
-                <li><strong>Tiers</strong> answer: “Who looks strong this patch overall?”</li>
+                <li><strong>Builds</strong> — what should <em>this god</em> buy in <em>this role</em>?</li>
+                <li><strong>Tiers</strong> — who looks strong this patch overall?</li>
               </ul>
-              <p class="muted score-note">
-                A god can be high tier and still have a different buy order than another god in the same role.
-              </p>
             </div>
             <div class="score-explain-block">
-              <h3>Build pipeline (god-first)</h3>
+              <h3>Build pipeline</h3>
               <ol class="how-list">
-                <li><strong>Role score</strong> — each role has stat weights (e.g. Carry: AS/crit/pen; Support: prots/auras/anti-crit). Items also get utility, cost, active tax, and item patch momentum.</li>
-                <li><strong>God re-score</strong> — role score is reduced (~55%), then kit affinity is added hard: STR vs INT, physical vs magical, tags (DoT, AA, heal, CC…), kit effects, and that god’s recent patch axes.</li>
-                <li><strong>Assemble a path</strong> — not “global top 6.” We fill archetype slots (power / pen / CDR / defense…), diversify so gods don’t clone each other, inject signature items, cap luxury actives (usually ≤2 shop actives), and enforce pen on damage roles.</li>
-                <li><strong>Explain</strong> — path “why” + per-item “Why this?” from the signals that picked the item.</li>
+                <li><strong>Role score</strong> — each role has stat priorities (e.g. Carry wants AS/crit/pen).</li>
+                <li><strong>God re-score</strong> — kit tags and abilities change the ranking hard.</li>
+                <li><strong>Assemble</strong> — fill a 6-item path with pen rules and active caps.</li>
               </ol>
             </div>
             <div class="score-explain-block">
-              <h3>Tiers (separate ladder)</h3>
+              <h3>Tiers</h3>
               <ul class="how-list score-list">
-                <li><strong>Patch ~48%</strong> — note momentum (recent patches count more)</li>
-                <li><strong>Kit ~28%</strong> — how strong/flexible the kit metrics look</li>
-                <li><strong>Build fit ~14%</strong> — how well the Conquest engine can itemize them</li>
-                <li><strong>Novelty / stability ~5% each</strong></li>
-              </ul>
-              <p class="muted score-note">
-                S/A/B/C/D are percentiles inside a scope (overall, role, damage type) — not “pro letter grades.”
-                Tier letters on build cards are ranking context, not “buy this because S-tier.”
-              </p>
-            </div>
-            <div class="score-explain-block">
-              <h3>Counter &amp; Troll</h3>
-              <ul class="how-list score-list">
-                <li><strong>Counter</strong> — starts from the kit path, then re-weights for the enemy 5 (magic/phys mix, crit ADC, healing, CC).</li>
-                <li><strong>Troll</strong> — kit-true off-meta paths for frustration/fun. Not ranked advice.</li>
-                <li><strong>Aspects</strong> — same pipeline, different kit input (separate base vs aspect paths when available).</li>
+                <li><strong>Patch ~48%</strong> · <strong>Kit ~28%</strong> · <strong>Build fit ~14%</strong></li>
               </ul>
             </div>
           </div>
 
-          <h3>Role jobs</h3>
-          <ul>
-            <li><strong>Carry / Mid</strong> — backline damage + pen; Support peels.</li>
-            <li><strong>Jungle</strong> — ganks (Bumba, pen, CDR, Blink).</li>
-            <li><strong>Solo</strong> — unkillable frontline (prots, HP, Damp/Plat/Ten).</li>
-            <li><strong>Support</strong> — peel for ADC/mid (mitigate, anti-AS/crit).</li>
-          </ul>
-          <h3>Patch momentum (r5)</h3>
+          <h3>Patch momentum</h3>
           <div class="grid-2">
             <div>
               <h4 class="muted">Gods rising</h4>
@@ -397,45 +345,42 @@
             </div>
           </div>
           <p class="muted">
-            Model from wiki.smite2.com — not live WR. Tiers: patch 48% · kit 28% · build 14%.
-            Builds and tier “build fit” share one Conquest engine. Patch r5 axes steer itemization.
+            Model from wiki.smite2.com — not live WR.
           </p>
           <p>
             <a href="https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool" target="_blank" rel="noopener">GitHub</a>
-            · <code>python -m smite2db.refresh</code>
-            · <code>preview_local.bat</code>
           </p>
         </div>
       </section>
     </div>
 
     <footer class="footer">
-      SMITE 2 Arena Intel · wiki.smite2.com model · not live WR · not affiliated with Hi-Rez
+      SMITE 2 Builds · not live WR · not affiliated with Hi-Rez
+      <span class="meta-telemetry muted" id="meta-line" style="display:block;margin-top:6px"></span>
     </footer>
   </div>
 
-  <nav class="mobile-nav" aria-label="Mobile primary">
-    <button type="button" class="mobile-tab active" data-tab="builds"><span class="mn-icon">⚔</span><span>Builds</span></button>
-    <button type="button" class="mobile-tab" data-tab="counter"><span class="mn-icon">◎</span><span>Counter</span></button>
-    <button type="button" class="mobile-tab" data-tab="troll"><span class="mn-icon">😈</span><span>Troll</span></button>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <button type="button" class="mobile-tab active" data-tab="builds"><span class="mn-icon">1</span><span>Builds</span></button>
     <button type="button" class="mobile-tab" data-tab="gods"><span class="mn-icon">◆</span><span>Gods</span></button>
-    <button type="button" class="mobile-tab" data-tab="more" id="mobile-more" aria-haspopup="true"><span class="mn-icon">···</span><span>More</span></button>
+    <button type="button" class="mobile-tab" data-tab="counter"><span class="mn-icon">◎</span><span>Counter</span></button>
+    <button type="button" class="mobile-tab" data-tab="more" id="mobile-more"><span class="mn-icon">···</span><span>More</span></button>
   </nav>
   <div class="mobile-more-sheet" id="mobile-more-sheet" hidden>
-    <button type="button" class="mobile-sheet-btn" data-tab="tiers">Tiers</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="troll">Troll builds</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="tiers">Tier list</button>
     <button type="button" class="mobile-sheet-btn" data-tab="items">Items</button>
     <button type="button" class="mobile-sheet-btn" data-tab="about">About</button>
   </div>
 
-  <!-- Shareable intel card modal -->
   <div class="intel-modal" id="intel-modal" role="dialog" aria-modal="true" aria-labelledby="intel-modal-title" hidden>
     <div class="intel-modal-inner">
       <div class="intel-modal-toolbar">
-        <h3 id="intel-modal-title">Intel card</h3>
+        <h3 id="intel-modal-title">Share build</h3>
         <div class="intel-modal-actions">
-          <button type="button" class="btn-share" id="intel-dl-png">Download PNG</button>
+          <button type="button" class="btn-share" id="intel-dl-png">Download image</button>
           <button type="button" class="btn-ghost" id="intel-copy-link">Copy link</button>
-          <button type="button" class="btn-ghost" id="intel-copy-text">Copy path</button>
+          <button type="button" class="btn-ghost" id="intel-copy-text">Copy list</button>
           <button type="button" class="btn-ghost" id="intel-close">Close</button>
         </div>
       </div>

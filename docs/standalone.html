@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SMITE 2 Conquest Builds — Arena Intel</title>
-  <meta name="description" content="SMITE 2 Conquest build helper: pick your role and god for a kit-specific buy order. Not a generic tier-list copy." />
+  <title>SMITE 2 Builds — pick a role, get a buy order</title>
+  <meta name="description" content="SMITE 2 Conquest builds: pick your role and god, get a numbered item buy order for that kit." />
   <meta name="theme-color" content="#0a0c14" />
   <style>
 /* SMITE 2 — Obsidian Arena UI */
@@ -2308,104 +2308,327 @@ body.landing-compact .site-tagline {
   line-height: 1.4;
 }
 
+/* ==========================================================================
+   UI SIMPLE — less jargon, one clear path
+   ========================================================================== */
+
+body.ui-simple .app {
+  max-width: 960px;
+}
+
+.simple-header {
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding: 14px 16px;
+}
+.simple-header h1 {
+  font-size: clamp(1.2rem, 3vw, 1.5rem) !important;
+  letter-spacing: 0.04em !important;
+  margin: 0 0 4px !important;
+}
+.simple-header .site-tagline {
+  margin: 0;
+  font-size: 1rem;
+  max-width: 40ch;
+  color: #c5d0e8;
+}
+.simple-header .site-tagline strong { color: #fff; }
+.help-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: 800;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+/* Help overlay */
+.help-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(4, 6, 12, 0.78);
+  backdrop-filter: blur(6px);
+}
+.help-panel[hidden] { display: none !important; }
+.help-panel-inner {
+  width: min(420px, 100%);
+  padding: 22px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(76, 201, 240, 0.4);
+  background: var(--bg2);
+  box-shadow: var(--glow), 0 20px 60px rgba(0,0,0,0.5);
+}
+.help-panel-inner h2 {
+  margin: 0 0 12px;
+  font-family: var(--display);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.help-steps {
+  margin: 0 0 14px;
+  padding-left: 1.2rem;
+  line-height: 1.55;
+  font-size: 1.08rem;
+}
+.help-extra { font-size: 0.9rem; margin-bottom: 14px; }
+.help-panel-inner .btn-primary { width: 100%; }
+
+/* Step labels */
+.step-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  font-family: var(--display);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #041018;
+  background: linear-gradient(135deg, var(--accent), #7b61ff);
+  flex-shrink: 0;
+}
+
+/* Tabs: Get a build | Find a god | More */
+.simple-tabs {
+  border-radius: 12px;
+  width: 100%;
+  max-width: 100%;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.simple-tabs .tab-btn {
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 0.92rem;
+}
+.more-wrap {
+  position: relative;
+  flex: 0 0 auto;
+}
+.more-trigger {
+  white-space: nowrap;
+}
+.more-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 50;
+  min-width: 200px;
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(16, 20, 31, 0.98);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.more-menu[hidden] { display: none !important; }
+.more-item {
+  font: inherit;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+.more-item:hover {
+  border-color: var(--border-glow);
+  background: rgba(76, 201, 240, 0.08);
+}
+
+/* Role job collapsed */
+.role-job-details {
+  margin: 0 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(0,0,0,0.2);
+  padding: 0 12px;
+}
+.role-job-details > summary {
+  cursor: pointer;
+  padding: 10px 4px;
+  font-weight: 700;
+  color: var(--muted);
+  list-style: none;
+}
+.role-job-details > summary::-webkit-details-marker { display: none; }
+.role-job-details[open] > summary { color: var(--accent); border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.role-job-details .role-job {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 4px 0 12px;
+}
+
+/* Simple build cards */
+.simple-build .gbc-head h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.tier-pill {
+  font-family: var(--display);
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  letter-spacing: 0.06em;
+}
+.tier-pill.tier-S { color: var(--s); border-color: rgba(255,214,10,0.45); }
+.tier-pill.tier-A { color: var(--a); border-color: rgba(46,196,182,0.45); }
+.tier-pill.tier-B { color: var(--b); }
+.simple-why {
+  font-size: 0.95rem !important;
+  color: #aebad4 !important;
+  margin: 0 0 10px !important;
+}
+.simple-build .card-plain-what {
+  margin: 4px 0 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.simple-build .card-plain-what strong { color: var(--accent); text-transform: none; font-family: var(--font); letter-spacing: 0; font-size: inherit; }
+.extra-details {
+  margin: 10px 0 0;
+  border-top: 1px solid rgba(42,53,80,0.5);
+  padding-top: 8px;
+}
+.extra-details > summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+.extra-details > summary:hover { color: var(--accent); }
+.simple-buy .buy-row {
+  grid-template-columns: 36px 1fr auto;
+}
+.simple-buy .buy-tags:empty { display: none; }
+
+body.ui-simple .build-card::before,
+body.ui-simple .build-card::after,
+body.ui-simple .build-card .hud-br {
+  display: none;
+}
+
+body.ui-simple .loadout-rail {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 860px) {
+  .simple-tabs { display: none; }
+  body.ui-simple .app { padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px)); }
+}
+
   </style>
 </head>
-<body>
+<body class="ui-simple">
   <div class="app">
-    <header class="top hud-frame site-header">
+    <header class="top site-header simple-header">
       <div class="site-header-main">
-        <p class="site-kicker">SMITE 2 · Conquest</p>
-        <h1>God-first build helper</h1>
-        <p class="site-tagline" id="site-tagline">
-          Pick your <strong>role</strong> and <strong>god</strong> → get a <strong>numbered buy order</strong> built for that kit
-          (not a cookie-cutter pro site copy).
+        <h1>SMITE 2 Builds</h1>
+        <p class="site-tagline">
+          Pick your <strong>lane role</strong>, open a <strong>god</strong>, buy items <strong>top → bottom</strong>.
         </p>
-        <div class="sub meta-telemetry" id="meta-line">Loading…</div>
       </div>
-      <div class="badge-row">
-        <span class="badge ice">Kit-fit paths</span>
-        <span class="badge hot">Patch-aware</span>
-        <span class="badge">Free tool</span>
-      </div>
+      <button type="button" class="btn-ghost help-btn" id="btn-help" title="How this works">?</button>
     </header>
 
-    <div id="loading" class="loading">Loading gods · builds · patches</div>
+    <div id="loading" class="loading">Loading builds…</div>
 
     <div id="app-main" style="display:none">
-      <!-- Friend-proof front door -->
-      <section class="landing-hero" id="landing-hero" aria-label="How to use this site">
-        <div class="landing-hero-inner">
-          <h2 class="landing-title">What is this?</h2>
-          <p class="landing-lead">
-            A <strong>SMITE 2 Conquest build helper</strong>. You choose the role you queue,
-            open a god, and get a <strong>buy order made for that god’s abilities</strong> —
-            with a short “why” under items. Also: counter paths for the enemy team, and meme troll builds.
-          </p>
-          <ol class="landing-steps">
-            <li><span class="step-n">1</span><span><strong>Pick a role</strong> (Support, Mid, Jungle…)</span></li>
-            <li><span class="step-n">2</span><span><strong>Open a god</strong> in that role</span></li>
-            <li><span class="step-n">3</span><span><strong>Buy top → bottom</strong> — expand “Why this?” if you want detail</span></li>
+      <!-- Simple help modal / panel -->
+      <section class="help-panel" id="help-panel" hidden>
+        <div class="help-panel-inner">
+          <h2>How to use this</h2>
+          <ol class="help-steps">
+            <li>Tap a <strong>role</strong> (Support, Mid, Carry…)</li>
+            <li>Tap a <strong>god</strong> below</li>
+            <li>Buy the items in order — top first, bottom last</li>
           </ol>
-          <div class="landing-ctas" id="landing-ctas">
-            <button type="button" class="btn-primary landing-cta" data-landing-role="Support">Show Support builds</button>
-            <button type="button" class="btn-primary landing-cta" data-landing-role="Mid">Show Mid builds</button>
-            <button type="button" class="btn-primary landing-cta" data-landing-role="Carry">Show Carry builds</button>
-            <button type="button" class="btn-ghost landing-cta" data-landing-role="Jungle">Jungle</button>
-            <button type="button" class="btn-ghost landing-cta" data-landing-role="Solo">Solo</button>
-          </div>
-          <p class="landing-note muted">
-            Role cards at the top are <em>job notes only</em> — the real builds are the god cards below.
+          <p class="muted">
+            Paths are made for each god’s abilities (not a one-size-fits-all guide).
+            Not live win rates. Free fan tool.
           </p>
-          <button type="button" class="hint-dismiss landing-dismiss" id="landing-dismiss">Got it — hide this</button>
+          <p class="muted help-extra">
+            <strong>More tools</strong> (top right / bottom nav): Counter the enemy team, meme Troll builds,
+            tier ladder, item search.
+          </p>
+          <button type="button" class="btn-primary" id="help-close">Got it</button>
         </div>
       </section>
 
-      <p class="flow-hint compact-hint" id="flow-hint" hidden>
-        <strong>Quick:</strong> role → god → numbered path.
-        <button type="button" class="hint-dismiss" id="flow-hint-show-landing">What is this?</button>
-      </p>
-
-      <nav class="tabs" aria-label="Primary">
-        <button class="tab-btn active" data-tab="builds" title="Kit-fit buy orders">Builds</button>
-        <button class="tab-btn tab-advanced" data-tab="counter" title="Re-weight path vs enemy 5">Counter</button>
-        <button class="tab-btn tab-advanced" data-tab="troll" title="Off-meta meme paths">Troll</button>
-        <button class="tab-btn" data-tab="gods" title="Search any god">Gods</button>
-        <button class="tab-btn tab-advanced" data-tab="tiers" title="Patch-weighted ladder">Tiers</button>
-        <button class="tab-btn tab-advanced" data-tab="items">Items</button>
-        <button class="tab-btn tab-advanced" data-tab="about">About</button>
+      <nav class="tabs simple-tabs" aria-label="Main">
+        <button class="tab-btn active" data-tab="builds">Get a build</button>
+        <button class="tab-btn" data-tab="gods">Find a god</button>
+        <div class="more-wrap">
+          <button type="button" class="tab-btn more-trigger" id="more-tools-btn" aria-expanded="false" aria-haspopup="true">
+            More tools ▾
+          </button>
+          <div class="more-menu" id="more-menu" hidden>
+            <button type="button" class="more-item" data-tab="counter">Counter enemy team</button>
+            <button type="button" class="more-item" data-tab="troll">Troll / meme builds</button>
+            <button type="button" class="more-item" data-tab="tiers">Tier list</button>
+            <button type="button" class="more-item" data-tab="items">Item search</button>
+            <button type="button" class="more-item" data-tab="about">About &amp; scoring</button>
+          </div>
+        </div>
       </nav>
-      <p class="tabs-legend muted" id="tabs-legend">
-        <strong>Start on Builds.</strong>
-        Counter / Troll / Tiers are optional extras once you know the basics.
-      </p>
 
-      <!-- BUILDS first -->
+      <!-- BUILDS — primary experience -->
       <section id="panel-builds" class="panel active">
-        <div class="panel-plain-intro" id="builds-intro">
-          <strong>Builds</strong> — choose the Conquest role you queue, then open a god for that role’s buy order.
-        </div>
+        <p class="step-label"><span class="step-badge">1</span> What role are you playing?</p>
         <div class="toolbar role-pills" id="role-pills"></div>
-        <div class="card role-job" id="role-job">
-          <h2>Pick a role above</h2>
-          <p class="muted">You’ll see that role’s job, then kit-fit builds for real gods.</p>
-        </div>
+
+        <details class="role-job-details" id="role-job-wrap">
+          <summary>What does this role do? <span class="muted">(optional)</span></summary>
+          <div class="card role-job" id="role-job">
+            <h2>Pick a role above</h2>
+            <p class="muted">Short job notes — not the full build.</p>
+          </div>
+        </details>
+
+        <p class="step-label"><span class="step-badge">2</span> Pick a god <span class="muted" id="build-god-count"></span></p>
         <div class="toolbar">
-          <input id="build-god-search" type="search" placeholder="Filter gods in this role…" style="min-width:240px" />
-          <span class="muted" id="build-god-count"></span>
+          <input id="build-god-search" type="search" placeholder="Search gods…" style="min-width:220px" />
         </div>
         <div id="build-gods" class="build-god-grid"></div>
       </section>
 
-      <!-- COUNTER builds -->
+      <!-- COUNTER -->
       <section id="panel-counter" class="panel">
         <div class="card counter-panel">
-          <div class="panel-plain-intro">
-            <strong>Counter</strong> — optional. After you know your base path, re-weight it for the enemy team of 5.
-          </div>
-          <h2>Counter build</h2>
+          <h2>Counter the enemy team</h2>
           <p class="muted">
-            Pick <strong>your god + role</strong> and up to <strong>5 enemies</strong>.
-            We re-weight the kit path for magic/physical mix, crit ADC, healing, and CC.
+            Your god + up to 5 enemies → a buy order adjusted for their damage, crit, healing, and CC.
           </p>
           <div class="counter-form">
             <label>Your god
@@ -2421,7 +2644,7 @@ body.landing-compact .site-tagline {
               </select>
             </label>
             <div class="counter-enemies">
-              <span class="muted">Enemy team (up to 5) — click filled slot to remove</span>
+              <span class="muted">Enemy team (up to 5) — click a name to remove</span>
               <div class="enemy-lobby" id="ctr-enemy-picks" aria-label="Enemy lobby slots"></div>
               <input id="ctr-enemy-add" type="search" list="ctr-god-list" placeholder="Add enemy god…" autocomplete="off" />
             </div>
@@ -2430,23 +2653,15 @@ body.landing-compact .site-tagline {
           </div>
           <div id="ctr-threat" class="counter-threat muted"></div>
           <div id="ctr-result" class="counter-result"></div>
-          <p class="muted" style="margin-top:12px;font-size:0.85rem">
-            CLI: <code>python -m smite2db.counter_builds Charon Support Discordia Merlin Ymir Artemis Ganesha</code>
-          </p>
         </div>
       </section>
 
-      <!-- TROLL builds -->
+      <!-- TROLL -->
       <section id="panel-troll" class="panel">
         <div class="card counter-panel troll-panel">
-          <div class="panel-plain-intro">
-            <strong>Troll</strong> — meme only. Legal items, illegal vibes. Not ranked advice.
-          </div>
-          <h2>😈 Troll build</h2>
+          <h2>Troll / meme builds</h2>
           <p class="muted">
-            Kit-true, <strong>off-meta</strong> paths designed to be
-            <em>frustrating and funny</em> — not ranked advice.
-            Unkillable clowns, peel prisons, antiheal tax, AA on the wrong gods, aura farmers.
+            Off-meta paths that are funny and annoying — <strong>not ranked advice</strong>.
           </p>
           <div class="counter-form">
             <label>God
@@ -2467,23 +2682,20 @@ body.landing-compact .site-tagline {
             </label>
             <label class="troll-check">
               <input type="checkbox" id="troll-chaos" />
-              Chaos mode (lean into the secondary bit)
+              Chaos mode
             </label>
             <button type="button" class="btn-primary btn-troll" id="troll-run">Generate troll path</button>
           </div>
           <div id="troll-result" class="counter-result"></div>
-          <p class="muted" style="margin-top:12px;font-size:0.85rem">
-            CLI: <code>python -m smite2db.troll_builds Geb Solo --aspect</code>
-            · add <code>--chaos</code> for maximum crime
-          </p>
         </div>
       </section>
 
       <!-- GODS -->
       <section id="panel-gods" class="panel">
+        <p class="step-label">Search any god for their buy orders (by role)</p>
         <div class="toolbar">
-          <input id="god-search" type="search" placeholder="Search any god…" style="min-width:240px" />
-          <label>Compare
+          <input id="god-search" type="search" placeholder="Search gods…" style="min-width:240px" />
+          <label class="compare-label">Compare
             <select id="god-compare">
               <option value="">— none —</option>
             </select>
@@ -2506,16 +2718,16 @@ body.landing-compact .site-tagline {
               <div id="god-metrics" class="god-metrics-row"></div>
             </div>
             <div class="god-section god-section-builds" id="god-builds-section">
-              <h3>Kit-fit Conquest paths</h3>
-              <div class="muted" id="god-build-hint">One buy order per role this god plays (base + aspect when available).</div>
+              <h3>Buy orders by role</h3>
+              <div class="muted" id="god-build-hint">Base kit + aspect path when available.</div>
               <div id="god-build" class="god-builds"></div>
             </div>
             <details class="god-more">
-              <summary>Patch exploit</summary>
-              <div id="god-patch-axes" class="patch-axes muted" style="margin-top:10px">Select a god to see r5 axes.</div>
+              <summary>Patch notes (optional)</summary>
+              <div id="god-patch-axes" class="patch-axes muted" style="margin-top:10px">Select a god.</div>
             </details>
             <details class="god-more">
-              <summary>Abilities &amp; patch notes</summary>
+              <summary>Abilities (optional)</summary>
               <div class="god-abilities-scroll">
                 <table>
                   <thead>
@@ -2532,6 +2744,7 @@ body.landing-compact .site-tagline {
 
       <!-- TIERS -->
       <section id="panel-tiers" class="panel">
+        <p class="step-label">Tier list — who looks strong this patch (not the same as a full build)</p>
         <div class="toolbar">
           <label>Scope
             <select id="tier-scope"></select>
@@ -2561,13 +2774,14 @@ body.landing-compact .site-tagline {
           </div>
           <div class="card">
             <h2>Why this rank</h2>
-            <div id="tier-detail">Pick a row. Use scope <strong>overall</strong> for the full ladder.</div>
+            <div id="tier-detail">Pick a row.</div>
           </div>
         </div>
       </section>
 
       <!-- ITEMS -->
       <section id="panel-items" class="panel">
+        <p class="step-label">Search items</p>
         <div class="toolbar">
           <input id="item-search" type="search" placeholder="Search items…" style="min-width:220px" />
           <label>Tier
@@ -2603,9 +2817,9 @@ body.landing-compact .site-tagline {
             </table>
           </div>
           <div class="card">
-            <h2>Item intel</h2>
-            <div id="item-patch-box" class="patch-axes muted" style="margin-bottom:10px">Select an item for patch axes + stats.</div>
-            <pre class="detail" id="item-detail">Select an item. Look for Pen, Damp, Plat, Ten.</pre>
+            <h2>Item details</h2>
+            <div id="item-patch-box" class="patch-axes muted" style="margin-bottom:10px">Select an item.</div>
+            <pre class="detail" id="item-detail">Select an item.</pre>
           </div>
         </div>
       </section>
@@ -2617,73 +2831,47 @@ body.landing-compact .site-tagline {
           <p class="about-blurb">
             <strong>SMITE 2 Conquest build helper.</strong>
             Open a role, pick a god, and follow a numbered buy order built around
-            <em>that god’s kit</em> and recent patch signals — not a one-size-fits-all pro site copy.
+            that god’s kit — not a one-size-fits-all pro site copy.
           </p>
           <h2>How to use this</h2>
           <ol class="how-list">
-            <li><strong>Builds</strong> — start here: pick role → open a god card (kit-fit buy order).</li>
-            <li><strong>Counter</strong> — optional: your god + enemy 5 → lobby-adjusted path.</li>
-            <li><strong>Troll</strong> — optional: kit-true meme paths (not ranked advice).</li>
-            <li><strong>Gods</strong> — search any god; base + aspect paths for each role.</li>
-            <li><strong>Tiers</strong> — patch-weighted ladder (ranking, not the same as a full build guide).</li>
+            <li><strong>Get a build</strong> — role → god → buy top to bottom.</li>
+            <li><strong>Find a god</strong> — search anyone; see all their roles.</li>
+            <li><strong>Counter</strong> — optional: adjust for the enemy 5.</li>
+            <li><strong>Troll</strong> — meme only, not ranked advice.</li>
+            <li><strong>Tiers</strong> — patch ladder (not a full build guide).</li>
           </ol>
 
           <h2>How builds are weighted</h2>
           <p class="about-blurb">
             Nothing here is <strong>live win rate</strong>. Paths come from wiki stats, ability text, and
-            patch-note impact we score locally — not from pro sites.
+            patch-note impact — not from pro sites.
           </p>
           <div class="score-explain">
             <div class="score-explain-block">
               <h3>Two different systems</h3>
               <ul class="how-list score-list">
-                <li><strong>Builds</strong> answer: “What should <em>this god</em> buy in <em>this role</em>?”</li>
-                <li><strong>Tiers</strong> answer: “Who looks strong this patch overall?”</li>
+                <li><strong>Builds</strong> — what should <em>this god</em> buy in <em>this role</em>?</li>
+                <li><strong>Tiers</strong> — who looks strong this patch overall?</li>
               </ul>
-              <p class="muted score-note">
-                A god can be high tier and still have a different buy order than another god in the same role.
-              </p>
             </div>
             <div class="score-explain-block">
-              <h3>Build pipeline (god-first)</h3>
+              <h3>Build pipeline</h3>
               <ol class="how-list">
-                <li><strong>Role score</strong> — each role has stat weights (e.g. Carry: AS/crit/pen; Support: prots/auras/anti-crit). Items also get utility, cost, active tax, and item patch momentum.</li>
-                <li><strong>God re-score</strong> — role score is reduced (~55%), then kit affinity is added hard: STR vs INT, physical vs magical, tags (DoT, AA, heal, CC…), kit effects, and that god’s recent patch axes.</li>
-                <li><strong>Assemble a path</strong> — not “global top 6.” We fill archetype slots (power / pen / CDR / defense…), diversify so gods don’t clone each other, inject signature items, cap luxury actives (usually ≤2 shop actives), and enforce pen on damage roles.</li>
-                <li><strong>Explain</strong> — path “why” + per-item “Why this?” from the signals that picked the item.</li>
+                <li><strong>Role score</strong> — each role has stat priorities (e.g. Carry wants AS/crit/pen).</li>
+                <li><strong>God re-score</strong> — kit tags and abilities change the ranking hard.</li>
+                <li><strong>Assemble</strong> — fill a 6-item path with pen rules and active caps.</li>
               </ol>
             </div>
             <div class="score-explain-block">
-              <h3>Tiers (separate ladder)</h3>
+              <h3>Tiers</h3>
               <ul class="how-list score-list">
-                <li><strong>Patch ~48%</strong> — note momentum (recent patches count more)</li>
-                <li><strong>Kit ~28%</strong> — how strong/flexible the kit metrics look</li>
-                <li><strong>Build fit ~14%</strong> — how well the Conquest engine can itemize them</li>
-                <li><strong>Novelty / stability ~5% each</strong></li>
-              </ul>
-              <p class="muted score-note">
-                S/A/B/C/D are percentiles inside a scope (overall, role, damage type) — not “pro letter grades.”
-                Tier letters on build cards are ranking context, not “buy this because S-tier.”
-              </p>
-            </div>
-            <div class="score-explain-block">
-              <h3>Counter &amp; Troll</h3>
-              <ul class="how-list score-list">
-                <li><strong>Counter</strong> — starts from the kit path, then re-weights for the enemy 5 (magic/phys mix, crit ADC, healing, CC).</li>
-                <li><strong>Troll</strong> — kit-true off-meta paths for frustration/fun. Not ranked advice.</li>
-                <li><strong>Aspects</strong> — same pipeline, different kit input (separate base vs aspect paths when available).</li>
+                <li><strong>Patch ~48%</strong> · <strong>Kit ~28%</strong> · <strong>Build fit ~14%</strong></li>
               </ul>
             </div>
           </div>
 
-          <h3>Role jobs</h3>
-          <ul>
-            <li><strong>Carry / Mid</strong> — backline damage + pen; Support peels.</li>
-            <li><strong>Jungle</strong> — ganks (Bumba, pen, CDR, Blink).</li>
-            <li><strong>Solo</strong> — unkillable frontline (prots, HP, Damp/Plat/Ten).</li>
-            <li><strong>Support</strong> — peel for ADC/mid (mitigate, anti-AS/crit).</li>
-          </ul>
-          <h3>Patch momentum (r5)</h3>
+          <h3>Patch momentum</h3>
           <div class="grid-2">
             <div>
               <h4 class="muted">Gods rising</h4>
@@ -2699,45 +2887,42 @@ body.landing-compact .site-tagline {
             </div>
           </div>
           <p class="muted">
-            Model from wiki.smite2.com — not live WR. Tiers: patch 48% · kit 28% · build 14%.
-            Builds and tier “build fit” share one Conquest engine. Patch r5 axes steer itemization.
+            Model from wiki.smite2.com — not live WR.
           </p>
           <p>
             <a href="https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool" target="_blank" rel="noopener">GitHub</a>
-            · <code>python -m smite2db.refresh</code>
-            · <code>preview_local.bat</code>
           </p>
         </div>
       </section>
     </div>
 
     <footer class="footer">
-      SMITE 2 Arena Intel · wiki.smite2.com model · not live WR · not affiliated with Hi-Rez
+      SMITE 2 Builds · not live WR · not affiliated with Hi-Rez
+      <span class="meta-telemetry muted" id="meta-line" style="display:block;margin-top:6px"></span>
     </footer>
   </div>
 
-  <nav class="mobile-nav" aria-label="Mobile primary">
-    <button type="button" class="mobile-tab active" data-tab="builds"><span class="mn-icon">⚔</span><span>Builds</span></button>
-    <button type="button" class="mobile-tab" data-tab="counter"><span class="mn-icon">◎</span><span>Counter</span></button>
-    <button type="button" class="mobile-tab" data-tab="troll"><span class="mn-icon">😈</span><span>Troll</span></button>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <button type="button" class="mobile-tab active" data-tab="builds"><span class="mn-icon">1</span><span>Builds</span></button>
     <button type="button" class="mobile-tab" data-tab="gods"><span class="mn-icon">◆</span><span>Gods</span></button>
-    <button type="button" class="mobile-tab" data-tab="more" id="mobile-more" aria-haspopup="true"><span class="mn-icon">···</span><span>More</span></button>
+    <button type="button" class="mobile-tab" data-tab="counter"><span class="mn-icon">◎</span><span>Counter</span></button>
+    <button type="button" class="mobile-tab" data-tab="more" id="mobile-more"><span class="mn-icon">···</span><span>More</span></button>
   </nav>
   <div class="mobile-more-sheet" id="mobile-more-sheet" hidden>
-    <button type="button" class="mobile-sheet-btn" data-tab="tiers">Tiers</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="troll">Troll builds</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="tiers">Tier list</button>
     <button type="button" class="mobile-sheet-btn" data-tab="items">Items</button>
     <button type="button" class="mobile-sheet-btn" data-tab="about">About</button>
   </div>
 
-  <!-- Shareable intel card modal -->
   <div class="intel-modal" id="intel-modal" role="dialog" aria-modal="true" aria-labelledby="intel-modal-title" hidden>
     <div class="intel-modal-inner">
       <div class="intel-modal-toolbar">
-        <h3 id="intel-modal-title">Intel card</h3>
+        <h3 id="intel-modal-title">Share build</h3>
         <div class="intel-modal-actions">
-          <button type="button" class="btn-share" id="intel-dl-png">Download PNG</button>
+          <button type="button" class="btn-share" id="intel-dl-png">Download image</button>
           <button type="button" class="btn-ghost" id="intel-copy-link">Copy link</button>
-          <button type="button" class="btn-ghost" id="intel-copy-text">Copy path</button>
+          <button type="button" class="btn-ghost" id="intel-copy-text">Copy list</button>
           <button type="button" class="btn-ghost" id="intel-close">Close</button>
         </div>
       </div>
@@ -2838,20 +3023,16 @@ function shareBar(data) {
   if (!data.deeplink) data.deeplink = deeplinkForShare(data);
   const id = registerShare(data);
   return `<div class="card-actions">
-    <button type="button" class="btn-share" data-share-id="${id}">Share intel card</button>
+    <button type="button" class="btn-share" data-share-id="${id}">Share</button>
   </div>`;
 }
 
 function trustLine(extra) {
-  return `<p class="trust-line">Patch-weighted model · not live WR · ≤2 shop actives${
-    extra ? ` · ${escapeHtml(extra)}` : ""
-  }</p>`;
+  return `<p class="trust-line">Not live win rates${extra ? ` · ${escapeHtml(extra)}` : ""}</p>`;
 }
 
 function emptyHud(title, body) {
-  return `<div class="empty-hud card hud">
-    <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
-    <div class="empty-hud-kicker">ARENA INTEL</div>
+  return `<div class="empty-hud card">
     <div class="empty-hud-title">${escapeHtml(title)}</div>
     <p class="muted">${escapeHtml(body)}</p>
   </div>`;
@@ -3196,12 +3377,20 @@ const routeState = {
   build: null, // { getRole, setRole }
 };
 
+const ADVANCED_TABS = new Set(["counter", "troll", "tiers", "items", "about"]);
+
 function activateTab(tab, { updateHash = true } = {}) {
   if (!VALID_TABS.has(tab)) tab = "builds";
-  $$(".tab-btn").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
+  $$(".tab-btn").forEach((b) => {
+    if (b.classList.contains("more-trigger")) {
+      b.classList.toggle("active", ADVANCED_TABS.has(tab));
+      return;
+    }
+    b.classList.toggle("active", b.dataset.tab === tab);
+  });
   $$(".mobile-tab").forEach((b) => {
     if (b.dataset.tab === "more") {
-      b.classList.toggle("active", ["tiers", "items", "about"].includes(tab));
+      b.classList.toggle("active", ["troll", "tiers", "items", "about"].includes(tab));
     } else {
       b.classList.toggle("active", b.dataset.tab === tab);
     }
@@ -3209,6 +3398,10 @@ function activateTab(tab, { updateHash = true } = {}) {
   $$(".panel").forEach((p) => p.classList.toggle("active", p.id === `panel-${tab}`));
   const sheet = $("#mobile-more-sheet");
   if (sheet) sheet.hidden = true;
+  const menu = $("#more-menu");
+  if (menu) menu.hidden = true;
+  const moreBtn = $("#more-tools-btn");
+  if (moreBtn) moreBtn.setAttribute("aria-expanded", "false");
   if (updateHash) syncHashFromUi(tab);
   return tab;
 }
@@ -3223,65 +3416,51 @@ function setupTabs() {
     activateTab(tab, { updateHash: true });
   };
   $$(".tab-btn").forEach((btn) => {
+    if (btn.classList.contains("more-trigger")) return;
     btn.addEventListener("click", () => onTab(btn.dataset.tab));
   });
-  $$(".mobile-tab, .mobile-sheet-btn").forEach((btn) => {
+  $$(".mobile-tab, .mobile-sheet-btn, .more-item").forEach((btn) => {
     btn.addEventListener("click", () => onTab(btn.dataset.tab));
   });
-}
-
-function landingDismissed() {
-  try {
-    return localStorage.getItem("arena_intel_landing_v2") === "1";
-  } catch {
-    return false;
-  }
-}
-
-function setLandingDismissed(v) {
-  try {
-    localStorage.setItem("arena_intel_landing_v2", v ? "1" : "0");
-  } catch (_) {}
-}
-
-function applyLandingVisibility() {
-  const hero = $("#landing-hero");
-  const compact = $("#flow-hint");
-  const legend = $("#tabs-legend");
-  const gone = landingDismissed();
-  if (hero) hero.hidden = gone;
-  if (compact) compact.hidden = !gone;
-  if (legend) legend.hidden = gone;
-  document.body.classList.toggle("landing-compact", gone);
-}
-
-function setupLanding() {
-  applyLandingVisibility();
-  $("#landing-dismiss")?.addEventListener("click", () => {
-    setLandingDismissed(true);
-    applyLandingVisibility();
-    showToast("Tip hidden — use What is this? anytime");
+  const moreBtn = $("#more-tools-btn");
+  const menu = $("#more-menu");
+  moreBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (!menu) return;
+    const open = menu.hidden;
+    menu.hidden = !open;
+    moreBtn.setAttribute("aria-expanded", open ? "true" : "false");
   });
-  $("#flow-hint-show-landing")?.addEventListener("click", () => {
-    setLandingDismissed(false);
-    applyLandingVisibility();
-    $("#landing-hero")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.addEventListener("click", (e) => {
+    if (!menu || menu.hidden) return;
+    if (e.target.closest(".more-wrap")) return;
+    menu.hidden = true;
+    moreBtn?.setAttribute("aria-expanded", "false");
   });
-  $("#landing-ctas")?.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-landing-role]");
-    if (!btn) return;
-    const role = btn.getAttribute("data-landing-role");
-    activateTab("builds", { updateHash: false });
-    if (routeState.build?.setRole) {
-      routeState.build.setRole(role, { updateHash: true });
+}
+
+function setupHelp() {
+  const panel = $("#help-panel");
+  const open = () => {
+    if (panel) panel.hidden = false;
+  };
+  const close = () => {
+    if (panel) panel.hidden = true;
+    try {
+      localStorage.setItem("arena_intel_help_v3", "1");
+    } catch (_) {}
+  };
+  $("#btn-help")?.addEventListener("click", open);
+  $("#help-close")?.addEventListener("click", close);
+  panel?.addEventListener("click", (e) => {
+    if (e.target === panel) close();
+  });
+  // First visit: show help once
+  try {
+    if (localStorage.getItem("arena_intel_help_v3") !== "1") {
+      open();
     }
-    setLandingDismissed(true);
-    applyLandingVisibility();
-    requestAnimationFrame(() => {
-      $("#role-pills")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-    showToast(`${role} builds — pick a god below`);
-  });
+  } catch (_) {}
 }
 
 function currentHash() {
@@ -3931,42 +4110,31 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta) {
     deeplink: `#gods/${encodeURIComponent(g.name)}`,
   };
   return `
-    <div class="card build-card god-role-build ${roleClass(role)} ${isAspect ? "is-aspect" : ""}">
-      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
-      <p class="card-plain-what">
-        <strong>${escapeHtml(g.name)}</strong> · ${escapeHtml(label)} —
-        buy top → bottom${isAspect ? " (aspect kit path)" : " (base kit path)"}.
-      </p>
+    <div class="card build-card god-role-build simple-build ${roleClass(role)} ${isAspect ? "is-aspect" : ""}">
       <h3>${escapeHtml(label)}</h3>
-      <div class="build-meta">
-        ${isAspect ? `<span class="pill aspect">aspect</span>` : `<span class="pill">base kit</span>`}
-        ${gb.archetype ? `<span class="pill hot">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
-        <span class="pill">actives ${nAct}/${maxA}</span>
-        <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
-      </div>
+      <p class="card-plain-what">Buy top → bottom${isAspect ? " · aspect" : " · base kit"}</p>
       ${
         isAspect && (gb.aspect_description || aspectMeta?.description)
-          ? `<p class="aspect-blurb">${escapeHtml(gb.aspect_description || aspectMeta.description)}</p>`
+          ? `<p class="aspect-blurb">${escapeHtml(
+              String(gb.aspect_description || aspectMeta.description).slice(0, 180)
+            )}</p>`
           : ""
       }
-      ${
-        (gb.kit_effects || []).length
-          ? `<div class="kit-effects"><span class="muted">Kit effects:</span> ${(gb.kit_effects || [])
-              .slice(0, 6)
-              .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
-              .join("")}</div>`
-          : ""
-      }
-      <p class="muted why">${escapeHtml(gb.why || "")}</p>
-      <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(gb.starter?.name || "—")}${
-        gb.starter?.why ? ` <span class="item-why">— ${escapeHtml(gb.starter.why)}</span>` : ""
-      }</div>
+      <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>
       ${loadoutRail(items)}
-      <ol class="buy-list">
-        ${items.map((it, i) => buyRow(it, i + 1)).join("")}
+      <ol class="buy-list simple-buy">
+        ${items.map((it, i) => buyRow(it, i + 1, { simple: true })).join("")}
       </ol>
       <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
-      ${trustLine(isAspect ? "aspect path" : "base kit path")}
+      <details class="extra-details">
+        <summary>Why this path?</summary>
+        <p class="why">${escapeHtml(gb.why || "")}</p>
+        <div class="build-meta">
+          ${gb.archetype ? `<span class="pill">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
+          <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
+          <span class="pill">actives ${nAct}/${maxA}</span>
+        </div>
+      </details>
       ${shareBar(shareData)}
     </div>`;
 }
@@ -4018,48 +4186,37 @@ function setupBuilds() {
 
     setActiveRoleTheme(activeRole);
     const rj = $("#role-job");
-    rj.className = `card role-job ${roleClass(activeRole)}`;
-    rj.innerHTML = `
-      <div class="breadcrumb-bar">CONQUEST // <strong>${escapeHtml(activeRole.toUpperCase())}</strong> // ROLE JOB</div>
-      <div class="role-job-head">
-        <h2>${escapeHtml(job.title)}</h2>
-        <span class="pill hot">Job only — not a full build</span>
-      </div>
-      <p class="role-job-blurb">${escapeHtml(job.blurb || t.description || "")}</p>
-      <div class="build-meta">
-        ${pri.map((p) => `<span class="pill">${escapeHtml(p)}</span>`).join("")}
-        ${st ? `<span class="pill ice">Typical starter: ${escapeHtml(st.name)}</span>` : ""}
-      </div>
-      ${
-        commons.length
-          ? `<p class="muted common-label">Items this role often likes (unordered — use a god card for buy order):</p>
-             <div class="build-line">${commons
-               .slice(0, 8)
-               .map((it, i) => chip(it, String(i + 1)))
-               .join("")}</div>`
-          : ""
-      }
-      <p class="muted" style="margin:0">
-        <strong>Next:</strong> scroll down and open a <strong>god card</strong> —
-        that card is the real build (this box is only the role’s job description).
-      </p>
-      ${trustLine("role job only")}
-    `;
+    if (rj) {
+      rj.className = `card role-job ${roleClass(activeRole)}`;
+      rj.innerHTML = `
+        <div class="role-job-head">
+          <h2>${escapeHtml(job.title)}</h2>
+        </div>
+        <p class="role-job-blurb">${escapeHtml(job.blurb || t.description || "")}</p>
+        ${
+          st
+            ? `<p class="muted">Common starter idea: <strong>${escapeHtml(st.name)}</strong> — still pick a god below for a full path.</p>`
+            : ""
+        }
+        <p class="muted" style="margin:0">This is only role context. The <strong>god cards below</strong> are the real builds.</p>
+      `;
+    }
 
     const q = (search.value || "").toLowerCase().trim();
     let gods = [...(data?.recommended_gods || [])].sort(
       (a, b) => (a.rank ?? 99) - (b.rank ?? 99)
     );
     if (q) gods = gods.filter((g) => (g.god || "").toLowerCase().includes(q));
-    $("#build-god-count").textContent = `${gods.length} kit-fit builds · ${activeRole}`;
+    const countEl = $("#build-god-count");
+    if (countEl) countEl.textContent = `(${gods.length} in ${activeRole})`;
 
     $("#build-gods").innerHTML = gods.length
       ? gods.map((gb) => godBuildCard(gb, activeRole)).join("")
       : emptyHud(
           "No gods match",
           q
-            ? `Nothing in ${activeRole} matches “${q}”. Clear the filter or try another role.`
-            : `No kit-fit builds exported for ${activeRole} yet.`
+            ? `Nothing in ${activeRole} matches “${q}”. Clear the search or try another role.`
+            : `No builds for ${activeRole} yet.`
         );
   };
 
@@ -4106,64 +4263,45 @@ function godBuildCard(gb, role) {
     footerLeft: `CONQUEST // ${role.toUpperCase()}`,
     deeplink: `#gods/${encodeURIComponent(gb.god)}`,
   };
+  const shortWhy = String(gb.why || "").split(".")[0];
   return `
-    <article class="card build-card god-build-card ${roleClass(role)}">
-      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
-      <p class="card-plain-what">
-        <strong>${escapeHtml(gb.god)}</strong> · ${escapeHtml(role)} —
-        buy in this order (top → bottom). Made for this god’s kit${gb.is_aspect ? " + aspect" : ""}.
-      </p>
+    <article class="card build-card god-build-card simple-build ${roleClass(role)}">
       <header class="gbc-head">
         <h3>
-          <span class="tier-${gb.tier || ""}">[${gb.tier || "?"}]</span>
           ${escapeHtml(gb.god)}
+          <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
         </h3>
-        <div class="muted gbc-meta">#${gb.rank ?? "—"} · ${escapeHtml(gb.damage_type || "")} · ${escapeHtml(gb.scaling || "—")} scale</div>
+        <p class="card-plain-what">
+          <strong>${escapeHtml(role)}</strong> buy order — top first${gb.is_aspect ? " · aspect path" : ""}
+        </p>
       </header>
-      <div class="build-meta">
-        ${gb.is_aspect ? `<span class="pill aspect">aspect</span>` : ""}
-        ${gb.archetype ? `<span class="pill hot">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : `<span class="pill">kit-fit</span>`}
-        <span class="pill">actives ${ga}/${maxG}</span>
-        <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
-        ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
-        ${gb.patch_trajectory ? `<span class="pill ice">${escapeHtml(gb.patch_trajectory)}</span>` : ""}
-      </div>
-      ${
-        gb.is_aspect && gb.aspect_name
-          ? `<div class="aspect-blurb"><strong>${escapeHtml(gb.aspect_name)}</strong>${
-              gb.aspect_description ? ` — ${escapeHtml(String(gb.aspect_description).slice(0, 160))}` : ""
-            }</div>`
-          : ""
-      }
-      ${
-        effects.length
-          ? `<div class="kit-effects"><span class="muted">Kit effects:</span> ${effects
-              .slice(0, 6)
-              .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
-              .join("")}</div>`
-          : ""
-      }
-      ${
-        (gb.kit_tags || []).length
-          ? `<div class="kit-tags">${(gb.kit_tags || [])
-              .slice(0, 8)
-              .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
-              .join("")}</div>`
-          : ""
-      }
-      <p class="why">${escapeHtml(gb.why || "")}</p>
-      <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(gb.starter?.name || "—")}${
-        gb.starter?.why ? ` <span class="item-why">— ${escapeHtml(gb.starter.why)}</span>` : ""
-      }</div>
+      ${shortWhy ? `<p class="why simple-why">${escapeHtml(shortWhy)}.</p>` : ""}
+      <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>
       ${loadoutRail(itemsG)}
-      <ol class="buy-list">
-        ${itemsG.map((it, i) => buyRow(it, i + 1)).join("")}
+      <ol class="buy-list simple-buy">
+        ${itemsG.map((it, i) => buyRow(it, i + 1, { simple: true })).join("")}
       </ol>
       <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
-      ${trustLine("kit-fit path")}
+      <details class="extra-details">
+        <summary>More detail</summary>
+        <div class="build-meta">
+          ${gb.archetype ? `<span class="pill">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
+          <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
+          ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
+        </div>
+        ${
+          effects.length
+            ? `<div class="kit-effects">${effects
+                .slice(0, 6)
+                .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
+                .join("")}</div>`
+            : ""
+        }
+        <p class="why">${escapeHtml(gb.why || "")}</p>
+      </details>
       <div class="card-actions">
-        <button type="button" class="btn-share" data-share-id="${registerShare(shareData)}">Share intel card</button>
-        <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">Open full god page →</button>
+        <button type="button" class="btn-share" data-share-id="${registerShare(shareData)}">Share</button>
+        <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">All roles for this god →</button>
       </div>
     </article>`;
 }
@@ -4180,21 +4318,25 @@ function chip(it, n) {
   </span>`;
 }
 
-function buyRow(it, n) {
+function buyRow(it, n, opts = {}) {
   if (!it) return "";
   const kind = slotKind(it);
+  const simple = !!opts.simple;
   const tags = [];
-  if (it.slot) tags.push({ t: it.slot, metal: kind });
-  if (it.is_active) tags.push({ t: "active", metal: "active" });
-  if (it.pen) tags.push({ t: `pen ${it.pen}`, metal: "pen" });
-  if (it.damp) tags.push({ t: `damp ${it.damp}`, metal: "mitigate" });
-  if (it.plat) tags.push({ t: `plat ${it.plat}`, metal: "mitigate" });
-  if (it.ten) tags.push({ t: `ten ${it.ten}`, metal: "mitigate" });
+  if (!simple) {
+    if (it.slot) tags.push({ t: it.slot, metal: kind });
+    if (it.is_active) tags.push({ t: "active", metal: "active" });
+    if (it.pen) tags.push({ t: `pen ${it.pen}`, metal: "pen" });
+    if (it.damp) tags.push({ t: `damp ${it.damp}`, metal: "mitigate" });
+    if (it.plat) tags.push({ t: `plat ${it.plat}`, metal: "mitigate" });
+    if (it.ten) tags.push({ t: `ten ${it.ten}`, metal: "mitigate" });
+  }
   if (it.troll) tags.push({ t: "troll", metal: "troll" });
-  if (it.counter) tags.push({ t: "counter", metal: "counter" });
+  if (it.counter || it.is_diff) tags.push({ t: "counter", metal: "counter" });
+  if (it.is_active && simple) tags.push({ t: "active", metal: "active" });
   const slotClass = `is-${kind}${it.is_diff ? " is-diff" : ""}`;
   const why = it.why
-    ? `<details class="item-why-details"><summary>Why this?</summary><div class="item-why">${escapeHtml(
+    ? `<details class="item-why-details"><summary>Why?</summary><div class="item-why">${escapeHtml(
         it.why
       )}</div></details>`
     : "";
@@ -5244,7 +5386,7 @@ function setupCounter() {
 async function main() {
   setupTabs();
   setupShareUi();
-  setupLanding();
+  setupHelp();
   const loading = $("#loading");
   try {
     await loadData();

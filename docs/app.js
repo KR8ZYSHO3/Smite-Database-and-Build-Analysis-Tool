@@ -89,20 +89,16 @@ function shareBar(data) {
   if (!data.deeplink) data.deeplink = deeplinkForShare(data);
   const id = registerShare(data);
   return `<div class="card-actions">
-    <button type="button" class="btn-share" data-share-id="${id}">Share intel card</button>
+    <button type="button" class="btn-share" data-share-id="${id}">Share</button>
   </div>`;
 }
 
 function trustLine(extra) {
-  return `<p class="trust-line">Patch-weighted model · not live WR · ≤2 shop actives${
-    extra ? ` · ${escapeHtml(extra)}` : ""
-  }</p>`;
+  return `<p class="trust-line">Not live win rates${extra ? ` · ${escapeHtml(extra)}` : ""}</p>`;
 }
 
 function emptyHud(title, body) {
-  return `<div class="empty-hud card hud">
-    <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
-    <div class="empty-hud-kicker">ARENA INTEL</div>
+  return `<div class="empty-hud card">
     <div class="empty-hud-title">${escapeHtml(title)}</div>
     <p class="muted">${escapeHtml(body)}</p>
   </div>`;
@@ -447,12 +443,20 @@ const routeState = {
   build: null, // { getRole, setRole }
 };
 
+const ADVANCED_TABS = new Set(["counter", "troll", "tiers", "items", "about"]);
+
 function activateTab(tab, { updateHash = true } = {}) {
   if (!VALID_TABS.has(tab)) tab = "builds";
-  $$(".tab-btn").forEach((b) => b.classList.toggle("active", b.dataset.tab === tab));
+  $$(".tab-btn").forEach((b) => {
+    if (b.classList.contains("more-trigger")) {
+      b.classList.toggle("active", ADVANCED_TABS.has(tab));
+      return;
+    }
+    b.classList.toggle("active", b.dataset.tab === tab);
+  });
   $$(".mobile-tab").forEach((b) => {
     if (b.dataset.tab === "more") {
-      b.classList.toggle("active", ["tiers", "items", "about"].includes(tab));
+      b.classList.toggle("active", ["troll", "tiers", "items", "about"].includes(tab));
     } else {
       b.classList.toggle("active", b.dataset.tab === tab);
     }
@@ -460,6 +464,10 @@ function activateTab(tab, { updateHash = true } = {}) {
   $$(".panel").forEach((p) => p.classList.toggle("active", p.id === `panel-${tab}`));
   const sheet = $("#mobile-more-sheet");
   if (sheet) sheet.hidden = true;
+  const menu = $("#more-menu");
+  if (menu) menu.hidden = true;
+  const moreBtn = $("#more-tools-btn");
+  if (moreBtn) moreBtn.setAttribute("aria-expanded", "false");
   if (updateHash) syncHashFromUi(tab);
   return tab;
 }
@@ -474,65 +482,51 @@ function setupTabs() {
     activateTab(tab, { updateHash: true });
   };
   $$(".tab-btn").forEach((btn) => {
+    if (btn.classList.contains("more-trigger")) return;
     btn.addEventListener("click", () => onTab(btn.dataset.tab));
   });
-  $$(".mobile-tab, .mobile-sheet-btn").forEach((btn) => {
+  $$(".mobile-tab, .mobile-sheet-btn, .more-item").forEach((btn) => {
     btn.addEventListener("click", () => onTab(btn.dataset.tab));
   });
-}
-
-function landingDismissed() {
-  try {
-    return localStorage.getItem("arena_intel_landing_v2") === "1";
-  } catch {
-    return false;
-  }
-}
-
-function setLandingDismissed(v) {
-  try {
-    localStorage.setItem("arena_intel_landing_v2", v ? "1" : "0");
-  } catch (_) {}
-}
-
-function applyLandingVisibility() {
-  const hero = $("#landing-hero");
-  const compact = $("#flow-hint");
-  const legend = $("#tabs-legend");
-  const gone = landingDismissed();
-  if (hero) hero.hidden = gone;
-  if (compact) compact.hidden = !gone;
-  if (legend) legend.hidden = gone;
-  document.body.classList.toggle("landing-compact", gone);
-}
-
-function setupLanding() {
-  applyLandingVisibility();
-  $("#landing-dismiss")?.addEventListener("click", () => {
-    setLandingDismissed(true);
-    applyLandingVisibility();
-    showToast("Tip hidden — use What is this? anytime");
+  const moreBtn = $("#more-tools-btn");
+  const menu = $("#more-menu");
+  moreBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (!menu) return;
+    const open = menu.hidden;
+    menu.hidden = !open;
+    moreBtn.setAttribute("aria-expanded", open ? "true" : "false");
   });
-  $("#flow-hint-show-landing")?.addEventListener("click", () => {
-    setLandingDismissed(false);
-    applyLandingVisibility();
-    $("#landing-hero")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  document.addEventListener("click", (e) => {
+    if (!menu || menu.hidden) return;
+    if (e.target.closest(".more-wrap")) return;
+    menu.hidden = true;
+    moreBtn?.setAttribute("aria-expanded", "false");
   });
-  $("#landing-ctas")?.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-landing-role]");
-    if (!btn) return;
-    const role = btn.getAttribute("data-landing-role");
-    activateTab("builds", { updateHash: false });
-    if (routeState.build?.setRole) {
-      routeState.build.setRole(role, { updateHash: true });
+}
+
+function setupHelp() {
+  const panel = $("#help-panel");
+  const open = () => {
+    if (panel) panel.hidden = false;
+  };
+  const close = () => {
+    if (panel) panel.hidden = true;
+    try {
+      localStorage.setItem("arena_intel_help_v3", "1");
+    } catch (_) {}
+  };
+  $("#btn-help")?.addEventListener("click", open);
+  $("#help-close")?.addEventListener("click", close);
+  panel?.addEventListener("click", (e) => {
+    if (e.target === panel) close();
+  });
+  // First visit: show help once
+  try {
+    if (localStorage.getItem("arena_intel_help_v3") !== "1") {
+      open();
     }
-    setLandingDismissed(true);
-    applyLandingVisibility();
-    requestAnimationFrame(() => {
-      $("#role-pills")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-    showToast(`${role} builds — pick a god below`);
-  });
+  } catch (_) {}
 }
 
 function currentHash() {
@@ -1182,42 +1176,31 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta) {
     deeplink: `#gods/${encodeURIComponent(g.name)}`,
   };
   return `
-    <div class="card build-card god-role-build ${roleClass(role)} ${isAspect ? "is-aspect" : ""}">
-      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
-      <p class="card-plain-what">
-        <strong>${escapeHtml(g.name)}</strong> · ${escapeHtml(label)} —
-        buy top → bottom${isAspect ? " (aspect kit path)" : " (base kit path)"}.
-      </p>
+    <div class="card build-card god-role-build simple-build ${roleClass(role)} ${isAspect ? "is-aspect" : ""}">
       <h3>${escapeHtml(label)}</h3>
-      <div class="build-meta">
-        ${isAspect ? `<span class="pill aspect">aspect</span>` : `<span class="pill">base kit</span>`}
-        ${gb.archetype ? `<span class="pill hot">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
-        <span class="pill">actives ${nAct}/${maxA}</span>
-        <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
-      </div>
+      <p class="card-plain-what">Buy top → bottom${isAspect ? " · aspect" : " · base kit"}</p>
       ${
         isAspect && (gb.aspect_description || aspectMeta?.description)
-          ? `<p class="aspect-blurb">${escapeHtml(gb.aspect_description || aspectMeta.description)}</p>`
+          ? `<p class="aspect-blurb">${escapeHtml(
+              String(gb.aspect_description || aspectMeta.description).slice(0, 180)
+            )}</p>`
           : ""
       }
-      ${
-        (gb.kit_effects || []).length
-          ? `<div class="kit-effects"><span class="muted">Kit effects:</span> ${(gb.kit_effects || [])
-              .slice(0, 6)
-              .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
-              .join("")}</div>`
-          : ""
-      }
-      <p class="muted why">${escapeHtml(gb.why || "")}</p>
-      <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(gb.starter?.name || "—")}${
-        gb.starter?.why ? ` <span class="item-why">— ${escapeHtml(gb.starter.why)}</span>` : ""
-      }</div>
+      <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>
       ${loadoutRail(items)}
-      <ol class="buy-list">
-        ${items.map((it, i) => buyRow(it, i + 1)).join("")}
+      <ol class="buy-list simple-buy">
+        ${items.map((it, i) => buyRow(it, i + 1, { simple: true })).join("")}
       </ol>
       <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
-      ${trustLine(isAspect ? "aspect path" : "base kit path")}
+      <details class="extra-details">
+        <summary>Why this path?</summary>
+        <p class="why">${escapeHtml(gb.why || "")}</p>
+        <div class="build-meta">
+          ${gb.archetype ? `<span class="pill">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
+          <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
+          <span class="pill">actives ${nAct}/${maxA}</span>
+        </div>
+      </details>
       ${shareBar(shareData)}
     </div>`;
 }
@@ -1269,48 +1252,37 @@ function setupBuilds() {
 
     setActiveRoleTheme(activeRole);
     const rj = $("#role-job");
-    rj.className = `card role-job ${roleClass(activeRole)}`;
-    rj.innerHTML = `
-      <div class="breadcrumb-bar">CONQUEST // <strong>${escapeHtml(activeRole.toUpperCase())}</strong> // ROLE JOB</div>
-      <div class="role-job-head">
-        <h2>${escapeHtml(job.title)}</h2>
-        <span class="pill hot">Job only — not a full build</span>
-      </div>
-      <p class="role-job-blurb">${escapeHtml(job.blurb || t.description || "")}</p>
-      <div class="build-meta">
-        ${pri.map((p) => `<span class="pill">${escapeHtml(p)}</span>`).join("")}
-        ${st ? `<span class="pill ice">Typical starter: ${escapeHtml(st.name)}</span>` : ""}
-      </div>
-      ${
-        commons.length
-          ? `<p class="muted common-label">Items this role often likes (unordered — use a god card for buy order):</p>
-             <div class="build-line">${commons
-               .slice(0, 8)
-               .map((it, i) => chip(it, String(i + 1)))
-               .join("")}</div>`
-          : ""
-      }
-      <p class="muted" style="margin:0">
-        <strong>Next:</strong> scroll down and open a <strong>god card</strong> —
-        that card is the real build (this box is only the role’s job description).
-      </p>
-      ${trustLine("role job only")}
-    `;
+    if (rj) {
+      rj.className = `card role-job ${roleClass(activeRole)}`;
+      rj.innerHTML = `
+        <div class="role-job-head">
+          <h2>${escapeHtml(job.title)}</h2>
+        </div>
+        <p class="role-job-blurb">${escapeHtml(job.blurb || t.description || "")}</p>
+        ${
+          st
+            ? `<p class="muted">Common starter idea: <strong>${escapeHtml(st.name)}</strong> — still pick a god below for a full path.</p>`
+            : ""
+        }
+        <p class="muted" style="margin:0">This is only role context. The <strong>god cards below</strong> are the real builds.</p>
+      `;
+    }
 
     const q = (search.value || "").toLowerCase().trim();
     let gods = [...(data?.recommended_gods || [])].sort(
       (a, b) => (a.rank ?? 99) - (b.rank ?? 99)
     );
     if (q) gods = gods.filter((g) => (g.god || "").toLowerCase().includes(q));
-    $("#build-god-count").textContent = `${gods.length} kit-fit builds · ${activeRole}`;
+    const countEl = $("#build-god-count");
+    if (countEl) countEl.textContent = `(${gods.length} in ${activeRole})`;
 
     $("#build-gods").innerHTML = gods.length
       ? gods.map((gb) => godBuildCard(gb, activeRole)).join("")
       : emptyHud(
           "No gods match",
           q
-            ? `Nothing in ${activeRole} matches “${q}”. Clear the filter or try another role.`
-            : `No kit-fit builds exported for ${activeRole} yet.`
+            ? `Nothing in ${activeRole} matches “${q}”. Clear the search or try another role.`
+            : `No builds for ${activeRole} yet.`
         );
   };
 
@@ -1357,64 +1329,45 @@ function godBuildCard(gb, role) {
     footerLeft: `CONQUEST // ${role.toUpperCase()}`,
     deeplink: `#gods/${encodeURIComponent(gb.god)}`,
   };
+  const shortWhy = String(gb.why || "").split(".")[0];
   return `
-    <article class="card build-card god-build-card ${roleClass(role)}">
-      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
-      <p class="card-plain-what">
-        <strong>${escapeHtml(gb.god)}</strong> · ${escapeHtml(role)} —
-        buy in this order (top → bottom). Made for this god’s kit${gb.is_aspect ? " + aspect" : ""}.
-      </p>
+    <article class="card build-card god-build-card simple-build ${roleClass(role)}">
       <header class="gbc-head">
         <h3>
-          <span class="tier-${gb.tier || ""}">[${gb.tier || "?"}]</span>
           ${escapeHtml(gb.god)}
+          <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
         </h3>
-        <div class="muted gbc-meta">#${gb.rank ?? "—"} · ${escapeHtml(gb.damage_type || "")} · ${escapeHtml(gb.scaling || "—")} scale</div>
+        <p class="card-plain-what">
+          <strong>${escapeHtml(role)}</strong> buy order — top first${gb.is_aspect ? " · aspect path" : ""}
+        </p>
       </header>
-      <div class="build-meta">
-        ${gb.is_aspect ? `<span class="pill aspect">aspect</span>` : ""}
-        ${gb.archetype ? `<span class="pill hot">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : `<span class="pill">kit-fit</span>`}
-        <span class="pill">actives ${ga}/${maxG}</span>
-        <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
-        ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
-        ${gb.patch_trajectory ? `<span class="pill ice">${escapeHtml(gb.patch_trajectory)}</span>` : ""}
-      </div>
-      ${
-        gb.is_aspect && gb.aspect_name
-          ? `<div class="aspect-blurb"><strong>${escapeHtml(gb.aspect_name)}</strong>${
-              gb.aspect_description ? ` — ${escapeHtml(String(gb.aspect_description).slice(0, 160))}` : ""
-            }</div>`
-          : ""
-      }
-      ${
-        effects.length
-          ? `<div class="kit-effects"><span class="muted">Kit effects:</span> ${effects
-              .slice(0, 6)
-              .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
-              .join("")}</div>`
-          : ""
-      }
-      ${
-        (gb.kit_tags || []).length
-          ? `<div class="kit-tags">${(gb.kit_tags || [])
-              .slice(0, 8)
-              .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
-              .join("")}</div>`
-          : ""
-      }
-      <p class="why">${escapeHtml(gb.why || "")}</p>
-      <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(gb.starter?.name || "—")}${
-        gb.starter?.why ? ` <span class="item-why">— ${escapeHtml(gb.starter.why)}</span>` : ""
-      }</div>
+      ${shortWhy ? `<p class="why simple-why">${escapeHtml(shortWhy)}.</p>` : ""}
+      <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>
       ${loadoutRail(itemsG)}
-      <ol class="buy-list">
-        ${itemsG.map((it, i) => buyRow(it, i + 1)).join("")}
+      <ol class="buy-list simple-buy">
+        ${itemsG.map((it, i) => buyRow(it, i + 1, { simple: true })).join("")}
       </ol>
       <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
-      ${trustLine("kit-fit path")}
+      <details class="extra-details">
+        <summary>More detail</summary>
+        <div class="build-meta">
+          ${gb.archetype ? `<span class="pill">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
+          <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
+          ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
+        </div>
+        ${
+          effects.length
+            ? `<div class="kit-effects">${effects
+                .slice(0, 6)
+                .map((t) => `<span class="tag effect">${escapeHtml(t)}</span>`)
+                .join("")}</div>`
+            : ""
+        }
+        <p class="why">${escapeHtml(gb.why || "")}</p>
+      </details>
       <div class="card-actions">
-        <button type="button" class="btn-share" data-share-id="${registerShare(shareData)}">Share intel card</button>
-        <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">Open full god page →</button>
+        <button type="button" class="btn-share" data-share-id="${registerShare(shareData)}">Share</button>
+        <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">All roles for this god →</button>
       </div>
     </article>`;
 }
@@ -1431,21 +1384,25 @@ function chip(it, n) {
   </span>`;
 }
 
-function buyRow(it, n) {
+function buyRow(it, n, opts = {}) {
   if (!it) return "";
   const kind = slotKind(it);
+  const simple = !!opts.simple;
   const tags = [];
-  if (it.slot) tags.push({ t: it.slot, metal: kind });
-  if (it.is_active) tags.push({ t: "active", metal: "active" });
-  if (it.pen) tags.push({ t: `pen ${it.pen}`, metal: "pen" });
-  if (it.damp) tags.push({ t: `damp ${it.damp}`, metal: "mitigate" });
-  if (it.plat) tags.push({ t: `plat ${it.plat}`, metal: "mitigate" });
-  if (it.ten) tags.push({ t: `ten ${it.ten}`, metal: "mitigate" });
+  if (!simple) {
+    if (it.slot) tags.push({ t: it.slot, metal: kind });
+    if (it.is_active) tags.push({ t: "active", metal: "active" });
+    if (it.pen) tags.push({ t: `pen ${it.pen}`, metal: "pen" });
+    if (it.damp) tags.push({ t: `damp ${it.damp}`, metal: "mitigate" });
+    if (it.plat) tags.push({ t: `plat ${it.plat}`, metal: "mitigate" });
+    if (it.ten) tags.push({ t: `ten ${it.ten}`, metal: "mitigate" });
+  }
   if (it.troll) tags.push({ t: "troll", metal: "troll" });
-  if (it.counter) tags.push({ t: "counter", metal: "counter" });
+  if (it.counter || it.is_diff) tags.push({ t: "counter", metal: "counter" });
+  if (it.is_active && simple) tags.push({ t: "active", metal: "active" });
   const slotClass = `is-${kind}${it.is_diff ? " is-diff" : ""}`;
   const why = it.why
-    ? `<details class="item-why-details"><summary>Why this?</summary><div class="item-why">${escapeHtml(
+    ? `<details class="item-why-details"><summary>Why?</summary><div class="item-why">${escapeHtml(
         it.why
       )}</div></details>`
     : "";
@@ -2495,7 +2452,7 @@ function setupCounter() {
 async function main() {
   setupTabs();
   setupShareUi();
-  setupLanding();
+  setupHelp();
   const loading = $("#loading");
   try {
     await loadData();
