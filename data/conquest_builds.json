@@ -34445,26 +34445,6 @@
         },
         "starter_alternatives": [
           {
-            "name": "Death's Toll",
-            "score": 38.2,
-            "cost": 650,
-            "type": "Starter",
-            "slot": "power",
-            "momentum": 0.0,
-            "ladder_tier": null,
-            "ladder_rank": null,
-            "ladder_score": null,
-            "stats": {
-              "hp": 100.0
-            },
-            "pen": 0,
-            "damp": 0,
-            "plat": 0,
-            "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
-            "is_active": false
-          },
-          {
             "name": "Bluestone Pendant",
             "score": 36.2,
             "cost": 600,
@@ -34484,6 +34464,26 @@
             "plat": 0,
             "ten": 0,
             "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Hit: +32 Physical Damage over 2s.\n*Subsequent hits on the same target: 50% bonus damage for 3s",
+            "is_active": false
+          },
+          {
+            "name": "Death's Toll",
+            "score": 30.2,
+            "cost": 650,
+            "type": "Starter",
+            "slot": "power",
+            "momentum": 0.0,
+            "ladder_tier": null,
+            "ladder_rank": null,
+            "ladder_score": null,
+            "stats": {
+              "hp": 100.0
+            },
+            "pen": 0,
+            "damp": 0,
+            "plat": 0,
+            "ten": 0,
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
             "is_active": false
           }
         ],
@@ -35418,23 +35418,24 @@
           "avg_str_scaling": 97.1,
           "avg_int_scaling": 44.1,
           "starter": {
-            "name": "Death's Toll",
-            "score": 38.2,
+            "name": "Warrior's Axe",
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.0,
+            "momentum": -0.31,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0
+              "pprot": 10.0,
+              "mprot": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nDamage a God:\n*+20 (+2 per Level) Bonus True Damage\n*+40 (+1 per Level) Heal\nHits only one God per act",
             "is_active": false,
             "why": "Solo starter \u2014 lane pressure & sustain"
           },
@@ -35916,23 +35917,24 @@
           "avg_str_scaling": 65.9,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Death's Toll",
-            "score": 38.2,
+            "name": "Warrior's Axe",
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.0,
+            "momentum": -0.31,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0
+              "pprot": 10.0,
+              "mprot": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nDamage a God:\n*+20 (+2 per Level) Bonus True Damage\n*+40 (+1 per Level) Heal\nHits only one God per act",
             "is_active": false,
             "why": "Solo starter \u2014 lane pressure & sustain"
           },
@@ -36883,23 +36885,24 @@
           "avg_str_scaling": 69.9,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Death's Toll",
-            "score": 38.2,
+            "name": "Warrior's Axe",
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.0,
+            "momentum": -0.31,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0
+              "pprot": 10.0,
+              "mprot": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nDamage a God:\n*+20 (+2 per Level) Bonus True Damage\n*+40 (+1 per Level) Heal\nHits only one God per act",
             "is_active": false,
             "why": "Solo starter \u2014 lane pressure & sustain"
           },
@@ -37865,23 +37868,24 @@
           "avg_str_scaling": 77.5,
           "avg_int_scaling": 45.8,
           "starter": {
-            "name": "Death's Toll",
-            "score": 38.2,
+            "name": "Warrior's Axe",
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.0,
+            "momentum": -0.31,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0
+              "pprot": 10.0,
+              "mprot": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nDamage a God:\n*+20 (+2 per Level) Bonus True Damage\n*+40 (+1 per Level) Heal\nHits only one God per act",
             "is_active": false,
             "why": "Solo starter \u2014 lane pressure & sustain"
           },
@@ -38340,23 +38344,24 @@
           "avg_str_scaling": 65.2,
           "avg_int_scaling": 34.1,
           "starter": {
-            "name": "Death's Toll",
-            "score": 38.2,
+            "name": "Warrior's Axe",
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.0,
+            "momentum": -0.31,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0
+              "pprot": 10.0,
+              "mprot": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nDamage a God:\n*+20 (+2 per Level) Bonus True Damage\n*+40 (+1 per Level) Heal\nHits only one God per act",
             "is_active": false,
             "why": "Solo starter \u2014 lane pressure & sustain"
           },
@@ -38810,23 +38815,24 @@
           "avg_str_scaling": 47.0,
           "avg_int_scaling": 51.3,
           "starter": {
-            "name": "Death's Toll",
-            "score": 38.2,
+            "name": "Warrior's Axe",
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.0,
+            "momentum": -0.31,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0
+              "pprot": 10.0,
+              "mprot": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nDamage a God:\n*+20 (+2 per Level) Bonus True Damage\n*+40 (+1 per Level) Heal\nHits only one God per act",
             "is_active": false,
             "why": "Solo starter \u2014 lane pressure & sustain"
           },
@@ -40717,23 +40723,24 @@
           "avg_str_scaling": 84.8,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Death's Toll",
-            "score": 38.2,
+            "name": "Warrior's Axe",
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.0,
+            "momentum": -0.31,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0
+              "pprot": 10.0,
+              "mprot": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nDamage a God:\n*+20 (+2 per Level) Bonus True Damage\n*+40 (+1 per Level) Heal\nHits only one God per act",
             "is_active": false,
             "why": "Solo starter \u2014 lane pressure & sustain"
           },
@@ -41214,23 +41221,24 @@
           "avg_str_scaling": 42.4,
           "avg_int_scaling": 13.3,
           "starter": {
-            "name": "Death's Toll",
-            "score": 38.2,
+            "name": "Warrior's Axe",
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.0,
+            "momentum": -0.31,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0
+              "pprot": 10.0,
+              "mprot": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nDamage a God:\n*+20 (+2 per Level) Bonus True Damage\n*+40 (+1 per Level) Heal\nHits only one God per act",
             "is_active": false,
             "why": "Solo starter \u2014 lane pressure & sustain"
           },
@@ -41694,23 +41702,24 @@
           "avg_str_scaling": 82.9,
           "avg_int_scaling": 0,
           "starter": {
-            "name": "Death's Toll",
-            "score": 38.2,
+            "name": "Warrior's Axe",
+            "score": 42.5,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.0,
+            "momentum": -0.31,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0
+              "pprot": 10.0,
+              "mprot": 10.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAttack Hit:\n*+2 (+0.3% Max Health) Heal\n*+1 (+0.1% Max Mana) Restore\nRequires Level 20 to upgrade.",
+            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nDamage a God:\n*+20 (+2 per Level) Bonus True Damage\n*+40 (+1 per Level) Heal\nHits only one God per act",
             "is_active": false,
             "why": "Solo starter \u2014 lane pressure & sustain"
           },

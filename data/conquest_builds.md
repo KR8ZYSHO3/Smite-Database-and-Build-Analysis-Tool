@@ -1210,7 +1210,7 @@ Sun Wukong · Solo · archetype «bruiser_solo» (STR / physical). Kit effects: 
 
 Chaac · Solo · archetype «sustain_solo» (STR / physical). Kit effects: channel / cast time, big ult spike, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, long_cd, pet_zone. Style burst 39%/dps 61%; patch stable (net +0.8, r5 +0.0). Patch axes (r5): damage +0.4, general +0.4, utility -0.0. Scale STR 97% / INT 44%. Path: Shifter's Shield (offline hybrid tank); Chandra's Grace (team aura / support core); Eye of Providence (team aura / support core). Actives 1/3 · pen ≈ 0.
 
-- **Starter:** Death's Toll
+- **Starter:** Warrior's Axe
 - **Buy order** (actives 1/3, pen ≈ 0.0):
   1. Shifter's Shield (defense, 2650g)
   2. Chandra's Grace (mitigate, 2300g)
@@ -1226,7 +1226,7 @@ Chaac · Solo · archetype «sustain_solo» (STR / physical). Kit effects: chann
 
 Osiris · Solo · archetype «tank_solo» (STR / physical). Kit effects: basic-attack kit, attack-speed steroid, pet / deployable, hard crowd control, dash / leap engage, lots of CC. Tags: aa, as_steroid, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone. Style burst 26%/dps 74%; patch stable (net -0.3, r5 +0.0). Patch axes (r5): general -0.2, attack_speed -0.1, damage -0.0. Scale STR 66% / INT 0%. Path: Shifter's Shield (offline hybrid tank); Gauntlet of Thebes (team aura / support core); Breastplate of Valor (physical CDR defense). Actives 0/3 · pen ≈ 0.
 
-- **Starter:** Death's Toll
+- **Starter:** Warrior's Axe
 - **Buy order** (actives 0/3, pen ≈ 0.0):
   1. Shifter's Shield (defense, 2650g)
   2. Gauntlet of Thebes (defense, 2200g)
@@ -1258,7 +1258,7 @@ Jormungandr · Solo · archetype «mage_solo» (INT / magical). Kit effects: cha
 
 Bellona · Solo · archetype «sustain_solo» (STR / physical). Kit effects: basic-attack kit, self heal / drain, shields, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, burst, gap_close, hard_cc, heal, heavy_shield, high_cc. Style burst 64%/dps 36%; patch volatile (net +0.4, r5 +0.6). Patch axes (r5): damage +0.6. Scale STR 70% / INT 0%. Path: Shifter's Shield (offline hybrid tank); Leviathan's Hide (Solo path fit for kit profile); Stone of Binding (Stone of Binding — CC setup shred). Actives 1/3 · pen ≈ 0.
 
-- **Starter:** Death's Toll
+- **Starter:** Warrior's Axe
 - **Buy order** (actives 1/3, pen ≈ 0.0):
   1. Shifter's Shield (defense, 2650g)
   2. Leviathan's Hide (mitigate, 2500g)
@@ -1290,7 +1290,7 @@ Hua Mulan · Solo · archetype «bruiser_solo» (STR / physical). Kit effects: b
 
 Mordred · Solo · archetype «sustain_solo» (STR / physical). Kit effects: damage over time, channel / cast time, big ult spike, attack-speed steroid, self heal / drain, heavy healing. Tags: anti_cc, as_steroid, burst, channel, dot, gap_close, hard_cc, heal. Style burst 58%/dps 42%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): survivability +0.0, general -0.0, heal +0.0. Scale STR 77% / INT 46%. Path: Eye of Providence (team aura / support core); Shield of the Phoenix (shield / phoenix-style bulk); Breastplate of Valor (physical CDR defense). Actives 1/3 · pen ≈ 0.
 
-- **Starter:** Death's Toll
+- **Starter:** Warrior's Axe
 - **Buy order** (actives 1/3, pen ≈ 0.0):
   1. Eye of Providence (defense, 2300g)
   2. Shield of the Phoenix (mitigate, 2400g)
@@ -1306,7 +1306,7 @@ Mordred · Solo · archetype «sustain_solo» (STR / physical). Kit effects: dam
 
 Odin · Solo · archetype «shield_solo» (STR / physical). Kit effects: big ult spike, basic-attack kit, attack-speed steroid, shields, hard crowd control, dash / leap engage. Tags: aa, as_steroid, burst, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 64%/dps 36%; patch volatile (net +1.1, r5 +0.1). Patch axes (r5): damage +0.1, survivability +0.1. Scale STR 65% / INT 34%. Path: Eye of Erebus (Solo path fit for kit profile); Chandra's Grace (team aura / support core); Shield of the Phoenix (shield / phoenix-style bulk). Actives 3/3 · pen ≈ 0.
 
-- **Starter:** Death's Toll
+- **Starter:** Warrior's Axe
 - **Buy order** (actives 3/3, pen ≈ 0.0):
   1. Eye of Erebus (defense, active, 2600g)
   2. Chandra's Grace (mitigate, 2300g)
@@ -1322,7 +1322,7 @@ Odin · Solo · archetype «shield_solo» (STR / physical). Kit effects: big ult
 
 Amaterasu · Solo · archetype «sustain_solo» (STR / physical). Kit effects: big ult spike, self heal / drain, hard crowd control, dash / leap engage, CC immunity in kit, sustained DPS. Tags: anti_cc, dot, gap_close, hard_cc, heal, long_cd, self_sustain, shield. Style burst 2%/dps 98%; patch volatile (net +1.3, r5 +0.6). Patch axes (r5): damage +0.6. Scale STR 47% / INT 51%. Path: Amanita Charm (Solo path fit for kit profile); Contagion (team anti-heal aura); Gladiator's Shield (Solo path fit for kit profile). Actives 3/3 · pen ≈ 0.
 
-- **Starter:** Death's Toll
+- **Starter:** Warrior's Axe
 - **Buy order** (actives 3/3, pen ≈ 0.0):
   1. Amanita Charm (defense, active, 2350g)
   2. Contagion (defense, 2400g)
@@ -1386,7 +1386,7 @@ Gilgamesh · Solo · archetype «bruiser_solo» (STR / physical). Kit effects: p
 
 Hercules · Solo · archetype «sustain_solo» (STR / physical). Kit effects: big ult spike, attack-speed steroid, self heal / drain, hard crowd control, dash / leap engage, lots of CC. Tags: as_steroid, gap_close, hard_cc, heal, high_cc, long_cd, self_sustain, sustained. Style burst 37%/dps 63%; patch volatile (net -1.1, r5 +0.0). Patch axes (r5): damage -0.7, survivability -0.4, general -0.2. Scale STR 85% / INT 0%. Path: Shifter's Shield (offline hybrid tank); Spectral Armor (mitigate enemy crit (Spectral line)); Shield of the Phoenix (shield / phoenix-style bulk). Actives 0/3 · pen ≈ 0.
 
-- **Starter:** Death's Toll
+- **Starter:** Warrior's Axe
 - **Buy order** (actives 0/3, pen ≈ 0.0):
   1. Shifter's Shield (defense, 2650g)
   2. Spectral Armor (mitigate, 2300g)
@@ -1402,7 +1402,7 @@ Hercules · Solo · archetype «sustain_solo» (STR / physical). Kit effects: bi
 
 Guan Yu · Solo · archetype «sustain_solo» (STR / physical). Kit effects: damage over time, attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, dot, gap_close, hard_cc, heal, heavy_dot, long_cd, pet_zone. Style burst 15%/dps 85%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.3, survivability -0.1, cooldown -0.1. Scale STR 42% / INT 13%. Path: Eye of Erebus (Solo path fit for kit profile); Chandra's Grace (team aura / support core); Breastplate of Valor (physical CDR defense). Actives 1/3 · pen ≈ 0.
 
-- **Starter:** Death's Toll
+- **Starter:** Warrior's Axe
 - **Buy order** (actives 1/3, pen ≈ 0.0):
   1. Eye of Erebus (defense, active, 2600g)
   2. Chandra's Grace (mitigate, 2300g)
@@ -1418,7 +1418,7 @@ Guan Yu · Solo · archetype «sustain_solo» (STR / physical). Kit effects: dam
 
 Achilles · Solo · archetype «sustain_solo» (STR / physical). Kit effects: big ult spike, basic-attack kit, self heal / drain, execute / threshold, shields, hard crowd control. Tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 30%/dps 70%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.3, attack_speed +0.0, survivability +0.0. Scale STR 83% / INT 0%. Path: Shifter's Shield (offline hybrid tank); Chandra's Grace (team aura / support core); Amanita Charm (Solo path fit for kit profile). Actives 3/3 · pen ≈ 0.
 
-- **Starter:** Death's Toll
+- **Starter:** Warrior's Axe
 - **Buy order** (actives 3/3, pen ≈ 0.0):
   1. Shifter's Shield (defense, 2650g)
   2. Chandra's Grace (mitigate, 2300g)

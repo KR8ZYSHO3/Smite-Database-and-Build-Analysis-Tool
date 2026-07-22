@@ -431,10 +431,24 @@ def build_counter_build(
 
     starters = [s for s in scored if is_t1_starter(next(i for i in items if i["name"] == s.name))]
     starter_pick = pick_god_starter(starters, items, profile, bias, role, dtype)
+    # High-CC lobby: auto-attack LS starters (Death's Toll / Leather / Vamp) get
+    # shut down — can't free-hit. Prefer Warrior's Axe / Conduit / shell starters.
+    heavy_cc = bool(threat.get("need_magi")) or len(threat.get("cc_gods") or []) >= 2
     for s in starters:
         raw = next(i for i in items if i["name"] == s.name)
         s.role_score = score_starter(raw, profile, role=role)
+        nlow = s.name.lower()
+        if heavy_cc and any(k in nlow for k in ("death", "leather", "vampiric", "shroud", "gilded")):
+            s.role_score -= 55
+        if heavy_cc and role == "Solo" and any(k in nlow for k in ("warrior", "axe", "bluestone")):
+            s.role_score += 35
+        if heavy_cc and role in ("Mid", "Carry") and any(
+            k in nlow for k in ("conduit", "sands", "bluestone")
+        ):
+            s.role_score += 20
     starters.sort(key=lambda x: x.role_score, reverse=True)
+    if heavy_cc and starters:
+        starter_pick = starters[0]
     if starter_pick:
         starters = [starter_pick] + [s for s in starters if s.name != starter_pick.name]
 
@@ -495,6 +509,14 @@ def build_counter_build(
         sw = explain_item_pick(
             starters[0].name, bias=bias, role=role, effects=effects, is_starter=True
         )
+        if heavy_cc and any(
+            k in starters[0].name.lower() for k in ("warrior", "axe", "conduit", "bluestone", "sands")
+        ):
+            sw = "vs heavy CC — shell starter (LS starters get locked out)"
+        elif heavy_cc and any(
+            k in starters[0].name.lower() for k in ("death", "leather", "vampiric")
+        ):
+            sw = "⚠ LS starter is weak into this CC lobby"
         starter_card = _item_card(starters[0], why=sw)
 
     relics = [s for s in scored if is_base_relic(next(i for i in items if i["name"] == s.name))]

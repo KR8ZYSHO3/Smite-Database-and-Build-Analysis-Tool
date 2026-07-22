@@ -2036,6 +2036,49 @@ function getStarter(god, role) {
   return hit?.starter || null;
 }
 
+/** LS starters die into heavy CC (can't auto). Swap to shell when lobby locks hard. */
+function pickCounterStarter(god, role, threat) {
+  const base = getStarter(god, role);
+  const heavyCc =
+    !!threat?.need_magi || (threat?.cc_gods && threat.cc_gods.length >= 2);
+  if (!heavyCc || !base) return base;
+  const n = (base.name || "").toLowerCase();
+  const isLsStart = ["death", "leather", "vampiric", "shroud", "gilded"].some((k) =>
+    n.includes(k)
+  );
+  if (!isLsStart) return base;
+  // Prefer role-safe shell starters from known names in items catalog
+  const prefs =
+    role === "Solo"
+      ? ["warrior's axe", "warrior", "bluestone"]
+      : role === "Mid"
+        ? ["conduit", "sands of time", "sands"]
+        : role === "Carry"
+          ? ["gilded arrow", "bluestone", "leather"] // if gilded was LS path, bluestone
+          : ["selflessness", "war flag", "warrior"];
+  // If Carry was gilded (AS) not LS, keep it — only Death/Leather/Vamp swap
+  if (role === "Carry" && n.includes("gilded") && !n.includes("death")) return base;
+  const pool = (state.items || []).filter((it) => {
+    const cost = Number(it.total_cost ?? it.cost ?? 0);
+    const tier = String(it.tier || "");
+    return cost > 0 && cost <= 700 && (tier === "1" || tier === "Starter" || cost <= 650);
+  });
+  for (const key of prefs) {
+    const hit = pool.find((it) => it.name.toLowerCase().includes(key));
+    if (hit) {
+      return {
+        name: hit.name,
+        cost: hit.total_cost ?? hit.cost,
+        why: "vs heavy CC — shell starter (LS starters get locked out)",
+      };
+    }
+  }
+  return {
+    ...base,
+    why: "⚠ LS starter is weak into this CC lobby",
+  };
+}
+
 function markPathDiffs(baselineItems, counterItems) {
   const baseSet = new Set((baselineItems || []).map((i) => i.name));
   return (counterItems || []).map((it) => ({
@@ -2045,20 +2088,30 @@ function markPathDiffs(baselineItems, counterItems) {
   }));
 }
 
-function pathCompareHtml(baselineItems, counterItems, starter) {
+function pathCompareHtml(baselineItems, counterItems, kitStarter, lobbyStarter) {
   const base = baselineItems || [];
   const ctr = markPathDiffs(base, counterItems || []);
   const baseBuy = base.length
     ? base.map((it, i) => buyRow(it, i + 1)).join("")
     : `<li class="muted" style="list-style:none;padding:8px">No kit baseline for this role.</li>`;
   const ctrBuy = ctr.map((it, i) => buyRow(it, i + 1)).join("");
+  const kitS = kitStarter || lobbyStarter;
+  const lobS = lobbyStarter || kitStarter;
+  const starterDiff =
+    kitS?.name && lobS?.name && kitS.name !== lobS.name
+      ? `<p class="muted" style="margin:6px 0 0">Starter swap: <strong>${escapeHtml(
+          kitS.name
+        )}</strong> → <strong>${escapeHtml(lobS.name)}</strong>${
+          lobS.why ? ` — ${escapeHtml(lobS.why)}` : ""
+        }</p>`
+      : "";
   return `
     <div class="path-compare">
       <div class="path-col">
         <h4 class="path-col-title">Kit path</h4>
         <p class="muted path-col-sub">Default kit-fit buy order</p>
         <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(
-          starter?.name || "—"
+          kitS?.name || "—"
         )}</div>
         ${base.length ? loadoutRail(base) : ""}
         <ol class="buy-list">${baseBuy}</ol>
@@ -2067,8 +2120,9 @@ function pathCompareHtml(baselineItems, counterItems, starter) {
         <h4 class="path-col-title">Lobby path</h4>
         <p class="muted path-col-sub">Re-weighted vs enemy 5 · <span class="diff-legend">highlighted = swap</span></p>
         <div class="starter-line"><span class="tag-start">Starter</span> ${escapeHtml(
-          starter?.name || "—"
+          lobS?.name || "—"
         )}</div>
+        ${starterDiff}
         ${loadoutRail(ctr)}
         <ol class="buy-list">${ctrBuy}</ol>
       </div>
@@ -2896,7 +2950,8 @@ function runCounterFromForm({ updateHash = true } = {}) {
   const baselineItems = getBaselineItems(you, role);
   const baselineNames = baselineItems.map((i) => i.name);
   const path = markPathDiffs(baselineItems, injectCounterCores(baselineNames, threat, role));
-  const starter = getStarter(you, role);
+  const kitStarter = getStarter(you, role);
+  const lobbyStarter = pickCounterStarter(you, role, threat);
 
   const vsList = enemyGods.map((g) => g.name);
   const vs = vsList.join(", ");
@@ -2908,7 +2963,7 @@ function runCounterFromForm({ updateHash = true } = {}) {
     title: `${you.name} · ${role} · counter`,
     subtitle: `vs ${vs}${allies.allies.length ? ` · with ${allies.allies.join(", ")}` : ""}`,
     why: threat.summary || "",
-    starter: starter?.name || "",
+    starter: lobbyStarter?.name || "",
     items: itemsForShare(path),
     tags: [
       "counter",
@@ -2924,7 +2979,7 @@ function runCounterFromForm({ updateHash = true } = {}) {
       .join(",")}`,
   };
 
-  const copyTxt = copyPathText(starter?.name, path, you.name, `${role} counter`);
+  const copyTxt = copyPathText(lobbyStarter?.name, path, you.name, `${role} counter`);
   resultEl.innerHTML = `
     <article class="card build-card god-build-card simple-build ${roleClass(role)}">
       <header class="gbc-head">
@@ -2940,7 +2995,7 @@ function runCounterFromForm({ updateHash = true } = {}) {
         ${allies.need_peel_adc ? `<span class="pill ice">peel ADC</span>` : ""}
         ${path.some((p) => p.is_diff) ? `<span class="pill">swaps highlighted</span>` : ""}
       </div>
-      ${pathCompareHtml(baselineItems, path, starter)}
+      ${pathCompareHtml(baselineItems, path, kitStarter, lobbyStarter)}
       ${trustLine("not live win rates")}
       <div class="card-actions">
         <button type="button" class="btn-ghost btn-copy-path" data-copy-path="${escapeAttr(copyTxt)}">Copy list</button>

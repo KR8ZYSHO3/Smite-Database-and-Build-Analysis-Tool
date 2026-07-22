@@ -286,14 +286,15 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
             "shield": 8,
         },
         "starter_prefs": {
+            # Warrior's Axe = default Solo shell (works into CC / poke)
             "warrior": 42,
             "axe": 40,
             "bluestone": 34,
             "sundering": 30,
-            # Death's Toll / Leather Cowl — AA & sustain solo maniac path
-            "death": 36,
-            "leather": 28,
-            "gilded": 18,
+            # Death's Toll is strong AA/sustain — but hard-countered by CC (can't auto)
+            "death": 28,
+            "leather": 22,
+            "gilded": 14,
             "shroud": 12,
             "vampiric": 10,
             "selfless": -15,  # support starter — not solo identity
@@ -974,21 +975,26 @@ def pick_god_starter(
                 sc -= 40
             if "bumba" in n:
                 sc -= 35
-            # AA / self-sustain bruisers (Bellona-style) — Death's Toll LS starter
-            # is the maniac lane path, not only Warrior's Axe every time.
+            # AA / self-sustain bruisers: Death's Toll is a *conditional* maniac path.
+            # High CC shuts it down (can't auto → no LS). Default stays Warrior's Axe;
+            # salt + strong AA can flip to Death's when the lobby looks free-hit.
             if physical and (
                 "self_sustain" in tags
                 or "aa" in tags
                 or float(bias.get("aa_score") or 0) >= 0.5
             ):
+                aa_w = float(bias.get("aa_score") or 0)
+                # Only pure AA identity strongly prefers Death's; mixed kits stay Axe
                 if "death" in n:
-                    sc += 55  # Death's Toll — the maniac you faced
+                    if aa_w >= 0.65 or ("aa" in tags and "self_sustain" in tags):
+                        sc += 28  # competitive with Axe, not auto-win
+                    else:
+                        sc += 8
                 elif any(k in n for k in ("leather", "gilded")):
-                    sc += 38
+                    sc += 12
+                # Warrior's Axe remains the safe default into unknown / CC lobbies
                 if "warrior" in n or "axe" in n:
-                    sc -= 12  # still fine, but not automatic #1
-                if "bluestone" in n:
-                    sc -= 6
+                    sc += 6
 
         # Damage-type fit
         if mage:
