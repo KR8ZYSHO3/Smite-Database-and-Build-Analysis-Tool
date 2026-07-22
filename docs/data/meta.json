@@ -1,13 +1,13 @@
 {
   "game": "SMITE 2",
   "source": "https://wiki.smite2.com",
-  "exported_at": "2026-07-22T16:14:50.786404+00:00",
+  "exported_at": "2026-07-22T16:46:15.205441+00:00",
   "repo": "https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool",
   "live_url": "https://cdn.jsdelivr.net/gh/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool@main/docs/index.html",
   "live_url_alt": "https://raw.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main/docs/index.html",
   "scraped_at": "2026-07-20T16:04:23.384538+00:00",
   "last_results": "{\"aspects\": 70}",
-  "analysis_last_analysis_at": "2026-07-21T14:59:34.594695+00:00",
-  "analysis_last_analysis_results": "{\"weights\": {\"patch\": 0.48, \"kit\": 0.28, \"build\": 0.14, \"novelty\": 0.05, \"stability\": 0.05}, \"abilities\": {\"abilities\": 539, \"gods\": 87}, \"patches\": {\"patch_impact_rows\": 2584, \"entities_scored\": 304}, \"builds\": {\"gods\": 87, \"items_cataloged\": 255, \"engine\": \"conquest_builds\"}, \"tiers\": {\"tier_rows\": 484, \"gods_scored\": 87}}",
-  "analysis_weights": "{\"patch\": 0.48, \"kit\": 0.28, \"build\": 0.14, \"novelty\": 0.05, \"stability\": 0.05}"
+  "analysis_last_analysis_at": "2026-07-22T16:45:30.975914+00:00",
+  "analysis_last_analysis_results": "{\"weights\": {\"patch\": 0.34, \"kit\": 0.32, \"build\": 0.24, \"novelty\": 0.04, \"stability\": 0.06}, \"abilities\": {\"abilities\": 539, \"gods\": 87}, \"patches\": {\"patch_impact_rows\": 2585, \"entities_scored\": 304}, \"builds\": {\"gods\": 87, \"items_cataloged\": 255, \"engine\": \"conquest_builds\"}, \"tiers\": {\"tier_rows\": 483, \"gods_scored\": 87}}",
+  "analysis_weights": "{\"patch\": 0.34, \"kit\": 0.32, \"build\": 0.24, \"novelty\": 0.04, \"stability\": 0.06}"
 }

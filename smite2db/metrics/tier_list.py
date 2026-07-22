@@ -10,14 +10,30 @@ from typing import Any
 from .stat_parse import clamp, normalize_minmax
 
 
-# Default weights — patch notes dominate by design
+# Default weights — rebalanced 2026-07:
+# Old patch 48% made overall S almost pure "recently buffed physical Solo."
+# Kit + build now share more of the vote so strong mages / mid kits can be S
+# without ignoring patch momentum.
 WEIGHTS = {
-    "patch": 0.48,
-    "kit": 0.28,
-    "build": 0.14,
-    "novelty": 0.05,
-    "stability": 0.05,
+    "patch": 0.34,
+    "kit": 0.32,
+    "build": 0.24,
+    "novelty": 0.04,
+    "stability": 0.06,
 }
+
+
+def _winsorize(vals: list[float], lo_pct: float = 0.08, hi_pct: float = 0.92) -> list[float]:
+    """Clip extremes so a few hard buffs don't own the entire 0–100 scale."""
+    if not vals:
+        return vals
+    ordered = sorted(vals)
+    n = len(ordered)
+    lo = ordered[max(0, int(n * lo_pct))]
+    hi = ordered[min(n - 1, int(n * hi_pct))]
+    if hi <= lo:
+        return list(vals)
+    return [min(hi, max(lo, v)) for v in vals]
 
 
 def _percentile_tiers(scores: list[float]) -> list[str]:
@@ -163,7 +179,8 @@ def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | Non
             s = 60.0  # unmentioned — average trust
         stability_raw.append(s)
 
-    patch_n = normalize_minmax(patch_vals)
+    # Winsorize patch so one OB of tank buffs doesn't set the whole ladder
+    patch_n = normalize_minmax(_winsorize(patch_vals))
     # kit already 0-100-ish; re-normalize for fairness
     kit_n = normalize_minmax(kit_vals)
     build_n = normalize_minmax(build_vals)
@@ -179,6 +196,13 @@ def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | Non
             + w["novelty"] * novelty_n[i]
             + w["stability"] * stability_n[i]
         )
+        # Mild role-balance nudge: pure backline mages with strong kits were
+        # buried under Solo patch heat. Small kit×damage blend, not a hard floor.
+        dtype = (r["primary_damage_type"] or "").lower()
+        if dtype == "magical" and kit_n[i] >= 55 and patch_n[i] >= 40:
+            score += 2.5
+        if dtype == "physical" and kit_n[i] >= 70 and patch_n[i] >= 70:
+            score += 1.0  # keep strong physical visible, smaller nudge
         # Confidence: more patch + ability data → higher
         conf = 0.35
         conf += min((r["patches_touched"] or 0) / 10.0, 0.35)
@@ -314,7 +338,8 @@ def _write_scope(conn: sqlite3.Connection, scope: str, group: list[dict[str, Any
 def _item_tier_list(conn: sqlite3.Connection) -> None:
     rows = conn.execute(
         """
-        SELECT i.name, i.tier, i.item_type, i.total_cost,
+        SELECT i.name, i.tier, i.item_type, i.total_cost, i.categories,
+               i.stats_text, i.passive, i.active,
                COALESCE(p.net_weighted_score, 0) AS net_w,
                COALESCE(p.recent_5_score, 0) AS r5,
                COALESCE(p.buff_events, 0) AS buffs,
@@ -323,39 +348,77 @@ def _item_tier_list(conn: sqlite3.Connection) -> None:
         FROM items i
         LEFT JOIN entity_patch_summary p
             ON p.entity_type = 'item' AND p.entity_name = i.name
-        WHERE i.tier = '3' OR i.item_type IN ('Offensive','Defensive','Hybrid')
+        WHERE (i.tier = '3' OR i.item_type IN ('Offensive','Defensive','Hybrid'))
+          AND COALESCE(i.item_type, '') != 'God Specific'
+          AND lower(COALESCE(i.categories, '')) NOT LIKE '%god specific%'
+          AND lower(i.name) NOT LIKE '%acorn%'
+          AND lower(i.name) NOT LIKE '%providence%'
         """
     ).fetchall()
     if not rows:
         return
 
-    raw = []
+    # Multi-factor: patch still matters, but not 100% — so core pen items
+    # (often "nerfed/stable") aren't auto D while every buffed tank is S.
+    patch_raw: list[float] = []
+    util_raw: list[float] = []
     for r in rows:
-        # item score: patch momentum primary
-        s = (r["net_w"] or 0) * 0.5 + (r["r5"] or 0) * 0.5
-        # small efficiency nudge
+        patch_raw.append((r["net_w"] or 0) * 0.45 + (r["r5"] or 0) * 0.55)
+        nlow = (r["name"] or "").lower()
+        blob = f"{r['passive'] or ''} {r['active'] or ''} {r['stats_text'] or ''}".lower()
+        itype = (r["item_type"] or "").lower()
         cost = r["total_cost"] or 2500
-        if 2200 <= cost <= 2700:
-            s += 0.15
-        raw.append(s)
-    norms = normalize_minmax(raw)
+        u = 0.0
+        # Cost band: real cores
+        if 2200 <= cost <= 2800:
+            u += 1.2
+        elif 2800 < cost <= 3200:
+            u += 0.6
+        elif cost > 3400:
+            u -= 0.4
+        # Identity cores always usable
+        if any(k in nlow for k in ("obsidian", "titan", "desolat", "magus", "divine", "executioner")):
+            u += 1.5
+        if "penetrat" in blob or "pen:" in blob:
+            u += 0.8
+        if itype == "offensive":
+            u += 0.5
+        elif itype == "hybrid":
+            u += 0.35
+        elif itype == "defensive":
+            u += 0.25  # not zero — tanks matter, but not free S from patch alone
+        # Common support auras
+        if any(k in nlow for k in ("thebes", "chandra", "spectral", "contagion", "binding")):
+            u += 0.4
+        util_raw.append(u)
+
+    patch_n = normalize_minmax(_winsorize(patch_raw))
+    util_n = normalize_minmax(util_raw)
     group = []
     for i, r in enumerate(rows):
+        # ~55% patch, ~45% structural utility — still meta-aware, less clown S-tanks only
+        combined = 0.55 * patch_n[i] + 0.45 * util_n[i]
         group.append(
             {
                 "name": r["name"],
-                "score": norms[i],
-                "patch_score": norms[i],
-                "kit_score": None,
+                "score": combined,
+                "patch_score": patch_n[i],
+                "kit_score": util_n[i],
                 "build_score": None,
                 "novelty_score": None,
                 "confidence": 0.55 if (r["buffs"] + r["nerfs"]) > 0 else 0.35,
-                "rationale": f"Item patch trajectory: {r['trajectory']}; net weighted {r['net_w']:+.2f}",
+                "rationale": (
+                    f"Item ladder: trajectory {r['trajectory']}; "
+                    f"patch net {r['net_w']:+.2f}; "
+                    f"utility/identity {util_n[i]:.0f}/100"
+                ),
                 "god_id": None,
                 "components": {
                     "total_cost": r["total_cost"],
                     "item_type": r["item_type"],
                     "tier": r["tier"],
+                    "patch_component": patch_n[i],
+                    "utility_component": util_n[i],
                 },
             }
         )
@@ -376,6 +439,10 @@ def _item_tier_list(conn: sqlite3.Connection) -> None:
                 rank_in_scope=excluded.rank_in_scope,
                 score=excluded.score,
                 patch_score=excluded.patch_score,
+                kit_score=excluded.kit_score,
+                build_score=excluded.build_score,
+                novelty_score=excluded.novelty_score,
+                confidence=excluded.confidence,
                 rationale=excluded.rationale,
                 components_json=excluded.components_json,
                 generated_at=datetime('now')
@@ -389,9 +456,9 @@ def _item_tier_list(conn: sqlite3.Connection) -> None:
                 rank_of[i],
                 g["score"],
                 g["patch_score"],
-                None,
-                None,
-                None,
+                g["kit_score"],
+                g["build_score"],
+                g["novelty_score"],
                 g["confidence"],
                 g["rationale"],
                 json.dumps(g["components"]),

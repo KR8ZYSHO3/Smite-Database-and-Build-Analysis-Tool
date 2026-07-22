@@ -5,7 +5,7 @@
   "active_over": 0,
   "clone_groups": 0,
   "clones_detail": [],
-  "avg_pairwise_jaccard_sample": 0.183,
+  "avg_pairwise_jaccard_sample": 0.181,
   "top_items": [
     [
       "Titan's Bane",
@@ -13,11 +13,11 @@
     ],
     [
       "Gem of Isolation",
-      25
+      27
     ],
     [
       "Chandra's Grace",
-      24
+      26
     ],
     [
       "Obsidian Shard",
@@ -28,11 +28,11 @@
       20
     ],
     [
-      "Stone of Binding",
-      19
+      "Breastplate of Valor",
+      18
     ],
     [
-      "Soul Gem",
+      "Stone of Binding",
       18
     ],
     [
@@ -40,32 +40,32 @@
       17
     ],
     [
-      "Breastplate of Valor",
-      16
+      "Gluttonous Grimoire",
+      15
+    ],
+    [
+      "Shifter's Shield",
+      15
+    ],
+    [
+      "Spectral Armor",
+      15
     ],
     [
       "Bloodforge",
       14
     ],
     [
-      "Arondight",
+      "Devourer's Gauntlet",
       14
     ],
     [
-      "Gluttonous Grimoire",
+      "Soul Gem",
       14
     ],
     [
-      "Shifter's Shield",
-      14
-    ],
-    [
-      "Contagion",
-      14
-    ],
-    [
-      "Spectral Armor",
-      14
+      "Spear of Desolation",
+      13
     ]
   ],
   "top_starters": [
@@ -116,11 +116,11 @@
       10
     ],
     [
-      "heal_support",
-      9
+      "lockdown_support",
+      10
     ],
     [
-      "lockdown_support",
+      "shield_support",
       8
     ],
     [
@@ -128,27 +128,27 @@
       6
     ],
     [
-      "dot_mage",
-      6
-    ],
-    [
       "burst_mage",
       6
     ],
     [
-      "burst_assassin",
-      4
+      "dot_mage",
+      6
     ],
     [
       "sustain_assassin",
       4
     ],
     [
-      "shield_support",
+      "burst_assassin",
       4
     ],
     [
       "channel_mage",
+      3
+    ],
+    [
+      "bruiser_solo",
       3
     ]
   ],
