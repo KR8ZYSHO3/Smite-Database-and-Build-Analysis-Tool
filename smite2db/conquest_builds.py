@@ -290,12 +290,15 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
             "axe": 40,
             "bluestone": 34,
             "sundering": 30,
+            # Death's Toll / Leather Cowl — AA & sustain solo maniac path
+            "death": 36,
+            "leather": 28,
+            "gilded": 18,
             "shroud": 12,
             "vampiric": 10,
             "selfless": -15,  # support starter — not solo identity
             "flag": -20,
             "bumba": -25,
-            "gilded": -30,
             "conduit": -15,
         },
         "relic_prefs": {
@@ -971,6 +974,21 @@ def pick_god_starter(
                 sc -= 40
             if "bumba" in n:
                 sc -= 35
+            # AA / self-sustain bruisers (Bellona-style) — Death's Toll LS starter
+            # is the maniac lane path, not only Warrior's Axe every time.
+            if physical and (
+                "self_sustain" in tags
+                or "aa" in tags
+                or float(bias.get("aa_score") or 0) >= 0.5
+            ):
+                if "death" in n:
+                    sc += 55  # Death's Toll — the maniac you faced
+                elif any(k in n for k in ("leather", "gilded")):
+                    sc += 38
+                if "warrior" in n or "axe" in n:
+                    sc -= 12  # still fine, but not automatic #1
+                if "bluestone" in n:
+                    sc -= 6
 
         # Damage-type fit
         if mage:
@@ -1732,6 +1750,23 @@ def rescore_for_god(
         # Jungle/Carry shields are not Spectral-first
         if role in ("Jungle", "Carry", "Mid") and "spectral" in nlow:
             s -= 25
+    # Solo AA / self-sustain bruisers: early Shifter's + hybrid LS when ladder is hot
+    if role == "Solo" and (
+        "self_sustain" in tags
+        or "aa" in tags
+        or float(bias.get("aa_score") or 0) >= 0.5
+    ):
+        if "shifter" in nlow:
+            s += 36
+            # Extra when item ladder says it's the meta king
+            if (item.ladder_tier or "").upper() in ("S", "A"):
+                s += 22
+        if any(k in nlow for k in ("sanguine", "gladiator", "bloodforge", "devourer")):
+            s += 24
+        if item.item_type == "Hybrid" and (
+            (item.ladder_tier or "").upper() in ("S", "A") or float(item.ladder_score or 0) >= 55
+        ):
+            s += 16
     if "high_cc" in tags or "hard_cc" in tags:
         s += cdr_v * 1.3 + 12
         if role == "Support" and item.item_type == "Defensive":
@@ -2056,8 +2091,9 @@ ARCHETYPE_SLOTS: dict[str, list[str]] = {
     "mage_jungle": ["power", "flat_pen", "pct_pen", "cdr", "sustain", "defense"],
     # Solo
     "tank_solo": ["mitigate", "defense", "hybrid_bulk", "antiheal", "aura", "cdr_def"],
-    "sustain_solo": ["sustain_tank", "defense", "hybrid_bulk", "mitigate", "antiheal", "aura"],
-    "shield_solo": ["shield_item", "defense", "hybrid_bulk", "mitigate", "antiheal", "cdr_def"],
+    # hybrid_bulk early — Shifter's / offline when ladder-hot (Bellona maniac path)
+    "sustain_solo": ["hybrid_bulk", "sustain_tank", "defense", "mitigate", "antiheal", "aura"],
+    "shield_solo": ["shield_item", "hybrid_bulk", "defense", "mitigate", "antiheal", "cdr_def"],
     "bruiser_solo": ["hybrid_bulk", "defense", "power_bruiser", "mitigate", "antiheal", "cdr_def"],
     "mage_solo": ["hybrid_bulk", "defense", "mitigate", "flat_pen", "cdr_def", "antiheal"],
     # Support
@@ -2279,11 +2315,22 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     # bancroft only injects when self_sustain (kit_ok) — keep off generic heal signatures
     "heal": ["chandra", "soul gem", "asclepius", "lifebinder"],
     "heavy_heal": ["asclepius", "lifebinder", "chandra"],
-    "self_sustain": ["bancroft", "typhon", "gluttonous", "bloodforge", "devourer", "sanguine", "soul gem"],
+    # LS cores + Shifter offline hybrid (Solo AA/sustain maniacs when patch-hot)
+    "self_sustain": [
+        "shifter",
+        "sanguine",
+        "gladiator",
+        "bancroft",
+        "typhon",
+        "gluttonous",
+        "bloodforge",
+        "devourer",
+        "soul gem",
+    ],
     "execute": ["bloodforge", "titan", "soul reaver", "deathbringer", "desolat", "obsi"],
     "prot_shred": ["executioner", "titan", "magus", "desolat", "void", "obsi", "crusher"],
-    "shield": ["pridwen", "phoenix", "shifter"],
-    "heavy_shield": ["pridwen", "phoenix", "shifter"],
+    "shield": ["shifter", "pridwen", "phoenix"],
+    "heavy_shield": ["shifter", "pridwen", "phoenix"],
     "high_cc": ["isolation", "binding", "breastplate", "genji", "stygian"],
     "hard_cc": ["isolation", "binding", "stygian"],
     "immobile": ["alchemist", "magi", "cloak", "mantle", "oni", "genji"],
@@ -3045,13 +3092,22 @@ def _order_buy_path(path: list[ScoredItem], role: str) -> list[ScoredItem]:
                 )
             )
         ) and pen < 8 and as_v < 15 and crit_v < 15
+        # Solo offline hybrid (Shifter's) — early spike, not item 6
+        solo_offline = role == "Solo" and (
+            "shifter" in nlow
+            or (
+                it.item_type == "Hybrid"
+                and (it.ladder_tier or "").upper() in ("S", "A")
+                and pen < 12
+            )
+        )
         luxury = 1 if cost >= 3200 or (it.is_active_item and pen >= 8 and cost >= 3000) else 0
         # phase: early cores (0), pen (1), mid damage (2), shell (3), luxury (4)
         if luxury:
             phase = 4
         elif damage and pure_shell:
             phase = 3  # never open ADC/Jungle/Mid with Alchemist/Phoenix
-        elif frontline and pure_shell:
+        elif frontline and (pure_shell or solo_offline):
             phase = 0
         elif pen >= 10 and powerish:
             phase = 1
@@ -3063,7 +3119,8 @@ def _order_buy_path(path: list[ScoredItem], role: str) -> list[ScoredItem]:
             phase = 3 if damage else 0
         else:
             phase = 2
-        return (phase, cost, -it.role_score)
+        # Prefer cheaper early shells before expensive hybrids of same phase
+        return (phase, 0 if solo_offline else 1, cost, -it.role_score)
 
     return sorted(path, key=sort_key)
 

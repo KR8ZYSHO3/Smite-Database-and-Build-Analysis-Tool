@@ -86,14 +86,14 @@ Danzaburou · Carry · archetype «crit_adc» (STR / physical). Kit effects: cha
 
 *Physical · Strength scaling (STR 80.4% / INT 51.1%)*
 
-Cernunnos · Carry · archetype «crit_adc» (STR / physical). Kit effects: protection shred, big ult spike, basic-attack kit, self heal / drain, hard crowd control, dash / leap engage. Tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 30%/dps 70%; patch stable (net +0.5, r5 +0.0). Patch axes (r5): general +0.5, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path: The Executioner (AA prot shred); Bloodforge (lifesteal + power for execute/bruiser); Riptalon (attack speed / crit carry core). Pen: Riptalon, The Crusher, Titan's Bane. Actives 1/2 · pen ≈ 40.
+Cernunnos · Carry · archetype «crit_adc» (STR / physical). Kit effects: protection shred, big ult spike, basic-attack kit, self heal / drain, hard crowd control, dash / leap engage. Tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 30%/dps 70%; patch stable (net +0.5, r5 +0.0). Patch axes (r5): general +0.5, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path: Bloodforge (lifesteal + power for execute/bruiser); Arondight (CDR + pen for gank/engage); Riptalon (attack speed / crit carry core). Pen: Riptalon, Heartseeker, Titan's Bane. Actives 2/2 · pen ≈ 40.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 40.0):
-  1. The Executioner (power, 2550g)
-  2. Bloodforge (power, active, 2550g)
+- **Buy order** (actives 2/2, pen ≈ 40.0):
+  1. Bloodforge (power, active, 2550g)
+  2. Arondight (power, active, 2650g)
   3. Riptalon (pen, pen 10.0, 2700g)
-  4. The Crusher (pen, pen 10.0, 2800g)
+  4. Heartseeker (pen, pen 10.0, 3000g)
   5. Titan's Bane (pen, pen 20.0, 3100g)
   6. Deathbringer (power, 2900g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
@@ -143,7 +143,7 @@ Sol · Carry · archetype «dot_mage_adc» (INT / magical). Kit effects: damage 
   3. Gluttonous Grimoire (pen, pen 10.0, 2600g)
   4. Spear Of The Magus (pen, pen 10.0, 2700g)
   5. Soul Reaver (power, 2950g)
-  6. Stygian Anchor (counter, 2550g)
+  6. Eye of Providence (defense, 2300g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Chiron — B-tier (role rank #8, model 62.9)
@@ -262,13 +262,13 @@ Ishtar · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-
 
 *Physical · Strength scaling (STR 80.1% / INT 0%)*
 
-Ullr · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, gap_close, hard_cc, heal, high_cc, pet_zone, self_sustain, sustained. Style burst 3%/dps 97%; patch stable (net -0.6, r5 +0.0). Patch axes (r5): general -0.6, attack_speed +0.0, cooldown +0.0. Scale STR 80% / INT 0%. Path: Bloodforge (lifesteal + power for execute/bruiser); The Crusher (penetration required for damage role); Titan's Bane (% pen for physical tanks / late fights). Pen: The Crusher, Titan's Bane. Actives 1/2 · pen ≈ 30.
+Ullr · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, gap_close, hard_cc, heal, high_cc, pet_zone, self_sustain, sustained. Style burst 3%/dps 97%; patch stable (net -0.6, r5 +0.0). Patch axes (r5): general -0.6, attack_speed +0.0, cooldown +0.0. Scale STR 80% / INT 0%. Path: Bloodforge (lifesteal + power for execute/bruiser); Titan's Bane (% pen for physical tanks / late fights); Shifter's Shield (offline hybrid tank). Pen: Titan's Bane. Actives 1/2 · pen ≈ 20.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 30.0):
+- **Buy order** (actives 1/2, pen ≈ 20.0):
   1. Bloodforge (power, active, 2550g)
-  2. The Crusher (pen, pen 10.0, 2800g)
-  3. Titan's Bane (pen, pen 20.0, 3100g)
+  2. Titan's Bane (pen, pen 20.0, 3100g)
+  3. Shifter's Shield (defense, 2650g)
   4. Demon Blade (power, 2750g)
   5. Deathbringer (power, 2900g)
   6. Stygian Anchor (counter, 2550g)
@@ -550,16 +550,16 @@ The Morrigan · Mid · archetype «zone_mage» (INT / magical). Kit effects: big
 
 *Magical · Intelligence scaling (STR 0% / INT 70.3%)*
 
-Hecate · Mid · archetype «channel_mage» (INT / magical). Kit effects: channel / cast time, hard crowd control, dash / leap engage, ally buffs / auras, burst combos, shields. Tags: burst, channel, gap_close, hard_cc, heal, long_cd, shield, team_buff. Style burst 57%/dps 43%; patch stable (net -0.4, r5 +0.0). Patch axes (r5): general -0.5, damage +0.0, survivability +0.0. Scale STR 0% / INT 70%. Path: The Cosmic Horror (penetration required for damage role); The World Stone (penetration required for damage role); Obsidian Shard (% pen for magical tanks / late fights). Pen: The Cosmic Horror, The World Stone, Obsidian Shard, Rod of Tahuti. Actives 1/2 · pen ≈ 45.
+Hecate · Mid · archetype «channel_mage» (INT / magical). Kit effects: channel / cast time, hard crowd control, dash / leap engage, ally buffs / auras, burst combos, shields. Tags: burst, channel, gap_close, hard_cc, heal, long_cd, shield, team_buff. Style burst 57%/dps 43%; patch stable (net -0.4, r5 +0.0). Patch axes (r5): general -0.5, damage +0.0, survivability +0.0. Scale STR 0% / INT 70%. Path: The World Stone (penetration required for damage role); Obsidian Shard (% pen for magical tanks / late fights); Shifter's Shield (offline hybrid tank). Pen: The World Stone, Obsidian Shard, Rod of Tahuti, Dreamer's Idol. Actives 2/2 · pen ≈ 45.
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 45.0):
-  1. The Cosmic Horror (pen, pen 10.0, 2650g)
-  2. The World Stone (pen, pen 10.0, 2800g)
-  3. Obsidian Shard (pen, pen 20.0, 3050g)
+- **Buy order** (actives 2/2, pen ≈ 45.0):
+  1. The World Stone (pen, pen 10.0, 2800g)
+  2. Obsidian Shard (pen, pen 20.0, 3050g)
+  3. Shifter's Shield (defense, 2650g)
   4. Staff of Myrddin (power, active, 2900g)
   5. Rod of Tahuti (power, pen 5.0, 3000g)
-  6. Eye of Providence (defense, 2300g)
+  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Poseidon — B-tier (role rank #12, model 56.5)
@@ -598,16 +598,16 @@ Scylla · Mid · archetype «zone_mage» (INT / magical). Kit effects: protectio
 
 *Magical · Intelligence scaling (STR 0% / INT 118.8%)*
 
-Discordia · Mid · archetype «sustain_mage» (INT / magical). Kit effects: big ult spike, self heal / drain, hard crowd control, dash / leap engage, ally buffs / auras, burst combos. Tags: burst, gap_close, hard_cc, heal, long_cd, self_sustain, team_buff, ult_nuke. Style burst 69%/dps 31%; patch volatile (net -1.6, r5 -0.1). Patch axes (r5): utility -0.9, cooldown +0.8. Scale STR 0% / INT 119%. Path: Bancroft's Talon (self-sustain power (missing HP)); Gem of Isolation (zones & CC — Isolation slow/shred value); Spear of Desolation (flat pen + CDR for ability burst). Pen: Spear of Desolation, Obsidian Shard. Actives 0/2 · pen ≈ 30.
+Discordia · Mid · archetype «sustain_mage» (INT / magical). Kit effects: big ult spike, self heal / drain, hard crowd control, dash / leap engage, ally buffs / auras, burst combos. Tags: burst, gap_close, hard_cc, heal, long_cd, self_sustain, team_buff, ult_nuke. Style burst 69%/dps 31%; patch volatile (net -1.6, r5 -0.1). Patch axes (r5): utility -0.9, cooldown +0.8. Scale STR 0% / INT 119%. Path: Spear of Desolation (flat pen + CDR for ability burst); Obsidian Shard (% pen for magical tanks / late fights); Soul Reaver (big ability hits / execute spikes). Pen: Spear of Desolation, Obsidian Shard. Actives 0/2 · pen ≈ 30.
 
 - **Starter:** Vampiric Shroud
 - **Buy order** (actives 0/2, pen ≈ 30.0):
-  1. Bancroft's Talon (power, 2300g)
-  2. Gem of Isolation (power, 2500g)
-  3. Spear of Desolation (pen, pen 10.0, 2650g)
-  4. Obsidian Shard (pen, pen 20.0, 3050g)
-  5. Soul Reaver (power, 2950g)
-  6. Chandra's Grace (mitigate, 2300g)
+  1. Spear of Desolation (pen, pen 10.0, 2650g)
+  2. Obsidian Shard (pen, pen 20.0, 3050g)
+  3. Soul Reaver (power, 2950g)
+  4. Chandra's Grace (mitigate, 2300g)
+  5. Eye of Providence (defense, 2300g)
+  6. Wish-Granting Pearl (power, 3550g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Vulcan — C-tier (role rank #15, model 55.8)
@@ -742,16 +742,16 @@ Nu Wa · Mid · archetype «aa_mage» (INT / magical). Kit effects: protection s
 
 *Magical · Intelligence scaling (STR 0% / INT 59.8%)*
 
-Anubis · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, pet / deployable, hard crowd control. Tags: anti_cc, channel, dot, hard_cc, heal, heavy_dot, high_cc, immobile. Style burst 98%/dps 2%; patch falling (net -4.4, r5 -4.5). Patch axes (r5): survivability -2.1, damage -1.5, heal -1.0. Scale STR 0% / INT 60%. Path: Gem of Isolation (zones & CC — Isolation slow/shred value); Soul Gem (ability heal/proc for mages); Gluttonous Grimoire (sustain / omnivamp line). Pen: Soul Gem, Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard. Actives 1/2 · pen ≈ 45.
+Anubis · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, pet / deployable, hard crowd control. Tags: anti_cc, channel, dot, hard_cc, heal, heavy_dot, high_cc, immobile. Style burst 98%/dps 2%; patch falling (net -4.4, r5 -4.5). Patch axes (r5): survivability -2.1, damage -1.5, heal -1.0. Scale STR 0% / INT 60%. Path: Gem of Isolation (zones & CC — Isolation slow/shred value); Soul Gem (ability heal/proc for mages); Divine Ruin (anti-heal + pen for healing/sustain kits). Pen: Soul Gem, Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard. Actives 0/2 · pen ≈ 45.
 
 - **Starter:** Vampiric Shroud
-- **Buy order** (actives 1/2, pen ≈ 45.0):
+- **Buy order** (actives 0/2, pen ≈ 45.0):
   1. Gem of Isolation (power, 2500g)
   2. Soul Gem (power, pen 5.0, 2500g)
-  3. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  4. Spear Of The Magus (pen, pen 10.0, 2700g)
-  5. Obsidian Shard (pen, pen 20.0, 3050g)
-  6. Staff of Myrddin (power, active, 2900g)
+  3. Divine Ruin (counter, 2500g)
+  4. Gluttonous Grimoire (pen, pen 10.0, 2600g)
+  5. Spear Of The Magus (pen, pen 10.0, 2700g)
+  6. Obsidian Shard (pen, pen 20.0, 3050g)
 - **Relics:** Aegis of Acceleration (40.0), Purification Beads (38.0)
 
 #### Chronos — D-tier (role rank #24, model 28.0)
@@ -853,30 +853,30 @@ Tsukuyomi · Jungle · archetype «aa_assassin» (STR / physical). Kit effects: 
 
 *Physical · Strength scaling (STR 80.4% / INT 51.1%)*
 
-Cernunnos · Jungle · archetype «aa_assassin» (STR / physical). Kit effects: protection shred, big ult spike, basic-attack kit, self heal / drain, hard crowd control, dash / leap engage. Tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 30%/dps 70%; patch stable (net +0.5, r5 +0.0). Patch axes (r5): general +0.5, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Avenging Blade (attack speed / crit carry core); Riptalon (attack speed / crit carry core). Pen: Jotunn's Revenge, Riptalon, Pendulum Blade, Avatar's Parashu. Actives 2/3 · pen ≈ 35.
+Cernunnos · Jungle · archetype «aa_assassin» (STR / physical). Kit effects: protection shred, big ult spike, basic-attack kit, self heal / drain, hard crowd control, dash / leap engage. Tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 30%/dps 70%; patch stable (net +0.5, r5 +0.0). Patch axes (r5): general +0.5, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path: Jotunn's Revenge (CDR + pen for gank/engage); The Executioner (AA prot shred); Avenging Blade (attack speed / crit carry core). Pen: Jotunn's Revenge, Pendulum Blade. Actives 2/3 · pen ≈ 15.
 
 - **Starter:** Bumba's Golden Dagger
-- **Buy order** (actives 2/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 15.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Avenging Blade (power, 2650g)
-  3. Riptalon (pen, pen 10.0, 2700g)
-  4. Pendulum Blade (pen, active, pen 10.0, 2750g)
-  5. Breastplate of Valor (defense, 2400g)
-  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
+  2. The Executioner (power, 2550g)
+  3. Avenging Blade (power, 2650g)
+  4. Arondight (power, active, 2650g)
+  5. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  6. Gladiator's Shield (defense, 2450g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 #### Thanatos — A-tier (role rank #5, model 65.5)
 
 *Physical · Strength scaling (STR 56.1% / INT 0%)*
 
-Thanatos · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: protection shred, self heal / drain, execute / threshold, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, burst, execute, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 62%/dps 38%; patch rising (net +1.2, r5 +1.0). Patch axes (r5): general +1.0. Scale STR 56% / INT 0%. Path: Transcendence (mana stack → power scaling); Devourer's Gauntlet (lifesteal stacking); Arondight (CDR + pen for gank/engage). Pen: Transcendence, Titan's Bane, Avatar's Parashu. Actives 2/3 · pen ≈ 30.
+Thanatos · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: protection shred, self heal / drain, execute / threshold, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, burst, execute, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 62%/dps 38%; patch rising (net +1.2, r5 +1.0). Patch axes (r5): general +1.0. Scale STR 56% / INT 0%. Path: Devourer's Gauntlet (lifesteal stacking); Arondight (CDR + pen for gank/engage); Titan's Bane (% pen for physical tanks / late fights; patch rising — lean damage). Pen: Titan's Bane, Avatar's Parashu. Actives 2/3 · pen ≈ 30.
 
 - **Starter:** Bumba's Golden Dagger
 - **Buy order** (actives 2/3, pen ≈ 30.0):
-  1. Transcendence (power, 2400g)
-  2. Devourer's Gauntlet (power, 2500g)
-  3. Arondight (power, active, 2650g)
-  4. Titan's Bane (pen, pen 20.0, 3100g)
+  1. Devourer's Gauntlet (power, 2500g)
+  2. Arondight (power, active, 2650g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Deathbringer (power, 2900g)
   5. Prophetic Cloak (defense, 2400g)
   6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
@@ -965,12 +965,12 @@ Gilgamesh · Jungle · archetype «burst_assassin» (STR / physical). Kit effect
 
 *Physical · Strength scaling (STR 102.2% / INT 70.3%)*
 
-Nemesis · Jungle · archetype «bruiser_jungle» (STR / physical). Kit effects: big ult spike, dash / leap engage, shields, healing in kit, long cooldowns. Tags: gap_close, heal, long_cd, shield, ult_nuke. Style burst 52%/dps 48%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.1, damage +0.0, survivability +0.0. Scale STR 102% / INT 70%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Golden Blade (Jungle path fit for kit profile); Avenging Blade (attack speed / crit carry core). Pen: Jotunn's Revenge, The Crusher, Avatar's Parashu. Actives 1/3 · pen ≈ 25.
+Nemesis · Jungle · archetype «bruiser_jungle» (STR / physical). Kit effects: big ult spike, dash / leap engage, shields, healing in kit, long cooldowns. Tags: gap_close, heal, long_cd, shield, ult_nuke. Style burst 52%/dps 48%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.1, damage +0.0, survivability +0.0. Scale STR 102% / INT 70%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Runeforged Hammer (Jungle path fit for kit profile); Avenging Blade (attack speed / crit carry core). Pen: Jotunn's Revenge, The Crusher, Avatar's Parashu. Actives 1/3 · pen ≈ 25.
 
 - **Starter:** Bumba's Golden Dagger
 - **Buy order** (actives 1/3, pen ≈ 25.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Golden Blade (power, 2450g)
+  2. Runeforged Hammer (power, 2550g)
   3. Avenging Blade (power, 2650g)
   4. The Crusher (pen, pen 10.0, 2800g)
   5. Shifter's Shield (defense, 2650g)
@@ -1061,15 +1061,15 @@ Hun Batz · Jungle · archetype «aa_assassin» (STR / physical). Kit effects: c
 
 *Physical · Strength scaling (STR 71.7% / INT 8.5%)*
 
-Bastet · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: big ult spike, self heal / drain, pet / deployable, hard crowd control, dash / leap engage, multi-hit / ticks. Tags: dot, gap_close, hard_cc, heal, long_cd, pet_zone, self_sustain, ult_nuke. Style burst 69%/dps 31%; patch falling (net -3.3, r5 -3.3). Patch axes (r5): utility -2.1, damage -1.8, general +0.8. Scale STR 72% / INT 8%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Bloodforge (lifesteal + power for execute/bruiser); Arondight (CDR + pen for gank/engage). Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 3/3 · pen ≈ 35.
+Bastet · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: big ult spike, self heal / drain, pet / deployable, hard crowd control, dash / leap engage, multi-hit / ticks. Tags: dot, gap_close, hard_cc, heal, long_cd, pet_zone, self_sustain, ult_nuke. Style burst 69%/dps 31%; patch falling (net -3.3, r5 -3.3). Patch axes (r5): utility -2.1, damage -1.8, general +0.8. Scale STR 72% / INT 8%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Devourer's Gauntlet (lifesteal stacking); Arondight (CDR + pen for gank/engage). Pen: Jotunn's Revenge, Titan's Bane, Avatar's Parashu. Actives 3/3 · pen ≈ 35.
 
 - **Starter:** Bumba's Cudgel
 - **Buy order** (actives 3/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Bloodforge (power, active, 2550g)
+  2. Devourer's Gauntlet (power, 2500g)
   3. Arondight (power, active, 2650g)
   4. Titan's Bane (pen, pen 20.0, 3100g)
-  5. Genji's Guard (defense, 2350g)
+  5. Eye of Erebus (defense, active, 2600g)
   6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
@@ -1125,14 +1125,14 @@ Aladdin · Jungle · archetype «mage_jungle» (INT / magical). Kit effects: big
 
 *Physical · Strength scaling (STR 91.4% / INT 0%)*
 
-Pele · Jungle · archetype «aa_assassin» (STR / physical). Kit effects: big ult spike, basic-attack kit, self heal / drain, execute / threshold, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, burst, execute, gap_close, heal, long_cd, mobile. Style burst 77%/dps 23%; patch falling (net -7.7, r5 -4.3). Patch axes (r5): damage -4.3. Scale STR 91% / INT 0%. Path: Devourer's Gauntlet (lifesteal stacking); Musashi's Dual Swords (attack speed / crit carry core); The Reaper (penetration required for damage role). Pen: The Reaper, Heartseeker, Titan's Bane. Actives 0/3 · pen ≈ 40.
+Pele · Jungle · archetype «aa_assassin» (STR / physical). Kit effects: big ult spike, basic-attack kit, self heal / drain, execute / threshold, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, burst, execute, gap_close, heal, long_cd, mobile. Style burst 77%/dps 23%; patch falling (net -7.7, r5 -4.3). Patch axes (r5): damage -4.3. Scale STR 91% / INT 0%. Path: Devourer's Gauntlet (lifesteal stacking); Bloodforge (lifesteal + power for execute/bruiser); Musashi's Dual Swords (attack speed / crit carry core). Pen: The Reaper, Titan's Bane. Actives 1/3 · pen ≈ 30.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 0/3, pen ≈ 40.0):
+- **Buy order** (actives 1/3, pen ≈ 30.0):
   1. Devourer's Gauntlet (power, 2500g)
-  2. Musashi's Dual Swords (power, 2700g)
-  3. The Reaper (pen, pen 10.0, 2600g)
-  4. Heartseeker (pen, pen 10.0, 3000g)
+  2. Bloodforge (power, active, 2550g)
+  3. Musashi's Dual Swords (power, 2700g)
+  4. The Reaper (pen, pen 10.0, 2600g)
   5. Titan's Bane (pen, pen 20.0, 3100g)
   6. Demon Blade (power, 2750g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
@@ -1141,16 +1141,16 @@ Pele · Jungle · archetype «aa_assassin» (STR / physical). Kit effects: big u
 
 *Physical · Strength scaling (STR 54.5% / INT 17.1%)*
 
-Kali · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: protection shred, self heal / drain, heavy healing, execute / threshold, hard crowd control, dash / leap engage. Tags: anti_cc, execute, gap_close, hard_cc, heal, heavy_heal, long_cd, prot_shred. Style burst 0%/dps 100%; patch falling (net -5.6, r5 -5.9). Patch axes (r5): damage -5.9. Scale STR 54% / INT 17%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Bloodforge (lifesteal + power for execute/bruiser); Pendulum Blade (penetration required for damage role). Pen: Jotunn's Revenge, Pendulum Blade, The Crusher, Titan's Bane. Actives 2/3 · pen ≈ 45.
+Kali · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: protection shred, self heal / drain, heavy healing, execute / threshold, hard crowd control, dash / leap engage. Tags: anti_cc, execute, gap_close, hard_cc, heal, heavy_heal, long_cd, prot_shred. Style burst 0%/dps 100%; patch falling (net -5.6, r5 -5.9). Patch axes (r5): damage -5.9. Scale STR 54% / INT 17%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Transcendence (penetration required for damage role); Bloodforge (lifesteal + power for execute/bruiser). Pen: Jotunn's Revenge, Transcendence, Pendulum Blade, Titan's Bane. Actives 2/3 · pen ≈ 35.
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 2/3, pen ≈ 45.0):
+- **Buy order** (actives 2/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Bloodforge (power, active, 2550g)
-  3. Pendulum Blade (pen, active, pen 10.0, 2750g)
-  4. The Crusher (pen, pen 10.0, 2800g)
+  2. Transcendence (power, 2400g)
+  3. Bloodforge (power, active, 2550g)
+  4. Pendulum Blade (pen, active, pen 10.0, 2750g)
   5. Titan's Bane (pen, pen 20.0, 3100g)
-  6. Genji's Guard (defense, 2350g)
+  6. Breastplate of Valor (defense, 2400g)
 - **Relics:** Purification Beads (38.0), Blink Rune (32.4)
 
 ---
@@ -1208,30 +1208,30 @@ Sun Wukong · Solo · archetype «bruiser_solo» (STR / physical). Kit effects: 
 
 *Physical · Strength scaling (STR 97.1% / INT 44.1%)*
 
-Chaac · Solo · archetype «sustain_solo» (STR / physical). Kit effects: channel / cast time, big ult spike, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, long_cd, pet_zone. Style burst 39%/dps 61%; patch stable (net +0.8, r5 +0.0). Patch axes (r5): damage +0.4, general +0.4, utility -0.0. Scale STR 97% / INT 44%. Path: Chandra's Grace (team aura / support core); Eye of Providence (team aura / support core); Shield of the Phoenix (shield / phoenix-style bulk). Actives 2/3 · pen ≈ 0.
+Chaac · Solo · archetype «sustain_solo» (STR / physical). Kit effects: channel / cast time, big ult spike, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, long_cd, pet_zone. Style burst 39%/dps 61%; patch stable (net +0.8, r5 +0.0). Patch axes (r5): damage +0.4, general +0.4, utility -0.0. Scale STR 97% / INT 44%. Path: Shifter's Shield (offline hybrid tank); Chandra's Grace (team aura / support core); Eye of Providence (team aura / support core). Actives 1/3 · pen ≈ 0.
 
-- **Starter:** Warrior's Axe
-- **Buy order** (actives 2/3, pen ≈ 0.0):
-  1. Chandra's Grace (mitigate, 2300g)
-  2. Eye of Providence (defense, 2300g)
-  3. Shield of the Phoenix (mitigate, 2400g)
-  4. Sanguine Lash (power, active, 2650g)
-  5. Draconic Scale (defense, 2700g)
-  6. Eye of Erebus (defense, active, 2600g)
+- **Starter:** Death's Toll
+- **Buy order** (actives 1/3, pen ≈ 0.0):
+  1. Shifter's Shield (defense, 2650g)
+  2. Chandra's Grace (mitigate, 2300g)
+  3. Eye of Providence (defense, 2300g)
+  4. Shield of the Phoenix (mitigate, 2400g)
+  5. Sanguine Lash (power, active, 2650g)
+  6. Draconic Scale (defense, 2700g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Osiris — S-tier (role rank #3, model 73.6)
 
 *Physical · Strength scaling (STR 65.9% / INT 0%)*
 
-Osiris · Solo · archetype «tank_solo» (STR / physical). Kit effects: basic-attack kit, attack-speed steroid, pet / deployable, hard crowd control, dash / leap engage, lots of CC. Tags: aa, as_steroid, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone. Style burst 26%/dps 74%; patch stable (net -0.3, r5 +0.0). Patch axes (r5): general -0.2, attack_speed -0.1, damage -0.0. Scale STR 66% / INT 0%. Path: Gauntlet of Thebes (team aura / support core); Genji's Guard (magic prot + CDR for mages); Breastplate of Valor (physical CDR defense). Actives 0/3 · pen ≈ 0.
+Osiris · Solo · archetype «tank_solo» (STR / physical). Kit effects: basic-attack kit, attack-speed steroid, pet / deployable, hard crowd control, dash / leap engage, lots of CC. Tags: aa, as_steroid, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone. Style burst 26%/dps 74%; patch stable (net -0.3, r5 +0.0). Patch axes (r5): general -0.2, attack_speed -0.1, damage -0.0. Scale STR 66% / INT 0%. Path: Shifter's Shield (offline hybrid tank); Gauntlet of Thebes (team aura / support core); Breastplate of Valor (physical CDR defense). Actives 0/3 · pen ≈ 0.
 
-- **Starter:** Warrior's Axe
+- **Starter:** Death's Toll
 - **Buy order** (actives 0/3, pen ≈ 0.0):
-  1. Gauntlet of Thebes (defense, 2200g)
-  2. Genji's Guard (defense, 2350g)
+  1. Shifter's Shield (defense, 2650g)
+  2. Gauntlet of Thebes (defense, 2200g)
   3. Breastplate of Valor (defense, 2400g)
-  4. Contagion (defense, 2400g)
+  4. Gladiator's Shield (defense, 2450g)
   5. Stone of Binding (mitigate, 2550g)
   6. Stygian Anchor (counter, 2550g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
@@ -1240,32 +1240,32 @@ Osiris · Solo · archetype «tank_solo» (STR / physical). Kit effects: basic-a
 
 *Magical · Intelligence scaling (STR 27.9% / INT 51.4%)*
 
-Jormungandr · Solo · archetype «mage_solo» (INT / magical). Kit effects: channel / cast time, big ult spike, hard crowd control, CC immunity in kit, lots of CC, multi-hit / ticks. Tags: anti_cc, burst, channel, dot, hard_cc, heal, high_cc, long_cd. Style burst 63%/dps 37%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): general -0.2, utility +0.1, damage +0.0. Scale STR 28% / INT 51%. Path: Prophetic Cloak (tenacity / anti-CC bulk); Gem of Isolation (zones & CC — Isolation slow/shred value); Stone of Binding (Stone of Binding — CC setup shred). Actives 1/2 · pen ≈ 0.
+Jormungandr · Solo · archetype «mage_solo» (INT / magical). Kit effects: channel / cast time, big ult spike, hard crowd control, CC immunity in kit, lots of CC, multi-hit / ticks. Tags: anti_cc, burst, channel, dot, hard_cc, heal, high_cc, long_cd. Style burst 63%/dps 37%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): general -0.2, utility +0.1, damage +0.0. Scale STR 28% / INT 51%. Path: Shifter's Shield (offline hybrid tank); Prophetic Cloak (tenacity / anti-CC bulk); Gem of Isolation (zones & CC — Isolation slow/shred value). Actives 1/2 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 1/2, pen ≈ 0.0):
-  1. Prophetic Cloak (defense, 2400g)
-  2. Gem of Isolation (power, 2500g)
-  3. Stone of Binding (mitigate, 2550g)
-  4. Stygian Anchor (counter, 2550g)
-  5. Doublet of Binding (mitigate, active, 2700g)
-  6. Shifter's Shield (defense, 2650g)
+  1. Shifter's Shield (defense, 2650g)
+  2. Prophetic Cloak (defense, 2400g)
+  3. Gem of Isolation (power, 2500g)
+  4. Stone of Binding (mitigate, 2550g)
+  5. Stygian Anchor (counter, 2550g)
+  6. Doublet of Binding (mitigate, active, 2700g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Bellona — A-tier (role rank #5, model 69.0)
 
 *Physical · Strength scaling (STR 69.9% / INT 0%)*
 
-Bellona · Solo · archetype «sustain_solo» (STR / physical). Kit effects: basic-attack kit, self heal / drain, shields, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, burst, gap_close, hard_cc, heal, heavy_shield, high_cc. Style burst 64%/dps 36%; patch volatile (net +0.4, r5 +0.6). Patch axes (r5): damage +0.6. Scale STR 70% / INT 0%. Path: Shield of the Phoenix (shield / phoenix-style bulk); Leviathan's Hide (Solo path fit for kit profile); Stygian Anchor (peel / anti-dive anchor). Actives 2/3 · pen ≈ 0.
+Bellona · Solo · archetype «sustain_solo» (STR / physical). Kit effects: basic-attack kit, self heal / drain, shields, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, burst, gap_close, hard_cc, heal, heavy_shield, high_cc. Style burst 64%/dps 36%; patch volatile (net +0.4, r5 +0.6). Patch axes (r5): damage +0.6. Scale STR 70% / INT 0%. Path: Shifter's Shield (offline hybrid tank); Leviathan's Hide (Solo path fit for kit profile); Stone of Binding (Stone of Binding — CC setup shred). Actives 1/3 · pen ≈ 0.
 
-- **Starter:** Warrior's Axe
-- **Buy order** (actives 2/3, pen ≈ 0.0):
-  1. Shield of the Phoenix (mitigate, 2400g)
+- **Starter:** Death's Toll
+- **Buy order** (actives 1/3, pen ≈ 0.0):
+  1. Shifter's Shield (defense, 2650g)
   2. Leviathan's Hide (mitigate, 2500g)
-  3. Stygian Anchor (counter, 2550g)
-  4. Heartwood Charm (defense, active, 2650g)
-  5. Sanguine Lash (power, active, 2650g)
-  6. Shifter's Shield (defense, 2650g)
+  3. Stone of Binding (mitigate, 2550g)
+  4. Wyrmskin Hide (mitigate, 2600g)
+  5. Avenging Blade (power, 2650g)
+  6. Heartwood Charm (defense, active, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Hua Mulan — A-tier (role rank #6, model 68.5)
@@ -1288,47 +1288,47 @@ Hua Mulan · Solo · archetype «bruiser_solo» (STR / physical). Kit effects: b
 
 *Physical · Strength scaling (STR 77.5% / INT 45.8%)*
 
-Mordred · Solo · archetype «sustain_solo» (STR / physical). Kit effects: damage over time, channel / cast time, big ult spike, attack-speed steroid, self heal / drain, heavy healing. Tags: anti_cc, as_steroid, burst, channel, dot, gap_close, hard_cc, heal. Style burst 58%/dps 42%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): survivability +0.0, general -0.0, heal +0.0. Scale STR 77% / INT 46%. Path: Eye of Providence (team aura / support core); Genji's Guard (magic prot + CDR for mages); Shield of the Phoenix (shield / phoenix-style bulk). Actives 0/3 · pen ≈ 0.
+Mordred · Solo · archetype «sustain_solo» (STR / physical). Kit effects: damage over time, channel / cast time, big ult spike, attack-speed steroid, self heal / drain, heavy healing. Tags: anti_cc, as_steroid, burst, channel, dot, gap_close, hard_cc, heal. Style burst 58%/dps 42%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): survivability +0.0, general -0.0, heal +0.0. Scale STR 77% / INT 46%. Path: Eye of Providence (team aura / support core); Shield of the Phoenix (shield / phoenix-style bulk); Breastplate of Valor (physical CDR defense). Actives 1/3 · pen ≈ 0.
 
-- **Starter:** Warrior's Axe
-- **Buy order** (actives 0/3, pen ≈ 0.0):
+- **Starter:** Death's Toll
+- **Buy order** (actives 1/3, pen ≈ 0.0):
   1. Eye of Providence (defense, 2300g)
-  2. Genji's Guard (defense, 2350g)
-  3. Shield of the Phoenix (mitigate, 2400g)
-  4. Prophetic Cloak (defense, 2400g)
-  5. Contagion (defense, 2400g)
-  6. Mantle Of Discord (mitigate, 2600g)
+  2. Shield of the Phoenix (mitigate, 2400g)
+  3. Breastplate of Valor (defense, 2400g)
+  4. Contagion (defense, 2400g)
+  5. Mantle Of Discord (mitigate, 2600g)
+  6. Sanguine Lash (power, active, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Odin — B-tier (role rank #8, model 65.4)
 
 *Physical · Strength scaling (STR 65.2% / INT 34.1%)*
 
-Odin · Solo · archetype «shield_solo» (STR / physical). Kit effects: big ult spike, basic-attack kit, attack-speed steroid, shields, hard crowd control, dash / leap engage. Tags: aa, as_steroid, burst, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 64%/dps 36%; patch volatile (net +1.1, r5 +0.1). Patch axes (r5): damage +0.1, survivability +0.1. Scale STR 65% / INT 34%. Path: Spectral Armor (mitigate enemy crit (Spectral line)); Chandra's Grace (team aura / support core); Shield of the Phoenix (shield / phoenix-style bulk). Actives 1/3 · pen ≈ 0.
+Odin · Solo · archetype «shield_solo» (STR / physical). Kit effects: big ult spike, basic-attack kit, attack-speed steroid, shields, hard crowd control, dash / leap engage. Tags: aa, as_steroid, burst, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 64%/dps 36%; patch volatile (net +1.1, r5 +0.1). Patch axes (r5): damage +0.1, survivability +0.1. Scale STR 65% / INT 34%. Path: Eye of Erebus (Solo path fit for kit profile); Chandra's Grace (team aura / support core); Shield of the Phoenix (shield / phoenix-style bulk). Actives 3/3 · pen ≈ 0.
 
-- **Starter:** Warrior's Axe
-- **Buy order** (actives 1/3, pen ≈ 0.0):
-  1. Spectral Armor (mitigate, 2300g)
+- **Starter:** Death's Toll
+- **Buy order** (actives 3/3, pen ≈ 0.0):
+  1. Eye of Erebus (defense, active, 2600g)
   2. Chandra's Grace (mitigate, 2300g)
   3. Shield of the Phoenix (mitigate, 2400g)
-  4. Kinetic Cuirass (mitigate, 2400g)
-  5. Heartwood Charm (defense, active, 2650g)
-  6. Avenging Blade (power, 2650g)
+  4. Phoenix Feather (mitigate, active, 2400g)
+  5. Mystical Mail (defense, 2550g)
+  6. Heartwood Charm (defense, active, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Amaterasu — B-tier (role rank #9, model 62.1)
 
 *Physical · Hybrid scaling (STR 47.0% / INT 51.3%)*
 
-Amaterasu · Solo · archetype «sustain_solo» (STR / physical). Kit effects: big ult spike, self heal / drain, hard crowd control, dash / leap engage, CC immunity in kit, sustained DPS. Tags: anti_cc, dot, gap_close, hard_cc, heal, long_cd, self_sustain, shield. Style burst 2%/dps 98%; patch volatile (net +1.3, r5 +0.6). Patch axes (r5): damage +0.6. Scale STR 47% / INT 51%. Path: Eye of Providence (team aura / support core); Amanita Charm (Solo path fit for kit profile); Leviathan's Hide (Solo path fit for kit profile). Actives 2/3 · pen ≈ 0.
+Amaterasu · Solo · archetype «sustain_solo» (STR / physical). Kit effects: big ult spike, self heal / drain, hard crowd control, dash / leap engage, CC immunity in kit, sustained DPS. Tags: anti_cc, dot, gap_close, hard_cc, heal, long_cd, self_sustain, shield. Style burst 2%/dps 98%; patch volatile (net +1.3, r5 +0.6). Patch axes (r5): damage +0.6. Scale STR 47% / INT 51%. Path: Amanita Charm (Solo path fit for kit profile); Contagion (team anti-heal aura); Gladiator's Shield (Solo path fit for kit profile). Actives 3/3 · pen ≈ 0.
 
-- **Starter:** Warrior's Axe
-- **Buy order** (actives 2/3, pen ≈ 0.0):
-  1. Eye of Providence (defense, 2300g)
-  2. Amanita Charm (defense, active, 2350g)
-  3. Leviathan's Hide (mitigate, 2500g)
-  4. Stone of Binding (mitigate, 2550g)
-  5. Freya's Tears (defense, 2600g)
+- **Starter:** Death's Toll
+- **Buy order** (actives 3/3, pen ≈ 0.0):
+  1. Amanita Charm (defense, active, 2350g)
+  2. Contagion (defense, 2400g)
+  3. Gladiator's Shield (defense, 2450g)
+  4. Leviathan's Hide (mitigate, 2500g)
+  5. Glorious Pridwen (defense, active, 2550g)
   6. Sanguine Lash (power, active, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
@@ -1336,32 +1336,32 @@ Amaterasu · Solo · archetype «sustain_solo» (STR / physical). Kit effects: b
 
 *Magical · Intelligence scaling (STR 0% / INT 57.1%)*
 
-Xing Tian · Solo · archetype «mage_solo» (INT / magical). Kit effects: damage over time, channel / cast time, basic-attack kit, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot. Style burst 65%/dps 35%; patch rising (net +1.0, r5 +1.0). Patch axes (r5): general +1.0. Scale STR 0% / INT 57%. Path: Chandra's Grace (team aura / support core); Shield of the Phoenix (shield / phoenix-style bulk); Contagion (team anti-heal aura). Actives 0/2 · pen ≈ 0.
+Xing Tian · Solo · archetype «mage_solo» (INT / magical). Kit effects: damage over time, channel / cast time, basic-attack kit, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot. Style burst 65%/dps 35%; patch rising (net +1.0, r5 +1.0). Patch axes (r5): general +1.0. Scale STR 0% / INT 57%. Path: Shifter's Shield (offline hybrid tank); Chandra's Grace (team aura / support core); Shield of the Phoenix (shield / phoenix-style bulk). Actives 0/2 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 0/2, pen ≈ 0.0):
-  1. Chandra's Grace (mitigate, 2300g)
-  2. Shield of the Phoenix (mitigate, 2400g)
-  3. Contagion (defense, 2400g)
-  4. Gem of Isolation (power, 2500g)
-  5. Freya's Tears (defense, 2600g)
-  6. Shifter's Shield (defense, 2650g)
+  1. Shifter's Shield (defense, 2650g)
+  2. Chandra's Grace (mitigate, 2300g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Contagion (defense, 2400g)
+  5. Gem of Isolation (power, 2500g)
+  6. Freya's Tears (defense, 2600g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Cabrakan — B-tier (role rank #11, model 61.2)
 
 *Magical · Hybrid scaling (STR 75.1% / INT 51.2%)*
 
-Cabrakan · Solo · archetype «shield_solo» (INT / magical). Kit effects: channel / cast time, big ult spike, basic-attack kit, hard crowd control, ally buffs / auras, lots of CC. Tags: aa, channel, hard_cc, heal, high_cc, long_cd, shield, team_buff. Style burst 54%/dps 46%; patch falling (net -2.2, r5 -2.3). Patch axes (r5): survivability -1.0, damage -0.9, heal -0.3. Scale STR 75% / INT 51%. Path: Chandra's Grace (team aura / support core); Amanita Charm (Solo path fit for kit profile); Gem of Isolation (zones & CC — Isolation slow/shred value). Actives 2/2 · pen ≈ 0.
+Cabrakan · Solo · archetype «shield_solo» (INT / magical). Kit effects: channel / cast time, big ult spike, basic-attack kit, hard crowd control, ally buffs / auras, lots of CC. Tags: aa, channel, hard_cc, heal, high_cc, long_cd, shield, team_buff. Style burst 54%/dps 46%; patch falling (net -2.2, r5 -2.3). Patch axes (r5): survivability -1.0, damage -0.9, heal -0.3. Scale STR 75% / INT 51%. Path: Chandra's Grace (team aura / support core); Amanita Charm (Solo path fit for kit profile); Gem of Isolation (zones & CC — Isolation slow/shred value). Actives 1/2 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 2/2, pen ≈ 0.0):
+- **Buy order** (actives 1/2, pen ≈ 0.0):
   1. Chandra's Grace (mitigate, 2300g)
   2. Amanita Charm (defense, active, 2350g)
   3. Gem of Isolation (power, 2500g)
-  4. Stygian Anchor (counter, 2550g)
-  5. Heartwood Charm (defense, active, 2650g)
-  6. Shifter's Shield (defense, 2650g)
+  4. Stone of Binding (mitigate, 2550g)
+  5. Mystical Mail (defense, 2550g)
+  6. Stygian Anchor (counter, 2550g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Gilgamesh — C-tier (role rank #12, model 61.0)
@@ -1384,15 +1384,15 @@ Gilgamesh · Solo · archetype «bruiser_solo» (STR / physical). Kit effects: p
 
 *Physical · Strength scaling (STR 84.8% / INT 0%)*
 
-Hercules · Solo · archetype «sustain_solo» (STR / physical). Kit effects: big ult spike, attack-speed steroid, self heal / drain, hard crowd control, dash / leap engage, lots of CC. Tags: as_steroid, gap_close, hard_cc, heal, high_cc, long_cd, self_sustain, sustained. Style burst 37%/dps 63%; patch volatile (net -1.1, r5 +0.0). Patch axes (r5): damage -0.7, survivability -0.4, general -0.2. Scale STR 85% / INT 0%. Path: Spectral Armor (mitigate enemy crit (Spectral line)); Breastplate of Valor (physical CDR defense); Shield of the Phoenix (shield / phoenix-style bulk). Actives 0/3 · pen ≈ 0.
+Hercules · Solo · archetype «sustain_solo» (STR / physical). Kit effects: big ult spike, attack-speed steroid, self heal / drain, hard crowd control, dash / leap engage, lots of CC. Tags: as_steroid, gap_close, hard_cc, heal, high_cc, long_cd, self_sustain, sustained. Style burst 37%/dps 63%; patch volatile (net -1.1, r5 +0.0). Patch axes (r5): damage -0.7, survivability -0.4, general -0.2. Scale STR 85% / INT 0%. Path: Shifter's Shield (offline hybrid tank); Spectral Armor (mitigate enemy crit (Spectral line)); Shield of the Phoenix (shield / phoenix-style bulk). Actives 0/3 · pen ≈ 0.
 
-- **Starter:** Warrior's Axe
+- **Starter:** Death's Toll
 - **Buy order** (actives 0/3, pen ≈ 0.0):
-  1. Spectral Armor (mitigate, 2300g)
-  2. Breastplate of Valor (defense, 2400g)
+  1. Shifter's Shield (defense, 2650g)
+  2. Spectral Armor (mitigate, 2300g)
   3. Shield of the Phoenix (mitigate, 2400g)
   4. Contagion (defense, 2400g)
-  5. Stone of Binding (mitigate, 2550g)
+  5. Freya's Tears (defense, 2600g)
   6. Avenging Blade (power, 2650g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
@@ -1400,15 +1400,15 @@ Hercules · Solo · archetype «sustain_solo» (STR / physical). Kit effects: bi
 
 *Physical · Strength scaling (STR 42.4% / INT 13.3%)*
 
-Guan Yu · Solo · archetype «sustain_solo» (STR / physical). Kit effects: damage over time, attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, dot, gap_close, hard_cc, heal, heavy_dot, long_cd, pet_zone. Style burst 15%/dps 85%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.3, survivability -0.1, cooldown -0.1. Scale STR 42% / INT 13%. Path: Chandra's Grace (team aura / support core); Berserker's Shield (Solo path fit for kit profile); Stone of Binding (Stone of Binding — CC setup shred). Actives 0/3 · pen ≈ 0.
+Guan Yu · Solo · archetype «sustain_solo» (STR / physical). Kit effects: damage over time, attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, dot, gap_close, hard_cc, heal, heavy_dot, long_cd, pet_zone. Style burst 15%/dps 85%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.3, survivability -0.1, cooldown -0.1. Scale STR 42% / INT 13%. Path: Eye of Erebus (Solo path fit for kit profile); Chandra's Grace (team aura / support core); Breastplate of Valor (physical CDR defense). Actives 1/3 · pen ≈ 0.
 
-- **Starter:** Warrior's Axe
-- **Buy order** (actives 0/3, pen ≈ 0.0):
-  1. Chandra's Grace (mitigate, 2300g)
-  2. Berserker's Shield (defense, 2400g)
-  3. Stone of Binding (mitigate, 2550g)
-  4. Runeforged Hammer (power, 2550g)
-  5. Stygian Anchor (counter, 2550g)
+- **Starter:** Death's Toll
+- **Buy order** (actives 1/3, pen ≈ 0.0):
+  1. Eye of Erebus (defense, active, 2600g)
+  2. Chandra's Grace (mitigate, 2300g)
+  3. Breastplate of Valor (defense, 2400g)
+  4. Berserker's Shield (defense, 2400g)
+  5. Stone of Binding (mitigate, 2550g)
   6. Draconic Scale (defense, 2700g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
@@ -1416,14 +1416,14 @@ Guan Yu · Solo · archetype «sustain_solo» (STR / physical). Kit effects: dam
 
 *Physical · Strength scaling (STR 82.9% / INT 0%)*
 
-Achilles · Solo · archetype «sustain_solo» (STR / physical). Kit effects: big ult spike, basic-attack kit, self heal / drain, execute / threshold, shields, hard crowd control. Tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 30%/dps 70%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.3, attack_speed +0.0, survivability +0.0. Scale STR 83% / INT 0%. Path: Prophetic Cloak (tenacity / anti-CC bulk); Phoenix Feather (shield / phoenix-style bulk); Runeforged Hammer (Solo path fit for kit profile). Actives 3/3 · pen ≈ 0.
+Achilles · Solo · archetype «sustain_solo» (STR / physical). Kit effects: big ult spike, basic-attack kit, self heal / drain, execute / threshold, shields, hard crowd control. Tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 30%/dps 70%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.3, attack_speed +0.0, survivability +0.0. Scale STR 83% / INT 0%. Path: Shifter's Shield (offline hybrid tank); Chandra's Grace (team aura / support core); Amanita Charm (Solo path fit for kit profile). Actives 3/3 · pen ≈ 0.
 
-- **Starter:** Warrior's Axe
+- **Starter:** Death's Toll
 - **Buy order** (actives 3/3, pen ≈ 0.0):
-  1. Prophetic Cloak (defense, 2400g)
-  2. Phoenix Feather (mitigate, active, 2400g)
-  3. Runeforged Hammer (power, 2550g)
-  4. Glorious Pridwen (defense, active, 2550g)
+  1. Shifter's Shield (defense, 2650g)
+  2. Chandra's Grace (mitigate, 2300g)
+  3. Amanita Charm (defense, active, 2350g)
+  4. Phoenix Feather (mitigate, active, 2400g)
   5. Heartwood Charm (defense, active, 2650g)
   6. Hussar's Wings (defense, 3500g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
@@ -1432,13 +1432,13 @@ Achilles · Solo · archetype «sustain_solo» (STR / physical). Kit effects: bi
 
 *Magical · Intelligence scaling (STR 0% / INT 83.3%)*
 
-Hades · Solo · archetype «sustain_solo» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot, high_cc. Style burst 45%/dps 55%; patch stable (net +0.4, r5 +0.0). Patch axes (r5): general +0.4, survivability -0.0, heal -0.0. Scale STR 0% / INT 83%. Path: Chandra's Grace (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Gem of Isolation (zones & CC — Isolation slow/shred value). Pen: Gluttonous Grimoire. Actives 1/2 · pen ≈ 10.
+Hades · Solo · archetype «sustain_solo» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot, high_cc. Style burst 45%/dps 55%; patch stable (net +0.4, r5 +0.0). Patch axes (r5): general +0.4, survivability -0.0, heal -0.0. Scale STR 0% / INT 83%. Path: Gauntlet of Thebes (team aura / support core); Chandra's Grace (team aura / support core); Gladiator's Shield (Solo path fit for kit profile). Pen: Gluttonous Grimoire. Actives 1/2 · pen ≈ 10.
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 1/2, pen ≈ 10.0):
-  1. Chandra's Grace (mitigate, 2300g)
-  2. Prophetic Cloak (defense, 2400g)
-  3. Gem of Isolation (power, 2500g)
+  1. Gauntlet of Thebes (defense, 2200g)
+  2. Chandra's Grace (mitigate, 2300g)
+  3. Gladiator's Shield (defense, 2450g)
   4. Stone of Binding (mitigate, 2550g)
   5. Heartwood Charm (defense, active, 2650g)
   6. Gluttonous Grimoire (pen, pen 10.0, 2600g)
@@ -1448,32 +1448,32 @@ Hades · Solo · archetype «sustain_solo» (INT / magical). Kit effects: damage
 
 *Magical · Hybrid scaling (STR 52.4% / INT 36.2%)*
 
-Artio · Solo · archetype «sustain_solo» (INT / magical). Kit effects: protection shred, channel / cast time, big ult spike, heavy healing, pet / deployable, hard crowd control. Tags: channel, hard_cc, heal, heavy_heal, high_cc, long_cd, mobile, pet_zone. Style burst 83%/dps 17%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): general -0.1, damage +0.1, mana -0.1. Scale STR 52% / INT 36%. Path: Chandra's Grace (team aura / support core); Gem of Isolation (zones & CC — Isolation slow/shred value); Stone of Binding (Stone of Binding — CC setup shred). Actives 1/2 · pen ≈ 0.
+Artio · Solo · archetype «sustain_solo» (INT / magical). Kit effects: protection shred, channel / cast time, big ult spike, heavy healing, pet / deployable, hard crowd control. Tags: channel, hard_cc, heal, heavy_heal, high_cc, long_cd, mobile, pet_zone. Style burst 83%/dps 17%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): general -0.1, damage +0.1, mana -0.1. Scale STR 52% / INT 36%. Path: Shifter's Shield (offline hybrid tank); Chandra's Grace (team aura / support core); Gem of Isolation (zones & CC — Isolation slow/shred value). Actives 0/2 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 1/2, pen ≈ 0.0):
-  1. Chandra's Grace (mitigate, 2300g)
-  2. Gem of Isolation (power, 2500g)
-  3. Stone of Binding (mitigate, 2550g)
-  4. Glorious Pridwen (defense, active, 2550g)
+- **Buy order** (actives 0/2, pen ≈ 0.0):
+  1. Shifter's Shield (defense, 2650g)
+  2. Chandra's Grace (mitigate, 2300g)
+  3. Gem of Isolation (power, 2500g)
+  4. Stone of Binding (mitigate, 2550g)
   5. Stygian Anchor (counter, 2550g)
-  6. Shifter's Shield (defense, 2650g)
+  6. Draconic Scale (defense, 2700g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Cerberus — D-tier (role rank #18, model 39.3)
 
 *Magical · Intelligence scaling (STR 0% / INT 42.4%)*
 
-Cerberus · Solo · archetype «sustain_solo» (INT / magical). Kit effects: self heal / drain, pet / deployable, hard crowd control, dash / leap engage, burst combos, lots of CC. Tags: dot, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone, self_sustain. Style burst 100%/dps 0%; patch falling (net -1.8, r5 -1.8). Patch axes (r5): survivability -1.2, general -0.6. Scale STR 0% / INT 42%. Path: Chandra's Grace (team aura / support core); Amanita Charm (Solo path fit for kit profile); Shield of the Phoenix (shield / phoenix-style bulk). Actives 2/2 · pen ≈ 0.
+Cerberus · Solo · archetype «sustain_solo» (INT / magical). Kit effects: self heal / drain, pet / deployable, hard crowd control, dash / leap engage, burst combos, lots of CC. Tags: dot, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone, self_sustain. Style burst 100%/dps 0%; patch falling (net -1.8, r5 -1.8). Patch axes (r5): survivability -1.2, general -0.6. Scale STR 0% / INT 42%. Path: Eye of Erebus (Solo path fit for kit profile); Chandra's Grace (team aura / support core); Alchemist Coat (tenacity / anti-CC bulk). Actives 1/2 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
-- **Buy order** (actives 2/2, pen ≈ 0.0):
-  1. Chandra's Grace (mitigate, 2300g)
-  2. Amanita Charm (defense, active, 2350g)
-  3. Shield of the Phoenix (mitigate, 2400g)
-  4. Contagion (defense, 2400g)
-  5. Gem of Isolation (power, 2500g)
-  6. Jade Scepter (power, active, 2750g)
+- **Buy order** (actives 1/2, pen ≈ 0.0):
+  1. Eye of Erebus (defense, active, 2600g)
+  2. Chandra's Grace (mitigate, 2300g)
+  3. Alchemist Coat (mitigate, 2350g)
+  4. Kinetic Cuirass (mitigate, 2400g)
+  5. Contagion (defense, 2400g)
+  6. Stone of Binding (mitigate, 2550g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Thor — D-tier (role rank #19, model 32.1)
@@ -1580,16 +1580,16 @@ Athena · Support · archetype «shield_support» (INT / magical). Kit effects: 
 
 *Magical · Intelligence scaling (STR 33.6% / INT 29.6%)*
 
-Ares · Support · archetype «shield_support» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, pet / deployable, hard crowd control, ally buffs / auras. Tags: anti_cc, burst, channel, dot, hard_cc, heal, heavy_dot, long_cd. Style burst 84%/dps 16%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.2, damage +0.0, survivability -0.0. Scale STR 34% / INT 30%. Path: Alchemist Coat (tenacity / anti-CC bulk); Shield of the Phoenix (shield / phoenix-style bulk); Contagion (team anti-heal aura). Actives 1/2 · pen ≈ 0.
+Ares · Support · archetype «shield_support» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, pet / deployable, hard crowd control, ally buffs / auras. Tags: anti_cc, burst, channel, dot, hard_cc, heal, heavy_dot, long_cd. Style burst 84%/dps 16%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.2, damage +0.0, survivability -0.0. Scale STR 34% / INT 30%. Path: Alchemist Coat (tenacity / anti-CC bulk); Shield of the Phoenix (shield / phoenix-style bulk); Contagion (team anti-heal aura). Actives 0/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 1/2, pen ≈ 0.0):
+- **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Alchemist Coat (mitigate, 2350g)
   2. Shield of the Phoenix (mitigate, 2400g)
   3. Contagion (defense, 2400g)
   4. Stone of Binding (mitigate, 2550g)
   5. Mystical Mail (defense, 2550g)
-  6. Glorious Pridwen (defense, active, 2550g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Aphrodite — A-tier (role rank #5, model 64.5)
@@ -1708,13 +1708,13 @@ Cabrakan · Support · archetype «shield_support» (INT / magical). Kit effects
 
 *Magical · Intelligence scaling (STR 0% / INT 50.0%)*
 
-Sobek · Support · archetype «lockdown_support» (INT / magical). Kit effects: self heal / drain, execute / threshold, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, burst, dot, execute, gap_close, hard_cc, heal, high_cc. Style burst 81%/dps 19%; patch stable (net +0.4, r5 +0.0). Patch axes (r5): general +0.4, cooldown -0.0, damage +0.0. Scale STR 0% / INT 50%. Path: Chandra's Grace (team aura / support core); Shield of the Phoenix (shield / phoenix-style bulk); Breastplate of Valor (physical CDR defense). Actives 1/2 · pen ≈ 0.
+Sobek · Support · archetype «lockdown_support» (INT / magical). Kit effects: self heal / drain, execute / threshold, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, burst, dot, execute, gap_close, hard_cc, heal, high_cc. Style burst 81%/dps 19%; patch stable (net +0.4, r5 +0.0). Patch axes (r5): general +0.4, cooldown -0.0, damage +0.0. Scale STR 0% / INT 50%. Path: Chandra's Grace (team aura / support core); Shield of the Phoenix (shield / phoenix-style bulk); Freya's Tears (raw protections / HP). Actives 1/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
 - **Buy order** (actives 1/2, pen ≈ 0.0):
   1. Chandra's Grace (mitigate, 2300g)
   2. Shield of the Phoenix (mitigate, 2400g)
-  3. Breastplate of Valor (defense, 2400g)
+  3. Freya's Tears (defense, 2600g)
   4. Doublet of Binding (mitigate, active, 2700g)
   5. Resolute Mantle (mitigate, 2750g)
   6. Shifter's Shield (defense, 2650g)
@@ -1740,32 +1740,32 @@ Ganesha · Support · archetype «lockdown_support» (INT / magical). Kit effect
 
 *Physical · Strength scaling (STR 42.4% / INT 13.3%)*
 
-Guan Yu · Support · archetype «heal_support» (STR / physical). Kit effects: damage over time, attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, dot, gap_close, hard_cc, heal, heavy_dot, long_cd, pet_zone. Style burst 15%/dps 85%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.3, survivability -0.1, cooldown -0.1. Scale STR 42% / INT 13%. Path: Spectral Armor (mitigate enemy crit (Spectral line)); Eye of Providence (team aura / support core); Breastplate of Valor (physical CDR defense). Pen: Jotunn's Revenge. Actives 0/2 · pen ≈ 5.
+Guan Yu · Support · archetype «heal_support» (STR / physical). Kit effects: damage over time, attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, dot, gap_close, hard_cc, heal, heavy_dot, long_cd, pet_zone. Style burst 15%/dps 85%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.3, survivability -0.1, cooldown -0.1. Scale STR 42% / INT 13%. Path: Eye of Providence (team aura / support core); Breastplate of Valor (physical CDR defense); Stone of Binding (Stone of Binding — CC setup shred). Actives 0/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 5.0):
-  1. Spectral Armor (mitigate, 2300g)
-  2. Eye of Providence (defense, 2300g)
-  3. Breastplate of Valor (defense, 2400g)
-  4. Jotunn's Revenge (power, pen 5.0, 2400g)
-  5. Stone of Binding (mitigate, 2550g)
-  6. Freya's Tears (defense, 2600g)
+- **Buy order** (actives 0/2, pen ≈ 0.0):
+  1. Eye of Providence (defense, 2300g)
+  2. Breastplate of Valor (defense, 2400g)
+  3. Stone of Binding (mitigate, 2550g)
+  4. Freya's Tears (defense, 2600g)
+  5. Avenging Blade (power, 2650g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Horus — C-tier (role rank #15, model 57.4)
 
 *Physical · Strength scaling (STR 74.4% / INT 0%)*
 
-Horus · Support · archetype «shield_support» (STR / physical). Kit effects: channel / cast time, self heal / drain, heavy healing, hard crowd control, dash / leap engage, ally buffs / auras. Tags: anti_cc, channel, gap_close, hard_cc, heal, heavy_heal, high_cc, long_cd. Style burst 30%/dps 70%; patch falling (net -3.0, r5 -3.0). Patch axes (r5): damage -1.6, cooldown -0.8, heal -0.7. Scale STR 74% / INT 0%. Path: Spectral Armor (Support path fit for kit profile); Kinetic Cuirass (Support path fit for kit profile); Stone of Binding (Stone of Binding — CC setup shred). Actives 2/2 · pen ≈ 0.
+Horus · Support · archetype «shield_support» (STR / physical). Kit effects: channel / cast time, self heal / drain, heavy healing, hard crowd control, dash / leap engage, ally buffs / auras. Tags: anti_cc, channel, gap_close, hard_cc, heal, heavy_heal, high_cc, long_cd. Style burst 30%/dps 70%; patch falling (net -3.0, r5 -3.0). Patch axes (r5): damage -1.6, cooldown -0.8, heal -0.7. Scale STR 74% / INT 0%. Path: Chandra's Grace (team aura / support core); Breastplate of Valor (physical CDR defense; patch falling — extra bulk/CDR); Shield of the Phoenix (shield / phoenix-style bulk). Actives 1/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 2/2, pen ≈ 0.0):
-  1. Spectral Armor (mitigate, 2300g)
-  2. Kinetic Cuirass (mitigate, 2400g)
-  3. Stone of Binding (mitigate, 2550g)
-  4. Glorious Pridwen (defense, active, 2550g)
-  5. Freya's Tears (defense, 2600g)
-  6. Doublet of Binding (mitigate, active, 2700g)
+- **Buy order** (actives 1/2, pen ≈ 0.0):
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Breastplate of Valor (defense, 2400g)
+  3. Shield of the Phoenix (mitigate, 2400g)
+  4. Prophetic Cloak (defense, 2400g)
+  5. Doublet of Binding (mitigate, active, 2700g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Bacchus — C-tier (role rank #16, model 56.4)
@@ -1788,16 +1788,16 @@ Bacchus · Support · archetype «lockdown_support» (INT / magical). Kit effect
 
 *Magical · Intelligence scaling (STR 0% / INT 30.5%)*
 
-Khepri · Support · archetype «shield_support» (INT / magical). Kit effects: execute / threshold, hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, dot, execute, gap_close, hard_cc, high_cc, long_cd, shield. Style burst 0%/dps 0%; patch new (net +0.6, r5 +0.0). Patch axes (r5): utility +1.0, damage -0.5, general +0.1. Scale STR 0% / INT 30%. Path: Spectral Armor (mitigate enemy crit (Spectral line)); Chandra's Grace (team aura / support core); Amanita Charm (Support path fit for kit profile). Actives 2/2 · pen ≈ 0.
+Khepri · Support · archetype «shield_support» (INT / magical). Kit effects: execute / threshold, hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, dot, execute, gap_close, hard_cc, high_cc, long_cd, shield. Style burst 0%/dps 0%; patch new (net +0.6, r5 +0.0). Patch axes (r5): utility +1.0, damage -0.5, general +0.1. Scale STR 0% / INT 30%. Path: Chandra's Grace (team aura / support core); Amanita Charm (Support path fit for kit profile); Genji's Guard (magic prot + CDR for mages). Actives 1/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 2/2, pen ≈ 0.0):
-  1. Spectral Armor (mitigate, 2300g)
-  2. Chandra's Grace (mitigate, 2300g)
-  3. Amanita Charm (defense, active, 2350g)
-  4. Prophetic Cloak (defense, 2400g)
+- **Buy order** (actives 1/2, pen ≈ 0.0):
+  1. Chandra's Grace (mitigate, 2300g)
+  2. Amanita Charm (defense, active, 2350g)
+  3. Genji's Guard (defense, 2350g)
+  4. Shield of the Phoenix (mitigate, 2400g)
   5. Contagion (defense, 2400g)
-  6. Glorious Pridwen (defense, active, 2550g)
+  6. Shifter's Shield (defense, 2650g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Artio — C-tier (role rank #18, model 51.7)
@@ -1836,16 +1836,16 @@ Sylvanus · Support · archetype «lockdown_support» (INT / magical). Kit effec
 
 *Magical · Intelligence scaling (STR 0% / INT 36.3%)*
 
-Geb · Support · archetype «shield_support» (INT / magical). Kit effects: hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit, lots of CC, shields. Tags: anti_cc, dot, gap_close, hard_cc, high_cc, long_cd, shield, team_buff. Style burst 66%/dps 34%; patch volatile (net -2.4, r5 +0.0). Patch axes (r5): general -0.9, damage -0.7, survivability -0.6. Scale STR 0% / INT 36%. Path: Spectral Armor (mitigate enemy crit (Spectral line)); Shield of the Phoenix (shield / phoenix-style bulk); Breastplate of Valor (physical CDR defense). Actives 1/2 · pen ≈ 0.
+Geb · Support · archetype «shield_support» (INT / magical). Kit effects: hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit, lots of CC, shields. Tags: anti_cc, dot, gap_close, hard_cc, high_cc, long_cd, shield, team_buff. Style burst 66%/dps 34%; patch volatile (net -2.4, r5 +0.0). Patch axes (r5): general -0.9, damage -0.7, survivability -0.6. Scale STR 0% / INT 36%. Path: Spectral Armor (mitigate enemy crit (Spectral line)); Phoenix Feather (shield / phoenix-style bulk); Stone of Binding (Stone of Binding — CC setup shred). Actives 2/2 · pen ≈ 0.
 
 - **Starter:** Selflessness
-- **Buy order** (actives 1/2, pen ≈ 0.0):
+- **Buy order** (actives 2/2, pen ≈ 0.0):
   1. Spectral Armor (mitigate, 2300g)
-  2. Shield of the Phoenix (mitigate, 2400g)
-  3. Breastplate of Valor (defense, 2400g)
-  4. Phoenix Feather (mitigate, active, 2400g)
-  5. Stone of Binding (mitigate, 2550g)
-  6. Stygian Anchor (counter, 2550g)
+  2. Phoenix Feather (mitigate, active, 2400g)
+  3. Stone of Binding (mitigate, 2550g)
+  4. Stygian Anchor (counter, 2550g)
+  5. Freya's Tears (defense, 2600g)
+  6. Doublet of Binding (mitigate, active, 2700g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Cerberus — D-tier (role rank #21, model 39.3)
