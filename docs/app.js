@@ -1802,11 +1802,35 @@ function pickRandomSeed() {
   return (Math.random() * 0xffffffff) >>> 0;
 }
 
+function isGodSpecificItem(it) {
+  const tier = String(it.tier || "");
+  const itype = String(it.item_type || "").toLowerCase();
+  const cats = String(it.categories || "").toLowerCase();
+  const name = String(it.name || "").toLowerCase();
+  // Ratatoskr acorns, Vulcan-style mods, Baron's Brew, etc.
+  if (tier === "God Specific" || itype === "god specific" || cats.includes("god specific"))
+    return true;
+  if (name.includes("acorn")) return true;
+  return false;
+}
+
 function isT3Item(it) {
   const tier = String(it.tier || "");
   const cost = Number(it.total_cost ?? it.cost ?? 0);
+  const itype = String(it.item_type || "").toLowerCase();
+  // Never treat god-only items as universal T3 (troll was picking acorns on everyone)
+  if (isGodSpecificItem(it)) return false;
+  if (tier === "Relic" || itype === "relic") return false;
+  if (tier === "Curio" || tier === "Consumable" || itype === "consumable") return false;
   if (tier === "3" || tier === "T3") return true;
-  if (cost >= 2000 && tier !== "1" && tier !== "Starter" && tier !== "Relic") return true;
+  if (
+    cost >= 2000 &&
+    tier !== "1" &&
+    tier !== "Starter" &&
+    tier !== "Relic" &&
+    tier !== "God Specific"
+  )
+    return true;
   return false;
 }
 

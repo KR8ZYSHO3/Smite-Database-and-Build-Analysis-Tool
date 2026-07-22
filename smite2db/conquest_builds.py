@@ -1120,7 +1120,38 @@ def is_upgraded_starter(it: dict) -> bool:
     return (it["total_cost"] or 0) >= 1500 or it["tier"] in ("2", "Upgraded Starter")
 
 
+def is_god_specific_item(it: dict | ScoredItem | str) -> bool:
+    """Ratatoskr acorns, mods, Baron's Brew, etc. — not buyable by other gods."""
+    if isinstance(it, str):
+        n = it.lower()
+        # Name cues when we only have a string (client / inject keys)
+        if "acorn" in n:
+            return True
+        return False
+    if isinstance(it, ScoredItem):
+        n = (it.name or "").lower()
+        itype = (it.item_type or "").lower()
+        # ScoredItem may not carry categories; name + type
+        if "god specific" in itype or itype == "god specific":
+            return True
+        if "acorn" in n:
+            return True
+        return False
+    n = (it.get("name") or "").lower()
+    cats = (it.get("categories") or "").lower()
+    itype = (it.get("item_type") or "").lower()
+    tier = str(it.get("tier") or "")
+    if "god specific" in cats or "god specific" in itype or tier == "God Specific":
+        return True
+    if "acorn" in n:  # Ratatoskr-only family
+        return True
+    return False
+
+
 def is_t3_core(it: dict) -> bool:
+    """True for normal shop T3 cores — never god-specific / relics / starters."""
+    if is_god_specific_item(it):
+        return False
     if it["tier"] == "3":
         return True
     if it["item_type"] in ("Offensive", "Defensive", "Hybrid") and (it["total_cost"] or 0) >= 2200:
@@ -3471,6 +3502,9 @@ def build_god_build(
             return False
         # Not in live shop / removed (wiki may still list them)
         if _is_removed_or_unavailable_item(s.name):
+            return False
+        # God-specific (acorns, mods, …) never on shared shop paths
+        if is_god_specific_item(s) or is_god_specific_item(s.name):
             return False
         # Cross-type hard bans
         if physical and any(

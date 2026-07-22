@@ -27,6 +27,7 @@ from .conquest_builds import (
     is_base_relic,
     is_pen_item,
     is_t1_starter,
+    is_god_specific_item,
     is_t3_core,
     item_pen_value,
     load_items,
@@ -614,6 +615,8 @@ def build_max_stat_troll(
             continue
         if _is_removed_or_unavailable_item(it.get("name") or ""):
             continue
+        if is_god_specific_item(it):
+            continue
         base = score_item_for_role(it, role, profile)
         val = _item_stat_value(base, mode["stat"])
         if val <= 0:
@@ -848,6 +851,8 @@ def build_troll_build(
         for s in scored
         if is_t3_core(next(i for i in items if i["name"] == s.name))
         and not _is_removed_or_unavailable_item(s.name)
+        and not is_god_specific_item(s.name)
+        and not is_god_specific_item(next(i for i in items if i["name"] == s.name))
     ]
     # Type filter for non-AA-clown paths
     if identity["primary_axis"] != "aa_clown":
