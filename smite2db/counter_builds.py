@@ -340,7 +340,7 @@ def counter_score_delta(
             if fam == "anti_as" or has_key("midgardian"):
                 delta += 32
                 why.append("peel for ally ADC — cut enemy AS")
-            if has_key("chandra", "thebes", "sovereign", "providence") or (
+            if has_key("chandra", "thebes", "sovereign", "heartward") or (
                 "ally" in blob or "allies" in blob or "aura" in blob
             ):
                 delta += 18

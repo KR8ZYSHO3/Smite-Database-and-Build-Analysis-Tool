@@ -21,6 +21,7 @@ from .conquest_builds import (
     ROLE_PROFILES,
     ScoredItem,
     _canon_stat_value,
+    _is_removed_or_unavailable_item,
     _order_buy_path,
     god_scaling_bias,
     is_base_relic,
@@ -186,7 +187,7 @@ AXIS_ITEM_KEYS: dict[str, list[str]] = {
         "ichival", "wind", "executioner", "bloodforge", "devourer", "odysseus",
     ],
     "aura_tax": [
-        "thebes", "chandra", "sovereign", "heartward", "providence", "contagion",
+        "thebes", "chandra", "sovereign", "heartward", "contagion",
         "spectral", "midgardian",
     ],
     "active_toybox": [
@@ -611,6 +612,8 @@ def build_max_stat_troll(
     for it in items:
         if not is_t3_core(it):
             continue
+        if _is_removed_or_unavailable_item(it.get("name") or ""):
+            continue
         base = score_item_for_role(it, role, profile)
         val = _item_stat_value(base, mode["stat"])
         if val <= 0:
@@ -840,7 +843,12 @@ def build_troll_build(
     if starter_pick:
         starters = [starter_pick] + [s for s in starters if s.name != starter_pick.name]
 
-    t3 = [s for s in scored if is_t3_core(next(i for i in items if i["name"] == s.name))]
+    t3 = [
+        s
+        for s in scored
+        if is_t3_core(next(i for i in items if i["name"] == s.name))
+        and not _is_removed_or_unavailable_item(s.name)
+    ]
     # Type filter for non-AA-clown paths
     if identity["primary_axis"] != "aa_clown":
         if mage:

@@ -91,7 +91,7 @@ ITEM_TO_FAMILY: list[tuple[str, str]] = [
     ("chandra", "aura"),
     ("sovereign", "aura"),
     ("heartward", "aura"),
-    ("providence", "aura"),
+    # Eye of Providence removed from live recommendations (not reliably in shop)
     ("spectral", "anti_crit"),
     ("midgardian", "anti_as"),
     ("nemean", "anti_crit"),

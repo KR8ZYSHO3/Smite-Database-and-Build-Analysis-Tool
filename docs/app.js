@@ -2191,7 +2191,7 @@ const TROLL_AXIS_KEYS = {
   antiheal_tax: ["contagion", "divine ruin", "pestilence", "brawler", "toxic"],
   infinite_poke: ["chronos", "pendant", "gem of focus", "breastplate", "genji", "thoth", "doom orb", "isolation", "magus", "soul gem", "myrddin"],
   aa_clown: ["deathbringer", "demon", "riptalon", "avenging", "musashi", "qins", "ichival", "wind", "executioner", "bloodforge", "devourer"],
-  aura_tax: ["thebes", "chandra", "sovereign", "heartward", "providence", "contagion", "spectral", "midgardian"],
+  aura_tax: ["thebes", "chandra", "sovereign", "heartward", "contagion", "spectral", "midgardian"],
   active_toybox: ["dreamer", "wish-granting", "parashu", "arondight", "pridwen"],
 };
 const TROLL_TITLES = {

@@ -57,6 +57,14 @@ MAGE_LS_CORE_KEYS = ("bancroft", "typhon", "gluttonous")
 # Starters that lead into mage LS / sustain stacking.
 VAMP_STARTER_KEYS = ("vampiric", "shroud")
 
+# Wiki / scrape may still list these, but they are not reliably in the live SMITE 2 shop.
+# Hard-ban from all recommended Conquest paths (substring match on item name).
+# Eye of Providence: ward T3 — players report missing from shop; do not recommend.
+REMOVED_OR_UNAVAILABLE_ITEM_KEYS = (
+    "eye of providence",
+    "providence",  # only matches Eye of Providence (not Eye of Erebus / Storm)
+)
+
 
 def _is_heal_core_item(name: str) -> bool:
     n = (name or "").lower()
@@ -71,6 +79,20 @@ def _is_mage_ls_core_item(name: str) -> bool:
 def _is_vamp_starter_name(name: str) -> bool:
     n = (name or "").lower()
     return any(k in n for k in VAMP_STARTER_KEYS)
+
+
+def _is_removed_or_unavailable_item(name: str) -> bool:
+    """True if item should never appear on recommended paths."""
+    n = (name or "").lower()
+    # Providence only — do not ban Eye of Erebus / Eye of the Storm
+    if "providence" in n:
+        return True
+    for key in REMOVED_OR_UNAVAILABLE_ITEM_KEYS:
+        if key == "providence":
+            continue
+        if key in n:
+            return True
+    return False
 
 
 def _is_true_healer(bias: dict | None) -> bool:
@@ -2276,7 +2298,7 @@ def _item_matches_slot(
         if _is_heal_core_item(it.name):
             return False
         return any(k in blob for k in ("ally", "allies", "aura", "team")) or any(
-            k in n for k in ("thebes", "sovereignty", "heartward", "chandra", "providence", "contagion")
+            k in n for k in ("thebes", "sovereignty", "heartward", "chandra", "contagion")
         )
     if slot == "tenacity":
         return ten >= 5 or "magi" in n or "tenacit" in blob
@@ -2342,7 +2364,7 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     "immobile": ["alchemist", "magi", "cloak", "mantle", "oni", "genji"],
     "mobile": ["jotunn", "hydra", "arondight", "heartseeker"],
     "gap_close": ["jotunn", "hydra", "arondight", "heartseeker", "transcend"],
-    "team_buff": ["thebes", "sovereign", "heartward", "chandra", "providence"],
+    "team_buff": ["thebes", "sovereign", "heartward", "chandra"],
     "anti_cc": ["magi", "mantle", "alchemist", "prophetic"],
     "sustained": ["bloodforge", "devourer", "qins", "chronos", "pendant", "breastplate"],
 }
@@ -3446,6 +3468,9 @@ def build_god_build(
             return False
         # Bancroft / Typhon / Gluttonous only on self-sustain mage kits
         if _is_mage_ls_core_item(s.name) and not _wants_mage_lifesteal(bias):
+            return False
+        # Not in live shop / removed (wiki may still list them)
+        if _is_removed_or_unavailable_item(s.name):
             return False
         # Cross-type hard bans
         if physical and any(

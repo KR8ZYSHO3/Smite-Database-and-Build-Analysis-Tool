@@ -1,5 +1,6 @@
 {
-  "_comment": "Optional human kit overrides. Keys are exact god names from the wiki.",
+  "_comment": "Optional human kit overrides. Keys are exact god names from the wiki. Global dead items are banned in conquest_builds.REMOVED_OR_UNAVAILABLE_ITEM_KEYS.",
+  "_global_unavailable_note": "Eye of Providence: wiki still lists it; players report not in live shop — hard-banned in engine.",
   "_example": {
     "SomeGod": {
       "force_tags": ["channel", "heal"],
