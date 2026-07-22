@@ -4,6 +4,7 @@ Statistically weighted Conquest builds per role.
 Uses only local DB data:
   - item stats / categories / cost
   - item patch momentum
+  - item tier ladder (items:overall S–D)
   - god kit scaling + role tags + tier scores
 No external build guides.
 """
@@ -496,6 +497,10 @@ class ScoredItem:
     recent_momentum: float = 0.0
     patch_axes: dict[str, float] = field(default_factory=dict)
     patch_axes_r5: dict[str, float] = field(default_factory=dict)
+    # Item tier ladder (scope items:overall) — meta strength from analysis
+    ladder_tier: str | None = None
+    ladder_rank: int | None = None
+    ladder_score: float = 0.0
 
 
 def is_shop_active_item(
@@ -573,6 +578,8 @@ def load_items(conn: sqlite3.Connection) -> list[dict]:
     recent_mom: dict[str, float] = {}
     item_axes: dict[str, dict[str, float]] = {}
     item_axes_r5: dict[str, dict[str, float]] = {}
+    # Item tier ladder (items:overall) — composite score from analysis
+    ladder: dict[str, dict[str, Any]] = {}
     try:
         for r in conn.execute(
             """
@@ -593,6 +600,21 @@ def load_items(conn: sqlite3.Connection) -> list[dict]:
             "SELECT entity_name, net_weighted_score FROM entity_patch_summary WHERE entity_type='item'"
         ):
             momentum[r["entity_name"]] = r["net_weighted_score"] or 0.0
+    try:
+        for r in conn.execute(
+            """
+            SELECT entity_name, tier, rank_in_scope, score
+            FROM tier_list
+            WHERE scope = 'items:overall' AND entity_type = 'item'
+            """
+        ):
+            ladder[r["entity_name"]] = {
+                "ladder_tier": r["tier"],
+                "ladder_rank": int(r["rank_in_scope"] or 0),
+                "ladder_score": float(r["score"] or 0.0),
+            }
+    except sqlite3.OperationalError:
+        pass
     items = []
     for r in rows:
         stats = _parse_stats(r["stats_json"], r["stats_text"])
@@ -612,6 +634,7 @@ def load_items(conn: sqlite3.Connection) -> list[dict]:
             flags.add("active_item")
         else:
             flags.add("passive_item")
+        lad = ladder.get(r["name"]) or {}
         items.append(
             {
                 "name": r["name"],
@@ -624,6 +647,9 @@ def load_items(conn: sqlite3.Connection) -> list[dict]:
                 "recent_momentum": recent_mom.get(r["name"], 0.0),
                 "patch_axes": item_axes.get(r["name"], {}),
                 "patch_axes_r5": item_axes_r5.get(r["name"], {}),
+                "ladder_tier": lad.get("ladder_tier"),
+                "ladder_rank": lad.get("ladder_rank"),
+                "ladder_score": lad.get("ladder_score", 0.0),
                 "passive": r["passive"] or "",
                 "active": active,
                 "categories": cats,
@@ -631,6 +657,55 @@ def load_items(conn: sqlite3.Connection) -> list[dict]:
             }
         )
     return items
+
+
+def _item_ladder_boost(
+    *,
+    ladder_tier: str | None,
+    ladder_score: float,
+    ladder_rank: int | None,
+    role: str,
+    item_type: str,
+    is_pen: bool = False,
+) -> float:
+    """
+    Map items:overall tier ladder into a role-score delta.
+    Strong enough that S/A items beat B/C peers of similar stats, but not so strong
+    that kit identity (pen, damage type) is ignored. Tank S-tiers are muted on
+    damage backline roles unless the item is real pen.
+    """
+    if not ladder_tier and not ladder_score:
+        return 0.0
+    letter = (ladder_tier or "").upper().strip()
+    letter_w = {"S": 22.0, "A": 14.0, "B": 4.0, "C": -6.0, "D": -12.0}.get(letter, 0.0)
+    # Continuous score 0..100 (top items ~60–100)
+    score_w = 0.0
+    if ladder_score > 0:
+        score_w = (float(ladder_score) / 100.0) * 18.0  # 0..18
+    # Rank: #1 gets a bit more love
+    rank_w = 0.0
+    if ladder_rank and ladder_rank > 0:
+        if ladder_rank <= 10:
+            rank_w = 6.0 - (ladder_rank - 1) * 0.4
+        elif ladder_rank <= 25:
+            rank_w = 2.0
+    raw = letter_w + score_w + rank_w
+
+    # Role-gate: don't let pure defensive ladder S-tier invade Mid/Carry/Jungle
+    itype = (item_type or "").lower()
+    damage_backline = role in DAMAGE_ROLES_NEED_PEN
+    frontline = role in ("Solo", "Support")
+    if damage_backline and itype == "defensive" and not is_pen:
+        raw *= 0.25  # soft awareness only
+    elif damage_backline and itype == "hybrid" and not is_pen:
+        raw *= 0.55
+    elif frontline and itype in ("defensive", "hybrid"):
+        raw *= 1.15  # tanks should prefer hot defensive ladder items
+    elif damage_backline and itype == "offensive":
+        raw *= 1.1
+
+    # Soft cap so ladder never alone overrides kit bans / signatures
+    return max(-18.0, min(32.0, raw))
 
 
 def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
@@ -771,6 +846,19 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
     breakdown["momentum"] = round(mom, 2)
     breakdown["item_axes"] = round(axis_boost, 2)
 
+    # Item tier ladder (items:overall) — prefer S/A meta items in role score
+    ladder_part = _item_ladder_boost(
+        ladder_tier=item.get("ladder_tier"),
+        ladder_score=float(item.get("ladder_score") or 0),
+        ladder_rank=item.get("ladder_rank"),
+        role=role,
+        item_type=item.get("item_type") or "",
+        is_pen=_canon_stat_value(item.get("stats") or {}, "pen") >= 8
+        or "penetrat" in (item.get("passive") or "").lower()
+        or "penetrat" in (item.get("categories") or "").lower(),
+    )
+    breakdown["ladder"] = round(ladder_part, 2)
+
     # cost efficiency: prefer 2300-2800 cores; starters handled separately
     cost = item["total_cost"] or 0
     cost_part = 0.0
@@ -792,7 +880,7 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
     else:
         breakdown["active_tax"] = 0.0
 
-    total = stat_score + tag_score + util + mom + cost_part + align + active_tax
+    total = stat_score + tag_score + util + mom + cost_part + align + active_tax + ladder_part
     return ScoredItem(
         name=item["name"],
         tier=item["tier"],
@@ -809,6 +897,9 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
         recent_momentum=float(item.get("recent_momentum") or 0),
         patch_axes=dict(item.get("patch_axes") or {}),
         patch_axes_r5=dict(item.get("patch_axes_r5") or {}),
+        ladder_tier=item.get("ladder_tier"),
+        ladder_rank=int(item["ladder_rank"]) if item.get("ladder_rank") is not None else None,
+        ladder_score=float(item.get("ladder_score") or 0),
     )
 
 
@@ -1682,6 +1773,18 @@ def rescore_for_god(
     r5 = float(bias.get("recent_patch") or 0)
     frontline = role in ("Solo", "Support")
     damage_backline = role in DAMAGE_ROLES_NEED_PEN
+
+    # Item tier ladder again at god-rescore (kit path assembly uses this score)
+    # Slightly stronger here so S/A meta items win near-ties after kit filters.
+    ladder_delta = _item_ladder_boost(
+        ladder_tier=item.ladder_tier,
+        ladder_score=float(item.ladder_score or 0),
+        ladder_rank=item.ladder_rank,
+        role=role,
+        item_type=item.item_type or "",
+        is_pen=pen_v >= 8 or "penetrat" in blob,
+    )
+    s += ladder_delta * 0.85
 
     # Item momentum: strong on matching role; pure tanks don't invade Mid/Carry
     pure_tank = (
@@ -3612,6 +3715,9 @@ def _item_card(it: ScoredItem | None, why: str | None = None) -> dict | None:
         "type": it.item_type or it.tier,
         "slot": _slot_label(it),
         "momentum": round(it.momentum, 2),
+        "ladder_tier": it.ladder_tier,
+        "ladder_rank": it.ladder_rank,
+        "ladder_score": round(float(it.ladder_score or 0), 1) if it.ladder_score else None,
         "stats": {k: v for k, v in ordered[:5]},
         "pen": round(pen, 1) if pen else 0,
         "damp": round(_canon_stat_value(it.stats, "damp"), 1) or 0,
@@ -3770,8 +3876,9 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 24) -> dict[str,
         "mode": "Conquest",
         "method": (
             "God-first Conquest builds: each path is assembled from that god's ability kit "
-            "(structured effects + tags + metrics + patch axes), archetype slot recipes, "
-            "item-family matching, and per-item why lines. "
+            "(structured effects + tags + metrics + patch axes), the items:overall tier ladder "
+            "(S/A preferred, C/D soft-penalized, role-gated so tank S-tiers don't invade Mid), "
+            "archetype slot recipes, item-family matching, and per-item why lines. "
             "Hard damage-type bans (no mage toys on physical / no hunter toys on mages). "
             "Optional data/kit_overrides.json force tags / prefer / ban items. "
             "Role cards explain the job only — they are NOT a full build. "
