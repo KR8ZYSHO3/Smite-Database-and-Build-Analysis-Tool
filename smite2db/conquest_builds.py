@@ -153,6 +153,155 @@ def _wants_mage_lifesteal(bias: dict | None) -> bool:
 
 
 # ---------------------------------------------------------------------------
+# Melee vs ranged — Carry only works for ranged basics (or aspect that enables it)
+# ---------------------------------------------------------------------------
+
+_RANGED_TAG_MARKERS = (
+    "character.type.ranged",
+    "keyword.descriptor.ranged",
+    "descriptor.ranged",
+)
+_MELEE_TAG_MARKERS = (
+    "character.type.melee",
+    "keyword.descriptor.melee",
+    "descriptor.melee",
+)
+_ASPECT_RANGED_BASICS_RE = re.compile(
+    r"basics? are ranged|basic attacks? are ranged|attacks are ranged|"
+    r"attacks are ranged|geb'?s attacks are ranged|"
+    r"basics? become ranged|become(?:s)? ranged|"
+    r"ranged attack|mangetsu ranged|fire a projectile|throw a piercing projectile",
+    re.I,
+)
+_ASPECT_MELEE_BASICS_RE = re.compile(
+    r"basic attacks? are now melee|attacks are now melee|are now melee|"
+    r"basics? are now melee|your basic attacks are now melee",
+    re.I,
+)
+
+
+def _parse_character_tags(raw: Any) -> list[str]:
+    if raw is None:
+        return []
+    if isinstance(raw, list):
+        return [str(x) for x in raw]
+    if isinstance(raw, str):
+        s = raw.strip()
+        if not s:
+            return []
+        try:
+            parsed = json.loads(s)
+            if isinstance(parsed, list):
+                return [str(x) for x in parsed]
+        except json.JSONDecodeError:
+            pass
+        return [s]
+    return []
+
+
+def detect_base_attack_range(
+    character_tags: Any = None,
+    basic_attack_text: str = "",
+) -> str:
+    """
+    Return 'ranged', 'melee', or 'unknown' from wiki character tags / basic text.
+    Prefer tags (Character.Type.Ranged / Melee); fall back to basic attack prose.
+    """
+    tags_l = " ".join(_parse_character_tags(character_tags)).lower()
+    has_r = any(m in tags_l for m in _RANGED_TAG_MARKERS)
+    has_m = any(m in tags_l for m in _MELEE_TAG_MARKERS)
+    if has_r and not has_m:
+        return "ranged"
+    if has_m and not has_r:
+        return "melee"
+    if has_r and has_m:
+        # Prefer the Character.Type.* form if both appear
+        if "character.type.ranged" in tags_l:
+            return "ranged"
+        if "character.type.melee" in tags_l:
+            return "melee"
+
+    blob = (basic_attack_text or "").lower()
+    if "projectile" in blob or "ranged" in blob or "fire a" in blob:
+        return "ranged"
+    if "in front of you" in blob or "melee" in blob:
+        return "melee"
+    return "unknown"
+
+
+def load_god_attack_range(conn: sqlite3.Connection, god_id: int) -> str:
+    """Look up melee/ranged from DB character_tags + Basic Attack description."""
+    row = conn.execute(
+        "SELECT character_tags, type_label FROM gods WHERE id=?",
+        (god_id,),
+    ).fetchone()
+    tags = row["character_tags"] if row else None
+    basic = conn.execute(
+        """
+        SELECT description, stats_text, notes_text
+        FROM abilities
+        WHERE god_id = ? AND LOWER(COALESCE(slot,'')) LIKE '%basic%'
+        ORDER BY slot_order LIMIT 1
+        """,
+        (god_id,),
+    ).fetchone()
+    basic_blob = ""
+    if basic:
+        basic_blob = " ".join(
+            str(basic[k] or "") for k in ("description", "stats_text", "notes_text")
+        )
+    return detect_base_attack_range(tags, basic_blob)
+
+
+def aspect_enables_ranged_basics(blob: str) -> bool:
+    """True when aspect text turns basics into ranged (Kali Unbound, Geb Calamity, …)."""
+    return bool(blob and _ASPECT_RANGED_BASICS_RE.search(blob))
+
+
+def aspect_forces_melee_basics(blob: str) -> bool:
+    """True when aspect text forces melee basics (e.g. Cernunnos Strife)."""
+    return bool(blob and _ASPECT_MELEE_BASICS_RE.search(blob))
+
+
+def carry_role_allowed(
+    *,
+    base_range: str,
+    is_aspect: bool = False,
+    aspect_blob: str = "",
+    native_roles: list[str] | None = None,
+) -> tuple[bool, str]:
+    """
+    Duo Carry needs ranged basic attacks.
+    Melee gods only get Carry when an aspect changes basics to ranged (or ADC kit).
+    """
+    native = {str(r) for r in (native_roles or [])}
+    if is_aspect:
+        if aspect_forces_melee_basics(aspect_blob):
+            return False, "aspect_melee_basics"
+        if aspect_enables_ranged_basics(aspect_blob):
+            return True, "aspect_ranged_basics"
+        if base_range == "ranged":
+            return True, "ranged_base"
+        if base_range == "melee":
+            return False, "melee_no_aspect_ranged"
+        # unknown base: still allow if native Carry (hunters mis-tagged)
+        if "Carry" in native:
+            return True, "native_carry"
+        return False, "unknown_melee_safe"
+    # Base kit
+    if base_range == "ranged":
+        return True, "ranged"
+    if "Carry" in native and base_range != "melee":
+        return True, "native_carry"
+    if base_range == "melee":
+        return False, "melee_base"
+    # Unknown: only native Carry
+    if "Carry" in native:
+        return True, "native_carry"
+    return False, "unknown_not_native"
+
+
+# ---------------------------------------------------------------------------
 # Role frameworks — weights sum to ~1.0 for primary stat axes
 # ---------------------------------------------------------------------------
 
@@ -190,8 +339,9 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
             "toll": 30,
             "cowl": 28,
             "leather": 26,
-            "shroud": 12,
-            "vampiric": 10,
+            # Vamp is a mage starter — never default on physical Carry
+            "shroud": -40,
+            "vampiric": -40,
             "bluestone": 8,
             "selfless": -50,
             "flag": -45,
@@ -242,10 +392,12 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
             "sands": 38,
             "pendulum": 34,
             "archmage": 32,
-            "vampiric": 26,
-            "shroud": 22,
-            "bluestone": 16,
-            "death": 10,
+            # Vamp only when kit self-sustains — default is Conduit/Sands
+            "vampiric": -35,
+            "shroud": -35,
+            "bluestone": 22,
+            "death": 12,
+            "warrior": 8,
             "selfless": -55,
             "flag": -50,
             "bumba": -25,
@@ -1010,7 +1162,7 @@ def pick_god_starter(
                 if "flag" in n:
                     sc -= 70
         if role == "Support":
-            if any(k in n for k in ("conduit", "death", "gilded", "bumba", "vampiric", "sands")):
+            if any(k in n for k in ("conduit", "death", "gilded", "bumba", "vampiric", "sands", "shroud")):
                 sc -= 50
             if "selfless" in n or "flag" in n:
                 sc += 25
@@ -1019,6 +1171,9 @@ def pick_god_starter(
                 sc += 45
             else:
                 sc -= 30
+            # Never open jungle on Vamp / Conduit / Gilded
+            if _is_vamp_starter_name(n) or any(k in n for k in ("conduit", "gilded", "selfless")):
+                sc -= 80
         if role == "Solo":
             if any(k in n for k in ("warrior", "axe", "bluestone")):
                 sc += 35
@@ -1026,6 +1181,8 @@ def pick_god_starter(
                 sc -= 40
             if "bumba" in n:
                 sc -= 35
+            if _is_vamp_starter_name(n):
+                sc -= 90  # Solo is Axe / Bluestone / Death's — not mage vamp
             # AA / self-sustain bruisers: Death's Toll is a *conditional* maniac path.
             # High CC shuts it down (can't auto → no LS). Default stays Warrior's Axe;
             # salt + strong AA can flip to Death's when the lobby looks free-hit.
@@ -1047,26 +1204,37 @@ def pick_god_starter(
                 if "warrior" in n or "axe" in n:
                     sc += 6
 
+        # --- Vampiric Shroud: mage-only self-sustain niche ---
+        # Physical gods never open Vamp (wrong damage type + wrong role job).
+        if _is_vamp_starter_name(n):
+            if physical:
+                sc -= 120
+            elif not mage:
+                sc -= 80
+            elif not _wants_mage_lifesteal(bias):
+                sc -= 90  # Conduit/Sands default for almost every mid mage
+            else:
+                sc += 55  # real drain/self-heal kit only
+
         # Damage-type fit
         if mage:
             if any(k in n for k in ("conduit", "sands", "archmage", "pendulum")):
                 sc += 30
-            if any(k in n for k in ("gilded", "leather", "death")):
+            if any(k in n for k in ("gilded", "leather", "death")) and role != "Carry":
                 sc -= 20
-            # Vampiric Shroud only for real self-sustain kits (not every mid mage)
-            if _is_vamp_starter_name(n):
-                if _wants_mage_lifesteal(bias):
-                    sc += 42
-                else:
-                    sc -= 70
+        if physical and role == "Mid":
+            # Flex physical mid: Bluestone / Death's / Warrior — not Conduit, not Vamp
+            if any(k in n for k in ("bluestone", "death", "warrior", "axe")):
+                sc += 40
+            if any(k in n for k in ("conduit", "sands", "archmage", "pendulum")):
+                sc -= 45
+            if any(k in n for k in ("gilded", "leather", "cowl", "arrow")):
+                sc += 10  # AA hunters flexed mid
         if physical and role in ("Carry", "Jungle"):
             if any(k in n for k in ("gilded", "death", "leather", "cowl", "arrow", "bluestone")):
                 sc += 28
             if "conduit" in n or "sands" in n:
                 sc -= 18
-            # Physical ADC death's-toll style is fine; don't treat as mage vamp
-            if _is_vamp_starter_name(n) and not mage:
-                sc -= 40
 
         # Kit tags
         if "mana_stack" in tags and any(k in n for k in ("conduit", "sands")):
@@ -1075,9 +1243,6 @@ def pick_god_starter(
             k in n for k in ("gilded", "leather", "death", "cowl", "arrow")
         ):
             sc += 20
-        # Only real self_sustain boosts vamp shroud — noisy "heal" tags do not
-        if _wants_mage_lifesteal(bias) and _is_vamp_starter_name(n):
-            sc += 18
         if "spam" in tags and any(k in n for k in ("sands", "pendulum", "conduit")):
             sc += 12
         if float(bias.get("patch_axes_r5", {}).get("mana", 0) or 0) >= 0.2 and "conduit" in n:
@@ -4563,11 +4728,13 @@ def build_god_build(
     *,
     use_aspect: bool = False,
     aspect_id: int | None = None,
-) -> dict[str, Any]:
+) -> dict[str, Any] | None:
     """
     Ranked Conquest path for one god × role.
 
     Implements docs/BUILD_ALGORITHM.md phases P0–P8.
+    Returns None when the role is illegal for this kit (e.g. melee on Carry
+    without an aspect that enables ranged basics).
     """
     # --- P0 Context ---
     profile = ROLE_PROFILES[role]
@@ -4575,6 +4742,45 @@ def build_god_build(
     if use_aspect or aspect_id is not None:
         bias = build_aspect_bias(conn, god["god_id"], bias, aspect_id=aspect_id)
     dtype = god.get("primary_damage_type")
+
+    # Carry is duo ADC — melee basics don't work unless aspect enables ranged AA
+    if role == "Carry":
+        base_range = load_god_attack_range(conn, int(god["god_id"]))
+        bias["attack_range"] = base_range
+        native: list[str] = []
+        # Prefer explicit native list if caller attached it
+        for key in ("native_roles", "role_list", "roles"):
+            raw = god.get(key)
+            if isinstance(raw, list):
+                native = [str(x) for x in raw]
+                break
+            if isinstance(raw, str) and raw.strip():
+                try:
+                    parsed = json.loads(raw)
+                    if isinstance(parsed, list):
+                        native = []
+                        for rr in parsed:
+                            s = str(rr)
+                            m = re.search(r"Role\.([A-Za-z]+)", s)
+                            native.append(m.group(1) if m else s)
+                except json.JSONDecodeError:
+                    native = [raw]
+                break
+        aspect_blob = ""
+        if bias.get("is_aspect"):
+            aspect_blob = " ".join(
+                str(bias.get(k) or "")
+                for k in ("aspect_name", "aspect_description", "ability_blob")
+            )
+        ok, reason = carry_role_allowed(
+            base_range=base_range,
+            is_aspect=bool(bias.get("is_aspect")),
+            aspect_blob=aspect_blob,
+            native_roles=native,
+        )
+        if not ok:
+            return None
+        bias["carry_allow_reason"] = reason
     # --- P1 Score universe + P3 God rescore (rescore_for_god includes kit + soft high-SR) ---
     scored = []
     for it in items:
@@ -5269,7 +5475,25 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 24) -> dict[str,
     for role in ("Carry", "Mid", "Jungle", "Solo", "Support"):
         template = build_role_template(items, role)
         gods = top_gods_for_role(conn, role, limit=gods_per_role)
-        god_builds = [build_god_build(conn, items, role, g) for g in gods]
+        god_builds = []
+        for g in gods:
+            b = build_god_build(conn, items, role, g)
+            if b is not None:
+                god_builds.append(b)
+        # Carry: backfill more ranged/native carries if melee tier noise dropped rows
+        if role == "Carry" and len(god_builds) < min(12, gods_per_role):
+            extra = top_gods_for_role(conn, role, limit=gods_per_role * 2)
+            seen = {x.get("god") or x.get("entity_name") for x in god_builds}
+            for g in extra:
+                nm = g.get("entity_name") or g.get("name")
+                if nm in seen:
+                    continue
+                b = build_god_build(conn, items, role, g)
+                if b is not None:
+                    god_builds.append(b)
+                    seen.add(nm)
+                if len(god_builds) >= gods_per_role:
+                    break
         report["roles"][role] = {
             "template": template,
             "recommended_gods": god_builds,

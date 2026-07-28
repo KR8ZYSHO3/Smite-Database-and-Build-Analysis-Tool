@@ -72,7 +72,7 @@ Danzaburou · Carry · archetype «crit_adc» (STR / physical). Kit effects: cha
 
 Princess Bari · Carry · archetype «ability_mage_adc» (INT / magical). Kit effects: big ult spike, pet / deployable, hard crowd control, ally buffs / auras, lots of CC, burst combos. Tags: burst, hard_cc, high_cc, long_cd, pet_zone, team_buff, ult_nuke. Style burst 68%/dps 32%; patch new (net +0.2, r5 +0.0). Patch axes (r5): general +0.2, cooldown -0.0, attack_speed -0.0. Scale STR 80% / INT 110%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); Shifter's Shield (offline hybrid tank). Pen: Book of Thoth, Spear of Desolation, Doom Orb, Obsidian Shard. Actives 0/2 · pen ≈ 40. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
 
-- **Starter:** Sands Of Time
+- **Starter:** Gilded Arrow
 - **Buy order** (actives 0/2, pen ≈ 40.0):
   1. Book of Thoth (power, 2300g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
@@ -136,7 +136,7 @@ Anhur · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult 
 
 Sol · Carry · archetype «dot_mage_adc» (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 60%/dps 40%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); Typhon’s Heart (self-sustain power (missing HP)). Pen: Book of Thoth, Spear of Desolation, Soul Gem, Obsidian Shard. Actives 0/2 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
-- **Starter:** Vampiric Shroud
+- **Starter:** Gilded Arrow
 - **Buy order** (actives 0/2, pen ≈ 35.0):
   1. Book of Thoth (power, 2300g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
@@ -184,7 +184,7 @@ Xbalanque · Carry · archetype «power_adc» (STR / physical). Kit effects: dam
 
 Nut · Carry · archetype «ability_mage_adc» (INT / magical). Kit effects: big ult spike, hard crowd control, dash / leap engage, CC immunity in kit, lots of CC, multi-hit / ticks. Tags: anti_cc, burst, gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 74%/dps 26%; patch falling (net -1.2, r5 +0.0). Patch axes (r5): general -0.8, damage -0.4. Scale STR 80% / INT 131%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); Obsidian Shard (% pen for magical tanks / late fights). Pen: Book of Thoth, Spear of Desolation, Obsidian Shard, Spear Of The Magus, Dreamer's Idol. Actives 1/2 · pen ≈ 50. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
-- **Starter:** Sands Of Time
+- **Starter:** Gilded Arrow
 - **Buy order** (actives 1/2, pen ≈ 50.0):
   1. Book of Thoth (power, 2300g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
@@ -344,7 +344,7 @@ Rama · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-sp
 
 Chronos · Carry · archetype «ability_mage_adc» (INT / magical). Kit effects: hard crowd control, dash / leap engage, CC immunity in kit, sustained DPS, multi-hit / ticks, healing in kit. Tags: anti_cc, gap_close, hard_cc, heal, long_cd. Style burst 0%/dps 100%; patch falling (net -3.7, r5 -3.7). Patch axes (r5): utility -1.9, damage -1.3, general -0.5. Scale STR 0% / INT 67%. Path: Book of Thoth (penetration required for damage role); Spear of Desolation (flat pen + CDR for ability burst); The World Stone (penetration required for damage role). Pen: Book of Thoth, Spear of Desolation, The World Stone, Obsidian Shard, The Cosmic Horror. Actives 0/2 · pen ≈ 50. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
-- **Starter:** Sands Of Time
+- **Starter:** Gilded Arrow
 - **Buy order** (actives 0/2, pen ≈ 50.0):
   1. Book of Thoth (power, 2300g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
@@ -392,7 +392,7 @@ This is the Mid job description + common items — not a complete build. Open a 
 
 Aphrodite · Mid · archetype «burst_mage» (INT / magical). Kit effects: big ult spike, hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, burst, dot, gap_close, hard_cc, heal, long_cd, team_buff. Style burst 59%/dps 41%; patch new (net +1.0, r5 +0.0). Patch axes (r5): general +0.9, heal +0.1, cooldown +0.0. Scale STR 0% / INT 102%. Path: Book of Thoth (mana stack → power scaling); Soul Reaver (big ability hits / execute spikes); Spear of Desolation (flat pen + CDR for ability burst). Pen: Book of Thoth, Spear of Desolation, Soul Gem, Obsidian Shard. Actives 1/2 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
-- **Starter:** Vampiric Shroud
+- **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 35.0):
   1. Book of Thoth (power, 2300g)
   2. Soul Reaver (power, 2950g)
@@ -440,7 +440,7 @@ Ra · Mid · archetype «zone_mage» (INT / magical). Kit effects: big ult spike
 
 Sol · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 60%/dps 40%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); Chronos' Pendant (CDR core for spam / channel kits). Pen: Book of Thoth, Spear of Desolation, Soul Gem, Obsidian Shard. Actives 0/2 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
-- **Starter:** Vampiric Shroud
+- **Starter:** Conduit Gem
 - **Buy order** (actives 0/2, pen ≈ 35.0):
   1. Book of Thoth (power, 2300g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
@@ -472,7 +472,7 @@ Kukulkan · Mid · archetype «mana_mage» (INT / magical). Kit effects: big ult
 
 Neith · Mid · archetype «channel_mage» (STR / physical). Kit effects: channel / cast time, big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, lots of CC. Tags: as_steroid, burst, channel, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 66%/dps 34%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): general +0.1, utility -0.0, attack_speed -0.0. Scale STR 63% / INT 77%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); Barbed Carver (Mid path fit for kit profile). Pen: Jotunn's Revenge, Heartseeker, Titan's Bane. Actives 0/2 · pen ≈ 35.
 
-- **Starter:** Conduit Gem
+- **Starter:** Bluestone Pendant
 - **Buy order** (actives 0/2, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Hydra's Lament (power, 2450g)
@@ -584,7 +584,7 @@ Poseidon · Mid · archetype «zone_mage» (INT / magical). Kit effects: big ult
 
 Discordia · Mid · archetype «sustain_mage» (INT / magical). Kit effects: big ult spike, self heal / drain, hard crowd control, dash / leap engage, ally buffs / auras, burst combos. Tags: burst, gap_close, hard_cc, heal, long_cd, self_sustain, team_buff, ult_nuke. Style burst 68%/dps 32%; patch volatile (net -1.4, r5 -0.8). Patch axes (r5): utility -0.8. Scale STR 0% / INT 119%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); Bancroft's Talon (self-sustain power (missing HP)). Pen: Book of Thoth, Spear of Desolation, Doom Orb, Soul Gem, Obsidian Shard. Actives 0/2 · pen ≈ 45. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
-- **Starter:** Vampiric Shroud
+- **Starter:** Conduit Gem
 - **Buy order** (actives 0/2, pen ≈ 45.0):
   1. Book of Thoth (power, 2300g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
@@ -744,7 +744,7 @@ Nu Wa · Mid · archetype «zone_mage» (INT / magical). Kit effects: protection
 
 Anubis · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, pet / deployable, hard crowd control. Tags: anti_cc, channel, dot, hard_cc, heal, heavy_dot, high_cc, immobile. Style burst 98%/dps 2%; patch falling (net -3.9, r5 -1.4). Patch axes (r5): damage -1.4. Scale STR 0% / INT 60%. Path: Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits); Soul Gem (ability heal/proc for mages). Pen: Book of Thoth, Soul Gem, Spear of Desolation, Obsidian Shard. Actives 0/2 · pen ≈ 35. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
-- **Starter:** Vampiric Shroud
+- **Starter:** Conduit Gem
 - **Buy order** (actives 0/2, pen ≈ 35.0):
   1. Book of Thoth (power, 2300g)
   2. Chronos' Pendant (power, 2400g)

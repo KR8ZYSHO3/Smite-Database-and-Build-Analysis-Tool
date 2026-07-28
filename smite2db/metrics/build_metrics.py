@@ -114,6 +114,27 @@ def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
             meta_raws.append(0.0)
             continue
 
+        if build is None:
+            records.append(
+                {
+                    "god_id": g["id"],
+                    "damage_type": dtype,
+                    "primary_scaling": g["primary_scaling"] or "Mixed",
+                    "recommended_starter": None,
+                    "core_items": [],
+                    "defense_items": [],
+                    "hybrid_items": [],
+                    "relics": [],
+                    "synergy_raw": 40.0,
+                    "meta_raw": 0.0,
+                    "notes": f"{role} illegal for kit (e.g. melee Carry)",
+                    "extra": {"role": role, "skipped": True},
+                }
+            )
+            synergy_raws.append(40.0)
+            meta_raws.append(0.0)
+            continue
+
         path = build.get("items") or []
         cores = [
             it["name"]

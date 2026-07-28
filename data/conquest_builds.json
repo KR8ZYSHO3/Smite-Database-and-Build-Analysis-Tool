@@ -2024,24 +2024,24 @@
           "avg_str_scaling": 80.1,
           "avg_int_scaling": 110.3,
           "starter": {
-            "name": "Sands Of Time",
-            "score": -1.6,
+            "name": "Gilded Arrow",
+            "score": 36.8,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": -0.58,
+            "momentum": -1.04,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "cdr": 10.0,
-              "mpr": 2.0
+              "as": 10.0,
+              "bap": 20.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\n+0.4 Mana per second per 10% of missing Mana.\nRequires Level 20 to upgrade.",
+            "effect": "Every 10s: Mark the highest Health enemy minion or jungle monster within 12.8m.\n*If you land the killing blow:\n**+3 Bonus Gold\n**+15% Attack Speed for 8s\n**+30 Mana\nRequires Level ",
             "is_active": false,
             "why": "Carry starter \u2014 early AS / sustain"
           },
@@ -4636,24 +4636,24 @@
           "avg_str_scaling": 21.8,
           "avg_int_scaling": 50.7,
           "starter": {
-            "name": "Vampiric Shroud",
-            "score": 13.6,
-            "cost": 600,
+            "name": "Gilded Arrow",
+            "score": 36.8,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": -1.04,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0,
-              "ls": 4.0
+              "as": 10.0,
+              "bap": 20.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nAbility Hit:\n*+4 Health Heal\n*+4 Mana Recovery\nOnce per target, per Ability.\nRequires Level 20 to upgr",
+            "effect": "Every 10s: Mark the highest Health enemy minion or jungle monster within 12.8m.\n*If you land the killing blow:\n**+3 Bonus Gold\n**+15% Attack Speed for 8s\n**+30 Mana\nRequires Level ",
             "is_active": false,
             "why": "Carry starter \u2014 early AS / sustain"
           },
@@ -6596,24 +6596,24 @@
           "avg_str_scaling": 80.3,
           "avg_int_scaling": 130.9,
           "starter": {
-            "name": "Sands Of Time",
-            "score": -1.6,
+            "name": "Gilded Arrow",
+            "score": 36.8,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": -0.58,
+            "momentum": -1.04,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "cdr": 10.0,
-              "mpr": 2.0
+              "as": 10.0,
+              "bap": 20.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\n+0.4 Mana per second per 10% of missing Mana.\nRequires Level 20 to upgrade.",
+            "effect": "Every 10s: Mark the highest Health enemy minion or jungle monster within 12.8m.\n*If you land the killing blow:\n**+3 Bonus Gold\n**+15% Attack Speed for 8s\n**+30 Mana\nRequires Level ",
             "is_active": false,
             "why": "Carry starter \u2014 early AS / sustain"
           },
@@ -13040,24 +13040,24 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 67.2,
           "starter": {
-            "name": "Sands Of Time",
-            "score": -1.6,
+            "name": "Gilded Arrow",
+            "score": 36.8,
             "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": -0.58,
+            "momentum": -1.04,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "cdr": 10.0,
-              "mpr": 2.0
+              "as": 10.0,
+              "bap": 20.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\n+0.4 Mana per second per 10% of missing Mana.\nRequires Level 20 to upgrade.",
+            "effect": "Every 10s: Mark the highest Health enemy minion or jungle monster within 12.8m.\n*If you land the killing blow:\n**+3 Bonus Gold\n**+15% Attack Speed for 8s\n**+30 Mana\nRequires Level ",
             "is_active": false,
             "why": "Carry starter \u2014 early AS / sustain"
           },
@@ -13735,8 +13735,8 @@
             "is_active": false
           },
           {
-            "name": "Vampiric Shroud",
-            "score": 27.6,
+            "name": "Bluestone Pendant",
+            "score": 24.1,
             "cost": 600,
             "type": "Starter",
             "slot": "power",
@@ -13745,14 +13745,15 @@
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0,
-              "ls": 4.0
+              "hp": 1.0,
+              "mpr": 1.5,
+              "hpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nAbility Hit:\n*+4 Health Heal\n*+4 Mana Recovery\nOnce per target, per Ability.\nRequires Level 20 to upgr",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Hit: +32 Physical Damage over 2s.\n*Subsequent hits on the same target: 50% bonus damage for 3s",
             "is_active": false
           }
         ],
@@ -14206,24 +14207,24 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 102.0,
           "starter": {
-            "name": "Vampiric Shroud",
-            "score": 27.6,
-            "cost": 600,
+            "name": "Conduit Gem",
+            "score": 44.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": 0.16,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0,
-              "ls": 4.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nAbility Hit:\n*+4 Health Heal\n*+4 Mana Recovery\nOnce per target, per Ability.\nRequires Level 20 to upgr",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false,
             "why": "Lane starter \u2014 early stats for this role"
           },
@@ -16151,24 +16152,24 @@
           "avg_str_scaling": 21.8,
           "avg_int_scaling": 50.7,
           "starter": {
-            "name": "Vampiric Shroud",
-            "score": 27.6,
-            "cost": 600,
+            "name": "Conduit Gem",
+            "score": 44.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": 0.16,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0,
-              "ls": 4.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nAbility Hit:\n*+4 Health Heal\n*+4 Mana Recovery\nOnce per target, per Ability.\nRequires Level 20 to upgr",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false,
             "why": "Lane starter \u2014 early stats for this role"
           },
@@ -17455,24 +17456,25 @@
           "avg_str_scaling": 63.3,
           "avg_int_scaling": 76.7,
           "starter": {
-            "name": "Conduit Gem",
-            "score": 44.0,
-            "cost": 650,
+            "name": "Bluestone Pendant",
+            "score": 24.1,
+            "cost": 600,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.16,
+            "momentum": 0.31,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "mp": 100.0,
-              "mpr": 1.0
+              "hp": 1.0,
+              "mpr": 1.5,
+              "hpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
+            "effect": "Adaptive Stat: +15 Strength or +25 Intelligence (based on highest item stat).\nAbility Hit: +32 Physical Damage over 2s.\n*Subsequent hits on the same target: 50% bonus damage for 3s",
             "is_active": false,
             "why": "Lane starter \u2014 early stats for this role"
           },
@@ -22006,24 +22008,24 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 118.8,
           "starter": {
-            "name": "Vampiric Shroud",
-            "score": 27.6,
-            "cost": 600,
+            "name": "Conduit Gem",
+            "score": 44.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": 0.16,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0,
-              "ls": 4.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nAbility Hit:\n*+4 Health Heal\n*+4 Mana Recovery\nOnce per target, per Ability.\nRequires Level 20 to upgr",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false,
             "why": "Lane starter \u2014 early stats for this role"
           },
@@ -28470,24 +28472,24 @@
           "avg_str_scaling": 0,
           "avg_int_scaling": 59.8,
           "starter": {
-            "name": "Vampiric Shroud",
-            "score": 27.6,
-            "cost": 600,
+            "name": "Conduit Gem",
+            "score": 44.0,
+            "cost": 650,
             "type": "Starter",
             "slot": "power",
-            "momentum": 0.31,
+            "momentum": 0.16,
             "ladder_tier": null,
             "ladder_rank": null,
             "ladder_score": null,
             "stats": {
-              "hp": 100.0,
-              "ls": 4.0
+              "mp": 100.0,
+              "mpr": 1.0
             },
             "pen": 0,
             "damp": 0,
             "plat": 0,
             "ten": 0,
-            "effect": "Adaptive Stat: +10 Strength or +20 Intelligence (based on highest item stat).\nAbility Hit:\n*+4 Health Heal\n*+4 Mana Recovery\nOnce per target, per Ability.\nRequires Level 20 to upgr",
+            "effect": "Adaptive Stat: +15 Strength or +30 Intelligence (based on highest item stat).\nEvery 0.5s: Gain 1 Stack (max 20).\nDamaging Abilities deals 3 True Damage per Stack (half vs Gods), th",
             "is_active": false,
             "why": "Lane starter \u2014 early stats for this role"
           },

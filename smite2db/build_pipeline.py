@@ -145,6 +145,18 @@ def run_build_pipeline(
         use_aspect=use_aspect,
         aspect_id=aspect_id,
     )
+    if result is None:
+        return {
+            "god": god.get("entity_name") or god.get("name"),
+            "role": role,
+            "invalid_role": True,
+            "why": (
+                f"{role} is not valid for this kit "
+                f"(melee basics need a ranged-enabling aspect for Carry)."
+            ),
+            "algorithm": algorithm_card(),
+            "algorithm_phases": [f"{p['id']}: {p['summary']}" for p in PHASES],
+        }
     result["algorithm"] = algorithm_card()
     # Compact phase trail for debugging / UI
     result["algorithm_phases"] = [

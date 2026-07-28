@@ -3382,10 +3382,36 @@ async function main() {
 
     const exported = state.meta?.exported_at || state.meta?.scraped_at || "";
     const analysis = state.meta?.analysis_last_analysis_at || state.meta?.last_analysis_at || "";
+    const fmtStamp = (iso) => {
+      if (!iso) return "";
+      const d = new Date(iso);
+      if (Number.isNaN(d.getTime())) return String(iso).slice(0, 19).replace("T", " ");
+      // Local date + time so you know when your browser last got a refresh
+      try {
+        return d.toLocaleString(undefined, {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+      } catch {
+        return d.toISOString().replace("T", " ").slice(0, 19) + " UTC";
+      }
+    };
+    const stamp = fmtStamp(exported);
+    const upd = $("#site-updated");
+    if (upd) {
+      upd.innerHTML = stamp
+        ? `Last updated: <strong>${escapeHtml(stamp)}</strong>`
+        : "Last updated: <strong>unknown</strong>";
+      if (exported) upd.title = `Export timestamp (UTC): ${String(exported)}`;
+    }
     $("#meta-line").textContent = [
       `${(state.gods || []).length} gods`,
       `${(state.items || []).length} items`,
-      exported ? `data ${String(exported).slice(0, 10)}` : "live data",
+      stamp ? `updated ${stamp}` : "live data",
       "model: kit + patch — not live win rate",
     ]
       .filter(Boolean)

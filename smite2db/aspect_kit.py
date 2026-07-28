@@ -258,6 +258,24 @@ def build_aspect_bias(
     bias["aspect_name"] = aspect["name"]
     bias["aspect_description"] = aspect.get("description") or ""
     bias["is_aspect"] = True
+    # Explicit flags for role legality (Carry needs ranged basics)
+    bias["aspect_ranged_basics"] = bool(
+        re.search(
+            r"basics? are ranged|basic attacks? are ranged|attacks are ranged|"
+            r"geb'?s attacks are ranged|become(?:s)? ranged|ranged attack|"
+            r"fire a projectile|throw a piercing projectile|mangetsu ranged",
+            blob,
+            re.I,
+        )
+    )
+    bias["aspect_melee_basics"] = bool(
+        re.search(
+            r"basic attacks? are now melee|attacks are now melee|are now melee|"
+            r"basics? are now melee",
+            blob,
+            re.I,
+        )
+    )
 
     # Prefer/ban from aspect rules (merged with overrides later)
     prefer = list(bias.get("prefer_items") or [])

@@ -55,7 +55,8 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     gods = []
     for r in conn.execute(
         """
-        SELECT g.id, g.name, g.title, g.pantheon, g.primary_damage_type, g.roles, g.wiki_url,
+        SELECT g.id, g.name, g.title, g.pantheon, g.primary_damage_type, g.roles,
+               g.character_tags, g.type_label, g.wiki_url,
                k.primary_scaling, k.avg_scaling_str, k.avg_scaling_int, k.kit_power_score,
                k.cc_count, k.heal_count, k.mobility_count,
                t.tier, t.rank_in_scope, t.score, t.patch_score, t.kit_score, t.build_score,
@@ -119,6 +120,13 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
             m = re.search(r"Role\.([A-Za-z]+)", s)
             role_names.append(m.group(1) if m else s)
         d["role_list"] = role_names
+        # Melee / ranged for UI + Carry gating (tags already on row)
+        try:
+            from .conquest_builds import detect_base_attack_range
+
+            d["attack_range"] = detect_base_attack_range(d.get("character_tags") or "")
+        except Exception:  # noqa: BLE001
+            d["attack_range"] = None
 
         # Recent balance bullets (so UI can show "what patched" without full wikitext)
         try:
@@ -291,6 +299,8 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
                 "tier": g.get("tier"),
                 "rank_in_scope": g.get("rank_in_scope"),
                 "score": g.get("score"),
+                "native_roles": list(native),
+                "role_list": list(native),
             }
             aspects = list_god_aspects(conn, g["id"])
             g["aspects"] = [
@@ -303,10 +313,23 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
             ]
             if gi == 1 or gi % 15 == 0 or gi == n_gods:
                 print(f"  Conquest paths {gi}/{n_gods} {g['name']}…")
+            # Melee / ranged from character tags (Carry eligibility)
+            attack_range = None
+            try:
+                from .conquest_builds import load_god_attack_range
+
+                attack_range = load_god_attack_range(conn, g["id"])
+            except Exception:  # noqa: BLE001
+                attack_range = None
+            if attack_range:
+                g["attack_range"] = attack_range
+
             for role in ALL_CONQUEST_ROLES:
                 if role not in ROLE_PROFILES:
                     continue
                 b = build_god_build(conn, shop_items, role, god_row)
+                if b is None:
+                    continue  # e.g. melee on Carry without ranged aspect
                 b["native_role"] = role in native
                 b["flex_role"] = role not in native
                 paths[role] = b
@@ -323,17 +346,20 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
                         use_aspect=True,
                         aspect_id=asp["id"],
                     )
+                    if ab is None:
+                        continue
                     ab["native_role"] = role in native
                     ab["flex_role"] = role not in native
                     ab["aspect_id"] = asp["id"]
                     ab["aspect_name"] = asp["name"]
                     role_map[role] = ab
-                by_aspect[asp["name"]] = role_map
+                if role_map:
+                    by_aspect[asp["name"]] = role_map
                 # Primary aspect keeps flat conquest_by_role_aspect for older UI
                 if ai == 0:
                     aspect_paths = role_map
             g["conquest_by_role"] = paths
-            g["conquest_roles"] = list(ALL_CONQUEST_ROLES)
+            g["conquest_roles"] = list(paths.keys())
             g["native_roles"] = native
             if aspect_paths:
                 g["conquest_by_role_aspect"] = aspect_paths

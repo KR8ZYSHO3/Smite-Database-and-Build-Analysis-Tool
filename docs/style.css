@@ -2402,6 +2402,18 @@ body.ui-simple .app {
   color: #c5d0e8;
 }
 .simple-header .site-tagline strong { color: #fff; }
+.site-updated {
+  margin: 8px 0 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #8fa3c4;
+  font-variant-numeric: tabular-nums;
+}
+.site-updated strong {
+  color: #dce6f8;
+  font-weight: 700;
+}
 .help-btn {
   width: 40px;
   height: 40px;

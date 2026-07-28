@@ -531,13 +531,14 @@ def build_counter_build(
             r.role_score += 10
     relics.sort(key=lambda x: x.role_score, reverse=True)
 
-    # Baseline for comparison
+    # Baseline for comparison (None when role is illegal, e.g. melee Carry)
     baseline = build_god_build(conn, items, role, god)
 
     return {
         "god": god.get("entity_name") or god.get("name"),
         "role": role,
         "mode": "counter",
+        "invalid_role": baseline is None,
         "archetype": archetype,
         "kit_tags": sorted(bias.get("tags") or []),
         "kit_effects": bias.get("effect_labels") or effect_labels(effects),
@@ -553,7 +554,9 @@ def build_counter_build(
         "hard_max_actives": HARD_MAX_ACTIVE_ITEMS,
         "active_count": n_act,
         "pen_total": round(pen_total, 1),
-        "baseline_items": [it["name"] for it in (baseline.get("items") or [])],
+        "baseline_items": [
+            it["name"] for it in ((baseline or {}).get("items") or [])
+        ],
         "why": (
             f"Counter path for {god.get('entity_name') or god.get('name')} {role}. "
             f"{threat.get('summary', '')}. "
