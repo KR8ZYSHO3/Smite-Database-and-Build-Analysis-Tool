@@ -4289,7 +4289,11 @@ function selectGod(name, switchTab) {
     .join("");
 
   // One clear Conquest path per role (no separate Cores/Defense dump).
+  // Include roles that only exist on aspects (e.g. Kali Unbound Destruction → Carry).
   const byRole = g.conquest_by_role || {};
+  const byAspectFlat = g.conquest_by_role_aspect || {};
+  const byAspectAll = g.conquest_by_aspect || {};
+  const aspectNames = Object.keys(byAspectAll);
   let roleKeys = Object.keys(byRole);
   if (!roleKeys.length) {
     // Fallback: hunt role lists in builds export
@@ -4302,6 +4306,17 @@ function selectGod(name, switchTab) {
     }
     roleKeys = Object.keys(byRole);
   }
+  // Aspect-only roles (melee base + ranged aspect, etc.)
+  const aspectOnlyRoles = new Set();
+  for (const aname of aspectNames) {
+    for (const role of Object.keys(byAspectAll[aname] || {})) {
+      if (!byRole[role]) aspectOnlyRoles.add(role);
+    }
+  }
+  for (const role of Object.keys(byAspectFlat)) {
+    if (!byRole[role]) aspectOnlyRoles.add(role);
+  }
+  roleKeys = [...new Set([...roleKeys, ...aspectOnlyRoles])];
 
   const dtype = (g.primary_damage_type || "").toLowerCase();
   const powerHint =
@@ -4316,31 +4331,43 @@ function selectGod(name, switchTab) {
   if (!roleKeys.length) {
     $("#god-build").innerHTML = `<p class="muted">${escapeHtml(g.build_notes || "No conquest path exported for this god yet.")}</p>`;
   } else {
-    // Always show all five roles when present (native + flex off-role)
+    // Always show all five roles when present (native + flex + aspect-only)
     const order = ["Carry", "Mid", "Jungle", "Solo", "Support"];
     roleKeys.sort((a, b) => order.indexOf(a) - order.indexOf(b));
-    const byAspectFlat = g.conquest_by_role_aspect || {};
-    const byAspectAll = g.conquest_by_aspect || {};
-    const aspectNames = Object.keys(byAspectAll);
     const native = new Set(g.native_roles || g.role_list || []);
     $("#god-build").innerHTML = roleKeys
       .map((role) => {
         const gb = byRole[role];
-        if (!gb) return "";
-        const cards = [renderRolePathCard(gb, role, dtype, g, false, null, !native.has(role))];
-        // Every aspect variant for this role
+        const cards = [];
+        // Base kit path (if this role is legal on base, e.g. not melee Carry)
+        if (gb) {
+          cards.push(renderRolePathCard(gb, role, dtype, g, false, null, !native.has(role)));
+        }
+        // Every aspect variant for this role (including aspect-only roles)
         if (aspectNames.length) {
           for (const aname of aspectNames) {
             const ga = byAspectAll[aname]?.[role];
             const meta = (g.aspects || []).find((a) => a.name === aname) || {
               name: aname,
             };
-            if (ga) cards.push(renderRolePathCard(ga, role, dtype, g, true, meta, !native.has(role)));
+            if (ga) {
+              cards.push(
+                renderRolePathCard(ga, role, dtype, g, true, meta, !native.has(role))
+              );
+            }
           }
         } else if (byAspectFlat[role]) {
           const aspectMeta = (g.aspects || [])[0];
           cards.push(
-            renderRolePathCard(byAspectFlat[role], role, dtype, g, true, aspectMeta, !native.has(role))
+            renderRolePathCard(
+              byAspectFlat[role],
+              role,
+              dtype,
+              g,
+              true,
+              aspectMeta,
+              !native.has(role)
+            )
           );
         }
         return cards.join("");
@@ -4514,9 +4541,33 @@ function setupBuilds() {
     }
 
     const q = (search.value || "").toLowerCase().trim();
-    let gods = [...(data?.recommended_gods || [])].sort(
-      (a, b) => (a.rank ?? 99) - (b.rank ?? 99)
-    );
+    let gods = [...(data?.recommended_gods || [])];
+    // Aspect-only role unlocks (e.g. Kali Unbound Destruction → Carry)
+    const seenNames = new Set(gods.map((gb) => gb.god));
+    for (const g of state.gods || []) {
+      if (seenNames.has(g.name)) continue;
+      const base = (g.conquest_by_role || {})[activeRole];
+      if (base) continue; // base already covers this role elsewhere
+      const byAspect = g.conquest_by_aspect || {};
+      for (const [aname, roleMap] of Object.entries(byAspect)) {
+        const ab = roleMap?.[activeRole];
+        if (!ab) continue;
+        gods.push({
+          ...ab,
+          god: g.name,
+          is_aspect: true,
+          aspect_name: aname,
+          aspect_description: ab.aspect_description ||
+            (g.aspects || []).find((a) => a.name === aname)?.description,
+          tier: g.tier,
+          rank: g.rank_in_scope,
+          damage_type: g.primary_damage_type,
+        });
+        seenNames.add(g.name);
+        break; // one aspect path per god in the list
+      }
+    }
+    gods.sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99));
     if (q) gods = gods.filter((g) => (g.god || "").toLowerCase().includes(q));
     const countEl = $("#build-god-count");
     if (countEl) countEl.textContent = `(${gods.length} in ${activeRole})`;
