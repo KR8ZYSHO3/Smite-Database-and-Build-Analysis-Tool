@@ -47,6 +47,256 @@ ITEM_CATEGORY_META: list[tuple[str, str, str]] = [
 ]
 
 
+def _discover_gods_from_latest_patches(
+    wiki: WikiClient,
+    known_names: set[str],
+    *,
+    look_ahead_ob: int = 3,
+    verbose: bool = True,
+) -> list[str]:
+    """
+    Data:Gods.json often lags a day after a new classic god ships.
+    Pull god page titles from recent Open Beta 'New Classic God' sections.
+    """
+    # Highest OB we know from index + look-ahead
+    try:
+        index_wt = wiki.get_wikitext("Patch notes")
+        patches = parse_patch_list(index_wt)
+    except Exception:
+        patches = []
+    max_n = 0
+    for p in patches:
+        m = re.search(r"Open Beta\s+(\d+)", p.get("name") or "", re.I)
+        if m:
+            max_n = max(max_n, int(m.group(1)))
+    candidates = [f"SMITE 2 Open Beta {n}" for n in range(max(1, max_n - 1), max_n + 1 + look_ahead_ob)]
+    found: list[str] = []
+    skip_prefixes = (
+        "file:",
+        "category:",
+        "smite 2 ",
+        "template:",
+        "ob",
+    )
+    for patch_name in candidates:
+        try:
+            wt = wiki.get_wikitext(patch_name)
+        except Exception:
+            continue
+        if not wt or len(wt) < 200:
+            continue
+        # Prefer New Classic God section; fall back to full page links under === [[God]] ===
+        sections = re.findall(
+            r"==\s*New Classic Gods?\s*==(.+?)(?:\n==\s[^=]|\Z)",
+            wt,
+            flags=re.S | re.I,
+        )
+        blob = "\n".join(sections) if sections else wt
+        for link in re.findall(r"\[\[([^\]|#]+)(?:[|#][^\]]*)?\]\]", blob):
+            name = link.strip()
+            if not name or name.lower().startswith(skip_prefixes):
+                continue
+            # Skip patch-nav style links
+            if re.search(r"open beta|closed alpha|patch notes", name, re.I):
+                continue
+            if name in known_names or name in found:
+                continue
+            # Must look like a real god page (has God infobox)
+            try:
+                gwt = wiki.get_wikitext(name)
+            except Exception:
+                continue
+            if not gwt or "God infobox" not in gwt:
+                continue
+            found.append(name)
+            if verbose:
+                print(f"  Discovered god not in Gods.json: {name} (from {patch_name})")
+    return found
+
+
+def _upsert_god_from_wiki(
+    conn,
+    wiki: WikiClient,
+    name: str,
+    g: dict[str, Any] | None = None,
+    *,
+    verbose: bool = True,
+) -> bool:
+    """Insert/update one god from wiki (+ optional Gods.json row)."""
+    g = g or {}
+    if verbose:
+        print(f"  God: {name}")
+    try:
+        wikitext = wiki.get_wikitext(name)
+    except Exception as exc:  # noqa: BLE001
+        print(f"    WARN: could not load page for {name}: {exc}", file=sys.stderr)
+        wikitext = ""
+
+    infobox = parse_god_infobox(wikitext) if wikitext else {}
+    base_wt = wikitext
+    if wikitext:
+        m = re.search(r"^={2,6}\s*God Aspect\s*={2,6}", wikitext, re.I | re.M)
+        if m:
+            base_wt = wikitext[: m.start()]
+    abilities = parse_abilities(base_wt) if base_wt else []
+    aspect = parse_god_aspect(wikitext) if wikitext else None
+    lore = parse_lore(wikitext) if wikitext else ""
+
+    roles = g.get("roleTags") or []
+    wiki_roles = [infobox.get("role1"), infobox.get("role2")]
+    wiki_roles = [r for r in wiki_roles if r]
+    role_list = wiki_roles or roles
+
+    release = None
+    if infobox.get("day") and infobox.get("month") and infobox.get("year"):
+        release = f"{infobox['year']}-{infobox['month'].zfill(2)}-{infobox['day'].zfill(2)}"
+
+    # Damage type: JSON or infobox "attack damage" / "attack type"
+    dtype = (
+        g.get("primaryDamageType")
+        or infobox.get("attack damage")
+        or infobox.get("attackdamage")
+        or ""
+    )
+    if dtype and dtype.lower() in ("physical", "magical"):
+        dtype = dtype.title()
+
+    slug = g.get("slug") or re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+
+    conn.execute(
+        """
+        INSERT INTO gods (
+            name, slug, title, pantheon, primary_damage_type, roles, character_tags,
+            type_label, release_date, diamonds, voice_actor, wiki_url, icon_path, card_path,
+            lore, game_id, master_id, patch_version, base_stats_json, raw_infobox_json
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+        ON CONFLICT(name) DO UPDATE SET
+            slug=excluded.slug,
+            title=excluded.title,
+            pantheon=excluded.pantheon,
+            primary_damage_type=excluded.primary_damage_type,
+            roles=excluded.roles,
+            character_tags=excluded.character_tags,
+            type_label=excluded.type_label,
+            release_date=excluded.release_date,
+            diamonds=excluded.diamonds,
+            voice_actor=excluded.voice_actor,
+            wiki_url=excluded.wiki_url,
+            icon_path=excluded.icon_path,
+            card_path=excluded.card_path,
+            lore=excluded.lore,
+            game_id=excluded.game_id,
+            master_id=excluded.master_id,
+            patch_version=excluded.patch_version,
+            base_stats_json=excluded.base_stats_json,
+            raw_infobox_json=excluded.raw_infobox_json,
+            scraped_at=datetime('now')
+        """,
+        (
+            name,
+            slug,
+            g.get("title") or infobox.get("title"),
+            g.get("pantheon") or infobox.get("pantheon"),
+            dtype,
+            json.dumps(role_list),
+            json.dumps(g.get("characterTags") or []),
+            g.get("type") or infobox.get("spec1"),
+            release,
+            _safe_int(infobox.get("diamonds")),
+            infobox.get("voice actor"),
+            wiki.page_url(name),
+            g.get("smallIconPath"),
+            g.get("godCardPath"),
+            lore,
+            str(g.get("id") or ""),
+            g.get("masterId"),
+            g.get("patchVersion"),
+            json.dumps(g.get("baseStats") or {}),
+            json.dumps(infobox),
+        ),
+    )
+    god_id = conn.execute("SELECT id FROM gods WHERE name = ?", (name,)).fetchone()["id"]
+    conn.execute("DELETE FROM abilities WHERE god_id = ?", (god_id,))
+
+    for ab in abilities:
+        conn.execute(
+            """
+            INSERT OR IGNORE INTO abilities (
+                god_id, slot, slot_order, name, short_label, icon,
+                description, stats_text, notes_text, stats_json
+            ) VALUES (?,?,?,?,?,?,?,?,?,?)
+            """,
+            (
+                god_id,
+                ab["slot"],
+                ab["slot_order"],
+                ab["name"],
+                ab["short_label"],
+                ab["icon"],
+                ab["description"],
+                ab["stats_text"],
+                ab["notes_text"],
+                json.dumps(ab["stats_json"]),
+            ),
+        )
+
+    try:
+        old_aspects = conn.execute(
+            "SELECT id FROM god_aspects WHERE god_id = ?", (god_id,)
+        ).fetchall()
+        for oa in old_aspects:
+            conn.execute(
+                "DELETE FROM god_aspect_abilities WHERE aspect_id = ?", (oa["id"],)
+            )
+        conn.execute("DELETE FROM god_aspects WHERE god_id = ?", (god_id,))
+    except sqlite3.OperationalError:
+        pass
+    if aspect and (aspect.get("name") or aspect.get("description")):
+        conn.execute(
+            """
+            INSERT INTO god_aspects (god_id, name, description, image, raw_json)
+            VALUES (?,?,?,?,?)
+            """,
+            (
+                god_id,
+                aspect.get("name") or "God Aspect",
+                aspect.get("description") or "",
+                aspect.get("image") or "",
+                json.dumps(aspect),
+            ),
+        )
+        aspect_id = conn.execute(
+            "SELECT id FROM god_aspects WHERE god_id = ? ORDER BY id DESC LIMIT 1",
+            (god_id,),
+        ).fetchone()["id"]
+        for ab in aspect.get("abilities") or []:
+            conn.execute(
+                """
+                INSERT INTO god_aspect_abilities (
+                    aspect_id, slot, slot_order, name, short_label, icon,
+                    description, stats_text, notes_text, stats_json
+                ) VALUES (?,?,?,?,?,?,?,?,?,?)
+                """,
+                (
+                    aspect_id,
+                    ab.get("slot") or "",
+                    ab.get("slot_order") or 0,
+                    ab.get("name") or "",
+                    ab.get("short_label") or "",
+                    ab.get("icon") or "",
+                    ab.get("description") or "",
+                    ab.get("stats_text") or "",
+                    ab.get("notes_text") or "",
+                    json.dumps(ab.get("stats_json") or {}),
+                ),
+            )
+        if verbose:
+            print(f"    Aspect: {aspect.get('name')}")
+
+    conn.commit()
+    return True
+
+
 def scrape_gods(conn, wiki: WikiClient, verbose: bool = True) -> int:
     if verbose:
         print("Fetching Data:Gods.json …")
@@ -55,180 +305,25 @@ def scrape_gods(conn, wiki: WikiClient, verbose: bool = True) -> int:
     if not isinstance(gods_data, list):
         raise RuntimeError("Unexpected Gods.json shape")
 
-    count = 0
+    # Dedupe JSON rows (Bastet has appeared twice)
+    by_name: dict[str, dict] = {}
     for g in gods_data:
         name = g.get("name")
-        if not name:
-            continue
-        if verbose:
-            print(f"  God: {name}")
-        try:
-            wikitext = wiki.get_wikitext(name)
-        except Exception as exc:  # noqa: BLE001
-            print(f"    WARN: could not load page for {name}: {exc}", file=sys.stderr)
-            wikitext = ""
+        if name:
+            by_name[name] = g
 
-        infobox = parse_god_infobox(wikitext) if wikitext else {}
-        # Base kit only: strip God Aspect section so enhanced abilities don't collide
-        base_wt = wikitext
-        if wikitext:
-            from .parse_util import extract_section
+    count = 0
+    for name, g in by_name.items():
+        if _upsert_god_from_wiki(conn, wiki, name, g, verbose=verbose):
+            count += 1
 
-            aspect_sec = extract_section(wikitext, "God Aspect")
-            if aspect_sec:
-                # Remove first occurrence of the aspect section body from ability parse
-                # parse_abilities still scans whole page; use text before aspect heading
-                m = re.search(r"^={2,6}\s*God Aspect\s*={2,6}", wikitext, re.I | re.M)
-                if m:
-                    base_wt = wikitext[: m.start()]
-        abilities = parse_abilities(base_wt) if base_wt else []
-        aspect = parse_god_aspect(wikitext) if wikitext else None
-        lore = parse_lore(wikitext) if wikitext else ""
-
-        roles = g.get("roleTags") or []
-        # Prefer wiki infobox roles when present
-        wiki_roles = [infobox.get("role1"), infobox.get("role2")]
-        wiki_roles = [r for r in wiki_roles if r]
-        role_list = wiki_roles or roles
-
-        release = None
-        if infobox.get("day") and infobox.get("month") and infobox.get("year"):
-            release = f"{infobox['year']}-{infobox['month'].zfill(2)}-{infobox['day'].zfill(2)}"
-
-        conn.execute(
-            """
-            INSERT INTO gods (
-                name, slug, title, pantheon, primary_damage_type, roles, character_tags,
-                type_label, release_date, diamonds, voice_actor, wiki_url, icon_path, card_path,
-                lore, game_id, master_id, patch_version, base_stats_json, raw_infobox_json
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-            ON CONFLICT(name) DO UPDATE SET
-                slug=excluded.slug,
-                title=excluded.title,
-                pantheon=excluded.pantheon,
-                primary_damage_type=excluded.primary_damage_type,
-                roles=excluded.roles,
-                character_tags=excluded.character_tags,
-                type_label=excluded.type_label,
-                release_date=excluded.release_date,
-                diamonds=excluded.diamonds,
-                voice_actor=excluded.voice_actor,
-                wiki_url=excluded.wiki_url,
-                icon_path=excluded.icon_path,
-                card_path=excluded.card_path,
-                lore=excluded.lore,
-                game_id=excluded.game_id,
-                master_id=excluded.master_id,
-                patch_version=excluded.patch_version,
-                base_stats_json=excluded.base_stats_json,
-                raw_infobox_json=excluded.raw_infobox_json,
-                scraped_at=datetime('now')
-            """,
-            (
-                name,
-                g.get("slug"),
-                g.get("title") or infobox.get("title"),
-                g.get("pantheon") or infobox.get("pantheon"),
-                g.get("primaryDamageType") or infobox.get("attack damage"),
-                json.dumps(role_list),
-                json.dumps(g.get("characterTags") or []),
-                g.get("type") or infobox.get("spec1"),
-                release,
-                _safe_int(infobox.get("diamonds")),
-                infobox.get("voice actor"),
-                wiki.page_url(name),
-                g.get("smallIconPath"),
-                g.get("godCardPath"),
-                lore,
-                str(g.get("id") or ""),
-                g.get("masterId"),
-                g.get("patchVersion"),
-                json.dumps(g.get("baseStats") or {}),
-                json.dumps(infobox),
-            ),
-        )
-        god_id = conn.execute("SELECT id FROM gods WHERE name = ?", (name,)).fetchone()["id"]
-        # Replace abilities for this god (handles re-scrape / JSON duplicates)
-        conn.execute("DELETE FROM abilities WHERE god_id = ?", (god_id,))
-
-        for ab in abilities:
-            conn.execute(
-                """
-                INSERT OR IGNORE INTO abilities (
-                    god_id, slot, slot_order, name, short_label, icon,
-                    description, stats_text, notes_text, stats_json
-                ) VALUES (?,?,?,?,?,?,?,?,?,?)
-                """,
-                (
-                    god_id,
-                    ab["slot"],
-                    ab["slot_order"],
-                    ab["name"],
-                    ab["short_label"],
-                    ab["icon"],
-                    ab["description"],
-                    ab["stats_text"],
-                    ab["notes_text"],
-                    json.dumps(ab["stats_json"]),
-                ),
-            )
-
-        # God Aspect (alternate kit) — replace per god
-        try:
-            old_aspects = conn.execute(
-                "SELECT id FROM god_aspects WHERE god_id = ?", (god_id,)
-            ).fetchall()
-            for oa in old_aspects:
-                conn.execute(
-                    "DELETE FROM god_aspect_abilities WHERE aspect_id = ?", (oa["id"],)
-                )
-            conn.execute("DELETE FROM god_aspects WHERE god_id = ?", (god_id,))
-        except sqlite3.OperationalError:
-            pass
-        if aspect and (aspect.get("name") or aspect.get("description")):
-            conn.execute(
-                """
-                INSERT INTO god_aspects (god_id, name, description, image, raw_json)
-                VALUES (?,?,?,?,?)
-                """,
-                (
-                    god_id,
-                    aspect.get("name") or "God Aspect",
-                    aspect.get("description") or "",
-                    aspect.get("image") or "",
-                    json.dumps(aspect),
-                ),
-            )
-            aspect_id = conn.execute(
-                "SELECT id FROM god_aspects WHERE god_id = ? ORDER BY id DESC LIMIT 1",
-                (god_id,),
-            ).fetchone()["id"]
-            for ab in aspect.get("abilities") or []:
-                conn.execute(
-                    """
-                    INSERT INTO god_aspect_abilities (
-                        aspect_id, slot, slot_order, name, short_label, icon,
-                        description, stats_text, notes_text, stats_json
-                    ) VALUES (?,?,?,?,?,?,?,?,?,?)
-                    """,
-                    (
-                        aspect_id,
-                        ab.get("slot") or "",
-                        ab.get("slot_order") or 0,
-                        ab.get("name") or "",
-                        ab.get("short_label") or "",
-                        ab.get("icon") or "",
-                        ab.get("description") or "",
-                        ab.get("stats_text") or "",
-                        ab.get("notes_text") or "",
-                        json.dumps(ab.get("stats_json") or {}),
-                    ),
-                )
-            if verbose:
-                print(f"    Aspect: {aspect.get('name')}")
-
-        count += 1
-        conn.commit()
+    # Gods.json lag: pull new classics from latest patch pages (e.g. Cu Chulainn on OB40 day-1)
+    extras = _discover_gods_from_latest_patches(
+        wiki, set(by_name.keys()), verbose=verbose
+    )
+    for name in extras:
+        if _upsert_god_from_wiki(conn, wiki, name, None, verbose=verbose):
+            count += 1
     return count
 
 
@@ -394,11 +489,67 @@ def scrape_items(conn, wiki: WikiClient, verbose: bool = True) -> int:
     return count
 
 
+def _discover_newer_open_beta_patches(
+    wiki: WikiClient,
+    patches: list[dict[str, str]],
+    *,
+    look_ahead: int = 3,
+    verbose: bool = True,
+) -> list[dict[str, str]]:
+    """
+    Wiki Patch_notes index sometimes lags a day after launch.
+    If Open Beta N is listed, try Open Beta N+1…N+look_ahead and prepend any live pages.
+    """
+    max_n = 0
+    for p in patches:
+        m = re.search(r"Open Beta\s+(\d+)", p.get("name") or "", re.I)
+        if m:
+            max_n = max(max_n, int(m.group(1)))
+    if max_n <= 0:
+        return patches
+    known = {p["name"] for p in patches}
+    extra: list[dict[str, str]] = []
+    for n in range(max_n + 1, max_n + 1 + look_ahead):
+        name = f"SMITE 2 Open Beta {n}"
+        if name in known:
+            continue
+        try:
+            wt = wiki.get_wikitext(name)
+        except Exception:
+            continue
+        if not wt or len(wt) < 200:
+            continue
+        # Prefer infobox release date when present
+        info = parse_patch_infobox(wt)
+        release = info.get("release date") or info.get("releasedate") or ""
+        if not release:
+            # common first heading / table cell
+            dm = re.search(
+                r"(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?,?\s+\d{4}",
+                wt,
+            )
+            release = dm.group(0) if dm else ""
+        extra.append(
+            {
+                "name": name,
+                "release_date": release,
+                "phase": "Open Beta",
+            }
+        )
+        if verbose:
+            print(f"  Discovered unlisted patch page: {name} ({release or 'date TBD'})")
+    if not extra:
+        return patches
+    # Newest first to match index order
+    return extra[::-1] + patches
+
+
 def scrape_patches(conn, wiki: WikiClient, verbose: bool = True) -> int:
     if verbose:
         print("Fetching patch notes index …")
     index_wt = wiki.get_wikitext("Patch notes")
     patches = parse_patch_list(index_wt)
+    patches = _discover_newer_open_beta_patches(wiki, patches, verbose=verbose)
     if verbose:
         print(f"  Found {len(patches)} patches")
 

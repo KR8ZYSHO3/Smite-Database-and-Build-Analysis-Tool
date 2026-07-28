@@ -27,6 +27,14 @@ https://rawcdn.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main
 
 Tabs: **Tier List · Gods · Conquest Builds · Items**
 
+### How Conquest builds are produced
+
+See **[docs/BUILD_ALGORITHM.md](docs/BUILD_ALGORITHM.md)** — multi-phase pipeline:
+
+**hard gates → role job → buy order → kit archetype → ladder/patch → soft high-SR inspiration → light flex diversify**
+
+Order is first-class (e.g. Mid Book/Deso before Obsidian; Jungle Jotunn before late Titan’s).
+
 > Use scope **`overall`** for the full S-tier list (~11).  
 > Role scopes (Mid, Jungle, …) only show ~3 S-tier gods each.
 

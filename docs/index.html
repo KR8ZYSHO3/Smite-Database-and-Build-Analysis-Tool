@@ -125,7 +125,9 @@
           <h2>Troll / meme builds</h2>
           <p class="muted">
             Off-meta paths that are funny and annoying — <strong>not ranked advice</strong>.
-            Roll again for a brand-new path. Max-stat modes pure greed one number.
+            <strong>Annoy</strong> = kit-true frustration · <strong>Max stat</strong> = pure greed ·
+            <strong>True random</strong> = shop lottery (still legal items).
+            Each re-roll is a new seed. Gates still ban removed shop / stolen acorns / pure cross-type cores.
           </p>
           <div class="counter-form troll-form">
             <label>God
@@ -150,7 +152,8 @@
               <select id="troll-mode">
                 <option value="annoy">Annoyance (kit troll)</option>
                 <option value="maxstat">Max stat greed</option>
-                <option value="surprise">Surprise me (random mode)</option>
+                <option value="random">True random (shop lottery)</option>
+                <option value="surprise">Surprise me</option>
               </select>
             </label>
             <label id="troll-maxstat-wrap" hidden>Greed target
@@ -171,9 +174,9 @@
               <input type="checkbox" id="troll-aspect" checked />
               Use aspect kit if available
             </label>
-            <label class="troll-check">
+            <label class="troll-check" id="troll-chaos-wrap">
               <input type="checkbox" id="troll-chaos" />
-              Chaos mode
+              Chaos mode (extra axis / swaps)
             </label>
             <div class="troll-actions">
               <button type="button" class="btn-primary btn-troll" id="troll-run">Generate troll path</button>

@@ -19,6 +19,7 @@ from .conquest_builds import (
     load_items,
     render_markdown,
 )
+from .build_pipeline import algorithm_card
 
 ROOT = Path(__file__).resolve().parent.parent
 WEB_DATA = ROOT / "docs" / "data"
@@ -271,18 +272,17 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     if builds is None and builds_path.exists():
         builds = json.loads(builds_path.read_text(encoding="utf-8"))
 
-    # Attach per-god Conquest paths for every role they play (not only top-5 lists).
-    # Magical supports also get a Mid full-damage path.
+    # Attach Conquest paths for ALL roles (flex / off-role included).
+    # Base kit + every God Aspect × every role. Algorithm: docs/BUILD_ALGORITHM.md
+    ALL_CONQUEST_ROLES = ("Carry", "Mid", "Jungle", "Solo", "Support")
     try:
         shop_items = load_items(conn)
-        by_name = {g["name"]: g for g in gods}
-        for g in gods:
-            roles = list(g.get("role_list") or [])
-            dtype = (g.get("primary_damage_type") or "").lower()
-            if "Support" in roles and dtype == "magical" and "Mid" not in roles:
-                roles = roles + ["Mid"]  # full-damage option for mage guardians
+        n_gods = len(gods)
+        for gi, g in enumerate(gods, 1):
+            native = list(g.get("role_list") or [])
             paths: dict = {}
-            aspect_paths: dict = {}
+            aspect_paths: dict = {}  # first aspect only (back-compat UI)
+            by_aspect: dict = {}  # aspect_name → { role → build }
             god_row = {
                 "god_id": g["id"],
                 "entity_name": g["name"],
@@ -301,24 +301,50 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
                 }
                 for a in aspects
             ]
-            for role in roles:
+            if gi == 1 or gi % 15 == 0 or gi == n_gods:
+                print(f"  Conquest paths {gi}/{n_gods} {g['name']}…")
+            for role in ALL_CONQUEST_ROLES:
                 if role not in ROLE_PROFILES:
                     continue
-                paths[role] = build_god_build(conn, shop_items, role, god_row)
-                if aspects:
-                    aspect_paths[role] = build_god_build(
-                        conn, shop_items, role, god_row, use_aspect=True
+                b = build_god_build(conn, shop_items, role, god_row)
+                b["native_role"] = role in native
+                b["flex_role"] = role not in native
+                paths[role] = b
+            for ai, asp in enumerate(aspects):
+                role_map: dict = {}
+                for role in ALL_CONQUEST_ROLES:
+                    if role not in ROLE_PROFILES:
+                        continue
+                    ab = build_god_build(
+                        conn,
+                        shop_items,
+                        role,
+                        god_row,
+                        use_aspect=True,
+                        aspect_id=asp["id"],
                     )
+                    ab["native_role"] = role in native
+                    ab["flex_role"] = role not in native
+                    ab["aspect_id"] = asp["id"]
+                    ab["aspect_name"] = asp["name"]
+                    role_map[role] = ab
+                by_aspect[asp["name"]] = role_map
+                # Primary aspect keeps flat conquest_by_role_aspect for older UI
+                if ai == 0:
+                    aspect_paths = role_map
             g["conquest_by_role"] = paths
+            g["conquest_roles"] = list(ALL_CONQUEST_ROLES)
+            g["native_roles"] = native
             if aspect_paths:
                 g["conquest_by_role_aspect"] = aspect_paths
-            # Drop bulky legacy lists from the main god payload confusion in UI
-            # (still keep short notes + starter for tier rationale)
+            if by_aspect:
+                g["conquest_by_aspect"] = by_aspect
             if paths:
                 g["build_display"] = "conquest"
     except Exception as exc:  # noqa: BLE001
         print(f"WARN: per-god conquest attach failed: {exc}")
 
+    meta["build_algorithm"] = algorithm_card()
     payload = {
         "meta": meta,
         "gods": gods,

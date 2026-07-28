@@ -1,12 +1,15 @@
 """
 Statistically weighted Conquest builds per role.
 
-Uses only local DB data:
-  - item stats / categories / cost
-  - item patch momentum
-  - item tier ladder (items:overall S–D)
-  - god kit scaling + role tags + tier scores
-No external build guides.
+Formal multi-phase algorithm: docs/BUILD_ALGORITHM.md
+Orchestration API: smite2db.build_pipeline
+
+Phases (priority: gates > role > order > kit > ladder > high-SR inspire > diversify):
+  P0 Context → P1 Score universe → P2 Hard gates → P3 God rescore
+  → P4 Archetype → P5 Assemble slots → P6 Structural repair
+  → P7 Buy order (spike timing) → P8 Explain
+
+Data: kit metrics, item ladder, patch axes, optional tracker.gg soft inspiration.
 """
 
 from __future__ import annotations
@@ -31,6 +34,8 @@ from .kit_effects import (
     family_score_boost,
     prefer_ban_adjust,
 )
+from .tracker_inspire import inspiration_boost, inspiration_buy_rank
+# algorithm_card imported lazily in build_god_build to avoid circular import
 
 # SMITE 2 active-item rules (shop T3 On-Use items in the 6-item grid):
 # - Hard game limit is 3 (item text + curios share this budget; curios auto-drop at 3).
@@ -44,7 +49,30 @@ MAX_ACTIVE_ITEMS = DEFAULT_MAX_SHOP_ACTIVES
 # Roles that must ship real penetration in the final 6 (not just raw power).
 DAMAGE_ROLES_NEED_PEN = frozenset({"Carry", "Mid", "Jungle"})
 # Minimum pen stat total (flat or %) across the 6 items for those roles.
-MIN_BUILD_PEN = 10.0
+# Ranked carry floor: enough shred that tanks don't hard-wall you.
+MIN_BUILD_PEN = 20.0
+
+# Critical slots — always take the best candidate (no diversify salt).
+# Uniqueness comes from kit tags + last flex, not random mid cores.
+RANKED_CORE_SLOTS = frozenset(
+    {
+        "flat_pen",
+        "pct_pen",
+        "as_core",
+        "crit_core",
+        "onhit",
+        "gap",
+        "mana_stack",
+        "ls_core",
+        "power",
+        "dot_core",
+        "zone_core",
+        "hybrid_bulk",
+        "power_bruiser",
+        "aura",  # Support Thebes/Stampede — do not diversify into Spectral
+        "heal_aura",
+    }
+)
 
 # Pure heal-amp / team-heal actives — only real heal kits should buy these early.
 # Chandra / Thebes / etc. stay available as normal support auras.
@@ -703,18 +731,18 @@ def _item_ladder_boost(
     if not ladder_tier and not ladder_score:
         return 0.0
     letter = (ladder_tier or "").upper().strip()
-    letter_w = {"S": 22.0, "A": 14.0, "B": 4.0, "C": -6.0, "D": -12.0}.get(letter, 0.0)
+    letter_w = {"S": 28.0, "A": 18.0, "B": 5.0, "C": -8.0, "D": -16.0}.get(letter, 0.0)
     # Continuous score 0..100 (top items ~60–100)
     score_w = 0.0
     if ladder_score > 0:
-        score_w = (float(ladder_score) / 100.0) * 18.0  # 0..18
+        score_w = (float(ladder_score) / 100.0) * 22.0  # 0..22
     # Rank: #1 gets a bit more love
     rank_w = 0.0
     if ladder_rank and ladder_rank > 0:
         if ladder_rank <= 10:
-            rank_w = 6.0 - (ladder_rank - 1) * 0.4
+            rank_w = 8.0 - (ladder_rank - 1) * 0.5
         elif ladder_rank <= 25:
-            rank_w = 2.0
+            rank_w = 3.0
     raw = letter_w + score_w + rank_w
 
     # Role-gate: don't let pure defensive ladder S-tier invade Mid/Carry/Jungle
@@ -722,16 +750,16 @@ def _item_ladder_boost(
     damage_backline = role in DAMAGE_ROLES_NEED_PEN
     frontline = role in ("Solo", "Support")
     if damage_backline and itype == "defensive" and not is_pen:
-        raw *= 0.25  # soft awareness only
+        raw *= 0.2  # soft awareness only
     elif damage_backline and itype == "hybrid" and not is_pen:
-        raw *= 0.55
+        raw *= 0.5
     elif frontline and itype in ("defensive", "hybrid"):
-        raw *= 1.15  # tanks should prefer hot defensive ladder items
+        raw *= 1.2  # tanks should prefer hot defensive ladder items
     elif damage_backline and itype == "offensive":
-        raw *= 1.1
+        raw *= 1.25  # ranked: lean into hot damage ladder items
 
     # Soft cap so ladder never alone overrides kit bans / signatures
-    return max(-18.0, min(32.0, raw))
+    return max(-20.0, min(40.0, raw))
 
 
 def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
@@ -1080,6 +1108,8 @@ def score_relic(item: dict, profile: dict) -> float:
 
 
 def is_t1_starter(it: dict) -> bool:
+    if is_god_specific_item(it):
+        return False
     if "starter" not in it["flags"] and "starter" not in (it.get("categories") or "").lower():
         # also allow known starter tiers
         if it["tier"] not in ("1", "Starter"):
@@ -1121,11 +1151,15 @@ def is_upgraded_starter(it: dict) -> bool:
 
 
 def is_god_specific_item(it: dict | ScoredItem | str) -> bool:
-    """Ratatoskr acorns, mods, Baron's Brew, etc. — not buyable by other gods."""
+    """Ratatoskr acorns, Vulcan mods, Baron's Brew, etc. — not buyable by other gods."""
     if isinstance(it, str):
         n = it.lower()
         # Name cues when we only have a string (client / inject keys)
         if "acorn" in n:
+            return True
+        if n.endswith(" mod") or " mod" in n:
+            return True
+        if "baron's brew" in n or "genie's lamp" in n or "training grounds" in n:
             return True
         return False
     if isinstance(it, ScoredItem):
@@ -1136,14 +1170,51 @@ def is_god_specific_item(it: dict | ScoredItem | str) -> bool:
             return True
         if "acorn" in n:
             return True
+        if n.endswith(" mod") or " mod" in n:
+            return True
+        if "baron's brew" in n or "genie's lamp" in n or "training grounds" in n:
+            return True
         return False
     n = (it.get("name") or "").lower()
-    cats = (it.get("categories") or "").lower()
+    cats_raw = it.get("categories") or ""
+    if isinstance(cats_raw, (list, tuple)):
+        cats = " ".join(str(c) for c in cats_raw).lower()
+    else:
+        cats = str(cats_raw).lower()
     itype = (it.get("item_type") or "").lower()
     tier = str(it.get("tier") or "")
-    if "god specific" in cats or "god specific" in itype or tier == "God Specific":
+    if (
+        "god specific" in cats
+        or "god-specific" in cats
+        or "god specific" in itype
+        or tier == "God Specific"
+    ):
         return True
     if "acorn" in n:  # Ratatoskr-only family
+        return True
+    if n.endswith(" mod") or " mod" in n:
+        return True
+    if "baron's brew" in n or "genie's lamp" in n or "training grounds" in n:
+        return True
+    return False
+
+
+def item_allowed_for_god(it: dict | ScoredItem | str, god_name: str | None) -> bool:
+    """
+    Shared-shop gate for builds / troll / random.
+    God-specific items are banned unless this god owns them.
+    Acorns → Ratatoskr only.
+    """
+    if not is_god_specific_item(it):
+        return True
+    if isinstance(it, str):
+        n = it.lower()
+    elif isinstance(it, ScoredItem):
+        n = (it.name or "").lower()
+    else:
+        n = (it.get("name") or "").lower()
+    g = (god_name or "").lower()
+    if "acorn" in n and "ratatoskr" in g:
         return True
     return False
 
@@ -1155,6 +1226,34 @@ def is_t3_core(it: dict) -> bool:
     if it["tier"] == "3":
         return True
     if it["item_type"] in ("Offensive", "Defensive", "Hybrid") and (it["total_cost"] or 0) >= 2200:
+        return True
+    return False
+
+
+def is_build_pool_item(it: dict | ScoredItem | str, god_name: str | None) -> bool:
+    """
+    Items legal in a Conquest path for this god:
+      - normal shared T3 cores, or
+      - god-specific lines this god owns (Ratatoskr acorns only today).
+    """
+    if isinstance(it, ScoredItem):
+        name = it.name
+        # Reconstruct minimal dict-like checks via helpers
+        if _is_removed_or_unavailable_item(name):
+            return False
+        if item_allowed_for_god(name, god_name) and is_god_specific_item(name):
+            return True
+        # Shared T3 via name alone is ambiguous — callers usually pass raw dict
+        return False
+    if isinstance(it, str):
+        if _is_removed_or_unavailable_item(it):
+            return False
+        return is_god_specific_item(it) and item_allowed_for_god(it, god_name)
+    if _is_removed_or_unavailable_item(it.get("name") or ""):
+        return False
+    if is_t3_core(it):
+        return True
+    if is_god_specific_item(it) and item_allowed_for_god(it, god_name):
         return True
     return False
 
@@ -1506,6 +1605,15 @@ def rescore_for_god(
     mage = dtype == "magical" or primary == "Intelligence"
     physical = (not mage) and (dtype == "physical" or primary == "Strength")
 
+    # Soft high-SR inspiration (tracker.gg) — never hard-override kit bans
+    t_boost, _t_why = inspiration_boost(
+        item.name,
+        god_name=str(bias.get("god_name") or ""),
+        role=role,
+    )
+    if t_boost:
+        s += t_boost
+
     # --- Damage-type alignment (hard) ---
     if mage:
         s += int_v * 1.15
@@ -1659,11 +1767,23 @@ def rescore_for_god(
         s += pen_v * 1.5 + cdr_v * 0.7
         if any(k in blob for k in ("jungle", "monster", "minion")):
             s += 22
+        # Standard ability jungle: Jotunn / Hydra / stack first, then pen+power
+        if "jotunn" in nlow:
+            s += 48
+        elif "hydra" in nlow:
+            s += 44
+        elif any(k in nlow for k in ("transcend", "heartseeker", "arondight", "crusher")):
+            s += 32
+        elif any(k in nlow for k in ("devourer", "bloodforge", "titan")):
+            s += 28
         if item.item_type == "Defensive" and pen_v < 5 and (str_v + int_v) < 20:
             s -= 28
         # Spectral / aura peel is Support identity — not jungle core
         if any(k in nlow for k in ("spectral", "midgardian", "thebes", "chandra", "contagion")):
             s -= 50
+        # Crit ADC toys rarely belong on ability junglers
+        if any(k in nlow for k in ("deathbringer", "musashi", "avenging", "wind demon")):
+            s -= 35
         if physical:
             s += str_v * 0.35 + pen_v * 0.4
     elif role == "Carry":
@@ -1758,10 +1878,16 @@ def rescore_for_god(
         ):
             s += 40
         elif mage and not wants_ls and any(k in nlow for k in ("soul gem",)):
-            # Soul Gem is ability-proc; still fine on many mages without full LS path
-            s += 12
+            # Soul Gem is late luxury sustain — not a mid opener for ranked
+            if role == "Mid":
+                s -= 25
+            else:
+                s += 6
         if mage and true_healer and any(k in nlow for k in ("asclepius", "lifebinder")):
-            s += 40
+            if role in ("Support", "Solo"):
+                s += 40
+            elif role == "Mid":
+                s -= 30  # mid is damage; heal items belong on Support
         if physical and (
             ls_v >= 8 or any(k in nlow for k in ("bloodforge", "devourer", "sanguine", "gladiator"))
         ):
@@ -2077,16 +2203,33 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
         return "tank_solo"
 
     if role == "Jungle":
+        # Flex-friendly: mages, solo bruisers, and traditional assassins all get paths
         if mage:
             return "mage_jungle"
-        # AA identity first — don't let heal/shield tags force soft Spectral sustain
-        if "aa" in tags or aa >= 0.55 or "as_steroid" in tags:
+        # True AA jungle only — noisy "basic attack" tags made everyone aa_assassin
+        if (aa >= 0.7 or ("aa" in tags and "as_steroid" in tags)) and "as_steroid" in tags:
             return "aa_assassin"
-        if "execute" in tags or ("self_sustain" in tags and "gap_close" in tags):
+        if aa >= 0.75 and "aa" in tags:
+            return "aa_assassin"
+        # LS stack jungle (Thanatos / Kali style) — DG then pen, not pure ADC
+        if "self_sustain" in tags and ("execute" in tags or "aa" in tags):
             return "sustain_assassin"
-        if sb >= sd + 0.08:
-            return "burst_assassin"
-        return "bruiser_jungle"
+        if "execute" in tags and "gap_close" in tags:
+            return "sustain_assassin"
+        # Solo-style tanks / low-mobility bruisers flexed into jungle
+        if (
+            "gap_close" not in tags
+            and aa < 0.45
+            and (
+                "heavy_shield" in tags
+                or "shield" in tags
+                or float(bias.get("style_utility") or 0) >= 0.45
+            )
+            and sb < 0.55
+        ):
+            return "bruiser_jungle"
+        # Default ability jungle (includes most warriors flexed from Solo)
+        return "burst_assassin"
 
     if role == "Carry":
         if mage:
@@ -2124,41 +2267,41 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
     return "burst_mage"
 
 
-# Slot recipes: ordered identity of the 6-item grid (pen still enforced later)
+# Slot recipes: ordered identity of the 6-item grid (pen still enforced later).
+# Ranked-first order: spike items early, luxury/shell late.
 ARCHETYPE_SLOTS: dict[str, list[str]] = {
-    # Mid / mage
-    "burst_mage": ["power", "flat_pen", "pct_pen", "cdr", "defense", "luxury"],
-    "dot_mage": ["flat_pen", "dot_core", "pct_pen", "sustain", "cdr", "defense"],
-    "mana_mage": ["mana_stack", "flat_pen", "pct_pen", "cdr", "power", "defense"],
-    "channel_mage": ["pct_pen", "flat_pen", "power", "defense", "cdr", "luxury"],
-    "spam_mage": ["cdr", "flat_pen", "pct_pen", "power", "sustain", "defense"],
-    "sustain_mage": ["sustain", "flat_pen", "pct_pen", "cdr", "power", "defense"],
+    # Mid / mage — pen + power first (not Soul Gem / sustain openers)
+    "burst_mage": ["flat_pen", "pct_pen", "power", "cdr", "defense", "luxury"],
+    "dot_mage": ["flat_pen", "pct_pen", "dot_core", "power", "cdr", "defense"],
+    "mana_mage": ["mana_stack", "flat_pen", "pct_pen", "power", "cdr", "defense"],
+    "channel_mage": ["flat_pen", "pct_pen", "power", "cdr", "defense", "luxury"],
+    "spam_mage": ["cdr", "flat_pen", "pct_pen", "power", "defense", "sustain"],
+    "sustain_mage": ["flat_pen", "pct_pen", "power", "sustain", "cdr", "defense"],
     "aa_mage": ["aa_core", "flat_pen", "pct_pen", "as_core", "power", "defense"],
-    "zone_mage": ["flat_pen", "zone_core", "pct_pen", "cdr", "power", "defense"],
-    # Carry
-    "crit_adc": ["as_core", "crit_core", "pct_pen", "ls_core", "power", "defense"],
+    "zone_mage": ["flat_pen", "pct_pen", "zone_core", "power", "cdr", "defense"],
+    # Carry — AS/LS → pen → crit/power (standard ranked ADC)
+    "crit_adc": ["as_core", "ls_core", "pct_pen", "crit_core", "power", "defense"],
     "onhit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "power", "defense"],
-    "power_adc": ["power", "pct_pen", "as_core", "ls_core", "crit_core", "defense"],
-    "dot_mage_adc": ["dot_core", "flat_pen", "pct_pen", "sustain", "power", "defense"],
+    "power_adc": ["as_core", "pct_pen", "ls_core", "power", "crit_core", "defense"],
+    "dot_mage_adc": ["flat_pen", "pct_pen", "dot_core", "power", "sustain", "defense"],
     "aa_mage_adc": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "defense"],
-    "ability_mage_adc": ["power", "flat_pen", "pct_pen", "cdr", "sustain", "defense"],
-    # Jungle
-    "burst_assassin": ["power", "flat_pen", "pct_pen", "cdr", "gap", "defense"],
-    "sustain_assassin": ["sustain", "flat_pen", "pct_pen", "power", "cdr", "defense"],
-    "aa_assassin": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "defense"],
-    "bruiser_jungle": ["power", "flat_pen", "pct_pen", "hybrid_bulk", "cdr", "defense"],
-    "mage_jungle": ["power", "flat_pen", "pct_pen", "cdr", "sustain", "defense"],
-    # Solo
-    "tank_solo": ["mitigate", "defense", "hybrid_bulk", "antiheal", "aura", "cdr_def"],
-    # hybrid_bulk early — Shifter's / offline when ladder-hot (Bellona maniac path)
-    "sustain_solo": ["hybrid_bulk", "sustain_tank", "defense", "mitigate", "antiheal", "aura"],
-    "shield_solo": ["shield_item", "hybrid_bulk", "defense", "mitigate", "antiheal", "cdr_def"],
-    "bruiser_solo": ["hybrid_bulk", "defense", "power_bruiser", "mitigate", "antiheal", "cdr_def"],
-    "mage_solo": ["hybrid_bulk", "defense", "mitigate", "flat_pen", "cdr_def", "antiheal"],
-    # Support
-    "peel_support": ["mitigate", "counter", "aura", "defense", "cdr_def", "tenacity"],
-    "lockdown_support": ["cdr_def", "mitigate", "aura", "defense", "counter", "tenacity"],
-    "shield_support": ["shield_item", "aura", "mitigate", "defense", "cdr_def", "counter"],
+    "ability_mage_adc": ["flat_pen", "pct_pen", "power", "cdr", "sustain", "defense"],
+    # Jungle — Jotunn/Hydra OR stack, then pen + power
+    "burst_assassin": ["gap", "flat_pen", "pct_pen", "power", "cdr", "defense"],
+    "sustain_assassin": ["gap", "ls_core", "flat_pen", "pct_pen", "power", "defense"],
+    "aa_assassin": ["gap", "ls_core", "flat_pen", "pct_pen", "power", "defense"],
+    "bruiser_jungle": ["gap", "flat_pen", "pct_pen", "hybrid_bulk", "power", "defense"],
+    "mage_jungle": ["flat_pen", "pct_pen", "power", "cdr", "sustain", "defense"],
+    # Solo — offline damage + bulk (not pure aura shell)
+    "tank_solo": ["hybrid_bulk", "defense", "mitigate", "power_bruiser", "antiheal", "cdr_def"],
+    "sustain_solo": ["hybrid_bulk", "power_bruiser", "defense", "mitigate", "antiheal", "sustain_tank"],
+    "shield_solo": ["hybrid_bulk", "shield_item", "defense", "power_bruiser", "antiheal", "mitigate"],
+    "bruiser_solo": ["hybrid_bulk", "power_bruiser", "defense", "mitigate", "antiheal", "cdr_def"],
+    "mage_solo": ["hybrid_bulk", "flat_pen", "defense", "mitigate", "cdr_def", "antiheal"],
+    # Support — aura/utility first (Thebes/Stampede line), peel second
+    "peel_support": ["aura", "mitigate", "defense", "cdr_def", "counter", "tenacity"],
+    "lockdown_support": ["aura", "cdr_def", "mitigate", "defense", "counter", "tenacity"],
+    "shield_support": ["aura", "shield_item", "mitigate", "defense", "cdr_def", "counter"],
     "heal_support": ["heal_aura", "aura", "mitigate", "defense", "cdr_def", "counter"],
     "aura_support": ["aura", "mitigate", "defense", "cdr_def", "counter", "tenacity"],
 }
@@ -2305,6 +2448,13 @@ def _item_matches_slot(
     if slot == "gap":
         if mage:
             return cdr >= 10 and power_ok()
+        # Jungle openers ONLY: Jotunn / Hydra / stacking (Trans, HS, DG).
+        # Arondight / Crusher / Bloodforge are mid-build pen/power — not gap openers.
+        if role == "Jungle":
+            return any(
+                k in n
+                for k in ("jotunn", "hydra", "heartseeker", "transcend", "devourer")
+            )
         return any(k in n for k in ("jotunn", "arondight", "hydra", "heartseeker", "transcend")) or (
             cdr >= 10 and power_ok()
         )
@@ -2328,8 +2478,27 @@ def _item_matches_slot(
         # Heal gods pick them via heal_aura only.
         if _is_heal_core_item(it.name):
             return False
-        return any(k in blob for k in ("ally", "allies", "aura", "team")) or any(
-            k in n for k in ("thebes", "sovereignty", "heartward", "chandra", "contagion")
+        # Spectral / Midgardian are counter peel — not generic aura openers
+        if any(k in n for k in ("spectral", "midgardian", "nemean")):
+            return False
+        # Support meta auras + true team auras
+        if any(
+            k in n
+            for k in (
+                "thebes",
+                "sovereignty",
+                "heartward",
+                "chandra",
+                "contagion",
+                "stampede",
+                "amanita",
+                "shogun",
+            )
+        ):
+            return True
+        return any(k in blob for k in ("ally", "allies", "aura", "team")) and it.item_type in (
+            "Defensive",
+            "Hybrid",
         )
     if slot == "tenacity":
         return ten >= 5 or "magi" in n or "tenacit" in blob
@@ -2345,7 +2514,10 @@ def _item_matches_slot(
         # Frontline only — jungle must not open Spectral via shield_item
         if role in ("Jungle", "Carry", "Mid"):
             return False
-        return "shield" in blob or any(k in n for k in ("pridwen", "phoenix", "shifter", "spectral"))
+        # Spectral is anti-crit counter (mitigate/counter), not a shield-aura opener
+        if "spectral" in n:
+            return False
+        return "shield" in blob or any(k in n for k in ("pridwen", "phoenix", "shifter"))
     if slot == "heal_aura":
         # Asclepius / Lifebinder / Chandra-class team sustain (heal_support archetype only)
         return any(k in n for k in ("asclepius", "lifebinder", "chandra", "thebes", "sovereignty")) or (
@@ -2365,7 +2537,8 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     "channel": ["chronos", "gem of focus", "myrddin", "desolat"],
     "spam": ["chronos", "pendant", "gem of focus", "breastplate", "genji"],
     "ult_nuke": ["soul reaver", "tahuti", "obsidian", "titan", "desolat"],
-    "burst": ["desolat", "obsi", "titan", "soul reaver", "tahuti", "heartseeker"],
+    # Jungle ability openers first (Jotunn/Hydra), then pen finishers
+    "burst": ["jotunn", "hydra", "desolat", "obsi", "titan", "soul reaver", "tahuti", "heartseeker"],
     "pet_zone": ["isolation", "magus", "soul gem", "divine", "grimoire"],
     "zone": ["isolation", "magus", "soul gem", "divine"],
     "aa": ["riptalon", "demon", "deathbringer", "qins", "ichival", "wind", "avenging", "musashi"],
@@ -2505,81 +2678,159 @@ def _pick_slot_item(
         if slot in ("mitigate", "counter", "aura") and x.item_type == "Defensive":
             sc += 12
         if slot == "heal_aura":
-            # Keep heal_support identity — don't diversify into plain Thebes/bulk
+            # True healers: Asclepius/Lifebinder. Everyone else should not be here.
             if any(k in n for k in ("asclepius", "lifebinder")):
                 sc += 70
             elif "chandra" in n:
-                sc += 40
+                sc += 35
             elif any(k in n for k in ("thebes", "sovereignty")):
-                sc -= 15
+                sc += 20
+        if slot == "aura" and role == "Support":
+            # Meta support openers — Thebes / Stampede / Amanita beat Chandra/Spectral
+            if any(k in n for k in ("thebes", "stampede", "amanita")):
+                sc += 160
+            elif any(k in n for k in ("sovereignty", "heartward", "shogun")):
+                sc += 70
+            elif "chandra" in n:
+                sc += 15  # fine aura, not default over Thebes
+            elif "contagion" in n:
+                sc += 40
         if slot == "dot_core" and any(k in n for k in ("desolat", "magus", "isolation", "divine")):
-            sc += 28
-        if slot == "zone_core" and any(k in n for k in ("isolation", "magus", "soul gem", "grimoire")):
-            sc += 28
+            sc += 40
+        if slot == "zone_core" and any(k in n for k in ("isolation", "magus", "desolat")):
+            sc += 40
+        if slot == "zone_core" and "soul gem" in n:
+            sc -= 25  # luxury sustain, not zone identity
         if slot == "defense" and role in ("Carry", "Mid", "Jungle"):
             if any(k in n for k in ("genji", "breastplate", "valor", "alchemist", "magi", "cloak")):
                 sc += 28
             if _canon_stat_value(x.stats, "cdr") >= 10:
                 sc += 15
+            # No team auras as "defense" on damage roles
+            if any(k in n for k in ("thebes", "chandra", "spectral", "phoenix")):
+                sc -= 40
+        # --- Ranked meta cores by role (carry games need these spikes) ---
+        if role == "Mid":
+            if slot in ("flat_pen", "pct_pen", "power", "cdr", "dot_core", "zone_core", "mana_stack"):
+                # High-SR openers: Deso / Book / Chronos — Obsidian is mid-build
+                if any(k in n for k in ("desolat", "thoth", "book of", "chronos", "pendant", "doom orb")):
+                    sc += 70
+                if any(k in n for k in ("magus",)):
+                    sc += 50
+                if "obsi" in n:
+                    sc += 35  # needed after online spike, not item 1
+                if any(k in n for k in ("tahuti", "soul reaver", "rod of")):
+                    sc += 30
+                if any(k in n for k in ("soul gem", "gluttonous", "bancroft", "typhon")):
+                    sc -= 25  # late luxury, not opener
+                if any(k in n for k in ("world stone", "cosmic horror", "dreamer", "wish-granting")):
+                    sc -= 35
+                if any(k in n for k in ("lifebinder", "asclepius")):
+                    sc -= 50  # mid is damage, not heal support
+        if role == "Carry":
+            if slot in ("as_core", "crit_core", "onhit", "ls_core", "pct_pen", "power"):
+                # High-SR openers: Tyrfing / DG / Trans / AS shred
+                if any(k in n for k in ("tyrfing", "odysseus", "devourer", "transcend")):
+                    sc += 70
+                if any(k in n for k in ("executioner", "riptalon", "qins", "ichival", "lernaean")):
+                    sc += 55
+                if any(k in n for k in ("titan", "deathbringer", "demon blade")):
+                    sc += 40  # mid/late staples
+                if any(k in n for k in ("bloodforge", "avenging", "musashi", "wind demon")):
+                    sc += 30
+                if any(k in n for k in ("runeforged", "crusher", "jotunn", "hydra", "pendulum")):
+                    sc -= 45  # solo/jungle toys, not ADC cores
+                if any(k in n for k in ("freya", "chandra", "phoenix", "spectral")):
+                    sc -= 40
+                if any(k in n for k in ("death metal",)):
+                    sc -= 15  # situational, not default opener
+        if role == "Jungle":
+            if slot == "gap":
+                if "jotunn" in n:
+                    sc += 120
+                elif "hydra" in n:
+                    sc += 110
+                elif "transcend" in n:
+                    sc += 70
+                elif "devourer" in n:
+                    sc += 65
+                elif "heartseeker" in n:
+                    sc += 55
+            if slot == "ls_core":
+                if "devourer" in n:
+                    sc += 80
+                elif "bloodforge" in n:
+                    sc += 25
+            if slot in ("flat_pen", "pct_pen"):
+                if any(k in n for k in ("titan", "pendulum", "crusher", "desolat", "obsi")):
+                    sc += 45
+                if any(k in n for k in ("executioner", "riptalon", "qins")):
+                    sc -= 30
+            if slot == "power":
+                if any(k in n for k in ("arondight", "bloodforge", "reaper")):
+                    sc += 35
+                if any(k in n for k in ("executioner", "riptalon", "musashi", "avenging")):
+                    sc -= 40
+            if any(k in n for k in ("parashu", "dreamer", "wish-granting", "eye of erebus")):
+                sc -= 20  # luxury last, not core
+        if role == "Solo":
+            if slot in ("hybrid_bulk", "power_bruiser", "sustain_tank"):
+                if any(k in n for k in ("shifter", "gladiator", "sanguine", "berserker", "ancile")):
+                    sc += 45
+                if any(k in n for k in ("brawler", "runeforged", "void shield", "pestilence")):
+                    sc += 30
+            if slot in ("aura", "mitigate") and any(k in n for k in ("chandra", "thebes")):
+                sc -= 25  # support auras are not solo cores
+            if slot == "defense" and "spectral" in n:
+                sc += 15  # fine mid-build anti-crit, not item 1
+        if role == "Support":
+            if slot in ("aura", "mitigate", "cdr_def", "defense"):
+                if any(k in n for k in ("thebes", "stampede", "amanita")):
+                    sc += 55
+                if any(k in n for k in ("sovereignty", "heartward", "contagion", "genji", "breastplate")):
+                    sc += 30
+                # High-SR supports often open Shifter offline — allow it
+                if "shifter" in n:
+                    sc += 50
+                if any(k in n for k in ("arondight", "tahuti", "deathbringer")):
+                    sc -= 40  # not support cores
         if slot == "luxury":
             # Prefer passives for most gods; actives only when kit wants burst finisher
             if x.is_active_item and (x.total_cost or 0) >= 3200:
                 if "burst" in tags or "ult_nuke" in tags or "execute" in tags:
                     sc += 8
                 else:
-                    sc -= 25
+                    sc -= 35
             elif any(k in n for k in ("tahuti", "soul reaver", "myrddin", "deathbringer", "bloodforge")):
                 sc += 18
+            if any(k in n for k in ("world stone", "cosmic horror", "dreamer", "wish-granting", "parashu")):
+                sc -= 10
         # Kit-tag signature affinity (primary god differentiator)
         sc += _tag_signature_boost(n, tags, slot)
-        # Per-god reordering of the entire candidate list (not only near-ties).
-        # Magnitude is large enough to swap #1/#2/#3 among legitimate slot peers.
-        if diversify_key:
-            salt = _god_slot_salt(diversify_key, slot, role, x.name) % 53
-            sc += salt * 1.15
+        # Light salt only on flex/shell slots — never scramble ranked cores
+        if diversify_key and slot not in RANKED_CORE_SLOTS:
+            salt = _god_slot_salt(diversify_key, slot, role, x.name) % 17
+            sc += salt * 0.35
         return sc
 
     cands.sort(key=slot_rank, reverse=True)
 
-    # Always pick among top-K by god salt — every slot, including pen/power.
-    # Full top-K (no score-floor collapse) so similar-tag gods still diverge.
+    # Ranked spike slots: always best candidate (pen / AS / gap / etc.)
+    hard_core = slot in RANKED_CORE_SLOTS and slot not in ("power", "ls_core", "hybrid_bulk")
+    if hard_core or (role == "Jungle" and slot == "gap"):
+        return cands[0]
+
+    # Mild diversify on power / shell / flex so gods aren't clones, without
+    # scrambling Deso/Titan/Jotunn openers.
     if diversify_key and len(cands) > 1:
-        wide = {
-            "flat_pen",
-            "pct_pen",
-            "power",
-            "luxury",
-            "defense",
-            "mitigate",
-            "counter",
-            "aura",
-            "hybrid_bulk",
-            "sustain",
-            "cdr",
-            "cdr_def",
-            "gap",
-            "ls_core",
-            "as_core",
-            "crit_core",
-            "antiheal",
-            "shield_item",
-            "heal_aura",
-            "sustain_tank",
-            "power_bruiser",
-            "dot_core",
-            "zone_core",
-            "mana_stack",
-            "tenacity",
-            "onhit",
-        }
-        top_k = 7 if slot in wide else 5
+        top_k = 2 if slot in ("power", "ls_core", "defense", "cdr", "hybrid_bulk") else 3
         top_k = min(top_k, len(cands))
-        # Soft quality gate: drop only true junk (>35% behind #1), keep ≥3 when possible
         best = slot_rank(cands[0])
-        floor = best - max(80.0, abs(best) * 0.35)
+        # Tight floor — only true near-peers (not random junk)
+        floor = best - max(25.0, abs(best) * 0.12)
         near = [c for c in cands[:top_k] if slot_rank(c) >= floor]
-        if len(near) < min(3, top_k):
-            near = cands[:top_k]
+        if not near:
+            near = cands[:1]
         idx = _god_slot_salt(diversify_key, slot, role) % len(near)
         return near[idx]
     return cands[0]
@@ -2928,6 +3179,63 @@ def assemble_kit_path(
     return path[:6], arch
 
 
+def _ensure_owned_god_items(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    god_name: str,
+    *,
+    max_actives: int,
+    role: str,
+) -> list[ScoredItem]:
+    """
+    Pin owner-only lines when they exist in the pool (Ratatoskr acorns).
+    Shared shop remains the rest of the path.
+    """
+    if not path or not god_name:
+        return path
+    g = god_name.lower()
+    if "ratatoskr" not in g:
+        return path
+    path = list(path)
+    if any("acorn" in x.name.lower() for x in path):
+        return path
+    acorns = [
+        x
+        for x in pool
+        if "acorn" in x.name.lower() and item_allowed_for_god(x.name, god_name)
+    ]
+    if not acorns:
+        return path
+    # Prefer higher-scored T3-ish acorn; salt by role so Solo ≠ Jungle
+    acorns.sort(
+        key=lambda x: x.role_score + (_god_slot_salt(god_name, "acorn", role, x.name) % 11),
+        reverse=True,
+    )
+    pick = acorns[0]
+    seen = {x.name for x in path}
+    if pick.name in seen:
+        return path
+    # Replace lowest-priority non-opener / non-pen slot
+    drop = None
+    ranked = sorted(range(len(path)), key=lambda i: path[i].role_score)
+    for i in ranked:
+        n = path[i].name.lower()
+        if is_pen_item(path[i]) or _is_jungle_standard_opener(n):
+            continue
+        if path[i].is_active_item and pick.is_active_item:
+            continue
+        drop = i
+        break
+    if drop is None:
+        if len(path) < 6:
+            path.append(pick)
+        return path[:6]
+    if path[drop].is_active_item and not pick.is_active_item:
+        pass  # free an active slot
+    path[drop] = pick
+    return path[:6]
+
+
 def _god_flavor_flex(
     path: list[ScoredItem],
     pool: list[ScoredItem],
@@ -2939,78 +3247,132 @@ def _god_flavor_flex(
     physical: bool,
     max_actives: int,
 ) -> list[ScoredItem]:
-    """Replace one non-critical slot with a god-salted alternate from a wide peer pool."""
+    """
+    Light last-slot flavor only. Never scramble pen / power / AS / crit cores —
+    ranked paths must stay spike-first; uniqueness is kit tags + defense/luxury.
+    Jungle: also flavor one mid power toy so assassin clones (Rat/Thor) diverge.
+    """
     if not path or not dkey:
         return path
     path = list(path)
     seen = {x.name for x in path}
-    # Never swap the sole matching pen item
+    # Never swap pen, openers, or early cores — only last 1–2 shell/luxury slots
     pen_idxs = [
         i
         for i, it in enumerate(path)
         if is_pen_item(it) and _pen_matches_kit(it, mage=mage, physical=physical)
     ]
-    # Prefer swapping luxury / defense / power filler
-    candidates_idx = list(range(len(path)))
-    # Rotate which index we flavor by god
-    start = _god_slot_salt(dkey, "flavor_idx", role) % len(candidates_idx)
-    order = candidates_idx[start:] + candidates_idx[:start]
-    target = None
+    protected_keys = (
+        "jotunn",
+        "hydra",
+        "transcend",
+        "heartseeker",
+        "devourer",
+        "titan",
+        "obsi",
+        "desolat",
+        "magus",
+        "executioner",
+        "deathbringer",
+        "demon blade",
+        "riptalon",
+        "shifter",
+        "thebes",
+        "stampede",
+    )
+
+    def is_protected(it: ScoredItem, idx: int) -> bool:
+        n = it.name.lower()
+        if is_pen_item(it) and _pen_matches_kit(it, mage=mage, physical=physical):
+            return True
+        if role == "Jungle" and _is_jungle_standard_opener(n):
+            return True
+        if any(k in n for k in protected_keys):
+            return True
+        # First two slots are spike openers — leave them
+        if idx < 2:
+            return True
+        return False
+
+    # Flavor 1–2 trailing slots (defense / last power) so gods diverge without
+    # touching Jotunn/Deso/Titan cores. Jungle may also re-roll one mid power toy.
+    order = list(range(len(path) - 1, -1, -1))
+    targets: list[int] = []
     for i in order:
-        if len(pen_idxs) <= 1 and i in pen_idxs:
+        if is_protected(path[i], i):
             continue
-        target = i
-        break
-    if target is None:
+        if len(pen_idxs) <= 2 and i in pen_idxs:
+            continue
+        if role in DAMAGE_ROLES_NEED_PEN and i < max(3, len(path) - 2):
+            # Jungle exception: allow one mid-index power flex (slot 2–4)
+            if not (role == "Jungle" and 2 <= i <= 4):
+                continue
+        targets.append(i)
+        if len(targets) >= (3 if role == "Jungle" else 2):
+            break
+    if not targets:
         return path
 
-    actives = sum(1 for x in path if x.is_active_item)
-    alts = [
-        x
-        for x in pool
-        if x.name not in seen
-        and not (x.is_active_item and actives >= max_actives and not path[target].is_active_item)
-    ]
-    # Kit/type filter
-    filtered: list[ScoredItem] = []
-    for x in alts:
-        str_v = _canon_stat_value(x.stats, "str")
-        int_v = _canon_stat_value(x.stats, "int")
-        nlow = x.name.lower()
-        if mage and int_v < 25 and x.item_type not in ("Defensive", "Hybrid") and str_v > int_v + 10:
-            continue
-        if physical and str_v < 15 and x.item_type not in ("Defensive", "Hybrid") and int_v > str_v + 20:
-            continue
-        # Damage roles: skip pure aura tanks as flavor
-        if role in DAMAGE_ROLES_NEED_PEN and x.item_type == "Defensive" and item_pen_value(x) < 5:
-            if _canon_stat_value(x.stats, "cdr") < 8 and int_v + str_v < 25:
+    for ti, target in enumerate(targets):
+        seen = {x.name for x in path}
+        actives = sum(1 for x in path if x.is_active_item)
+        alts = [
+            x
+            for x in pool
+            if x.name not in seen
+            and not (x.is_active_item and actives >= max_actives and not path[target].is_active_item)
+        ]
+        filtered: list[ScoredItem] = []
+        for x in alts:
+            str_v = _canon_stat_value(x.stats, "str")
+            int_v = _canon_stat_value(x.stats, "int")
+            nlow = x.name.lower()
+            if mage and int_v < 25 and x.item_type not in ("Defensive", "Hybrid") and str_v > int_v + 10:
                 continue
-        # Support: no glass DPS toys / pure pen cores as "flavor"
-        if role == "Support":
-            if any(k in nlow for k in ("dreamer", "wish-granting", "parashu", "deathbringer", "tahuti", "soul reaver")):
+            if physical and str_v < 15 and x.item_type not in ("Defensive", "Hybrid") and int_v > str_v + 20:
                 continue
-            if x.item_type == "Offensive" and _canon_stat_value(x.stats, "hp") < 150:
+            if role in DAMAGE_ROLES_NEED_PEN and x.item_type == "Defensive" and item_pen_value(x) < 5:
+                if _canon_stat_value(x.stats, "cdr") < 8 and int_v + str_v < 25:
+                    continue
+            if role == "Support":
+                if any(
+                    k in nlow
+                    for k in ("dreamer", "wish-granting", "parashu", "deathbringer", "tahuti", "soul reaver")
+                ):
+                    continue
+                if x.item_type == "Offensive" and _canon_stat_value(x.stats, "hp") < 150:
+                    continue
+            if role == "Solo" and any(k in nlow for k in ("deathbringer", "dreamer", "wish-granting", "parashu")):
                 continue
-        # Solo: no pure ADC crit toys
-        if role == "Solo" and any(k in nlow for k in ("deathbringer", "dreamer", "wish-granting", "parashu")):
+            if role == "Jungle" and (_is_jungle_adc_toy(nlow) or "executioner" in nlow):
+                if "as_steroid" not in tags:
+                    continue
+            filtered.append(x)
+        if not filtered:
             continue
-        filtered.append(x)
-    if not filtered:
-        return path
-    filtered.sort(
-        key=lambda x: (
-            x.role_score
-            + _tag_signature_boost(x.name.lower(), tags, "flavor")
-            + (_god_slot_salt(dkey, "flavor", role, x.name) % 61) * 1.4
-        ),
-        reverse=True,
-    )
-    # Take god-rotated pick among top 8 so names always split
-    top = filtered[:8]
-    pick = top[_god_slot_salt(dkey, "flavor_pick", role) % len(top)]
-    # Only swap if it actually changes the set (always true if not in seen)
-    if pick.name != path[target].name:
-        path[target] = pick
+        filtered.sort(
+            key=lambda x: (
+                x.role_score
+                + _tag_signature_boost(x.name.lower(), tags, "flavor")
+                + (_god_slot_salt(dkey, f"flavor{ti}", role, x.name) % 71) * 1.6
+            ),
+            reverse=True,
+        )
+        # Jungle: offset into near-best cluster so assassin clones diverge.
+        # Other roles: keep mild salt pick among top 10 (spike cores stay tight).
+        if role == "Jungle":
+            top = filtered[:14]
+            off = _god_slot_salt(dkey, f"flavor_pick{ti}", role) % min(len(top), 6)
+            pick = top[off]
+            if pick.name == path[target].name and len(top) > 1:
+                pick = top[
+                    (off + 1 + _god_slot_salt(dkey, f"flavor_bump{ti}", role) % 3) % len(top)
+                ]
+        else:
+            top = filtered[:10]
+            pick = top[_god_slot_salt(dkey, f"flavor_pick{ti}", role) % len(top)]
+        if pick.name != path[target].name:
+            path[target] = pick
     return path
 
 
@@ -3112,19 +3474,473 @@ def _trim_excess_defense(
     return new_path
 
 
-def _order_buy_path(path: list[ScoredItem], role: str) -> list[ScoredItem]:
+def _is_jungle_standard_opener(nlow: str) -> bool:
+    """True for Jotunn / Hydra / stacking openers (Trans, HS, DG) only."""
+    return any(
+        k in nlow for k in ("jotunn", "hydra", "transcend", "heartseeker", "devourer")
+    )
+
+
+def _is_jungle_adc_toy(nlow: str) -> bool:
+    """Crit/AS ADC items that do not belong on ability jungle paths."""
+    return any(
+        k in nlow
+        for k in (
+            "deathbringer",
+            "demon blade",
+            "musashi",
+            "avenging blade",
+            "wind demon",
+            "rage",
+            "riptalon",
+            "death metal",
+            "ichival",
+            "eros",
+            "lernaean",
+            "silverbranch",
+            "qins",
+        )
+    )
+
+
+def _is_jungle_opener_family(nlow: str) -> bool:
+    """Opener-line items — cap how many sit in one path (Jotunn+Hydra OK)."""
+    return _is_jungle_standard_opener(nlow)
+
+
+def _normalize_jungle_path(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    bias: dict,
+    *,
+    mage: bool,
+    physical: bool,
+    max_actives: int,
+) -> list[ScoredItem]:
     """
-    Present items in an intuitive buy order, not pure score rank:
-      Damage roles: power → pen → more damage → light defense → luxury
-      Frontline: shell/aura first, then flex, then greed
+    Enforce standard jungle identity:
+      1) Open Jotunn / Hydra OR a stacking item (Trans / HS / DG)
+      2) Then pen + power (not four more openers, not ADC toys)
+    """
+    if not path:
+        return path
+    path = list(path)
+    arch = detect_archetype(bias, "Jungle", mage, physical)
+    aa = arch == "aa_assassin"
+    seen = {x.name for x in path}
+
+    def ok_replace(alt: ScoredItem) -> bool:
+        if alt.name in seen:
+            return False
+        n = alt.name.lower()
+        if not aa and _is_jungle_adc_toy(n):
+            return False
+        if mage and _canon_stat_value(alt.stats, "int") < 25 and alt.item_type != "Defensive":
+            return False
+        if physical and _canon_stat_value(alt.stats, "str") < 15 and item_pen_value(alt) < 5:
+            if _canon_stat_value(alt.stats, "as") > 0 and not aa:
+                return False
+        return True
+
+    def best_opener() -> ScoredItem | None:
+        scored: list[tuple[float, ScoredItem]] = []
+        for x in pool:
+            n = x.name.lower()
+            if mage:
+                # Mage jungle: pen cores first (Deso / Magus / Obsidian)
+                if any(k in n for k in ("desolat", "magus", "obsi")):
+                    sc = 100 + x.role_score * 0.01
+                elif item_pen_value(x) >= 8 and _canon_stat_value(x.stats, "int") >= 40:
+                    sc = 80 + x.role_score * 0.01
+                else:
+                    continue
+            else:
+                if not _is_jungle_standard_opener(n):
+                    continue
+                if "jotunn" in n:
+                    sc = 120.0
+                elif "hydra" in n:
+                    sc = 110.0
+                elif "transcend" in n or "devourer" in n:
+                    sc = 80.0
+                else:
+                    sc = 60.0  # heartseeker
+                sc += x.role_score * 0.01
+            scored.append((sc, x))
+        if not scored:
+            return None
+        scored.sort(key=lambda t: t[0], reverse=True)
+        return scored[0][1]
+
+    def best_pen(exclude: set[str]) -> ScoredItem | None:
+        cands = []
+        for x in pool:
+            if x.name in exclude:
+                continue
+            n = x.name.lower()
+            # Never re-introduce opener-line items as "pen" (HS has pen but is a stack opener)
+            if _is_jungle_standard_opener(n):
+                continue
+            if not _pen_matches_kit(x, mage=mage, physical=physical):
+                continue
+            if item_pen_value(x) < 8:
+                continue
+            if not aa and _is_jungle_adc_toy(n):
+                continue
+            if not aa and "executioner" in n:
+                continue
+            cands.append(x)
+        cands.sort(key=lambda x: (item_pen_value(x), x.role_score), reverse=True)
+        return cands[0] if cands else None
+
+    def best_power(exclude: set[str]) -> ScoredItem | None:
+        cands = []
+        for x in pool:
+            if x.name in exclude:
+                continue
+            n = x.name.lower()
+            if _is_jungle_standard_opener(n):
+                continue  # don't pile more openers as "power"
+            if not aa and (_is_jungle_adc_toy(n) or "executioner" in n):
+                continue
+            str_v = _canon_stat_value(x.stats, "str")
+            int_v = _canon_stat_value(x.stats, "int")
+            if mage and int_v < 40:
+                continue
+            if physical and str_v < 30 and item_pen_value(x) < 8:
+                continue
+            if x.item_type == "Defensive" and item_pen_value(x) < 5:
+                continue
+            # Prefer named power cores (not Hydra — that is an opener)
+            bonus = 0
+            if any(k in n for k in ("arondight", "bloodforge", "reaper", "tahuti", "soul reaver")):
+                bonus = 40
+            cands.append((bonus + x.role_score, x))
+        cands.sort(key=lambda t: t[0], reverse=True)
+        return cands[0][1] if cands else None
+
+    # Strip ADC toys from ability junglers
+    if not aa:
+        for i, it in enumerate(path):
+            n = it.name.lower()
+            if _is_jungle_adc_toy(n) or "executioner" in n:
+                alt = best_pen(seen) or best_power(seen)
+                if alt:
+                    seen.discard(it.name)
+                    path[i] = alt
+                    seen.add(alt.name)
+
+    # AA bruiser jungle: no early full-shell (BoV / Genji / Spectral) — keep damage online
+    if aa and physical:
+        shell_keys = (
+            "breastplate",
+            "genji",
+            "spectral",
+            "oni hunter",
+            "midgardian",
+            "contagion",
+            "prophetic",
+            "leviathan",
+        )
+
+        def best_aa_damage(exclude: set[str]) -> ScoredItem | None:
+            cands = []
+            for x in pool:
+                if x.name in exclude:
+                    continue
+                n = x.name.lower()
+                if any(k in n for k in shell_keys):
+                    continue
+                as_v = _canon_stat_value(x.stats, "as")
+                str_v = _canon_stat_value(x.stats, "str")
+                ls_v = _canon_stat_value(x.stats, "ls")
+                pen = item_pen_value(x)
+                if as_v < 10 and str_v < 35 and pen < 8 and ls_v < 10:
+                    continue
+                if x.item_type == "Defensive" and pen < 8 and as_v < 15:
+                    continue
+                bonus = 0.0
+                if any(k in n for k in ("riptalon", "qins", "odysseus", "executioner", "devourer", "bloodforge")):
+                    bonus += 50
+                if as_v >= 15:
+                    bonus += 25
+                if ls_v >= 10:
+                    bonus += 15
+                cands.append((bonus + x.role_score, x))
+            cands.sort(key=lambda t: t[0], reverse=True)
+            return cands[0][1] if cands else None
+
+        for i, it in enumerate(path[:5]):  # leave last flex free for optional shell
+            n = it.name.lower()
+            if any(k in n for k in shell_keys) or (
+                it.item_type == "Defensive"
+                and item_pen_value(it) < 5
+                and _canon_stat_value(it.stats, "as") < 10
+                and _canon_stat_value(it.stats, "str") < 30
+            ):
+                alt = best_aa_damage(seen) or best_power(seen) or best_pen(seen)
+                if alt:
+                    seen.discard(it.name)
+                    path[i] = alt
+                    seen.add(alt.name)
+
+    # Ensure a standard opener is present and first after ordering
+    has_opener = any(
+        _is_jungle_standard_opener(x.name.lower())
+        or (mage and any(k in x.name.lower() for k in ("desolat", "magus", "obsi", "focus")))
+        for x in path
+    )
+    if not has_opener:
+        op = best_opener()
+        if op:
+            # replace weakest non-pen item
+            drop = min(
+                range(len(path)),
+                key=lambda i: (
+                    100 if _pen_matches_kit(path[i], mage=mage, physical=physical) else 0,
+                    path[i].role_score,
+                ),
+            )
+            seen.discard(path[drop].name)
+            path[drop] = op
+            seen.add(op.name)
+
+    # Cap opener-family at 2 (Jotunn+Hydra, or one gap + one stack)
+    opener_idxs = [
+        i for i, x in enumerate(path) if _is_jungle_standard_opener(x.name.lower())
+    ]
+    if len(opener_idxs) > 2:
+        def op_keep_score(i: int) -> float:
+            n = path[i].name.lower()
+            if "jotunn" in n:
+                return 100
+            if "hydra" in n:
+                return 90
+            if "transcend" in n or "devourer" in n:
+                return 70
+            return 50  # heartseeker
+
+        opener_idxs.sort(key=op_keep_score, reverse=True)
+        pen_n = sum(
+            1
+            for x in path
+            if _pen_matches_kit(x, mage=mage, physical=physical) and item_pen_value(x) >= 8
+        )
+        for i in opener_idxs[2:]:
+            # Prefer power once pen is covered; else pen
+            alt = (best_power(seen) if pen_n >= 2 else None) or best_pen(seen) or best_power(seen)
+            if alt:
+                seen.discard(path[i].name)
+                path[i] = alt
+                seen.add(alt.name)
+                if item_pen_value(alt) >= 8:
+                    pen_n += 1
+
+    # Need real pen in the build
+    pen_items = [
+        x
+        for x in path
+        if _pen_matches_kit(x, mage=mage, physical=physical) and item_pen_value(x) >= 8
+    ]
+    if len(pen_items) < 2:
+        need = 2 - len(pen_items)
+        for _ in range(need):
+            alt = best_pen(seen)
+            if not alt:
+                break
+            # drop extra opener or pure power without pen
+            drop = None
+            for i, it in enumerate(path):
+                n = it.name.lower()
+                if _is_jungle_standard_opener(n) and sum(
+                    1 for x in path if _is_jungle_standard_opener(x.name.lower())
+                ) > 1:
+                    # only drop if we still keep one opener
+                    if not any(
+                        j != i and _is_jungle_standard_opener(path[j].name.lower())
+                        for j in range(len(path))
+                    ):
+                        continue
+                    drop = i
+                    break
+            if drop is None:
+                for i, it in enumerate(path):
+                    if item_pen_value(it) < 5 and it.item_type != "Defensive":
+                        if not _is_jungle_standard_opener(it.name.lower()) or len(
+                            [x for x in path if _is_jungle_standard_opener(x.name.lower())]
+                        ) > 1:
+                            drop = i
+                            break
+            if drop is None:
+                break
+            seen.discard(path[drop].name)
+            path[drop] = alt
+            seen.add(alt.name)
+
+    # Active budget
+    while sum(1 for x in path if x.is_active_item) > max_actives:
+        for i, it in enumerate(path):
+            if it.is_active_item:
+                alt = best_power(seen) or best_pen(seen)
+                if alt and not alt.is_active_item:
+                    seen.discard(it.name)
+                    path[i] = alt
+                    seen.add(alt.name)
+                break
+        else:
+            break
+
+    return path[:6]
+
+
+def _ensure_inspired_cores(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    role: str,
+    god_name: str,
+    *,
+    mage: bool,
+    physical: bool,
+    max_actives: int,
+) -> list[ScoredItem]:
+    """
+    Inject 1–2 high-SR openers/staples into the path when missing.
+    Order is applied later by _order_buy_path — this only ensures the items exist.
+    """
+    from .tracker_inspire import load_inspiration
+
+    data = load_inspiration()
+    if not data or not path:
+        return path
+    path = list(path)
+    seen = {x.name for x in path}
+    want: list[str] = []
+
+    # God-specific openers first
+    gr = (data.get("by_god_role") or {}).get(f"{god_name}|{role}")
+    if gr and gr.get("games", 0) >= 3:
+        for name, meta in list((gr.get("openers") or {}).items())[:3]:
+            if float(meta.get("rate") or 0) >= 0.18:
+                want.append(name)
+    # Role openers (high-SR)
+    rr = (data.get("by_role") or {}).get(role) or {}
+    for name, meta in list((rr.get("openers") or {}).items())[:4]:
+        if float(meta.get("rate") or 0) >= 0.12 and name not in want:
+            want.append(name)
+
+    # Role hard staples from ladder snapshot (always try if legal)
+    role_staples = {
+        "Mid": ("Spear of Desolation", "Book of Thoth", "Obsidian Shard"),
+        "Carry": ("Tyrfing", "Devourer's Gauntlet", "Titan's Bane", "The Executioner"),
+        "Jungle": ("Jotunn's Revenge", "Hydra's Lament", "Titan's Bane"),
+        "Solo": ("Shifter's Shield", "Genji's Guard", "Breastplate of Valor"),
+        "Support": ("Gauntlet of Thebes", "Shifter's Shield", "Stampede"),
+    }
+    # Magical gods flexed to Jungle/Carry/Mid — Deso/Book/Obsidian, not Jotunn
+    if mage and role in ("Jungle", "Carry", "Mid"):
+        role_staples = {
+            **role_staples,
+            "Jungle": ("Spear of Desolation", "Book of Thoth", "Obsidian Shard", "Rod of Tahuti"),
+            "Carry": ("Spear of Desolation", "Book of Thoth", "Obsidian Shard", "Soul Reaver"),
+        }
+    for name in role_staples.get(role, ()):
+        if name not in want:
+            want.append(name)
+
+    def legal(it: ScoredItem) -> bool:
+        if it.name in seen:
+            return False
+        if not item_allowed_for_god(it.name, god_name):
+            return False
+        if mage and _canon_stat_value(it.stats, "int") < 20 and item_pen_value(it) < 5:
+            if it.item_type not in ("Defensive", "Hybrid"):
+                return False
+        if physical and _canon_stat_value(it.stats, "str") < 15 and item_pen_value(it) < 5:
+            if _canon_stat_value(it.stats, "as") <= 0 and it.item_type not in ("Defensive", "Hybrid"):
+                return False
+        return True
+
+    injected = 0
+    for name in want:
+        if injected >= 2:
+            break
+        if any(x.name == name for x in path):
+            continue
+        cand = next((x for x in pool if x.name == name and legal(x)), None)
+        if not cand:
+            # fuzzy name match
+            nl = name.lower()
+            cand = next(
+                (
+                    x
+                    for x in pool
+                    if (nl in x.name.lower() or x.name.lower() in nl) and legal(x)
+                ),
+                None,
+            )
+        if not cand:
+            continue
+        # Replace weakest non-opener / non-pen late item
+        drop = None
+        for i, it in enumerate(path):
+            n = it.name.lower()
+            if item_pen_value(it) >= 15:
+                continue
+            if role == "Jungle" and _is_jungle_standard_opener(n):
+                continue
+            if any(k in n for k in ("desolat", "thoth", "jotunn", "hydra", "tyrfing", "shifter", "thebes")):
+                continue
+            drop = i
+            break
+        if drop is None:
+            drop = len(path) - 1
+        seen.discard(path[drop].name)
+        path[drop] = cand
+        seen.add(cand.name)
+        injected += 1
+
+    # Active budget
+    while sum(1 for x in path if x.is_active_item) > max_actives:
+        for i, it in enumerate(path):
+            if it.is_active_item:
+                for alt in pool:
+                    if alt.name not in seen and not alt.is_active_item and legal(alt):
+                        seen.discard(it.name)
+                        path[i] = alt
+                        seen.add(alt.name)
+                        break
+                break
+        else:
+            break
+    return path[:6]
+
+
+def _order_buy_path(
+    path: list[ScoredItem],
+    role: str,
+    *,
+    god_name: str | None = None,
+) -> list[ScoredItem]:
+    """
+    Buy order is half the build. High-SR Ranked Conquest order (tracker.gg):
+
+      Mid:     Book / Deso / Chronos → flat pen → Obsidian → Tahuti/Reaver
+      Carry:   Tyrfing / DG / Trans / AS → pen (Titan) → crit finishers
+      Jungle:  Jotunn / Hydra / stack → Titan/Crusher → power
+      Solo:    Shifter offline → bulk / Genji / BP
+      Support: Shifter / Thebes / Stampede → peel shells → Spectral last
+
+    When tracker avg_slot is available for an item, it is the primary sort key.
+    Heuristics fill gaps so we never open with late % pen or luxury.
     """
     if not path:
         return path
 
     damage = role in DAMAGE_ROLES_NEED_PEN
-    frontline = role in ("Solo", "Support")
+    gname = god_name or ""
 
-    def sort_key(it: ScoredItem) -> tuple:
+    def heuristic_phase(it: ScoredItem) -> tuple[int, int]:
+        """(phase 0..5, sub-priority). Lower = buy sooner."""
         pen = item_pen_value(it)
         cost = it.total_cost or 2500
         nlow = it.name.lower()
@@ -3132,7 +3948,6 @@ def _order_buy_path(path: list[ScoredItem], role: str) -> list[ScoredItem]:
         int_v = _canon_stat_value(it.stats, "int")
         as_v = _canon_stat_value(it.stats, "as")
         crit_v = _canon_stat_value(it.stats, "crit")
-        powerish = (str_v + int_v) >= 25 or as_v >= 15 or crit_v >= 15 or pen >= 8
         pure_shell = (
             it.item_type == "Defensive"
             or any(
@@ -3142,44 +3957,159 @@ def _order_buy_path(path: list[ScoredItem], role: str) -> list[ScoredItem]:
                     "alchemist",
                     "phoenix",
                     "midgardian",
-                    "thebes",
                     "nemean",
                     "magi",
                     "contagion",
-                    "chandra",
-                    "gauntlet of thebes",
                 )
             )
         ) and pen < 8 and as_v < 15 and crit_v < 15
-        # Solo offline hybrid (Shifter's) — early spike, not item 6
-        solo_offline = role == "Solo" and (
-            "shifter" in nlow
-            or (
-                it.item_type == "Hybrid"
-                and (it.ladder_tier or "").upper() in ("S", "A")
-                and pen < 12
+
+        # --- Late finishers (never open) ---
+        if any(
+            k in nlow
+            for k in (
+                "deathbringer",
+                "tahuti",
+                "soul reaver",
+                "rod of",
+                "dreamer",
+                "wish-granting",
+                "parashu",
+                "world stone",
+                "cosmic horror",
             )
-        )
-        luxury = 1 if cost >= 3200 or (it.is_active_item and pen >= 8 and cost >= 3000) else 0
-        # phase: early cores (0), pen (1), mid damage (2), shell (3), luxury (4)
-        if luxury:
-            phase = 4
-        elif damage and pure_shell:
-            phase = 3  # never open ADC/Jungle/Mid with Alchemist/Phoenix
-        elif frontline and (pure_shell or solo_offline):
-            phase = 0
-        elif pen >= 10 and powerish:
-            phase = 1
-        elif powerish and cost <= 2700:
-            phase = 0
-        elif powerish:
-            phase = 2
-        elif pure_shell:
-            phase = 3 if damage else 0
-        else:
-            phase = 2
-        # Prefer cheaper early shells before expensive hybrids of same phase
-        return (phase, 0 if solo_offline else 1, cost, -it.role_score)
+        ):
+            return 5, cost
+        if "soul gem" in nlow:
+            return 4, cost  # mid/late luxury, not item 1 (high-SR still builds it late)
+
+        if role == "Mid":
+            # 0: stack / flat pen openers (Book, Deso, Chronos, Doom)
+            if any(
+                k in nlow
+                for k in (
+                    "book of",
+                    "thoth",
+                    "desolat",
+                    "chronos",
+                    "pendant",
+                    "doom orb",
+                    "transcend",
+                )
+            ):
+                return 0, cost
+            if pen >= 8 and pen < 16 and int_v >= 40:  # Magus-class flat
+                return 1, cost
+            if pen >= 16 or "obsi" in nlow:  # Obsidian after spike
+                return 2, -pen
+            if pure_shell:
+                return 4, cost
+            if int_v >= 50:
+                return 3, cost
+            return 3, cost
+
+        if role == "Carry":
+            # 0: online spike — Tyrfing, DG, Trans, AS shred
+            if any(
+                k in nlow
+                for k in (
+                    "tyrfing",
+                    "devourer",
+                    "transcend",
+                    "lernaean",
+                    "executioner",
+                    "riptalon",
+                    "qins",
+                    "ichival",
+                    "avenging",
+                    "odysseus",
+                )
+            ):
+                return 0, cost
+            if any(k in nlow for k in ("bloodforge", "musashi", "demon blade", "wind demon")):
+                return 1, cost
+            if pen >= 12 or "titan" in nlow:  # Titan mid, not first
+                return 2, -pen
+            if crit_v >= 15:
+                return 3, -crit_v
+            if pure_shell:
+                return 4, cost
+            return 2, cost
+
+        if role == "Jungle":
+            if _is_jungle_standard_opener(nlow):
+                if "jotunn" in nlow:
+                    return 0, 0
+                if "hydra" in nlow:
+                    return 0, 1
+                if "transcend" in nlow or "devourer" in nlow:
+                    return 0, 2
+                return 0, 3  # HS
+            if pen >= 8:
+                return 1, -pen
+            if pure_shell or "shifter" in nlow:
+                return 3, cost
+            return 2, cost
+
+        if role == "Solo":
+            if "shifter" in nlow:
+                return 0, 0
+            if any(
+                k in nlow
+                for k in (
+                    "berserker",
+                    "gladiator",
+                    "sanguine",
+                    "runeforged",
+                    "genji",
+                    "breastplate",
+                    "valor",
+                    "dwarven",
+                )
+            ):
+                return 1, cost
+            if pure_shell or any(k in nlow for k in ("thebes", "chandra", "amanita")):
+                return 2, cost
+            return 2, cost
+
+        if role == "Support":
+            # High-SR opens Shifter OR Thebes/Stampede — both phase 0
+            if any(
+                k in nlow
+                for k in (
+                    "shifter",
+                    "thebes",
+                    "stampede",
+                    "amanita",
+                    "yogi",
+                    "prophetic",
+                )
+            ):
+                return 0, cost
+            if any(k in nlow for k in ("genji", "breastplate", "valor", "shell of rebuke")):
+                return 1, cost
+            if any(k in nlow for k in ("spectral", "midgardian", "nemean")):
+                return 3, cost  # counter, not opener
+            if pure_shell:
+                return 2, cost
+            return 2, cost
+
+        # fallback
+        if pure_shell:
+            return 3 if damage else 0, cost
+        if pen >= 10:
+            return 1, -pen
+        return 2, cost
+
+    def sort_key(it: ScoredItem) -> tuple:
+        # Primary: high-SR average inventory slot when known
+        avg = inspiration_buy_rank(it.name, god_name=gname, role=role)
+        phase, sub = heuristic_phase(it)
+        cost = it.total_cost or 2500
+        if avg is not None:
+            # Blend: tracker position dominates, heuristic breaks ties
+            return (avg, phase, sub, cost, -it.role_score)
+        return (float(phase), float(sub), cost, -it.role_score, 0.0)
 
     return sorted(path, key=sort_key)
 
@@ -3455,11 +4385,18 @@ def build_god_build(
     use_aspect: bool = False,
     aspect_id: int | None = None,
 ) -> dict[str, Any]:
+    """
+    Ranked Conquest path for one god × role.
+
+    Implements docs/BUILD_ALGORITHM.md phases P0–P8.
+    """
+    # --- P0 Context ---
     profile = ROLE_PROFILES[role]
     bias = god_scaling_bias(conn, god["god_id"])
     if use_aspect or aspect_id is not None:
         bias = build_aspect_bias(conn, god["god_id"], bias, aspect_id=aspect_id)
     dtype = god.get("primary_damage_type")
+    # --- P1 Score universe + P3 God rescore (rescore_for_god includes kit + soft high-SR) ---
     scored = []
     for it in items:
         base = score_item_for_role(it, role, profile)
@@ -3481,11 +4418,24 @@ def build_god_build(
         # Pin chosen starter first
         starters = [starter_pick] + [s for s in starters if s.name != starter_pick.name]
 
-    t3 = [s for s in scored if is_t3_core(next(i for i in items if i["name"] == s.name))]
+    # Shared T3 + this god's own lines (e.g. Ratatoskr acorns)
+    _gname_early = str(
+        bias.get("god_name") or god.get("entity_name") or god.get("name") or ""
+    )
+    t3 = [
+        s
+        for s in scored
+        if is_build_pool_item(next(i for i in items if i["name"] == s.name), _gname_early)
+    ]
 
     tags_kit = set(bias.get("tags") or [])
     aaish = "aa" in tags_kit or float(bias.get("aa_score") or 0) >= 0.5 or "as_steroid" in tags_kit
 
+    god_name_gate = str(
+        bias.get("god_name") or god.get("entity_name") or god.get("name") or ""
+    )
+
+    # --- P2 Hard gates (kit_ok) ---
     def kit_ok(s: ScoredItem) -> bool:
         str_v = _canon_stat_value(s.stats, "str")
         int_v = _canon_stat_value(s.stats, "int")
@@ -3503,9 +4453,9 @@ def build_god_build(
         # Not in live shop / removed (wiki may still list them)
         if _is_removed_or_unavailable_item(s.name):
             return False
-        # God-specific (acorns, mods, …) never on shared shop paths
+        # God-specific (acorns, mods, …): owner only (Ratatoskr acorns)
         if is_god_specific_item(s) or is_god_specific_item(s.name):
-            return False
+            return item_allowed_for_god(s.name, god_name_gate)
         # Cross-type hard bans
         if physical and any(
             k in nlow
@@ -3608,12 +4558,60 @@ def build_god_build(
                 )
             ):
                 return False
+            # Ability jungles: no ADC crit/AS toys unless true AA assassin
+            arch = detect_archetype(bias, role, mage, physical)
+            if arch != "aa_assassin":
+                if _is_jungle_adc_toy(nlow) or "executioner" in nlow:
+                    return False
+            # Eye of the Storm / pure mid hybrid actives are not jungle openers
+            if "eye of the storm" in nlow:
+                return False
             return True
         if role == "Carry":
-            if any(k in nlow for k in ("alchemist", "spectral", "phoenix", "thebes", "midgardian")):
+            if any(k in nlow for k in ("alchemist", "spectral", "phoenix", "thebes", "midgardian", "chandra")):
                 return False
-            if physical and aaish and any(k in nlow for k in ("jotunn", "hydra")):
+            # AA ADC: no solo/jungle ability cores
+            if physical and aaish and any(
+                k in nlow
+                for k in (
+                    "jotunn",
+                    "hydra",
+                    "crusher",
+                    "runeforged",
+                    "pendulum",
+                    "gladiator",
+                    "berserker",
+                )
+            ):
                 return False
+        if role == "Mid" and mage:
+            # No heal-support openers / frontline shells as mid cores
+            if any(
+                k in nlow
+                for k in (
+                    "lifebinder",
+                    "asclepius",
+                    "thebes",
+                    "spectral",
+                    "phoenix",
+                    "stampede",
+                    "chandra",
+                )
+            ):
+                return False
+            # Soul Gem / Bancroft line — only real self-sustain kits (not every mid)
+            if any(k in nlow for k in ("soul gem", "gluttonous", "bancroft", "typhon")):
+                if not _wants_mage_lifesteal(bias) and "self_sustain" not in tags_kit:
+                    return False
+            # Luxury toys never as mid "cores" from pool noise
+            if any(k in nlow for k in ("world stone", "cosmic horror")):
+                return False
+        if role == "Carry" and mage:
+            if any(k in nlow for k in ("soul gem", "gluttonous")) and not _wants_mage_lifesteal(
+                bias
+            ):
+                if "self_sustain" not in tags_kit and "dot" not in tags_kit:
+                    return False
         if mage:
             # Reject basic-attack / STR toys on pure mages
             if str_v >= 30 and int_v < 40:
@@ -3637,19 +4635,53 @@ def build_god_build(
         t3 = [s for s in t3 if not any(b in s.name.lower() for b in bans)]
     max_act = max_shop_actives_for_god(role, dtype, bias)
 
-    # Slot-based path from kit archetype (primary differentiator across gods)
+    # --- P4 Archetype + P5 Assemble slots ---
     items_6, archetype = assemble_kit_path(
         t3, bias, role, mage=mage, physical=physical, max_actives=max_act
     )
+    # --- P6 Structural repair ---
     items_6 = _ensure_pen_in_path(
         items_6, t3, role, max_act, mage=mage, physical=physical
     )
+    if role == "Jungle":
+        items_6 = _normalize_jungle_path(
+            items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
+        )
+        # Light god flavor after normalize (openers protected inside flex)
+        items_6 = _god_flavor_flex(
+            items_6,
+            t3,
+            str(bias.get("god_name") or ""),
+            role,
+            set(bias.get("tags") or []),
+            mage=mage,
+            physical=physical,
+            max_actives=max_act,
+        )
+        # Re-cap openers if flavor reintroduced a 3rd stack item
+        items_6 = _normalize_jungle_path(
+            items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
+        )
     if role in DAMAGE_ROLES_NEED_PEN:
         items_6 = _trim_excess_defense(items_6, t3, max_defense=1, max_actives=max_act)
     elif role in ("Solo", "Support"):
         # keep frontline bulk — no trim
         pass
-    items_6 = _order_buy_path(items_6, role)
+    god_nm = str(bias.get("god_name") or god.get("entity_name") or "")
+    # Owner-only lines (Ratatoskr acorns) — after structural repair, before inspire
+    items_6 = _ensure_owned_god_items(
+        items_6, t3, god_nm, max_actives=max_act, role=role
+    )
+    items_6 = _ensure_inspired_cores(
+        items_6, t3, role, god_nm, mage=mage, physical=physical, max_actives=max_act
+    )
+    # Inspire can reintroduce shells on AA jungle — strip again
+    if role == "Jungle":
+        items_6 = _normalize_jungle_path(
+            items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
+        )
+    # --- P7 Buy order (spike timing; high-SR avg_slot when available) ---
+    items_6 = _order_buy_path(items_6, role, god_name=god_nm)
     # Avoid double luxury actives (Dreamer's + Wish-Granting) on damage roles
     luxury = [
         i
@@ -3675,7 +4707,7 @@ def build_god_build(
                 ):
                     items_6[i] = alt
                     break
-        items_6 = _order_buy_path(items_6, role)
+        items_6 = _order_buy_path(items_6, role, god_name=god_nm)
     pen_total = sum(item_pen_value(x) for x in items_6)
     n_act = sum(1 for x in items_6 if x.is_active_item)
 
@@ -3739,10 +4771,19 @@ def build_god_build(
         "hard_max_actives": HARD_MAX_ACTIVE_ITEMS,
         "active_count": n_act,
         "pen_total": round(pen_total, 1),
+        "min_build_pen": MIN_BUILD_PEN,
+        # --- P8 Explain (+ algorithm card for UI transparency) ---
+        "algorithm": _algorithm_card(),
         "why": _explain_god_build(
             god, bias, role, items_6, starters, pen_total, n_act, max_act, archetype=archetype
         ),
     }
+
+
+def _algorithm_card() -> dict[str, Any]:
+    from .build_pipeline import algorithm_card
+
+    return algorithm_card()
 
 
 def _fill_six_items(
@@ -3860,6 +4901,7 @@ def _path_item_cards(
 ) -> list[dict]:
     """Attach per-item kit/effect why lines."""
     effects = bias.get("effects") or extract_kit_effects(bias)
+    god_name = str(bias.get("god_name") or "")
     cards = []
     for it in path:
         why = explain_item_pick(
@@ -3871,8 +4913,13 @@ def _path_item_cards(
             is_pen=is_pen_item(it),
             is_active=bool(it.is_active_item),
         )
+        t_boost, t_why = inspiration_boost(it.name, god_name=god_name, role=role)
+        if t_boost >= 6 and t_why:
+            why = f"{why}; inspired: {t_why}" if why else f"inspired: {t_why}"
         card = _item_card(it, why=why)
         if card:
+            if t_boost >= 6:
+                card["inspired"] = True
             cards.append(card)
     return cards
 
@@ -3895,6 +4942,16 @@ def _explain_god_build(
         role,
         mage=str(dtype).lower() == "magical" or bias.get("primary") == "Intelligence",
         physical=str(dtype).lower() == "physical" or bias.get("primary") == "Strength",
+    )
+    insp_n = sum(
+        1
+        for it in path
+        if inspiration_boost(it.name, god_name=str(bias.get("god_name") or ""), role=role)[0] >= 6
+    )
+    insp_note = (
+        f" Soft high-SR inspiration on {insp_n} item(s) (tracker.gg — not a meta copy)."
+        if insp_n
+        else ""
     )
     style = (
         f"burst {float(bias.get('style_burst') or 0):.0%}/"
@@ -3939,6 +4996,8 @@ def _explain_god_build(
     if pens:
         parts.append("Pen: " + ", ".join(pens) + ".")
     parts.append(f"Actives {n_act}/{max_act} · pen ≈ {pen_total:.0f}.")
+    if insp_note:
+        parts.append(insp_note.strip())
     return " ".join(parts)
 
 
@@ -3993,21 +5052,23 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
 
 def generate_all(conn: sqlite3.Connection, gods_per_role: int = 24) -> dict[str, Any]:
     items = load_items(conn)
+    from .build_pipeline import algorithm_card
+
     report: dict[str, Any] = {
         "game": "SMITE 2",
         "mode": "Conquest",
+        "algorithm": algorithm_card(),
         "method": (
-            "God-first Conquest builds: each path is assembled from that god's ability kit "
-            "(structured effects + tags + metrics + patch axes), the items:overall tier ladder "
-            "(S/A preferred, C/D soft-penalized, role-gated so tank S-tiers don't invade Mid), "
-            "archetype slot recipes, item-family matching, and per-item why lines. "
-            "Hard damage-type bans (no mage toys on physical / no hunter toys on mages). "
-            "Optional data/kit_overrides.json force tags / prefer / ban items. "
-            "Role cards explain the job only — they are NOT a full build. "
-            "Carry/Mid backline + pen; Jungle ganks; Solo frontline bulk; Support peels. "
-            f"Shop actives ≤{DEFAULT_MAX_SHOP_ACTIVES} default "
-            f"(hard max {HARD_MAX_ACTIVE_ITEMS}). "
-            f"Damage roles enforce ≥{MIN_BUILD_PEN:.0f} matching pen."
+            "Multi-phase Conquest algorithm (docs/BUILD_ALGORITHM.md): "
+            "hard gates → role job → buy-order spikes → kit archetype slots → "
+            "ladder/patch → soft high-SR inspiration → light flex diversify. "
+            "God kit (effects/tags/scaling) + items:overall ladder + optional "
+            "data/tracker_inspiration.json (nudge only). "
+            "Hard bans: damage type, god-only items, healer cores, removed shop. "
+            f"Shop actives ≤{DEFAULT_MAX_SHOP_ACTIVES} (hard max {HARD_MAX_ACTIVE_ITEMS}). "
+            f"Damage roles ≥{MIN_BUILD_PEN:.0f} matching pen. "
+            "Order is first-class: Mid Book/Deso before Obsidian; Carry Tyrfing/DG before Titan's; "
+            "Jungle Jotunn before late pen; Support Thebes/Shifter before Spectral."
         ),
         "max_active_items": DEFAULT_MAX_SHOP_ACTIVES,
         "hard_max_active_items": HARD_MAX_ACTIVE_ITEMS,

@@ -1,13 +1,161 @@
 {
   "game": "SMITE 2",
   "source": "https://wiki.smite2.com",
-  "exported_at": "2026-07-22T16:46:15.205441+00:00",
+  "exported_at": "2026-07-28T14:36:55.609362+00:00",
   "repo": "https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool",
   "live_url": "https://cdn.jsdelivr.net/gh/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool@main/docs/index.html",
   "live_url_alt": "https://raw.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main/docs/index.html",
-  "scraped_at": "2026-07-20T16:04:23.384538+00:00",
-  "last_results": "{\"aspects\": 70}",
-  "analysis_last_analysis_at": "2026-07-22T16:45:30.975914+00:00",
-  "analysis_last_analysis_results": "{\"weights\": {\"patch\": 0.34, \"kit\": 0.32, \"build\": 0.24, \"novelty\": 0.04, \"stability\": 0.06}, \"abilities\": {\"abilities\": 539, \"gods\": 87}, \"patches\": {\"patch_impact_rows\": 2585, \"entities_scored\": 304}, \"builds\": {\"gods\": 87, \"items_cataloged\": 255, \"engine\": \"conquest_builds\"}, \"tiers\": {\"tier_rows\": 483, \"gods_scored\": 87}}",
-  "analysis_weights": "{\"patch\": 0.34, \"kit\": 0.32, \"build\": 0.24, \"novelty\": 0.04, \"stability\": 0.06}"
+  "scraped_at": "2026-07-28T14:34:14.042990+00:00",
+  "last_results": "{\"gods\": 88, \"abilities\": 545, \"aspects\": 71, \"items\": 258, \"patches\": 52, \"patch_changes\": 17138}",
+  "analysis_last_analysis_at": "2026-07-28T14:36:55.597845+00:00",
+  "analysis_last_analysis_results": "{\"weights\": {\"patch\": 0.34, \"kit\": 0.32, \"build\": 0.24, \"novelty\": 0.04, \"stability\": 0.06}, \"abilities\": {\"abilities\": 545, \"gods\": 88}, \"patches\": {\"patch_impact_rows\": 2619, \"entities_scored\": 308}, \"builds\": {\"gods\": 88, \"items_cataloged\": 258, \"engine\": \"conquest_builds\"}, \"tiers\": {\"tier_rows\": 493, \"gods_scored\": 88}}",
+  "analysis_weights": "{\"patch\": 0.34, \"kit\": 0.32, \"build\": 0.24, \"novelty\": 0.04, \"stability\": 0.06}",
+  "build_algorithm": {
+    "version": "1.0.0",
+    "doc": "docs/BUILD_ALGORITHM.md",
+    "phases": [
+      {
+        "id": "P0_context",
+        "name": "Context",
+        "summary": "Kit bias, tags, effects, damage type, aspect, role profile"
+      },
+      {
+        "id": "P1_score_universe",
+        "name": "Score universe",
+        "summary": "Role base \u00d7 ladder \u00d7 patch for every T3 shop item"
+      },
+      {
+        "id": "P2_hard_gates",
+        "name": "Hard gates",
+        "summary": "Illegal items out: type, god-only, heal/LS, removed, role toys"
+      },
+      {
+        "id": "P3_god_rescore",
+        "name": "God rescore",
+        "summary": "Kit affinity + signatures + soft high-SR boost (capped)"
+      },
+      {
+        "id": "P4_archetype",
+        "name": "Archetype",
+        "summary": "Map kit \u00d7 role \u2192 slot recipe (burst_mage, crit_adc, \u2026)"
+      },
+      {
+        "id": "P5_assemble",
+        "name": "Assemble slots",
+        "summary": "Fill 6 slots; ranked cores = #1; flex = mild near-peer diversify"
+      },
+      {
+        "id": "P6_repair",
+        "name": "Structural repair",
+        "summary": "Pen floor, jungle openers, inject high-SR staples, actives, trim shells"
+      },
+      {
+        "id": "P7_buy_order",
+        "name": "Buy order",
+        "summary": "high-SR avg_slot \u2295 role spike phases (order = half the build)"
+      },
+      {
+        "id": "P8_explain",
+        "name": "Explain + gate",
+        "summary": "Why lines, inspired flags, quality checks"
+      }
+    ],
+    "priority": [
+      {
+        "rank": "1",
+        "layer": "hard_gates",
+        "rule": "Illegal items never appear"
+      },
+      {
+        "rank": "2",
+        "layer": "role_job",
+        "rule": "Carry/Mid/Jungle/Solo/Support identity"
+      },
+      {
+        "rank": "3",
+        "layer": "buy_order",
+        "rule": "Spike timing before late % pen / luxury"
+      },
+      {
+        "rank": "4",
+        "layer": "kit",
+        "rule": "Tags, effects, scaling, archetype recipe"
+      },
+      {
+        "rank": "5",
+        "layer": "ladder_patch",
+        "rule": "S/A momentum; tank S muted on backline"
+      },
+      {
+        "rank": "6",
+        "layer": "high_sr_inspire",
+        "rule": "Soft frequency + avg_slot from tracker.gg"
+      },
+      {
+        "rank": "7",
+        "layer": "diversify",
+        "rule": "Shell/flex only \u2014 never scramble openers/pen"
+      }
+    ],
+    "role_spike_openers": {
+      "Mid": [
+        "Book of Thoth",
+        "Spear of Desolation",
+        "Chronos' Pendant",
+        "Doom Orb"
+      ],
+      "Carry": [
+        "Tyrfing",
+        "Devourer's Gauntlet",
+        "Transcendence",
+        "Lernaean Bow",
+        "The Executioner"
+      ],
+      "Jungle": [
+        "Jotunn's Revenge",
+        "Hydra's Lament",
+        "Transcendence",
+        "Heartseeker",
+        "Devourer's Gauntlet"
+      ],
+      "Solo": [
+        "Shifter's Shield",
+        "Genji's Guard",
+        "Breastplate of Valor",
+        "Runeforged Hammer"
+      ],
+      "Support": [
+        "Gauntlet of Thebes",
+        "Shifter's Shield",
+        "Stampede",
+        "Prophetic Cloak"
+      ]
+    },
+    "role_late_items": {
+      "Mid": [
+        "Obsidian Shard",
+        "Rod of Tahuti",
+        "Soul Reaver",
+        "Soul Gem"
+      ],
+      "Carry": [
+        "Titan's Bane",
+        "Deathbringer",
+        "Demon Blade"
+      ],
+      "Jungle": [
+        "Titan's Bane",
+        "Avatar's Parashu"
+      ],
+      "Solo": [
+        "Draconic Scale",
+        "Hussar's Wings"
+      ],
+      "Support": [
+        "Spectral Armor",
+        "Mantle Of Discord"
+      ]
+    },
+    "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and pen floors always win."
+  }
 }

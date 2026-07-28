@@ -224,6 +224,24 @@ def cmd_momentum(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_inspire(args: argparse.Namespace) -> int:
+    """Pull high-SR tracker.gg builds as soft scoring inspiration (not hard meta copy)."""
+    from .tracker_inspire import collect_inspiration, save_inspiration
+
+    doc = collect_inspiration(
+        players=args.players,
+        pages=args.pages,
+        season=args.season,
+        max_matches_per_player=args.matches,
+        sleep_s=args.sleep,
+        verbose=not args.quiet,
+    )
+    path = save_inspiration(doc)
+    print(f"Wrote {path} ({doc.get('builds_extracted')} builds)")
+    print("Re-export web data: python -m smite2db.export_web")
+    return 0
+
+
 def cmd_export(args: argparse.Namespace) -> int:
     conn = connect(args.db)
     out = Path(args.output)
@@ -373,6 +391,18 @@ def main(argv: list[str] | None = None) -> int:
 
     p_sc = sub.add_parser("scopes", help="List available tier list scopes")
     p_sc.set_defaults(func=cmd_scopes)
+
+    p_insp = sub.add_parser(
+        "inspire",
+        help="Scrape tracker.gg high-SR Ranked Conquest builds (soft inspiration only)",
+    )
+    p_insp.add_argument("--players", type=int, default=40)
+    p_insp.add_argument("--pages", type=int, default=2)
+    p_insp.add_argument("--season", type=int, default=3)
+    p_insp.add_argument("--matches", type=int, default=20)
+    p_insp.add_argument("--sleep", type=float, default=0.4)
+    p_insp.add_argument("-q", "--quiet", action="store_true")
+    p_insp.set_defaults(func=cmd_inspire)
 
     args = parser.parse_args(argv)
     if args.cmd == "momentum" and args.bottom:

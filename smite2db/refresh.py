@@ -38,8 +38,10 @@ def main(argv: list[str] | None = None) -> int:
         targets = set(args.scrape) if args.scrape else {"gods", "items", "patches"}
         if verbose:
             print(f"Scraping: {', '.join(sorted(targets))} …")
-        # Full scrape resets; patch-only keeps gods/items
-        reset = targets >= {"gods", "items", "patches"} or "gods" in targets
+        # Only wipe tables on a full multi-target scrape. Partial scrapes (gods /
+        # items / patches alone) must not destroy the rest of the DB.
+        full = {"gods", "items", "patches"}
+        reset = targets >= full or targets == full
         run_scrape(db_path=args.db, targets=targets, reset=reset, verbose=verbose)
 
     if not args.skip_analyze:

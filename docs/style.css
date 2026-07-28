@@ -654,6 +654,18 @@ tr.selected td {
   border-color: rgba(192, 132, 252, 0.75);
   box-shadow: 0 0 16px rgba(168, 85, 247, 0.25);
 }
+.troll-baseline {
+  margin: 0.65rem 0 0.25rem;
+  font-size: 0.88rem;
+}
+.troll-baseline summary {
+  cursor: pointer;
+  user-select: none;
+}
+.troll-baseline p {
+  margin: 0.35rem 0 0;
+  line-height: 1.4;
+}
 .troll-stat-total {
   margin: 8px 0 12px;
   padding: 8px 12px;

@@ -28,6 +28,7 @@ from .conquest_builds import (
     is_pen_item,
     is_t1_starter,
     is_god_specific_item,
+    item_allowed_for_god,
     is_t3_core,
     item_pen_value,
     load_items,
@@ -200,6 +201,34 @@ AXIS_ITEM_KEYS: dict[str, list[str]] = {
 TRYHARD_PENALTY_KEYS = (
     "soul reaver", "tahuti", "titan's bane", "obsidian shard", "deathbringer",
     "heartseeker", "arondight",
+)
+
+# Support/peel paths: pure damage luxury is not funny — it's just smurfing mid items
+TROLL_SUPPORT_POWER_BAN = (
+    "tahuti",
+    "soul reaver",
+    "dreamer",
+    "wish-granting",
+    "parashu",
+    "deathbringer",
+    "doom orb",
+    "book of thoth",
+    "heartseeker",
+    "bloodforge",
+    "arondight",
+    "soul gem",
+    "obsidian shard",
+    "titan's bane",
+)
+
+# True-random lottery titles
+RANDOM_TITLES = (
+    "Legal Items, Illegal Vibes",
+    "I Pressed Random And Hit Send",
+    "Shop Lottery Winner",
+    "This Was A Conscious Choice",
+    "Ranked Dodge Simulator",
+    "My Support Main Is Crying",
 )
 
 # Forced archetype slot recipes for troll axes (role-agnostic enough)
@@ -578,6 +607,118 @@ def _item_stat_value(item: ScoredItem | dict, stat: str) -> float:
     return _canon_stat_value(stats, stat)
 
 
+# Name cues when wiki stats fail to parse (common for some T3s)
+_MAGE_ITEM_NAME_KEYS = (
+    "bancroft",
+    "typhon",
+    "soul gem",
+    "soul reaver",
+    "gluttonous",
+    "tahuti",
+    "obsidian shard",
+    "spear of the magus",
+    "spear of desolation",
+    "book of thoth",
+    "doom orb",
+    "chronos' pendant",
+    "gem of focus",
+    "divine ruin",
+    "rod of asclepius",
+    "lifebinder",
+    "jade scepter",
+    "blood-bound",
+    "umbral",
+)
+_PHYS_ITEM_NAME_KEYS = (
+    "titan's bane",
+    "bloodforge",
+    "deathbringer",
+    "demon blade",
+    "riptalon",
+    "musashi",
+    "avenging blade",
+    "executioner",
+    "heartseeker",
+    "jotunn",
+    "hydra's",
+    "tekko",
+    "tyrfing",
+    "death metal",
+)
+
+
+def _troll_pool_item_ok(
+    it: dict | ScoredItem,
+    god_name: str,
+    *,
+    role: str,
+    mage: bool,
+    physical: bool,
+    primary_axis: str | None = None,
+) -> bool:
+    """Legal + vibe-aware filter for troll / maxstat / random paths."""
+    if isinstance(it, ScoredItem):
+        name = it.name
+        str_v = _canon_stat_value(it.stats, "str")
+        int_v = _canon_stat_value(it.stats, "int")
+        itype = (it.item_type or "").lower()
+    else:
+        name = it.get("name") or ""
+        from .conquest_builds import _parse_stats, _canon_stat_value as _cv
+
+        stats = _parse_stats(it.get("stats_json"), it.get("stats_text"))
+        # Prefer pre-parsed stats dict from load_items when present
+        if not stats and isinstance(it.get("stats"), dict):
+            stats = it["stats"]
+        str_v = _cv(stats, "str") if stats else 0.0
+        int_v = _cv(stats, "int") if stats else 0.0
+        if not str_v and not int_v and isinstance(it.get("stats"), dict):
+            str_v = _cv(it["stats"], "str")
+            int_v = _cv(it["stats"], "int")
+        itype = (it.get("item_type") or "").lower()
+    nlow = name.lower()
+    if _is_removed_or_unavailable_item(name):
+        return False
+    if not item_allowed_for_god(name, god_name):
+        return False
+    # Shared T3 or owned god-specific only
+    if isinstance(it, dict):
+        if not (
+            is_t3_core(it)
+            or (is_god_specific_item(it) and item_allowed_for_god(it, god_name))
+        ):
+            return False
+    # Hard type: stats when present + name cues (stats often empty in raw rows)
+    if physical and primary_axis != "aa_clown":
+        if int_v >= 40 and str_v < 20:
+            return False
+        if any(k in nlow for k in _MAGE_ITEM_NAME_KEYS):
+            return False
+    if mage and primary_axis != "aa_clown":
+        if str_v >= 40 and int_v < 20:
+            return False
+        if any(k in nlow for k in _PHYS_ITEM_NAME_KEYS):
+            return False
+    # Support: pure mid power luxury is not a support troll bit
+    if role == "Support" and primary_axis not in ("active_toybox", "aa_clown", "infinite_poke"):
+        if any(k in nlow for k in TROLL_SUPPORT_POWER_BAN):
+            return False
+        if itype == "offensive" and int_v + str_v >= 70:
+            # allow if also bulk / aura-ish
+            if isinstance(it, ScoredItem):
+                hp = _canon_stat_value(it.stats, "hp")
+            else:
+                hp = 0
+            if hp < 200:
+                return False
+    # Heal cores only funny on actual heal kits (otherwise just wrong)
+    if any(k in nlow for k in ("asclepius", "lifebinder")):
+        g = (god_name or "").lower()
+        if g not in ("aphrodite", "guan yu", "yemoja"):
+            return False
+    return True
+
+
 def build_max_stat_troll(
     conn: sqlite3.Connection,
     items: list[dict] | None,
@@ -610,25 +751,29 @@ def build_max_stat_troll(
     physical = (primary == "Strength" or (dtype or "").lower() == "physical") and not mage
 
     scored: list[ScoredItem] = []
+    god_name = god.get("entity_name") or god.get("name") or ""
     for it in items:
-        if not is_t3_core(it):
-            continue
-        if _is_removed_or_unavailable_item(it.get("name") or ""):
-            continue
-        if is_god_specific_item(it):
+        if not _troll_pool_item_ok(
+            it, god_name, role=role, mage=mage, physical=physical, primary_axis=None
+        ):
             continue
         base = score_item_for_role(it, role, profile)
         val = _item_stat_value(base, mode["stat"])
         if val <= 0:
             continue
-        # Soft type filter
+        # Soft type filter for pure power greed
         str_v = _canon_stat_value(base.stats, "str")
         int_v = _canon_stat_value(base.stats, "int")
         if mode_key == "max_int" and physical and int_v < 15 and str_v >= 30:
             continue
         if mode_key == "max_str" and mage and str_v < 15 and int_v >= 30:
             continue
-        base.role_score = val * 10 + rng.random() * 3
+        # Prefer denser stacks + tiny noise
+        cost = max(base.total_cost or 2500, 1)
+        density = val / (cost / 1000)
+        # Ratatoskr: acorns are the bit — slight boost when they carry the stat
+        acorn_boost = 8 if ("acorn" in base.name.lower() and "ratatoskr" in god_name.lower()) else 0
+        base.role_score = val * 10 + density * 2 + rng.random() * 4 + acorn_boost
         scored.append(base)
     scored.sort(key=lambda x: x.role_score, reverse=True)
 
@@ -636,24 +781,47 @@ def build_max_stat_troll(
     seen: set[str] = set()
     actives = 0
     max_act = 2
-    for s in scored:
-        if len(path) >= 6:
-            break
-        if s.name in seen:
-            continue
-        if s.is_active_item and actives >= max_act:
-            continue
-        path.append(s)
-        seen.add(s.name)
-        if s.is_active_item:
-            actives += 1
+    # Greedy with light skip noise so re-rolls differ
+    for pass_i in range(2):
+        for s in scored:
+            if len(path) >= 6:
+                break
+            if s.name in seen:
+                continue
+            if s.is_active_item and actives >= max_act:
+                continue
+            if pass_i == 0 and len(path) >= 2 and rng.random() < 0.1:
+                continue
+            path.append(s)
+            seen.add(s.name)
+            if s.is_active_item:
+                actives += 1
 
     # Density sort for buy order
     def density(it: ScoredItem) -> float:
         cost = max(it.total_cost or 2500, 1)
         return _item_stat_value(it, mode["stat"]) / cost
 
+    path = [x for x in path if item_allowed_for_god(x.name, god_name)]
     path = sorted(path[:6], key=lambda x: (-density(x), x.total_cost or 0))
+    seen = {x.name for x in path}
+    for s in scored:
+        if len(path) >= 6:
+            break
+        if s.name in seen or not item_allowed_for_god(s.name, god_name):
+            continue
+        path.append(s)
+        seen.add(s.name)
+    # One chaos swap among near-best leftovers
+    if len(path) >= 3 and len(scored) > 8:
+        fi = rng.randrange(len(path))
+        alts = [s for s in scored if s.name not in seen][:8]
+        if alts:
+            alt = alts[rng.randrange(len(alts))]
+            seen.discard(path[fi].name)
+            path[fi] = alt
+            seen.add(alt.name)
+    path = path[:6]
     total = sum(_item_stat_value(x, mode["stat"]) for x in path)
     titles = mode["titles"]
     title = titles[rng.randrange(len(titles))]
@@ -667,7 +835,6 @@ def build_max_stat_troll(
             card["troll"] = True
             path_cards.append(card)
 
-    # Starter still role-normal
     all_scored = []
     for it in items:
         base = score_item_for_role(it, role, profile)
@@ -689,7 +856,7 @@ def build_max_stat_troll(
         "role": role,
         "mode": "troll_maxstat",
         "kind": "maxstat",
-        "disclaimer": "TROLL / MEME — max-stat greed. Not ranked advice.",
+        "disclaimer": "TROLL / MEME — max-stat greed. Not ranked advice. Legal items, illegal vibes.",
         "troll_title": title,
         "troll_blurb": mode["blurb"],
         "primary_axis": mode_key,
@@ -718,6 +885,132 @@ def build_max_stat_troll(
     }
 
 
+def build_true_random_troll(
+    conn: sqlite3.Connection,
+    items: list[dict] | None,
+    role: str,
+    god: dict,
+    *,
+    use_aspect: bool = False,
+    aspect_id: int | None = None,
+    seed: int | None = None,
+) -> dict[str, Any]:
+    """
+    True shop lottery: 6 legal items with type/god gates only.
+    Intentionally incoherent — still no Providence / wrong acorns / cross-type cores.
+    """
+    if items is None:
+        items = load_items(conn)
+    god_name = god.get("entity_name") or god.get("name") or ""
+    # Mix god into seed so identical seeds diverge per god
+    base_seed = seed if seed is not None else random.randrange(1 << 30)
+    rng = random.Random(base_seed ^ (_god_salt({"god_name": god_name}, "truerand") << 1))
+    profile = ROLE_PROFILES.get(role) or ROLE_PROFILES["Mid"]
+    bias = god_scaling_bias(conn, god["god_id"])
+    if use_aspect or aspect_id is not None:
+        aspects = list_god_aspects(conn, god["god_id"])
+        if aspects:
+            bias = build_aspect_bias(conn, god["god_id"], bias, aspect_id=aspect_id)
+
+    dtype = god.get("primary_damage_type")
+    primary = bias.get("primary") or ""
+    mage = primary == "Intelligence" or (dtype or "").lower() == "magical"
+    physical = (primary == "Strength" or (dtype or "").lower() == "physical") and not mage
+
+    pool: list[ScoredItem] = []
+    for it in items:
+        if not _troll_pool_item_ok(
+            it, god_name, role=role, mage=mage, physical=physical, primary_axis="active_toybox"
+        ):
+            continue
+        # Soft type: prefer matching power, allow hybrid/def always
+        base = score_item_for_role(it, role, profile)
+        str_v = _canon_stat_value(base.stats, "str")
+        int_v = _canon_stat_value(base.stats, "int")
+        if physical and int_v > str_v + 25 and base.item_type == "Offensive":
+            continue
+        if mage and str_v > int_v + 25 and base.item_type == "Offensive":
+            continue
+        pool.append(base)
+
+    rng.shuffle(pool)
+    # Secondary order by god salt for stability within a roll
+    pool.sort(
+        key=lambda x: (
+            _god_salt({"god_name": god_name}, "rand", x.name) % 97,
+            -(x.total_cost or 0),
+        )
+    )
+    path: list[ScoredItem] = []
+    seen: set[str] = set()
+    actives = 0
+    max_act = 2
+    for s in pool:
+        if len(path) >= 6:
+            break
+        if s.name in seen:
+            continue
+        if s.is_active_item and actives >= max_act:
+            continue
+        path.append(s)
+        seen.add(s.name)
+        if s.is_active_item:
+            actives += 1
+
+    # Cheap-first buy order so the lottery still has a "path"
+    path = sorted(path[:6], key=lambda x: (x.total_cost or 0))
+    title = RANDOM_TITLES[rng.randrange(len(RANDOM_TITLES))]
+    path_cards = []
+    for it in path:
+        card = _item_card(it, why="😈 shop lottery")
+        if card:
+            card["troll"] = True
+            path_cards.append(card)
+
+    all_scored = [score_item_for_role(it, role, profile) for it in items]
+    starters = [s for s in all_scored if is_t1_starter(next(i for i in items if i["name"] == s.name))]
+    starter_pick = pick_god_starter(starters, items, profile, bias, role, dtype) if starters else None
+    starter_card = _item_card(starter_pick, why="😈 meme starter") if starter_pick else None
+
+    monologue = (
+        f"{title}. Six legal shop items, zero tryhard intent. "
+        f"Gates still apply (no removed shop, no stolen acorns, no pure cross-type cores). "
+        f"{god_name} · {role}."
+    )
+    if bias.get("aspect_name"):
+        monologue += f" Aspect: {bias['aspect_name']} for style points."
+
+    return {
+        "god": god_name,
+        "role": role,
+        "mode": "troll_random",
+        "kind": "random",
+        "disclaimer": "TROLL / MEME — true random shop lottery. Not ranked advice.",
+        "troll_title": title,
+        "troll_blurb": "Legal items, illegal draft.",
+        "primary_axis": "true_random",
+        "secondary_axis": "lottery",
+        "is_aspect": bool(bias.get("is_aspect")),
+        "aspect_name": bias.get("aspect_name"),
+        "aspect_description": bias.get("aspect_description"),
+        "kit_tags": sorted(bias.get("tags") or []),
+        "damage_type": dtype,
+        "scaling": bias.get("primary"),
+        "starter": starter_card,
+        "items": path_cards,
+        "full_path": path_cards,
+        "relics": [],
+        "max_shop_actives": max_act,
+        "hard_max_actives": HARD_MAX_ACTIVE_ITEMS,
+        "active_count": sum(1 for x in path if x.is_active_item),
+        "pen_total": round(sum(item_pen_value(x) for x in path), 1),
+        "chaos": True,
+        "seed": seed,
+        "why": monologue,
+        "monologue": monologue,
+    }
+
+
 def build_troll_build(
     conn: sqlite3.Connection,
     items: list[dict] | None,
@@ -728,16 +1021,34 @@ def build_troll_build(
     aspect_id: int | None = None,
     chaos: bool = False,
     max_stat: str | None = None,
+    kind: str | None = None,
     seed: int | None = None,
 ) -> dict[str, Any]:
     """
     Assemble a kit-true troll path for god × role.
     chaos=True amplifies secondary axis and active toys.
     max_stat=max_int|max_hp|… for pure greed mode; 'random' picks one.
+    kind=random → true shop lottery; kind=maxstat with max_stat; default annoy.
     seed=None uses fresh randomness for axis/title/picks when provided.
     """
-    if max_stat:
-        key = max_stat if max_stat != "random" else random.choice(list(MAX_STAT_MODES.keys()))
+    if kind == "random" or max_stat == "true_random":
+        return build_true_random_troll(
+            conn,
+            items,
+            role,
+            god,
+            use_aspect=use_aspect,
+            aspect_id=aspect_id,
+            seed=seed,
+        )
+    if max_stat or kind == "maxstat":
+        key = max_stat if max_stat and max_stat != "random" else random.choice(
+            list(MAX_STAT_MODES.keys())
+        )
+        if key == "true_random":
+            return build_true_random_troll(
+                conn, items, role, god, use_aspect=use_aspect, aspect_id=aspect_id, seed=seed
+            )
         return build_max_stat_troll(
             conn,
             items,
@@ -825,13 +1136,28 @@ def build_troll_build(
 
     scored: list[ScoredItem] = []
     troll_whys: dict[str, list[str]] = {}
+    god_name = god.get("entity_name") or god.get("name") or ""
     for it in items:
+        if not _troll_pool_item_ok(
+            it,
+            god_name,
+            role=role,
+            mage=mage,
+            physical=physical,
+            primary_axis=identity["primary_axis"],
+        ):
+            # Still score starters separately
+            if not is_t1_starter(it):
+                continue
         base = score_item_for_role(it, role, profile)
         base.role_score = rescore_for_god(base, bias, role, damage_type=dtype)
-        # Shrink "optimal" signal, inflate troll
-        base.role_score = base.role_score * 0.45
+        # Shrink "optimal" signal hard — troll should not look like ranked + 1 meme
+        base.role_score = base.role_score * 0.28
         td, tw = troll_score_delta(base, identity, bias, role)
         base.role_score += td
+        if "acorn" in base.name.lower() and "ratatoskr" in god_name.lower():
+            base.role_score += 35
+            tw = list(tw or []) + ["god acorn"]
         if tw:
             troll_whys[base.name] = tw
         scored.append(base)
@@ -846,14 +1172,21 @@ def build_troll_build(
     if starter_pick:
         starters = [starter_pick] + [s for s in starters if s.name != starter_pick.name]
 
-    t3 = [
-        s
-        for s in scored
-        if is_t3_core(next(i for i in items if i["name"] == s.name))
-        and not _is_removed_or_unavailable_item(s.name)
-        and not is_god_specific_item(s.name)
-        and not is_god_specific_item(next(i for i in items if i["name"] == s.name))
-    ]
+    t3 = []
+    for s in scored:
+        raw = next((i for i in items if i["name"] == s.name), None)
+        if not raw:
+            continue
+        if not _troll_pool_item_ok(
+            raw,
+            god_name,
+            role=role,
+            mage=mage,
+            physical=physical,
+            primary_axis=identity["primary_axis"],
+        ):
+            continue
+        t3.append(s)
     # Type filter for non-AA-clown paths
     if identity["primary_axis"] != "aa_clown":
         if mage:
@@ -879,20 +1212,11 @@ def build_troll_build(
     if identity["primary_axis"] == "active_toybox":
         max_act = min(HARD_MAX_ACTIVE_ITEMS, max(max_act, 2))
 
-    # --- Assembly: kit baseline first, then troll-mutate (god-specific) ---
-    from .conquest_builds import assemble_kit_path
-
-    # Real kit path for this god (base or aspect already in bias)
-    try:
-        baseline_path, _arch = assemble_kit_path(
-            t3, bias, role, mage=mage, physical=physical, max_actives=max_act
-        )
-    except Exception:
-        baseline_path = []
-
-    path: list[ScoredItem] = list(baseline_path[:6]) if baseline_path else []
-    seen: set[str] = {x.name for x in path}
-    actives = sum(1 for x in path if x.is_active_item)
+    # --- Assembly: kit signatures + troll axes (NOT full ranked baseline) ---
+    # Ranked baseline made every troll look like "serious path + Spectral".
+    path: list[ScoredItem] = []
+    seen: set[str] = set()
+    actives = 0
 
     # 1) Pin 1–2 kit signature items (god-unique identity)
     sig_keys = _kit_signature_keys(bias)[:8]
@@ -901,7 +1225,6 @@ def build_troll_build(
         if sig_injected >= 2:
             break
         if any(key in x.name.lower() for x in path):
-            # already have signature
             sig_injected += 1
             continue
         cands = [
@@ -918,36 +1241,28 @@ def build_troll_build(
             reverse=True,
         )
         pick = cands[0]
-        if len(path) < 6:
-            path.append(pick)
-        else:
-            # replace lowest non-signature
-            drop = min(
-                range(len(path)),
-                key=lambda i: path[i].role_score
-                + (80 if any(k in path[i].name.lower() for k in sig_keys[:4]) else 0),
-            )
-            seen.discard(path[drop].name)
-            if path[drop].is_active_item:
-                actives = max(0, actives - 1)
-            path[drop] = pick
+        path.append(pick)
         seen.add(pick.name)
         if pick.is_active_item:
             actives += 1
         sig_injected += 1
         troll_whys.setdefault(pick.name, []).append("kit signature")
 
-    # 2) Inject 2–3 troll-axis items, god-rotated key order (not always Spectral #1)
+    # 2) Inject 3–4 troll-axis items (majority of the path)
     axis_keys = list(AXIS_ITEM_KEYS.get(identity["primary_axis"]) or [])
     for k in AXIS_ITEM_KEYS.get(identity["secondary_axis"]) or []:
         if k not in axis_keys:
             axis_keys.append(k)
     if axis_keys:
-        rot = _god_salt(bias, "axrot", identity["primary_axis"]) % len(axis_keys)
-        axis_keys = axis_keys[rot:] + axis_keys[:rot]
+        if seed is not None:
+            rng_ax = random.Random(seed + 17)
+            rng_ax.shuffle(axis_keys)
+        else:
+            rot = _god_salt(bias, "axrot", identity["primary_axis"]) % len(axis_keys)
+            axis_keys = axis_keys[rot:] + axis_keys[:rot]
 
     troll_injected = 0
-    max_troll = 3
+    max_troll = 4 if chaos else 3
     for key in axis_keys:
         if troll_injected >= max_troll:
             break
@@ -962,37 +1277,26 @@ def build_troll_build(
         ]
         if not cands:
             continue
-        # God-diversified pick among all key matches, not just score #1
         cands.sort(key=lambda x: x.role_score, reverse=True)
-        pick = cands[_god_salt(bias, "axpick", key) % min(len(cands), 4)]
-        # Prefer replacing non-signature, non-already-troll slot
-        drop = None
-        ranked = sorted(range(len(path)), key=lambda i: path[i].role_score)
-        for i in ranked:
-            nlow = path[i].name.lower()
-            if any(k in nlow for k in sig_keys[:5]):
-                continue
-            drop = i
-            break
-        if drop is None and len(path) >= 6:
-            continue
-        if len(path) < 6:
-            path.append(pick)
-        else:
-            seen.discard(path[drop].name)
-            if path[drop].is_active_item:
-                actives = max(0, actives - 1)
-            path[drop] = pick
+        pick_idx = (
+            random.Random(seed).randrange(min(len(cands), 5))
+            if seed is not None
+            else _god_salt(bias, "axpick", key) % min(len(cands), 4)
+        )
+        pick = cands[pick_idx]
+        path.append(pick)
         seen.add(pick.name)
         if pick.is_active_item:
             actives += 1
         troll_injected += 1
-        troll_whys.setdefault(pick.name, []).insert(0, f"troll {identity['primary_axis'].replace('_', ' ')}")
+        troll_whys.setdefault(pick.name, []).insert(
+            0, f"troll {identity['primary_axis'].replace('_', ' ')}"
+        )
 
     # 3) Fill to 6 with god-salted troll scores
     while len(path) < 6:
         pick = _pick_from_pool_god(
-            t3, seen, bias, f"fill{len(path)}", max_actives=max_act, actives=actives, top_k=8
+            t3, seen, bias, f"fill{len(path)}", max_actives=max_act, actives=actives, top_k=10
         )
         if not pick:
             break
@@ -1000,31 +1304,65 @@ def build_troll_build(
         seen.add(pick.name)
         if pick.is_active_item:
             actives += 1
+        troll_whys.setdefault(pick.name, []).append(f"troll flex · {god_name}")
 
-    # 4) Final god flavor: swap one non-signature slot so near-clones still diverge
-    if len(path) >= 4:
-        flex_i = _god_salt(bias, "flexi") % len(path)
-        # skip if only signature left
-        for _ in range(len(path)):
-            nlow = path[flex_i].name.lower()
-            if not any(k in nlow for k in sig_keys[:4]):
-                break
-            flex_i = (flex_i + 1) % len(path)
-        alt = _pick_from_pool_god(
-            t3,
-            seen - {path[flex_i].name},
-            bias,
-            "finalflex",
-            max_actives=max_act,
-            actives=actives - (1 if path[flex_i].is_active_item else 0),
-            top_k=8,
+    # 4) Chaos: swap 1–2 slots among near-top troll pool (axis-coherent, not pure trash)
+    n_swaps = 2 if chaos else 1
+    for si in range(n_swaps):
+        if len(path) < 3 or len(t3) < 6:
+            break
+        flex_i = (
+            random.Random((seed or 0) + si * 3).randrange(len(path))
+            if seed is not None
+            else (_god_salt(bias, "flexi", str(si)) % len(path))
         )
-        if alt and alt.name != path[flex_i].name:
-            seen.discard(path[flex_i].name)
-            path[flex_i] = alt
-            seen.add(alt.name)
+        nlow = path[flex_i].name.lower()
+        if any(k in nlow for k in sig_keys[:3]):
+            continue
+        alts = [
+            x
+            for x in t3
+            if x.name not in seen
+            and not (x.is_active_item and actives >= max_act and not path[flex_i].is_active_item)
+        ]
+        if not alts:
+            continue
+        alts.sort(key=lambda x: x.role_score, reverse=True)
+        alt = alts[
+            (random.Random((seed or 1) + si).randrange(min(8, len(alts))))
+            if seed is not None
+            else (_god_salt(bias, "flexpick", str(si)) % min(8, len(alts)))
+        ]
+        if path[flex_i].is_active_item and not alt.is_active_item:
+            actives = max(0, actives - 1)
+        elif alt.is_active_item and not path[flex_i].is_active_item:
+            actives += 1
+        seen.discard(path[flex_i].name)
+        path[flex_i] = alt
+        seen.add(alt.name)
+        troll_whys.setdefault(alt.name, []).insert(0, f"{god_name} chaos flavor")
 
+    # Soft buy order — still readable as a path
     path = _order_buy_path(path[:6], role)
+
+    # Final strip — never leave god-only items (acorns etc.) on the wrong god
+    path = [x for x in path if item_allowed_for_god(x.name, god_name)]
+    seen = {x.name for x in path}
+    actives = sum(1 for x in path if x.is_active_item)
+    while len(path) < 6:
+        pick = _pick_from_pool_god(
+            t3, seen, bias, f"gsan{len(path)}", max_actives=max_act, actives=actives, top_k=8
+        )
+        if not pick:
+            break
+        if not item_allowed_for_god(pick.name, god_name):
+            seen.add(pick.name)  # skip permanently
+            continue
+        path.append(pick)
+        seen.add(pick.name)
+        if pick.is_active_item:
+            actives += 1
+    path = path[:6]
 
     # Cards
     path_cards = []
@@ -1084,6 +1422,7 @@ def build_troll_build(
         "god": gname,
         "role": role,
         "mode": "troll",
+        "kind": "annoy",
         "disclaimer": identity["disclaimer"],
         "troll_title": identity["title"],
         "troll_blurb": identity["blurb"],
@@ -1108,6 +1447,7 @@ def build_troll_build(
         "active_count": n_act,
         "pen_total": round(pen_total, 1),
         "chaos": chaos,
+        "seed": seed,
         "why": monologue,
         "monologue": monologue,
     }
@@ -1192,6 +1532,12 @@ def troll_cli(argv: list[str] | None = None) -> int:
         default=None,
         help="Pure greed max-stat mode (max_int, max_hp, max_prots, …)",
     )
+    p.add_argument(
+        "--kind",
+        choices=["annoy", "maxstat", "random"],
+        default=None,
+        help="annoy (default) | maxstat | random shop lottery",
+    )
     p.add_argument("--seed", type=int, default=None, help="RNG seed (omit for fresh each run)")
     p.add_argument("--random-god", action="store_true", help="Ignore god arg; pick a random god")
     p.add_argument("--json", action="store_true")
@@ -1224,6 +1570,7 @@ def troll_cli(argv: list[str] | None = None) -> int:
         use_aspect=args.aspect,
         chaos=args.chaos,
         max_stat=args.max_stat,
+        kind=args.kind,
         seed=seed,
     )
     conn.close()
