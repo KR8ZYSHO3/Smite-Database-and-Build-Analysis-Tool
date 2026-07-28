@@ -265,23 +265,23 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
     },
     "Jungle": {
         "description": (
-            "Conquest jungle — job is ganks: Bumba clear, burst pen, CDR, "
-            "Blink/mobility relics, enough HP to invade. Not a full-tank solo."
+            "Conquest jungle — ganks first: Bumba clear, Jotunn/Hydra (or stack) openers, "
+            "then power + pen. Not a Solo shell — Shifter/BoV mid is wrong for most junglers."
         ),
         "prefer_damage": None,
         "stat_weights": {
-            "str": 0.14,
-            "int": 0.12,
-            "pen": 0.22,   # shred tanks so ganks stick
-            "cdr": 0.16,   # ability uptime for multi-gank
-            "hp": 0.10,
+            "str": 0.16,
+            "int": 0.13,
+            "pen": 0.24,   # shred tanks so ganks stick
+            "cdr": 0.18,   # ability uptime for multi-gank
+            "hp": 0.08,
             "as": 0.08,
             "ls": 0.06,
-            "crit": 0.04,
-            "pprot": 0.04,
-            "mprot": 0.04,
+            "crit": 0.03,
+            "pprot": 0.02,
+            "mprot": 0.02,
         },
-        "tag_bonus": {"offensive": 14, "passive": 6, "active": 3, "ms": 8, "cc": 6},
+        "tag_bonus": {"offensive": 16, "passive": 6, "active": 4, "ms": 8, "cc": 5},
         "starter_prefs": {
             "bumba": 42,
             "dagger": 32,
@@ -303,7 +303,8 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
             "aegis": 12,
             "phantom": 10,
         },
-        "build_slots": {"starter": 1, "cores": 4, "defense": 1, "flex": 1},
+        # No dedicated defense slot — damage path; optional late shell only via flex
+        "build_slots": {"starter": 1, "cores": 5, "defense": 0, "flex": 1},
         "tier_scope": "role:Jungle",
     },
     "Solo": {
@@ -1769,15 +1770,33 @@ def rescore_for_god(
             s += 22
         # Standard ability jungle: Jotunn / Hydra / stack first, then pen+power
         if "jotunn" in nlow:
-            s += 48
+            s += 52
         elif "hydra" in nlow:
-            s += 44
-        elif any(k in nlow for k in ("transcend", "heartseeker", "arondight", "crusher")):
-            s += 32
+            s += 48
+        elif any(k in nlow for k in ("transcend", "heartseeker", "arondight", "crusher", "reaper", "pendulum")):
+            s += 36
         elif any(k in nlow for k in ("devourer", "bloodforge", "titan")):
-            s += 28
-        if item.item_type == "Defensive" and pen_v < 5 and (str_v + int_v) < 20:
-            s -= 28
+            s += 30
+        # Mid-shell is Solo identity — kills gank tempo (esp. post-Shifter nerf)
+        if any(
+            k in nlow
+            for k in (
+                "shifter",
+                "breastplate",
+                "genji",
+                "spectral",
+                "midgardian",
+                "prophetic",
+                "thebes",
+                "chandra",
+                "oni hunter",
+                "leviathan",
+                "gladiator",
+            )
+        ):
+            s -= 55
+        if item.item_type == "Defensive" and pen_v < 8 and (str_v + int_v) < 35:
+            s -= 40
         # Spectral / aura peel is Support identity — not jungle core
         if any(k in nlow for k in ("spectral", "midgardian", "thebes", "chandra", "contagion")):
             s -= 50
@@ -1785,7 +1804,7 @@ def rescore_for_god(
         if any(k in nlow for k in ("deathbringer", "musashi", "avenging", "wind demon")):
             s -= 35
         if physical:
-            s += str_v * 0.35 + pen_v * 0.4
+            s += str_v * 0.4 + pen_v * 0.45
     elif role == "Carry":
         # AA carries: AS/crit/LS first-class; ability hunters stay secondary
         aaish = "aa" in tags or float(bias.get("aa_score") or 0) >= 0.5 or "as_steroid" in tags
@@ -2286,12 +2305,12 @@ ARCHETYPE_SLOTS: dict[str, list[str]] = {
     "dot_mage_adc": ["flat_pen", "pct_pen", "dot_core", "power", "sustain", "defense"],
     "aa_mage_adc": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "defense"],
     "ability_mage_adc": ["flat_pen", "pct_pen", "power", "cdr", "sustain", "defense"],
-    # Jungle — Jotunn/Hydra OR stack, then pen + power
-    "burst_assassin": ["gap", "flat_pen", "pct_pen", "power", "cdr", "defense"],
-    "sustain_assassin": ["gap", "ls_core", "flat_pen", "pct_pen", "power", "defense"],
-    "aa_assassin": ["gap", "ls_core", "flat_pen", "pct_pen", "power", "defense"],
-    "bruiser_jungle": ["gap", "flat_pen", "pct_pen", "hybrid_bulk", "power", "defense"],
-    "mage_jungle": ["flat_pen", "pct_pen", "power", "cdr", "sustain", "defense"],
+    # Jungle — Jotunn/Hydra OR stack, then power + pen (no mid Shifter/BoV)
+    "burst_assassin": ["gap", "flat_pen", "power", "power", "pct_pen", "cdr"],
+    "sustain_assassin": ["gap", "ls_core", "flat_pen", "power", "pct_pen", "cdr"],
+    "aa_assassin": ["gap", "ls_core", "as_core", "flat_pen", "pct_pen", "power"],
+    "bruiser_jungle": ["gap", "flat_pen", "power", "power", "pct_pen", "hybrid_bulk"],
+    "mage_jungle": ["flat_pen", "power", "cdr", "pct_pen", "sustain", "power"],
     # Solo — offline damage + bulk (not pure aura shell)
     "tank_solo": ["hybrid_bulk", "defense", "mitigate", "power_bruiser", "antiheal", "cdr_def"],
     "sustain_solo": ["hybrid_bulk", "power_bruiser", "defense", "mitigate", "antiheal", "sustain_tank"],
@@ -3276,10 +3295,12 @@ def _god_flavor_flex(
         "deathbringer",
         "demon blade",
         "riptalon",
-        "shifter",
+        # Solo/Support staples only — never protect mid-shell on Jungle
         "thebes",
         "stampede",
     )
+    if role != "Jungle":
+        protected_keys = protected_keys + ("shifter",)
 
     def is_protected(it: ScoredItem, idx: int) -> bool:
         n = it.name.lower()
@@ -3287,6 +3308,20 @@ def _god_flavor_flex(
             return True
         if role == "Jungle" and _is_jungle_standard_opener(n):
             return True
+        # Jungle: shells are never protected (gank damage path)
+        if role == "Jungle" and any(
+            k in n
+            for k in (
+                "shifter",
+                "breastplate",
+                "genji",
+                "spectral",
+                "midgardian",
+                "thebes",
+                "prophetic",
+            )
+        ):
+            return False
         if any(k in n for k in protected_keys):
             return True
         # First two slots are spike openers — leave them
@@ -3603,6 +3638,22 @@ def _normalize_jungle_path(
                 continue  # don't pile more openers as "power"
             if not aa and (_is_jungle_adc_toy(n) or "executioner" in n):
                 continue
+            # Never inject mid-shell as "power"
+            if any(
+                k in n
+                for k in (
+                    "shifter",
+                    "breastplate",
+                    "genji",
+                    "spectral",
+                    "midgardian",
+                    "prophetic",
+                    "thebes",
+                    "oni hunter",
+                    "leviathan",
+                )
+            ):
+                continue
             str_v = _canon_stat_value(x.stats, "str")
             int_v = _canon_stat_value(x.stats, "int")
             if mage and int_v < 40:
@@ -3613,8 +3664,86 @@ def _normalize_jungle_path(
                 continue
             # Prefer named power cores (not Hydra — that is an opener)
             bonus = 0
-            if any(k in n for k in ("arondight", "bloodforge", "reaper", "tahuti", "soul reaver")):
-                bonus = 40
+            if any(
+                k in n
+                for k in (
+                    "arondight",
+                    "bloodforge",
+                    "reaper",
+                    "crusher",
+                    "pendulum",
+                    "tahuti",
+                    "soul reaver",
+                    "parashu",
+                )
+            ):
+                bonus = 45
+            cands.append((bonus + x.role_score, x))
+        cands.sort(key=lambda t: t[0], reverse=True)
+        return cands[0][1] if cands else None
+
+    # Mid-build shell ruins gank tempo (ability + AA jungle). Strip from first 5 slots.
+    shell_keys = (
+        "shifter",
+        "breastplate",
+        "genji",
+        "spectral",
+        "oni hunter",
+        "midgardian",
+        "contagion",
+        "prophetic",
+        "leviathan",
+        "thebes",
+        "chandra",
+        "gladiator",
+        "mantle of discord",
+        "magi's",
+    )
+
+    def is_mid_shell(it: ScoredItem) -> bool:
+        n = it.name.lower()
+        if any(k in n for k in shell_keys):
+            return True
+        if it.item_type == "Defensive" and item_pen_value(it) < 8 and (
+            _canon_stat_value(it.stats, "str") + _canon_stat_value(it.stats, "int") < 35
+        ):
+            return True
+        return False
+
+    def best_aa_damage(exclude: set[str]) -> ScoredItem | None:
+        cands = []
+        for x in pool:
+            if x.name in exclude:
+                continue
+            n = x.name.lower()
+            if is_mid_shell(x):
+                continue
+            as_v = _canon_stat_value(x.stats, "as")
+            str_v = _canon_stat_value(x.stats, "str")
+            ls_v = _canon_stat_value(x.stats, "ls")
+            pen = item_pen_value(x)
+            if as_v < 10 and str_v < 35 and pen < 8 and ls_v < 10:
+                continue
+            if x.item_type == "Defensive" and pen < 8 and as_v < 15:
+                continue
+            bonus = 0.0
+            if any(
+                k in n
+                for k in (
+                    "riptalon",
+                    "qins",
+                    "odysseus",
+                    "executioner",
+                    "devourer",
+                    "bloodforge",
+                    "dominance",
+                )
+            ):
+                bonus += 50
+            if as_v >= 15:
+                bonus += 25
+            if ls_v >= 10:
+                bonus += 15
             cands.append((bonus + x.role_score, x))
         cands.sort(key=lambda t: t[0], reverse=True)
         return cands[0][1] if cands else None
@@ -3630,59 +3759,80 @@ def _normalize_jungle_path(
                     path[i] = alt
                     seen.add(alt.name)
 
-    # AA bruiser jungle: no early full-shell (BoV / Genji / Spectral) — keep damage online
-    if aa and physical:
-        shell_keys = (
-            "breastplate",
-            "genji",
-            "spectral",
-            "oni hunter",
-            "midgardian",
-            "contagion",
-            "prophetic",
-            "leviathan",
-        )
+    # All jungle: no Shifter/BoV/Genji in first 5 (optional last-slot shell only)
+    for i, it in enumerate(path[:5]):
+        if not is_mid_shell(it):
+            continue
+        if aa and physical:
+            alt = best_aa_damage(seen) or best_power(seen) or best_pen(seen)
+        else:
+            alt = best_power(seen) or best_pen(seen)
+        if not alt:
+            # Broader fallback: any high power/pen passive not already in path
+            for x in sorted(pool, key=lambda z: z.role_score, reverse=True):
+                if x.name in seen or is_mid_shell(x):
+                    continue
+                if x.is_active_item:
+                    continue
+                pv = item_pen_value(x)
+                pow_v = _canon_stat_value(x.stats, "str") + _canon_stat_value(x.stats, "int")
+                if pv >= 8 or pow_v >= 40:
+                    alt = x
+                    break
+        if alt:
+            seen.discard(it.name)
+            path[i] = alt
+            seen.add(alt.name)
 
-        def best_aa_damage(exclude: set[str]) -> ScoredItem | None:
-            cands = []
-            for x in pool:
-                if x.name in exclude:
-                    continue
-                n = x.name.lower()
-                if any(k in n for k in shell_keys):
-                    continue
-                as_v = _canon_stat_value(x.stats, "as")
-                str_v = _canon_stat_value(x.stats, "str")
-                ls_v = _canon_stat_value(x.stats, "ls")
-                pen = item_pen_value(x)
-                if as_v < 10 and str_v < 35 and pen < 8 and ls_v < 10:
-                    continue
-                if x.item_type == "Defensive" and pen < 8 and as_v < 15:
-                    continue
-                bonus = 0.0
-                if any(k in n for k in ("riptalon", "qins", "odysseus", "executioner", "devourer", "bloodforge")):
-                    bonus += 50
-                if as_v >= 15:
-                    bonus += 25
-                if ls_v >= 10:
-                    bonus += 15
-                cands.append((bonus + x.role_score, x))
-            cands.sort(key=lambda t: t[0], reverse=True)
-            return cands[0][1] if cands else None
-
-        for i, it in enumerate(path[:5]):  # leave last flex free for optional shell
-            n = it.name.lower()
-            if any(k in n for k in shell_keys) or (
-                it.item_type == "Defensive"
-                and item_pen_value(it) < 5
-                and _canon_stat_value(it.stats, "as") < 10
-                and _canon_stat_value(it.stats, "str") < 30
-            ):
-                alt = best_aa_damage(seen) or best_power(seen) or best_pen(seen)
-                if alt:
-                    seen.discard(it.name)
-                    path[i] = alt
-                    seen.add(alt.name)
+    # Ability physical: prefer dual openers Jotunn + Hydra (the ranked standard)
+    if physical and not aa:
+        has_j = any("jotunn" in x.name.lower() for x in path)
+        has_h = any("hydra" in x.name.lower() for x in path)
+        if has_j and not has_h:
+            hyd = next(
+                (x for x in pool if "hydra" in x.name.lower() and x.name not in seen),
+                None,
+            )
+            if hyd:
+                # Replace weakest non-opener non-pen
+                ranked = sorted(
+                    range(len(path)),
+                    key=lambda i: (
+                        100 if _is_jungle_standard_opener(path[i].name.lower()) else 0,
+                        80
+                        if _pen_matches_kit(path[i], mage=mage, physical=physical)
+                        and item_pen_value(path[i]) >= 15
+                        else 0,
+                        path[i].role_score,
+                    ),
+                )
+                for i in ranked:
+                    if _is_jungle_standard_opener(path[i].name.lower()):
+                        continue
+                    seen.discard(path[i].name)
+                    path[i] = hyd
+                    seen.add(hyd.name)
+                    break
+        if has_h and not has_j:
+            jot = next(
+                (x for x in pool if "jotunn" in x.name.lower() and x.name not in seen),
+                None,
+            )
+            if jot:
+                ranked = sorted(
+                    range(len(path)),
+                    key=lambda i: (
+                        100 if _is_jungle_standard_opener(path[i].name.lower()) else 0,
+                        path[i].role_score,
+                    ),
+                )
+                for i in ranked:
+                    if _is_jungle_standard_opener(path[i].name.lower()):
+                        continue
+                    seen.discard(path[i].name)
+                    path[i] = jot
+                    seen.add(jot.name)
+                    break
 
     # Ensure a standard opener is present and first after ordering
     has_opener = any(
@@ -3847,10 +3997,32 @@ def _ensure_inspired_cores(
         if name not in want:
             want.append(name)
 
+    # Jungle high-SR is polluted by Solo flex / bruiser games — never inspire shells
+    _jungle_shell_ban = (
+        "shifter",
+        "breastplate",
+        "genji",
+        "spectral",
+        "midgardian",
+        "thebes",
+        "prophetic",
+        "oni hunter",
+        "leviathan",
+        "gladiator",
+        "dwarven",
+        "contagion",
+        "mantle of discord",
+        "magi's",
+        "chandra",
+    )
+
     def legal(it: ScoredItem) -> bool:
         if it.name in seen:
             return False
         if not item_allowed_for_god(it.name, god_name):
+            return False
+        n = it.name.lower()
+        if role == "Jungle" and any(k in n for k in _jungle_shell_ban):
             return False
         if mage and _canon_stat_value(it.stats, "int") < 20 and item_pen_value(it) < 5:
             if it.item_type not in ("Defensive", "Hybrid"):
@@ -3865,6 +4037,9 @@ def _ensure_inspired_cores(
         if injected >= 2:
             break
         if any(x.name == name for x in path):
+            continue
+        # Skip shell names before pool lookup (tracker openers often include Shifter)
+        if role == "Jungle" and any(k in name.lower() for k in _jungle_shell_ban):
             continue
         cand = next((x for x in pool if x.name == name and legal(x)), None)
         if not cand:
@@ -3888,7 +4063,11 @@ def _ensure_inspired_cores(
                 continue
             if role == "Jungle" and _is_jungle_standard_opener(n):
                 continue
-            if any(k in n for k in ("desolat", "thoth", "jotunn", "hydra", "tyrfing", "shifter", "thebes")):
+            # Protect role openers; do NOT protect Shifter on Jungle (shell ban above)
+            protect = ("desolat", "thoth", "jotunn", "hydra", "tyrfing")
+            if role != "Jungle":
+                protect = protect + ("shifter", "thebes")
+            if any(k in n for k in protect):
                 continue
             drop = i
             break
@@ -4555,6 +4734,17 @@ def build_god_build(
                     "alchemist",
                     "pridwen",
                     "contagion",
+                    # Mid-shell is Solo — high-SR "jungle" games often mis-role bruisers
+                    "shifter",
+                    "breastplate",
+                    "genji",
+                    "prophetic",
+                    "oni hunter",
+                    "leviathan",
+                    "gladiator",
+                    "dwarven",
+                    "mantle of discord",
+                    "magi's",
                 )
             ):
                 return False
