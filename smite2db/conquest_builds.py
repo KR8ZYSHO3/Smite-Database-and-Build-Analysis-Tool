@@ -269,33 +269,70 @@ def carry_role_allowed(
     is_aspect: bool = False,
     aspect_blob: str = "",
     native_roles: list[str] | None = None,
+    type_label: str = "",
+    tags: set[str] | None = None,
+    aa_score: float = 0.0,
 ) -> tuple[bool, str]:
     """
-    Duo Carry needs ranged basic attacks.
-    Melee gods only get Carry when an aspect changes basics to ranged (or ADC kit).
+    Duo Carry needs ranged basic attacks and a real damage identity.
+
+    - Melee only if aspect enables ranged basics
+    - Native Carry / Mid / ranged Jungle hunters: OK
+    - Pure Support / guardian peel kits: no flex Carry page (builds were mid clones)
     """
     native = {str(r) for r in (native_roles or [])}
+    tags = set(tags or [])
+    tlab = (type_label or "").lower()
+    aaish = float(aa_score or 0) >= 0.55 or "aa" in tags or "as_steroid" in tags
+
+    def _support_only_flex() -> bool:
+        """Guardians/heal supports with no Mid/Carry native are not duo ADCs."""
+        if not native:
+            return False  # unknown roles — never ban (empty set ⊆ Support was a bug)
+        if "Carry" in native or "Mid" in native:
+            return False
+        if native & {"Jungle"} and base_range == "ranged":
+            return False  # Cern-style hunter jungle can flex duo
+        if native <= {"Support"} or native <= {"Support", "Solo"}:
+            return True
+        if any(k in tlab for k in ("guardian", "tank", "healer")) and "Mid" not in native:
+            if not aaish:
+                return True
+        return False
+
     if is_aspect:
         if aspect_forces_melee_basics(aspect_blob):
             return False, "aspect_melee_basics"
         if aspect_enables_ranged_basics(aspect_blob):
             return True, "aspect_ranged_basics"
-        if base_range == "ranged":
-            return True, "ranged_base"
         if base_range == "melee":
             return False, "melee_no_aspect_ranged"
-        # unknown base: still allow if native Carry (hunters mis-tagged)
-        if "Carry" in native:
-            return True, "native_carry"
+        if base_range == "ranged" or "Carry" in native:
+            if _support_only_flex() and not aspect_enables_ranged_basics(aspect_blob):
+                return False, "support_flex_not_adc"
+            return True, "ranged_or_native"
         return False, "unknown_melee_safe"
+
     # Base kit
-    if base_range == "ranged":
-        return True, "ranged"
-    if "Carry" in native and base_range != "melee":
-        return True, "native_carry"
     if base_range == "melee":
         return False, "melee_base"
-    # Unknown: only native Carry
+    if "Carry" in native:
+        return True, "native_carry"
+    if base_range != "ranged" and base_range != "unknown":
+        return False, "not_ranged"
+    if _support_only_flex():
+        return False, "support_flex_not_adc"
+    # Real flex ADC: Mid mages, ranged junglers, hybrid damage roles
+    if "Mid" in native or ("Jungle" in native and base_range == "ranged"):
+        return True, "damage_flex_adc"
+    if base_range == "ranged" and ("Solo" not in native or aaish):
+        # Ranged mid-line mages sometimes only tagged oddly — allow AA/ranged damage
+        if aaish or "burst" in tags or "dot" in tags or "spam" in tags:
+            return True, "ranged_damage_flex"
+    if base_range == "ranged" and "Mid" not in native and "Carry" not in native:
+        # Default: still allow pure ranged damage types that aren't support-only
+        if not _support_only_flex():
+            return True, "ranged"
     if "Carry" in native:
         return True, "native_carry"
     return False, "unknown_not_native"
@@ -1235,6 +1272,23 @@ def pick_god_starter(
                 sc += 28
             if "conduit" in n or "sands" in n:
                 sc -= 18
+        # Mage Carry flex: pure ability mages start Conduit/Sands — Gilded only for AA mages
+        if mage and role == "Carry":
+            aa_carry = (
+                "aa" in tags
+                or "as_steroid" in tags
+                or float(bias.get("aa_score") or 0) >= 0.55
+            )
+            if aa_carry:
+                if any(k in n for k in ("gilded", "death", "leather", "arrow", "cowl")):
+                    sc += 35
+                if "conduit" in n or "sands" in n:
+                    sc += 8
+            else:
+                if any(k in n for k in ("conduit", "sands", "archmage", "pendulum")):
+                    sc += 45
+                if any(k in n for k in ("gilded", "leather", "arrow", "cowl")):
+                    sc -= 55  # ability mage ADC is not an AS hunter
 
         # Kit tags
         if "mana_stack" in tags and any(k in n for k in ("conduit", "sands")):
@@ -2417,10 +2471,12 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
 
     if role == "Carry":
         if mage:
-            if "dot" in tags:
-                return "dot_mage_adc"
-            if "aa" in tags or aa >= 0.5:
+            # True AA mages (Sol / Chronos style) — AS path, not mid clone
+            if "aa" in tags or aa >= 0.55 or "as_steroid" in tags:
                 return "aa_mage_adc"
+            # Only heavy DoT kits use the DoT ADC recipe (not every mage with a tick)
+            if "heavy_dot" in tags or ("dot" in tags and "zone" in tags):
+                return "dot_mage_adc"
             return "ability_mage_adc"
         if "aa" in tags or aa >= 0.5 or "as_steroid" in tags:
             return "crit_adc"
@@ -2463,13 +2519,14 @@ ARCHETYPE_SLOTS: dict[str, list[str]] = {
     "sustain_mage": ["flat_pen", "pct_pen", "power", "sustain", "cdr", "defense"],
     "aa_mage": ["aa_core", "flat_pen", "pct_pen", "as_core", "power", "defense"],
     "zone_mage": ["flat_pen", "pct_pen", "zone_core", "power", "cdr", "defense"],
-    # Carry — AS/LS → pen → crit/power (standard ranked ADC)
-    "crit_adc": ["as_core", "ls_core", "pct_pen", "crit_core", "power", "defense"],
-    "onhit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "power", "defense"],
-    "power_adc": ["as_core", "pct_pen", "ls_core", "power", "crit_core", "defense"],
-    "dot_mage_adc": ["flat_pen", "pct_pen", "dot_core", "power", "sustain", "defense"],
-    "aa_mage_adc": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "defense"],
-    "ability_mage_adc": ["flat_pen", "pct_pen", "power", "cdr", "sustain", "defense"],
+    # Carry — AS/LS → pen → crit/power (standard ranked ADC). No mid-shell slots.
+    "crit_adc": ["as_core", "ls_core", "pct_pen", "crit_core", "power", "power"],
+    "onhit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "power", "power"],
+    "power_adc": ["stack", "as_core", "pct_pen", "power", "crit_core", "power"],
+    # Mage ADC flex: pen + INT power (duo farm) — not Book→Soul Gem mid paste
+    "dot_mage_adc": ["flat_pen", "pct_pen", "dot_core", "power", "power", "luxury"],
+    "aa_mage_adc": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "power"],
+    "ability_mage_adc": ["flat_pen", "power", "pct_pen", "power", "cdr", "luxury"],
     # Jungle — Jotunn/Hydra OR stack, then power + pen (no mid Shifter/BoV)
     "burst_assassin": ["gap", "flat_pen", "power", "power", "pct_pen", "cdr"],
     "sustain_assassin": ["gap", "ls_core", "flat_pen", "power", "pct_pen", "cdr"],
@@ -2594,6 +2651,13 @@ def _item_matches_slot(
             or any(k in n for k in ("thoth", "book of", "doom orb", "transcend"))
             or (mp >= 150 and "pendant" in n)
         )
+    if slot == "stack":
+        # Carry power openers: Transcendence / HS stack (physical) or Book (mage)
+        if physical:
+            return any(k in n for k in ("transcend", "heartseeker", "devourer", "tyrfing"))
+        if mage:
+            return any(k in n for k in ("thoth", "book of", "doom orb", "transcend"))
+        return any(k in n for k in ("transcend", "thoth", "heartseeker", "devourer"))
     if slot == "dot_core":
         if physical:
             return any(k in n for k in ("crusher", "serpentine", "toxic", "brawler", "contagion"))
@@ -4108,6 +4172,186 @@ def _normalize_jungle_path(
     return path[:6]
 
 
+def _normalize_carry_path(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    bias: dict,
+    *,
+    mage: bool,
+    physical: bool,
+    max_actives: int,
+) -> list[ScoredItem]:
+    """
+    Duo Carry identity:
+      Physical hunters — Trans/Tyrfing/DG openers, pen, crit/power (no Solo shells)
+      Mage ADC flex — Deso/Book/Obsidian power (not mid-shell, not pure Soul Gem paste)
+    """
+    if not path:
+        return path
+    path = list(path)
+    seen = {x.name for x in path}
+    arch = detect_archetype(bias, "Carry", mage, physical)
+    shell_keys = (
+        "shifter",
+        "breastplate",
+        "genji",
+        "spectral",
+        "midgardian",
+        "contagion",
+        "prophetic",
+        "thebes",
+        "oni hunter",
+        "leviathan",
+        "gladiator",
+        "mantle of discord",
+        "magi's",
+        "pridwen",
+        "phoenix",
+    )
+
+    def is_shell(it: ScoredItem) -> bool:
+        n = it.name.lower()
+        if any(k in n for k in shell_keys):
+            return True
+        if it.item_type == "Defensive" and item_pen_value(it) < 8 and (
+            _canon_stat_value(it.stats, "str") + _canon_stat_value(it.stats, "int") < 35
+        ):
+            return True
+        return False
+
+    def best_phys(exclude: set[str]) -> ScoredItem | None:
+        cands: list[tuple[float, ScoredItem]] = []
+        for x in pool:
+            if x.name in exclude or is_shell(x):
+                continue
+            n = x.name.lower()
+            bonus = 0.0
+            if any(k in n for k in ("tyrfing", "transcend", "devourer", "deathbring", "titan", "musashi", "demon", "executioner", "bloodforge", "dominance")):
+                bonus += 40
+            as_v = _canon_stat_value(x.stats, "as")
+            crit_v = _canon_stat_value(x.stats, "crit")
+            str_v = _canon_stat_value(x.stats, "str")
+            if as_v >= 10 or crit_v >= 15 or str_v >= 35 or item_pen_value(x) >= 8:
+                cands.append((bonus + x.role_score, x))
+        cands.sort(key=lambda t: t[0], reverse=True)
+        return cands[0][1] if cands else None
+
+    def best_mage(exclude: set[str]) -> ScoredItem | None:
+        cands: list[tuple[float, ScoredItem]] = []
+        for x in pool:
+            if x.name in exclude or is_shell(x):
+                continue
+            n = x.name.lower()
+            int_v = _canon_stat_value(x.stats, "int")
+            if int_v < 40 and item_pen_value(x) < 8:
+                continue
+            bonus = 0.0
+            if any(k in n for k in ("desolat", "thoth", "obsi", "tahuti", "soul reaver", "magus", "chronos", "doom")):
+                bonus += 50
+            # Soul Gem is optional late sustain, not a mid core replace
+            if "soul gem" in n:
+                bonus -= 15
+            cands.append((bonus + x.role_score, x))
+        cands.sort(key=lambda t: t[0], reverse=True)
+        return cands[0][1] if cands else None
+
+    # Strip shells from first 5
+    for i, it in enumerate(path[:5]):
+        if not is_shell(it):
+            continue
+        alt = best_mage(seen) if mage else best_phys(seen)
+        if alt:
+            seen.discard(it.name)
+            path[i] = alt
+            seen.add(alt.name)
+
+    # Physical: ensure a real ADC opener (Trans / Tyrfing / DG)
+    if physical:
+        openers = ("transcend", "tyrfing", "devourer")
+        has_op = any(any(k in x.name.lower() for k in openers) for x in path)
+        if not has_op:
+            pick = None
+            for key in ("tyrfing", "transcend", "devourer"):
+                pick = next((x for x in pool if key in x.name.lower() and x.name not in seen), None)
+                if pick:
+                    break
+            if pick:
+                # replace weakest non-pen non-crit
+                ranked = sorted(
+                    range(len(path)),
+                    key=lambda i: (
+                        100 if item_pen_value(path[i]) >= 15 else 0,
+                        80 if _canon_stat_value(path[i].stats, "crit") >= 15 else 0,
+                        path[i].role_score,
+                    ),
+                )
+                drop = ranked[0]
+                seen.discard(path[drop].name)
+                path[drop] = pick
+                seen.add(pick.name)
+
+    # Mage ADC: ensure flat pen + % pen cores
+    if mage:
+        has_flat = any(
+            item_pen_value(x) >= 8
+            and item_pen_value(x) < 18
+            and _pen_matches_kit(x, mage=True, physical=False)
+            for x in path
+        )
+        has_pct = any(
+            item_pen_value(x) >= 15 and _pen_matches_kit(x, mage=True, physical=False)
+            for x in path
+        )
+        for need_flat, need_pct in ((not has_flat, False), (False, not has_pct)):
+            if not need_flat and not need_pct:
+                continue
+            alt = None
+            for x in pool:
+                if x.name in seen or is_shell(x):
+                    continue
+                pen = item_pen_value(x)
+                if not _pen_matches_kit(x, mage=True, physical=False):
+                    continue
+                if need_flat and 8 <= pen < 18:
+                    alt = x
+                    break
+                if need_pct and pen >= 15:
+                    alt = x
+                    break
+            if not alt:
+                continue
+            drop = min(
+                range(len(path)),
+                key=lambda i: (
+                    100 if item_pen_value(path[i]) >= 8 else 0,
+                    50 if "thoth" in path[i].name.lower() or "tahuti" in path[i].name.lower() else 0,
+                    path[i].role_score,
+                ),
+            )
+            if item_pen_value(path[drop]) >= 8:
+                continue
+            seen.discard(path[drop].name)
+            path[drop] = alt
+            seen.add(alt.name)
+
+    # Cap actives
+    while sum(1 for x in path if x.is_active_item) > max_actives:
+        for i, it in enumerate(path):
+            if it.is_active_item:
+                alt = best_mage(seen) if mage else best_phys(seen)
+                if alt and not alt.is_active_item:
+                    seen.discard(it.name)
+                    path[i] = alt
+                    seen.add(alt.name)
+                break
+        else:
+            break
+
+    # Quiet unused arch warning for linters
+    _ = arch
+    return path[:6]
+
+
 def _ensure_inspired_cores(
     path: list[ScoredItem],
     pool: list[ScoredItem],
@@ -4743,7 +4987,7 @@ def build_god_build(
         bias = build_aspect_bias(conn, god["god_id"], bias, aspect_id=aspect_id)
     dtype = god.get("primary_damage_type")
 
-    # Carry is duo ADC — melee basics don't work unless aspect enables ranged AA
+    # Carry is duo ADC — melee/support flex pages blocked; damage ranged only
     if role == "Carry":
         base_range = load_god_attack_range(conn, int(god["god_id"]))
         bias["attack_range"] = base_range
@@ -4766,6 +5010,17 @@ def build_god_build(
                 except json.JSONDecodeError:
                     native = [raw]
                 break
+        # type_label from DB when present on god row
+        type_label = str(god.get("type_label") or "")
+        if not type_label:
+            try:
+                tr = conn.execute(
+                    "SELECT type_label FROM gods WHERE id=?",
+                    (int(god["god_id"]),),
+                ).fetchone()
+                type_label = str(tr["type_label"] or "") if tr else ""
+            except Exception:  # noqa: BLE001
+                type_label = ""
         aspect_blob = ""
         if bias.get("is_aspect"):
             aspect_blob = " ".join(
@@ -4777,10 +5032,14 @@ def build_god_build(
             is_aspect=bool(bias.get("is_aspect")),
             aspect_blob=aspect_blob,
             native_roles=native,
+            type_label=type_label,
+            tags=set(bias.get("tags") or []),
+            aa_score=float(bias.get("aa_score") or 0),
         )
         if not ok:
             return None
         bias["carry_allow_reason"] = reason
+        bias["type_label"] = type_label
     # --- P1 Score universe + P3 God rescore (rescore_for_god includes kit + soft high-SR) ---
     scored = []
     for it in items:
@@ -4964,7 +5223,23 @@ def build_god_build(
                 return False
             return True
         if role == "Carry":
-            if any(k in nlow for k in ("alchemist", "spectral", "phoenix", "thebes", "midgardian", "chandra")):
+            if any(
+                k in nlow
+                for k in (
+                    "alchemist",
+                    "spectral",
+                    "phoenix",
+                    "thebes",
+                    "midgardian",
+                    "chandra",
+                    "shifter",
+                    "breastplate",
+                    "genji",
+                    "contagion",
+                    "prophetic",
+                    "pridwen",
+                )
+            ):
                 return False
             # AA ADC: no solo/jungle ability cores
             if physical and aaish and any(
@@ -5058,6 +5333,10 @@ def build_god_build(
         items_6 = _normalize_jungle_path(
             items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
         )
+    if role == "Carry":
+        items_6 = _normalize_carry_path(
+            items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
+        )
     if role in DAMAGE_ROLES_NEED_PEN:
         items_6 = _trim_excess_defense(items_6, t3, max_defense=1, max_actives=max_act)
     elif role in ("Solo", "Support"):
@@ -5071,9 +5350,13 @@ def build_god_build(
     items_6 = _ensure_inspired_cores(
         items_6, t3, role, god_nm, mage=mage, physical=physical, max_actives=max_act
     )
-    # Inspire can reintroduce shells on AA jungle — strip again
+    # Inspire can reintroduce shells — strip again
     if role == "Jungle":
         items_6 = _normalize_jungle_path(
+            items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
+        )
+    if role == "Carry":
+        items_6 = _normalize_carry_path(
             items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
         )
     # --- P7 Buy order (spike timing; high-SR avg_slot when available) ---
