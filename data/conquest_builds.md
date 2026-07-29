@@ -38,15 +38,15 @@ This is the Carry job description + common items — not a complete build. Open 
 
 *Physical · Strength scaling (STR 116.6% / INT 83.6%)*
 
-Cupid · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, attack-speed steroid, heavy healing, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, gap_close, hard_cc, heal, heavy_heal, long_cd, pet_zone, sustained. Style burst 43%/dps 57%; patch stable (net +0.9, r5 +0.0). Patch axes (r5): damage +0.9, attack_speed +0.1, general -0.0. Scale STR 117% / INT 84%. Path: Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile); Bloodforge (lifesteal + power for execute/bruiser). Pen: Transcendence, Riptalon, Titan's Bane. Actives 1/2 · pen ≈ 30. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Cupid · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, attack-speed steroid, heavy healing, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, gap_close, hard_cc, heal, heavy_heal, long_cd, pet_zone, sustained. Style burst 43%/dps 57%; patch stable (net +0.9, r5 +0.0). Patch axes (r5): damage +0.9, attack_speed +0.1, general -0.0. Scale STR 117% / INT 84%. Path: Devourer's Gauntlet (lifesteal stacking); Tyrfing (Carry path fit for kit profile); The Executioner (AA prot shred). Pen: Titan's Bane. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 30.0):
-  1. Transcendence (power, 2400g)
+- **Buy order** (actives 0/2, pen ≈ 20.0):
+  1. Devourer's Gauntlet (power, 2500g)
   2. Tyrfing (power, 2400g)
-  3. Bloodforge (power, active, 2550g)
+  3. The Executioner (power, 2550g)
   4. Musashi's Dual Swords (power, 2700g)
-  5. Riptalon (pen, pen 10.0, 2700g)
+  5. Odysseus' Bow (power, 2450g)
   6. Titan's Bane (pen, pen 20.0, 3100g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
@@ -54,15 +54,15 @@ Cupid · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult 
 
 *Physical · Hybrid scaling (STR 113.4% / INT 119.3%)*
 
-Danzaburou · Carry · archetype «crit_adc» (STR / physical). Kit effects: channel / cast time, big ult spike, basic-attack kit, hard crowd control, CC immunity in kit, lots of CC. Tags: aa, anti_cc, burst, channel, dot, hard_cc, heal, high_cc. Style burst 70%/dps 30%; patch new (net +0.1, r5 +0.0). Patch axes (r5): general +0.0. Scale STR 113% / INT 119%. Path: Devourer's Gauntlet (lifesteal stacking); Bloodforge (lifesteal + power for execute/bruiser); Tyrfing (Carry path fit for kit profile). Pen: Titan's Bane. Actives 1/2 · pen ≈ 20. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Danzaburou · Carry · archetype «crit_adc» (STR / physical). Kit effects: channel / cast time, big ult spike, basic-attack kit, hard crowd control, CC immunity in kit, lots of CC. Tags: aa, anti_cc, burst, channel, dot, hard_cc, heal, high_cc. Style burst 70%/dps 30%; patch new (net +0.1, r5 +0.0). Patch axes (r5): general +0.0. Scale STR 113% / INT 119%. Path: Devourer's Gauntlet (lifesteal stacking); Odysseus' Bow (Carry path fit for kit profile); Tyrfing (Carry path fit for kit profile). Pen: Titan's Bane, Riptalon. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 20.0):
+- **Buy order** (actives 0/2, pen ≈ 30.0):
   1. Devourer's Gauntlet (power, 2500g)
-  2. Bloodforge (power, active, 2550g)
+  2. Odysseus' Bow (power, 2450g)
   3. Tyrfing (power, 2400g)
-  4. Musashi's Dual Swords (power, 2700g)
-  5. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Titan's Bane (pen, pen 20.0, 3100g)
+  5. Riptalon (pen, pen 10.0, 2700g)
   6. Deathbringer (power, 2900g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
@@ -86,15 +86,15 @@ Princess Bari · Carry · archetype «ability_mage_adc» (INT / magical). Kit ef
 
 *Physical · Strength scaling (STR 80.4% / INT 51.1%)*
 
-Cernunnos · Carry · archetype «crit_adc» (STR / physical). Kit effects: protection shred, big ult spike, basic-attack kit, self heal / drain, hard crowd control, dash / leap engage. Tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 31%/dps 69%; patch stable (net +0.4, r5 +0.0). Patch axes (r5): general +0.4, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path: Transcendence (mana stack → power scaling); Lernaean Bow (Carry path fit for kit profile); Tyrfing (Carry path fit for kit profile). Pen: Transcendence, Titan's Bane. Actives 1/2 · pen ≈ 20. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
+Cernunnos · Carry · archetype «crit_adc» (STR / physical). Kit effects: protection shred, big ult spike, basic-attack kit, self heal / drain, hard crowd control, dash / leap engage. Tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 31%/dps 69%; patch stable (net +0.4, r5 +0.0). Patch axes (r5): general +0.4, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path: Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile); Odysseus' Bow (Carry path fit for kit profile). Pen: Transcendence, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 20.0):
+- **Buy order** (actives 0/2, pen ≈ 30.0):
   1. Transcendence (power, 2400g)
-  2. Lernaean Bow (power, active, 2500g)
-  3. Tyrfing (power, 2400g)
+  2. Tyrfing (power, 2400g)
+  3. Odysseus' Bow (power, 2450g)
   4. Demon Blade (power, 2750g)
-  5. Deathbringer (power, 2900g)
+  5. Riptalon (pen, pen 10.0, 2700g)
   6. Titan's Bane (pen, pen 20.0, 3100g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
@@ -102,14 +102,14 @@ Cernunnos · Carry · archetype «crit_adc» (STR / physical). Kit effects: prot
 
 *Physical · Strength scaling (STR 52.4% / INT 0%)*
 
-Ishtar · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-speed steroid, execute / threshold, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, as_steroid, execute, gap_close, hard_cc, high_cc, long_cd, pet_zone. Style burst 1%/dps 99%; patch new (net +0.8, r5 +1.5). Patch axes (r5): survivability +1.1, damage +0.4. Scale STR 52% / INT 0%. Path: Avenging Blade (attack speed / crit carry core; patch rising — lean damage); Tyrfing (Carry path fit for kit profile); Bloodforge (lifesteal + power for execute/bruiser). Pen: Silverbranch Bow, Titan's Bane. Actives 1/2 · pen ≈ 30. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Ishtar · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-speed steroid, execute / threshold, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, as_steroid, execute, gap_close, hard_cc, high_cc, long_cd, pet_zone. Style burst 1%/dps 99%; patch new (net +0.8, r5 +1.5). Patch axes (r5): survivability +1.1, damage +0.4. Scale STR 52% / INT 0%. Path: Transcendence (penetration required for damage role); Tyrfing (Carry path fit for kit profile); Odysseus' Bow (Carry path fit for kit profile). Pen: Transcendence, Titan's Bane. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 30.0):
-  1. Avenging Blade (power, 2650g)
+- **Buy order** (actives 0/2, pen ≈ 20.0):
+  1. Transcendence (power, 2400g)
   2. Tyrfing (power, 2400g)
-  3. Bloodforge (power, active, 2550g)
-  4. Silverbranch Bow (pen, pen 10.0, 2700g)
+  3. Odysseus' Bow (power, 2450g)
+  4. The Executioner (power, 2550g)
   5. Deathbringer (power, 2900g)
   6. Titan's Bane (pen, pen 20.0, 3100g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
@@ -118,14 +118,14 @@ Ishtar · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-
 
 *Physical · Strength scaling (STR 121.5% / INT 0%)*
 
-Anhur · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, basic-attack kit, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, dot, gap_close, hard_cc, high_cc, long_cd, pet_zone. Style burst 47%/dps 53%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.2, pen +0.0, survivability +0.0. Scale STR 121% / INT 0%. Path: Devourer's Gauntlet (lifesteal stacking); Tyrfing (Carry path fit for kit profile); Musashi's Dual Swords (attack speed / crit carry core). Pen: Titan's Bane. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
+Anhur · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, basic-attack kit, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, dot, gap_close, hard_cc, high_cc, long_cd, pet_zone. Style burst 47%/dps 53%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): general +0.2, pen +0.0, survivability +0.0. Scale STR 121% / INT 0%. Path: Tyrfing (Carry path fit for kit profile); Demon Blade (attack speed / crit carry core); Odysseus' Bow (Carry path fit for kit profile). Pen: Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 20.0):
-  1. Devourer's Gauntlet (power, 2500g)
-  2. Tyrfing (power, 2400g)
-  3. Musashi's Dual Swords (power, 2700g)
-  4. The Executioner (power, 2550g)
+- **Buy order** (actives 0/2, pen ≈ 30.0):
+  1. Tyrfing (power, 2400g)
+  2. Demon Blade (power, 2750g)
+  3. Odysseus' Bow (power, 2450g)
+  4. Riptalon (pen, pen 10.0, 2700g)
   5. Titan's Bane (pen, pen 20.0, 3100g)
   6. Deathbringer (power, 2900g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
@@ -134,14 +134,14 @@ Anhur · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult 
 
 *Magical · Intelligence scaling (STR 21.8% / INT 50.7%)*
 
-Sol · Carry · archetype «dot_mage_adc» (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 60%/dps 40%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); Gluttonous Grimoire (sustain / omnivamp line). Pen: Book of Thoth, Spear of Desolation, Gluttonous Grimoire, Obsidian Shard. Actives 0/2 · pen ≈ 40. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Sol · Carry · archetype «dot_mage_adc» (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 60%/dps 40%; patch stable (net -0.1, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); Gluttonous Grimoire (sustain / omnivamp line). Pen: Book of Thoth, Spear of Desolation, Gluttonous Grimoire, Spear Of The Magus, Obsidian Shard. Actives 0/2 · pen ≈ 50. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Sands Of Time
-- **Buy order** (actives 0/2, pen ≈ 40.0):
+- **Buy order** (actives 0/2, pen ≈ 50.0):
   1. Book of Thoth (power, 2300g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
   3. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  4. Typhon’s Heart (power, 2600g)
+  4. Spear Of The Magus (pen, pen 10.0, 2700g)
   5. Obsidian Shard (pen, pen 20.0, 3050g)
   6. Soul Reaver (power, 2950g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
@@ -150,30 +150,30 @@ Sol · Carry · archetype «dot_mage_adc» (INT / magical). Kit effects: damage 
 
 *Physical · Hybrid scaling (STR 63.3% / INT 76.7%)*
 
-Neith · Carry · archetype «crit_adc» (STR / physical). Kit effects: channel / cast time, big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, lots of CC. Tags: as_steroid, burst, channel, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 66%/dps 34%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): general +0.1, utility -0.0, attack_speed -0.0. Scale STR 63% / INT 77%. Path: Devourer's Gauntlet (lifesteal stacking); Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile). Pen: Transcendence, Heartseeker, Titan's Bane. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Neith · Carry · archetype «crit_adc» (STR / physical). Kit effects: channel / cast time, big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, lots of CC. Tags: as_steroid, burst, channel, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 66%/dps 34%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): general +0.1, utility -0.0, attack_speed -0.0. Scale STR 63% / INT 77%. Path: Devourer's Gauntlet (lifesteal stacking); Tyrfing (Carry path fit for kit profile); Riptalon (attack speed / crit carry core). Pen: Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
 - **Buy order** (actives 0/2, pen ≈ 30.0):
   1. Devourer's Gauntlet (power, 2500g)
-  2. Transcendence (power, 2400g)
-  3. Tyrfing (power, 2400g)
-  4. Demon Blade (power, 2750g)
-  5. Heartseeker (pen, pen 10.0, 3000g)
-  6. Titan's Bane (pen, pen 20.0, 3100g)
+  2. Tyrfing (power, 2400g)
+  3. Riptalon (pen, pen 10.0, 2700g)
+  4. Titan's Bane (pen, pen 20.0, 3100g)
+  5. Deathbringer (power, 2900g)
+  6. Odysseus' Bow (power, 2450g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Xbalanque — B-tier (role rank #9, model 56.6)
 
 *Physical · Strength scaling (STR 36.9% / INT 34.2%)*
 
-Xbalanque · Carry · archetype «power_adc» (STR / physical). Kit effects: damage over time, dash / leap engage, CC immunity in kit, multi-hit / ticks, sustained DPS, zones / linger. Tags: anti_cc, dot, gap_close, heal, heavy_dot, long_cd, sustained, zone. Style burst 28%/dps 72%; patch volatile (net +1.7, r5 +0.0). Patch axes (r5): damage +1.6, general +0.1, utility +0.1. Scale STR 37% / INT 34%. Path: Devourer's Gauntlet (lifesteal stacking); Lernaean Bow (Carry path fit for kit profile); Tyrfing (Carry path fit for kit profile). Pen: Titan's Bane. Actives 2/2 · pen ≈ 20. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Xbalanque · Carry · archetype «power_adc» (STR / physical). Kit effects: damage over time, dash / leap engage, CC immunity in kit, multi-hit / ticks, sustained DPS, zones / linger. Tags: anti_cc, dot, gap_close, heal, heavy_dot, long_cd, sustained, zone. Style burst 28%/dps 72%; patch volatile (net +1.7, r5 +0.0). Patch axes (r5): damage +1.6, general +0.1, utility +0.1. Scale STR 37% / INT 34%. Path: Devourer's Gauntlet (lifesteal stacking); Tyrfing (Carry path fit for kit profile); Odysseus' Bow (Carry path fit for kit profile). Pen: Titan's Bane. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 2/2, pen ≈ 20.0):
+- **Buy order** (actives 0/2, pen ≈ 20.0):
   1. Devourer's Gauntlet (power, 2500g)
-  2. Lernaean Bow (power, active, 2500g)
-  3. Tyrfing (power, 2400g)
-  4. Bloodforge (power, active, 2550g)
+  2. Tyrfing (power, 2400g)
+  3. Odysseus' Bow (power, 2450g)
+  4. Qin's Blade (power, 2600g)
   5. Deathbringer (power, 2900g)
   6. Titan's Bane (pen, pen 20.0, 3100g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
@@ -182,78 +182,78 @@ Xbalanque · Carry · archetype «power_adc» (STR / physical). Kit effects: dam
 
 *Magical · Intelligence scaling (STR 80.3% / INT 130.9%)*
 
-Nut · Carry · archetype «ability_mage_adc» (INT / magical). Kit effects: big ult spike, hard crowd control, dash / leap engage, CC immunity in kit, lots of CC, multi-hit / ticks. Tags: anti_cc, burst, gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 74%/dps 26%; patch falling (net -1.2, r5 +0.0). Patch axes (r5): general -0.8, damage -0.4. Scale STR 80% / INT 131%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); Obsidian Shard (% pen for magical tanks / late fights). Pen: Book of Thoth, Spear of Desolation, Obsidian Shard, Spear Of The Magus, Dreamer's Idol. Actives 1/2 · pen ≈ 50. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Nut · Carry · archetype «ability_mage_adc» (INT / magical). Kit effects: big ult spike, hard crowd control, dash / leap engage, CC immunity in kit, lots of CC, multi-hit / ticks. Tags: anti_cc, burst, gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 74%/dps 26%; patch falling (net -1.2, r5 +0.0). Patch axes (r5): general -0.8, damage -0.4. Scale STR 80% / INT 131%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); The World Stone (penetration required for damage role). Pen: Book of Thoth, Spear of Desolation, The World Stone, Obsidian Shard, Spear Of The Magus. Actives 0/2 · pen ≈ 50. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Sands Of Time
-- **Buy order** (actives 1/2, pen ≈ 50.0):
+- **Buy order** (actives 0/2, pen ≈ 50.0):
   1. Book of Thoth (power, 2300g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
-  3. Obsidian Shard (pen, pen 20.0, 3050g)
-  4. Spear Of The Magus (pen, pen 10.0, 2700g)
-  5. Soul Reaver (power, 2950g)
-  6. Dreamer's Idol (pen, active, pen 10.0, 3500g)
+  3. The World Stone (pen, pen 10.0, 2800g)
+  4. Obsidian Shard (pen, pen 20.0, 3050g)
+  5. Spear Of The Magus (pen, pen 10.0, 2700g)
+  6. Soul Reaver (power, 2950g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Chiron — B-tier (role rank #11, model 51.4)
 
 *Physical · Strength scaling (STR 99.9% / INT 0%)*
 
-Chiron · Carry · archetype «power_adc» (STR / physical). Kit effects: protection shred, channel / cast time, big ult spike, pet / deployable, dash / leap engage, ally buffs / auras. Tags: burst, channel, dot, gap_close, heal, high_cc, long_cd, pet_zone. Style burst 69%/dps 31%; patch new (net -0.2, r5 +0.0). Patch axes (r5): general -0.3, utility +0.0. Scale STR 100% / INT 0%. Path: Devourer's Gauntlet (lifesteal stacking); Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile). Pen: Transcendence, Toxic Blade, The Crusher, Titan's Bane. Actives 0/2 · pen ≈ 40. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Chiron · Carry · archetype «power_adc» (STR / physical). Kit effects: protection shred, channel / cast time, big ult spike, pet / deployable, dash / leap engage, ally buffs / auras. Tags: burst, channel, dot, gap_close, heal, high_cc, long_cd, pet_zone. Style burst 69%/dps 31%; patch new (net -0.2, r5 +0.0). Patch axes (r5): general -0.3, utility +0.0. Scale STR 100% / INT 0%. Path: Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile); Odysseus' Bow (Carry path fit for kit profile). Pen: Transcendence, Titan's Bane. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 40.0):
-  1. Devourer's Gauntlet (power, 2500g)
-  2. Transcendence (power, 2400g)
-  3. Tyrfing (power, 2400g)
-  4. Toxic Blade (pen, pen 10.0, 2700g)
-  5. The Crusher (pen, pen 10.0, 2800g)
-  6. Titan's Bane (pen, pen 20.0, 3100g)
+- **Buy order** (actives 0/2, pen ≈ 20.0):
+  1. Transcendence (power, 2400g)
+  2. Tyrfing (power, 2400g)
+  3. Odysseus' Bow (power, 2450g)
+  4. The Executioner (power, 2550g)
+  5. Titan's Bane (pen, pen 20.0, 3100g)
+  6. Deathbringer (power, 2900g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Medusa — B-tier (role rank #12, model 50.3)
 
 *Physical · Hybrid scaling (STR 64.2% / INT 63.9%)*
 
-Medusa · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, as_steroid, burst, dot, gap_close, hard_cc, heal, long_cd. Style burst 75%/dps 25%; patch volatile (net +1.2, r5 +0.0). Patch axes (r5): cooldown +0.4, damage +0.4, survivability +0.2. Scale STR 64% / INT 64%. Path: Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile); Arondight (CDR + pen for gank/engage). Pen: Transcendence, Titan's Bane, Heartseeker. Actives 1/2 · pen ≈ 30. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Medusa · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, as_steroid, burst, dot, gap_close, hard_cc, heal, long_cd. Style burst 75%/dps 25%; patch volatile (net +1.2, r5 +0.0). Patch axes (r5): cooldown +0.4, damage +0.4, survivability +0.2. Scale STR 64% / INT 64%. Path: Tyrfing (Carry path fit for kit profile); Odysseus' Bow (Carry path fit for kit profile); Titan's Bane (% pen for physical tanks / late fights; damage buffed — power/pen). Pen: Titan's Bane, Riptalon, Avatar's Parashu. Actives 1/2 · pen ≈ 40. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 30.0):
-  1. Transcendence (power, 2400g)
-  2. Tyrfing (power, 2400g)
-  3. Arondight (power, active, 2650g)
-  4. Titan's Bane (pen, pen 20.0, 3100g)
-  5. Heartseeker (pen, pen 10.0, 3000g)
-  6. Deathbringer (power, 2900g)
+- **Buy order** (actives 1/2, pen ≈ 40.0):
+  1. Tyrfing (power, 2400g)
+  2. Odysseus' Bow (power, 2450g)
+  3. Titan's Bane (pen, pen 20.0, 3100g)
+  4. Riptalon (pen, pen 10.0, 2700g)
+  5. Deathbringer (power, 2900g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Izanami — C-tier (role rank #13, model 50.2)
 
 *Physical · Hybrid scaling (STR 92.9% / INT 84.5%)*
 
-Izanami · Carry · archetype «crit_adc» (STR / physical). Kit effects: protection shred, big ult spike, attack-speed steroid, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, dot, gap_close, hard_cc, heal, long_cd, pet_zone, prot_shred. Style burst 34%/dps 66%; patch new (net -0.2, r5 +0.0). Patch axes (r5): general -0.2, attack_speed -0.0, damage +0.0. Scale STR 93% / INT 84%. Path: Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile); Arondight (CDR + pen for gank/engage). Pen: Transcendence, Titan's Bane. Actives 1/2 · pen ≈ 20. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Izanami · Carry · archetype «crit_adc» (STR / physical). Kit effects: protection shred, big ult spike, attack-speed steroid, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, dot, gap_close, hard_cc, heal, long_cd, pet_zone, prot_shred. Style burst 34%/dps 66%; patch new (net -0.2, r5 +0.0). Patch axes (r5): general -0.2, attack_speed -0.0, damage +0.0. Scale STR 93% / INT 84%. Path: Devourer's Gauntlet (lifesteal stacking); Tyrfing (Carry path fit for kit profile); The Executioner (AA prot shred). Pen: Titan's Bane, Riptalon. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 20.0):
-  1. Transcendence (power, 2400g)
+- **Buy order** (actives 0/2, pen ≈ 30.0):
+  1. Devourer's Gauntlet (power, 2500g)
   2. Tyrfing (power, 2400g)
-  3. Arondight (power, active, 2650g)
-  4. Demon Blade (power, 2750g)
-  5. Musashi's Dual Swords (power, 2700g)
-  6. Titan's Bane (pen, pen 20.0, 3100g)
+  3. The Executioner (power, 2550g)
+  4. Titan's Bane (pen, pen 20.0, 3100g)
+  5. Riptalon (pen, pen 10.0, 2700g)
+  6. Deathbringer (power, 2900g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Artemis — C-tier (role rank #14, model 49.0)
 
 *Physical · Strength scaling (STR 67.1% / INT 0%)*
 
-Artemis · Carry · archetype «crit_adc» (STR / physical). Kit effects: basic-attack kit, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit, lots of CC. Tags: aa, anti_cc, dot, gap_close, hard_cc, high_cc, long_cd, pet_zone. Style burst 10%/dps 90%; patch stable (net -0.2, r5 +0.0). Patch axes (r5): general -0.2, heal -0.0, attack_speed +0.0. Scale STR 67% / INT 0%. Path: Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile); Toxic Blade (penetration required for damage role). Pen: Transcendence, Toxic Blade, Titan's Bane. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Artemis · Carry · archetype «crit_adc» (STR / physical). Kit effects: basic-attack kit, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit, lots of CC. Tags: aa, anti_cc, dot, gap_close, hard_cc, high_cc, long_cd, pet_zone. Style burst 10%/dps 90%; patch stable (net -0.2, r5 +0.0). Patch axes (r5): general -0.2, heal -0.0, attack_speed +0.0. Scale STR 67% / INT 0%. Path: Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile); Odysseus' Bow (Carry path fit for kit profile). Pen: Transcendence, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
 - **Buy order** (actives 0/2, pen ≈ 30.0):
   1. Transcendence (power, 2400g)
   2. Tyrfing (power, 2400g)
-  3. Toxic Blade (pen, pen 10.0, 2700g)
-  4. Musashi's Dual Swords (power, 2700g)
+  3. Odysseus' Bow (power, 2450g)
+  4. Riptalon (pen, pen 10.0, 2700g)
   5. Deathbringer (power, 2900g)
   6. Titan's Bane (pen, pen 20.0, 3100g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
@@ -262,30 +262,30 @@ Artemis · Carry · archetype «crit_adc» (STR / physical). Kit effects: basic-
 
 *Physical · Strength scaling (STR 50.0% / INT 36.8%)*
 
-Hou Yi · Carry · archetype «power_adc» (STR / physical). Kit effects: big ult spike, hard crowd control, dash / leap engage, lots of CC, long cooldowns. Tags: gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 47%/dps 53%; patch stable (net -0.6, r5 +0.0). Patch axes (r5): general -0.7, damage +0.0, utility +0.0. Scale STR 50% / INT 37%. Path: Tyrfing (Carry path fit for kit profile); Arondight (CDR + pen for gank/engage); The Executioner (AA prot shred). Pen: Heartseeker, Titan's Bane. Actives 1/2 · pen ≈ 30. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Hou Yi · Carry · archetype «power_adc» (STR / physical). Kit effects: big ult spike, hard crowd control, dash / leap engage, lots of CC, long cooldowns. Tags: gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 47%/dps 53%; patch stable (net -0.6, r5 +0.0). Patch axes (r5): general -0.7, damage +0.0, utility +0.0. Scale STR 50% / INT 37%. Path: Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile); The Executioner (AA prot shred). Pen: Transcendence, Titan's Bane. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 30.0):
-  1. Tyrfing (power, 2400g)
-  2. Arondight (power, active, 2650g)
+- **Buy order** (actives 0/2, pen ≈ 20.0):
+  1. Transcendence (power, 2400g)
+  2. Tyrfing (power, 2400g)
   3. The Executioner (power, 2550g)
   4. Odysseus' Bow (power, 2450g)
-  5. Heartseeker (pen, pen 10.0, 3000g)
-  6. Titan's Bane (pen, pen 20.0, 3100g)
+  5. Titan's Bane (pen, pen 20.0, 3100g)
+  6. Deathbringer (power, 2900g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Ullr — C-tier (role rank #16, model 45.8)
 
 *Physical · Strength scaling (STR 75.8% / INT 0%)*
 
-Ullr · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage, sustained DPS. Tags: as_steroid, gap_close, hard_cc, heal, high_cc, pet_zone, self_sustain, sustained. Style burst 1%/dps 99%; patch stable (net -0.5, r5 +0.0). Patch axes (r5): general -0.5, attack_speed +0.0, cooldown +0.0. Scale STR 76% / INT 0%. Path: Transcendence (penetration required for damage role); Tyrfing (Carry path fit for kit profile); Odysseus' Bow (Carry path fit for kit profile). Pen: Transcendence, Titan's Bane. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Ullr · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage, sustained DPS. Tags: as_steroid, gap_close, hard_cc, heal, high_cc, pet_zone, self_sustain, sustained. Style burst 1%/dps 99%; patch stable (net -0.5, r5 +0.0). Patch axes (r5): general -0.5, attack_speed +0.0, cooldown +0.0. Scale STR 76% / INT 0%. Path: Devourer's Gauntlet (lifesteal stacking); Tyrfing (Carry path fit for kit profile); Bloodforge (Carry path fit for kit profile). Pen: Titan's Bane. Actives 1/2 · pen ≈ 20. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 20.0):
-  1. Transcendence (power, 2400g)
+- **Buy order** (actives 1/2, pen ≈ 20.0):
+  1. Devourer's Gauntlet (power, 2500g)
   2. Tyrfing (power, 2400g)
-  3. Odysseus' Bow (power, 2450g)
-  4. Musashi's Dual Swords (power, 2700g)
+  3. Bloodforge (power, active, 2550g)
+  4. Odysseus' Bow (power, 2450g)
   5. The Executioner (power, 2550g)
   6. Titan's Bane (pen, pen 20.0, 3100g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
@@ -294,15 +294,15 @@ Ullr · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-sp
 
 *Physical · Strength scaling (STR 87.0% / INT 0%)*
 
-Jing Wei · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, attack-speed steroid, pet / deployable, dash / leap engage, CC immunity in kit, high mobility. Tags: anti_cc, as_steroid, dot, gap_close, long_cd, mobile, pet_zone, sustained. Style burst 31%/dps 69%; patch stable (net -0.6, r5 +0.0). Patch axes (r5): general -0.6, damage -0.0, utility +0.0. Scale STR 87% / INT 0%. Path: Tyrfing (Carry path fit for kit profile); Lernaean Bow (Carry path fit for kit profile); Musashi's Dual Swords (attack speed / crit carry core). Pen: Silverbranch Bow, Titan's Bane. Actives 1/2 · pen ≈ 30. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Jing Wei · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, attack-speed steroid, pet / deployable, dash / leap engage, CC immunity in kit, high mobility. Tags: anti_cc, as_steroid, dot, gap_close, long_cd, mobile, pet_zone, sustained. Style burst 31%/dps 69%; patch stable (net -0.6, r5 +0.0). Patch axes (r5): general -0.6, damage -0.0, utility +0.0. Scale STR 87% / INT 0%. Path: Devourer's Gauntlet (lifesteal stacking); Avenging Blade (attack speed / crit carry core); Odysseus' Bow (Carry path fit for kit profile). Pen: Titan's Bane. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 30.0):
-  1. Tyrfing (power, 2400g)
-  2. Lernaean Bow (power, active, 2500g)
-  3. Musashi's Dual Swords (power, 2700g)
-  4. Silverbranch Bow (pen, pen 10.0, 2700g)
-  5. The Executioner (power, 2550g)
+- **Buy order** (actives 0/2, pen ≈ 20.0):
+  1. Devourer's Gauntlet (power, 2500g)
+  2. Avenging Blade (power, 2650g)
+  3. Odysseus' Bow (power, 2450g)
+  4. The Executioner (power, 2550g)
+  5. Deathbringer (power, 2900g)
   6. Titan's Bane (pen, pen 20.0, 3100g)
 - **Relics:** Purification Beads (33.0), Aegis of Acceleration (28.0)
 
@@ -310,14 +310,14 @@ Jing Wei · Carry · archetype «crit_adc» (STR / physical). Kit effects: big u
 
 *Physical · Strength scaling (STR 74.1% / INT 0%)*
 
-Apollo · Carry · archetype «crit_adc» (STR / physical). Kit effects: basic-attack kit, attack-speed steroid, hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit. Tags: aa, anti_cc, as_steroid, gap_close, hard_cc, long_cd, sustained, team_buff. Style burst 13%/dps 87%; patch volatile (net +0.6, r5 +0.7). Patch axes (r5): general +0.7. Scale STR 74% / INT 0%. Path: Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile); Arondight (CDR + pen for gank/engage). Pen: Transcendence, Titan's Bane. Actives 1/2 · pen ≈ 20. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Apollo · Carry · archetype «crit_adc» (STR / physical). Kit effects: basic-attack kit, attack-speed steroid, hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit. Tags: aa, anti_cc, as_steroid, gap_close, hard_cc, long_cd, sustained, team_buff. Style burst 13%/dps 87%; patch volatile (net +0.6, r5 +0.7). Patch axes (r5): general +0.7. Scale STR 74% / INT 0%. Path: Transcendence (mana stack → power scaling); Tyrfing (Carry path fit for kit profile); The Executioner (AA prot shred). Pen: Transcendence, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 1/2, pen ≈ 20.0):
+- **Buy order** (actives 0/2, pen ≈ 30.0):
   1. Transcendence (power, 2400g)
   2. Tyrfing (power, 2400g)
-  3. Arondight (power, active, 2650g)
-  4. Musashi's Dual Swords (power, 2700g)
+  3. The Executioner (power, 2550g)
+  4. Riptalon (pen, pen 10.0, 2700g)
   5. Titan's Bane (pen, pen 20.0, 3100g)
   6. Deathbringer (power, 2900g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
@@ -326,15 +326,15 @@ Apollo · Carry · archetype «crit_adc» (STR / physical). Kit effects: basic-a
 
 *Physical · Strength scaling (STR 64.6% / INT 0%)*
 
-Rama · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-speed steroid, hard crowd control, sustained DPS, multi-hit / ticks, long cooldowns. Tags: as_steroid, hard_cc, long_cd, sustained. Style burst 0%/dps 100%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): general +0.1, survivability -0.0, attack_speed +0.0. Scale STR 65% / INT 0%. Path: Transcendence (penetration required for damage role); Tyrfing (Carry path fit for kit profile); Musashi's Dual Swords (attack speed / crit carry core). Pen: Transcendence, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
+Rama · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-speed steroid, hard crowd control, sustained DPS, multi-hit / ticks, long cooldowns. Tags: as_steroid, hard_cc, long_cd, sustained. Style burst 0%/dps 100%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): general +0.1, survivability -0.0, attack_speed +0.0. Scale STR 65% / INT 0%. Path: Devourer's Gauntlet (lifesteal stacking); Tyrfing (Carry path fit for kit profile); Odysseus' Bow (Carry path fit for kit profile). Pen: Titan's Bane. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 30.0):
-  1. Transcendence (power, 2400g)
+- **Buy order** (actives 0/2, pen ≈ 20.0):
+  1. Devourer's Gauntlet (power, 2500g)
   2. Tyrfing (power, 2400g)
-  3. Musashi's Dual Swords (power, 2700g)
-  4. Riptalon (pen, pen 10.0, 2700g)
-  5. The Executioner (power, 2550g)
+  3. Odysseus' Bow (power, 2450g)
+  4. The Executioner (power, 2550g)
+  5. Deathbringer (power, 2900g)
   6. Titan's Bane (pen, pen 20.0, 3100g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
@@ -342,13 +342,13 @@ Rama · Carry · archetype «crit_adc» (STR / physical). Kit effects: attack-sp
 
 *Magical · Intelligence scaling (STR 0% / INT 67.2%)*
 
-Chronos · Carry · archetype «ability_mage_adc» (INT / magical). Kit effects: hard crowd control, dash / leap engage, CC immunity in kit, sustained DPS, multi-hit / ticks, healing in kit. Tags: anti_cc, gap_close, hard_cc, heal, long_cd. Style burst 0%/dps 100%; patch falling (net -3.7, r5 -3.7). Patch axes (r5): utility -1.9, damage -1.3, general -0.5. Scale STR 0% / INT 67%. Path: Book of Thoth (penetration required for damage role); Spear of Desolation (flat pen + CDR for ability burst); The World Stone (penetration required for damage role). Pen: Book of Thoth, Spear of Desolation, The World Stone, Obsidian Shard, The Cosmic Horror. Actives 0/2 · pen ≈ 50. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Chronos · Carry · archetype «ability_mage_adc» (INT / magical). Kit effects: hard crowd control, dash / leap engage, CC immunity in kit, sustained DPS, multi-hit / ticks, healing in kit. Tags: anti_cc, gap_close, hard_cc, heal, long_cd. Style burst 0%/dps 100%; patch falling (net -3.7, r5 -3.7). Patch axes (r5): utility -1.9, damage -1.3, general -0.5. Scale STR 0% / INT 67%. Path: Book of Thoth (penetration required for damage role); Spear of Desolation (flat pen + CDR for ability burst); Chronos' Pendant (CDR core for spam / channel kits). Pen: Book of Thoth, Spear of Desolation, Obsidian Shard, The Cosmic Horror. Actives 0/2 · pen ≈ 40. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Sands Of Time
-- **Buy order** (actives 0/2, pen ≈ 50.0):
+- **Buy order** (actives 0/2, pen ≈ 40.0):
   1. Book of Thoth (power, 2300g)
   2. Spear of Desolation (pen, pen 10.0, 2650g)
-  3. The World Stone (pen, pen 10.0, 2800g)
+  3. Chronos' Pendant (power, 2400g)
   4. Obsidian Shard (pen, pen 20.0, 3050g)
   5. The Cosmic Horror (pen, pen 10.0, 2650g)
   6. Soul Reaver (power, 2950g)

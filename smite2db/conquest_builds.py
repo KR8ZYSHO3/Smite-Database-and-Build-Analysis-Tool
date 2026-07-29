@@ -2519,10 +2519,10 @@ ARCHETYPE_SLOTS: dict[str, list[str]] = {
     "sustain_mage": ["flat_pen", "pct_pen", "power", "sustain", "cdr", "defense"],
     "aa_mage": ["aa_core", "flat_pen", "pct_pen", "as_core", "power", "defense"],
     "zone_mage": ["flat_pen", "pct_pen", "zone_core", "power", "cdr", "defense"],
-    # Carry — AS/LS → pen → crit/power (standard ranked ADC). No mid-shell slots.
-    "crit_adc": ["as_core", "ls_core", "pct_pen", "crit_core", "power", "power"],
-    "onhit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "power", "power"],
-    "power_adc": ["stack", "as_core", "pct_pen", "power", "crit_core", "power"],
+    # Carry — ranked hunter shape: opener → AS/LS → shred → Titan's → finisher
+    "crit_adc": ["as_core", "ls_core", "onhit", "pct_pen", "crit_core", "power"],
+    "onhit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "power", "crit_core"],
+    "power_adc": ["stack", "as_core", "onhit", "pct_pen", "power", "crit_core"],
     # Mage ADC flex: pen + INT power (duo farm) — not Book→Soul Gem mid paste
     "dot_mage_adc": ["flat_pen", "pct_pen", "dot_core", "power", "power", "luxury"],
     "aa_mage_adc": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "power"],
@@ -2670,9 +2670,14 @@ def _item_matches_slot(
     if slot == "aa_core" or slot == "as_core":
         if mage and any(k in n for k in ("titan", "bloodforge", "jotunn")):
             return False
-        return as_v >= 15 or any(
+        # Hunter openers + AS cores (ranked: Tyrfing / Lernaean / OBow / …)
+        return as_v >= 10 or any(
             k in n
             for k in (
+                "tyrfing",
+                "lernaean",
+                "odysseus",
+                "dominance",
                 "riptalon",
                 "ichival",
                 "demon",
@@ -2681,17 +2686,32 @@ def _item_matches_slot(
                 "avenging",
                 "musashi",
                 "eros",
-                "qins",
+                "qin",
                 "death metal",
+                "silverbranch",
+                "manchu",
+                "fatalis",
             )
         )
     if slot == "crit_core":
         return crit_v >= 15 or any(k in n for k in ("deathbringer", "demon blade", "rage", "wind", "death metal"))
     if slot == "onhit":
-        return as_v >= 10 and (
-            pen >= 5
-            or "basic" in blob
-            or any(k in n for k in ("riptalon", "executioner", "qins", "silverbranch"))
+        return any(
+            k in n
+            for k in (
+                "executioner",
+                "odysseus",
+                "qin",
+                "riptalon",
+                "silverbranch",
+                "dominance",
+            )
+        ) or (
+            as_v >= 10
+            and (
+                pen >= 5
+                or "basic" in blob
+            )
         )
     if slot == "gap":
         if mage:
@@ -2976,22 +2996,43 @@ def _pick_slot_item(
                 if any(k in n for k in ("lifebinder", "asclepius")):
                     sc -= 50  # mid is damage, not heal support
         if role == "Carry":
-            if slot in ("as_core", "crit_core", "onhit", "ls_core", "pct_pen", "power"):
-                # High-SR openers: Tyrfing / DG / Trans / AS shred
-                if any(k in n for k in ("tyrfing", "odysseus", "devourer", "transcend")):
+            if slot in ("as_core", "crit_core", "onhit", "ls_core", "pct_pen", "power", "stack"):
+                # High-SR ranked ADC staples
+                if any(k in n for k in ("tyrfing", "devourer", "transcend")):
+                    sc += 85
+                if any(k in n for k in ("odysseus", "executioner", "qin", "riptalon")):
+                    sc += 75
+                if "titan" in n:
                     sc += 70
-                if any(k in n for k in ("executioner", "riptalon", "qins", "ichival", "lernaean")):
-                    sc += 55
-                if any(k in n for k in ("titan", "deathbringer", "demon blade")):
-                    sc += 40  # mid/late staples
-                if any(k in n for k in ("bloodforge", "avenging", "musashi", "wind demon")):
-                    sc += 30
-                if any(k in n for k in ("runeforged", "crusher", "jotunn", "hydra", "pendulum")):
-                    sc -= 45  # solo/jungle toys, not ADC cores
-                if any(k in n for k in ("freya", "chandra", "phoenix", "spectral")):
-                    sc -= 40
-                if any(k in n for k in ("death metal",)):
-                    sc -= 15  # situational, not default opener
+                if any(k in n for k in ("lernaean", "avenging", "dominance", "silverbranch")):
+                    sc += 50
+                if any(k in n for k in ("deathbring", "demon blade", "bloodforge", "musashi")):
+                    sc += 40
+                if any(
+                    k in n
+                    for k in (
+                        "runeforged",
+                        "crusher",
+                        "jotunn",
+                        "hydra",
+                        "pendulum",
+                        "arondight",
+                        "toxic",
+                    )
+                ):
+                    sc -= 70
+                if any(
+                    k in n
+                    for k in (
+                        "freya",
+                        "chandra",
+                        "phoenix",
+                        "spectral",
+                        "shifter",
+                        "breastplate",
+                    )
+                ):
+                    sc -= 60
         if role == "Jungle":
             if slot == "gap":
                 if "jotunn" in n:
@@ -4182,16 +4223,24 @@ def _normalize_carry_path(
     max_actives: int,
 ) -> list[ScoredItem]:
     """
-    Duo Carry identity:
-      Physical hunters — Trans/Tyrfing/DG openers, pen, crit/power (no Solo shells)
-      Mage ADC flex — Deso/Book/Obsidian power (not mid-shell, not pure Soul Gem paste)
+    Duo Carry identity (high-SR Ranked Conquest shape):
+
+      Physical hunters:
+        Tyrfing / Trans / DG opener → AS/LS → shred (Exec / OBow / Qin / Riptalon)
+        → Titan's Bane → crit/power finisher
+        Hard-ban: Solo shells, jungle toys (Jotunn/Hydra/Crusher), random antiheal cores
+
+      Mage ADC:
+        Book/Deso → pen → INT power (not support shells)
     """
     if not path:
         return path
     path = list(path)
     seen = {x.name for x in path}
     arch = detect_archetype(bias, "Carry", mage, physical)
-    shell_keys = (
+
+    # Never on hunter paths (ranked junk / wrong role toys)
+    carry_ban = (
         "shifter",
         "breastplate",
         "genji",
@@ -4207,39 +4256,85 @@ def _normalize_carry_path(
         "magi's",
         "pridwen",
         "phoenix",
+        "jotunn",
+        "hydra",
+        "crusher",
+        "arondight",
+        "pendulum blade",
+        "runeforged",
+        "toxic blade",  # situational antiheal — not a core
+        "brawler",
     )
 
-    def is_shell(it: ScoredItem) -> bool:
+    def is_banned(it: ScoredItem) -> bool:
         n = it.name.lower()
-        if any(k in n for k in shell_keys):
+        if any(k in n for k in carry_ban):
             return True
         if it.item_type == "Defensive" and item_pen_value(it) < 8 and (
-            _canon_stat_value(it.stats, "str") + _canon_stat_value(it.stats, "int") < 35
+            _canon_stat_value(it.stats, "str") + _canon_stat_value(it.stats, "int") < 40
         ):
             return True
         return False
 
-    def best_phys(exclude: set[str]) -> ScoredItem | None:
+    def find_named(*keys: str) -> ScoredItem | None:
+        for key in keys:
+            for x in pool:
+                if key in x.name.lower() and x.name not in seen and not is_banned(x):
+                    return x
+        return None
+
+    def drop_worst(protect: set[str] | None = None) -> int:
+        protect = protect or set()
+        ranked = sorted(
+            range(len(path)),
+            key=lambda i: (
+                200 if any(p in path[i].name.lower() for p in protect) else 0,
+                100 if "titan" in path[i].name.lower() else 0,
+                90 if any(k in path[i].name.lower() for k in ("tyrfing", "transcend", "devourer")) else 0,
+                80 if item_pen_value(path[i]) >= 15 else 0,
+                path[i].role_score,
+            ),
+        )
+        return ranked[0]
+
+    def replace_slot(idx: int, new: ScoredItem) -> None:
+        nonlocal seen
+        if new.name in seen and path[idx].name != new.name:
+            return
+        seen.discard(path[idx].name)
+        path[idx] = new
+        seen.add(new.name)
+
+    def best_phys_fill(exclude: set[str]) -> ScoredItem | None:
         cands: list[tuple[float, ScoredItem]] = []
         for x in pool:
-            if x.name in exclude or is_shell(x):
+            if x.name in exclude or is_banned(x):
                 continue
             n = x.name.lower()
             bonus = 0.0
-            if any(k in n for k in ("tyrfing", "transcend", "devourer", "deathbring", "titan", "musashi", "demon", "executioner", "bloodforge", "dominance")):
-                bonus += 40
+            # Ranked staples (tracker.gg Carry rates)
+            if "tyrfing" in n:
+                bonus += 80
+            elif "titan" in n:
+                bonus += 75
+            elif any(k in n for k in ("odysseus", "executioner", "qin", "riptalon")):
+                bonus += 70
+            elif any(k in n for k in ("transcend", "devourer", "lernaean", "avenging")):
+                bonus += 60
+            elif any(k in n for k in ("deathbring", "demon", "musashi", "bloodforge", "dominance", "silverbranch")):
+                bonus += 45
             as_v = _canon_stat_value(x.stats, "as")
             crit_v = _canon_stat_value(x.stats, "crit")
             str_v = _canon_stat_value(x.stats, "str")
-            if as_v >= 10 or crit_v >= 15 or str_v >= 35 or item_pen_value(x) >= 8:
-                cands.append((bonus + x.role_score, x))
+            if as_v >= 10 or crit_v >= 15 or str_v >= 30 or item_pen_value(x) >= 8:
+                cands.append((bonus + x.role_score * 0.01, x))
         cands.sort(key=lambda t: t[0], reverse=True)
         return cands[0][1] if cands else None
 
-    def best_mage(exclude: set[str]) -> ScoredItem | None:
+    def best_mage_fill(exclude: set[str]) -> ScoredItem | None:
         cands: list[tuple[float, ScoredItem]] = []
         for x in pool:
-            if x.name in exclude or is_shell(x):
+            if x.name in exclude or is_banned(x):
                 continue
             n = x.name.lower()
             int_v = _canon_stat_value(x.stats, "int")
@@ -4247,51 +4342,125 @@ def _normalize_carry_path(
                 continue
             bonus = 0.0
             if any(k in n for k in ("desolat", "thoth", "obsi", "tahuti", "soul reaver", "magus", "chronos", "doom")):
-                bonus += 50
-            # Soul Gem is optional late sustain, not a mid core replace
+                bonus += 55
             if "soul gem" in n:
-                bonus -= 15
-            cands.append((bonus + x.role_score, x))
+                bonus -= 10
+            cands.append((bonus + x.role_score * 0.01, x))
         cands.sort(key=lambda t: t[0], reverse=True)
         return cands[0][1] if cands else None
 
-    # Strip shells from first 5
-    for i, it in enumerate(path[:5]):
-        if not is_shell(it):
+    # --- Strip banned items ---
+    for i, it in enumerate(path):
+        if not is_banned(it):
             continue
-        alt = best_mage(seen) if mage else best_phys(seen)
+        alt = best_mage_fill(seen) if mage else best_phys_fill(seen)
         if alt:
-            seen.discard(it.name)
-            path[i] = alt
-            seen.add(alt.name)
+            replace_slot(i, alt)
 
-    # Physical: ensure a real ADC opener (Trans / Tyrfing / DG)
     if physical:
-        openers = ("transcend", "tyrfing", "devourer")
-        has_op = any(any(k in x.name.lower() for k in openers) for x in path)
-        if not has_op:
-            pick = None
-            for key in ("tyrfing", "transcend", "devourer"):
-                pick = next((x for x in pool if key in x.name.lower() and x.name not in seen), None)
-                if pick:
-                    break
-            if pick:
-                # replace weakest non-pen non-crit
-                ranked = sorted(
-                    range(len(path)),
-                    key=lambda i: (
-                        100 if item_pen_value(path[i]) >= 15 else 0,
-                        80 if _canon_stat_value(path[i].stats, "crit") >= 15 else 0,
-                        path[i].role_score,
-                    ),
-                )
-                drop = ranked[0]
-                seen.discard(path[drop].name)
-                path[drop] = pick
-                seen.add(pick.name)
+        # 1) Opener: Tyrfing preferred (highest SR), else Trans / DG / Lernaean
+        opener_keys = ("tyrfing", "transcend", "devourer", "lernaean", "avenging")
+        has_opener = any(any(k in x.name.lower() for k in opener_keys) for x in path)
+        if not has_opener:
+            op = find_named("tyrfing", "transcend", "devourer", "lernaean")
+            if op:
+                replace_slot(drop_worst(), op)
 
-    # Mage ADC: ensure flat pen + % pen cores
+        # Power ADC / stack identity: keep Trans if already present; else Tyrfing
+        if arch == "power_adc":
+            if not any("transcend" in x.name.lower() or "devourer" in x.name.lower() for x in path):
+                st = find_named("transcend", "devourer", "tyrfing")
+                if st:
+                    replace_slot(drop_worst({"titan", "executioner", "odysseus", "qin", "riptalon"}), st)
+
+        # 2) Shred / AS mid (must have at least one of Exec / OBow / Qin / Riptalon)
+        shred_keys = ("executioner", "odysseus", "qin", "riptalon")
+        shred_n = sum(1 for x in path if any(k in x.name.lower() for k in shred_keys))
+        if shred_n < 1:
+            sh = find_named("executioner", "odysseus", "qin", "riptalon")
+            if sh:
+                replace_slot(
+                    drop_worst({"tyrfing", "transcend", "devourer", "titan", "deathbring"}),
+                    sh,
+                )
+        if shred_n < 2 and arch in ("crit_adc", "onhit_adc", "power_adc"):
+            # Second shred is the ranked standard (OBow + Exec, Qin + Titan, etc.)
+            sh2 = find_named("odysseus", "qin", "riptalon", "executioner", "silverbranch", "dominance")
+            if sh2:
+                replace_slot(
+                    drop_worst(
+                        {
+                            "tyrfing",
+                            "transcend",
+                            "devourer",
+                            "titan",
+                            "executioner",
+                            "odysseus",
+                            "qin",
+                            "riptalon",
+                            "deathbring",
+                        }
+                    ),
+                    sh2,
+                )
+
+        # 3) Titan's Bane mandatory (% pen)
+        if not any("titan" in x.name.lower() for x in path):
+            tb = find_named("titan")
+            if tb:
+                replace_slot(
+                    drop_worst(
+                        {
+                            "tyrfing",
+                            "transcend",
+                            "devourer",
+                            "executioner",
+                            "odysseus",
+                            "qin",
+                            "riptalon",
+                        }
+                    ),
+                    tb,
+                )
+
+        # 4) Crit / LS finisher if path is all shred and no closer
+        has_finisher = any(
+            any(k in x.name.lower() for k in ("deathbring", "demon", "musashi", "bloodforge", "rage", "wind demon"))
+            for x in path
+        )
+        if not has_finisher:
+            fin = find_named("deathbring", "demon blade", "musashi", "bloodforge")
+            if fin:
+                replace_slot(
+                    drop_worst(
+                        {
+                            "tyrfing",
+                            "transcend",
+                            "devourer",
+                            "titan",
+                            "executioner",
+                            "odysseus",
+                            "qin",
+                            "riptalon",
+                        }
+                    ),
+                    fin,
+                )
+
+        # 5) Cap duplicate opener-family (don't need Trans + DG + Tyrfing all three)
+        opener_idxs = [
+            i
+            for i, x in enumerate(path)
+            if any(k in x.name.lower() for k in ("tyrfing", "transcend", "devourer", "lernaean"))
+        ]
+        if len(opener_idxs) > 2:
+            for i in opener_idxs[2:]:
+                alt = best_phys_fill(seen)
+                if alt:
+                    replace_slot(i, alt)
+
     if mage:
+        # Flat + % pen
         has_flat = any(
             item_pen_value(x) >= 8
             and item_pen_value(x) < 18
@@ -4302,53 +4471,33 @@ def _normalize_carry_path(
             item_pen_value(x) >= 15 and _pen_matches_kit(x, mage=True, physical=False)
             for x in path
         )
-        for need_flat, need_pct in ((not has_flat, False), (False, not has_pct)):
-            if not need_flat and not need_pct:
-                continue
-            alt = None
-            for x in pool:
-                if x.name in seen or is_shell(x):
-                    continue
-                pen = item_pen_value(x)
-                if not _pen_matches_kit(x, mage=True, physical=False):
-                    continue
-                if need_flat and 8 <= pen < 18:
-                    alt = x
-                    break
-                if need_pct and pen >= 15:
-                    alt = x
-                    break
-            if not alt:
-                continue
-            drop = min(
-                range(len(path)),
-                key=lambda i: (
-                    100 if item_pen_value(path[i]) >= 8 else 0,
-                    50 if "thoth" in path[i].name.lower() or "tahuti" in path[i].name.lower() else 0,
-                    path[i].role_score,
-                ),
-            )
-            if item_pen_value(path[drop]) >= 8:
-                continue
-            seen.discard(path[drop].name)
-            path[drop] = alt
-            seen.add(alt.name)
+        if not has_flat:
+            alt = find_named("desolat", "magus", "divine")
+            if alt:
+                replace_slot(drop_worst({"obsi", "thoth", "tahuti"}), alt)
+        if not has_pct:
+            alt = find_named("obsi")
+            if alt:
+                replace_slot(drop_worst({"desolat", "thoth", "tahuti", "soul reaver"}), alt)
+        # Book / power stack for non-AA mage ADC
+        if arch != "aa_mage_adc" and not any(
+            any(k in x.name.lower() for k in ("thoth", "book of", "doom")) for x in path
+        ):
+            bk = find_named("thoth", "book of", "doom")
+            if bk:
+                replace_slot(drop_worst({"desolat", "obsi", "tahuti", "soul reaver"}), bk)
 
-    # Cap actives
+    # Active budget
     while sum(1 for x in path if x.is_active_item) > max_actives:
         for i, it in enumerate(path):
             if it.is_active_item:
-                alt = best_mage(seen) if mage else best_phys(seen)
+                alt = best_mage_fill(seen) if mage else best_phys_fill(seen)
                 if alt and not alt.is_active_item:
-                    seen.discard(it.name)
-                    path[i] = alt
-                    seen.add(alt.name)
+                    replace_slot(i, alt)
                 break
         else:
             break
 
-    # Quiet unused arch warning for linters
-    _ = arch
     return path[:6]
 
 
@@ -4390,7 +4539,14 @@ def _ensure_inspired_cores(
     # Role hard staples from ladder snapshot (always try if legal)
     role_staples = {
         "Mid": ("Spear of Desolation", "Book of Thoth", "Obsidian Shard"),
-        "Carry": ("Tyrfing", "Devourer's Gauntlet", "Titan's Bane", "The Executioner"),
+        "Carry": (
+            "Tyrfing",
+            "Devourer's Gauntlet",
+            "Titan's Bane",
+            "The Executioner",
+            "Odysseus' Bow",
+            "Qin's Blade",
+        ),
         "Jungle": ("Jotunn's Revenge", "Hydra's Lament", "Titan's Bane"),
         "Solo": ("Shifter's Shield", "Genji's Guard", "Breastplate of Valor"),
         "Support": ("Gauntlet of Thebes", "Shifter's Shield", "Stampede"),
@@ -4597,7 +4753,7 @@ def _order_buy_path(
             return 3, cost
 
         if role == "Carry":
-            # 0: online spike — Tyrfing, DG, Trans, AS shred
+            # Ranked hunter order: opener → shred AS → Titan → crit finisher
             if any(
                 k in nlow
                 for k in (
@@ -4605,23 +4761,31 @@ def _order_buy_path(
                     "devourer",
                     "transcend",
                     "lernaean",
-                    "executioner",
-                    "riptalon",
-                    "qins",
-                    "ichival",
                     "avenging",
-                    "odysseus",
                 )
             ):
-                return 0, cost
-            if any(k in nlow for k in ("bloodforge", "musashi", "demon blade", "wind demon")):
+                return 0, 0 if "tyrfing" in nlow else (1 if "transcend" in nlow or "devourer" in nlow else 2)
+            if any(
+                k in nlow
+                for k in (
+                    "executioner",
+                    "odysseus",
+                    "qin",
+                    "riptalon",
+                    "dominance",
+                    "silverbranch",
+                    "ichival",
+                )
+            ):
                 return 1, cost
-            if pen >= 12 or "titan" in nlow:  # Titan mid, not first
+            if any(k in nlow for k in ("bloodforge",)):
+                return 1, cost + 50
+            if pen >= 12 or "titan" in nlow:
                 return 2, -pen
-            if crit_v >= 15:
+            if crit_v >= 15 or any(k in nlow for k in ("deathbring", "demon", "musashi", "rage")):
                 return 3, -crit_v
-            if pure_shell:
-                return 4, cost
+            if pure_shell or "shifter" in nlow:
+                return 5, cost
             return 2, cost
 
         if role == "Jungle":
