@@ -29,14 +29,15 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     conn = connect(db_path or DEFAULT_DB)
     WEB_DATA.mkdir(parents=True, exist_ok=True)
 
+    exported_at = datetime.now(timezone.utc).isoformat()
     meta = {
         "game": "SMITE 2",
         "source": "https://wiki.smite2.com",
-        "exported_at": datetime.now(timezone.utc).isoformat(),
+        "exported_at": exported_at,
         "repo": "https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool",
         "live_url": (
-            "https://cdn.jsdelivr.net/gh/KR8ZYSHO3/"
-            "Smite-Database-and-Build-Analysis-Tool@main/docs/index.html"
+            "https://raw.githack.com/KR8ZYSHO3/"
+            "Smite-Database-and-Build-Analysis-Tool/main/docs/standalone.html"
         ),
         "live_url_alt": (
             "https://raw.githack.com/KR8ZYSHO3/"
@@ -45,11 +46,16 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     }
     try:
         for r in conn.execute("SELECT key, value FROM meta"):
+            # Never let stale DB meta overwrite this export's clock
+            if r["key"] in ("exported_at", "live_url", "live_url_alt", "repo"):
+                continue
             meta[r["key"]] = r["value"]
         for r in conn.execute("SELECT key, value FROM analysis_meta"):
             meta[f"analysis_{r['key']}"] = r["value"]
     except sqlite3.OperationalError:
         pass
+    # Force again after DB merge
+    meta["exported_at"] = exported_at
 
     # Gods summary
     gods = []
@@ -387,13 +393,51 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     (WEB_DATA / "items.json").write_text(json.dumps(items), encoding="utf-8")
     (WEB_DATA / "bundle.json").write_text(json.dumps(payload), encoding="utf-8")
 
+    # Bake a human stamp into index.html so the header isn't "…" before JS,
+    # and so CDN cache misses are easier to spot in View Source.
+    _inject_export_stamp(docs_index_html=ROOT / "docs" / "index.html", exported_at=exported_at)
+
     write_standalone(payload)
 
     conn.close()
     print(f"Exported web data → {WEB_DATA}")
     print(f"  gods: {len(gods)}  tier scopes: {len(tiers)}  items: {len(items)}")
     print(f"  standalone: {ROOT / 'docs' / 'standalone.html'}")
+    print(f"  exported_at: {exported_at}")
     return WEB_DATA
+
+
+def _format_stamp_local(iso: str) -> str:
+    """Readable stamp for the static HTML shell (UTC label so it's unambiguous)."""
+    try:
+        dt = datetime.fromisoformat(iso.replace("Z", "+00:00"))
+        return dt.strftime("%b %d, %Y %I:%M %p UTC").replace(" 0", " ")
+    except Exception:
+        return iso[:19].replace("T", " ") + " UTC"
+
+
+def _inject_export_stamp(*, docs_index_html: Path, exported_at: str) -> None:
+    """Write Last-updated into index.html shell (committed + used by standalone)."""
+    if not docs_index_html.is_file():
+        return
+    html = docs_index_html.read_text(encoding="utf-8")
+    pretty = _format_stamp_local(exported_at)
+    # Replace the whole site-updated paragraph so both placeholder and prior stamps update
+    new_p = (
+        f'        <p class="site-updated" id="site-updated" '
+        f'data-exported-at="{exported_at}" '
+        f'title="Export timestamp (UTC): {exported_at}">\n'
+        f"          Last updated: <strong>{pretty}</strong>\n"
+        f"        </p>"
+    )
+    html2, n = re.subn(
+        r'\s*<p class="site-updated"[^>]*>[\s\S]*?</p>',
+        "\n" + new_p,
+        html,
+        count=1,
+    )
+    if n:
+        docs_index_html.write_text(html2, encoding="utf-8")
 
 
 def write_standalone(payload: dict | None = None) -> Path:
@@ -432,6 +476,13 @@ def write_standalone(payload: dict | None = None) -> Path:
     html = html.replace(
         "Local / GitHub Pages viewer",
         "Self-contained viewer (data embedded)",
+    )
+    # Cache-bust comment (changes every export so CDNs see a different body hash)
+    exp = (payload.get("meta") or {}).get("exported_at") or ""
+    html = html.replace(
+        "<title>SMITE 2 Builds — pick a role, get a buy order</title>",
+        f"<title>SMITE 2 Builds — pick a role, get a buy order</title>\n"
+        f"  <!-- export {exp} -->",
     )
     out.write_text(html, encoding="utf-8")
     return out

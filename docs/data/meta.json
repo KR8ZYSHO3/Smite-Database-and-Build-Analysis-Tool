@@ -1,9 +1,9 @@
 {
   "game": "SMITE 2",
   "source": "https://wiki.smite2.com",
-  "exported_at": "2026-07-30T20:38:44.636122+00:00",
+  "exported_at": "2026-07-30T20:41:14.212684+00:00",
   "repo": "https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool",
-  "live_url": "https://cdn.jsdelivr.net/gh/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool@main/docs/index.html",
+  "live_url": "https://raw.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main/docs/standalone.html",
   "live_url_alt": "https://raw.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main/docs/index.html",
   "scraped_at": "2026-07-28T14:34:14.042990+00:00",
   "last_results": "{\"gods\": 88, \"abilities\": 545, \"aspects\": 71, \"items\": 258, \"patches\": 52, \"patch_changes\": 17138}",

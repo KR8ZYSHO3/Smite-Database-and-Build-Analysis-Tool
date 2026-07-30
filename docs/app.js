@@ -3677,8 +3677,10 @@ async function main() {
     loading.style.display = "none";
     $("#app-main").style.display = "block";
 
-    const exported = state.meta?.exported_at || state.meta?.scraped_at || "";
-    const analysis = state.meta?.analysis_last_analysis_at || state.meta?.last_analysis_at || "";
+    // Prefer live meta; fall back to HTML data-exported-at baked at export time
+    const shellExported = $("#site-updated")?.getAttribute("data-exported-at") || "";
+    const exported =
+      state.meta?.exported_at || shellExported || state.meta?.scraped_at || "";
     const fmtStamp = (iso) => {
       if (!iso) return "";
       const d = new Date(iso);
@@ -3703,7 +3705,10 @@ async function main() {
       upd.innerHTML = stamp
         ? `Last updated: <strong>${escapeHtml(stamp)}</strong>`
         : "Last updated: <strong>unknown</strong>";
-      if (exported) upd.title = `Export timestamp (UTC): ${String(exported)}`;
+      if (exported) {
+        upd.title = `Export timestamp (UTC): ${String(exported)}`;
+        upd.setAttribute("data-exported-at", String(exported));
+      }
     }
     $("#meta-line").textContent = [
       `${(state.gods || []).length} gods`,

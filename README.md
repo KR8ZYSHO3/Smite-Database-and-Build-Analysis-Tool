@@ -19,11 +19,14 @@ https://raw.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main/do
 
 That file is **self-contained** (CSS + JS + all data embedded). One request, no multi-file CDN path issues.
 
-Production CDN mirror (cached):
+**If the date stamp looks old after a push:** raw.githack aggressively caches the big `standalone.html`.  
+Hard-refresh (Ctrl+F5), or open a **commit-pinned** URL (always fresh), e.g.:
 
 ```
-https://rawcdn.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/main/docs/standalone.html
+https://raw.githack.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool/<commit-sha>/docs/standalone.html
 ```
+
+Avoid **rawcdn.githack.com** when checking for updates — it caches harder.
 
 Tabs: **Tier List · Gods · Conquest Builds · Items**
 
