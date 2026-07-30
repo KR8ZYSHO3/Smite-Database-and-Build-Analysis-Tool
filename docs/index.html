@@ -43,6 +43,11 @@
             <strong>More tools</strong> (top right / bottom nav): Counter the enemy team, meme Troll builds,
             tier ladder, item search.
           </p>
+          <p class="muted help-extra">
+            <strong>Share links:</strong> open a build → <em>Copy link</em> (e.g.
+            <code>#builds/Carry/Artemis</code>). Counter lobbies paste as
+            <code>#counter/You/Role/Enemies/Allies</code>. No live game lobby feed — paste names in Counter.
+          </p>
           <button type="button" class="btn-primary" id="help-close">Got it</button>
         </div>
       </section>
@@ -90,6 +95,7 @@
           <h2>Counter the enemy team</h2>
           <p class="muted">
             Your god + up to 5 enemies → a buy order adjusted for their damage, crit, healing, and CC.
+            Paste a lobby for speed — SMITE 2 has no public live-lobby feed for fan tools (yet).
           </p>
           <div class="counter-form">
             <label>Your god
@@ -104,6 +110,18 @@
                 <option>Carry</option>
               </select>
             </label>
+            <div class="counter-paste-block">
+              <label for="ctr-paste">Paste lobby <span class="muted">(fast entry)</span></label>
+              <textarea
+                id="ctr-paste"
+                rows="2"
+                placeholder="Zeus, Agni, Susano, Ymir, Ra   or   Zeus Agni vs with Neith Yemoja"
+              ></textarea>
+              <button type="button" class="btn-ghost" id="ctr-paste-apply">Apply paste</button>
+              <p class="muted paste-hint">
+                Commas / new lines / “vs” / “with allies”. No live game hook — Hi-Rez doesn’t expose champion select to third-party sites.
+              </p>
+            </div>
             <div class="counter-enemies">
               <span class="muted">Enemy team (up to 5) — click a name to remove</span>
               <div class="enemy-lobby" id="ctr-enemy-picks" aria-label="Enemy lobby slots"></div>

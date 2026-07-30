@@ -358,9 +358,11 @@ function deeplinkForShare(data) {
   const mode = data.mode || "base";
   if (mode === "counter" && data.god) {
     const vs = (data.enemies || []).map(encodeURIComponent).join(",");
-    return `#counter/${encodeURIComponent(data.god)}/${encodeURIComponent(data.role || "Support")}${
-      vs ? `/${vs}` : ""
-    }`;
+    const withA = (data.allies || []).map(encodeURIComponent).join(",");
+    let h = `#counter/${encodeURIComponent(data.god)}/${encodeURIComponent(data.role || "Support")}`;
+    if (vs || withA) h += `/${vs || "-"}`;
+    if (withA) h += `/${withA}`;
+    return h;
   }
   if (mode === "troll" && data.god) {
     let h = `#troll/${encodeURIComponent(data.god)}/${encodeURIComponent(data.role || "Support")}`;
@@ -369,6 +371,10 @@ function deeplinkForShare(data) {
     if (data.chaos) flags.push("chaos");
     if (flags.length) h += `/${flags.join(",")}`;
     return h;
+  }
+  // Prefer builds deep-link (role + god) so share opens the buy order
+  if (data.god && data.role) {
+    return `#builds/${encodeURIComponent(data.role)}/${encodeURIComponent(data.god)}`;
   }
   if (data.god) return `#gods/${encodeURIComponent(data.god)}`;
   if (data.role) return `#builds/${encodeURIComponent(data.role)}`;
@@ -395,7 +401,8 @@ function setupShareUi() {
     if (copyBtn) {
       e.preventDefault();
       e.stopPropagation();
-      copyText(copyBtn.getAttribute("data-copy-path") || "", "List copied");
+      const msg = copyBtn.getAttribute("data-copy-msg") || "List copied";
+      copyText(copyBtn.getAttribute("data-copy-path") || "", msg);
       return;
     }
     const btn = e.target.closest("[data-share-id]");
@@ -522,7 +529,7 @@ function setupHelp() {
   const close = () => {
     if (panel) panel.hidden = true;
     try {
-      localStorage.setItem("arena_intel_help_v3", "1");
+      localStorage.setItem("arena_intel_help_v4", "1");
     } catch (_) {}
   };
   $("#btn-help")?.addEventListener("click", open);
@@ -532,7 +539,7 @@ function setupHelp() {
   });
   // First visit: show help once
   try {
-    if (localStorage.getItem("arena_intel_help_v3") !== "1") {
+    if (localStorage.getItem("arena_intel_help_v4") !== "1") {
       open();
     }
   } catch (_) {}
@@ -555,17 +562,27 @@ function parseRoute(hash) {
   const tab = (segs[0] || "builds").toLowerCase();
   if (!VALID_TABS.has(tab)) return { tab: "builds" };
   if (tab === "builds") {
-    return { tab, role: segs[1] || null };
+    // #builds  |  #builds/Carry  |  #builds/Carry/Artemis
+    return { tab, role: segs[1] || null, god: segs[2] || null };
   }
   if (tab === "gods") {
     return { tab, god: segs[1] || null };
   }
   if (tab === "counter") {
+    // #counter/You/Role/Enemy1,Enemy2/Ally1,Ally2
+    // enemies segment "-" means empty (when only allies are shared)
+    const enemySeg = segs[3] || "";
+    const allySeg = segs[4] || "";
+    const splitNames = (seg) =>
+      !seg || seg === "-"
+        ? []
+        : seg.split(",").map((x) => x.trim()).filter(Boolean);
     return {
       tab,
       god: segs[1] || null,
       role: segs[2] || null,
-      enemies: segs[3] ? segs[3].split(",").map((x) => x.trim()).filter(Boolean) : [],
+      enemies: splitNames(enemySeg),
+      allies: splitNames(allySeg),
     };
   }
   if (tab === "troll") {
@@ -592,7 +609,11 @@ function syncHashFromUi(tab) {
   if (routeState.suppressHash) return;
   let hash = tab || "builds";
   if (hash === "builds" && routeState.build?.getRole) {
-    hash = `builds/${encodeURIComponent(routeState.build.getRole())}`;
+    const role = routeState.build.getRole();
+    const god = routeState.build.getGod?.();
+    hash = god
+      ? `builds/${encodeURIComponent(role)}/${encodeURIComponent(god)}`
+      : `builds/${encodeURIComponent(role)}`;
   } else if (hash === "gods" && state.selectedGod?.name) {
     hash = `gods/${encodeURIComponent(state.selectedGod.name)}`;
   } else if (hash === "counter") {
@@ -600,7 +621,10 @@ function syncHashFromUi(tab) {
     const role = $("#ctr-role")?.value || "Support";
     if (you) {
       const vs = (counterState.enemies || []).map(encodeURIComponent).join(",");
-      hash = `counter/${encodeURIComponent(you)}/${encodeURIComponent(role)}${vs ? `/${vs}` : ""}`;
+      const withA = (counterState.allies || []).map(encodeURIComponent).join(",");
+      hash = `counter/${encodeURIComponent(you)}/${encodeURIComponent(role)}`;
+      if (vs || withA) hash += `/${vs || "-"}`;
+      if (withA) hash += `/${withA}`;
     }
   } else if (hash === "troll") {
     const god = ($("#troll-god")?.value || "").trim();
@@ -622,8 +646,14 @@ function applyRoute(route) {
   routeState.suppressHash = true;
   activateTab(route.tab, { updateHash: false });
 
-  if (route.tab === "builds" && route.role && routeState.build?.setRole) {
-    routeState.build.setRole(route.role, { updateHash: false });
+  if (route.tab === "builds") {
+    if (route.role && routeState.build?.setRole) {
+      routeState.build.setRole(route.role, { updateHash: false });
+    }
+    if (route.god && routeState.build?.focusGod) {
+      // focus after role render
+      queueMicrotask(() => routeState.build.focusGod(route.god, { updateHash: false }));
+    }
   }
   if (route.tab === "gods" && route.god) {
     selectGod(route.god, false);
@@ -636,15 +666,23 @@ function applyRoute(route) {
       );
       if (opt) $("#ctr-role").value = opt.value;
     }
-    if (route.enemies?.length) {
+    if (route.enemies) {
       counterState.enemies = route.enemies
         .map((n) => findGodByName(n)?.name)
         .filter(Boolean)
         .slice(0, 5);
       renderEnemyPicks();
     }
-    if (route.god && route.enemies?.length) {
-      runCounterFromForm({ updateHash: false });
+    if (route.allies) {
+      counterState.allies = route.allies
+        .map((n) => findGodByName(n)?.name)
+        .filter(Boolean)
+        .slice(0, 4);
+      renderAllyPicks();
+    }
+    if (route.god && (route.enemies?.length || route.allies?.length)) {
+      // Need enemies for counter path; allies alone still open lobby
+      if (route.enemies?.length) runCounterFromForm({ updateHash: false });
     }
   }
   if (route.tab === "troll") {
@@ -1259,7 +1297,7 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta, isFlex) {
       `actives ${nAct}/${maxA}`,
     ].filter(Boolean),
     footerLeft: `PATCH · KIT · ${role.toUpperCase()}`,
-    deeplink: `#gods/${encodeURIComponent(g.name)}`,
+    deeplink: `#builds/${encodeURIComponent(role)}/${encodeURIComponent(g.name)}`,
   };
   return `
     <div class="card build-card god-role-build simple-build ${roleClass(role)} ${isAspect ? "is-aspect" : ""} ${flex ? "is-flex-role" : ""}">
@@ -1312,6 +1350,7 @@ function setupBuilds() {
   const pills = $("#role-pills");
   const search = $("#build-god-search");
   let activeRole = roles[0] || "Mid";
+  let focusGodName = null;
 
   pills.innerHTML = roles
     .map(
@@ -1324,6 +1363,7 @@ function setupBuilds() {
     const hit = roles.find((r) => r.toLowerCase() === String(role || "").toLowerCase());
     if (!hit) return false;
     activeRole = hit;
+    focusGodName = null;
     pills.querySelectorAll(".role-pill").forEach((b) =>
       b.classList.toggle("active", b.dataset.role === activeRole)
     );
@@ -1333,12 +1373,42 @@ function setupBuilds() {
     return true;
   };
 
+  const openFocusedCard = () => {
+    if (!focusGodName) return;
+    const box = $("#build-gods");
+    if (!box) return;
+    const target = [...box.querySelectorAll("details[data-god]")].find(
+      (el) => (el.getAttribute("data-god") || "").toLowerCase() === focusGodName.toLowerCase()
+    );
+    if (!target) return;
+    target.open = true;
+    target.classList.add("deep-link-focus");
+    try {
+      target.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } catch {
+      target.scrollIntoView();
+    }
+  };
+
+  const focusGod = (name, { updateHash = true } = {}) => {
+    const g = findGodByName(name);
+    if (!g) return false;
+    focusGodName = g.name;
+    // If search would hide them, clear it
+    if (search && search.value) {
+      search.value = "";
+      render();
+    } else {
+      openFocusedCard();
+    }
+    if (updateHash) syncHashFromUi("builds");
+    return true;
+  };
+
   const render = () => {
     const data = state.builds?.roles?.[activeRole];
     const t = data?.template || {};
     const job = ROLE_JOB[activeRole] || { title: activeRole, blurb: t.description || "" };
-    const pri = t.priority_stats || Object.keys(t.stat_priorities || {}).slice(0, 5);
-    const commons = t.common_items || t.top_scored_items || [];
     const st = t.typical_starter || t.starter;
 
     setActiveRoleTheme(activeRole);
@@ -1392,28 +1462,52 @@ function setupBuilds() {
     if (countEl) countEl.textContent = `(${gods.length} in ${activeRole})`;
 
     $("#build-gods").innerHTML = gods.length
-      ? gods.map((gb) => godBuildCard(gb, activeRole)).join("")
+      ? gods.map((gb) => godBuildCard(gb, activeRole, { open: focusGodName === gb.god })).join("")
       : emptyHud(
           "No gods match",
           q
             ? `Nothing in ${activeRole} matches “${q}”. Clear the search or try another role.`
             : `No builds for ${activeRole} yet.`
         );
+    queueMicrotask(openFocusedCard);
   };
 
   pills.querySelectorAll(".role-pill").forEach((btn) => {
     btn.addEventListener("click", () => setRole(btn.dataset.role));
   });
-  search.addEventListener("input", render);
+  search.addEventListener("input", () => {
+    focusGodName = null;
+    render();
+  });
   $("#build-gods").addEventListener("click", (e) => {
     const btn = e.target.closest("[data-open-god]");
     if (!btn) return;
     selectGod(btn.getAttribute("data-open-god"), true);
   });
+  // Track which card is open for shareable #builds/Role/God
+  $("#build-gods").addEventListener("toggle", (e) => {
+    const det = e.target;
+    if (!(det instanceof HTMLDetailsElement) || !det.matches("details[data-god]")) return;
+    if (det.open) {
+      focusGodName = det.getAttribute("data-god");
+      // Close siblings so one deep-link target is clear
+      $("#build-gods")
+        ?.querySelectorAll("details[data-god][open]")
+        .forEach((other) => {
+          if (other !== det) other.open = false;
+        });
+      if (!routeState.suppressHash) syncHashFromUi("builds");
+    } else if (focusGodName === det.getAttribute("data-god")) {
+      focusGodName = null;
+      if (!routeState.suppressHash) syncHashFromUi("builds");
+    }
+  });
 
   routeState.build = {
     getRole: () => activeRole,
+    getGod: () => focusGodName,
     setRole,
+    focusGod,
   };
   render();
 }
@@ -1427,12 +1521,13 @@ function copyPathText(starter, items, god, role) {
   return lines.join("\n");
 }
 
-function godBuildCard(gb, role) {
+function godBuildCard(gb, role, opts = {}) {
   const itemsG = gb.items || gb.full_path || [];
   const penG = gb.pen_total ?? itemsG.reduce((s, it) => s + (it.pen || 0), 0);
   const mitG = itemsG.reduce((s, it) => s + (it.damp || 0) + (it.plat || 0) + (it.ten || 0), 0);
   const showMit = role === "Support" || role === "Solo";
   const effects = gb.kit_effects || [];
+  const buildDeep = `#builds/${encodeURIComponent(role)}/${encodeURIComponent(gb.god)}`;
   const shareData = {
     mode: gb.is_aspect ? "aspect" : "base",
     god: gb.god,
@@ -1449,7 +1544,7 @@ function godBuildCard(gb, role) {
       gb.patch_trajectory || null,
     ].filter(Boolean),
     footerLeft: `CONQUEST // ${role.toUpperCase()}`,
-    deeplink: `#gods/${encodeURIComponent(gb.god)}`,
+    deeplink: buildDeep,
   };
   const shortWhy = String(gb.why || "").split(".")[0];
   const preview = itemsG
@@ -1457,8 +1552,11 @@ function godBuildCard(gb, role) {
     .map((it) => it.name)
     .join(" → ");
   const copyPayload = copyPathText(gb.starter?.name, itemsG, gb.god, role);
+  const absLink = absoluteShareUrl(shareData);
   return `
-    <details class="card build-card god-build-card simple-build build-expand ${roleClass(role)}">
+    <details class="card build-card god-build-card simple-build build-expand ${roleClass(role)}${
+      opts.open ? " deep-link-focus" : ""
+    }" data-god="${escapeAttr(gb.god)}" ${opts.open ? "open" : ""}>
       <summary class="build-expand-summary">
         <span class="bes-main">
           <span class="bes-name">${escapeHtml(gb.god)}</span>
@@ -1499,7 +1597,8 @@ function godBuildCard(gb, role) {
           <p class="why">${escapeHtml(gb.why || "")}</p>
         </details>
         <div class="card-actions">
-          <button type="button" class="btn-ghost btn-copy-path" data-copy-path="${escapeAttr(copyPayload)}">Copy list</button>
+          <button type="button" class="btn-ghost btn-copy-path" data-copy-path="${escapeAttr(copyPayload)}" data-copy-msg="List copied">Copy list</button>
+          <button type="button" class="btn-ghost" data-copy-path="${escapeAttr(absLink)}" data-copy-msg="Link copied">Copy link</button>
           <button type="button" class="btn-share" data-share-id="${registerShare(shareData)}">Share card</button>
           <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">All roles →</button>
         </div>
@@ -3331,14 +3430,16 @@ function runCounterFromForm({ updateHash = true } = {}) {
   const lobbyStarter = pickCounterStarter(you, role, threat);
 
   const vsList = enemyGods.map((g) => g.name);
+  const allyList = allyGods.map((g) => g.name);
   const vs = vsList.join(", ");
   const shareData = {
     mode: "counter",
     god: you.name,
     role,
     enemies: vsList,
+    allies: allyList,
     title: `${you.name} · ${role} · counter`,
-    subtitle: `vs ${vs}${allies.allies.length ? ` · with ${allies.allies.join(", ")}` : ""}`,
+    subtitle: `vs ${vs}${allyList.length ? ` · with ${allyList.join(", ")}` : ""}`,
     why: threat.summary || "",
     starter: lobbyStarter?.name || "",
     items: itemsForShare(path),
@@ -3351,9 +3452,13 @@ function runCounterFromForm({ updateHash = true } = {}) {
       allies.need_peel_adc ? "peel ADC" : null,
     ].filter(Boolean),
     footerLeft: "COUNTER PATH · LOBBY INTEL",
-    deeplink: `#counter/${encodeURIComponent(you.name)}/${encodeURIComponent(role)}/${vsList
-      .map(encodeURIComponent)
-      .join(",")}`,
+    deeplink: deeplinkForShare({
+      mode: "counter",
+      god: you.name,
+      role,
+      enemies: vsList,
+      allies: allyList,
+    }),
   };
 
   const copyTxt = copyPathText(lobbyStarter?.name, path, you.name, `${role} counter`);
@@ -3383,6 +3488,77 @@ function runCounterFromForm({ updateHash = true } = {}) {
   if (updateHash) syncHashFromUi("counter");
 }
 
+/** Split lobby paste text into candidate god name tokens. */
+function tokenizeLobbyPaste(raw) {
+  return String(raw || "")
+    .replace(/\bvs\.?\b/gi, " ")
+    .replace(/\benemy\b|\ballies?\b|\bteam\b|\bwith\b/gi, " ")
+    .split(/[\n,;/|]+|\s{2,}/)
+    .map((s) => s.trim())
+    .filter((s) => s.length >= 2);
+}
+
+/**
+ * Parse free-text lobby into resolved god names.
+ * Optional `vs` / `with` / `allies` separators:
+ *   "Zeus, Agni vs my Susano"  or  "enemies: Zeus Agni / allies: Neith"
+ */
+function parseLobbyPaste(raw) {
+  const text = String(raw || "").trim();
+  if (!text) return { enemies: [], allies: [], unknown: [] };
+
+  let enemyPart = text;
+  let allyPart = "";
+  // Prefer explicit "A vs B" / "A / allies: B" patterns
+  const vsIdx = text.search(/\bvs\.?\b|\bversus\b/i);
+  const withIdx = text.search(/\b(?:with|allies?)\b\s*[:\-]/i);
+  if (vsIdx >= 0 && withIdx > vsIdx) {
+    enemyPart = text.slice(vsIdx).replace(/^\s*(?:vs\.?|versus)\b\s*/i, "");
+    const w = enemyPart.search(/\b(?:with|allies?)\b\s*[:\-]?\s*/i);
+    if (w >= 0) {
+      allyPart = enemyPart.slice(w).replace(/^\s*(?:with|allies?)\b\s*[:\-]?\s*/i, "");
+      enemyPart = enemyPart.slice(0, w);
+    }
+  } else if (withIdx >= 0 && vsIdx < 0) {
+    // "with X" only → treat whole left as enemies if present
+    allyPart = text.slice(withIdx).replace(/^\s*(?:with|allies?)\b\s*[:\-]?\s*/i, "");
+    enemyPart = text.slice(0, withIdx);
+  } else if (vsIdx >= 0) {
+    // "me Zeus vs Agni, Ra" — take right of vs as enemies; left may include your god
+    enemyPart = text.slice(vsIdx).replace(/^\s*(?:vs\.?|versus)\b\s*/i, "");
+  }
+
+  const resolveList = (part, maxN) => {
+    const out = [];
+    const unknown = [];
+    for (const tok of tokenizeLobbyPaste(part)) {
+      const g = findGodByName(tok);
+      if (!g) {
+        unknown.push(tok);
+        continue;
+      }
+      if (out.includes(g.name)) continue;
+      out.push(g.name);
+      if (out.length >= maxN) break;
+    }
+    return { names: out, unknown };
+  };
+
+  // If no separators, entire paste = enemies
+  if (!allyPart && vsIdx < 0 && withIdx < 0) {
+    const e = resolveList(text, 5);
+    return { enemies: e.names, allies: [], unknown: e.unknown };
+  }
+
+  const e = resolveList(enemyPart, 5);
+  const a = resolveList(allyPart, 4);
+  return {
+    enemies: e.names,
+    allies: a.names,
+    unknown: [...e.unknown, ...a.unknown],
+  };
+}
+
 function setupCounter() {
   const list = $("#ctr-god-list");
   if (!list) return;
@@ -3393,7 +3569,7 @@ function setupCounter() {
   if (resultEl && !resultEl.innerHTML.trim()) {
     resultEl.innerHTML = emptyHud(
       "Counter lobby standby",
-      "Your god + enemies (optional allies) → kit path vs lobby path."
+      "Your god + enemies (optional allies) → kit path vs lobby path. Paste a full lobby for speed."
     );
   }
 
@@ -3412,10 +3588,38 @@ function setupCounter() {
       arr.push(g.name);
       addIn.value = "";
       renderFn();
+      if (!routeState.suppressHash) syncHashFromUi("counter");
     });
   };
   wireAdd("#ctr-enemy-add", counterState.enemies, 5, renderEnemyPicks);
   wireAdd("#ctr-ally-add", counterState.allies, 4, renderAllyPicks);
+
+  $("#ctr-paste-apply")?.addEventListener("click", () => {
+    const raw = $("#ctr-paste")?.value || "";
+    const parsed = parseLobbyPaste(raw);
+    if (!parsed.enemies.length && !parsed.allies.length) {
+      showToast(parsed.unknown.length ? `No gods matched (${parsed.unknown.slice(0, 3).join(", ")})` : "Paste god names first");
+      return;
+    }
+    if (parsed.enemies.length) {
+      counterState.enemies = parsed.enemies.slice(0, 5);
+      renderEnemyPicks();
+    }
+    if (parsed.allies.length) {
+      counterState.allies = parsed.allies.slice(0, 4);
+      renderAllyPicks();
+    }
+    const note = [];
+    if (parsed.enemies.length) note.push(`${parsed.enemies.length} enemies`);
+    if (parsed.allies.length) note.push(`${parsed.allies.length} allies`);
+    if (parsed.unknown.length) note.push(`skipped: ${parsed.unknown.slice(0, 4).join(", ")}`);
+    showToast(note.join(" · ") || "Lobby applied");
+    if (counterState.enemies.length && findGodByName($("#ctr-you")?.value)) {
+      runCounterFromForm({ updateHash: true });
+    } else if (!routeState.suppressHash) {
+      syncHashFromUi("counter");
+    }
+  });
 
   $("#ctr-run")?.addEventListener("click", () => runCounterFromForm({ updateHash: true }));
   renderAllyPicks();

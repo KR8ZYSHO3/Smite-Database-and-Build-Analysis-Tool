@@ -1427,6 +1427,44 @@ header.top .sub {
 .buy-tags .tag.metal-counter { color: var(--mint); border-color: rgba(46,196,182,0.4); }
 .buy-tags .tag.metal-troll { color: #f9a8d4; border-color: rgba(244,114,182,0.45); }
 
+/* ----- Deep-link focus on build cards ----- */
+details.build-expand.deep-link-focus {
+  outline: 2px solid rgba(76, 201, 240, 0.55);
+  box-shadow: 0 0 0 4px rgba(76, 201, 240, 0.12), var(--glow, 0 0 24px rgba(76, 201, 240, 0.15));
+}
+
+/* ----- Counter lobby paste ----- */
+.counter-paste-block {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 4px;
+  grid-column: 1 / -1;
+}
+.counter-paste-block textarea {
+  width: 100%;
+  min-height: 56px;
+  resize: vertical;
+  font: inherit;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.counter-paste-block textarea:focus {
+  outline: none;
+  border-color: rgba(76, 201, 240, 0.55);
+  box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.12);
+}
+.counter-paste-block .paste-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+.counter-paste-block #ctr-paste-apply {
+  justify-self: start;
+}
+
 /* ----- Card actions / share ----- */
 .card-actions {
   display: flex;
