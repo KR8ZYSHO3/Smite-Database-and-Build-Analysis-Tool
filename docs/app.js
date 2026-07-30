@@ -1456,13 +1456,42 @@ function setupBuilds() {
         break; // one aspect path per god in the list
       }
     }
-    gods.sort((a, b) => (a.rank ?? 99) - (b.rank ?? 99));
+    // Native role first (e.g. Artemis Carry before flex mage ADCs), then tier rank
+    const nativeFor = (name) => {
+      const g = (state.gods || []).find((x) => x.name === name);
+      const n = g?.native_roles || g?.role_list || g?.roles || [];
+      return Array.isArray(n) ? n.map(String) : [];
+    };
+    gods.forEach((gb) => {
+      if (gb.is_native == null) {
+        gb.is_native = nativeFor(gb.god).includes(activeRole);
+      }
+    });
+    gods.sort((a, b) => {
+      const na = a.is_native ? 0 : 1;
+      const nb = b.is_native ? 0 : 1;
+      if (na !== nb) return na - nb;
+      return (a.rank ?? 99) - (b.rank ?? 99);
+    });
     if (q) gods = gods.filter((g) => (g.god || "").toLowerCase().includes(q));
     const countEl = $("#build-god-count");
-    if (countEl) countEl.textContent = `(${gods.length} in ${activeRole})`;
+    if (countEl) {
+      const nNative = gods.filter((g) => g.is_native).length;
+      countEl.textContent =
+        nNative > 0
+          ? `(${gods.length} in ${activeRole} · ${nNative} primary)`
+          : `(${gods.length} in ${activeRole})`;
+    }
 
     $("#build-gods").innerHTML = gods.length
-      ? gods.map((gb) => godBuildCard(gb, activeRole, { open: focusGodName === gb.god })).join("")
+      ? gods
+          .map((gb) =>
+            godBuildCard(gb, activeRole, {
+              open: focusGodName === gb.god,
+              isNative: !!gb.is_native,
+            })
+          )
+          .join("")
       : emptyHud(
           "No gods match",
           q
@@ -1527,18 +1556,21 @@ function godBuildCard(gb, role, opts = {}) {
   const mitG = itemsG.reduce((s, it) => s + (it.damp || 0) + (it.plat || 0) + (it.ten || 0), 0);
   const showMit = role === "Support" || role === "Solo";
   const effects = gb.kit_effects || [];
+  const isNative = opts.isNative != null ? !!opts.isNative : !gb.flex_role && !gb.is_aspect;
   const buildDeep = `#builds/${encodeURIComponent(role)}/${encodeURIComponent(gb.god)}`;
   const shareData = {
     mode: gb.is_aspect ? "aspect" : "base",
     god: gb.god,
     role,
     title: `${gb.god} · ${role}`,
-    subtitle: `Tier ${gb.tier || "?"} · #${gb.rank ?? "—"} · ${gb.damage_type || ""} · ${gb.is_aspect ? gb.aspect_name || "aspect" : "base kit"}`,
+    subtitle: `Tier ${gb.tier || "?"} · #${gb.rank ?? "—"} · ${gb.damage_type || ""} · ${
+      gb.is_aspect ? gb.aspect_name || "aspect" : isNative ? "primary role" : "flex"
+    }`,
     why: gb.why || "",
     starter: gb.starter?.name || "",
     items: itemsForShare(itemsG),
     tags: [
-      gb.is_aspect ? "aspect" : "kit-fit",
+      gb.is_aspect ? "aspect" : isNative ? "primary" : "flex",
       role,
       gb.archetype ? String(gb.archetype).replace(/_/g, " ") : null,
       gb.patch_trajectory || null,
@@ -1553,13 +1585,21 @@ function godBuildCard(gb, role, opts = {}) {
     .join(" → ");
   const copyPayload = copyPathText(gb.starter?.name, itemsG, gb.god, role);
   const absLink = absoluteShareUrl(shareData);
+  const roleBadge = gb.is_aspect
+    ? `<span class="pill ice">aspect</span>`
+    : isNative
+      ? `<span class="pill hot">primary</span>`
+      : `<span class="pill">flex</span>`;
   return `
     <details class="card build-card god-build-card simple-build build-expand ${roleClass(role)}${
       opts.open ? " deep-link-focus" : ""
-    }" data-god="${escapeAttr(gb.god)}" ${opts.open ? "open" : ""}>
+    }${isNative ? " is-native-role" : " is-flex-role"}" data-god="${escapeAttr(gb.god)}" ${
+      opts.open ? "open" : ""
+    }>
       <summary class="build-expand-summary">
         <span class="bes-main">
           <span class="bes-name">${escapeHtml(gb.god)}</span>
+          ${roleBadge}
           <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
         </span>
         <span class="bes-sub muted">
@@ -1570,7 +1610,9 @@ function godBuildCard(gb, role, opts = {}) {
       </summary>
       <div class="build-expand-body">
         <p class="card-plain-what">
-          <strong>${escapeHtml(role)}</strong> — buy top first${gb.is_aspect ? " · aspect" : ""}
+          <strong>${escapeHtml(role)}</strong> — buy top first${
+            gb.is_aspect ? " · aspect" : isNative ? " · primary role" : " · off-role flex"
+          }
         </p>
         ${shortWhy ? `<p class="why simple-why">${escapeHtml(shortWhy)}.</p>` : ""}
         <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>

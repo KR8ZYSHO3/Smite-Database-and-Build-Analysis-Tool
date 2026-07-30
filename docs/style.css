@@ -1432,6 +1432,17 @@ details.build-expand.deep-link-focus {
   outline: 2px solid rgba(76, 201, 240, 0.55);
   box-shadow: 0 0 0 4px rgba(76, 201, 240, 0.12), var(--glow, 0 0 24px rgba(76, 201, 240, 0.15));
 }
+/* Primary-role builds (native Carry hunters, etc.) sit above flex */
+details.build-expand.is-native-role .bes-main .pill.hot {
+  font-size: 0.68rem;
+  padding: 2px 7px;
+}
+details.build-expand.is-flex-role {
+  opacity: 0.94;
+}
+details.build-expand.is-flex-role .bes-name {
+  font-weight: 600;
+}
 
 /* ----- Counter lobby paste ----- */
 .counter-paste-block {
