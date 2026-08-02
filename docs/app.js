@@ -1437,7 +1437,12 @@ function setupBuilds() {
     const q = (search.value || "").toLowerCase().trim();
     let gods = [...(data?.recommended_gods || [])];
     // Aspect-only role unlocks (e.g. Kali Unbound Destruction → Carry)
+    // Append after role-tier order — never insert above ranked natives
     const seenNames = new Set(gods.map((gb) => gb.god));
+    const roleTierPre = state.tiers?.[`role:${activeRole}`] || [];
+    const roleTierPreBy = new Map(
+      roleTierPre.map((r) => [r.entity_name || r.name, r])
+    );
     for (const g of state.gods || []) {
       if (seenNames.has(g.name)) continue;
       const base = (g.conquest_by_role || {})[activeRole];
@@ -1446,6 +1451,7 @@ function setupBuilds() {
       for (const [aname, roleMap] of Object.entries(byAspect)) {
         const ab = roleMap?.[activeRole];
         if (!ab) continue;
+        const tr = roleTierPreBy.get(g.name);
         gods.push({
           ...ab,
           god: g.name,
@@ -1453,15 +1459,20 @@ function setupBuilds() {
           aspect_name: aname,
           aspect_description: ab.aspect_description ||
             (g.aspects || []).find((a) => a.name === aname)?.description,
-          tier: g.tier,
-          rank: g.rank_in_scope,
+          // Role ladder if present; else park after ranked list (not overall rank)
+          tier: tr?.tier || ab.tier || g.tier,
+          rank: tr?.rank_in_scope ?? 950,
           damage_type: g.primary_damage_type,
         });
         seenNames.add(g.name);
         break; // one aspect path per god in the list
       }
     }
-    // Native role first (e.g. Artemis Carry before flex mage ADCs), then tier rank
+    // Align with Tiers tab: same role:{Role} ladder order (rank_in_scope)
+    const roleTier = state.tiers?.[`role:${activeRole}`] || [];
+    const roleTierByName = new Map(
+      roleTier.map((r) => [r.entity_name || r.name, r])
+    );
     const nativeFor = (name) => {
       const g = (state.gods || []).find((x) => x.name === name);
       const n = g?.native_roles || g?.role_list || g?.roles || [];
@@ -1471,12 +1482,22 @@ function setupBuilds() {
       if (gb.is_native == null) {
         gb.is_native = nativeFor(gb.god).includes(activeRole);
       }
+      // Prefer live role-tier row so Builds matches Tiers even if export is stale
+      const tr = roleTierByName.get(gb.god);
+      if (tr) {
+        if (tr.rank_in_scope != null) gb.rank = tr.rank_in_scope;
+        if (tr.tier) gb.tier = tr.tier;
+        if (tr.score != null) gb.model_score = tr.score;
+      } else if (gb.rank == null) {
+        // Flex / aspect-only not on role ladder → after all ranked gods
+        gb.rank = 900 + (gb.is_native ? 0 : 50);
+      }
     });
     gods.sort((a, b) => {
-      const na = a.is_native ? 0 : 1;
-      const nb = b.is_native ? 0 : 1;
-      if (na !== nb) return na - nb;
-      return (a.rank ?? 99) - (b.rank ?? 99);
+      const ra = Number(a.rank ?? 9999);
+      const rb = Number(b.rank ?? 9999);
+      if (ra !== rb) return ra - rb;
+      return String(a.god || "").localeCompare(String(b.god || ""));
     });
     if (q) gods = gods.filter((g) => (g.god || "").toLowerCase().includes(q));
     const countEl = $("#build-god-count");
@@ -1484,8 +1505,8 @@ function setupBuilds() {
       const nNative = gods.filter((g) => g.is_native).length;
       countEl.textContent =
         nNative > 0
-          ? `(${gods.length} in ${activeRole} · ${nNative} primary)`
-          : `(${gods.length} in ${activeRole})`;
+          ? `(${gods.length} in ${activeRole} · tier order · ${nNative} primary)`
+          : `(${gods.length} in ${activeRole} · tier order)`;
     }
 
     $("#build-gods").innerHTML = gods.length

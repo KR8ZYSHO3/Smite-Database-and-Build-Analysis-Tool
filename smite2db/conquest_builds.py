@@ -5893,7 +5893,14 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
     return summary
 
 
-def generate_all(conn: sqlite3.Connection, gods_per_role: int = 24) -> dict[str, Any]:
+def generate_all(conn: sqlite3.Connection, gods_per_role: int = 80) -> dict[str, Any]:
+    """
+    Build recommended paths per role.
+
+    Order matches ``tier_list`` scope ``role:{Role}`` (rank_in_scope ascending)
+    so the Builds tab and Tiers tab stay aligned. ``gods_per_role`` caps how
+    many role-tier rows we attempt (default high enough for full role lists).
+    """
     items = load_items(conn)
     from .build_pipeline import algorithm_card
 
@@ -5911,7 +5918,8 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 24) -> dict[str,
             f"Shop actives ≤{DEFAULT_MAX_SHOP_ACTIVES} (hard max {HARD_MAX_ACTIVE_ITEMS}). "
             f"Damage roles ≥{MIN_BUILD_PEN:.0f} matching pen. "
             "Order is first-class: Mid Book/Deso before Obsidian; Carry Tyrfing/DG before Titan's; "
-            "Jungle Jotunn before late pen; Support Thebes/Shifter before Spectral."
+            "Jungle Jotunn before late pen; Support Thebes/Shifter before Spectral. "
+            "Recommended god order = role tier list rank (same as Tiers → role:X)."
         ),
         "max_active_items": DEFAULT_MAX_SHOP_ACTIVES,
         "hard_max_active_items": HARD_MAX_ACTIVE_ITEMS,
@@ -5921,29 +5929,56 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 24) -> dict[str,
     }
     for role in ("Carry", "Mid", "Jungle", "Solo", "Support"):
         template = build_role_template(items, role)
-        gods = top_gods_for_role(conn, role, limit=gods_per_role)
+        # Full role ladder (not a short arbitrary cut that drifts from Tiers UI)
+        gods = top_gods_for_role(conn, role, limit=max(int(gods_per_role), 80))
         god_builds = []
+        seen: set[str] = set()
         for g in gods:
+            nm = g.get("entity_name") or g.get("name")
+            if not nm or nm in seen:
+                continue
             b = build_god_build(conn, items, role, g)
-            if b is not None:
-                god_builds.append(b)
-        # Carry: backfill more ranged/native carries if melee tier noise dropped rows
-        if role == "Carry" and len(god_builds) < min(12, gods_per_role):
-            extra = top_gods_for_role(conn, role, limit=gods_per_role * 2)
-            seen = {x.get("god") or x.get("entity_name") for x in god_builds}
+            if b is None:
+                continue
+            # Force role-tier fields (build_god_build copies from god row already)
+            b["rank"] = g.get("rank_in_scope")
+            b["tier"] = g.get("tier")
+            b["model_score"] = g.get("score")
+            b["role_tier_scope"] = f"role:{role}"
+            god_builds.append(b)
+            seen.add(str(nm))
+
+        # Carry only: if gates dropped many rows, walk more of the same role ladder
+        if role == "Carry" and len(god_builds) < 12:
+            extra = top_gods_for_role(conn, role, limit=200)
             for g in extra:
                 nm = g.get("entity_name") or g.get("name")
-                if nm in seen:
+                if not nm or nm in seen:
                     continue
                 b = build_god_build(conn, items, role, g)
-                if b is not None:
-                    god_builds.append(b)
-                    seen.add(nm)
-                if len(god_builds) >= gods_per_role:
+                if b is None:
+                    continue
+                b["rank"] = g.get("rank_in_scope")
+                b["tier"] = g.get("tier")
+                b["model_score"] = g.get("score")
+                b["role_tier_scope"] = f"role:{role}"
+                god_builds.append(b)
+                seen.add(str(nm))
+                if len(god_builds) >= 24:
                     break
+
+        # Stable order: role tier rank, then name (never reshuffle by native/flex)
+        god_builds.sort(
+            key=lambda x: (
+                x.get("rank") is None,
+                int(x.get("rank") or 9999),
+                str(x.get("god") or ""),
+            )
+        )
         report["roles"][role] = {
             "template": template,
             "recommended_gods": god_builds,
+            "ordered_by": f"tier_list scope role:{role} rank_in_scope",
         }
     report["quality_gate"] = quality_gate_builds(report)
     return report
