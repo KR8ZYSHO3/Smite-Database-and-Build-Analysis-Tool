@@ -2,7 +2,7 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-08-02T00:07:41.379304+00:00_
+_Generated: 2026-08-02T22:27:27.389133+00:00_
 
 ## Weekly themes
 
@@ -26,11 +26,11 @@ _Generated: 2026-08-02T00:07:41.379304+00:00_
 | Devourer's Gauntlet | 9 | 45.0 |
 | The Executioner | 8 | 40.0 |
 | Transcendence | 5 | 25.0 |
-| Spear of Desolation | 4 | 20.0 |
 | Sands Of Time | 4 | 20.0 |
-| Book of Thoth | 4 | 20.0 |
-| Obsidian Shard | 4 | 20.0 |
 | Soul Reaver | 4 | 20.0 |
+| Obsidian Shard | 4 | 20.0 |
+| Spear of Desolation | 4 | 20.0 |
+| Book of Thoth | 4 | 20.0 |
 | Spear Of The Magus | 2 | 10.0 |
 | The World Stone | 2 | 10.0 |
 
@@ -38,9 +38,9 @@ _Generated: 2026-08-02T00:07:41.379304+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
+| Obsidian Shard | 23 | 95.8 |
 | Spear of Desolation | 23 | 95.8 |
 | Book of Thoth | 23 | 95.8 |
-| Obsidian Shard | 23 | 95.8 |
 | Chronos' Pendant | 17 | 70.8 |
 | Gem of Isolation | 7 | 29.2 |
 | Rod of Tahuti | 7 | 29.2 |
@@ -59,8 +59,8 @@ _Generated: 2026-08-02T00:07:41.379304+00:00_
 | Item | Paths | % |
 |------|------:|--:|
 | Jotunn's Revenge | 21 | 95.5 |
-| Titan's Bane | 21 | 95.5 |
 | Hydra's Lament | 21 | 95.5 |
+| Titan's Bane | 21 | 95.5 |
 | The Crusher | 19 | 86.4 |
 | Arondight | 14 | 63.6 |
 | Pendulum Blade | 13 | 59.1 |
@@ -68,11 +68,11 @@ _Generated: 2026-08-02T00:07:41.379304+00:00_
 | Avatar's Parashu | 6 | 27.3 |
 | Toxic Blade | 3 | 13.6 |
 | Thistlethorn Acorn | 1 | 4.5 |
-| Spear of Desolation | 1 | 4.5 |
-| Book of Thoth | 1 | 4.5 |
-| Obsidian Shard | 1 | 4.5 |
 | Gem of Isolation | 1 | 4.5 |
 | Rod of Tahuti | 1 | 4.5 |
+| Obsidian Shard | 1 | 4.5 |
+| Soul Gem | 1 | 4.5 |
+| Spear of Desolation | 1 | 4.5 |
 
 ### Solo (20 paths)
 
@@ -83,8 +83,8 @@ _Generated: 2026-08-02T00:07:41.379304+00:00_
 | Stone of Binding | 10 | 50.0 |
 | Doublet of Binding | 9 | 45.0 |
 | Chandra's Grace | 8 | 40.0 |
-| Shield of the Phoenix | 7 | 35.0 |
 | Kinetic Cuirass | 7 | 35.0 |
+| Shield of the Phoenix | 7 | 35.0 |
 | Gauntlet of Thebes | 4 | 20.0 |
 | Freya's Tears | 4 | 20.0 |
 | Breastplate of Valor | 4 | 20.0 |
@@ -109,10 +109,10 @@ _Generated: 2026-08-02T00:07:41.379304+00:00_
 | Shield of the Phoenix | 4 | 19.0 |
 | Spectral Armor | 4 | 19.0 |
 | Leviathan's Hide | 4 | 19.0 |
-| Kinetic Cuirass | 3 | 14.3 |
 | Resolute Mantle | 3 | 14.3 |
+| Kinetic Cuirass | 3 | 14.3 |
 | Hussar's Wings | 3 | 14.3 |
-| Chandra's Grace | 3 | 14.3 |
+| Draconic Scale | 3 | 14.3 |
 
 ## Answer coverage
 

@@ -2896,3 +2896,37 @@ details.build-expand[open] .bes-cta::after { content: ""; }
 }
 .flex-cat-chip p { margin: 6px 0 0; font-size: 0.78rem; }
 .meta-axes { margin: 10px 0 4px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+
+/* ----- Simple item guide ----- */
+.item-simple-guide { margin-bottom: 12px; }
+.simple-guide-card {
+  border: 1px solid rgba(76, 201, 240, 0.35);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, rgba(76, 201, 240, 0.08), rgba(155, 93, 229, 0.06));
+  margin-bottom: 10px;
+}
+.simple-guide-card p { margin: 6px 0; font-size: 0.9rem; line-height: 1.4; }
+.sg-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.sg-tags { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+.sg-simple { color: var(--text); }
+.sg-when { color: var(--mint, #2ec4b6); }
+.sg-not { color: #f9a8d4; }
+.meta-item-guide {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  margin-top: 10px;
+}
+.meta-guide-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0;
+}

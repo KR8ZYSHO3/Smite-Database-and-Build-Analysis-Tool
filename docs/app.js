@@ -1784,12 +1784,56 @@ function setupItems() {
   render();
 }
 
+function lookupSimpleGuide(itemName) {
+  const by = state.meta_lab?.flex_item_guide?.by_name || {};
+  if (!itemName) return null;
+  return (
+    by[itemName] ||
+    by[String(itemName).replace(/['']/g, "'")] ||
+    by[String(itemName).toLowerCase()] ||
+    null
+  );
+}
+
+function simpleGuideCardHtml(g, { compact = false } = {}) {
+  if (!g) return "";
+  const tags = (g.tags || [])
+    .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
+    .join("");
+  return `<div class="simple-guide-card">
+    <div class="sg-head">
+      <strong>${compact ? "Simple English" : escapeHtml(g.name)}</strong>
+      <span class="sg-tags">${tags}</span>
+    </div>
+    <p class="sg-simple"><strong>What it does:</strong> ${escapeHtml(g.simple)}</p>
+    ${g.how ? `<p class="sg-how muted"><strong>How:</strong> ${escapeHtml(g.how)}</p>` : ""}
+    <p class="sg-when"><strong>Buy when:</strong> ${escapeHtml(g.when)}</p>
+    <p class="sg-not"><strong>Skip when:</strong> ${escapeHtml(g.when_not)}</p>
+    ${g.buy_as ? `<p class="sg-buy muted"><strong>Slot tip:</strong> ${escapeHtml(g.buy_as)}</p>` : ""}
+  </div>`;
+}
+
 function showItemDetail(it) {
   const box = $("#item-patch-box");
+  const guideEl = $("#item-simple-guide");
   if (!it) {
     if (box) box.textContent = "Select an item.";
+    if (guideEl) {
+      guideEl.hidden = true;
+      guideEl.innerHTML = "";
+    }
     $("#item-detail").textContent = "";
     return;
+  }
+  const guide = lookupSimpleGuide(it.name);
+  if (guideEl) {
+    if (guide) {
+      guideEl.hidden = false;
+      guideEl.innerHTML = simpleGuideCardHtml(guide, { compact: true });
+    } else {
+      guideEl.hidden = true;
+      guideEl.innerHTML = "";
+    }
   }
   const axes = it.patch_axes || {};
   const axEntries = Object.entries(axes).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
@@ -2066,6 +2110,43 @@ function setupMetaLab() {
       })
       .join("");
   }
+
+  // Weird / flex items — simple English guide
+  const guideRoot = lab.flex_item_guide || {};
+  const guideItems = guideRoot.items || [];
+  const tagSel = $("#meta-guide-tag");
+  const searchIn = $("#meta-guide-search");
+  const guideBox = $("#meta-item-guide");
+  if (tagSel && guideRoot.tag_labels) {
+    const opts = ['<option value="">All types</option>'].concat(
+      (guideRoot.tags || []).map((t) => {
+        const lab = guideRoot.tag_labels[t] || t;
+        return `<option value="${escapeAttr(t)}">${escapeHtml(lab)}</option>`;
+      })
+    );
+    tagSel.innerHTML = opts.join("");
+  }
+  const renderGuide = () => {
+    if (!guideBox) return;
+    const q = (searchIn?.value || "").toLowerCase().trim();
+    const tag = tagSel?.value || "";
+    let list = [...guideItems];
+    if (tag) list = list.filter((it) => (it.tags || []).includes(tag));
+    if (q) {
+      list = list.filter(
+        (it) =>
+          (it.name || "").toLowerCase().includes(q) ||
+          (it.simple || "").toLowerCase().includes(q) ||
+          (it.when || "").toLowerCase().includes(q)
+      );
+    }
+    guideBox.innerHTML = list.length
+      ? list.map((g) => simpleGuideCardHtml(g)).join("")
+      : `<p class="muted">No items match.</p>`;
+  };
+  searchIn?.addEventListener("input", renderGuide);
+  tagSel?.addEventListener("change", renderGuide);
+  renderGuide();
 }
 
 /* -------------------- About momentum lists -------------------- */

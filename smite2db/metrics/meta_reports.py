@@ -493,6 +493,8 @@ def generate_meta_lab(
     builds = attach_flex_to_builds(builds)
     role_paths = _collect_role_paths(builds)
 
+    from .flex_item_guide import build_flex_item_guide
+
     lab = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "game": "SMITE 2",
@@ -501,6 +503,7 @@ def generate_meta_lab(
             "Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps."
         ),
         "flex_catalog": build_flex_catalog(),
+        "flex_item_guide": build_flex_item_guide(),
         "role_staples": compute_role_staples(role_paths),
         "answer_coverage": compute_answer_coverage(role_paths),
         "tank_shred": compute_tank_shred_scores(role_paths),
