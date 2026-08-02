@@ -1444,7 +1444,133 @@ details.build-expand.is-flex-role .bes-name {
   font-weight: 600;
 }
 
-/* ----- Counter lobby paste ----- */
+/* ----- Counter draft speed (quick paste first) ----- */
+.counter-speed-lead {
+  margin: 0 0 12px;
+  line-height: 1.4;
+}
+.counter-quick {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(76, 201, 240, 0.35);
+  background: linear-gradient(145deg, rgba(76, 201, 240, 0.1), rgba(247, 37, 133, 0.06));
+  box-shadow: 0 0 24px rgba(76, 201, 240, 0.08);
+}
+.counter-quick .step-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.counter-quick textarea {
+  width: 100%;
+  min-height: 64px;
+  resize: vertical;
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: var(--text);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(76, 201, 240, 0.4);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.counter-quick textarea:focus {
+  outline: none;
+  border-color: rgba(76, 201, 240, 0.75);
+  box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.18);
+}
+.counter-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 10px;
+}
+.ctr-quick-preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  min-height: 28px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.ctr-quick-preview .qp-you {
+  color: var(--mint, #2ec4b6);
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(46, 196, 182, 0.15);
+  border: 1px solid rgba(46, 196, 182, 0.35);
+}
+.ctr-quick-preview .qp-role {
+  color: #fbbf24;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(251, 191, 36, 0.12);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+.ctr-quick-preview .qp-vs {
+  color: var(--muted);
+  font-weight: 500;
+  text-transform: lowercase;
+}
+.ctr-quick-preview .qp-enemy {
+  color: #ffb3d0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(247, 37, 133, 0.14);
+  border: 1px solid rgba(247, 37, 133, 0.35);
+}
+.ctr-quick-preview .qp-unk {
+  color: #f87171;
+  font-weight: 500;
+  opacity: 0.9;
+}
+.counter-form-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ctr-you-role-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) 1fr;
+  gap: 12px 16px;
+  align-items: start;
+}
+@media (max-width: 560px) {
+  .ctr-you-role-row {
+    grid-template-columns: 1fr;
+  }
+}
+.ctr-you-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.ctr-role-pills {
+  flex-wrap: wrap;
+}
+.ctr-advanced {
+  margin: 10px 0 4px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(42, 53, 80, 0.55);
+}
+.ctr-advanced summary {
+  cursor: pointer;
+  user-select: none;
+  padding: 4px 0;
+}
+.ctr-advanced[open] summary {
+  margin-bottom: 10px;
+}
+
+/* ----- Counter lobby paste (advanced) ----- */
 .counter-paste-block {
   display: grid;
   gap: 6px;

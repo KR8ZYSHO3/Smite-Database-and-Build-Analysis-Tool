@@ -94,48 +94,70 @@
       <section id="panel-counter" class="panel">
         <div class="card counter-panel">
           <h2>Counter the enemy team</h2>
-          <p class="muted">
-            Your god + up to 5 enemies → a buy order adjusted for their damage, crit, healing, and CC.
-            Paste a lobby for speed — SMITE 2 has no public live-lobby feed for fan tools (yet).
+          <p class="muted counter-speed-lead">
+            <strong>Draft speed:</strong> one paste → path builds itself. Partial lobbies (1–5 enemies) OK mid-pick.
           </p>
-          <div class="counter-form">
-            <label>Your god
-              <input id="ctr-you" type="search" list="ctr-god-list" placeholder="e.g. Charon" autocomplete="off" />
+
+          <!-- FAST PATH: one field first -->
+          <div class="counter-quick" id="ctr-quick-wrap">
+            <label for="ctr-quick" class="step-label" style="margin-top:0">
+              <span class="step-badge">⚡</span> Paste lobby (Ctrl+V auto-runs)
             </label>
-            <label>Your role
-              <select id="ctr-role">
-                <option>Support</option>
-                <option>Solo</option>
-                <option>Jungle</option>
-                <option>Mid</option>
-                <option>Carry</option>
-              </select>
-            </label>
-            <div class="counter-paste-block">
-              <label for="ctr-paste">Paste lobby <span class="muted">(fast entry)</span></label>
-              <textarea
-                id="ctr-paste"
-                rows="2"
-                placeholder="Zeus, Agni, Susano, Ymir, Ra   or   Zeus Agni vs with Neith Yemoja"
-              ></textarea>
-              <button type="button" class="btn-ghost" id="ctr-paste-apply">Apply paste</button>
-              <p class="muted paste-hint">
-                Commas / new lines / “vs” / “with allies”. No live game hook — Hi-Rez doesn’t expose champion select to third-party sites.
-              </p>
+            <textarea
+              id="ctr-quick"
+              rows="2"
+              placeholder="Ymir Support vs Zeus Agni Susano Charon Ra&#10;or enemies only: Zeus Agni Susano Charon Ra"
+              autocomplete="off"
+              spellcheck="false"
+            ></textarea>
+            <div id="ctr-quick-preview" class="ctr-quick-preview" hidden aria-live="polite"></div>
+            <div class="counter-quick-actions">
+              <button type="button" class="btn-primary" id="ctr-quick-go">Counter now</button>
+              <button type="button" class="btn-ghost" id="ctr-quick-clear">Clear enemies</button>
+              <span class="muted" id="ctr-quick-hint">Spaces or commas · multi-word gods OK · rebuilds as you type</span>
+            </div>
+          </div>
+
+          <div class="counter-form counter-form-compact">
+            <div class="ctr-you-role-row">
+              <label class="ctr-you-label">You
+                <input id="ctr-you" type="search" list="ctr-god-list" placeholder="Your god (saved)" autocomplete="off" />
+              </label>
+              <div class="ctr-role-block">
+                <span class="muted" style="font-size:0.8rem">Role (tap · remembered)</span>
+                <div class="role-pills ctr-role-pills" id="ctr-role-pills" role="group" aria-label="Your role"></div>
+                <select id="ctr-role" hidden>
+                  <option>Support</option>
+                  <option>Solo</option>
+                  <option>Jungle</option>
+                  <option>Mid</option>
+                  <option>Carry</option>
+                </select>
+              </div>
             </div>
             <div class="counter-enemies">
-              <span class="muted">Enemy team (up to 5) — click a name to remove</span>
+              <span class="muted">Enemies <span id="ctr-enemy-count">(0/5)</span> — click chip to remove · paste multi here too</span>
               <div class="enemy-lobby" id="ctr-enemy-picks" aria-label="Enemy lobby slots"></div>
-              <input id="ctr-enemy-add" type="search" list="ctr-god-list" placeholder="Add enemy god…" autocomplete="off" />
-            </div>
-            <div class="counter-enemies counter-allies">
-              <span class="muted">Your allies (optional, up to 4) — peels for your ADC/mid</span>
-              <div class="enemy-lobby ally-lobby" id="ctr-ally-picks" aria-label="Ally lobby slots"></div>
-              <input id="ctr-ally-add" type="search" list="ctr-god-list" placeholder="Add ally god…" autocomplete="off" />
+              <input id="ctr-enemy-add" type="search" list="ctr-god-list" placeholder="Add enemy or paste several + Enter" autocomplete="off" />
             </div>
             <datalist id="ctr-god-list"></datalist>
-            <button type="button" class="btn-primary" id="ctr-run">Build counter path</button>
+            <button type="button" class="btn-ghost" id="ctr-run">Rebuild path</button>
           </div>
+
+          <details class="ctr-advanced">
+            <summary class="muted">Allies &amp; extra paste</summary>
+            <div class="counter-enemies counter-allies">
+              <span class="muted">Allies (optional, up to 4)</span>
+              <div class="enemy-lobby ally-lobby" id="ctr-ally-picks" aria-label="Ally lobby slots"></div>
+              <input id="ctr-ally-add" type="search" list="ctr-god-list" placeholder="Add ally…" autocomplete="off" />
+            </div>
+            <div class="counter-paste-block">
+              <label for="ctr-paste">Extra paste field</label>
+              <textarea id="ctr-paste" rows="2" placeholder="Enemies only: Zeus Agni Susano"></textarea>
+              <button type="button" class="btn-ghost" id="ctr-paste-apply">Apply</button>
+            </div>
+          </details>
+
           <div id="ctr-threat" class="counter-threat muted"></div>
           <div id="ctr-result" class="counter-result"></div>
         </div>
