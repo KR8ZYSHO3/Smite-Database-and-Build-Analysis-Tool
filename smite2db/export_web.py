@@ -20,6 +20,12 @@ from .conquest_builds import (
     render_markdown,
 )
 from .build_pipeline import algorithm_card
+from .metrics.meta_reports import (
+    attach_flex_to_builds,
+    flex_chips_for_path,
+    generate_meta_lab,
+    write_meta_lab_markdown,
+)
 
 ROOT = Path(__file__).resolve().parent.parent
 WEB_DATA = ROOT / "docs" / "data"
@@ -286,6 +292,14 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     if builds is None and builds_path.exists():
         builds = json.loads(builds_path.read_text(encoding="utf-8"))
 
+    # Situational flex chips + answer flags on recommended paths
+    if builds:
+        try:
+            attach_flex_to_builds(builds)
+            builds_path.write_text(json.dumps(builds, indent=2), encoding="utf-8")
+        except Exception as exc:  # noqa: BLE001
+            print(f"WARN: flex chip attach failed: {exc}")
+
     # Attach Conquest paths for ALL roles (flex / off-role included).
     # Base kit + every God Aspect × every role. Algorithm: docs/BUILD_ALGORITHM.md
     ALL_CONQUEST_ROLES = ("Carry", "Mid", "Jungle", "Solo", "Support")
@@ -358,12 +372,17 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
                     ab["flex_role"] = role not in native
                     ab["aspect_id"] = asp["id"]
                     ab["aspect_name"] = asp["name"]
+                    _attach_flex_fields(ab, role)
                     role_map[role] = ab
                 if role_map:
                     by_aspect[asp["name"]] = role_map
                 # Primary aspect keeps flat conquest_by_role_aspect for older UI
                 if ai == 0:
                     aspect_paths = role_map
+            # Base paths flex chips
+            for role, pb in list(paths.items()):
+                if pb:
+                    _attach_flex_fields(pb, role)
             g["conquest_by_role"] = paths
             g["conquest_roles"] = list(paths.keys())
             g["native_roles"] = native
@@ -376,13 +395,31 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     except Exception as exc:  # noqa: BLE001
         print(f"WARN: per-god conquest attach failed: {exc}")
 
+    # Meta lab: staples, answer coverage, trajectories, themes
+    meta_lab: dict = {}
+    try:
+        meta_lab = generate_meta_lab(conn, builds)
+        (ROOT / "data" / "meta_lab.json").write_text(
+            json.dumps(meta_lab, indent=2), encoding="utf-8"
+        )
+        write_meta_lab_markdown(meta_lab, ROOT / "data" / "meta_lab.md")
+        print(
+            f"Meta lab: staples roles={len(meta_lab.get('role_staples') or {})} "
+            f"themes={len(meta_lab.get('weekly_themes') or [])}"
+        )
+    except Exception as exc:  # noqa: BLE001
+        print(f"WARN: meta lab failed: {exc}")
+        meta_lab = {"error": str(exc), "flex_catalog": {}}
+
     meta["build_algorithm"] = algorithm_card()
+    meta["has_meta_lab"] = bool(meta_lab) and "error" not in meta_lab
     payload = {
         "meta": meta,
         "gods": gods,
         "tiers": tiers,
         "items": items,
         "builds": builds,
+        "meta_lab": meta_lab,
     }
 
     # Split for lighter loads
@@ -391,6 +428,7 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     (WEB_DATA / "builds.json").write_text(json.dumps(builds or {}), encoding="utf-8")
     (WEB_DATA / "gods.json").write_text(json.dumps(gods), encoding="utf-8")
     (WEB_DATA / "items.json").write_text(json.dumps(items), encoding="utf-8")
+    (WEB_DATA / "meta_lab.json").write_text(json.dumps(meta_lab), encoding="utf-8")
     (WEB_DATA / "bundle.json").write_text(json.dumps(payload), encoding="utf-8")
 
     # Bake a human stamp into index.html so the header isn't "…" before JS,
@@ -405,6 +443,24 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     print(f"  standalone: {ROOT / 'docs' / 'standalone.html'}")
     print(f"  exported_at: {exported_at}")
     return WEB_DATA
+
+
+def _attach_flex_fields(build: dict, role: str) -> None:
+    """Add flex_chips + answer_flags onto a single path dict."""
+    if not build or not isinstance(build, dict):
+        return
+    names: list[str] = []
+    st = build.get("starter")
+    if isinstance(st, dict) and st.get("name"):
+        names.append(st["name"])
+    for it in build.get("items") or build.get("full_path") or []:
+        if isinstance(it, dict) and it.get("name"):
+            names.append(it["name"])
+        elif isinstance(it, str):
+            names.append(it)
+    chips = flex_chips_for_path(role, names)
+    build["flex_chips"] = chips
+    build["answer_flags"] = {c["id"]: c["in_path"] for c in chips}
 
 
 def _format_stamp_local(iso: str) -> str:

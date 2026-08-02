@@ -6,6 +6,7 @@ const state = {
   builds: null,
   gods: null,
   items: null,
+  meta_lab: null,
   selectedGod: null,
 };
 
@@ -453,13 +454,13 @@ function itemsForShare(items) {
 }
 
 /* -------------------- Routing / deep links -------------------- */
-const VALID_TABS = new Set(["builds", "counter", "troll", "gods", "tiers", "items", "about"]);
+const VALID_TABS = new Set(["builds", "counter", "troll", "gods", "tiers", "items", "meta", "about"]);
 const routeState = {
   suppressHash: false,
   build: null, // { getRole, setRole }
 };
 
-const ADVANCED_TABS = new Set(["counter", "troll", "tiers", "items", "about"]);
+const ADVANCED_TABS = new Set(["counter", "troll", "tiers", "items", "meta", "about"]);
 
 function activateTab(tab, { updateHash = true } = {}) {
   if (!VALID_TABS.has(tab)) tab = "builds";
@@ -472,7 +473,7 @@ function activateTab(tab, { updateHash = true } = {}) {
   });
   $$(".mobile-tab").forEach((b) => {
     if (b.dataset.tab === "more") {
-      b.classList.toggle("active", ["troll", "tiers", "items", "about"].includes(tab));
+      b.classList.toggle("active", ["troll", "tiers", "items", "meta", "about"].includes(tab));
     } else {
       b.classList.toggle("active", b.dataset.tab === tab);
     }
@@ -720,6 +721,7 @@ function applyPayload(payload) {
   state.builds = payload.builds || {};
   state.gods = payload.gods || [];
   state.items = payload.items || [];
+  state.meta_lab = payload.meta_lab || null;
 }
 
 async function fetchJson(url) {
@@ -744,14 +746,15 @@ async function loadData() {
     console.warn("bundle.json failed, falling back to split files", bundleErr);
   }
 
-  const [meta, tiers, builds, gods, items] = await Promise.all([
+  const [meta, tiers, builds, gods, items, meta_lab] = await Promise.all([
     fetchJson(new URL("meta.json", base)),
     fetchJson(new URL("tiers.json", base)),
     fetchJson(new URL("builds.json", base)),
     fetchJson(new URL("gods.json", base)),
     fetchJson(new URL("items.json", base)),
+    fetchJson(new URL("meta_lab.json", base)).catch(() => null),
   ]);
-  applyPayload({ meta, tiers, builds, gods, items });
+  applyPayload({ meta, tiers, builds, gods, items, meta_lab });
 }
 
 /* -------------------- Tiers -------------------- */
@@ -1321,6 +1324,7 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta, isFlex) {
         ${items.map((it, i) => buyRow(it, i + 1, { simple: true })).join("")}
       </ol>
       <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
+      ${flexChipsHtml(resolveFlexChips(gb, role), { compact: true })}
       <details class="extra-details">
         <summary>Why this path?</summary>
         <p class="why">${escapeHtml(gb.why || "")}</p>
@@ -1329,6 +1333,7 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta, isFlex) {
           <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
           <span class="pill">actives ${nAct}/${maxA}</span>
         </div>
+        ${flexChipsHtml(resolveFlexChips(gb, role), { compact: false })}
       </details>
       ${shareBar(shareData)}
     </div>`;
@@ -1621,6 +1626,7 @@ function godBuildCard(gb, role, opts = {}) {
           ${itemsG.map((it, i) => buyRow(it, i + 1, { simple: true })).join("")}
         </ol>
         <div class="muted gbc-relics">Relics: ${(gb.relics || []).map((r) => r.name).join(", ") || "—"}</div>
+        ${flexChipsHtml(resolveFlexChips(gb, role), { compact: true })}
         <details class="extra-details">
           <summary>More detail</summary>
           <div class="build-meta">
@@ -1637,6 +1643,7 @@ function godBuildCard(gb, role, opts = {}) {
               : ""
           }
           <p class="why">${escapeHtml(gb.why || "")}</p>
+          ${flexChipsHtml(resolveFlexChips(gb, role), { compact: false })}
         </details>
         <div class="card-actions">
           <button type="button" class="btn-ghost btn-copy-path" data-copy-path="${escapeAttr(copyPayload)}" data-copy-msg="List copied">Copy list</button>
@@ -1818,6 +1825,226 @@ function showItemDetail(it) {
   ]
     .filter((x) => x !== "")
     .join("\n");
+}
+
+/* -------------------- Flex chips (situational swaps) -------------------- */
+function flexChipsHtml(chips, opts = {}) {
+  const list = chips || [];
+  if (!list.length) return "";
+  const compact = !!opts.compact;
+  const rows = list
+    .map((c) => {
+      const ok = !!c.in_path;
+      const items = ok
+        ? (c.path_items || []).join(", ")
+        : (c.suggest || []).join(" / ");
+      const cls = ok ? "flex-chip is-covered" : "flex-chip is-gap";
+      const mark = ok ? "✓" : "→";
+      const tip = `${c.label}: ${c.why || ""}${items ? ` · ${items}` : ""}`;
+      return `<span class="${cls}" title="${escapeAttr(tip)}">
+        <span class="fc-mark">${mark}</span>
+        <span class="fc-label">${escapeHtml(c.short || c.label)}</span>
+        ${
+          compact
+            ? ""
+            : `<span class="fc-items muted">${escapeHtml(items || "—")}</span>`
+        }
+      </span>`;
+    })
+    .join("");
+  return `<div class="flex-chips" aria-label="Situational flex">
+    <span class="flex-chips-title muted">Flex</span>
+    ${rows}
+  </div>`;
+}
+
+function resolveFlexChips(gb, role) {
+  if (gb?.flex_chips?.length) return gb.flex_chips;
+  // Fall back: catalog only (no in_path detection)
+  const cat = state.meta_lab?.flex_catalog?.roles?.[role] || [];
+  return cat.map((c) => ({
+    ...c,
+    in_path: false,
+    suggest: c.items || [],
+    path_items: [],
+  }));
+}
+
+/* -------------------- Meta lab -------------------- */
+function setupMetaLab() {
+  const lab = state.meta_lab;
+  const disc = $("#meta-lab-disclaimer");
+  if (!lab || lab.error) {
+    if (disc) {
+      disc.textContent = lab?.error
+        ? `Meta lab unavailable: ${lab.error}`
+        : "Meta lab data missing — re-export the site (python -m smite2db.export_web).";
+    }
+    return;
+  }
+  if (disc) disc.textContent = lab.disclaimer || disc.textContent;
+
+  const themes = $("#meta-lab-themes");
+  if (themes) {
+    const list = lab.weekly_themes || [];
+    themes.innerHTML = list.length
+      ? `<ul class="meta-theme-list">${list
+          .map((t) => `<li>${escapeHtml(t)}</li>`)
+          .join("")}</ul>`
+      : "";
+  }
+
+  const fillTraj = (sel, rows) => {
+    const el = $(sel);
+    if (!el) return;
+    el.innerHTML = (rows || []).length
+      ? rows
+          .map((r) => {
+            const sc = Number(r.recent_5_score || 0);
+            const cls = sc > 0 ? "axis-up" : sc < 0 ? "axis-down" : "";
+            return `<li><span class="tag ${cls}">${sc >= 0 ? "+" : ""}${fmt(
+              sc,
+              2
+            )}</span> ${escapeHtml(r.entity_name)} <span class="muted">${escapeHtml(
+              r.trajectory || ""
+            )}</span></li>`;
+          })
+          .join("")
+      : `<li class="muted">—</li>`;
+  };
+  const g = lab.trajectories?.gods || {};
+  const it = lab.trajectories?.items || {};
+  fillTraj("#meta-gods-rising", g.rising);
+  fillTraj("#meta-gods-falling", g.falling);
+  fillTraj("#meta-items-rising", it.rising);
+  fillTraj("#meta-items-falling", it.falling);
+
+  const axesEl = $("#meta-axes");
+  if (axesEl) {
+    const axes = lab.trajectories?.patch_axes_avg_r5 || {};
+    const entries = Object.entries(axes).slice(0, 8);
+    axesEl.innerHTML = entries.length
+      ? `<strong>Patch axes (avg r5):</strong> ${entries
+          .map(([k, v]) => {
+            const n = Number(v);
+            const cls = n > 0.05 ? "axis-up" : n < -0.05 ? "axis-down" : "";
+            return `<span class="tag ${cls}">${escapeHtml(k)} ${n >= 0 ? "+" : ""}${fmt(
+              n,
+              2
+            )}</span>`;
+          })
+          .join(" ")}`
+      : "";
+  }
+
+  // Role staples
+  const roles = Object.keys(lab.role_staples || {});
+  const pills = $("#meta-staple-roles");
+  const box = $("#meta-staples");
+  let active = roles[0] || "Support";
+  const renderStaples = () => {
+    const data = lab.role_staples?.[active] || {};
+    const rows = data.staples || [];
+    if (box) {
+      box.innerHTML = rows.length
+        ? `<table class="meta-table"><thead><tr><th>Item</th><th>Paths</th><th>%</th></tr></thead><tbody>${rows
+            .map(
+              (s) =>
+                `<tr><td>${escapeHtml(s.name)}</td><td>${s.paths}</td><td>${s.pct}%</td></tr>`
+            )
+            .join("")}</tbody></table>
+          <p class="muted">${data.path_count || 0} recommended paths in ${escapeHtml(active)}</p>`
+        : `<p class="muted">No staple data.</p>`;
+    }
+  };
+  if (pills) {
+    pills.innerHTML = roles
+      .map(
+        (r) =>
+          `<button type="button" class="role-pill ${r === active ? "active" : ""}" data-meta-role="${escapeAttr(
+            r
+          )}">${escapeHtml(r)}</button>`
+      )
+      .join("");
+    pills.querySelectorAll("[data-meta-role]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        active = btn.getAttribute("data-meta-role");
+        pills.querySelectorAll(".role-pill").forEach((b) =>
+          b.classList.toggle("active", b.getAttribute("data-meta-role") === active)
+        );
+        renderStaples();
+      });
+    });
+  }
+  renderStaples();
+
+  // Coverage
+  const covEl = $("#meta-coverage");
+  if (covEl) {
+    const cov = lab.answer_coverage || {};
+    covEl.innerHTML = Object.entries(cov)
+      .map(([role, data]) => {
+        const answers = data.answers || {};
+        const bars = Object.entries(answers)
+          .map(([key, a]) => {
+            const pct = Number(a.pct || 0);
+            const cls = pct >= 50 ? "ok" : pct >= 25 ? "mid" : "low";
+            return `<div class="cov-row">
+              <span class="cov-label">${escapeHtml(a.label || key)}</span>
+              <span class="cov-bar"><span class="cov-fill cov-${cls}" style="width:${pct}%"></span></span>
+              <span class="cov-pct">${pct}%</span>
+            </div>`;
+          })
+          .join("");
+        return `<div class="cov-role card"><h4>${escapeHtml(role)}</h4>${bars}</div>`;
+      })
+      .join("");
+  }
+
+  // Tank shred
+  const shEl = $("#meta-shred");
+  if (shEl) {
+    const sh = lab.tank_shred || {};
+    shEl.innerHTML = Object.entries(sh)
+      .map(([role, data]) => {
+        const leaders = (data.leaders || [])
+          .slice(0, 5)
+          .map(
+            (s) =>
+              `<li>${escapeHtml(s.god)} <span class="muted">${s.score}/${s.max}</span></li>`
+          )
+          .join("");
+        return `<div class="shred-role">
+          <strong>${escapeHtml(role)}</strong>
+          <span class="muted"> — ${data.complete_paths || 0}/${data.total || 0} complete (${
+            data.pct_complete || 0
+          }%)</span>
+          <ul class="momentum-list">${leaders || "<li class='muted'>—</li>"}</ul>
+        </div>`;
+      })
+      .join("");
+  }
+
+  // Flex catalog
+  const flexEl = $("#meta-flex-catalog");
+  if (flexEl) {
+    const rolesFlex = lab.flex_catalog?.roles || {};
+    flexEl.innerHTML = Object.entries(rolesFlex)
+      .map(([role, chips]) => {
+        const chipsHtml = (chips || [])
+          .map(
+            (c) =>
+              `<div class="flex-cat-chip">
+                <strong>${escapeHtml(c.label)}</strong>
+                <span class="muted">${escapeHtml((c.items || []).join(", "))}</span>
+                <p class="muted">${escapeHtml(c.why || "")}</p>
+              </div>`
+          )
+          .join("");
+        return `<div class="flex-cat-role"><h4>${escapeHtml(role)}</h4><div class="flex-cat-grid">${chipsHtml}</div></div>`;
+      })
+      .join("");
+  }
 }
 
 /* -------------------- About momentum lists -------------------- */
@@ -3725,6 +3952,7 @@ async function main() {
     setupGods();
     setupTiers();
     setupItems();
+    setupMetaLab();
     setupAboutMomentum();
     renderEnemyPicks();
     setupRouting();

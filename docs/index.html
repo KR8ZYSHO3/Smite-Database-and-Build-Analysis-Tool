@@ -16,8 +16,8 @@
         <p class="site-tagline">
           Pick your <strong>lane role</strong>, open a <strong>god</strong>, buy items <strong>top → bottom</strong>.
         </p>
-        <p class="site-updated" id="site-updated" data-exported-at="2026-07-30T20:41:14.212684+00:00" title="Export timestamp (UTC): 2026-07-30T20:41:14.212684+00:00">
-          Last updated: <strong>Jul 30, 2026 8:41 PM UTC</strong>
+        <p class="site-updated" id="site-updated" data-exported-at="2026-08-01T23:58:58.159813+00:00" title="Export timestamp (UTC): 2026-08-01T23:58:58.159813+00:00">
+          Last updated: <strong>Aug 1, 2026 11:58 PM UTC</strong>
         </p>
       </div>
       <button type="button" class="btn-ghost help-btn" id="btn-help" title="How this works">?</button>
@@ -64,6 +64,7 @@
             <button type="button" class="more-item" data-tab="troll">Troll / meme builds</button>
             <button type="button" class="more-item" data-tab="tiers">Tier list</button>
             <button type="button" class="more-item" data-tab="items">Item search</button>
+            <button type="button" class="more-item" data-tab="meta">Meta lab</button>
             <button type="button" class="more-item" data-tab="about">About &amp; scoring</button>
           </div>
         </div>
@@ -345,6 +346,54 @@
         </div>
       </section>
 
+      <!-- META LAB -->
+      <section id="panel-meta" class="panel">
+        <div class="card meta-lab-panel">
+          <h2>Meta lab</h2>
+          <p class="muted" id="meta-lab-disclaimer">
+            Role staples, answer-item coverage, patch trajectories, and situational flex — kit + patch model, not live WR.
+          </p>
+          <div id="meta-lab-themes" class="meta-themes"></div>
+
+          <h3>Patch trajectories</h3>
+          <div class="grid-2 meta-traj-grid">
+            <div>
+              <h4 class="muted">Gods rising (r5)</h4>
+              <ul id="meta-gods-rising" class="momentum-list"></ul>
+              <h4 class="muted">Gods falling (r5)</h4>
+              <ul id="meta-gods-falling" class="momentum-list"></ul>
+            </div>
+            <div>
+              <h4 class="muted">Items hot (r5)</h4>
+              <ul id="meta-items-rising" class="momentum-list"></ul>
+              <h4 class="muted">Items cold (r5)</h4>
+              <ul id="meta-items-falling" class="momentum-list"></ul>
+            </div>
+          </div>
+          <div id="meta-axes" class="meta-axes muted"></div>
+
+          <h3>Role staples</h3>
+          <p class="muted">Most common items across recommended paths for each role.</p>
+          <div class="toolbar" id="meta-staple-roles"></div>
+          <div id="meta-staples" class="meta-staples"></div>
+
+          <h3>Answer coverage</h3>
+          <p class="muted">
+            How often default recommended paths already include anti-heal, anti-crit, AS shred, magic bulk, etc.
+            Low % → use <strong>flex chips</strong> on builds every game.
+          </p>
+          <div id="meta-coverage" class="meta-coverage"></div>
+
+          <h3>Tank-shred package</h3>
+          <p class="muted">Paths with anti-heal + %HP + pen + prot shred (3+ of 4).</p>
+          <div id="meta-shred" class="meta-shred"></div>
+
+          <h3>Situational flex catalog</h3>
+          <p class="muted">Swap these in when the lobby demands it — same chips shown on each build card.</p>
+          <div id="meta-flex-catalog" class="meta-flex-catalog"></div>
+        </div>
+      </section>
+
       <!-- ABOUT -->
       <section id="panel-about" class="panel">
         <div class="card">
@@ -361,6 +410,7 @@
             <li><strong>Counter</strong> — optional: adjust for the enemy 5.</li>
             <li><strong>Troll</strong> — meme only, not ranked advice.</li>
             <li><strong>Tiers</strong> — patch ladder (not a full build guide).</li>
+            <li><strong>Meta lab</strong> — staples, answer coverage, trajectories, flex catalog.</li>
           </ol>
 
           <h2>How builds are weighted</h2>
@@ -436,6 +486,7 @@
     <button type="button" class="mobile-sheet-btn" data-tab="troll">Troll builds</button>
     <button type="button" class="mobile-sheet-btn" data-tab="tiers">Tier list</button>
     <button type="button" class="mobile-sheet-btn" data-tab="items">Items</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="meta">Meta lab</button>
     <button type="button" class="mobile-sheet-btn" data-tab="about">About</button>
   </div>
 
