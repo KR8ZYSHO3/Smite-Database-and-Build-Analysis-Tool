@@ -661,7 +661,12 @@ function applyRoute(route) {
     selectGod(route.god, false);
   }
   if (route.tab === "counter") {
-    if (route.god && $("#ctr-you")) $("#ctr-you").value = route.god;
+    if (route.god && $("#ctr-you")) {
+      $("#ctr-you").value = route.god;
+      try {
+        localStorage.setItem("ctr_you", route.god);
+      } catch (_) {}
+    }
     if (route.role && $("#ctr-role")) {
       const opt = [...($("#ctr-role").options || [])].find(
         (o) => o.value.toLowerCase() === String(route.role).toLowerCase()
@@ -676,18 +681,18 @@ function applyRoute(route) {
         .map((n) => findGodByName(n)?.name)
         .filter(Boolean)
         .slice(0, 5);
-      renderEnemyPicks();
-      updateEnemyCount();
     }
     if (route.allies) {
       counterState.allies = route.allies
         .map((n) => findGodByName(n)?.name)
         .filter(Boolean)
         .slice(0, 4);
-      renderAllyPicks();
     }
+    if (typeof renderYourTeam === "function") renderYourTeam();
+    if (typeof renderEnemyPicks === "function") renderEnemyPicks();
+    if (typeof updateLobbyCount === "function") updateLobbyCount();
+    if (typeof setSlotMode === "function") setSlotMode(route.god ? "enemy" : "me");
     if (route.god && (route.enemies?.length || route.allies?.length)) {
-      // Need enemies for counter path; allies alone still open lobby
       if (route.enemies?.length) runCounterFromForm({ updateHash: false });
     }
   }
@@ -2208,7 +2213,7 @@ function safeJson(s) {
 }
 
 /* -------------------- Counter builds -------------------- */
-const counterState = { enemies: [], allies: [] };
+const counterState = { enemies: [], allies: [], slotMode: "enemy", _ta: [], _taIdx: 0 };
 
 /** Short aliases for draft typing (2–4 key presses). */
 const GOD_ALIASES = {
@@ -3133,20 +3138,26 @@ function pathCompareHtml(baselineItems, counterItems, kitStarter, lobbyStarter) 
     </div>`;
 }
 
-function renderLobbySlots(boxSel, list, maxN, onRemove) {
+function renderLobbySlots(boxSel, list, maxN, onRemove, { labels = null, meIndex = -1 } = {}) {
   const box = $(boxSel);
   if (!box) return;
   const slots = [];
   for (let i = 0; i < maxN; i++) {
     const n = list[i];
+    const emptyLabel = (labels && labels[i]) || `Slot ${i + 1}`;
     if (n) {
+      const isMe = i === meIndex;
       slots.push(
-        `<button type="button" class="lobby-slot filled" data-rm="${i}" title="Remove ${escapeAttr(
-          n
-        )}">${escapeHtml(n)}</button>`
+        `<button type="button" class="lobby-slot filled${isMe ? " is-me" : ""}" data-rm="${i}" title="${
+          isMe ? "Clear Me" : "Remove"
+        } ${escapeAttr(n)}">${
+          isMe ? `<span class="slot-me-tag">ME</span>` : ""
+        }${escapeHtml(n)}</button>`
       );
     } else {
-      slots.push(`<div class="lobby-slot">Slot ${i + 1}</div>`);
+      slots.push(
+        `<div class="lobby-slot${i === meIndex ? " is-me-empty" : ""}">${escapeHtml(emptyLabel)}</div>`
+      );
     }
   }
   box.innerHTML = slots.join("");
@@ -3155,12 +3166,83 @@ function renderLobbySlots(boxSel, list, maxN, onRemove) {
   });
 }
 
+function getYouName() {
+  return findGodByName($("#ctr-you")?.value)?.name || "";
+}
+
+function setYouName(name, { rebuild = true, save = true } = {}) {
+  const g = name ? findGodByName(name) : null;
+  const resolved = g?.name || "";
+  if ($("#ctr-you")) $("#ctr-you").value = resolved;
+  if (save) {
+    try {
+      if (resolved) localStorage.setItem("ctr_you", resolved);
+      else localStorage.removeItem("ctr_you");
+    } catch (_) {}
+  }
+  renderYourTeam();
+  updateLobbyCount();
+  if (rebuild && resolved && counterState.enemies.length) {
+    runCounterFromForm({ updateHash: true });
+  } else if (!routeState.suppressHash) {
+    syncHashFromUi("counter");
+  }
+  return !!resolved;
+}
+
+/** Your team = Me (slot 0) + up to 4 allies */
+function renderYourTeam() {
+  const you = getYouName();
+  const list = [you || null, ...counterState.allies].slice(0, 5);
+  // Normalize: pad allies display — list length always 5 for slots
+  while (list.length < 5) list.push(null);
+  // If you empty, slot0 null; allies occupy 1-4 only in data (allies array)
+  // Rebuild list carefully: [you, ally0, ally1, ally2, ally3]
+  const team = [you || null];
+  for (let i = 0; i < 4; i++) team.push(counterState.allies[i] || null);
+
+  renderLobbySlots(
+    "#ctr-your-picks",
+    team,
+    5,
+    (i) => {
+      if (i === 0) {
+        setYouName("", { rebuild: false, save: true });
+        if (counterState.enemies.length) {
+          // still show empty me state
+          const threat = $("#ctr-threat");
+          const result = $("#ctr-result");
+          if (threat) threat.innerHTML = "";
+          if (result) {
+            result.innerHTML = emptyHud("Me cleared", "Pick Me again, then enemies. Path needs your god.");
+          }
+        }
+        if (!routeState.suppressHash) syncHashFromUi("counter");
+        return;
+      }
+      // ally index = i - 1
+      counterState.allies.splice(i - 1, 1);
+      renderYourTeam();
+      renderAllyPicks();
+      updateLobbyCount();
+      if (getYouName() && counterState.enemies.length) {
+        runCounterFromForm({ updateHash: true });
+      } else if (!routeState.suppressHash) {
+        syncHashFromUi("counter");
+      }
+    },
+    { labels: ["Me", "Ally 1", "Ally 2", "Ally 3", "Ally 4"], meIndex: 0 }
+  );
+  // Keep advanced ally strip in sync if present
+  renderAllyPicks();
+}
+
 function renderEnemyPicks() {
   renderLobbySlots("#ctr-enemy-picks", counterState.enemies, 5, (i) => {
     counterState.enemies.splice(i, 1);
     renderEnemyPicks();
-    updateEnemyCount();
-    if (findGodByName($("#ctr-you")?.value) && counterState.enemies.length) {
+    updateLobbyCount();
+    if (getYouName() && counterState.enemies.length) {
       runCounterFromForm({ updateHash: true });
     } else if (!routeState.suppressHash) {
       syncHashFromUi("counter");
@@ -3169,10 +3251,13 @@ function renderEnemyPicks() {
 }
 
 function renderAllyPicks() {
+  const box = $("#ctr-ally-picks");
+  if (!box) return;
   renderLobbySlots("#ctr-ally-picks", counterState.allies, 4, (i) => {
     counterState.allies.splice(i, 1);
-    renderAllyPicks();
-    if (findGodByName($("#ctr-you")?.value) && counterState.enemies.length) {
+    renderYourTeam();
+    updateLobbyCount();
+    if (getYouName() && counterState.enemies.length) {
       runCounterFromForm({ updateHash: true });
     }
   });
@@ -4281,16 +4366,24 @@ function parseLobbyPaste(raw) {
 }
 
 function updateEnemyCount() {
+  updateLobbyCount();
+}
+
+function updateLobbyCount() {
+  const you = getYouName();
+  const e = counterState.enemies.length;
+  const a = counterState.allies.length;
   const el = $("#ctr-enemy-count");
-  if (el) el.textContent = `(${counterState.enemies.length}/5)`;
+  if (el) el.textContent = `(${e}/5)`;
+  const line = $("#ctr-lobby-count");
+  if (line) {
+    line.textContent = `${you ? `Me: ${you}` : "Me empty"} · ${a}/4 allies · ${e}/5 enemies`;
+  }
 }
 
 function applyLobbyParsed(parsed, { autoRun = true, toast = true } = {}) {
-  if (parsed.you && $("#ctr-you")) {
-    $("#ctr-you").value = parsed.you;
-    try {
-      localStorage.setItem("ctr_you", parsed.you);
-    } catch (_) {}
+  if (parsed.you) {
+    setYouName(parsed.you, { rebuild: false, save: true });
   }
   if (parsed.role && $("#ctr-role")) {
     $("#ctr-role").value = parsed.role;
@@ -4301,17 +4394,21 @@ function applyLobbyParsed(parsed, { autoRun = true, toast = true } = {}) {
   }
   if (parsed.enemies?.length) {
     counterState.enemies = parsed.enemies.slice(0, 5);
-    renderEnemyPicks();
   }
   if (parsed.allies?.length) {
-    counterState.allies = parsed.allies.slice(0, 4);
-    renderAllyPicks();
+    // Don't put "you" into allies
+    const youN = (parsed.you || getYouName() || "").toLowerCase();
+    counterState.allies = parsed.allies
+      .filter((n) => n.toLowerCase() !== youN)
+      .slice(0, 4);
   }
-  updateEnemyCount();
+  renderYourTeam();
+  renderEnemyPicks();
+  updateLobbyCount();
 
   if (toast) {
     const note = [];
-    if (parsed.you) note.push(parsed.you);
+    if (parsed.you) note.push(`Me ${parsed.you}`);
     if (parsed.role) note.push(parsed.role);
     if (parsed.enemies?.length) note.push(`${parsed.enemies.length} enemies`);
     if (parsed.allies?.length) note.push(`${parsed.allies.length} allies`);
@@ -4319,16 +4416,16 @@ function applyLobbyParsed(parsed, { autoRun = true, toast = true } = {}) {
     if (note.length) showToast(note.join(" · "));
   }
 
-  const youOk = findGodByName($("#ctr-you")?.value);
+  const youOk = getYouName();
   if (autoRun && youOk && counterState.enemies.length) {
     runCounterFromForm({ updateHash: true });
     return true;
   }
   if (!routeState.suppressHash) syncHashFromUi("counter");
   if (autoRun && youOk && !counterState.enemies.length) {
-    showToast("Add enemies (or paste: You Role vs Enemy1 Enemy2 …)");
+    showToast("Add enemies (Me is set — fill enemy slots)");
   } else if (autoRun && !youOk && counterState.enemies.length) {
-    showToast("Set your god (or paste: Ymir Support vs …)");
+    showToast("Set Me (tap Me mode + type your god)");
   }
   return false;
 }
@@ -4377,23 +4474,97 @@ function syncCtrRolePills(role) {
   if ($("#ctr-role") && ROLE_NAMES.includes(active)) $("#ctr-role").value = active;
 }
 
-function addEnemyGod(name, { rebuild = true, toast = false } = {}) {
+function getSlotMode() {
+  return counterState.slotMode || "enemy";
+}
+
+function setSlotMode(mode) {
+  const m = mode === "me" || mode === "ally" || mode === "enemy" ? mode : "enemy";
+  counterState.slotMode = m;
+  $$("#ctr-slot-mode .ctr-mode-btn").forEach((b) => {
+    b.classList.toggle("active", b.dataset.mode === m);
+  });
+  const addIn = $("#ctr-enemy-add");
+  if (addIn) {
+    addIn.placeholder =
+      m === "me"
+        ? "Type YOUR god → Enter (fills Me slot)"
+        : m === "ally"
+          ? "Type ally → Enter (fills Your team)"
+          : "Type enemy → Enter (fills Enemy team)";
+  }
+}
+
+/**
+ * Place a god into Me / Ally / Enemy based on mode.
+ * Auto: if Me empty and mode is enemy, still allow explicit enemy — user picks Me mode for self.
+ * Smart default: if Me empty on first add with mode enemy, offer... no — use Me button.
+ */
+function placeGod(name, { mode = null, rebuild = true, toast = false } = {}) {
   const g = typeof name === "object" ? name : findGodByName(name);
   if (!g) return false;
+  const slot = mode || getSlotMode();
+
+  if (slot === "me") {
+    setYouName(g.name, { rebuild, save: true });
+    // After Me is set, auto-switch to enemy for draft speed
+    setSlotMode("enemy");
+    if (toast) showToast(`Me: ${g.name}`);
+    return true;
+  }
+
+  if (slot === "ally") {
+    if (g.name === getYouName()) {
+      if (toast) showToast("That's you — already in Me");
+      return false;
+    }
+    if (counterState.allies.includes(g.name)) return false;
+    if (counterState.allies.length >= 4) {
+      if (toast) showToast("Allies full (4)");
+      return false;
+    }
+    if (counterState.enemies.includes(g.name)) {
+      if (toast) showToast("Already on enemy team");
+      return false;
+    }
+    counterState.allies.push(g.name);
+    renderYourTeam();
+    updateLobbyCount();
+    if (rebuild && getYouName() && counterState.enemies.length) {
+      runCounterFromForm({ updateHash: true });
+    } else if (!routeState.suppressHash) {
+      syncHashFromUi("counter");
+    }
+    return true;
+  }
+
+  // enemy
+  if (g.name === getYouName()) {
+    if (toast) showToast("That's Me — switch to Enemy for foes");
+    return false;
+  }
   if (counterState.enemies.includes(g.name)) return false;
   if (counterState.enemies.length >= 5) {
     if (toast) showToast("Enemy lobby full (5)");
     return false;
   }
+  if (counterState.allies.includes(g.name)) {
+    if (toast) showToast("Already an ally");
+    return false;
+  }
   counterState.enemies.push(g.name);
   renderEnemyPicks();
-  updateEnemyCount();
-  if (rebuild && findGodByName($("#ctr-you")?.value) && counterState.enemies.length) {
+  updateLobbyCount();
+  if (rebuild && getYouName() && counterState.enemies.length) {
     runCounterFromForm({ updateHash: true });
   } else if (!routeState.suppressHash) {
     syncHashFromUi("counter");
   }
   return true;
+}
+
+function addEnemyGod(name, opts = {}) {
+  return placeGod(name, { ...opts, mode: opts.mode || "enemy" });
 }
 
 function hideTypeahead() {
@@ -4419,7 +4590,16 @@ function renderTypeahead(query) {
     hideTypeahead();
     return;
   }
-  const matches = matchGodsTypeahead(q, { limit: 8, exclude: counterState.enemies });
+  const exclude = [
+    ...counterState.enemies,
+    ...counterState.allies,
+    getYouName(),
+  ].filter(Boolean);
+  // Me mode: can re-pick any god for yourself
+  const matches = matchGodsTypeahead(q, {
+    limit: 8,
+    exclude: getSlotMode() === "me" ? [] : exclude,
+  });
   counterState._ta = matches;
   counterState._taIdx = 0;
   if (!matches.length) {
@@ -4440,7 +4620,7 @@ function renderTypeahead(query) {
   box.querySelectorAll(".ctr-ta-item").forEach((btn) => {
     btn.addEventListener("mousedown", (e) => {
       e.preventDefault(); // keep focus on input
-      addEnemyGod(btn.dataset.god, { rebuild: true });
+      placeGod(btn.dataset.god, { rebuild: true, toast: true });
       const addIn = $("#ctr-enemy-add");
       if (addIn) {
         addIn.value = "";
@@ -4493,46 +4673,81 @@ function setupCounter() {
     }
   } catch (_) {}
 
+  // Slot mode: Me / Enemy / Ally — default Me if empty so first pick fills Your team
+  counterState.slotMode = getYouName() ? "enemy" : "me";
+  $$("#ctr-slot-mode .ctr-mode-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      setSlotMode(btn.dataset.mode);
+      $("#ctr-enemy-add")?.focus();
+    });
+  });
+  setSlotMode(counterState.slotMode);
+
+  renderYourTeam();
+  renderEnemyPicks();
+  updateLobbyCount();
+
   const resultEl = $("#ctr-result");
   if (resultEl && !resultEl.innerHTML.trim()) {
     resultEl.innerHTML = emptyHud(
-      "Draft mode",
-      "Set You + role once. Then type 2 letters of each enemy and Enter — or Ctrl+V the whole lobby."
+      "Fill Me, then enemies",
+      "Tap Me → type your god → Enter (fills Your team). Then Enemy mode for the other 5. Or paste: Ymir Support vs Zeus Agni…"
     );
   }
 
   const tryRebuild = () => {
-    if (findGodByName($("#ctr-you")?.value) && counterState.enemies.length) {
+    if (getYouName() && counterState.enemies.length) {
       runCounterFromForm({ updateHash: true });
     }
   };
 
   const consumeAddField = (raw) => {
-    const text = String(raw || "").trim();
+    let text = String(raw || "").trim();
     if (!text) return false;
+
+    // "me ymir" / "me: Ymir" quick force to Me slot
+    const mePref = text.match(/^(?:me|i|you)\s*[:\-]?\s+(.+)$/i);
+    if (mePref) {
+      const g = findGodByName(mePref[1].trim()) || matchGodsTypeahead(mePref[1].trim(), { limit: 1 })[0];
+      if (g) {
+        placeGod(g, { mode: "me", rebuild: true, toast: true });
+        return true;
+      }
+    }
+
     // Full lobby paste into add field
     if (/\bvs\b/i.test(text) || text.split(/[\s,]+/).filter(Boolean).length >= 3) {
       const parsed = parseLobbyPaste(text);
       if (parsed.enemies.length || parsed.you) {
         applyLobbyParsed(parsed, { autoRun: true, toast: true });
+        setSlotMode(getYouName() ? "enemy" : "me");
         return true;
       }
     }
-    const multi = extractGodsFromText(text, { maxN: 5 - counterState.enemies.length });
+    const multi = extractGodsFromText(text, { maxN: 5 });
     if (multi.names.length > 1) {
-      for (const n of multi.names) addEnemyGod(n, { rebuild: false });
+      // Multi without "vs": if Me empty, first god = Me, rest = enemies
+      let names = multi.names.slice();
+      if (!getYouName() && names.length) {
+        placeGod(names[0], { mode: "me", rebuild: false, toast: false });
+        names = names.slice(1);
+      }
+      for (const n of names) placeGod(n, { mode: "enemy", rebuild: false });
       tryRebuild();
+      updateLobbyCount();
       return true;
     }
-    // Typeahead top pick or direct match
+    // Typeahead top pick or direct match → current slot mode
     const ta = counterState._ta || [];
     if (ta.length) {
-      addEnemyGod(ta[counterState._taIdx || 0], { rebuild: true });
+      placeGod(ta[counterState._taIdx || 0], { rebuild: true, toast: true });
       return true;
     }
     const g = findGodByName(text);
     if (g) {
-      addEnemyGod(g, { rebuild: true });
+      // Smart: Me empty + mode enemy → still fill Me first so slot isn't stuck empty
+      const mode = !getYouName() && getSlotMode() === "enemy" ? "me" : getSlotMode();
+      placeGod(g, { mode, rebuild: true, toast: true });
       return true;
     }
     return false;
@@ -4578,7 +4793,7 @@ function setupCounter() {
       const idx = Number(e.key) - 1;
       if (ta[idx] && addIn.value.length > 0 && addIn.value.length <= 4) {
         e.preventDefault();
-        addEnemyGod(ta[idx], { rebuild: true });
+        placeGod(ta[idx], { rebuild: true, toast: true });
         addIn.value = "";
         hideTypeahead();
       }
@@ -4595,39 +4810,16 @@ function setupCounter() {
     }, 0);
   });
   addIn?.addEventListener("blur", () => {
-    // delay so mousedown on typeahead fires first
     setTimeout(hideTypeahead, 120);
   });
 
-  // Ally add (simple)
+  // Ally add (advanced strip)
   $("#ctr-ally-add")?.addEventListener("keydown", (e) => {
     if (e.key !== "Enter") return;
     e.preventDefault();
     const el = $("#ctr-ally-add");
-    const g = findGodByName(el?.value);
-    if (!g || counterState.allies.length >= 4 || counterState.allies.includes(g.name)) return;
-    counterState.allies.push(g.name);
-    el.value = "";
-    renderAllyPicks();
-    tryRebuild();
-  });
-
-  const onYouChange = () => {
-    const g = findGodByName($("#ctr-you")?.value);
-    if (g) {
-      try {
-        localStorage.setItem("ctr_you", g.name);
-      } catch (_) {}
-      if ($("#ctr-you")) $("#ctr-you").value = g.name;
-    }
-    tryRebuild();
-    if (g) $("#ctr-enemy-add")?.focus();
-  };
-  $("#ctr-you")?.addEventListener("change", onYouChange);
-  $("#ctr-you")?.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      onYouChange();
+    if (placeGod(el?.value, { mode: "ally", rebuild: true, toast: true })) {
+      el.value = "";
     }
   });
 
@@ -4659,15 +4851,22 @@ function setupCounter() {
     updateQuickPreview("");
     counterState.enemies = [];
     counterState.allies = [];
+    // Keep Me + role for next lobby; only clear teams
+    renderYourTeam();
     renderEnemyPicks();
-    renderAllyPicks();
-    updateEnemyCount();
+    updateLobbyCount();
     hideTypeahead();
+    setSlotMode(getYouName() ? "enemy" : "me");
     const threat = $("#ctr-threat");
     const result = $("#ctr-result");
     if (threat) threat.innerHTML = "";
     if (result) {
-      result.innerHTML = emptyHud("Cleared", "You/role kept. Type next enemy or paste lobby.");
+      result.innerHTML = emptyHud(
+        "Lobby cleared",
+        getYouName()
+          ? `Me kept (${getYouName()}). Add enemies.`
+          : "Tap Me → pick your god, then fill Enemy team."
+      );
     }
     $("#ctr-enemy-add")?.focus();
   });

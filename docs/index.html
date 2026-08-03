@@ -98,13 +98,11 @@
             <p class="muted">Type enemy → Enter · path updates live. Paste a full lobby anytime.</p>
           </div>
 
-          <!-- Sticky draft bar: you + role + add -->
+          <!-- Sticky draft bar: role + add + team slots -->
           <div class="ctr-sticky" id="ctr-sticky">
             <div class="ctr-you-role-row">
-              <label class="ctr-you-label">You
-                <input id="ctr-you" type="search" list="ctr-god-list" placeholder="Your god" autocomplete="off" />
-              </label>
-              <div class="ctr-role-block">
+              <div class="ctr-role-block ctr-role-block-full">
+                <span class="muted ctr-role-label">Your role</span>
                 <div class="role-pills ctr-role-pills" id="ctr-role-pills" role="group" aria-label="Your role"></div>
                 <select id="ctr-role" hidden>
                   <option>Support</option>
@@ -117,27 +115,42 @@
             </div>
 
             <div class="ctr-add-wrap">
-              <label class="ctr-add-label" for="ctr-enemy-add">
-                <span class="ctr-add-kicker">Add enemy</span>
-                <span class="muted" id="ctr-enemy-count">(0/5)</span>
-              </label>
+              <div class="ctr-add-label-row">
+                <div class="ctr-slot-mode" id="ctr-slot-mode" role="group" aria-label="Where to add god">
+                  <button type="button" class="ctr-mode-btn" data-mode="me" title="Fill your Me slot">Me</button>
+                  <button type="button" class="ctr-mode-btn active" data-mode="enemy" title="Fill enemy team">Enemy</button>
+                  <button type="button" class="ctr-mode-btn" data-mode="ally" title="Fill ally slots">Ally</button>
+                </div>
+                <span class="muted" id="ctr-lobby-count">Me · 0/4 allies · 0/5 enemies</span>
+              </div>
               <div class="ctr-add-row">
                 <input
                   id="ctr-enemy-add"
                   type="text"
-                  placeholder="Type 2 letters → tap · or Enter · or Ctrl+V full lobby"
+                  placeholder="Type god → Enter fills the selected slot (Me / Enemy / Ally)"
                   autocomplete="off"
                   autocorrect="off"
                   autocapitalize="off"
                   spellcheck="false"
                   enterkeyhint="done"
                 />
-                <button type="button" class="btn-ghost ctr-clear-btn" id="ctr-quick-clear" title="Clear enemies">Clear</button>
+                <button type="button" class="btn-ghost ctr-clear-btn" id="ctr-quick-clear" title="Clear lobby">Clear</button>
               </div>
               <div id="ctr-typeahead" class="ctr-typeahead" hidden role="listbox" aria-label="Matching gods"></div>
             </div>
 
-            <div class="enemy-lobby" id="ctr-enemy-picks" aria-label="Enemy lobby slots"></div>
+            <div class="ctr-lobby-teams">
+              <div class="ctr-team-block">
+                <span class="ctr-team-label ctr-team-us">Your team</span>
+                <div class="enemy-lobby your-lobby" id="ctr-your-picks" aria-label="Your team slots (Me + allies)"></div>
+              </div>
+              <div class="ctr-team-block">
+                <span class="ctr-team-label ctr-team-them">Enemy team <span id="ctr-enemy-count" class="muted">(0/5)</span></span>
+                <div class="enemy-lobby" id="ctr-enemy-picks" aria-label="Enemy lobby slots"></div>
+              </div>
+            </div>
+            <!-- Hidden: still used by JS/hash for your god name -->
+            <input id="ctr-you" type="hidden" value="" />
           </div>
 
           <datalist id="ctr-god-list"></datalist>
