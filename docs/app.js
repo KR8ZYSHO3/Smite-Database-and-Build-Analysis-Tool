@@ -460,7 +460,8 @@ const routeState = {
   build: null, // { getRole, setRole }
 };
 
-const ADVANCED_TABS = new Set(["counter", "troll", "tiers", "items", "meta", "about"]);
+// Buried under More ▾ (Counter is a main tab for draft speed)
+const ADVANCED_TABS = new Set(["troll", "tiers", "items", "meta", "about"]);
 
 function activateTab(tab, { updateHash = true } = {}) {
   if (!VALID_TABS.has(tab)) tab = "builds";
@@ -2209,19 +2210,231 @@ function safeJson(s) {
 /* -------------------- Counter builds -------------------- */
 const counterState = { enemies: [], allies: [] };
 
+/** Short aliases for draft typing (2–4 key presses). */
+const GOD_ALIASES = {
+  morr: "The Morrigan",
+  morri: "The Morrigan",
+  morrigan: "The Morrigan",
+  cu: "Cu Chulainn",
+  cuch: "Cu Chulainn",
+  cuchu: "Cu Chulainn",
+  swk: "Sun Wukong",
+  wukong: "Sun Wukong",
+  nuwa: "Nu Wa",
+  "nu wa": "Nu Wa",
+  nezha: "Ne Zha",
+  "ne zha": "Ne Zha",
+  houyi: "Hou Yi",
+  "hou yi": "Hou Yi",
+  mulan: "Hua Mulan",
+  hua: "Hua Mulan",
+  baron: "Baron Samedi",
+  sami: "Baron Samedi",
+  jing: "Jing Wei",
+  xing: "Xing Tian",
+  morgan: "Morgan Le Fay",
+  lefay: "Morgan Le Fay",
+  "le fay": "Morgan Le Fay",
+  ahpuch: "Ah Puch",
+  puch: "Ah Puch",
+  guanyu: "Guan Yu",
+  "guan yu": "Guan Yu",
+  daji: "Da Ji",
+  bari: "Princess Bari",
+  hun: "Hun Batz",
+  batz: "Hun Batz",
+  ymir: "Ymir",
+  sus: "Susano",
+  susano: "Susano",
+  agni: "Agni",
+  zeus: "Zeus",
+  ra: "Ra",
+  sol: "Sol",
+  fen: "Fenrir",
+  fenrir: "Fenrir",
+  thor: "Thor",
+  odin: "Odin",
+  geb: "Geb",
+  sobek: "Sobek",
+  khep: "Khepri",
+  khepri: "Khepri",
+  bacch: "Bacchus",
+  bacchus: "Bacchus",
+  athena: "Athena",
+  ganesh: "Ganesha",
+  ganesha: "Ganesha",
+  yemoja: "Yemoja",
+  charon: "Charon",
+  art: "Artemis",
+  artemis: "Artemis",
+  ama: "Amaterasu",
+  amaterasu: "Amaterasu",
+  bell: "Bellona",
+  bellona: "Bellona",
+  chaac: "Chaac",
+  herc: "Hercules",
+  hercules: "Hercules",
+  tyr: "Tyr",
+  surt: "Surtr",
+  surtr: "Surtr",
+  cama: "Camazotz",
+  pepe: "Pele",
+  pele: "Pele",
+  set: "Set",
+  than: "Thanatos",
+  thanatos: "Thanatos",
+  kali: "Kali",
+  bast: "Bastet",
+  bastet: "Bastet",
+  rat: "Ratatoskr",
+  rata: "Ratatoskr",
+  scylla: "Scylla",
+  hades: "Hades",
+  pose: "Poseidon",
+  poseidon: "Poseidon",
+  vulcan: "Vulcan",
+  janus: "Janus",
+  disc: "Discordia",
+  discordia: "Discordia",
+  aphro: "Aphrodite",
+  aphrodite: "Aphrodite",
+  hel: "Hel",
+  change: "Chang'e",
+  "chang'e": "Chang'e",
+  changee: "Chang'e",
+  thr: "Thoth",
+  thoth: "Thoth",
+  anubis: "Anubis",
+  kuk: "Kukulkan",
+  kuku: "Kukulkan",
+  isis: "Isis",
+  raijin: "Raijin",
+  zhong: "Zhong Kui",
+  "zhong kui": "Zhong Kui",
+  baba: "Baba Yaga",
+  yaga: "Baba Yaga",
+  baron: "Baron Samedi",
+  danza: "Danzaburou",
+  danzaburou: "Danzaburou",
+  ix: "Ix Chel",
+  ixchel: "Ix Chel",
+  "ix chel": "Ix Chel",
+  alad: "Aladdin",
+  aladdin: "Aladdin",
+  bakasura: "Bakasura",
+  baka: "Bakasura",
+  arachne: "Arachne",
+  serq: "Serqet",
+  serqet: "Serqet",
+  nem: "Nemesis",
+  nemesis: "Nemesis",
+  clio: "Cliodhna",
+  cliodhna: "Cliodhna",
+  loke: "Loki",
+  loki: "Loki",
+  merc: "Mercury",
+  mercury: "Mercury",
+  awilix: "Awilix",
+  tsuku: "Tsukuyomi",
+  tsukuyomi: "Tsukuyomi",
+  gil: "Gilgamesh",
+  gilgamesh: "Gilgamesh",
+  mulan: "Hua Mulan",
+  kinga: "King Arthur",
+  arthur: "King Arthur",
+  "king arthur": "King Arthur",
+  cthu: "Cthulhu",
+  cthulhu: "Cthulhu",
+  atlas: "Atlas",
+  jorm: "Jormungandr",
+  jormungandr: "Jormungandr",
+  cabra: "Cabrakan",
+  cabrakan: "Cabrakan",
+  terra: "Terra",
+  syl: "Sylvanus",
+  sylvanus: "Sylvanus",
+  kumba: "Kumbhakarna",
+  kumbha: "Kumbhakarna",
+  ares: "Ares",
+  faf: "Fafnir",
+  fafnir: "Fafnir",
+  cerb: "Cerberus",
+  cerberus: "Cerberus",
+  cern: "Cernunnos",
+  cernunnos: "Cernunnos",
+  chiron: "Chiron",
+  hach: "Hachiman",
+  hachiman: "Hachiman",
+  rama: "Rama",
+  ullr: "Ullr",
+  skadi: "Skadi",
+  medusa: "Medusa",
+  neith: "Neith",
+  ishi: "Izanami",
+  izanami: "Izanami",
+  chery: "Chernobog",
+  chernobog: "Chernobog",
+  heim: "Heimdallr",
+  heimdallr: "Heimdallr",
+  marti: "Martichoras",
+  martichoras: "Martichoras",
+  bari: "Princess Bari",
+  princess: "Princess Bari",
+};
+
 function findGodByName(q) {
   const s = (q || "").trim().toLowerCase();
   if (!s) return null;
   const gods = state.gods || [];
+  const alias = GOD_ALIASES[s];
+  if (alias) {
+    const g = gods.find((x) => (x.name || "").toLowerCase() === alias.toLowerCase());
+    if (g) return g;
+  }
   const exact = gods.find((g) => (g.name || "").toLowerCase() === s);
   if (exact) return exact;
   // Prefer prefix match so short queries ("ra", "nu") don't hit random substrings
   const pref = gods.find((g) => (g.name || "").toLowerCase().startsWith(s));
   if (pref) return pref;
+  // Word-start: "le fay" / "muzen"
+  const word = gods.find((g) =>
+    (g.name || "")
+      .toLowerCase()
+      .split(/[\s']+/)
+      .some((w) => w.startsWith(s))
+  );
+  if (word) return word;
   if (s.length >= 3) {
     return gods.find((g) => (g.name || "").toLowerCase().includes(s)) || null;
   }
   return null;
+}
+
+/** Typeahead matches for draft add-field (max 8). */
+function matchGodsTypeahead(q, { limit = 8, exclude = [] } = {}) {
+  const s = (q || "").trim().toLowerCase();
+  if (s.length < 1) return [];
+  const ex = new Set((exclude || []).map((n) => String(n).toLowerCase()));
+  const gods = state.gods || [];
+  const scored = [];
+  const aliasHit = GOD_ALIASES[s];
+  if (aliasHit && !ex.has(aliasHit.toLowerCase())) {
+    const g = gods.find((x) => x.name === aliasHit);
+    if (g) scored.push({ g, score: 0 });
+  }
+  for (const g of gods) {
+    const n = (g.name || "").toLowerCase();
+    if (!n || ex.has(n)) continue;
+    let score = 99;
+    if (n === s) score = 1;
+    else if (n.startsWith(s)) score = 2;
+    else if (n.split(/[\s']+/).some((w) => w.startsWith(s))) score = 3;
+    else if (s.length >= 2 && n.includes(s)) score = 4;
+    else continue;
+    if (!scored.some((x) => x.g.name === g.name)) scored.push({ g, score });
+  }
+  scored.sort((a, b) => a.score - b.score || a.g.name.localeCompare(b.g.name));
+  return scored.slice(0, limit).map((x) => x.g);
 }
 
 /** Longest-first god name list for space-separated lobby paste. */
@@ -3856,14 +4069,14 @@ function runCounterFromForm({ updateHash = true } = {}) {
 
   if (!you) {
     threatEl.innerHTML = "";
-    resultEl.innerHTML = emptyHud("Pick your god", "Choose your god + role, then fill enemy lobby slots (type name + Enter).");
+    resultEl.innerHTML = emptyHud("Set your god", "Type your god above, tap role, then add enemies (2 letters + Enter).");
     return;
   }
   if (!counterState.enemies.length) {
     threatEl.innerHTML = "";
     resultEl.innerHTML = emptyHud(
-      "Enemy lobby empty",
-      "Add at least one enemy (up to 5). Threat meters and the lobby path unlock after that."
+      "Add enemies",
+      "Type 2 letters → tap a match · Enter · or Ctrl+V a full lobby. Path builds after 1 enemy."
     );
     return;
   }
@@ -3880,15 +4093,22 @@ function runCounterFromForm({ updateHash = true } = {}) {
   if (allies.need_peel_mage) threat.need_peel_mage = true;
   const allReasons = [...(threat.reasons || []), ...(allies.reasons || [])];
   threat.reasons = allReasons;
-  threat.summary = allReasons.slice(0, 4).join(" · ");
+  threat.summary = allReasons.slice(0, 3).join(" · ");
 
+  // Compact threat strip (no tall meters during draft)
+  const tags = [];
+  if (threat.need_anti_crit) tags.push("anti-crit");
+  if (threat.need_mprot) tags.push("mprot");
+  if (threat.need_pprot) tags.push("pprot");
+  if (threat.need_antiheal) tags.push("antiheal");
+  if (threat.need_magi) tags.push("anti-CC");
+  if (allies.need_peel_adc) tags.push("peel ADC");
   threatEl.innerHTML = `
-    <strong>Threat</strong> — ${escapeHtml(threat.summary)}
-    ${threatMetersHtml(threat)}
-    <ul class="threat-list">${allReasons.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>
-    <div class="muted">Magic ${fmt(threat.magical_count, 0)} · Physical ${fmt(threat.physical_count, 0)}${
-      allies.allies.length ? ` · Allies ${allies.allies.map(escapeHtml).join(", ")}` : ""
-    }</div>
+    <div class="ctr-threat-compact">
+      <span class="ctr-threat-sum">${escapeHtml(threat.summary || "Lobby read")}</span>
+      <span class="ctr-threat-tags">${tags.map((t) => `<span class="pill">${escapeHtml(t)}</span>`).join("")}</span>
+      <span class="muted ctr-threat-mix">M${fmt(threat.magical_count, 0)} · P${fmt(threat.physical_count, 0)}</span>
+    </div>
   `;
 
   const baselineItems = getBaselineItems(you, role);
@@ -3930,27 +4150,41 @@ function runCounterFromForm({ updateHash = true } = {}) {
   };
 
   const copyTxt = copyPathText(lobbyStarter?.name, path, you.name, `${role} counter`);
+  const swapNames = path.filter((p) => p.is_diff).map((p) => p.name);
+  // Draft-first: big buy list only; kit compare buried
   resultEl.innerHTML = `
-    <article class="card build-card god-build-card simple-build ${roleClass(role)}">
-      <header class="gbc-head">
-        <h3>${escapeHtml(you.name)} · ${escapeHtml(role)} · counter</h3>
-        <div class="muted gbc-meta">vs ${enemyGods.map((g) => escapeHtml(g.name)).join(", ")}</div>
+    <article class="card build-card god-build-card simple-build ctr-buy-now ${roleClass(role)}">
+      <header class="gbc-head ctr-buy-head">
+        <h3>BUY NOW · ${escapeHtml(you.name)} ${escapeHtml(role)}</h3>
+        <div class="muted gbc-meta">vs ${vsList.map(escapeHtml).join(" · ")}</div>
       </header>
-      <div class="build-meta">
-        <span class="pill hot">counter</span>
-        ${threat.need_anti_crit ? `<span class="pill">anti-crit</span>` : ""}
-        ${threat.need_mprot ? `<span class="pill">mprot</span>` : ""}
-        ${threat.need_antiheal ? `<span class="pill">antiheal</span>` : ""}
-        ${threat.need_magi ? `<span class="pill">anti-CC</span>` : ""}
-        ${allies.need_peel_adc ? `<span class="pill ice">peel ADC</span>` : ""}
-        ${path.some((p) => p.is_diff) ? `<span class="pill">swaps highlighted</span>` : ""}
+      <div class="starter-line ctr-starter-big">
+        <span class="tag-start">Starter</span>
+        <strong>${escapeHtml(lobbyStarter?.name || "—")}</strong>
+        ${
+          kitStarter?.name && lobbyStarter?.name && kitStarter.name !== lobbyStarter.name
+            ? `<span class="muted"> (was ${escapeHtml(kitStarter.name)})</span>`
+            : ""
+        }
       </div>
-      ${pathCompareHtml(baselineItems, path, kitStarter, lobbyStarter)}
-      ${trustLine("not live win rates")}
-      <div class="card-actions">
-        <button type="button" class="btn-ghost btn-copy-path" data-copy-path="${escapeAttr(copyTxt)}">Copy list</button>
+      ${loadoutRail(path)}
+      <ol class="buy-list ctr-buy-list">
+        ${path.map((it, i) => buyRow(it, i + 1)).join("")}
+      </ol>
+      ${
+        swapNames.length
+          ? `<p class="ctr-swaps muted">Lobby swaps: <strong>${swapNames.map(escapeHtml).join(", ")}</strong></p>`
+          : ""
+      }
+      <div class="card-actions ctr-actions-tight">
+        <button type="button" class="btn-primary btn-copy-path" data-copy-path="${escapeAttr(copyTxt)}">Copy list</button>
         ${shareBar(shareData)}
       </div>
+      <details class="ctr-compare-details">
+        <summary class="muted">Kit path vs lobby (full compare)</summary>
+        ${pathCompareHtml(baselineItems, path, kitStarter, lobbyStarter)}
+        ${trustLine("not live win rates")}
+      </details>
     </article>
   `;
   if (updateHash) syncHashFromUi("counter");
@@ -4143,15 +4377,87 @@ function syncCtrRolePills(role) {
   if ($("#ctr-role") && ROLE_NAMES.includes(active)) $("#ctr-role").value = active;
 }
 
+function addEnemyGod(name, { rebuild = true, toast = false } = {}) {
+  const g = typeof name === "object" ? name : findGodByName(name);
+  if (!g) return false;
+  if (counterState.enemies.includes(g.name)) return false;
+  if (counterState.enemies.length >= 5) {
+    if (toast) showToast("Enemy lobby full (5)");
+    return false;
+  }
+  counterState.enemies.push(g.name);
+  renderEnemyPicks();
+  updateEnemyCount();
+  if (rebuild && findGodByName($("#ctr-you")?.value) && counterState.enemies.length) {
+    runCounterFromForm({ updateHash: true });
+  } else if (!routeState.suppressHash) {
+    syncHashFromUi("counter");
+  }
+  return true;
+}
+
+function hideTypeahead() {
+  const box = $("#ctr-typeahead");
+  if (box) {
+    box.hidden = true;
+    box.innerHTML = "";
+  }
+  counterState._ta = [];
+  counterState._taIdx = 0;
+}
+
+function renderTypeahead(query) {
+  const box = $("#ctr-typeahead");
+  if (!box) return;
+  const q = (query || "").trim();
+  if (q.length < 1) {
+    hideTypeahead();
+    return;
+  }
+  // If it looks like multi-god paste, don't show typeahead
+  if (/[,\n]|\bvs\b/i.test(q) || q.split(/\s+/).length > 3) {
+    hideTypeahead();
+    return;
+  }
+  const matches = matchGodsTypeahead(q, { limit: 8, exclude: counterState.enemies });
+  counterState._ta = matches;
+  counterState._taIdx = 0;
+  if (!matches.length) {
+    hideTypeahead();
+    return;
+  }
+  box.hidden = false;
+  box.innerHTML = matches
+    .map(
+      (g, i) =>
+        `<button type="button" class="ctr-ta-item${i === 0 ? " is-active" : ""}" data-god="${escapeAttr(
+          g.name
+        )}" role="option">${escapeHtml(g.name)}<span class="muted">${escapeHtml(
+          (g.roles || []).slice(0, 2).join(" · ")
+        )}</span></button>`
+    )
+    .join("");
+  box.querySelectorAll(".ctr-ta-item").forEach((btn) => {
+    btn.addEventListener("mousedown", (e) => {
+      e.preventDefault(); // keep focus on input
+      addEnemyGod(btn.dataset.god, { rebuild: true });
+      const addIn = $("#ctr-enemy-add");
+      if (addIn) {
+        addIn.value = "";
+        addIn.focus();
+      }
+      hideTypeahead();
+    });
+  });
+}
+
 function setupCounter() {
   const list = $("#ctr-god-list");
   if (!list) return;
-  // Invalidate longest-first cache when gods load
   _godNamesLongFirst = null;
   const names = [...(state.gods || [])].map((g) => g.name).sort();
   list.innerHTML = names.map((n) => `<option value="${escapeAttr(n)}"></option>`).join("");
 
-  // Role pills (faster than <select> in draft)
   const pills = $("#ctr-role-pills");
   if (pills) {
     let saved = "Support";
@@ -4174,11 +4480,11 @@ function setupCounter() {
         if (findGodByName($("#ctr-you")?.value) && counterState.enemies.length) {
           runCounterFromForm({ updateHash: true });
         }
+        $("#ctr-enemy-add")?.focus();
       });
     });
   }
 
-  // Restore last "you" god so enemies-only paste is one step
   try {
     const savedYou = localStorage.getItem("ctr_you");
     if (savedYou && $("#ctr-you") && !$("#ctr-you").value) {
@@ -4190,84 +4496,132 @@ function setupCounter() {
   const resultEl = $("#ctr-result");
   if (resultEl && !resultEl.innerHTML.trim()) {
     resultEl.innerHTML = emptyHud(
-      "Paste during draft",
-      "One line: Ymir Support vs Zeus Agni Susano Charon Ra — Ctrl+V auto-runs."
+      "Draft mode",
+      "Set You + role once. Then type 2 letters of each enemy and Enter — or Ctrl+V the whole lobby."
     );
   }
 
-  const wireAdd = (inputSel, arr, maxN, renderFn, { autoRun = false } = {}) => {
-    const addIn = $(inputSel);
-    // Typeahead: Enter adds; also accept multi-god paste into add field
-    addIn?.addEventListener("keydown", (e) => {
-      if (e.key !== "Enter") return;
-      e.preventDefault();
-      const raw = addIn.value.trim();
-      // Multi: "Zeus Agni Susano" in add box
-      const multi = extractGodsFromText(raw, { maxN: maxN - arr.length });
-      if (multi.names.length > 1 || (multi.names.length === 1 && raw.includes(" "))) {
-        for (const n of multi.names) {
-          if (arr.length >= maxN) break;
-          if (!arr.includes(n)) arr.push(n);
-        }
-        addIn.value = "";
-        renderFn();
-        updateEnemyCount();
-        if (autoRun && findGodByName($("#ctr-you")?.value) && counterState.enemies.length) {
-          runCounterFromForm({ updateHash: true });
-        }
-        return;
-      }
-      const g = findGodByName(raw);
-      if (!g) return;
-      if (arr.length >= maxN) return;
-      if (arr.includes(g.name)) {
-        addIn.value = "";
-        return;
-      }
-      arr.push(g.name);
-      addIn.value = "";
-      renderFn();
-      updateEnemyCount();
-      if (autoRun && findGodByName($("#ctr-you")?.value) && counterState.enemies.length) {
-        runCounterFromForm({ updateHash: true });
-      } else if (!routeState.suppressHash) {
-        syncHashFromUi("counter");
-      }
-    });
-    addIn?.addEventListener("paste", () => {
-      setTimeout(() => {
-        const raw = addIn.value.trim();
-        if (!raw || raw.length < 3) return;
-        const multi = extractGodsFromText(raw, { maxN: maxN - arr.length });
-        if (multi.names.length >= 1) {
-          for (const n of multi.names) {
-            if (arr.length >= maxN) break;
-            if (!arr.includes(n)) arr.push(n);
-          }
-          addIn.value = "";
-          renderFn();
-          updateEnemyCount();
-          if (autoRun && findGodByName($("#ctr-you")?.value) && counterState.enemies.length) {
-            runCounterFromForm({ updateHash: true });
-          }
-        }
-      }, 0);
-    });
+  const tryRebuild = () => {
+    if (findGodByName($("#ctr-you")?.value) && counterState.enemies.length) {
+      runCounterFromForm({ updateHash: true });
+    }
   };
-  wireAdd("#ctr-enemy-add", counterState.enemies, 5, renderEnemyPicks, { autoRun: true });
-  wireAdd("#ctr-ally-add", counterState.allies, 4, renderAllyPicks, { autoRun: true });
 
-  // Changing your god: rebuild if enemies ready
+  const consumeAddField = (raw) => {
+    const text = String(raw || "").trim();
+    if (!text) return false;
+    // Full lobby paste into add field
+    if (/\bvs\b/i.test(text) || text.split(/[\s,]+/).filter(Boolean).length >= 3) {
+      const parsed = parseLobbyPaste(text);
+      if (parsed.enemies.length || parsed.you) {
+        applyLobbyParsed(parsed, { autoRun: true, toast: true });
+        return true;
+      }
+    }
+    const multi = extractGodsFromText(text, { maxN: 5 - counterState.enemies.length });
+    if (multi.names.length > 1) {
+      for (const n of multi.names) addEnemyGod(n, { rebuild: false });
+      tryRebuild();
+      return true;
+    }
+    // Typeahead top pick or direct match
+    const ta = counterState._ta || [];
+    if (ta.length) {
+      addEnemyGod(ta[counterState._taIdx || 0], { rebuild: true });
+      return true;
+    }
+    const g = findGodByName(text);
+    if (g) {
+      addEnemyGod(g, { rebuild: true });
+      return true;
+    }
+    return false;
+  };
+
+  const addIn = $("#ctr-enemy-add");
+  addIn?.addEventListener("input", () => {
+    renderTypeahead(addIn.value);
+  });
+  addIn?.addEventListener("keydown", (e) => {
+    const ta = counterState._ta || [];
+    if (e.key === "ArrowDown" && ta.length) {
+      e.preventDefault();
+      counterState._taIdx = Math.min(ta.length - 1, (counterState._taIdx || 0) + 1);
+      $$("#ctr-typeahead .ctr-ta-item").forEach((b, i) =>
+        b.classList.toggle("is-active", i === counterState._taIdx)
+      );
+      return;
+    }
+    if (e.key === "ArrowUp" && ta.length) {
+      e.preventDefault();
+      counterState._taIdx = Math.max(0, (counterState._taIdx || 0) - 1);
+      $$("#ctr-typeahead .ctr-ta-item").forEach((b, i) =>
+        b.classList.toggle("is-active", i === counterState._taIdx)
+      );
+      return;
+    }
+    if (e.key === "Escape") {
+      hideTypeahead();
+      return;
+    }
+    if (e.key === "Enter" || e.key === "Tab") {
+      if (!addIn.value.trim() && e.key === "Tab") return;
+      e.preventDefault();
+      if (consumeAddField(addIn.value)) {
+        addIn.value = "";
+        hideTypeahead();
+      }
+      return;
+    }
+    // Digit 1-8 picks typeahead row
+    if (e.key >= "1" && e.key <= "8" && ta.length && !e.metaKey && !e.ctrlKey) {
+      const idx = Number(e.key) - 1;
+      if (ta[idx] && addIn.value.length > 0 && addIn.value.length <= 4) {
+        e.preventDefault();
+        addEnemyGod(ta[idx], { rebuild: true });
+        addIn.value = "";
+        hideTypeahead();
+      }
+    }
+  });
+  addIn?.addEventListener("paste", () => {
+    setTimeout(() => {
+      const raw = addIn.value.trim();
+      if (!raw) return;
+      if (consumeAddField(raw)) {
+        addIn.value = "";
+        hideTypeahead();
+      }
+    }, 0);
+  });
+  addIn?.addEventListener("blur", () => {
+    // delay so mousedown on typeahead fires first
+    setTimeout(hideTypeahead, 120);
+  });
+
+  // Ally add (simple)
+  $("#ctr-ally-add")?.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    const el = $("#ctr-ally-add");
+    const g = findGodByName(el?.value);
+    if (!g || counterState.allies.length >= 4 || counterState.allies.includes(g.name)) return;
+    counterState.allies.push(g.name);
+    el.value = "";
+    renderAllyPicks();
+    tryRebuild();
+  });
+
   const onYouChange = () => {
     const g = findGodByName($("#ctr-you")?.value);
     if (g) {
       try {
         localStorage.setItem("ctr_you", g.name);
       } catch (_) {}
+      if ($("#ctr-you")) $("#ctr-you").value = g.name;
     }
-    if (g && counterState.enemies.length) {
-      runCounterFromForm({ updateHash: true });
-    }
+    tryRebuild();
+    if (g) $("#ctr-enemy-add")?.focus();
   };
   $("#ctr-you")?.addEventListener("change", onYouChange);
   $("#ctr-you")?.addEventListener("keydown", (e) => {
@@ -4277,104 +4631,85 @@ function setupCounter() {
     }
   });
 
-  let quickTimer = null;
   const runQuick = ({ quiet = false } = {}) => {
-    const raw = ($("#ctr-quick")?.value || $("#ctr-paste")?.value || "").trim();
+    const raw = ($("#ctr-quick")?.value || "").trim();
     updateQuickPreview(raw);
     if (!raw) {
-      if (!quiet) showToast("Paste: You Role vs E1 E2 E3 E4 E5");
+      if (!quiet) showToast("Paste: You Role vs E1 E2 …");
       return;
     }
     const parsed = parseLobbyPaste(raw);
     if (!parsed.enemies.length && !parsed.you) {
-      if (!quiet) {
-        showToast(
-          parsed.unknown.length
-            ? `No gods matched (${parsed.unknown.slice(0, 3).join(", ")})`
-            : "Could not read lobby"
-        );
-      }
+      if (!quiet) showToast("Could not read lobby");
       return;
     }
-    // Need at least 1 enemy to build; allow partial (1–4) during draft
     applyLobbyParsed(parsed, { autoRun: true, toast: !quiet });
   };
-
   $("#ctr-quick-go")?.addEventListener("click", () => runQuick({ quiet: false }));
+  $("#ctr-quick")?.addEventListener("paste", () => setTimeout(() => runQuick({ quiet: false }), 0));
   $("#ctr-quick")?.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       runQuick({ quiet: false });
     }
   });
-  // Paste → instant auto-run (draft speed)
-  $("#ctr-quick")?.addEventListener("paste", () => {
-    setTimeout(() => runQuick({ quiet: false }), 0);
-  });
-  // Type → live preview; auto-run when 1+ enemies + you resolve (debounced)
-  $("#ctr-quick")?.addEventListener("input", () => {
-    const raw = $("#ctr-quick")?.value || "";
-    updateQuickPreview(raw);
-    clearTimeout(quickTimer);
-    quickTimer = setTimeout(() => {
-      const p = parseLobbyPaste(raw);
-      const youOk = p.you || findGodByName($("#ctr-you")?.value);
-      if (youOk && p.enemies.length >= 1) {
-        runQuick({ quiet: true });
-      }
-    }, 280);
-  });
+
   $("#ctr-quick-clear")?.addEventListener("click", () => {
     if ($("#ctr-quick")) $("#ctr-quick").value = "";
     updateQuickPreview("");
-    // Keep role + last you god for next game
     counterState.enemies = [];
     counterState.allies = [];
     renderEnemyPicks();
     renderAllyPicks();
     updateEnemyCount();
+    hideTypeahead();
     const threat = $("#ctr-threat");
     const result = $("#ctr-result");
     if (threat) threat.innerHTML = "";
     if (result) {
-      result.innerHTML = emptyHud(
-        "Cleared enemies",
-        "You/role kept. Paste enemies only, or full: Ymir Support vs Zeus Agni …"
-      );
+      result.innerHTML = emptyHud("Cleared", "You/role kept. Type next enemy or paste lobby.");
     }
-    showToast("Enemies cleared — you/role kept");
-  });
-
-  $("#ctr-paste-apply")?.addEventListener("click", () => {
-    const raw = $("#ctr-paste")?.value || "";
-    applyLobbyParsed(parseLobbyPaste(raw), { autoRun: true, toast: true });
-  });
-  $("#ctr-paste")?.addEventListener("paste", () => {
-    setTimeout(() => {
-      applyLobbyParsed(parseLobbyPaste($("#ctr-paste")?.value || ""), {
-        autoRun: true,
-        toast: true,
-      });
-    }, 0);
+    $("#ctr-enemy-add")?.focus();
   });
 
   $("#ctr-run")?.addEventListener("click", () => runCounterFromForm({ updateHash: true }));
   renderAllyPicks();
   updateEnemyCount();
+
+  // Global paste while Counter tab is active (draft: copy from Discord/notes)
+  if (!window.__ctrPasteBound) {
+    window.__ctrPasteBound = true;
+    document.addEventListener("paste", (e) => {
+      const panel = $("#panel-counter");
+      if (!panel || !panel.classList.contains("active")) return;
+      const t = e.target;
+      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA")) return; // field handlers own it
+      const text = e.clipboardData?.getData("text") || "";
+      if (!text.trim() || text.trim().length < 2) return;
+      e.preventDefault();
+      const parsed = parseLobbyPaste(text);
+      if (parsed.enemies.length || parsed.you) {
+        applyLobbyParsed(parsed, { autoRun: true, toast: true });
+        showToast("Lobby pasted");
+      }
+    });
+  }
 }
 
-// Focus quick paste when switching to Counter tab
+// Focus enemy-add when opening Counter
 const _activateTabCounterFocus = activateTab;
 activateTab = function (tab, opts) {
   const t = _activateTabCounterFocus(tab, opts);
   if (t === "counter") {
     queueMicrotask(() => {
-      const q = $("#ctr-quick");
-      if (q && !counterState.enemies.length) {
+      const you = $("#ctr-you");
+      const add = $("#ctr-enemy-add");
+      const focusEl = you && !you.value ? you : add;
+      if (focusEl) {
         try {
-          q.focus({ preventScroll: true });
+          focusEl.focus({ preventScroll: true });
         } catch {
-          q.focus();
+          focusEl.focus();
         }
       }
     });

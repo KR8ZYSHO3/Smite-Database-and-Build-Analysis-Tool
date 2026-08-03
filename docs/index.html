@@ -54,13 +54,13 @@
 
       <nav class="tabs simple-tabs" aria-label="Main">
         <button class="tab-btn active" data-tab="builds">Get a build</button>
-        <button class="tab-btn" data-tab="gods">Find a god</button>
+        <button class="tab-btn" data-tab="counter">Counter</button>
+        <button class="tab-btn" data-tab="gods">Gods</button>
         <div class="more-wrap">
           <button type="button" class="tab-btn more-trigger" id="more-tools-btn" aria-expanded="false" aria-haspopup="true">
-            More tools ▾
+            More ▾
           </button>
           <div class="more-menu" id="more-menu" hidden>
-            <button type="button" class="more-item" data-tab="counter">Counter enemy team</button>
             <button type="button" class="more-item" data-tab="troll">Troll / meme builds</button>
             <button type="button" class="more-item" data-tab="tiers">Tier list</button>
             <button type="button" class="more-item" data-tab="items">Item search</button>
@@ -92,39 +92,19 @@
 
       <!-- COUNTER -->
       <section id="panel-counter" class="panel">
-        <div class="card counter-panel">
-          <h2>Counter the enemy team</h2>
-          <p class="muted counter-speed-lead">
-            <strong>Draft speed:</strong> one paste → path builds itself. Partial lobbies (1–5 enemies) OK mid-pick.
-          </p>
-
-          <!-- FAST PATH: one field first -->
-          <div class="counter-quick" id="ctr-quick-wrap">
-            <label for="ctr-quick" class="step-label" style="margin-top:0">
-              <span class="step-badge">⚡</span> Paste lobby (Ctrl+V auto-runs)
-            </label>
-            <textarea
-              id="ctr-quick"
-              rows="2"
-              placeholder="Ymir Support vs Zeus Agni Susano Charon Ra&#10;or enemies only: Zeus Agni Susano Charon Ra"
-              autocomplete="off"
-              spellcheck="false"
-            ></textarea>
-            <div id="ctr-quick-preview" class="ctr-quick-preview" hidden aria-live="polite"></div>
-            <div class="counter-quick-actions">
-              <button type="button" class="btn-primary" id="ctr-quick-go">Counter now</button>
-              <button type="button" class="btn-ghost" id="ctr-quick-clear">Clear enemies</button>
-              <span class="muted" id="ctr-quick-hint">Spaces or commas · multi-word gods OK · rebuilds as you type</span>
-            </div>
+        <div class="card counter-panel counter-draft">
+          <div class="ctr-draft-head">
+            <h2>Counter</h2>
+            <p class="muted">Type enemy → Enter · path updates live. Paste a full lobby anytime.</p>
           </div>
 
-          <div class="counter-form counter-form-compact">
+          <!-- Sticky draft bar: you + role + add -->
+          <div class="ctr-sticky" id="ctr-sticky">
             <div class="ctr-you-role-row">
               <label class="ctr-you-label">You
-                <input id="ctr-you" type="search" list="ctr-god-list" placeholder="Your god (saved)" autocomplete="off" />
+                <input id="ctr-you" type="search" list="ctr-god-list" placeholder="Your god" autocomplete="off" />
               </label>
               <div class="ctr-role-block">
-                <span class="muted" style="font-size:0.8rem">Role (tap · remembered)</span>
                 <div class="role-pills ctr-role-pills" id="ctr-role-pills" role="group" aria-label="Your role"></div>
                 <select id="ctr-role" hidden>
                   <option>Support</option>
@@ -135,31 +115,64 @@
                 </select>
               </div>
             </div>
-            <div class="counter-enemies">
-              <span class="muted">Enemies <span id="ctr-enemy-count">(0/5)</span> — click chip to remove · paste multi here too</span>
-              <div class="enemy-lobby" id="ctr-enemy-picks" aria-label="Enemy lobby slots"></div>
-              <input id="ctr-enemy-add" type="search" list="ctr-god-list" placeholder="Add enemy or paste several + Enter" autocomplete="off" />
+
+            <div class="ctr-add-wrap">
+              <label class="ctr-add-label" for="ctr-enemy-add">
+                <span class="ctr-add-kicker">Add enemy</span>
+                <span class="muted" id="ctr-enemy-count">(0/5)</span>
+              </label>
+              <div class="ctr-add-row">
+                <input
+                  id="ctr-enemy-add"
+                  type="text"
+                  placeholder="Type 2 letters → tap · or Enter · or Ctrl+V full lobby"
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  enterkeyhint="done"
+                />
+                <button type="button" class="btn-ghost ctr-clear-btn" id="ctr-quick-clear" title="Clear enemies">Clear</button>
+              </div>
+              <div id="ctr-typeahead" class="ctr-typeahead" hidden role="listbox" aria-label="Matching gods"></div>
             </div>
-            <datalist id="ctr-god-list"></datalist>
-            <button type="button" class="btn-ghost" id="ctr-run">Rebuild path</button>
+
+            <div class="enemy-lobby" id="ctr-enemy-picks" aria-label="Enemy lobby slots"></div>
           </div>
 
+          <datalist id="ctr-god-list"></datalist>
+
+          <!-- Result first (above fold during draft) -->
+          <div id="ctr-threat" class="counter-threat muted"></div>
+          <div id="ctr-result" class="counter-result"></div>
+
           <details class="ctr-advanced">
-            <summary class="muted">Allies &amp; extra paste</summary>
+            <summary class="muted">Bulk paste · allies · kit compare</summary>
+            <div class="counter-quick" id="ctr-quick-wrap">
+              <label for="ctr-quick" class="step-label" style="margin-top:0">Bulk paste</label>
+              <textarea
+                id="ctr-quick"
+                rows="2"
+                placeholder="Ymir Support vs Zeus Agni Susano Charon Ra"
+                autocomplete="off"
+                spellcheck="false"
+              ></textarea>
+              <div id="ctr-quick-preview" class="ctr-quick-preview" hidden aria-live="polite"></div>
+              <div class="counter-quick-actions">
+                <button type="button" class="btn-primary" id="ctr-quick-go">Apply paste</button>
+                <button type="button" class="btn-ghost" id="ctr-run">Rebuild</button>
+              </div>
+            </div>
             <div class="counter-enemies counter-allies">
-              <span class="muted">Allies (optional, up to 4)</span>
+              <span class="muted">Allies (optional)</span>
               <div class="enemy-lobby ally-lobby" id="ctr-ally-picks" aria-label="Ally lobby slots"></div>
               <input id="ctr-ally-add" type="search" list="ctr-god-list" placeholder="Add ally…" autocomplete="off" />
             </div>
-            <div class="counter-paste-block">
-              <label for="ctr-paste">Extra paste field</label>
-              <textarea id="ctr-paste" rows="2" placeholder="Enemies only: Zeus Agni Susano"></textarea>
-              <button type="button" class="btn-ghost" id="ctr-paste-apply">Apply</button>
+            <div class="counter-paste-block" hidden>
+              <textarea id="ctr-paste" rows="1"></textarea>
+              <button type="button" id="ctr-paste-apply">Apply</button>
             </div>
           </details>
-
-          <div id="ctr-threat" class="counter-threat muted"></div>
-          <div id="ctr-result" class="counter-result"></div>
         </div>
       </section>
 
@@ -514,8 +527,8 @@
 
   <nav class="mobile-nav" aria-label="Mobile">
     <button type="button" class="mobile-tab active" data-tab="builds"><span class="mn-icon">1</span><span>Builds</span></button>
-    <button type="button" class="mobile-tab" data-tab="gods"><span class="mn-icon">◆</span><span>Gods</span></button>
     <button type="button" class="mobile-tab" data-tab="counter"><span class="mn-icon">◎</span><span>Counter</span></button>
+    <button type="button" class="mobile-tab" data-tab="gods"><span class="mn-icon">◆</span><span>Gods</span></button>
     <button type="button" class="mobile-tab" data-tab="more" id="mobile-more"><span class="mn-icon">···</span><span>More</span></button>
   </nav>
   <div class="mobile-more-sheet" id="mobile-more-sheet" hidden>
