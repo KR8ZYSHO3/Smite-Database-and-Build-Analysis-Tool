@@ -2,15 +2,15 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-08-02T22:27:27.389133+00:00_
+_Generated: 2026-08-11T17:38:06.983894+00:00_
 
 ## Weekly themes
 
-- Support paths under-buy anti-crit (Spectral on ~19.0% of recs) — flex Spectral almost every game.
-- Support/Solo anti-heal is rare in defaults (~4.8% support) — Stygian/Brawler's is a live flex.
-- Gods rising (r5 patch): Hun Batz, Fenrir, Ishtar, Ratatoskr.
+- Support paths under-buy anti-crit (Spectral on ~27.3% of recs) — flex Spectral almost every game.
+- Support/Solo anti-heal is rare in defaults (~4.5% support) — Stygian/Brawler's is a live flex.
+- Gods rising (r5 patch): Cu Chulainn, Hun Batz, Fenrir, Thanatos.
 - Items hot (r5 patch): Kinetic Cuirass, Amanita Charm, Draconic Scale, Freya's Tears.
-- Patch axes (avg r5): damage -0.29, utility -0.07, general +0.04.
+- Patch axes (avg r5): damage -0.19, general +0.10, utility -0.06.
 
 ## Role staples (top items in recommended paths)
 
@@ -20,99 +20,99 @@ _Generated: 2026-08-02T22:27:27.389133+00:00_
 |------|------:|--:|
 | Titan's Bane | 16 | 80.0 |
 | Tyrfing | 15 | 75.0 |
-| Deathbringer | 13 | 65.0 |
-| Odysseus' Bow | 12 | 60.0 |
+| Deathbringer | 14 | 70.0 |
+| Odysseus' Bow | 11 | 55.0 |
 | Riptalon | 10 | 50.0 |
 | Devourer's Gauntlet | 9 | 45.0 |
 | The Executioner | 8 | 40.0 |
 | Transcendence | 5 | 25.0 |
-| Sands Of Time | 4 | 20.0 |
 | Soul Reaver | 4 | 20.0 |
-| Obsidian Shard | 4 | 20.0 |
-| Spear of Desolation | 4 | 20.0 |
 | Book of Thoth | 4 | 20.0 |
-| Spear Of The Magus | 2 | 10.0 |
-| The World Stone | 2 | 10.0 |
+| Sands Of Time | 4 | 20.0 |
+| Spear of Desolation | 4 | 20.0 |
+| Obsidian Shard | 4 | 20.0 |
+| Qin's Blade | 3 | 15.0 |
+| Demon Blade | 2 | 10.0 |
 
-### Mid (24 paths)
+### Mid (25 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Obsidian Shard | 23 | 95.8 |
-| Spear of Desolation | 23 | 95.8 |
-| Book of Thoth | 23 | 95.8 |
-| Chronos' Pendant | 17 | 70.8 |
-| Gem of Isolation | 7 | 29.2 |
-| Rod of Tahuti | 7 | 29.2 |
-| Soul Gem | 4 | 16.7 |
-| Gem of Focus | 4 | 16.7 |
-| Wish-Granting Pearl | 4 | 16.7 |
-| Doom Orb | 4 | 16.7 |
-| Staff of Myrddin | 4 | 16.7 |
-| Divine Ruin | 4 | 16.7 |
-| Jade Scepter | 3 | 12.5 |
-| Soul Reaver | 2 | 8.3 |
-| Bancroft's Talon | 2 | 8.3 |
+| Book of Thoth | 24 | 96.0 |
+| Spear of Desolation | 24 | 96.0 |
+| Obsidian Shard | 23 | 92.0 |
+| Chronos' Pendant | 19 | 76.0 |
+| Gem of Isolation | 7 | 28.0 |
+| Soul Gem | 5 | 20.0 |
+| Rod of Tahuti | 5 | 20.0 |
+| Ancient Signet | 4 | 16.0 |
+| Doom Orb | 4 | 16.0 |
+| Staff of Myrddin | 3 | 12.0 |
+| Soul Reaver | 2 | 8.0 |
+| Wish-Granting Pearl | 2 | 8.0 |
+| Helm of Radiance | 2 | 8.0 |
+| Gem of Focus | 2 | 8.0 |
+| Blood-Bound Book | 2 | 8.0 |
 
 ### Jungle (22 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Jotunn's Revenge | 21 | 95.5 |
 | Hydra's Lament | 21 | 95.5 |
+| Jotunn's Revenge | 21 | 95.5 |
 | Titan's Bane | 21 | 95.5 |
-| The Crusher | 19 | 86.4 |
-| Arondight | 14 | 63.6 |
-| Pendulum Blade | 13 | 59.1 |
-| The Reaper | 7 | 31.8 |
-| Avatar's Parashu | 6 | 27.3 |
+| Arondight | 15 | 68.2 |
+| Pendulum Blade | 14 | 63.6 |
+| The Reaper | 9 | 40.9 |
+| The Crusher | 9 | 40.9 |
+| Avatar's Parashu | 9 | 40.9 |
+| Bloodforge | 3 | 13.6 |
 | Toxic Blade | 3 | 13.6 |
 | Thistlethorn Acorn | 1 | 4.5 |
 | Gem of Isolation | 1 | 4.5 |
 | Rod of Tahuti | 1 | 4.5 |
-| Obsidian Shard | 1 | 4.5 |
 | Soul Gem | 1 | 4.5 |
-| Spear of Desolation | 1 | 4.5 |
+| Book of Thoth | 1 | 4.5 |
 
-### Solo (20 paths)
-
-| Item | Paths | % |
-|------|------:|--:|
-| Shifter's Shield | 20 | 100.0 |
-| Genji's Guard | 14 | 70.0 |
-| Stone of Binding | 10 | 50.0 |
-| Doublet of Binding | 9 | 45.0 |
-| Chandra's Grace | 8 | 40.0 |
-| Kinetic Cuirass | 7 | 35.0 |
-| Shield of the Phoenix | 7 | 35.0 |
-| Gauntlet of Thebes | 4 | 20.0 |
-| Freya's Tears | 4 | 20.0 |
-| Breastplate of Valor | 4 | 20.0 |
-| Hussar's Wings | 3 | 15.0 |
-| Spectral Armor | 3 | 15.0 |
-| Prophetic Cloak | 3 | 15.0 |
-| Draconic Scale | 3 | 15.0 |
-| Gladiator's Shield | 2 | 10.0 |
-
-### Support (21 paths)
+### Solo (21 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Gauntlet of Thebes | 21 | 100.0 |
-| Shifter's Shield | 19 | 90.5 |
-| Gem of Isolation | 13 | 61.9 |
-| Stampede | 12 | 57.1 |
-| Stone of Binding | 10 | 47.6 |
-| Doublet of Binding | 5 | 23.8 |
-| Alchemist Coat | 5 | 23.8 |
+| Shifter's Shield | 20 | 95.2 |
+| Genji's Guard | 15 | 71.4 |
+| Stone of Binding | 11 | 52.4 |
+| Chandra's Grace | 10 | 47.6 |
+| Doublet of Binding | 9 | 42.9 |
+| Shield of the Phoenix | 8 | 38.1 |
+| Prophetic Cloak | 6 | 28.6 |
+| Kinetic Cuirass | 5 | 23.8 |
 | Freya's Tears | 5 | 23.8 |
-| Shield of the Phoenix | 4 | 19.0 |
-| Spectral Armor | 4 | 19.0 |
-| Leviathan's Hide | 4 | 19.0 |
-| Resolute Mantle | 3 | 14.3 |
-| Kinetic Cuirass | 3 | 14.3 |
-| Hussar's Wings | 3 | 14.3 |
+| Breastplate of Valor | 3 | 14.3 |
+| Gauntlet of Thebes | 3 | 14.3 |
+| Spectral Armor | 3 | 14.3 |
 | Draconic Scale | 3 | 14.3 |
+| Resolute Mantle | 2 | 9.5 |
+| Eye of Erebus | 2 | 9.5 |
+
+### Support (22 paths)
+
+| Item | Paths | % |
+|------|------:|--:|
+| Gauntlet of Thebes | 22 | 100.0 |
+| Shifter's Shield | 20 | 90.9 |
+| Stampede | 13 | 59.1 |
+| Gem of Isolation | 12 | 54.5 |
+| Doublet of Binding | 9 | 40.9 |
+| Stone of Binding | 8 | 36.4 |
+| Shield of the Phoenix | 6 | 27.3 |
+| Spectral Armor | 6 | 27.3 |
+| Draconic Scale | 5 | 22.7 |
+| Leviathan's Hide | 5 | 22.7 |
+| Hussar's Wings | 4 | 18.2 |
+| Kinetic Cuirass | 3 | 13.6 |
+| Resolute Mantle | 3 | 13.6 |
+| Alchemist Coat | 3 | 13.6 |
+| Freya's Tears | 3 | 13.6 |
 
 ## Answer coverage
 
@@ -121,50 +121,51 @@ _Generated: 2026-08-02T22:27:27.389133+00:00_
 - **vs high HP / tanks**: 20/20 (100.0%)
 
 ### Mid
-- **vs heals / sustain**: 4/24 (16.7%)
-- **vs high HP / tanks**: 24/24 (100.0%)
+- **vs heals / sustain**: 2/25 (8.0%)
+- **vs high HP / tanks**: 24/25 (96.0%)
 
 ### Jungle
 - **vs heals / sustain**: 3/22 (13.6%)
 - **vs high HP / tanks**: 22/22 (100.0%)
 
 ### Solo
-- **vs heals / sustain**: 2/20 (10.0%)
-- **vs physical damage**: 6/20 (30.0%)
-- **vs magic damage**: 16/20 (80.0%)
-- **vs CC / dive**: 0/20 (0.0%)
+- **vs heals / sustain**: 2/21 (9.5%)
+- **vs physical damage**: 6/21 (28.6%)
+- **vs magic damage**: 15/21 (71.4%)
+- **vs CC / dive**: 1/21 (4.8%)
 
 ### Support
-- **vs crit**: 4/21 (19.0%)
-- **vs attack speed**: 1/21 (4.8%)
-- **vs magic damage**: 1/21 (4.8%)
-- **vs heals / sustain**: 1/21 (4.8%)
+- **vs crit**: 6/22 (27.3%)
+- **vs attack speed**: 1/22 (4.5%)
+- **vs magic damage**: 0/22 (0.0%)
+- **vs heals / sustain**: 1/22 (4.5%)
 
 ## Trajectories — gods rising
 
-- Hun Batz: r5 +3.49 (rising)
-- Fenrir: r5 +2.43 (rising)
-- Ishtar: r5 +1.62 (new)
-- Ratatoskr: r5 +1.33 (rising)
-- Kukulkan: r5 +1.21 (rising)
-- Xing Tian: r5 +1.10 (rising)
-- Cu Chulainn: r5 +1.05 (rising)
-- Mercury: r5 +1.00 (rising)
-- Apollo: r5 +0.71 (volatile)
-- Loki: r5 +0.11 (stable)
-- Odin: r5 +0.09 (stable)
+- Cu Chulainn: r5 +11.64 (rising)
+- Hun Batz: r5 +3.11 (rising)
+- Fenrir: r5 +2.17 (rising)
+- Thanatos: r5 +1.77 (rising)
+- Ratatoskr: r5 +1.75 (rising)
+- Apollo: r5 +1.63 (rising)
+- Ishtar: r5 +1.44 (new)
+- Ix Chel: r5 +1.02 (rising)
+- Achilles: r5 +1.00 (rising)
+- Xing Tian: r5 +0.98 (new)
+- Mercury: r5 +0.89 (rising)
+- Hercules: r5 +0.28 (stable)
 
 ## Trajectories — items rising
 
-- Kinetic Cuirass: r5 +1.77
-- Amanita Charm: r5 +1.67
-- Draconic Scale: r5 +1.67
-- Freya's Tears: r5 +1.67
-- Hussar's Wings: r5 +1.67
-- Toxic Blade: r5 +1.00
-- Stone of Binding: r5 +1.00
-- Leviathan's Hide: r5 +0.89
-- Mystical Mail: r5 +0.89
-- Oni Hunter's Garb: r5 +0.89
-- Shield of the Phoenix: r5 +0.89
-- The Executioner: r5 +0.89
+- Kinetic Cuirass: r5 +1.58
+- Amanita Charm: r5 +1.48
+- Draconic Scale: r5 +1.48
+- Freya's Tears: r5 +1.48
+- Hussar's Wings: r5 +1.48
+- Shield: r5 +1.00
+- Toxic Blade: r5 +0.89
+- Stone of Binding: r5 +0.89
+- Leviathan's Hide: r5 +0.79
+- Mystical Mail: r5 +0.79
+- Oni Hunter's Garb: r5 +0.79
+- Shield of the Phoenix: r5 +0.79
