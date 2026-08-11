@@ -21,7 +21,11 @@ NERF_RE = re.compile(
     r"increased cooldown|cooldown increased|cost increased|no longer)\b",
     re.I,
 )
-SHIFT_RE = re.compile(r"\b(shift(?:ed)?|rework(?:ed|s)?|adjusted|changed|now\b|instead)\b", re.I)
+SHIFT_RE = re.compile(
+    r"\b(shift(?:ed)?|rework(?:ed|s)?|adjusted|changed|now\b|instead|redesign(?:ed)?)\b",
+    re.I,
+)
+REWORK_HEADER_RE = re.compile(r"\bREWORK\b", re.I)
 FIX_RE = re.compile(r"\b(fix(?:ed|es)?|bug|issue|correct(?:ed)?)\b", re.I)
 NEW_RE = re.compile(r"\b(new|added to the game|released|introduc)\b", re.I)
 
@@ -268,11 +272,13 @@ def parse_patch_wikitext_entities(
     """
     Walk patch wikitext and emit attributed change lines.
     Gods/items often appear as: [[File:...]] '''[[Aladdin]]'''
+    or: [[File:...]] [[The Cosmic Horror|'''The Cosmic Horror''']] - REWORK
     """
     events: list[dict[str, Any]] = []
     section = "General"
     entity_name: str | None = None
     entity_type: str | None = None
+    entity_is_rework = False
 
     # Pre-sorted names for longest-match scanning
     god_names = sorted(set(god_index.values()), key=len, reverse=True)
@@ -291,29 +297,75 @@ def parse_patch_wikitext_entities(
                 section = title
                 entity_name = None
                 entity_type = None
+                entity_is_rework = False
             else:
                 resolved = _resolve_name(title, god_index, item_index)
                 if resolved:
                     entity_type, entity_name = resolved
+                    entity_is_rework = bool(REWORK_HEADER_RE.search(line) or REWORK_HEADER_RE.search(title))
             continue
 
-        # Inline god/item header: '''[[Name]]''' or '''Name'''
+        # Inline god/item header: '''[[Name]]''' or File+[[Name]] or [[Name|'''Name''']] - REWORK
         header = re.search(r"'{2,3}\s*\[\[([^\]|]+)(?:\|[^\]]*)?\]\]\s*'{2,3}", line)
         if not header:
-            header = re.search(r"\[\[File:[^\]]+\]\].*?\[\[([^\]|]+)(?:\|[^\]]*)?\]\]", line)
+            header = re.search(r"\[\[File:[^\]]+\]\].*?\[\[([^\]|]+)(?:\|[^\]]*)?\]\]", line, re.I)
+        if not header:
+            header = re.search(r"\[\[([^\]|]+)(?:\|[^\]]*)?\]\].*\bREWORK\b", line, re.I)
         if header:
             resolved = _resolve_name(header.group(1), god_index, item_index)
             if resolved:
                 entity_type, entity_name = resolved
+                entity_is_rework = bool(REWORK_HEADER_RE.search(line))
+                # Emit a shift event for rework headers so they aren't silent
+                if entity_is_rework:
+                    # Full item/god REWORK headers are meta-relevant (Echo pass, etc.)
+                    events.append(
+                        {
+                            "section": section,
+                            "entity_type": entity_type,
+                            "entity_name": entity_name,
+                            "direction": "buff",
+                            "magnitude": 2.4,
+                            "change_text": f"REWORK — {_clean_entity(line)[:200]}",
+                            "axes": classify_stat_axes(line) or {"general": 0.5, "damage": 0.5},
+                        }
+                    )
                 continue
 
         # Bold-only name line
-        bold = re.match(r"^'{2,3}([^']+)'{2,3}\s*$", line)
+        bold = re.match(r"^'{2,3}([^']+)'{2,3}\s*(?:[-–—]\s*REWORK)?\s*$", line)
         if bold:
             resolved = _resolve_name(bold.group(1), god_index, item_index)
             if resolved:
                 entity_type, entity_name = resolved
+                entity_is_rework = bool(REWORK_HEADER_RE.search(line))
                 continue
+
+        # Global system lines (Echo pass) — credit major Echo payoff items as buffs
+        if re.search(r"\becho now copies\b", line, re.I):
+            text = _clean_entity(line.lstrip("* ").strip())
+            for echo_item in (
+                "The Cosmic Horror",
+                "Totem of Death",
+                "Damaru",
+                "Omen Drum",
+                "Eye of the Storm",
+            ):
+                canon = item_index.get(echo_item.lower())
+                if not canon:
+                    continue
+                events.append(
+                    {
+                        "section": section,
+                        "entity_type": "item",
+                        "entity_name": canon,
+                        "direction": "buff",
+                        "magnitude": 2.2,
+                        "change_text": text[:400],
+                        "axes": {"damage": 0.85, "general": 0.15},
+                    }
+                )
+            continue
 
         # Bullet changes
         bm = re.match(r"^\*+\s*(.+)$", line)
@@ -334,12 +386,16 @@ def parse_patch_wikitext_entities(
             resolved = _resolve_name(text, god_index, item_index)
             if resolved:
                 entity_type, entity_name = resolved
+                entity_is_rework = False
                 continue
 
         if not en:
             continue
 
         direction = classify_direction(text, section)
+        # Full item/god reworks: passive rewrites are shifts, not neutral noise
+        if direction == "neutral" and entity_is_rework:
+            direction = "shift"
         # Section-level buff/nerf override when text is short ability name only
         if direction == "neutral":
             if re.search(r"\bbuff", section, re.I):
@@ -358,8 +414,29 @@ def parse_patch_wikitext_entities(
             )
         ):
             continue
+        # Skip bare ability-name-only neutrals under reworks (Passive, Adaptive Stat lines
+        # that are pure labels) but keep real numbers / effects
+        if direction == "neutral" and re.fullmatch(
+            r"(passive|active|general|serenade|shield wall|heart bomb|tremors|"
+            r"refraction shield|barbed spear|ground slam|aspect of .+)",
+            text,
+            re.I,
+        ):
+            continue
 
         mag = change_magnitude(text, direction)
+        if entity_is_rework and direction in ("shift", "buff"):
+            mag = max(mag, 1.6)
+        # Passive rewrite bullets under REWORK are payoff, not noise
+        if entity_is_rework and re.search(
+            r"\beach time you echo|when you echo|echo damage|harmonized|dark resonance|"
+            r"tentacle|missing health|rhythm\b",
+            text,
+            re.I,
+        ):
+            if direction in ("neutral", "shift"):
+                direction = "buff"
+            mag = max(mag, 1.8)
         events.append(
             {
                 "section": section,

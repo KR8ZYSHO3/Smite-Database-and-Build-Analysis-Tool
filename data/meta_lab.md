@@ -2,14 +2,14 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-08-11T17:38:06.983894+00:00_
+_Generated: 2026-08-11T18:11:43.246383+00:00_
 
 ## Weekly themes
 
-- Support paths under-buy anti-crit (Spectral on ~27.3% of recs) — flex Spectral almost every game.
-- Support/Solo anti-heal is rare in defaults (~4.5% support) — Stygian/Brawler's is a live flex.
+- Support paths under-buy anti-crit (Spectral on ~9.1% of recs) — flex Spectral almost every game.
+- Support/Solo anti-heal is rare in defaults (~0.0% support) — Stygian/Brawler's is a live flex.
 - Gods rising (r5 patch): Cu Chulainn, Hun Batz, Fenrir, Thanatos.
-- Items hot (r5 patch): Kinetic Cuirass, Amanita Charm, Draconic Scale, Freya's Tears.
+- Items hot (r5 patch): Damaru, Omen Drum, The Cosmic Horror, Eye of the Storm.
 - Patch axes (avg r5): damage -0.19, general +0.10, utility -0.06.
 
 ## Role staples (top items in recommended paths)
@@ -19,80 +19,80 @@ _Generated: 2026-08-11T17:38:06.983894+00:00_
 | Item | Paths | % |
 |------|------:|--:|
 | Titan's Bane | 16 | 80.0 |
-| Tyrfing | 15 | 75.0 |
-| Deathbringer | 14 | 70.0 |
-| Odysseus' Bow | 11 | 55.0 |
-| Riptalon | 10 | 50.0 |
-| Devourer's Gauntlet | 9 | 45.0 |
+| Deathbringer | 16 | 80.0 |
+| Tyrfing | 16 | 80.0 |
+| Odysseus' Bow | 12 | 60.0 |
 | The Executioner | 8 | 40.0 |
-| Transcendence | 5 | 25.0 |
-| Soul Reaver | 4 | 20.0 |
-| Book of Thoth | 4 | 20.0 |
-| Sands Of Time | 4 | 20.0 |
+| Transcendence | 7 | 35.0 |
+| Qin's Blade | 7 | 35.0 |
+| Riptalon | 5 | 25.0 |
+| Eye of the Storm | 5 | 25.0 |
 | Spear of Desolation | 4 | 20.0 |
+| Soul Reaver | 4 | 20.0 |
+| Sands Of Time | 4 | 20.0 |
 | Obsidian Shard | 4 | 20.0 |
-| Qin's Blade | 3 | 15.0 |
-| Demon Blade | 2 | 10.0 |
+| Totem of Death | 4 | 20.0 |
+| Book of Thoth | 4 | 20.0 |
 
 ### Mid (25 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Book of Thoth | 24 | 96.0 |
 | Spear of Desolation | 24 | 96.0 |
-| Obsidian Shard | 23 | 92.0 |
-| Chronos' Pendant | 19 | 76.0 |
-| Gem of Isolation | 7 | 28.0 |
-| Soul Gem | 5 | 20.0 |
-| Rod of Tahuti | 5 | 20.0 |
-| Ancient Signet | 4 | 16.0 |
-| Doom Orb | 4 | 16.0 |
-| Staff of Myrddin | 3 | 12.0 |
-| Soul Reaver | 2 | 8.0 |
-| Wish-Granting Pearl | 2 | 8.0 |
-| Helm of Radiance | 2 | 8.0 |
-| Gem of Focus | 2 | 8.0 |
-| Blood-Bound Book | 2 | 8.0 |
+| Book of Thoth | 24 | 96.0 |
+| The Cosmic Horror | 24 | 96.0 |
+| Obsidian Shard | 21 | 84.0 |
+| Chronos' Pendant | 14 | 56.0 |
+| Totem of Death | 12 | 48.0 |
+| Doom Orb | 3 | 12.0 |
+| Rod of Tahuti | 3 | 12.0 |
+| Gem of Isolation | 3 | 12.0 |
+| Bancroft's Talon | 2 | 8.0 |
+| Dreamer's Idol | 2 | 8.0 |
+| Jade Scepter | 2 | 8.0 |
+| Spear Of The Magus | 1 | 4.0 |
+| Gem of Focus | 1 | 4.0 |
+| Soul Gem | 1 | 4.0 |
 
 ### Jungle (22 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Hydra's Lament | 21 | 95.5 |
 | Jotunn's Revenge | 21 | 95.5 |
 | Titan's Bane | 21 | 95.5 |
-| Arondight | 15 | 68.2 |
-| Pendulum Blade | 14 | 63.6 |
-| The Reaper | 9 | 40.9 |
-| The Crusher | 9 | 40.9 |
+| Hydra's Lament | 21 | 95.5 |
+| The Crusher | 18 | 81.8 |
+| Arondight | 11 | 50.0 |
 | Avatar's Parashu | 9 | 40.9 |
+| Pendulum Blade | 8 | 36.4 |
+| Damaru | 6 | 27.3 |
+| Omen Drum | 3 | 13.6 |
 | Bloodforge | 3 | 13.6 |
-| Toxic Blade | 3 | 13.6 |
+| The Reaper | 2 | 9.1 |
+| Ashwhorl Acorn | 1 | 4.5 |
 | Thistlethorn Acorn | 1 | 4.5 |
-| Gem of Isolation | 1 | 4.5 |
-| Rod of Tahuti | 1 | 4.5 |
-| Soul Gem | 1 | 4.5 |
+| Spear of Desolation | 1 | 4.5 |
 | Book of Thoth | 1 | 4.5 |
 
 ### Solo (21 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Shifter's Shield | 20 | 95.2 |
+| Shifter's Shield | 21 | 100.0 |
+| Eye of the Storm | 15 | 71.4 |
 | Genji's Guard | 15 | 71.4 |
-| Stone of Binding | 11 | 52.4 |
-| Chandra's Grace | 10 | 47.6 |
-| Doublet of Binding | 9 | 42.9 |
-| Shield of the Phoenix | 8 | 38.1 |
-| Prophetic Cloak | 6 | 28.6 |
+| Stone of Binding | 8 | 38.1 |
+| Doublet of Binding | 7 | 33.3 |
+| Shield of the Phoenix | 6 | 28.6 |
 | Kinetic Cuirass | 5 | 23.8 |
-| Freya's Tears | 5 | 23.8 |
-| Breastplate of Valor | 3 | 14.3 |
+| Chandra's Grace | 5 | 23.8 |
+| Prophetic Cloak | 4 | 19.0 |
+| Freya's Tears | 4 | 19.0 |
+| Hussar's Wings | 4 | 19.0 |
+| Alchemist Coat | 4 | 19.0 |
 | Gauntlet of Thebes | 3 | 14.3 |
-| Spectral Armor | 3 | 14.3 |
-| Draconic Scale | 3 | 14.3 |
 | Resolute Mantle | 2 | 9.5 |
-| Eye of Erebus | 2 | 9.5 |
+| Mystical Mail | 2 | 9.5 |
 
 ### Support (22 paths)
 
@@ -100,19 +100,19 @@ _Generated: 2026-08-11T17:38:06.983894+00:00_
 |------|------:|--:|
 | Gauntlet of Thebes | 22 | 100.0 |
 | Shifter's Shield | 20 | 90.9 |
-| Stampede | 13 | 59.1 |
-| Gem of Isolation | 12 | 54.5 |
-| Doublet of Binding | 9 | 40.9 |
-| Stone of Binding | 8 | 36.4 |
-| Shield of the Phoenix | 6 | 27.3 |
-| Spectral Armor | 6 | 27.3 |
+| Gem of Isolation | 15 | 68.2 |
+| Stone of Binding | 10 | 45.5 |
+| Stampede | 9 | 40.9 |
+| Doublet of Binding | 8 | 36.4 |
+| Kinetic Cuirass | 5 | 22.7 |
+| Hussar's Wings | 5 | 22.7 |
 | Draconic Scale | 5 | 22.7 |
-| Leviathan's Hide | 5 | 22.7 |
-| Hussar's Wings | 4 | 18.2 |
-| Kinetic Cuirass | 3 | 13.6 |
+| Alchemist Coat | 4 | 18.2 |
 | Resolute Mantle | 3 | 13.6 |
-| Alchemist Coat | 3 | 13.6 |
-| Freya's Tears | 3 | 13.6 |
+| Shield of the Phoenix | 3 | 13.6 |
+| Chandra's Grace | 3 | 13.6 |
+| Contagion | 2 | 9.1 |
+| Prophetic Cloak | 2 | 9.1 |
 
 ## Answer coverage
 
@@ -121,24 +121,24 @@ _Generated: 2026-08-11T17:38:06.983894+00:00_
 - **vs high HP / tanks**: 20/20 (100.0%)
 
 ### Mid
-- **vs heals / sustain**: 2/25 (8.0%)
-- **vs high HP / tanks**: 24/25 (96.0%)
+- **vs heals / sustain**: 1/25 (4.0%)
+- **vs high HP / tanks**: 22/25 (88.0%)
 
 ### Jungle
-- **vs heals / sustain**: 3/22 (13.6%)
+- **vs heals / sustain**: 0/22 (0.0%)
 - **vs high HP / tanks**: 22/22 (100.0%)
 
 ### Solo
 - **vs heals / sustain**: 2/21 (9.5%)
-- **vs physical damage**: 6/21 (28.6%)
+- **vs physical damage**: 2/21 (9.5%)
 - **vs magic damage**: 15/21 (71.4%)
 - **vs CC / dive**: 1/21 (4.8%)
 
 ### Support
-- **vs crit**: 6/22 (27.3%)
-- **vs attack speed**: 1/22 (4.5%)
-- **vs magic damage**: 0/22 (0.0%)
-- **vs heals / sustain**: 1/22 (4.5%)
+- **vs crit**: 2/22 (9.1%)
+- **vs attack speed**: 0/22 (0.0%)
+- **vs magic damage**: 2/22 (9.1%)
+- **vs heals / sustain**: 0/22 (0.0%)
 
 ## Trajectories — gods rising
 
@@ -157,15 +157,15 @@ _Generated: 2026-08-11T17:38:06.983894+00:00_
 
 ## Trajectories — items rising
 
+- Damaru: r5 +10.96
+- Omen Drum: r5 +8.67
+- The Cosmic Horror: r5 +7.96
+- Eye of the Storm: r5 +6.76
+- Totem of Death: r5 +6.05
+- The Crusher: r5 +2.31
 - Kinetic Cuirass: r5 +1.58
 - Amanita Charm: r5 +1.48
 - Draconic Scale: r5 +1.48
 - Freya's Tears: r5 +1.48
 - Hussar's Wings: r5 +1.48
 - Shield: r5 +1.00
-- Toxic Blade: r5 +0.89
-- Stone of Binding: r5 +0.89
-- Leviathan's Hide: r5 +0.79
-- Mystical Mail: r5 +0.79
-- Oni Hunter's Garb: r5 +0.79
-- Shield of the Phoenix: r5 +0.79

@@ -974,7 +974,8 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
         "damp": 20,   # 15 Damp on Alchemist is huge
         "plat": 15,   # 10–15 Plating is full value
         "ten": 20,
-        "echo": 30,
+        # OB41 Echo pass: payoff items (Cosmic Horror / Totem / Omen / Damaru) matter again
+        "echo": 55,
     }
     breakdown: dict[str, float] = {}
     stat_score = 0.0
@@ -1065,6 +1066,32 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
             util += 8
         if "crit" in blob or "basic attack" in blob:
             util += 10 if role == "Carry" else 2
+        # OB41 Echo pass — multi-hit kits want Cosmic Horror / Totem / Omen / Damaru / Storm
+        echo_v = _canon_stat_value(item["stats"], "echo")
+        nlow_item = (item.get("name") or "").lower()
+        multi_hit_kit = any(
+            t in (profile.get("kit_tags") or set() or set())
+            for t in ("dot", "heavy_dot", "channel", "pet_zone", "sustained")
+        )
+        # profile may not always carry kit_tags; also boost pure mid mages by role
+        if role == "Mid" or multi_hit_kit or prefer == "Magical":
+            if echo_v >= 15:
+                util += 18
+            elif echo_v >= 8:
+                util += 12
+            if any(
+                k in nlow_item
+                for k in (
+                    "cosmic horror",
+                    "totem of death",
+                    "omen drum",
+                    "damaru",
+                    "eye of the storm",
+                )
+            ):
+                util += 14
+            if "each time you echo" in blob or "when you echo" in blob:
+                util += 10
         # Prefer passive pen cores over luxury On-Use power+pen (Dreamer's Idol)
         cats = (item.get("categories") or "").lower()
         if "penetration" in cats and not item.get("is_active_item"):
@@ -1757,6 +1784,9 @@ def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, Any]:
         tags.add("anti_cc")
     if re.search(r"\bdash\b|\bleap\b|teleport|fly into", blob):
         tags.add("gap_close")
+    # OB41: kits that generate or spend Echo want Cosmic / Totem / Damaru / Omen
+    if re.search(r"\becho\b", blob):
+        tags.add("echo")
 
     aa_score = min(1.0, aa_hits / 4.0)
     if "aa" in tags:
@@ -1881,6 +1911,7 @@ def rescore_for_god(
         "gem of focus",
         "the world stone",
         "cosmic horror",
+        "totem of death",
         "jade scepter",
     )
     phys_only_names = (
@@ -2106,6 +2137,65 @@ def rescore_for_god(
         # channel gods need bulk mid-fight
         if _canon_stat_value(item.stats, "hp") >= 250 or item.item_type == "Defensive":
             s += 16
+
+    # --- OB41 Echo pass: multi-hit / channel / zone kits want Echo payoff ---
+    echo_v = _canon_stat_value(item.stats, "echo")
+    echo_payoff = any(
+        k in nlow
+        for k in (
+            "cosmic horror",
+            "totem of death",
+            "omen drum",
+            "damaru",
+            "eye of the storm",
+        )
+    )
+    effects_map = bias.get("effects") or {}
+    multi_hit_v = float(effects_map.get("multi_hit", 0) or 0)
+    kit_echo_hungry = bool(
+        tags
+        & {
+            "dot",
+            "heavy_dot",
+            "channel",
+            "pet_zone",
+            "spam",
+            "sustained",
+            "zone",
+            "echo",
+        }
+    ) or multi_hit_v >= 0.55
+    ability_blob = " ".join(
+        str(bias.get(k) or "")
+        for k in ("ability_blob", "aspect_description", "passive", "kit_text")
+    )
+    if re.search(r"\becho\b", ability_blob, re.I):
+        kit_echo_hungry = True
+        tags.add("echo")
+    if kit_echo_hungry or (role == "Mid" and mage):
+        if echo_payoff:
+            s += 70 if (mage or role == "Mid") else 45
+            if echo_v >= 15:
+                s += 28
+            elif echo_v >= 8:
+                s += 16
+            if "each time you echo" in blob or "when you echo" in blob:
+                s += 22
+            # Cosmic: INT + flat pen + tentacles — best multi-hit mage Echo core
+            if "cosmic horror" in nlow and mage:
+                s += 35
+            # Totem: execute-style missing HP on Echo — finishers on spam kits
+            if "totem of death" in nlow and mage:
+                s += 30
+        # Physical multi-hit (jungle/bruiser) wants Damaru / Omen / Storm
+        if physical and any(k in nlow for k in ("damaru", "omen drum", "eye of the storm")):
+            s += 48
+            if echo_v >= 15:
+                s += 18
+        # Hybrid adaptive Echo items work on both
+        if any(k in nlow for k in ("damaru", "omen drum")) and not physical and not mage:
+            s += 30
+
     wants_ls = _wants_mage_lifesteal(bias)
     true_healer = _is_true_healer(bias)
     if "heal" in tags or "heavy_heal" in tags or "self_sustain" in tags:
@@ -2512,13 +2602,13 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
 ARCHETYPE_SLOTS: dict[str, list[str]] = {
     # Mid / mage — pen + power first (not Soul Gem / sustain openers)
     "burst_mage": ["flat_pen", "pct_pen", "power", "cdr", "defense", "luxury"],
-    "dot_mage": ["flat_pen", "pct_pen", "dot_core", "power", "cdr", "defense"],
+    "dot_mage": ["flat_pen", "pct_pen", "dot_core", "echo_core", "power", "cdr"],
     "mana_mage": ["mana_stack", "flat_pen", "pct_pen", "power", "cdr", "defense"],
-    "channel_mage": ["flat_pen", "pct_pen", "power", "cdr", "defense", "luxury"],
-    "spam_mage": ["cdr", "flat_pen", "pct_pen", "power", "defense", "sustain"],
-    "sustain_mage": ["flat_pen", "pct_pen", "power", "sustain", "cdr", "defense"],
+    "channel_mage": ["flat_pen", "pct_pen", "power", "echo_core", "cdr", "defense"],
+    "spam_mage": ["cdr", "flat_pen", "pct_pen", "echo_core", "power", "defense"],
+    "sustain_mage": ["flat_pen", "pct_pen", "power", "sustain", "echo_core", "cdr"],
     "aa_mage": ["aa_core", "flat_pen", "pct_pen", "as_core", "power", "defense"],
-    "zone_mage": ["flat_pen", "pct_pen", "zone_core", "power", "cdr", "defense"],
+    "zone_mage": ["flat_pen", "pct_pen", "zone_core", "echo_core", "power", "cdr"],
     # Carry — ranked hunter shape: opener → AS/LS → shred → Titan's → finisher
     "crit_adc": ["as_core", "ls_core", "onhit", "pct_pen", "crit_core", "power"],
     "onhit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "power", "crit_core"],
@@ -2528,11 +2618,11 @@ ARCHETYPE_SLOTS: dict[str, list[str]] = {
     "aa_mage_adc": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "power"],
     "ability_mage_adc": ["flat_pen", "power", "pct_pen", "power", "cdr", "luxury"],
     # Jungle — Jotunn/Hydra OR stack, then power + pen (no mid Shifter/BoV)
-    "burst_assassin": ["gap", "flat_pen", "power", "power", "pct_pen", "cdr"],
+    "burst_assassin": ["gap", "flat_pen", "power", "echo_core", "pct_pen", "cdr"],
     "sustain_assassin": ["gap", "ls_core", "flat_pen", "power", "pct_pen", "cdr"],
     "aa_assassin": ["gap", "ls_core", "as_core", "flat_pen", "pct_pen", "power"],
-    "bruiser_jungle": ["gap", "flat_pen", "power", "power", "pct_pen", "hybrid_bulk"],
-    "mage_jungle": ["flat_pen", "power", "cdr", "pct_pen", "sustain", "power"],
+    "bruiser_jungle": ["gap", "flat_pen", "power", "echo_core", "pct_pen", "hybrid_bulk"],
+    "mage_jungle": ["flat_pen", "power", "echo_core", "pct_pen", "cdr", "power"],
     # Solo — offline damage + bulk (not pure aura shell)
     "tank_solo": ["hybrid_bulk", "defense", "mitigate", "power_bruiser", "antiheal", "cdr_def"],
     "sustain_solo": ["hybrid_bulk", "power_bruiser", "defense", "mitigate", "antiheal", "sustain_tank"],
@@ -2664,6 +2754,21 @@ def _item_matches_slot(
         return any(
             k in n
             for k in ("desolat", "magus", "divine", "soul reaver", "gem of isolation", "contagion", "grimoire")
+        )
+    if slot == "echo_core":
+        # OB41 Echo payoff items (Cosmic / Totem / Damaru / Omen / Storm)
+        echo_stat = _canon_stat_value(it.stats, "echo")
+        if echo_stat >= 8:
+            return True
+        return any(
+            k in n
+            for k in (
+                "cosmic horror",
+                "totem of death",
+                "omen drum",
+                "damaru",
+                "eye of the storm",
+            )
         )
     if slot == "zone_core":
         return any(k in n for k in ("magus", "isolation", "divine", "soul gem", "grimoire", "gem of focus"))
@@ -2800,15 +2905,16 @@ def _item_matches_slot(
 # This is the main god-specific differentiator (not global #1 pen every time).
 TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     "mana_stack": ["thoth", "doom orb", "book of", "transcend"],
-    "heavy_dot": ["magus", "isolation", "desolat", "divine", "contagion"],
-    "dot": ["magus", "desolat", "isolation", "divine", "contagion"],
-    "channel": ["chronos", "gem of focus", "myrddin", "desolat"],
-    "spam": ["chronos", "pendant", "gem of focus", "breastplate", "genji"],
+    "heavy_dot": ["magus", "isolation", "desolat", "divine", "contagion", "cosmic horror"],
+    "dot": ["magus", "desolat", "isolation", "divine", "contagion", "cosmic horror", "totem of death"],
+    "channel": ["chronos", "gem of focus", "myrddin", "desolat", "cosmic horror", "totem of death"],
+    "spam": ["chronos", "pendant", "gem of focus", "breastplate", "genji", "totem of death"],
     "ult_nuke": ["soul reaver", "tahuti", "obsidian", "titan", "desolat"],
     # Jungle ability openers first (Jotunn/Hydra), then pen finishers
-    "burst": ["jotunn", "hydra", "desolat", "obsi", "titan", "soul reaver", "tahuti", "heartseeker"],
-    "pet_zone": ["isolation", "magus", "soul gem", "divine", "grimoire"],
-    "zone": ["isolation", "magus", "soul gem", "divine"],
+    "burst": ["jotunn", "hydra", "desolat", "obsi", "titan", "soul reaver", "tahuti", "heartseeker", "damaru"],
+    "pet_zone": ["isolation", "magus", "soul gem", "divine", "grimoire", "cosmic horror"],
+    "zone": ["isolation", "magus", "soul gem", "divine", "totem of death"],
+    "echo": ["cosmic horror", "totem of death", "damaru", "omen drum", "eye of the storm"],
     "aa": ["riptalon", "demon", "deathbringer", "qins", "ichival", "wind", "avenging", "musashi"],
     "as_steroid": ["riptalon", "demon", "ichival", "avenging", "wind"],
     # asclepius/lifebinder only land on true healers via kit_ok; chandra is safe aura
@@ -3305,6 +3411,29 @@ def assemble_kit_path(
             idx = slots.index("flat_pen")
             slots.insert(idx + 1, "zone_core")
             slots = slots[:6]
+    # OB41 Echo pass: kits that generate Echo (or multi-hit Mid) reserve an Echo payoff slot
+    effects_map = bias.get("effects") or {}
+    multi_hit_v = float(effects_map.get("multi_hit", 0) or 0)
+    wants_echo_slot = (
+        "echo" in tags
+        or multi_hit_v >= 0.7
+        or (
+            role in ("Mid", "Carry", "Jungle")
+            and bool(tags & {"channel", "dot", "heavy_dot", "pet_zone", "spam", "zone"})
+        )
+    )
+    if wants_echo_slot and "echo_core" not in slots and role in ("Mid", "Carry", "Jungle"):
+        # Keep pen first; replace late defense/luxury/sustain with echo_core
+        for drop in ("luxury", "defense", "sustain", "cdr"):
+            if drop in slots and slots.index(drop) >= 3:
+                slots[slots.index(drop)] = "echo_core"
+                break
+        else:
+            if len(slots) >= 4:
+                slots[3] = "echo_core"
+            else:
+                slots.append("echo_core")
+        slots = slots[:6]
 
     path: list[ScoredItem] = []
     seen: set[str] = set()
@@ -4634,6 +4763,18 @@ def _ensure_inspired_cores(
                 protect = protect + ("shifter", "thebes")
             if any(k in n for k in protect):
                 continue
+            # OB41 Echo payoff items are kit identity — never replace with SR staples
+            if any(
+                k in n
+                for k in (
+                    "cosmic horror",
+                    "totem of death",
+                    "omen drum",
+                    "damaru",
+                    "eye of the storm",
+                )
+            ):
+                continue
             drop = i
             break
         if drop is None:
@@ -5438,8 +5579,8 @@ def build_god_build(
             if any(k in nlow for k in ("soul gem", "gluttonous", "bancroft", "typhon")):
                 if not _wants_mage_lifesteal(bias) and "self_sustain" not in tags_kit:
                     return False
-            # Luxury toys never as mid "cores" from pool noise
-            if any(k in nlow for k in ("world stone", "cosmic horror")):
+            # World Stone remains luxury noise; Cosmic Horror is an OB41 Echo core
+            if "world stone" in nlow:
                 return False
         if role == "Carry" and mage:
             if any(k in nlow for k in ("soul gem", "gluttonous")) and not _wants_mage_lifesteal(

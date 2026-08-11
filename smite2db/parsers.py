@@ -275,7 +275,10 @@ def parse_patch_list(wikitext: str) -> list[dict[str, str]]:
 def split_patch_changes(wikitext: str) -> list[dict[str, Any]]:
     """
     Heuristically split patch wikitext into change rows.
-    Looks for god/item headings and bullet lines.
+
+    OB-style notes often use inline headers, not === headings ===:
+      [[File:...]] '''[[Apollo]]'''
+      [[File:...]] [[The Cosmic Horror|'''The Cosmic Horror''']] - REWORK
     """
     changes: list[dict[str, Any]] = []
     section = "General"
@@ -286,46 +289,92 @@ def split_patch_changes(wikitext: str) -> list[dict[str, Any]]:
     # Remove infobox
     text = re.sub(r"\{\{Patch infobox2?.*?\}\}", "", wikitext, count=1, flags=re.S | re.I)
 
+    def _strip_title(title: str) -> str:
+        title = re.sub(r"\[\[File:[^\]]+\]\]", "", title, flags=re.I)
+        title = re.sub(r"\[\[([^|\]]+)\|([^\]]+)\]\]", r"\2", title)
+        title = re.sub(r"\[\[([^\]]+)\]\]", r"\1", title)
+        title = re.sub(r"'{2,}", "", title)
+        title = re.sub(r"^\d+px\s*", "", title.strip())
+        title = re.sub(r"\s*[-–—]\s*REWORK\s*$", "", title, flags=re.I)
+        return clean_text(title)
+
+    def _set_entity_from_title(title: str) -> None:
+        nonlocal entity_name, entity_type
+        title = _strip_title(title)
+        if not title or len(title) < 2:
+            return
+        # Skip section-ish labels that aren't gods/items
+        if re.search(
+            r"^(buffs?|nerfs?|general|echo item pass|gameplay|ui|bug)\b",
+            title,
+            re.I,
+        ):
+            return
+        entity_name = title
+        if re.search(r"god|balance", section, re.I) and not re.search(r"item", section, re.I):
+            entity_type = "god"
+        elif re.search(r"item", section, re.I):
+            entity_type = "item"
+        elif re.search(r"new classic god|new god", section, re.I):
+            entity_type = "god"
+        else:
+            entity_type = "other"
+
     for line in text.splitlines():
         heading = re.match(r"^(={1,6})\s*(.+?)\s*\1\s*$", line)
         if heading:
             level = len(heading.group(1))
-            title = heading.group(2)
-            title = re.sub(r"\[\[File:[^\]]+\]\]", "", title, flags=re.I)
-            title = re.sub(r"\[\[([^|\]]+)\|([^\]]+)\]\]", r"\2", title)
-            title = re.sub(r"\[\[([^\]]+)\]\]", r"\1", title)
-            # leftover image size tokens like "30px Name"
-            title = re.sub(r"^\d+px\s*", "", title.strip())
-            title = clean_text(title)
+            title = _strip_title(heading.group(2))
             if level <= 2:
                 section = title
                 entity_name = None
                 entity_type = "other"
-                if re.search(r"god", section, re.I):
+                if re.search(r"god", section, re.I) and not re.search(r"item", section, re.I):
                     entity_type = "god"
                 elif re.search(r"item", section, re.I):
                     entity_type = "item"
             else:
-                # Likely a god or item name
-                entity_name = title
-                if re.search(r"god|balance", section, re.I):
-                    entity_type = "god"
-                elif re.search(r"item", section, re.I):
-                    entity_type = "item"
-                else:
-                    entity_type = "other"
+                _set_entity_from_title(heading.group(2))
             continue
+
+        # Inline entity headers (most modern OB notes)
+        # [[File:...]] '''[[Name]]'''  OR  [[File:...]] [[Name|'''Name''']] - REWORK
+        inline = re.search(
+            r"\[\[File:[^\]]+\]\].*?\[\[([^\]|#]+)(?:\|[^\]]*)?\]\]",
+            line,
+            re.I,
+        )
+        if not inline:
+            inline = re.search(r"'{2,3}\s*\[\[([^\]|#]+)(?:\|[^\]]*)?\]\]\s*'{2,3}", line)
+        if not inline:
+            bold = re.match(r"^'{2,3}([^']+)'{2,3}\s*(?:[-–—]\s*REWORK)?\s*$", line)
+            if bold:
+                _set_entity_from_title(bold.group(1))
+                continue
+        if inline:
+            _set_entity_from_title(inline.group(1))
+            # Line may be header-only (no bullet); don't also treat as change
+            if not re.match(r"^\*+", line.strip()):
+                continue
 
         bullet = re.match(r"^\*+\s*(.+)$", line)
         if bullet:
             change_text = clean_text(bullet.group(1))
             if not change_text:
                 continue
+            en = entity_name
+            et = entity_type
+            # Global Echo pass line sits under Item Balance with no File header
+            if re.search(r"\becho now copies\b", change_text, re.I) or (
+                not en and re.search(r"\becho\b", change_text, re.I) and re.search(r"item", section, re.I)
+            ):
+                en = en or "Echo System"
+                et = "other" if en == "Echo System" else et
             changes.append(
                 {
                     "section": section,
-                    "entity_name": entity_name,
-                    "entity_type": entity_type,
+                    "entity_name": en,
+                    "entity_type": et,
                     "change_text": change_text,
                     "change_order": order,
                 }

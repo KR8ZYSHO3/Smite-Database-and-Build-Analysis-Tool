@@ -63,6 +63,26 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     # Force again after DB merge
     meta["exported_at"] = exported_at
 
+    # Latest patch stamp (so the site can show OB41 etc.)
+    try:
+        latest = conn.execute(
+            """
+            SELECT name, release_date, title
+            FROM patch_notes
+            WHERE name LIKE 'SMITE 2 Open Beta%'
+            ORDER BY
+              CAST(REPLACE(REPLACE(name, 'SMITE 2 Open Beta ', ''), 'Hotfix', '') AS INTEGER) DESC,
+              id DESC
+            LIMIT 1
+            """
+        ).fetchone()
+        if latest:
+            meta["latest_patch"] = latest["name"]
+            meta["latest_patch_date"] = latest["release_date"]
+            meta["latest_patch_title"] = latest["title"]
+    except sqlite3.OperationalError:
+        pass
+
     # Gods summary
     gods = []
     for r in conn.execute(
@@ -433,7 +453,12 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
 
     # Bake a human stamp into index.html so the header isn't "…" before JS,
     # and so CDN cache misses are easier to spot in View Source.
-    _inject_export_stamp(docs_index_html=ROOT / "docs" / "index.html", exported_at=exported_at)
+    _inject_export_stamp(
+        docs_index_html=ROOT / "docs" / "index.html",
+        exported_at=exported_at,
+        latest_patch=meta.get("latest_patch"),
+        latest_patch_date=meta.get("latest_patch_date"),
+    )
 
     write_standalone(payload)
 
@@ -472,18 +497,32 @@ def _format_stamp_local(iso: str) -> str:
         return iso[:19].replace("T", " ") + " UTC"
 
 
-def _inject_export_stamp(*, docs_index_html: Path, exported_at: str) -> None:
+def _inject_export_stamp(
+    *,
+    docs_index_html: Path,
+    exported_at: str,
+    latest_patch: str | None = None,
+    latest_patch_date: str | None = None,
+) -> None:
     """Write Last-updated into index.html shell (committed + used by standalone)."""
     if not docs_index_html.is_file():
         return
     html = docs_index_html.read_text(encoding="utf-8")
     pretty = _format_stamp_local(exported_at)
+    patch_bit = ""
+    if latest_patch:
+        short = latest_patch.replace("SMITE 2 ", "")
+        if latest_patch_date:
+            patch_bit = f" · Patch data: <strong>{short}</strong> ({latest_patch_date})"
+        else:
+            patch_bit = f" · Patch data: <strong>{short}</strong>"
     # Replace the whole site-updated paragraph so both placeholder and prior stamps update
     new_p = (
         f'        <p class="site-updated" id="site-updated" '
         f'data-exported-at="{exported_at}" '
+        f'data-latest-patch="{latest_patch or ""}" '
         f'title="Export timestamp (UTC): {exported_at}">\n'
-        f"          Last updated: <strong>{pretty}</strong>\n"
+        f"          Last updated: <strong>{pretty}</strong>{patch_bit}\n"
         f"        </p>"
     )
     html2, n = re.subn(
