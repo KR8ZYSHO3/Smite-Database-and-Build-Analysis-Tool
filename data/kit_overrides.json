@@ -9,5 +9,34 @@
       "ban_items": ["Riptalon", "Deathbringer"],
       "archetype": "sustain_mage"
     }
+  },
+  "Cu Chulainn": {
+    "_why": "Solo identity: max-HP sustain (Yogi's) + melee aura (Mystical Mail). Mana→HP passive makes Yogi's core; fights in melee range for Mystical ticks. Not ADC/assassin toys.",
+    "force_tags": ["self_sustain", "sustained", "shield"],
+    "remove_tags": ["aa", "as_steroid"],
+    "prefer_items": [
+      "Yogi's Necklace",
+      "Mystical Mail",
+      "Genji's Guard",
+      "Breastplate of Valor",
+      "Runeforged Hammer",
+      "Shifter's Shield"
+    ],
+    "ban_items": [
+      "Devourer's Gauntlet",
+      "Tyrfing",
+      "Riptalon",
+      "Deathbringer",
+      "Odysseus' Bow",
+      "Qin's Blade",
+      "Demon Blade",
+      "Hydra's Lament",
+      "Arondight",
+      "Eye of the Storm",
+      "Damaru",
+      "Omen Drum",
+      "Avenging Blade",
+      "Chandra's Grace"
+    ]
   }
 }

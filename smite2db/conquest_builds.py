@@ -2608,7 +2608,8 @@ ARCHETYPE_SLOTS: dict[str, list[str]] = {
     "mage_jungle": ["flat_pen", "power", "echo_core", "pct_pen", "cdr", "power"],
     # Solo — offline damage + bulk (not pure aura shell)
     "tank_solo": ["hybrid_bulk", "defense", "mitigate", "power_bruiser", "antiheal", "cdr_def"],
-    "sustain_solo": ["hybrid_bulk", "power_bruiser", "defense", "mitigate", "antiheal", "sustain_tank"],
+    # Yogi's / Mystical as sustain_tank + defense early; hybrid bulk second
+    "sustain_solo": ["sustain_tank", "defense", "hybrid_bulk", "mitigate", "cdr_def", "power_bruiser"],
     "shield_solo": ["hybrid_bulk", "shield_item", "defense", "power_bruiser", "antiheal", "mitigate"],
     "bruiser_solo": ["hybrid_bulk", "power_bruiser", "defense", "mitigate", "antiheal", "cdr_def"],
     "mage_solo": ["hybrid_bulk", "flat_pen", "defense", "mitigate", "cdr_def", "antiheal"],
@@ -2639,6 +2640,7 @@ def _item_matches_slot(
     ls_v = _canon_stat_value(it.stats, "ls")
     cdr = _canon_stat_value(it.stats, "cdr")
     hp = _canon_stat_value(it.stats, "hp")
+    hpr = _canon_stat_value(it.stats, "hpr")
     damp = _canon_stat_value(it.stats, "damp")
     plat = _canon_stat_value(it.stats, "plat")
     ten = _canon_stat_value(it.stats, "ten")
@@ -2880,7 +2882,18 @@ def _item_matches_slot(
             "heal" in blob and any(k in blob for k in ("ally", "allies", "aura"))
         )
     if slot == "sustain_tank":
-        return (ls_v >= 5 and hp >= 150) or any(k in n for k in ("sanguine", "gladiator", "ancile", "shifter"))
+        # Yogi's max-HP heal, Gladiator/Ancile LS, Cu-style HP bricks
+        return (ls_v >= 5 and hp >= 150) or any(
+            k in n
+            for k in (
+                "sanguine",
+                "gladiator",
+                "ancile",
+                "shifter",
+                "yogi",
+                "mystical",
+            )
+        ) or (hp >= 300 and hpr >= 4)
     return power_ok()
 
 
@@ -2904,8 +2917,10 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     # bancroft only injects when self_sustain (kit_ok) — keep off generic heal signatures
     "heal": ["chandra", "soul gem", "asclepius", "lifebinder"],
     "heavy_heal": ["asclepius", "lifebinder", "chandra"],
-    # LS cores + Shifter offline hybrid (Solo AA/sustain maniacs when patch-hot)
+    # LS cores + max-HP sustain (Yogi's) + offline hybrid
     "self_sustain": [
+        "yogi",
+        "mystical",
         "shifter",
         "sanguine",
         "gladiator",
@@ -2915,6 +2930,17 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
         "bloodforge",
         "devourer",
         "soul gem",
+    ],
+    # Melee tanks that stand in range: aura damage + HP regen cores
+    "sustained": [
+        "yogi",
+        "mystical",
+        "breastplate",
+        "genji",
+        "runeforged",
+        "gladiator",
+        "bloodforge",
+        "devourer",
     ],
     "execute": ["bloodforge", "titan", "soul reaver", "deathbringer", "desolat", "obsi"],
     "prot_shred": ["executioner", "titan", "magus", "desolat", "void", "obsi", "crusher"],
@@ -2927,7 +2953,6 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     "gap_close": ["jotunn", "hydra", "arondight", "heartseeker", "transcend"],
     "team_buff": ["thebes", "sovereign", "heartward", "chandra"],
     "anti_cc": ["magi", "mantle", "alchemist", "prophetic"],
-    "sustained": ["bloodforge", "devourer", "qins", "chronos", "pendant", "breastplate"],
 }
 
 
@@ -3152,11 +3177,16 @@ def _pick_slot_item(
             if any(k in n for k in ("parashu", "dreamer", "wish-granting", "eye of erebus")):
                 sc -= 20  # luxury last, not core
         if role == "Solo":
-            if slot in ("hybrid_bulk", "power_bruiser", "sustain_tank"):
+            if slot in ("hybrid_bulk", "power_bruiser", "sustain_tank", "defense"):
+                # Cu / HP-solo identity: Yogi's max-HP heal + Mystical aura
+                if any(k in n for k in ("yogi", "mystical mail", "mystical")):
+                    sc += 85
                 if any(k in n for k in ("shifter", "gladiator", "sanguine", "berserker", "ancile")):
                     sc += 45
                 if any(k in n for k in ("brawler", "runeforged", "void shield", "pestilence")):
                     sc += 30
+                if any(k in n for k in ("genji", "breastplate", "valor")):
+                    sc += 28
             if slot in ("aura", "mitigate") and any(k in n for k in ("chandra", "thebes")):
                 sc -= 25  # support auras are not solo cores
             if slot == "defense" and "spectral" in n:
@@ -3226,6 +3256,7 @@ def _inject_signature_items(
     max_actives: int,
     seen: set[str],
     actives: int,
+    prefer_items: list[str] | None = None,
 ) -> tuple[list[ScoredItem], set[str], int]:
     """
     Force 1–2 kit-signature items into the path if tags demand them and
@@ -3270,33 +3301,55 @@ def _inject_signature_items(
         rot = _god_slot_salt(dkey, "tagrot", role) % len(ordered_tags)
         ordered_tags = ordered_tags[rot:] + ordered_tags[:rot]
 
-    prefs: list[str] = []
+    forced: list[str] = []
+    # Kit override prefer_items first (e.g. Cu Chulainn: Yogi's + Mystical Mail)
+    # Never rotate these — human cores must land.
+    for p in prefer_items or []:
+        key = str(p).lower().strip()
+        # Normalize curly/smart quotes so "Yogi's" matches DB names
+        key = key.replace("’", "'").replace("‘", "'")
+        tokens: list[str] = []
+        if key:
+            tokens.append(key)
+        compact = key.replace("'s", "").replace("'", "").replace("  ", " ").strip()
+        if compact and compact not in tokens:
+            tokens.append(compact)
+        # Distinctive word tokens (yogi, mystical, genji, …)
+        for word in key.replace("'", " ").split():
+            if len(word) >= 4 and word not in ("with", "from", "shield", "guard"):
+                tokens.append(word)
+        for token in tokens:
+            if token and token not in forced:
+                forced.append(token)
+                break  # one primary token per prefer entry
+    tag_prefs: list[str] = []
     for tag in ordered_tags:
         for key in TAG_ITEM_SIGNATURES.get(tag, []):
-            if key not in prefs:
-                prefs.append(key)
+            if key not in forced and key not in tag_prefs:
+                tag_prefs.append(key)
+    # Only rotate tag-derived soft prefs (not human forced cores)
+    if tag_prefs and dkey:
+        rot = _god_slot_salt(dkey, "signature", role) % len(tag_prefs)
+        tag_prefs = tag_prefs[rot:] + tag_prefs[:rot]
+    prefs = forced + tag_prefs
     if not prefs:
         return path, seen, actives
 
-    # Second rotation on preference keys by god name
-    if prefs and dkey:
-        rot = _god_slot_salt(dkey, "signature", role) % len(prefs)
-        prefs = prefs[rot:] + prefs[:rot]
-
     path = list(path)
     injected = 0
-    max_inject = 2
+    # Allow more injects when human prefer list is long (Yogi's + Mystical + shell)
+    max_inject = max(2, min(3, len(forced) or 2))
     for key in prefs:
-        if injected >= max_inject or len(path) >= 6 and injected >= 1:
+        if injected >= max_inject:
             break
         # already have a matching item?
-        if any(key in x.name.lower() for x in path):
+        if any(key in x.name.lower().replace("’", "'") for x in path):
             continue
         cands = [
             x
             for x in pool
             if x.name not in seen
-            and key in x.name.lower()
+            and key in x.name.lower().replace("’", "'")
             and not (x.is_active_item and actives >= max_actives)
         ]
         if mage:
@@ -3463,6 +3516,7 @@ def assemble_kit_path(
         max_actives=max_actives,
         seen=seen,
         actives=actives,
+        prefer_items=list(bias.get("prefer_items") or []),
     )
     luxury_actives = sum(
         1 for x in path if x.is_active_item and (x.total_cost or 0) >= 3200
@@ -4758,6 +4812,9 @@ def _ensure_inspired_cores(
                 )
             ):
                 continue
+            # God kit cores (Yogi's / Mystical Mail on Cu, etc.)
+            if any(k in n for k in ("yogi", "mystical mail", "mystical")):
+                continue
             drop = i
             break
         if drop is None:
@@ -4928,8 +4985,11 @@ def _order_buy_path(
             return 2, cost
 
         if role == "Solo":
+            # Cu / HP-solo cores: Yogi's max-HP heal + Mystical aura early
+            if any(k in nlow for k in ("yogi", "mystical")):
+                return 0, 0 if "yogi" in nlow else 1
             if "shifter" in nlow:
-                return 0, 0
+                return 0, 2
             if any(
                 k in nlow
                 for k in (
@@ -5659,6 +5719,24 @@ def build_god_build(
     items_6 = _ensure_inspired_cores(
         items_6, t3, role, god_nm, mage=mage, physical=physical, max_actives=max_act
     )
+    # Re-assert human kit cores after SR inspire (Cu: Yogi's + Mystical Mail)
+    if bias.get("prefer_items") and role in ("Solo", "Support"):
+        seen_pref = {x.name for x in items_6}
+        act_pref = sum(1 for x in items_6 if x.is_active_item)
+        items_6, _, _ = _inject_signature_items(
+            items_6,
+            t3,
+            set(bias.get("tags") or []),
+            god_nm,
+            role,
+            mage=mage,
+            physical=physical,
+            max_actives=max_act,
+            seen=seen_pref,
+            actives=act_pref,
+            prefer_items=list(bias.get("prefer_items") or []),
+        )
+        items_6 = items_6[:6]
     # Inspire can reintroduce shells — strip again
     if role == "Jungle":
         items_6 = _normalize_jungle_path(

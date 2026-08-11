@@ -420,10 +420,15 @@ def prefer_ban_adjust(item_name: str, bias: dict[str, Any]) -> float:
     """Score delta from override prefer/ban lists."""
     n = (item_name or "").lower()
     delta = 0.0
-    for p in bias.get("prefer_items") or []:
-        if p in n:
-            delta += 55.0
+    prefs = list(bias.get("prefer_items") or [])
+    for i, p in enumerate(prefs):
+        pl = str(p).lower()
+        if pl in n:
+            # Earlier prefer list entries are stronger (god cores like Yogi's / Mystical)
+            delta += 140.0 - min(i, 5) * 12.0
+            break
     for b in bias.get("ban_items") or []:
-        if b in n:
-            delta -= 120.0
+        if str(b).lower() in n:
+            delta -= 200.0
+            break
     return delta
