@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-11T18:11:43.246383+00:00",
+  "generated_at": "2026-08-11T20:26:59.175182+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -2533,82 +2533,82 @@
   },
   "role_staples": {
     "Carry": {
-      "path_count": 20,
+      "path_count": 23,
       "staples": [
         {
+          "name": "Tyrfing",
+          "paths": 18,
+          "pct": 78.3
+        },
+        {
           "name": "Titan's Bane",
-          "paths": 16,
-          "pct": 80.0
+          "paths": 18,
+          "pct": 78.3
         },
         {
           "name": "Deathbringer",
-          "paths": 16,
-          "pct": 80.0
-        },
-        {
-          "name": "Tyrfing",
-          "paths": 16,
-          "pct": 80.0
+          "paths": 17,
+          "pct": 73.9
         },
         {
           "name": "Odysseus' Bow",
-          "paths": 12,
-          "pct": 60.0
+          "paths": 14,
+          "pct": 60.9
         },
         {
           "name": "The Executioner",
-          "paths": 8,
-          "pct": 40.0
+          "paths": 9,
+          "pct": 39.1
         },
         {
           "name": "Transcendence",
-          "paths": 7,
-          "pct": 35.0
+          "paths": 8,
+          "pct": 34.8
         },
         {
           "name": "Qin's Blade",
           "paths": 7,
-          "pct": 35.0
+          "pct": 30.4
         },
         {
           "name": "Riptalon",
+          "paths": 6,
+          "pct": 26.1
+        },
+        {
+          "name": "The Cosmic Horror",
           "paths": 5,
-          "pct": 25.0
+          "pct": 21.7
+        },
+        {
+          "name": "Obsidian Shard",
+          "paths": 5,
+          "pct": 21.7
+        },
+        {
+          "name": "Soul Reaver",
+          "paths": 5,
+          "pct": 21.7
+        },
+        {
+          "name": "Spear of Desolation",
+          "paths": 5,
+          "pct": 21.7
+        },
+        {
+          "name": "Book of Thoth",
+          "paths": 5,
+          "pct": 21.7
         },
         {
           "name": "Eye of the Storm",
           "paths": 5,
-          "pct": 25.0
+          "pct": 21.7
         },
         {
-          "name": "Spear of Desolation",
-          "paths": 4,
-          "pct": 20.0
-        },
-        {
-          "name": "Soul Reaver",
-          "paths": 4,
-          "pct": 20.0
-        },
-        {
-          "name": "Sands Of Time",
-          "paths": 4,
-          "pct": 20.0
-        },
-        {
-          "name": "Obsidian Shard",
-          "paths": 4,
-          "pct": 20.0
-        },
-        {
-          "name": "Totem of Death",
-          "paths": 4,
-          "pct": 20.0
-        },
-        {
-          "name": "Book of Thoth",
-          "paths": 4,
-          "pct": 20.0
+          "name": "Devourer's Gauntlet",
+          "paths": 5,
+          "pct": 21.7
         }
       ]
     },
@@ -2616,17 +2616,17 @@
       "path_count": 25,
       "staples": [
         {
+          "name": "The Cosmic Horror",
+          "paths": 24,
+          "pct": 96.0
+        },
+        {
           "name": "Spear of Desolation",
           "paths": 24,
           "pct": 96.0
         },
         {
           "name": "Book of Thoth",
-          "paths": 24,
-          "pct": 96.0
-        },
-        {
-          "name": "The Cosmic Horror",
           "paths": 24,
           "pct": 96.0
         },
@@ -2666,12 +2666,12 @@
           "pct": 8.0
         },
         {
-          "name": "Dreamer's Idol",
+          "name": "Jade Scepter",
           "paths": 2,
           "pct": 8.0
         },
         {
-          "name": "Jade Scepter",
+          "name": "Dreamer's Idol",
           "paths": 2,
           "pct": 8.0
         },
@@ -2701,12 +2701,12 @@
           "pct": 95.5
         },
         {
-          "name": "Titan's Bane",
+          "name": "Hydra's Lament",
           "paths": 21,
           "pct": 95.5
         },
         {
-          "name": "Hydra's Lament",
+          "name": "Titan's Bane",
           "paths": 21,
           "pct": 95.5
         },
@@ -2751,22 +2751,22 @@
           "pct": 9.1
         },
         {
-          "name": "Ashwhorl Acorn",
-          "paths": 1,
-          "pct": 4.5
-        },
-        {
           "name": "Thistlethorn Acorn",
           "paths": 1,
           "pct": 4.5
         },
         {
-          "name": "Spear of Desolation",
+          "name": "Ashwhorl Acorn",
           "paths": 1,
           "pct": 4.5
         },
         {
-          "name": "Book of Thoth",
+          "name": "The Cosmic Horror",
+          "paths": 1,
+          "pct": 4.5
+        },
+        {
+          "name": "Obsidian Shard",
           "paths": 1,
           "pct": 4.5
         }
@@ -2816,12 +2816,12 @@
           "pct": 23.8
         },
         {
-          "name": "Prophetic Cloak",
+          "name": "Freya's Tears",
           "paths": 4,
           "pct": 19.0
         },
         {
-          "name": "Freya's Tears",
+          "name": "Prophetic Cloak",
           "paths": 4,
           "pct": 19.0
         },
@@ -2926,7 +2926,7 @@
           "pct": 9.1
         },
         {
-          "name": "Prophetic Cloak",
+          "name": "Freya's Tears",
           "paths": 2,
           "pct": 9.1
         }
@@ -2943,7 +2943,7 @@
         "heal": {
           "label": "vs heals / sustain",
           "covered": 0,
-          "total": 20,
+          "total": 23,
           "pct": 0.0,
           "missing_sample": [
             "Cupid",
@@ -2962,8 +2962,8 @@
         },
         "tanks_hp": {
           "label": "vs high HP / tanks",
-          "covered": 20,
-          "total": 20,
+          "covered": 23,
+          "total": 23,
           "pct": 100.0,
           "missing_sample": []
         }

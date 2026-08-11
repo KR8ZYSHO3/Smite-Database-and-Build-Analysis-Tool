@@ -1,6 +1,6 @@
 # SMITE 2 Conquest Builds — Statistically Weighted
 
-Multi-phase Conquest algorithm (docs/BUILD_ALGORITHM.md): hard gates → role job → buy-order spikes → kit archetype slots → ladder/patch → soft high-SR inspiration → light flex diversify. God kit (effects/tags/scaling) + items:overall ladder + optional data/tracker_inspiration.json (nudge only). Hard bans: damage type, god-only items, healer cores, removed shop. Shop actives ≤2 (hard max 3). Damage roles ≥20 matching pen. Order is first-class: Mid Book/Deso before Obsidian; Carry Tyrfing/DG before Titan's; Jungle Jotunn before late pen; Support Thebes/Shifter before Spectral. Recommended god order = role tier list rank (same as Tiers → role:X).
+Multi-phase Conquest algorithm (docs/BUILD_ALGORITHM.md): hard gates → role job → buy-order spikes → kit archetype slots → ladder/patch → soft high-SR inspiration → light flex diversify. God kit (effects/tags/scaling) + items:overall ladder + optional data/tracker_inspiration.json (nudge only). Hard bans: damage type, god-only items, healer cores, removed shop. Shop actives ≤2 (hard max 3). Damage roles ≥20 matching pen. Order is first-class: Mid Book/Deso before Obsidian; Carry Tyrfing/DG before Titan's; Jungle Jotunn before late pen; Support Thebes/Shifter before Spectral. Recommended god order = role tier list rank (same as Tiers → role:X). Carry: native Carry only on base kit; off-role flex only via aspects that convert basics to ranged (e.g. Geb Calamity, Kali Unbound).
 
 > Not scraped from websites. Derived from wiki item stats, ability scaling, and patch-note item/god momentum in `smite2.db`.
 
@@ -353,6 +353,54 @@ Chronos · Carry · archetype «ability_mage_adc» (INT / magical). Kit effects:
   5. The Cosmic Horror (pen, pen 10.0, 2650g)
   6. Soul Reaver (power, 2950g)
 - **Relics:** Purification Beads (33.0), Aegis of Acceleration (28.0)
+
+#### Geb — ?-tier (role rank #9000, model None)
+
+*Magical · Intelligence scaling (STR 0% / INT 36.3%)*
+
+Geb · Carry · archetype «aa_mage» (INT / magical). ASPECT «Aspect of Calamity». Geb's attacks are ranged, travel slowly, and pierce with damage falloff. Shockwave deals circular damage, Crits, triggers on-hits, and grant Kit effects: basic-attack kit, attack-speed steroid, self heal / drain, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, as_steroid, burst, dot, gap_close, hard_cc, heal. Style burst 40%/dps 75%; patch volatile (net -1.2, r5 +0.0). Patch axes (r5): damage -0.6, survivability -0.5, crit -0.2. Scale STR 0% / INT 36%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); Spear Of The Magus (multi-hit / shred — stacks Magus passive). Pen: Book of Thoth, Spear of Desolation, Spear Of The Magus, Obsidian Shard, The Cosmic Horror. Actives 0/2 · pen ≈ 50. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
+
+- **Starter:** Gilded Arrow
+- **Buy order** (actives 0/2, pen ≈ 50.0):
+  1. Book of Thoth (power, 2300g)
+  2. Spear of Desolation (pen, pen 10.0, 2650g)
+  3. Spear Of The Magus (pen, pen 10.0, 2700g)
+  4. Obsidian Shard (pen, pen 20.0, 3050g)
+  5. The Cosmic Horror (pen, pen 10.0, 2650g)
+  6. Soul Reaver (power, 2950g)
+- **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
+
+#### Kali — ?-tier (role rank #9000, model None)
+
+*Physical · Strength scaling (STR 54.5% / INT 17.1%)*
+
+Kali · Carry · archetype «crit_adc» (STR / physical). ASPECT «Aspect of Unbound Destruction». Kali's Basics are ranged. Rupture procs at 5 stacks to deal damage & heal her. Incense doesn't stun or proc Rupture but knocks back & applie Kit effects: protection shred, basic-attack kit, attack-speed steroid, self heal / drain, heavy healing, execute / threshold. Tags: aa, anti_cc, as_steroid, burst, execute, gap_close, hard_cc, heal. Style burst 40%/dps 85%; patch falling (net -4.3, r5 -2.8). Patch axes (r5): damage -2.8, general +0.0. Scale STR 54% / INT 17%. Path: Transcendence (mana stack → power scaling); Odysseus' Bow (Carry path fit for kit profile); Tyrfing (Carry path fit for kit profile). Pen: Transcendence, Riptalon, Titan's Bane. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+
+- **Starter:** Gilded Arrow
+- **Buy order** (actives 0/2, pen ≈ 30.0):
+  1. Transcendence (power, 2400g)
+  2. Odysseus' Bow (power, 2450g)
+  3. Tyrfing (power, 2400g)
+  4. Riptalon (pen, pen 10.0, 2700g)
+  5. Titan's Bane (pen, pen 20.0, 3100g)
+  6. Deathbringer (power, 2900g)
+- **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
+
+#### Tsukuyomi — ?-tier (role rank #9000, model None)
+
+*Physical · Strength scaling (STR 157.1% / INT 112.5%)*
+
+Tsukuyomi · Carry · archetype «crit_adc» (STR / physical). ASPECT «Aspect of Mangetsu». When gaining Shingetsu Ranged Attack, they become Mangetsu Ranged Attacks instead. Dark Moon Shuriken no longer sticks to gods. Piercing Moo Kit effects: big ult spike, basic-attack kit, attack-speed steroid, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, as_steroid, burst, gap_close, hard_cc, heal, long_cd. Style burst 40%/dps 75%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): general +0.2, damage -0.2, utility +0.0. Scale STR 157% / INT 112%. Path: Devourer's Gauntlet (lifesteal stacking); Tyrfing (Carry path fit for kit profile); Demon Blade (attack speed / crit carry core). Pen: Titan's Bane. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+
+- **Starter:** Gilded Arrow
+- **Buy order** (actives 0/2, pen ≈ 20.0):
+  1. Devourer's Gauntlet (power, 2500g)
+  2. Tyrfing (power, 2400g)
+  3. Demon Blade (power, 2750g)
+  4. Odysseus' Bow (power, 2450g)
+  5. The Executioner (power, 2550g)
+  6. Titan's Bane (pen, pen 20.0, 3100g)
+- **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 ---
 

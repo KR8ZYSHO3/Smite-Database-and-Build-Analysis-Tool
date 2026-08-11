@@ -149,7 +149,7 @@
     },
     "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and pen floors always win."
   },
-  "method": "Multi-phase Conquest algorithm (docs/BUILD_ALGORITHM.md): hard gates \u2192 role job \u2192 buy-order spikes \u2192 kit archetype slots \u2192 ladder/patch \u2192 soft high-SR inspiration \u2192 light flex diversify. God kit (effects/tags/scaling) + items:overall ladder + optional data/tracker_inspiration.json (nudge only). Hard bans: damage type, god-only items, healer cores, removed shop. Shop actives \u22642 (hard max 3). Damage roles \u226520 matching pen. Order is first-class: Mid Book/Deso before Obsidian; Carry Tyrfing/DG before Titan's; Jungle Jotunn before late pen; Support Thebes/Shifter before Spectral. Recommended god order = role tier list rank (same as Tiers \u2192 role:X).",
+  "method": "Multi-phase Conquest algorithm (docs/BUILD_ALGORITHM.md): hard gates \u2192 role job \u2192 buy-order spikes \u2192 kit archetype slots \u2192 ladder/patch \u2192 soft high-SR inspiration \u2192 light flex diversify. God kit (effects/tags/scaling) + items:overall ladder + optional data/tracker_inspiration.json (nudge only). Hard bans: damage type, god-only items, healer cores, removed shop. Shop actives \u22642 (hard max 3). Damage roles \u226520 matching pen. Order is first-class: Mid Book/Deso before Obsidian; Carry Tyrfing/DG before Titan's; Jungle Jotunn before late pen; Support Thebes/Shifter before Spectral. Recommended god order = role tier list rank (same as Tiers \u2192 role:X). Carry: native Carry only on base kit; off-role flex only via aspects that convert basics to ranged (e.g. Geb Calamity, Kali Unbound).",
   "max_active_items": 2,
   "hard_max_active_items": 3,
   "default_max_shop_actives": 2,
@@ -14685,6 +14685,2136 @@
               "path_items": [
                 "Soul Reaver",
                 "Obsidian Shard"
+              ],
+              "suggest": [
+                "Soul Reaver",
+                "Ethereal Staff"
+              ]
+            },
+            {
+              "id": "cc_dive",
+              "label": "vs CC / dive",
+              "short": "CC",
+              "why": "Absorb or survive hard CC and all-ins.",
+              "in_path": false,
+              "path_items": [],
+              "suggest": [
+                "Magi's Cloak",
+                "Spirit Robe"
+              ]
+            },
+            {
+              "id": "physical",
+              "label": "vs physical damage",
+              "short": "phys",
+              "why": "Physical bulk into ADCs, hunters, physical junglers.",
+              "in_path": false,
+              "path_items": [],
+              "suggest": [
+                "Breastplate of Valor",
+                "Berserker's Shield"
+              ]
+            }
+          ],
+          "answer_flags": {
+            "heal": false,
+            "tanks_hp": true,
+            "cc_dive": false,
+            "physical": false
+          }
+        },
+        {
+          "god": "Geb",
+          "role": "Carry",
+          "tier": null,
+          "rank": 9000,
+          "model_score": null,
+          "damage_type": "Magical",
+          "pantheon": "Egyptian",
+          "scaling": "Intelligence",
+          "archetype": "aa_mage",
+          "kit_tags": [
+            "aa",
+            "anti_cc",
+            "as_steroid",
+            "burst",
+            "dot",
+            "gap_close",
+            "hard_cc",
+            "heal",
+            "high_cc",
+            "long_cd",
+            "self_sustain",
+            "shield",
+            "sustained"
+          ],
+          "kit_effects": [
+            "basic-attack kit",
+            "attack-speed steroid",
+            "self heal / drain",
+            "hard crowd control",
+            "dash / leap engage",
+            "CC immunity in kit",
+            "lots of CC",
+            "burst combos"
+          ],
+          "kit_effect_scores": {
+            "dot": 0.75,
+            "burst": 0.85,
+            "aa": 1.0,
+            "as_steroid": 1.0,
+            "self_sustain": 1.0,
+            "heal": 0.7,
+            "shield": 0.8,
+            "hard_cc": 1.0,
+            "high_cc": 0.9,
+            "gap_close": 1.0,
+            "anti_cc": 1.0,
+            "sustained": 0.85,
+            "long_cd": 0.7,
+            "multi_hit": 0.6
+          },
+          "is_aspect": true,
+          "aspect_name": "Aspect of Calamity",
+          "aspect_description": "Geb's attacks are ranged, travel slowly, and pierce with damage falloff. Shockwave deals circular damage, Crits, triggers on-hits, and grants Attack Speed on god hit. Stone Shield is self-only and buffs attack damage. Cataclysm causes Knockback rather than a Stun. -7.5% Base Health, -5% Base Protections.",
+          "aspect_id": 416,
+          "patch_trajectory": "volatile",
+          "avg_str_scaling": 0,
+          "avg_int_scaling": 36.3,
+          "starter": {
+            "name": "Gilded Arrow",
+            "score": 37.4,
+            "cost": 650,
+            "type": "Starter",
+            "slot": "power",
+            "momentum": -0.93,
+            "ladder_tier": null,
+            "ladder_rank": null,
+            "ladder_score": null,
+            "stats": {
+              "as": 10.0,
+              "bap": 20.0
+            },
+            "pen": 0,
+            "damp": 0,
+            "plat": 0,
+            "ten": 0,
+            "effect": "Every 10s: Mark the highest Health enemy minion or jungle monster within 12.8m.\n*If you land the killing blow:\n**+3 Bonus Gold\n**+15% Attack Speed for 8s\n**+30 Mana\nRequires Level ",
+            "is_active": false,
+            "why": "Carry starter \u2014 early AS / sustain"
+          },
+          "items": [
+            {
+              "name": "Book of Thoth",
+              "score": 25.6,
+              "cost": 2300,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.6,
+              "ladder_tier": "C",
+              "ladder_rank": 104,
+              "ladder_score": 28.7,
+              "stats": {
+                "int": 30.0,
+                "mp": 350.0,
+                "mpr": 4.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "+Intelligence equal to 5% of Mana from Items.\nDeal 900 Damage to Minions or Jungle Monsters:\n+1 Evolve Stack\n+1 Mana Infusion Stack (Max 50 Stacks)\n*Damage dealt to Gods counts dou",
+              "is_active": false,
+              "why": "mana stack \u2192 power scaling"
+            },
+            {
+              "name": "Spear of Desolation",
+              "score": 334.6,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.19,
+              "ladder_tier": "A",
+              "ladder_rank": 24,
+              "ladder_score": 52.6,
+              "stats": {
+                "pen": 10.0,
+                "int": 75.0,
+                "cdr": 10.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
+              "is_active": false,
+              "why": "flat pen + CDR for ability burst"
+            },
+            {
+              "name": "Spear Of The Magus",
+              "score": 344.9,
+              "cost": 2700,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 0.11,
+              "ladder_tier": "A",
+              "ladder_rank": 17,
+              "ladder_score": 62.7,
+              "stats": {
+                "pen": 10.0,
+                "int": 95.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit a God: That God is marked for 8s. Marked Gods take 5% increased damage from all sources.",
+              "is_active": false,
+              "why": "multi-hit / shred \u2014 stacks Magus passive"
+            },
+            {
+              "name": "Obsidian Shard",
+              "score": 310.5,
+              "cost": 3050,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -1.17,
+              "ladder_tier": "A",
+              "ladder_rank": 37,
+              "ladder_score": 38.5,
+              "stats": {
+                "pen": 20.0,
+                "int": 70.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Gain the Shattering effect:\nFirst Ability Cast: Gains +20% Penetration\n*This effect ignores the Penetration cap\n*Shattering does not Stack with itself.\nCooldown: 10s",
+              "is_active": false,
+              "why": "% pen for magical tanks / late fights"
+            },
+            {
+              "name": "The Cosmic Horror",
+              "score": 671.2,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 8.17,
+              "ladder_tier": "S",
+              "ladder_rank": 1,
+              "ladder_score": 83.7,
+              "stats": {
+                "pen": 10.0,
+                "int": 55.0,
+                "echo": 20.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Each time you Echo: +1 Stack.\nAt 3 Stacks: Next time you Echo:\n*Spawn a tentacle that deals deals Bonus Magical Damage (45% Intelligence over 1.5s)\n*Stacks are removed when a tenta",
+              "is_active": false,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "Soul Reaver",
+              "score": 243.8,
+              "cost": 2950,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.19,
+              "ladder_tier": "C",
+              "ladder_rank": 97,
+              "ladder_score": 30.4,
+              "stats": {
+                "int": 85.0,
+                "mp": 250.0,
+                "mpr": 5.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit: +Bonus Magical Damage.\nBonus Damage = +1.2% Target Base Health & +3% Target Item Health, dealt 4 times over 2s.\nTriggers once per Ability, per god.",
+              "is_active": false,
+              "why": "big ability hits / execute spikes; inspired: high-SR Geb Carry (1/3)",
+              "inspired": true
+            }
+          ],
+          "full_path": [
+            {
+              "name": "Book of Thoth",
+              "score": 25.6,
+              "cost": 2300,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.6,
+              "ladder_tier": "C",
+              "ladder_rank": 104,
+              "ladder_score": 28.7,
+              "stats": {
+                "int": 30.0,
+                "mp": 350.0,
+                "mpr": 4.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "+Intelligence equal to 5% of Mana from Items.\nDeal 900 Damage to Minions or Jungle Monsters:\n+1 Evolve Stack\n+1 Mana Infusion Stack (Max 50 Stacks)\n*Damage dealt to Gods counts dou",
+              "is_active": false,
+              "why": "mana stack \u2192 power scaling"
+            },
+            {
+              "name": "Spear of Desolation",
+              "score": 334.6,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.19,
+              "ladder_tier": "A",
+              "ladder_rank": 24,
+              "ladder_score": 52.6,
+              "stats": {
+                "pen": 10.0,
+                "int": 75.0,
+                "cdr": 10.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
+              "is_active": false,
+              "why": "flat pen + CDR for ability burst"
+            },
+            {
+              "name": "Spear Of The Magus",
+              "score": 344.9,
+              "cost": 2700,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 0.11,
+              "ladder_tier": "A",
+              "ladder_rank": 17,
+              "ladder_score": 62.7,
+              "stats": {
+                "pen": 10.0,
+                "int": 95.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit a God: That God is marked for 8s. Marked Gods take 5% increased damage from all sources.",
+              "is_active": false,
+              "why": "multi-hit / shred \u2014 stacks Magus passive"
+            },
+            {
+              "name": "Obsidian Shard",
+              "score": 310.5,
+              "cost": 3050,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -1.17,
+              "ladder_tier": "A",
+              "ladder_rank": 37,
+              "ladder_score": 38.5,
+              "stats": {
+                "pen": 20.0,
+                "int": 70.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Gain the Shattering effect:\nFirst Ability Cast: Gains +20% Penetration\n*This effect ignores the Penetration cap\n*Shattering does not Stack with itself.\nCooldown: 10s",
+              "is_active": false,
+              "why": "% pen for magical tanks / late fights"
+            },
+            {
+              "name": "The Cosmic Horror",
+              "score": 671.2,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 8.17,
+              "ladder_tier": "S",
+              "ladder_rank": 1,
+              "ladder_score": 83.7,
+              "stats": {
+                "pen": 10.0,
+                "int": 55.0,
+                "echo": 20.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Each time you Echo: +1 Stack.\nAt 3 Stacks: Next time you Echo:\n*Spawn a tentacle that deals deals Bonus Magical Damage (45% Intelligence over 1.5s)\n*Stacks are removed when a tenta",
+              "is_active": false,
+              "why": "penetration required for damage role"
+            },
+            {
+              "name": "Soul Reaver",
+              "score": 243.8,
+              "cost": 2950,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.19,
+              "ladder_tier": "C",
+              "ladder_rank": 97,
+              "ladder_score": 30.4,
+              "stats": {
+                "int": 85.0,
+                "mp": 250.0,
+                "mpr": 5.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit: +Bonus Magical Damage.\nBonus Damage = +1.2% Target Base Health & +3% Target Item Health, dealt 4 times over 2s.\nTriggers once per Ability, per god.",
+              "is_active": false,
+              "why": "big ability hits / execute spikes; inspired: high-SR Geb Carry (1/3)",
+              "inspired": true
+            }
+          ],
+          "inventory_slots": 7,
+          "cores": [
+            {
+              "name": "Book of Thoth",
+              "score": 25.6,
+              "cost": 2300,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.6,
+              "ladder_tier": "C",
+              "ladder_rank": 104,
+              "ladder_score": 28.7,
+              "stats": {
+                "int": 30.0,
+                "mp": 350.0,
+                "mpr": 4.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "+Intelligence equal to 5% of Mana from Items.\nDeal 900 Damage to Minions or Jungle Monsters:\n+1 Evolve Stack\n+1 Mana Infusion Stack (Max 50 Stacks)\n*Damage dealt to Gods counts dou",
+              "is_active": false,
+              "why": "mana stack \u2192 power scaling"
+            },
+            {
+              "name": "Spear of Desolation",
+              "score": 334.6,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.19,
+              "ladder_tier": "A",
+              "ladder_rank": 24,
+              "ladder_score": 52.6,
+              "stats": {
+                "pen": 10.0,
+                "int": 75.0,
+                "cdr": 10.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
+              "is_active": false,
+              "why": "flat pen + CDR for ability burst"
+            },
+            {
+              "name": "Spear Of The Magus",
+              "score": 344.9,
+              "cost": 2700,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 0.11,
+              "ladder_tier": "A",
+              "ladder_rank": 17,
+              "ladder_score": 62.7,
+              "stats": {
+                "pen": 10.0,
+                "int": 95.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Ability Hit a God: That God is marked for 8s. Marked Gods take 5% increased damage from all sources.",
+              "is_active": false,
+              "why": "multi-hit / shred \u2014 stacks Magus passive"
+            },
+            {
+              "name": "Obsidian Shard",
+              "score": 310.5,
+              "cost": 3050,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -1.17,
+              "ladder_tier": "A",
+              "ladder_rank": 37,
+              "ladder_score": 38.5,
+              "stats": {
+                "pen": 20.0,
+                "int": 70.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Gain the Shattering effect:\nFirst Ability Cast: Gains +20% Penetration\n*This effect ignores the Penetration cap\n*Shattering does not Stack with itself.\nCooldown: 10s",
+              "is_active": false,
+              "why": "% pen for magical tanks / late fights"
+            }
+          ],
+          "defense": [],
+          "relics": [
+            {
+              "name": "Purification Beads",
+              "score": 41.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": null,
+              "ladder_rank": null,
+              "ladder_score": null,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Immune to Crowd Control for 2s.\nCooldown: 150s",
+              "is_active": false
+            },
+            {
+              "name": "Aegis of Acceleration",
+              "score": 28.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": null,
+              "ladder_rank": null,
+              "ladder_score": null,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Become Immune (to damage and healing for 1.5s.\n*Can only Move\n*On god Damage prevented: +7% Movement Speed for 6s (Max 3x)\nCooldown: 140s",
+              "is_active": false
+            }
+          ],
+          "max_shop_actives": 2,
+          "hard_max_actives": 3,
+          "active_count": 0,
+          "pen_total": 50.0,
+          "min_build_pen": 20.0,
+          "algorithm": {
+            "version": "1.0.0",
+            "doc": "docs/BUILD_ALGORITHM.md",
+            "phases": [
+              {
+                "id": "P0_context",
+                "name": "Context",
+                "summary": "Kit bias, tags, effects, damage type, aspect, role profile"
+              },
+              {
+                "id": "P1_score_universe",
+                "name": "Score universe",
+                "summary": "Role base \u00d7 ladder \u00d7 patch for every T3 shop item"
+              },
+              {
+                "id": "P2_hard_gates",
+                "name": "Hard gates",
+                "summary": "Illegal items out: type, god-only, heal/LS, removed, role toys"
+              },
+              {
+                "id": "P3_god_rescore",
+                "name": "God rescore",
+                "summary": "Kit affinity + signatures + soft high-SR boost (capped)"
+              },
+              {
+                "id": "P4_archetype",
+                "name": "Archetype",
+                "summary": "Map kit \u00d7 role \u2192 slot recipe (burst_mage, crit_adc, \u2026)"
+              },
+              {
+                "id": "P5_assemble",
+                "name": "Assemble slots",
+                "summary": "Fill 6 slots; ranked cores = #1; flex = mild near-peer diversify"
+              },
+              {
+                "id": "P6_repair",
+                "name": "Structural repair",
+                "summary": "Pen floor, jungle openers, inject high-SR staples, actives, trim shells"
+              },
+              {
+                "id": "P7_buy_order",
+                "name": "Buy order",
+                "summary": "high-SR avg_slot \u2295 role spike phases (order = half the build)"
+              },
+              {
+                "id": "P8_explain",
+                "name": "Explain + gate",
+                "summary": "Why lines, inspired flags, quality checks"
+              }
+            ],
+            "priority": [
+              {
+                "rank": "1",
+                "layer": "hard_gates",
+                "rule": "Illegal items never appear"
+              },
+              {
+                "rank": "2",
+                "layer": "role_job",
+                "rule": "Carry/Mid/Jungle/Solo/Support identity"
+              },
+              {
+                "rank": "3",
+                "layer": "buy_order",
+                "rule": "Spike timing before late % pen / luxury"
+              },
+              {
+                "rank": "4",
+                "layer": "kit",
+                "rule": "Tags, effects, scaling, archetype recipe"
+              },
+              {
+                "rank": "5",
+                "layer": "ladder_patch",
+                "rule": "S/A momentum; tank S muted on backline"
+              },
+              {
+                "rank": "6",
+                "layer": "high_sr_inspire",
+                "rule": "Soft frequency + avg_slot from tracker.gg"
+              },
+              {
+                "rank": "7",
+                "layer": "diversify",
+                "rule": "Shell/flex only \u2014 never scramble openers/pen"
+              }
+            ],
+            "role_spike_openers": {
+              "Mid": [
+                "Book of Thoth",
+                "Spear of Desolation",
+                "Chronos' Pendant",
+                "Doom Orb"
+              ],
+              "Carry": [
+                "Tyrfing",
+                "Devourer's Gauntlet",
+                "Transcendence",
+                "Lernaean Bow",
+                "The Executioner"
+              ],
+              "Jungle": [
+                "Jotunn's Revenge",
+                "Hydra's Lament",
+                "Transcendence",
+                "Heartseeker",
+                "Devourer's Gauntlet"
+              ],
+              "Solo": [
+                "Shifter's Shield",
+                "Genji's Guard",
+                "Breastplate of Valor",
+                "Runeforged Hammer"
+              ],
+              "Support": [
+                "Gauntlet of Thebes",
+                "Shifter's Shield",
+                "Stampede",
+                "Prophetic Cloak"
+              ]
+            },
+            "role_late_items": {
+              "Mid": [
+                "Obsidian Shard",
+                "Rod of Tahuti",
+                "Soul Reaver",
+                "Soul Gem"
+              ],
+              "Carry": [
+                "Titan's Bane",
+                "Deathbringer",
+                "Demon Blade"
+              ],
+              "Jungle": [
+                "Titan's Bane",
+                "Avatar's Parashu"
+              ],
+              "Solo": [
+                "Draconic Scale",
+                "Hussar's Wings"
+              ],
+              "Support": [
+                "Spectral Armor",
+                "Mantle Of Discord"
+              ]
+            },
+            "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and pen floors always win."
+          },
+          "why": "Geb \u00b7 Carry \u00b7 archetype \u00abaa_mage\u00bb (INT / magical). ASPECT \u00abAspect of Calamity\u00bb. Geb's attacks are ranged, travel slowly, and pierce with damage falloff. Shockwave deals circular damage, Crits, triggers on-hits, and grant Kit effects: basic-attack kit, attack-speed steroid, self heal / drain, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, as_steroid, burst, dot, gap_close, hard_cc, heal. Style burst 40%/dps 75%; patch volatile (net -1.2, r5 +0.0). Patch axes (r5): damage -0.6, survivability -0.5, crit -0.2. Scale STR 0% / INT 36%. Path: Book of Thoth (mana stack \u2192 power scaling); Spear of Desolation (flat pen + CDR for ability burst); Spear Of The Magus (multi-hit / shred \u2014 stacks Magus passive). Pen: Book of Thoth, Spear of Desolation, Spear Of The Magus, Obsidian Shard, The Cosmic Horror. Actives 0/2 \u00b7 pen \u2248 50. Soft high-SR inspiration on 1 item(s) (tracker.gg \u2014 not a meta copy).",
+          "flex_role": true,
+          "native_role": false,
+          "role_tier_scope": "role:Carry",
+          "carry_unlock": "aspect_ranged_basics",
+          "flex_chips": [
+            {
+              "id": "heal",
+              "label": "vs heals / sustain",
+              "short": "heal",
+              "why": "25% healing reduction \u2014 stops Yogi's, Aphro, Cu sustain, lifesteal.",
+              "in_path": false,
+              "path_items": [],
+              "suggest": [
+                "Divine Ruin",
+                "Brawler's Beat Stick"
+              ]
+            },
+            {
+              "id": "tanks_hp",
+              "label": "vs high HP / tanks",
+              "short": "tanks",
+              "why": "%HP, pen, and prot shred so fat targets take real damage.",
+              "in_path": true,
+              "path_items": [
+                "Soul Reaver",
+                "Obsidian Shard"
+              ],
+              "suggest": [
+                "Soul Reaver",
+                "Ethereal Staff"
+              ]
+            },
+            {
+              "id": "cc_dive",
+              "label": "vs CC / dive",
+              "short": "CC",
+              "why": "Absorb or survive hard CC and all-ins.",
+              "in_path": false,
+              "path_items": [],
+              "suggest": [
+                "Magi's Cloak",
+                "Spirit Robe"
+              ]
+            },
+            {
+              "id": "physical",
+              "label": "vs physical damage",
+              "short": "phys",
+              "why": "Physical bulk into ADCs, hunters, physical junglers.",
+              "in_path": false,
+              "path_items": [],
+              "suggest": [
+                "Breastplate of Valor",
+                "Berserker's Shield"
+              ]
+            }
+          ],
+          "answer_flags": {
+            "heal": false,
+            "tanks_hp": true,
+            "cc_dive": false,
+            "physical": false
+          }
+        },
+        {
+          "god": "Kali",
+          "role": "Carry",
+          "tier": null,
+          "rank": 9000,
+          "model_score": null,
+          "damage_type": "Physical",
+          "pantheon": "Hindu",
+          "scaling": "Strength",
+          "archetype": "crit_adc",
+          "kit_tags": [
+            "aa",
+            "anti_cc",
+            "as_steroid",
+            "burst",
+            "execute",
+            "gap_close",
+            "hard_cc",
+            "heal",
+            "heavy_heal",
+            "long_cd",
+            "prot_shred",
+            "self_sustain",
+            "sustained"
+          ],
+          "kit_effects": [
+            "protection shred",
+            "basic-attack kit",
+            "attack-speed steroid",
+            "self heal / drain",
+            "heavy healing",
+            "execute / threshold",
+            "hard crowd control",
+            "dash / leap engage"
+          ],
+          "kit_effect_scores": {
+            "prot_shred": 1.0,
+            "burst": 0.85,
+            "aa": 1.0,
+            "as_steroid": 1.0,
+            "self_sustain": 1.0,
+            "heal": 0.7,
+            "heavy_heal": 1.0,
+            "execute": 1.0,
+            "hard_cc": 1.0,
+            "gap_close": 1.0,
+            "anti_cc": 1.0,
+            "sustained": 0.85,
+            "long_cd": 0.7
+          },
+          "is_aspect": true,
+          "aspect_name": "Aspect of Unbound Destruction",
+          "aspect_description": "Kali's Basics are ranged. Rupture procs at 5 stacks to deal damage & heal her. Incense doesn't stun or proc Rupture but knocks back & applies Rupture. Destruction doesn't damage, prevent death, or give immunities but gives stats, has a lower cooldown, resets cooldown on Mark kills, makes her Basics apply 2 Rupture stacks & pierce.",
+          "aspect_id": 387,
+          "patch_trajectory": "falling",
+          "avg_str_scaling": 54.5,
+          "avg_int_scaling": 17.1,
+          "starter": {
+            "name": "Gilded Arrow",
+            "score": 37.4,
+            "cost": 650,
+            "type": "Starter",
+            "slot": "power",
+            "momentum": -0.93,
+            "ladder_tier": null,
+            "ladder_rank": null,
+            "ladder_score": null,
+            "stats": {
+              "as": 10.0,
+              "bap": 20.0
+            },
+            "pen": 0,
+            "damp": 0,
+            "plat": 0,
+            "ten": 0,
+            "effect": "Every 10s: Mark the highest Health enemy minion or jungle monster within 12.8m.\n*If you land the killing blow:\n**+3 Bonus Gold\n**+15% Attack Speed for 8s\n**+30 Mana\nRequires Level ",
+            "is_active": false,
+            "why": "Carry starter \u2014 early AS / sustain"
+          },
+          "items": [
+            {
+              "name": "Transcendence",
+              "score": 168.9,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.49,
+              "ladder_tier": "A",
+              "ladder_rank": 19,
+              "ladder_score": 60.9,
+              "stats": {
+                "str": 35.0,
+                "mp": 250.0,
+                "mpr": 4.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "+Strength equal to 3% of Mana from Items.\nDeal 700 Damage to Minions or Jungle Monsters:\n+1 Evolve Stack\n+1 Mana Infusion Stack (Max 50 Stacks)\n*Damage dealt to Gods counts double\n",
+              "is_active": false,
+              "why": "mana stack \u2192 power scaling; inspired: high-SR Carry staple; high-SR role opener",
+              "inspired": true
+            },
+            {
+              "name": "Odysseus' Bow",
+              "score": 219.4,
+              "cost": 2450,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": "B",
+              "ladder_rank": 67,
+              "ladder_score": 33.8,
+              "stats": {
+                "as": 45.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every fourth Attack Hit: Trigger Chain Lightning.\n*Damage = 15 (+60% Attack Damage) Physical Damage\n*Hits target and up to 4 nearby enemies\n*Bounce Range: 4.8m\n*Can hit the same ta",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Kali Carry (2/4); common high-SR opener",
+              "inspired": true
+            },
+            {
+              "name": "Tyrfing",
+              "score": 208.3,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.12,
+              "ladder_tier": "A",
+              "ladder_rank": 39,
+              "ladder_score": 38.2,
+              "stats": {
+                "str": 25.0,
+                "as": 10.0,
+                "bap": 25.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Attacks deal +15 bonus Physical Damage.\nOn God hit:\n*Increase bonus Damage by +15 for 4s\n*Stacks once, +1 Stack per 4 Levels (Max 6 Stacks)",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Kali Carry (2/4)",
+              "inspired": true
+            },
+            {
+              "name": "Riptalon",
+              "score": 390.7,
+              "cost": 2700,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.41,
+              "ladder_tier": "C",
+              "ladder_rank": 98,
+              "ladder_score": 30.4,
+              "stats": {
+                "pen": 10.0,
+                "ls": 7.5,
+                "as": 20.0,
+                "bap": 20.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "While Above 50% Health:\n*+10% Attack Damage\nWhile Below 50% Health:\n*+25% Attack Damage\n*+7.5% Lifesteal",
+              "is_active": false,
+              "why": "attack speed / crit carry core; inspired: high-SR Kali Carry (1/4)",
+              "inspired": true
+            },
+            {
+              "name": "Titan's Bane",
+              "score": 362.6,
+              "cost": 3100,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -1.24,
+              "ladder_tier": "A",
+              "ladder_rank": 38,
+              "ladder_score": 38.5,
+              "stats": {
+                "pen": 20.0,
+                "str": 40.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Gain the Shattering effect:\nFirst Ability Cast: Gains +20% Penetration\n*This effect ignores the Penetration cap\n*Shattering does not Stack with itself.\nCooldown: 10s",
+              "is_active": false,
+              "why": "% pen for physical tanks / late fights; inspired: high-SR Carry staple",
+              "inspired": true
+            },
+            {
+              "name": "Deathbringer",
+              "score": 464.7,
+              "cost": 2900,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.02,
+              "ladder_tier": "C",
+              "ladder_rank": 111,
+              "ladder_score": 26.9,
+              "stats": {
+                "str": 45.0,
+                "crit": 20.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "+35% Critical Strike Damage.",
+              "is_active": false,
+              "why": "attack speed / crit carry core"
+            }
+          ],
+          "full_path": [
+            {
+              "name": "Transcendence",
+              "score": 168.9,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.49,
+              "ladder_tier": "A",
+              "ladder_rank": 19,
+              "ladder_score": 60.9,
+              "stats": {
+                "str": 35.0,
+                "mp": 250.0,
+                "mpr": 4.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "+Strength equal to 3% of Mana from Items.\nDeal 700 Damage to Minions or Jungle Monsters:\n+1 Evolve Stack\n+1 Mana Infusion Stack (Max 50 Stacks)\n*Damage dealt to Gods counts double\n",
+              "is_active": false,
+              "why": "mana stack \u2192 power scaling; inspired: high-SR Carry staple; high-SR role opener",
+              "inspired": true
+            },
+            {
+              "name": "Odysseus' Bow",
+              "score": 219.4,
+              "cost": 2450,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": "B",
+              "ladder_rank": 67,
+              "ladder_score": 33.8,
+              "stats": {
+                "as": 45.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every fourth Attack Hit: Trigger Chain Lightning.\n*Damage = 15 (+60% Attack Damage) Physical Damage\n*Hits target and up to 4 nearby enemies\n*Bounce Range: 4.8m\n*Can hit the same ta",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Kali Carry (2/4); common high-SR opener",
+              "inspired": true
+            },
+            {
+              "name": "Tyrfing",
+              "score": 208.3,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.12,
+              "ladder_tier": "A",
+              "ladder_rank": 39,
+              "ladder_score": 38.2,
+              "stats": {
+                "str": 25.0,
+                "as": 10.0,
+                "bap": 25.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Attacks deal +15 bonus Physical Damage.\nOn God hit:\n*Increase bonus Damage by +15 for 4s\n*Stacks once, +1 Stack per 4 Levels (Max 6 Stacks)",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Kali Carry (2/4)",
+              "inspired": true
+            },
+            {
+              "name": "Riptalon",
+              "score": 390.7,
+              "cost": 2700,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.41,
+              "ladder_tier": "C",
+              "ladder_rank": 98,
+              "ladder_score": 30.4,
+              "stats": {
+                "pen": 10.0,
+                "ls": 7.5,
+                "as": 20.0,
+                "bap": 20.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "While Above 50% Health:\n*+10% Attack Damage\nWhile Below 50% Health:\n*+25% Attack Damage\n*+7.5% Lifesteal",
+              "is_active": false,
+              "why": "attack speed / crit carry core; inspired: high-SR Kali Carry (1/4)",
+              "inspired": true
+            },
+            {
+              "name": "Titan's Bane",
+              "score": 362.6,
+              "cost": 3100,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -1.24,
+              "ladder_tier": "A",
+              "ladder_rank": 38,
+              "ladder_score": 38.5,
+              "stats": {
+                "pen": 20.0,
+                "str": 40.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Gain the Shattering effect:\nFirst Ability Cast: Gains +20% Penetration\n*This effect ignores the Penetration cap\n*Shattering does not Stack with itself.\nCooldown: 10s",
+              "is_active": false,
+              "why": "% pen for physical tanks / late fights; inspired: high-SR Carry staple",
+              "inspired": true
+            },
+            {
+              "name": "Deathbringer",
+              "score": 464.7,
+              "cost": 2900,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.02,
+              "ladder_tier": "C",
+              "ladder_rank": 111,
+              "ladder_score": 26.9,
+              "stats": {
+                "str": 45.0,
+                "crit": 20.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "+35% Critical Strike Damage.",
+              "is_active": false,
+              "why": "attack speed / crit carry core"
+            }
+          ],
+          "inventory_slots": 7,
+          "cores": [
+            {
+              "name": "Transcendence",
+              "score": 168.9,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.49,
+              "ladder_tier": "A",
+              "ladder_rank": 19,
+              "ladder_score": 60.9,
+              "stats": {
+                "str": 35.0,
+                "mp": 250.0,
+                "mpr": 4.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "+Strength equal to 3% of Mana from Items.\nDeal 700 Damage to Minions or Jungle Monsters:\n+1 Evolve Stack\n+1 Mana Infusion Stack (Max 50 Stacks)\n*Damage dealt to Gods counts double\n",
+              "is_active": false,
+              "why": "mana stack \u2192 power scaling; inspired: high-SR Carry staple; high-SR role opener",
+              "inspired": true
+            },
+            {
+              "name": "Odysseus' Bow",
+              "score": 219.4,
+              "cost": 2450,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": "B",
+              "ladder_rank": 67,
+              "ladder_score": 33.8,
+              "stats": {
+                "as": 45.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every fourth Attack Hit: Trigger Chain Lightning.\n*Damage = 15 (+60% Attack Damage) Physical Damage\n*Hits target and up to 4 nearby enemies\n*Bounce Range: 4.8m\n*Can hit the same ta",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Kali Carry (2/4); common high-SR opener",
+              "inspired": true
+            },
+            {
+              "name": "Tyrfing",
+              "score": 208.3,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.12,
+              "ladder_tier": "A",
+              "ladder_rank": 39,
+              "ladder_score": 38.2,
+              "stats": {
+                "str": 25.0,
+                "as": 10.0,
+                "bap": 25.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Attacks deal +15 bonus Physical Damage.\nOn God hit:\n*Increase bonus Damage by +15 for 4s\n*Stacks once, +1 Stack per 4 Levels (Max 6 Stacks)",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Kali Carry (2/4)",
+              "inspired": true
+            },
+            {
+              "name": "Riptalon",
+              "score": 390.7,
+              "cost": 2700,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -0.41,
+              "ladder_tier": "C",
+              "ladder_rank": 98,
+              "ladder_score": 30.4,
+              "stats": {
+                "pen": 10.0,
+                "ls": 7.5,
+                "as": 20.0,
+                "bap": 20.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "While Above 50% Health:\n*+10% Attack Damage\nWhile Below 50% Health:\n*+25% Attack Damage\n*+7.5% Lifesteal",
+              "is_active": false,
+              "why": "attack speed / crit carry core; inspired: high-SR Kali Carry (1/4)",
+              "inspired": true
+            }
+          ],
+          "defense": [],
+          "relics": [
+            {
+              "name": "Purification Beads",
+              "score": 41.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": null,
+              "ladder_rank": null,
+              "ladder_score": null,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Immune to Crowd Control for 2s.\nCooldown: 150s",
+              "is_active": false
+            },
+            {
+              "name": "Aegis of Acceleration",
+              "score": 28.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": null,
+              "ladder_rank": null,
+              "ladder_score": null,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Become Immune (to damage and healing for 1.5s.\n*Can only Move\n*On god Damage prevented: +7% Movement Speed for 6s (Max 3x)\nCooldown: 140s",
+              "is_active": false
+            }
+          ],
+          "max_shop_actives": 2,
+          "hard_max_actives": 3,
+          "active_count": 0,
+          "pen_total": 30.0,
+          "min_build_pen": 20.0,
+          "algorithm": {
+            "version": "1.0.0",
+            "doc": "docs/BUILD_ALGORITHM.md",
+            "phases": [
+              {
+                "id": "P0_context",
+                "name": "Context",
+                "summary": "Kit bias, tags, effects, damage type, aspect, role profile"
+              },
+              {
+                "id": "P1_score_universe",
+                "name": "Score universe",
+                "summary": "Role base \u00d7 ladder \u00d7 patch for every T3 shop item"
+              },
+              {
+                "id": "P2_hard_gates",
+                "name": "Hard gates",
+                "summary": "Illegal items out: type, god-only, heal/LS, removed, role toys"
+              },
+              {
+                "id": "P3_god_rescore",
+                "name": "God rescore",
+                "summary": "Kit affinity + signatures + soft high-SR boost (capped)"
+              },
+              {
+                "id": "P4_archetype",
+                "name": "Archetype",
+                "summary": "Map kit \u00d7 role \u2192 slot recipe (burst_mage, crit_adc, \u2026)"
+              },
+              {
+                "id": "P5_assemble",
+                "name": "Assemble slots",
+                "summary": "Fill 6 slots; ranked cores = #1; flex = mild near-peer diversify"
+              },
+              {
+                "id": "P6_repair",
+                "name": "Structural repair",
+                "summary": "Pen floor, jungle openers, inject high-SR staples, actives, trim shells"
+              },
+              {
+                "id": "P7_buy_order",
+                "name": "Buy order",
+                "summary": "high-SR avg_slot \u2295 role spike phases (order = half the build)"
+              },
+              {
+                "id": "P8_explain",
+                "name": "Explain + gate",
+                "summary": "Why lines, inspired flags, quality checks"
+              }
+            ],
+            "priority": [
+              {
+                "rank": "1",
+                "layer": "hard_gates",
+                "rule": "Illegal items never appear"
+              },
+              {
+                "rank": "2",
+                "layer": "role_job",
+                "rule": "Carry/Mid/Jungle/Solo/Support identity"
+              },
+              {
+                "rank": "3",
+                "layer": "buy_order",
+                "rule": "Spike timing before late % pen / luxury"
+              },
+              {
+                "rank": "4",
+                "layer": "kit",
+                "rule": "Tags, effects, scaling, archetype recipe"
+              },
+              {
+                "rank": "5",
+                "layer": "ladder_patch",
+                "rule": "S/A momentum; tank S muted on backline"
+              },
+              {
+                "rank": "6",
+                "layer": "high_sr_inspire",
+                "rule": "Soft frequency + avg_slot from tracker.gg"
+              },
+              {
+                "rank": "7",
+                "layer": "diversify",
+                "rule": "Shell/flex only \u2014 never scramble openers/pen"
+              }
+            ],
+            "role_spike_openers": {
+              "Mid": [
+                "Book of Thoth",
+                "Spear of Desolation",
+                "Chronos' Pendant",
+                "Doom Orb"
+              ],
+              "Carry": [
+                "Tyrfing",
+                "Devourer's Gauntlet",
+                "Transcendence",
+                "Lernaean Bow",
+                "The Executioner"
+              ],
+              "Jungle": [
+                "Jotunn's Revenge",
+                "Hydra's Lament",
+                "Transcendence",
+                "Heartseeker",
+                "Devourer's Gauntlet"
+              ],
+              "Solo": [
+                "Shifter's Shield",
+                "Genji's Guard",
+                "Breastplate of Valor",
+                "Runeforged Hammer"
+              ],
+              "Support": [
+                "Gauntlet of Thebes",
+                "Shifter's Shield",
+                "Stampede",
+                "Prophetic Cloak"
+              ]
+            },
+            "role_late_items": {
+              "Mid": [
+                "Obsidian Shard",
+                "Rod of Tahuti",
+                "Soul Reaver",
+                "Soul Gem"
+              ],
+              "Carry": [
+                "Titan's Bane",
+                "Deathbringer",
+                "Demon Blade"
+              ],
+              "Jungle": [
+                "Titan's Bane",
+                "Avatar's Parashu"
+              ],
+              "Solo": [
+                "Draconic Scale",
+                "Hussar's Wings"
+              ],
+              "Support": [
+                "Spectral Armor",
+                "Mantle Of Discord"
+              ]
+            },
+            "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and pen floors always win."
+          },
+          "why": "Kali \u00b7 Carry \u00b7 archetype \u00abcrit_adc\u00bb (STR / physical). ASPECT \u00abAspect of Unbound Destruction\u00bb. Kali's Basics are ranged. Rupture procs at 5 stacks to deal damage & heal her. Incense doesn't stun or proc Rupture but knocks back & applie Kit effects: protection shred, basic-attack kit, attack-speed steroid, self heal / drain, heavy healing, execute / threshold. Tags: aa, anti_cc, as_steroid, burst, execute, gap_close, hard_cc, heal. Style burst 40%/dps 85%; patch falling (net -4.3, r5 -2.8). Patch axes (r5): damage -2.8, general +0.0. Scale STR 54% / INT 17%. Path: Transcendence (mana stack \u2192 power scaling); Odysseus' Bow (Carry path fit for kit profile); Tyrfing (Carry path fit for kit profile). Pen: Transcendence, Riptalon, Titan's Bane. Actives 0/2 \u00b7 pen \u2248 30. Soft high-SR inspiration on 5 item(s) (tracker.gg \u2014 not a meta copy).",
+          "flex_role": true,
+          "native_role": false,
+          "role_tier_scope": "role:Carry",
+          "carry_unlock": "aspect_ranged_basics",
+          "flex_chips": [
+            {
+              "id": "heal",
+              "label": "vs heals / sustain",
+              "short": "heal",
+              "why": "25% healing reduction \u2014 stops Yogi's, Aphro, Cu sustain, lifesteal.",
+              "in_path": false,
+              "path_items": [],
+              "suggest": [
+                "Divine Ruin",
+                "Brawler's Beat Stick"
+              ]
+            },
+            {
+              "id": "tanks_hp",
+              "label": "vs high HP / tanks",
+              "short": "tanks",
+              "why": "%HP, pen, and prot shred so fat targets take real damage.",
+              "in_path": true,
+              "path_items": [
+                "Titan's Bane"
+              ],
+              "suggest": [
+                "Soul Reaver",
+                "Ethereal Staff"
+              ]
+            },
+            {
+              "id": "cc_dive",
+              "label": "vs CC / dive",
+              "short": "CC",
+              "why": "Absorb or survive hard CC and all-ins.",
+              "in_path": false,
+              "path_items": [],
+              "suggest": [
+                "Magi's Cloak",
+                "Spirit Robe"
+              ]
+            },
+            {
+              "id": "physical",
+              "label": "vs physical damage",
+              "short": "phys",
+              "why": "Physical bulk into ADCs, hunters, physical junglers.",
+              "in_path": false,
+              "path_items": [],
+              "suggest": [
+                "Breastplate of Valor",
+                "Berserker's Shield"
+              ]
+            }
+          ],
+          "answer_flags": {
+            "heal": false,
+            "tanks_hp": true,
+            "cc_dive": false,
+            "physical": false
+          }
+        },
+        {
+          "god": "Tsukuyomi",
+          "role": "Carry",
+          "tier": null,
+          "rank": 9000,
+          "model_score": null,
+          "damage_type": "Physical",
+          "pantheon": "Japanese",
+          "scaling": "Strength",
+          "archetype": "crit_adc",
+          "kit_tags": [
+            "aa",
+            "anti_cc",
+            "as_steroid",
+            "burst",
+            "gap_close",
+            "hard_cc",
+            "heal",
+            "long_cd",
+            "mobile",
+            "sustained",
+            "ult_nuke"
+          ],
+          "kit_effects": [
+            "big ult spike",
+            "basic-attack kit",
+            "attack-speed steroid",
+            "hard crowd control",
+            "dash / leap engage",
+            "CC immunity in kit",
+            "high mobility",
+            "burst combos"
+          ],
+          "kit_effect_scores": {
+            "ult_nuke": 1.0,
+            "burst": 0.85,
+            "aa": 1.0,
+            "as_steroid": 1.0,
+            "heal": 0.7,
+            "hard_cc": 1.0,
+            "mobile": 0.9,
+            "gap_close": 1.0,
+            "anti_cc": 1.0,
+            "sustained": 0.85,
+            "long_cd": 0.7
+          },
+          "is_aspect": true,
+          "aspect_name": "Aspect of Mangetsu",
+          "aspect_description": "When gaining Shingetsu Ranged Attack, they become Mangetsu Ranged Attacks instead. Dark Moon Shuriken no longer sticks to gods. Piercing Moonlight hits each target only once for major damage in an AoE, before returning to his casting location.",
+          "aspect_id": 360,
+          "patch_trajectory": "stable",
+          "avg_str_scaling": 157.1,
+          "avg_int_scaling": 112.5,
+          "starter": {
+            "name": "Gilded Arrow",
+            "score": 37.4,
+            "cost": 650,
+            "type": "Starter",
+            "slot": "power",
+            "momentum": -0.93,
+            "ladder_tier": null,
+            "ladder_rank": null,
+            "ladder_score": null,
+            "stats": {
+              "as": 10.0,
+              "bap": 20.0
+            },
+            "pen": 0,
+            "damp": 0,
+            "plat": 0,
+            "ten": 0,
+            "effect": "Every 10s: Mark the highest Health enemy minion or jungle monster within 12.8m.\n*If you land the killing blow:\n**+3 Bonus Gold\n**+15% Attack Speed for 8s\n**+30 Mana\nRequires Level ",
+            "is_active": false,
+            "why": "Carry starter \u2014 early AS / sustain"
+          },
+          "items": [
+            {
+              "name": "Devourer's Gauntlet",
+              "score": 272.3,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.04,
+              "ladder_tier": "B",
+              "ladder_rank": 73,
+              "ladder_score": 33.1,
+              "stats": {
+                "str": 35.0,
+                "ls": 5.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Kill Minion or Jungle Monsters: +1 Stack.\nEach Stack grants:\n*+.4 Strength\n*+0.05% Lifesteal\nAt 75 Stacks, gain:\n*+10 Strength\n*+3% Lifesteal\n*Continue to stack more Slowly; 10 Min",
+              "is_active": false,
+              "why": "lifesteal stacking; inspired: high-SR Carry staple; high-SR role opener",
+              "inspired": true
+            },
+            {
+              "name": "Tyrfing",
+              "score": 201.4,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.12,
+              "ladder_tier": "A",
+              "ladder_rank": 39,
+              "ladder_score": 38.2,
+              "stats": {
+                "str": 25.0,
+                "as": 10.0,
+                "bap": 25.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Attacks deal +15 bonus Physical Damage.\nOn God hit:\n*Increase bonus Damage by +15 for 4s\n*Stacks once, +1 Stack per 4 Levels (Max 6 Stacks)",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Carry staple; high-SR role opener",
+              "inspired": true
+            },
+            {
+              "name": "Demon Blade",
+              "score": 390.4,
+              "cost": 2750,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 75,
+              "ladder_score": 32.5,
+              "stats": {
+                "str": 30.0,
+                "as": 15.0,
+                "crit": 15.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Critically Strike: +30% Attack Speed for 3s.",
+              "is_active": false,
+              "why": "attack speed / crit carry core"
+            },
+            {
+              "name": "Odysseus' Bow",
+              "score": 236.1,
+              "cost": 2450,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": "B",
+              "ladder_rank": 67,
+              "ladder_score": 33.8,
+              "stats": {
+                "as": 45.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every fourth Attack Hit: Trigger Chain Lightning.\n*Damage = 15 (+60% Attack Damage) Physical Damage\n*Hits target and up to 4 nearby enemies\n*Bounce Range: 4.8m\n*Can hit the same ta",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Carry staple",
+              "inspired": true
+            },
+            {
+              "name": "The Executioner",
+              "score": 258.4,
+              "cost": 2550,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.84,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 80.4,
+              "stats": {
+                "as": 20.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Adaptive Stat: +30 Strength or +55 Intelligence (based on hightest item stat).\nAttack a God or Boss: Apply 1 Stack of Piercing.\nPiercing reduces 7% Protections for 4s. Stacks up to",
+              "is_active": false,
+              "why": "AA prot shred; inspired: high-SR Carry staple",
+              "inspired": true
+            },
+            {
+              "name": "Titan's Bane",
+              "score": 340.8,
+              "cost": 3100,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -1.24,
+              "ladder_tier": "A",
+              "ladder_rank": 38,
+              "ladder_score": 38.5,
+              "stats": {
+                "pen": 20.0,
+                "str": 40.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Gain the Shattering effect:\nFirst Ability Cast: Gains +20% Penetration\n*This effect ignores the Penetration cap\n*Shattering does not Stack with itself.\nCooldown: 10s",
+              "is_active": false,
+              "why": "% pen for physical tanks / late fights; inspired: high-SR Tsukuyomi Carry (1/5)",
+              "inspired": true
+            }
+          ],
+          "full_path": [
+            {
+              "name": "Devourer's Gauntlet",
+              "score": 272.3,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.04,
+              "ladder_tier": "B",
+              "ladder_rank": 73,
+              "ladder_score": 33.1,
+              "stats": {
+                "str": 35.0,
+                "ls": 5.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Kill Minion or Jungle Monsters: +1 Stack.\nEach Stack grants:\n*+.4 Strength\n*+0.05% Lifesteal\nAt 75 Stacks, gain:\n*+10 Strength\n*+3% Lifesteal\n*Continue to stack more Slowly; 10 Min",
+              "is_active": false,
+              "why": "lifesteal stacking; inspired: high-SR Carry staple; high-SR role opener",
+              "inspired": true
+            },
+            {
+              "name": "Tyrfing",
+              "score": 201.4,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.12,
+              "ladder_tier": "A",
+              "ladder_rank": 39,
+              "ladder_score": 38.2,
+              "stats": {
+                "str": 25.0,
+                "as": 10.0,
+                "bap": 25.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Attacks deal +15 bonus Physical Damage.\nOn God hit:\n*Increase bonus Damage by +15 for 4s\n*Stacks once, +1 Stack per 4 Levels (Max 6 Stacks)",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Carry staple; high-SR role opener",
+              "inspired": true
+            },
+            {
+              "name": "Demon Blade",
+              "score": 390.4,
+              "cost": 2750,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 75,
+              "ladder_score": 32.5,
+              "stats": {
+                "str": 30.0,
+                "as": 15.0,
+                "crit": 15.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Critically Strike: +30% Attack Speed for 3s.",
+              "is_active": false,
+              "why": "attack speed / crit carry core"
+            },
+            {
+              "name": "Odysseus' Bow",
+              "score": 236.1,
+              "cost": 2450,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": "B",
+              "ladder_rank": 67,
+              "ladder_score": 33.8,
+              "stats": {
+                "as": 45.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every fourth Attack Hit: Trigger Chain Lightning.\n*Damage = 15 (+60% Attack Damage) Physical Damage\n*Hits target and up to 4 nearby enemies\n*Bounce Range: 4.8m\n*Can hit the same ta",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Carry staple",
+              "inspired": true
+            },
+            {
+              "name": "The Executioner",
+              "score": 258.4,
+              "cost": 2550,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.84,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 80.4,
+              "stats": {
+                "as": 20.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Adaptive Stat: +30 Strength or +55 Intelligence (based on hightest item stat).\nAttack a God or Boss: Apply 1 Stack of Piercing.\nPiercing reduces 7% Protections for 4s. Stacks up to",
+              "is_active": false,
+              "why": "AA prot shred; inspired: high-SR Carry staple",
+              "inspired": true
+            },
+            {
+              "name": "Titan's Bane",
+              "score": 340.8,
+              "cost": 3100,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": -1.24,
+              "ladder_tier": "A",
+              "ladder_rank": 38,
+              "ladder_score": 38.5,
+              "stats": {
+                "pen": 20.0,
+                "str": 40.0
+              },
+              "pen": 20.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Gain the Shattering effect:\nFirst Ability Cast: Gains +20% Penetration\n*This effect ignores the Penetration cap\n*Shattering does not Stack with itself.\nCooldown: 10s",
+              "is_active": false,
+              "why": "% pen for physical tanks / late fights; inspired: high-SR Tsukuyomi Carry (1/5)",
+              "inspired": true
+            }
+          ],
+          "inventory_slots": 7,
+          "cores": [
+            {
+              "name": "Devourer's Gauntlet",
+              "score": 272.3,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.04,
+              "ladder_tier": "B",
+              "ladder_rank": 73,
+              "ladder_score": 33.1,
+              "stats": {
+                "str": 35.0,
+                "ls": 5.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Kill Minion or Jungle Monsters: +1 Stack.\nEach Stack grants:\n*+.4 Strength\n*+0.05% Lifesteal\nAt 75 Stacks, gain:\n*+10 Strength\n*+3% Lifesteal\n*Continue to stack more Slowly; 10 Min",
+              "is_active": false,
+              "why": "lifesteal stacking; inspired: high-SR Carry staple; high-SR role opener",
+              "inspired": true
+            },
+            {
+              "name": "Tyrfing",
+              "score": 201.4,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.12,
+              "ladder_tier": "A",
+              "ladder_rank": 39,
+              "ladder_score": 38.2,
+              "stats": {
+                "str": 25.0,
+                "as": 10.0,
+                "bap": 25.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Attacks deal +15 bonus Physical Damage.\nOn God hit:\n*Increase bonus Damage by +15 for 4s\n*Stacks once, +1 Stack per 4 Levels (Max 6 Stacks)",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Carry staple; high-SR role opener",
+              "inspired": true
+            },
+            {
+              "name": "Demon Blade",
+              "score": 390.4,
+              "cost": 2750,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 75,
+              "ladder_score": 32.5,
+              "stats": {
+                "str": 30.0,
+                "as": 15.0,
+                "crit": 15.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Critically Strike: +30% Attack Speed for 3s.",
+              "is_active": false,
+              "why": "attack speed / crit carry core"
+            },
+            {
+              "name": "Odysseus' Bow",
+              "score": 236.1,
+              "cost": 2450,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": "B",
+              "ladder_rank": 67,
+              "ladder_score": 33.8,
+              "stats": {
+                "as": 45.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every fourth Attack Hit: Trigger Chain Lightning.\n*Damage = 15 (+60% Attack Damage) Physical Damage\n*Hits target and up to 4 nearby enemies\n*Bounce Range: 4.8m\n*Can hit the same ta",
+              "is_active": false,
+              "why": "Carry path fit for kit profile; inspired: high-SR Carry staple",
+              "inspired": true
+            }
+          ],
+          "defense": [],
+          "relics": [
+            {
+              "name": "Purification Beads",
+              "score": 41.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": null,
+              "ladder_rank": null,
+              "ladder_score": null,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Immune to Crowd Control for 2s.\nCooldown: 150s",
+              "is_active": false
+            },
+            {
+              "name": "Aegis of Acceleration",
+              "score": 28.0,
+              "cost": 0,
+              "type": "Relic",
+              "slot": "power",
+              "momentum": 0.0,
+              "ladder_tier": null,
+              "ladder_rank": null,
+              "ladder_score": null,
+              "stats": {},
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Become Immune (to damage and healing for 1.5s.\n*Can only Move\n*On god Damage prevented: +7% Movement Speed for 6s (Max 3x)\nCooldown: 140s",
+              "is_active": false
+            }
+          ],
+          "max_shop_actives": 2,
+          "hard_max_actives": 3,
+          "active_count": 0,
+          "pen_total": 20.0,
+          "min_build_pen": 20.0,
+          "algorithm": {
+            "version": "1.0.0",
+            "doc": "docs/BUILD_ALGORITHM.md",
+            "phases": [
+              {
+                "id": "P0_context",
+                "name": "Context",
+                "summary": "Kit bias, tags, effects, damage type, aspect, role profile"
+              },
+              {
+                "id": "P1_score_universe",
+                "name": "Score universe",
+                "summary": "Role base \u00d7 ladder \u00d7 patch for every T3 shop item"
+              },
+              {
+                "id": "P2_hard_gates",
+                "name": "Hard gates",
+                "summary": "Illegal items out: type, god-only, heal/LS, removed, role toys"
+              },
+              {
+                "id": "P3_god_rescore",
+                "name": "God rescore",
+                "summary": "Kit affinity + signatures + soft high-SR boost (capped)"
+              },
+              {
+                "id": "P4_archetype",
+                "name": "Archetype",
+                "summary": "Map kit \u00d7 role \u2192 slot recipe (burst_mage, crit_adc, \u2026)"
+              },
+              {
+                "id": "P5_assemble",
+                "name": "Assemble slots",
+                "summary": "Fill 6 slots; ranked cores = #1; flex = mild near-peer diversify"
+              },
+              {
+                "id": "P6_repair",
+                "name": "Structural repair",
+                "summary": "Pen floor, jungle openers, inject high-SR staples, actives, trim shells"
+              },
+              {
+                "id": "P7_buy_order",
+                "name": "Buy order",
+                "summary": "high-SR avg_slot \u2295 role spike phases (order = half the build)"
+              },
+              {
+                "id": "P8_explain",
+                "name": "Explain + gate",
+                "summary": "Why lines, inspired flags, quality checks"
+              }
+            ],
+            "priority": [
+              {
+                "rank": "1",
+                "layer": "hard_gates",
+                "rule": "Illegal items never appear"
+              },
+              {
+                "rank": "2",
+                "layer": "role_job",
+                "rule": "Carry/Mid/Jungle/Solo/Support identity"
+              },
+              {
+                "rank": "3",
+                "layer": "buy_order",
+                "rule": "Spike timing before late % pen / luxury"
+              },
+              {
+                "rank": "4",
+                "layer": "kit",
+                "rule": "Tags, effects, scaling, archetype recipe"
+              },
+              {
+                "rank": "5",
+                "layer": "ladder_patch",
+                "rule": "S/A momentum; tank S muted on backline"
+              },
+              {
+                "rank": "6",
+                "layer": "high_sr_inspire",
+                "rule": "Soft frequency + avg_slot from tracker.gg"
+              },
+              {
+                "rank": "7",
+                "layer": "diversify",
+                "rule": "Shell/flex only \u2014 never scramble openers/pen"
+              }
+            ],
+            "role_spike_openers": {
+              "Mid": [
+                "Book of Thoth",
+                "Spear of Desolation",
+                "Chronos' Pendant",
+                "Doom Orb"
+              ],
+              "Carry": [
+                "Tyrfing",
+                "Devourer's Gauntlet",
+                "Transcendence",
+                "Lernaean Bow",
+                "The Executioner"
+              ],
+              "Jungle": [
+                "Jotunn's Revenge",
+                "Hydra's Lament",
+                "Transcendence",
+                "Heartseeker",
+                "Devourer's Gauntlet"
+              ],
+              "Solo": [
+                "Shifter's Shield",
+                "Genji's Guard",
+                "Breastplate of Valor",
+                "Runeforged Hammer"
+              ],
+              "Support": [
+                "Gauntlet of Thebes",
+                "Shifter's Shield",
+                "Stampede",
+                "Prophetic Cloak"
+              ]
+            },
+            "role_late_items": {
+              "Mid": [
+                "Obsidian Shard",
+                "Rod of Tahuti",
+                "Soul Reaver",
+                "Soul Gem"
+              ],
+              "Carry": [
+                "Titan's Bane",
+                "Deathbringer",
+                "Demon Blade"
+              ],
+              "Jungle": [
+                "Titan's Bane",
+                "Avatar's Parashu"
+              ],
+              "Solo": [
+                "Draconic Scale",
+                "Hussar's Wings"
+              ],
+              "Support": [
+                "Spectral Armor",
+                "Mantle Of Discord"
+              ]
+            },
+            "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and pen floors always win."
+          },
+          "why": "Tsukuyomi \u00b7 Carry \u00b7 archetype \u00abcrit_adc\u00bb (STR / physical). ASPECT \u00abAspect of Mangetsu\u00bb. When gaining Shingetsu Ranged Attack, they become Mangetsu Ranged Attacks instead. Dark Moon Shuriken no longer sticks to gods. Piercing Moo Kit effects: big ult spike, basic-attack kit, attack-speed steroid, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, as_steroid, burst, gap_close, hard_cc, heal, long_cd. Style burst 40%/dps 75%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): general +0.2, damage -0.2, utility +0.0. Scale STR 157% / INT 112%. Path: Devourer's Gauntlet (lifesteal stacking); Tyrfing (Carry path fit for kit profile); Demon Blade (attack speed / crit carry core). Pen: Titan's Bane. Actives 0/2 \u00b7 pen \u2248 20. Soft high-SR inspiration on 5 item(s) (tracker.gg \u2014 not a meta copy).",
+          "flex_role": true,
+          "native_role": false,
+          "role_tier_scope": "role:Carry",
+          "carry_unlock": "aspect_ranged_basics",
+          "flex_chips": [
+            {
+              "id": "heal",
+              "label": "vs heals / sustain",
+              "short": "heal",
+              "why": "25% healing reduction \u2014 stops Yogi's, Aphro, Cu sustain, lifesteal.",
+              "in_path": false,
+              "path_items": [],
+              "suggest": [
+                "Divine Ruin",
+                "Brawler's Beat Stick"
+              ]
+            },
+            {
+              "id": "tanks_hp",
+              "label": "vs high HP / tanks",
+              "short": "tanks",
+              "why": "%HP, pen, and prot shred so fat targets take real damage.",
+              "in_path": true,
+              "path_items": [
+                "Titan's Bane",
+                "The Executioner"
               ],
               "suggest": [
                 "Soul Reaver",
@@ -82201,8 +84331,8 @@
   "quality_gate": {
     "roles": {
       "Carry": {
-        "unique": 18,
-        "total": 20,
+        "unique": 21,
+        "total": 23,
         "shared_groups": 2,
         "pen_fail": [],
         "luxury_fail": []

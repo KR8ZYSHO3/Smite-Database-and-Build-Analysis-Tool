@@ -2,7 +2,7 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-08-11T18:11:43.246383+00:00_
+_Generated: 2026-08-11T20:26:59.175182+00:00_
 
 ## Weekly themes
 
@@ -14,33 +14,33 @@ _Generated: 2026-08-11T18:11:43.246383+00:00_
 
 ## Role staples (top items in recommended paths)
 
-### Carry (20 paths)
+### Carry (23 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Titan's Bane | 16 | 80.0 |
-| Deathbringer | 16 | 80.0 |
-| Tyrfing | 16 | 80.0 |
-| Odysseus' Bow | 12 | 60.0 |
-| The Executioner | 8 | 40.0 |
-| Transcendence | 7 | 35.0 |
-| Qin's Blade | 7 | 35.0 |
-| Riptalon | 5 | 25.0 |
-| Eye of the Storm | 5 | 25.0 |
-| Spear of Desolation | 4 | 20.0 |
-| Soul Reaver | 4 | 20.0 |
-| Sands Of Time | 4 | 20.0 |
-| Obsidian Shard | 4 | 20.0 |
-| Totem of Death | 4 | 20.0 |
-| Book of Thoth | 4 | 20.0 |
+| Tyrfing | 18 | 78.3 |
+| Titan's Bane | 18 | 78.3 |
+| Deathbringer | 17 | 73.9 |
+| Odysseus' Bow | 14 | 60.9 |
+| The Executioner | 9 | 39.1 |
+| Transcendence | 8 | 34.8 |
+| Qin's Blade | 7 | 30.4 |
+| Riptalon | 6 | 26.1 |
+| The Cosmic Horror | 5 | 21.7 |
+| Obsidian Shard | 5 | 21.7 |
+| Soul Reaver | 5 | 21.7 |
+| Spear of Desolation | 5 | 21.7 |
+| Book of Thoth | 5 | 21.7 |
+| Eye of the Storm | 5 | 21.7 |
+| Devourer's Gauntlet | 5 | 21.7 |
 
 ### Mid (25 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
+| The Cosmic Horror | 24 | 96.0 |
 | Spear of Desolation | 24 | 96.0 |
 | Book of Thoth | 24 | 96.0 |
-| The Cosmic Horror | 24 | 96.0 |
 | Obsidian Shard | 21 | 84.0 |
 | Chronos' Pendant | 14 | 56.0 |
 | Totem of Death | 12 | 48.0 |
@@ -48,8 +48,8 @@ _Generated: 2026-08-11T18:11:43.246383+00:00_
 | Rod of Tahuti | 3 | 12.0 |
 | Gem of Isolation | 3 | 12.0 |
 | Bancroft's Talon | 2 | 8.0 |
-| Dreamer's Idol | 2 | 8.0 |
 | Jade Scepter | 2 | 8.0 |
+| Dreamer's Idol | 2 | 8.0 |
 | Spear Of The Magus | 1 | 4.0 |
 | Gem of Focus | 1 | 4.0 |
 | Soul Gem | 1 | 4.0 |
@@ -59,8 +59,8 @@ _Generated: 2026-08-11T18:11:43.246383+00:00_
 | Item | Paths | % |
 |------|------:|--:|
 | Jotunn's Revenge | 21 | 95.5 |
-| Titan's Bane | 21 | 95.5 |
 | Hydra's Lament | 21 | 95.5 |
+| Titan's Bane | 21 | 95.5 |
 | The Crusher | 18 | 81.8 |
 | Arondight | 11 | 50.0 |
 | Avatar's Parashu | 9 | 40.9 |
@@ -69,10 +69,10 @@ _Generated: 2026-08-11T18:11:43.246383+00:00_
 | Omen Drum | 3 | 13.6 |
 | Bloodforge | 3 | 13.6 |
 | The Reaper | 2 | 9.1 |
-| Ashwhorl Acorn | 1 | 4.5 |
 | Thistlethorn Acorn | 1 | 4.5 |
-| Spear of Desolation | 1 | 4.5 |
-| Book of Thoth | 1 | 4.5 |
+| Ashwhorl Acorn | 1 | 4.5 |
+| The Cosmic Horror | 1 | 4.5 |
+| Obsidian Shard | 1 | 4.5 |
 
 ### Solo (21 paths)
 
@@ -86,8 +86,8 @@ _Generated: 2026-08-11T18:11:43.246383+00:00_
 | Shield of the Phoenix | 6 | 28.6 |
 | Kinetic Cuirass | 5 | 23.8 |
 | Chandra's Grace | 5 | 23.8 |
-| Prophetic Cloak | 4 | 19.0 |
 | Freya's Tears | 4 | 19.0 |
+| Prophetic Cloak | 4 | 19.0 |
 | Hussar's Wings | 4 | 19.0 |
 | Alchemist Coat | 4 | 19.0 |
 | Gauntlet of Thebes | 3 | 14.3 |
@@ -112,13 +112,13 @@ _Generated: 2026-08-11T18:11:43.246383+00:00_
 | Shield of the Phoenix | 3 | 13.6 |
 | Chandra's Grace | 3 | 13.6 |
 | Contagion | 2 | 9.1 |
-| Prophetic Cloak | 2 | 9.1 |
+| Freya's Tears | 2 | 9.1 |
 
 ## Answer coverage
 
 ### Carry
-- **vs heals / sustain**: 0/20 (0.0%)
-- **vs high HP / tanks**: 20/20 (100.0%)
+- **vs heals / sustain**: 0/23 (0.0%)
+- **vs high HP / tanks**: 23/23 (100.0%)
 
 ### Mid
 - **vs heals / sustain**: 1/25 (4.0%)

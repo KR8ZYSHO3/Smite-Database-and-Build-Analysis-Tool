@@ -1351,7 +1351,7 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta, isFlex) {
 
 /* -------------------- Builds (god-first) -------------------- */
 const ROLE_JOB = {
-  Carry: { title: "Carry — backline ADC", blurb: "AS, crit, pen, lifesteal. Support peels so you free-hit." },
+  Carry: { title: "Carry — backline ADC", blurb: "Native hunters + mage ADCs. Flex only via aspects that make basics ranged (Geb Calamity, Kali Unbound…)." },
   Mid: { title: "Mid — backline burst", blurb: "INT power, pen, CDR. Support peels for combos." },
   Jungle: { title: "Jungle — ganks", blurb: "Bumba clear, burst pen, CDR, Blink. Not full-tank solo." },
   Solo: { title: "Solo — unkillable frontline", blurb: "Dual prots, HP, Damp/Plat/Ten, hybrid offline damage." },

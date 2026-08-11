@@ -21,11 +21,13 @@ from .kit_effects import (
 
 # (regex on aspect description + enhanced kit text) → tags to force on / off
 ASPECT_TAG_RULES: list[tuple[re.Pattern[str], set[str], set[str]]] = [
-    # add_tags, remove_tags
+    # add_tags, remove_tags — basics → ranged ADC unlocks only (not ability projectiles)
     (
         re.compile(
-            r"basics? are ranged|basic attacks? are ranged|ranged\.|fire a projectile|"
-            r"throw a piercing projectile|attacks are ranged",
+            r"(?:your |kali'?s |geb'?s )?(?:basics?|basic attacks?|attacks) (?:are|become|now are) ranged|"
+            r"basics? are ranged|basic attacks? are ranged|attacks are ranged|"
+            r"basics? become ranged|become(?:s)? ranged|"
+            r"mangetsu ranged attacks?",
             re.I,
         ),
         {"aa", "as_steroid"},
@@ -259,11 +261,13 @@ def build_aspect_bias(
     bias["aspect_description"] = aspect.get("description") or ""
     bias["is_aspect"] = True
     # Explicit flags for role legality (Carry needs ranged basics)
+    # Align with conquest_builds.aspect_enables_ranged_basics (no ability-projectile noise)
     bias["aspect_ranged_basics"] = bool(
         re.search(
+            r"(?:your |kali'?s |geb'?s )?(?:basics?|basic attacks?|attacks) (?:are|become|now are) ranged|"
             r"basics? are ranged|basic attacks? are ranged|attacks are ranged|"
-            r"geb'?s attacks are ranged|become(?:s)? ranged|ranged attack|"
-            r"fire a projectile|throw a piercing projectile|mangetsu ranged",
+            r"basics? become ranged|become(?:s)? ranged|"
+            r"mangetsu ranged attacks?",
             blob,
             re.I,
         )
@@ -276,6 +280,21 @@ def build_aspect_bias(
             re.I,
         )
     )
+    # Ranged-basics aspects are duo ADC unlocks — force AA identity (not mid clones)
+    if bias["aspect_ranged_basics"]:
+        tags.add("aa")
+        tags.add("as_steroid")
+        tags.add("sustained")
+        bias["aa_score"] = max(float(bias.get("aa_score") or 0), 0.9)
+        bias["style_dps"] = max(float(bias.get("style_dps") or 0), 0.75)
+        bias["style_burst"] = min(float(bias.get("style_burst") or 0.5), 0.4)
+        primary = str(bias.get("primary") or "")
+        int_v = float(bias.get("int") or 0)
+        str_v = float(bias.get("str") or 0)
+        mageish = primary == "Intelligence" or int_v >= str_v + 0.05
+        if not bias.get("force_archetype"):
+            bias["force_archetype"] = "aa_mage" if mageish else "crit_adc"
+        bias["tags"] = tags
 
     # Prefer/ban from aspect rules (merged with overrides later)
     prefer = list(bias.get("prefer_items") or [])

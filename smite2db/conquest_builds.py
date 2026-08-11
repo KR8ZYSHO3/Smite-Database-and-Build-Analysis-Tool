@@ -166,11 +166,13 @@ _MELEE_TAG_MARKERS = (
     "keyword.descriptor.melee",
     "descriptor.melee",
 )
+# Only true "basics become ranged" conversions (Geb Calamity, Kali Unbound, …).
+# Do NOT match ability projectiles ("fire a projectile") — those flooded Mid mages onto Carry.
 _ASPECT_RANGED_BASICS_RE = re.compile(
+    r"(?:your |kali'?s |geb'?s )?(?:basics?|basic attacks?|attacks) (?:are|become|now are) ranged|"
     r"basics? are ranged|basic attacks? are ranged|attacks are ranged|"
-    r"attacks are ranged|geb'?s attacks are ranged|"
     r"basics? become ranged|become(?:s)? ranged|"
-    r"ranged attack|mangetsu ranged|fire a projectile|throw a piercing projectile",
+    r"mangetsu ranged attacks?",
     re.I,
 )
 _ASPECT_MELEE_BASICS_RE = re.compile(
@@ -274,68 +276,49 @@ def carry_role_allowed(
     aa_score: float = 0.0,
 ) -> tuple[bool, str]:
     """
-    Duo Carry needs ranged basic attacks and a real damage identity.
+    Duo Carry eligibility (Conquest ADC lane).
 
-    - Melee only if aspect enables ranged basics
-    - Native Carry / Mid / ranged Jungle hunters: OK
-    - Pure Support / guardian peel kits: no flex Carry page (builds were mid clones)
+    Base kit
+    --------
+    Only **native Carry** gods with ranged basics (hunters / mage ADCs listed as Carry).
+    Mid-only mages, supports, and melee kits do **not** get a free Carry flex page.
+
+    Aspects
+    -------
+    Off-role Carry is allowed **only** when the aspect converts basics to ranged
+    (Geb Calamity, Kali Unbound Destruction, Tsukuyomi Mangetsu, …).
+    Native Carries keep their aspect variants unless the aspect forces melee
+    (e.g. Cernunnos Strife).
     """
     native = {str(r) for r in (native_roles or [])}
     tags = set(tags or [])
-    tlab = (type_label or "").lower()
-    aaish = float(aa_score or 0) >= 0.55 or "aa" in tags or "as_steroid" in tags
-
-    def _support_only_flex() -> bool:
-        """Guardians/heal supports with no Mid/Carry native are not duo ADCs."""
-        if not native:
-            return False  # unknown roles — never ban (empty set ⊆ Support was a bug)
-        if "Carry" in native or "Mid" in native:
-            return False
-        if native & {"Jungle"} and base_range == "ranged":
-            return False  # Cern-style hunter jungle can flex duo
-        if native <= {"Support"} or native <= {"Support", "Solo"}:
-            return True
-        if any(k in tlab for k in ("guardian", "tank", "healer")) and "Mid" not in native:
-            if not aaish:
-                return True
-        return False
+    _ = (type_label, tags, aa_score)  # kept for call-site compatibility
 
     if is_aspect:
         if aspect_forces_melee_basics(aspect_blob):
             return False, "aspect_melee_basics"
+        # Flex Carry unlock: aspect that makes basics ranged (melee → ADC)
         if aspect_enables_ranged_basics(aspect_blob):
             return True, "aspect_ranged_basics"
+        # Native Carry hunters keep non-melee aspects on duo
+        if "Carry" in native and base_range == "ranged":
+            return True, "native_carry_aspect"
+        # Melee base without a ranged-basics aspect is never duo ADC
         if base_range == "melee":
             return False, "melee_no_aspect_ranged"
-        if base_range == "ranged" or "Carry" in native:
-            if _support_only_flex() and not aspect_enables_ranged_basics(aspect_blob):
-                return False, "support_flex_not_adc"
-            return True, "ranged_or_native"
-        return False, "unknown_melee_safe"
+        # Mid/Support/etc. aspect that does not convert basics → no Carry flex
+        return False, "aspect_not_ranged_adc"
 
-    # Base kit
+    # --- Base kit ---
     if base_range == "melee":
         return False, "melee_base"
-    if "Carry" in native:
+    # Native Carry only (wiki role list). No Mid-only / Jungle-only flex ADC pages.
+    if "Carry" in native and base_range in ("ranged", "unknown"):
         return True, "native_carry"
-    if base_range != "ranged" and base_range != "unknown":
-        return False, "not_ranged"
-    if _support_only_flex():
-        return False, "support_flex_not_adc"
-    # Real flex ADC: Mid mages, ranged junglers, hybrid damage roles
-    if "Mid" in native or ("Jungle" in native and base_range == "ranged"):
-        return True, "damage_flex_adc"
-    if base_range == "ranged" and ("Solo" not in native or aaish):
-        # Ranged mid-line mages sometimes only tagged oddly — allow AA/ranged damage
-        if aaish or "burst" in tags or "dot" in tags or "spam" in tags:
-            return True, "ranged_damage_flex"
-    if base_range == "ranged" and "Mid" not in native and "Carry" not in native:
-        # Default: still allow pure ranged damage types that aren't support-only
-        if not _support_only_flex():
-            return True, "ranged"
-    if "Carry" in native:
-        return True, "native_carry"
-    return False, "unknown_not_native"
+    if "Carry" in native and base_range == "melee":
+        # e.g. Geb listed Support+Carry but melee until Calamity aspect
+        return False, "native_carry_melee_needs_aspect"
+    return False, "flex_requires_aspect_ranged"
 
 
 # ---------------------------------------------------------------------------
@@ -5102,7 +5085,8 @@ def top_gods_for_role(conn: sqlite3.Connection, role: str, limit: int = 5) -> li
         """
         SELECT t.entity_name, t.tier, t.rank_in_scope, t.score,
                t.patch_score, t.kit_score, t.build_score, t.rationale,
-               g.id AS god_id, g.primary_damage_type, g.pantheon
+               g.id AS god_id, g.primary_damage_type, g.pantheon,
+               g.roles, g.type_label
         FROM tier_list t
         JOIN gods g ON g.name = t.entity_name
         WHERE t.scope = ? AND t.entity_type = 'god'
@@ -5292,30 +5276,49 @@ def build_god_build(
         bias = build_aspect_bias(conn, god["god_id"], bias, aspect_id=aspect_id)
     dtype = god.get("primary_damage_type")
 
-    # Carry is duo ADC — melee/support flex pages blocked; damage ranged only
+    # Carry is duo ADC — base kit only for native Carry; flex only via ranged-basics aspects
     if role == "Carry":
         base_range = load_god_attack_range(conn, int(god["god_id"]))
         bias["attack_range"] = base_range
         native: list[str] = []
-        # Prefer explicit native list if caller attached it
-        for key in ("native_roles", "role_list", "roles"):
-            raw = god.get(key)
-            if isinstance(raw, list):
-                native = [str(x) for x in raw]
-                break
+
+        def _normalize_role_names(raw: Any) -> list[str]:
+            if raw is None:
+                return []
             if isinstance(raw, str) and raw.strip():
                 try:
-                    parsed = json.loads(raw)
-                    if isinstance(parsed, list):
-                        native = []
-                        for rr in parsed:
-                            s = str(rr)
-                            m = re.search(r"Role\.([A-Za-z]+)", s)
-                            native.append(m.group(1) if m else s)
+                    raw = json.loads(raw)
                 except json.JSONDecodeError:
-                    native = [raw]
-                break
-        # type_label from DB when present on god row
+                    return [raw.strip()]
+            if not isinstance(raw, list):
+                return []
+            out: list[str] = []
+            for rr in raw:
+                s = str(rr)
+                m = re.search(r"Role\.([A-Za-z]+)", s)
+                out.append(m.group(1) if m else s)
+            return out
+
+        # Prefer explicit native list if caller attached it
+        for key in ("native_roles", "role_list", "roles"):
+            if god.get(key) is not None:
+                native = _normalize_role_names(god.get(key))
+                if native:
+                    break
+        # Tier ladder rows often omit roles — load from gods table
+        if not native:
+            try:
+                rr = conn.execute(
+                    "SELECT roles, type_label FROM gods WHERE id=?",
+                    (int(god["god_id"]),),
+                ).fetchone()
+                if rr:
+                    native = _normalize_role_names(rr["roles"])
+                    if not god.get("type_label") and rr["type_label"]:
+                        god = dict(god)
+                        god["type_label"] = rr["type_label"]
+            except Exception:  # noqa: BLE001
+                pass
         type_label = str(god.get("type_label") or "")
         if not type_label:
             try:
@@ -5345,6 +5348,7 @@ def build_god_build(
             return None
         bias["carry_allow_reason"] = reason
         bias["type_label"] = type_label
+        bias["native_roles"] = native
     # --- P1 Score universe + P3 God rescore (rescore_for_god includes kit + soft high-SR) ---
     scored = []
     for it in items:
@@ -6034,6 +6038,66 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
     return summary
 
 
+def _carry_aspect_flex_builds(
+    conn: sqlite3.Connection,
+    items: list[dict],
+    seen_base: set[str],
+) -> list[dict[str, Any]]:
+    """
+    Off-role Carry paths for gods whose aspect converts basics to ranged.
+
+    Native Carry base kits are already in the list; this adds e.g. Kali Unbound
+    Destruction / Geb Calamity / Tsukuyomi Mangetsu as explicit aspect builds.
+    """
+    from .aspect_kit import load_aspect_abilities, _aspect_kit_blob
+
+    out: list[dict[str, Any]] = []
+    # Dedup by god|aspect so we don't double-list
+    seen_aspect: set[str] = set()
+    gods = conn.execute(
+        """
+        SELECT id AS god_id, name AS entity_name, primary_damage_type, pantheon,
+               type_label, roles
+        FROM gods
+        ORDER BY name
+        """
+    ).fetchall()
+    for g in gods:
+        god = dict(g)
+        aspects = list_god_aspects(conn, int(god["god_id"]))
+        if not aspects:
+            continue
+        for asp in aspects:
+            abs_ = load_aspect_abilities(conn, asp["id"])
+            blob = _aspect_kit_blob(asp, abs_)
+            if not aspect_enables_ranged_basics(blob):
+                continue
+            key = f"{god['entity_name']}|{asp['name']}"
+            if key in seen_aspect:
+                continue
+            # Skip if this is only reinforcing a native hunter aspect (optional keep)
+            # Always emit aspect path so UI shows Calamity / Unbound clearly.
+            b = build_god_build(
+                conn,
+                items,
+                "Carry",
+                god,
+                use_aspect=True,
+                aspect_id=int(asp["id"]),
+            )
+            if b is None:
+                continue
+            b["flex_role"] = god["entity_name"] not in seen_base
+            b["native_role"] = not b["flex_role"]
+            b["role_tier_scope"] = "role:Carry"
+            b["carry_unlock"] = "aspect_ranged_basics"
+            # Sort after natives: high rank number
+            b["rank"] = b.get("rank") if b.get("rank") is not None else 9000
+            out.append(b)
+            seen_aspect.add(key)
+    return out
+
+
 def generate_all(conn: sqlite3.Connection, gods_per_role: int = 80) -> dict[str, Any]:
     """
     Build recommended paths per role.
@@ -6060,7 +6124,9 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 80) -> dict[str,
             f"Damage roles ≥{MIN_BUILD_PEN:.0f} matching pen. "
             "Order is first-class: Mid Book/Deso before Obsidian; Carry Tyrfing/DG before Titan's; "
             "Jungle Jotunn before late pen; Support Thebes/Shifter before Spectral. "
-            "Recommended god order = role tier list rank (same as Tiers → role:X)."
+            "Recommended god order = role tier list rank (same as Tiers → role:X). "
+            "Carry: native Carry only on base kit; off-role flex only via aspects that "
+            "convert basics to ranged (e.g. Geb Calamity, Kali Unbound)."
         ),
         "max_active_items": DEFAULT_MAX_SHOP_ACTIVES,
         "hard_max_active_items": HARD_MAX_ACTIVE_ITEMS,
@@ -6107,6 +6173,11 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 80) -> dict[str,
                 seen.add(str(nm))
                 if len(god_builds) >= 24:
                     break
+
+        # Carry flex unlocks: aspects that convert basics to ranged (Geb, Kali, …)
+        if role == "Carry":
+            aspect_flex = _carry_aspect_flex_builds(conn, items, seen)
+            god_builds.extend(aspect_flex)
 
         # Stable order: role tier rank, then name (never reshuffle by native/flex)
         god_builds.sort(
