@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-11T22:40:39.904121+00:00",
+  "generated_at": "2026-08-12T00:28:12.432488+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -2536,12 +2536,17 @@
       "path_count": 23,
       "staples": [
         {
-          "name": "Titan's Bane",
+          "name": "Deathbringer",
           "paths": 18,
           "pct": 78.3
         },
         {
-          "name": "Deathbringer",
+          "name": "Tyrfing",
+          "paths": 18,
+          "pct": 78.3
+        },
+        {
+          "name": "Titan's Bane",
           "paths": 18,
           "pct": 78.3
         },
@@ -2551,32 +2556,27 @@
           "pct": 73.9
         },
         {
-          "name": "Tyrfing",
-          "paths": 17,
-          "pct": 73.9
-        },
-        {
           "name": "The Executioner",
-          "paths": 11,
-          "pct": 47.8
-        },
-        {
-          "name": "Transcendence",
           "paths": 10,
           "pct": 43.5
         },
         {
-          "name": "Soul Reaver",
-          "paths": 5,
-          "pct": 21.7
+          "name": "Devourer's Gauntlet",
+          "paths": 8,
+          "pct": 34.8
         },
         {
-          "name": "Spear of Desolation",
-          "paths": 5,
-          "pct": 21.7
+          "name": "Transcendence",
+          "paths": 7,
+          "pct": 30.4
         },
         {
-          "name": "Obsidian Shard",
+          "name": "Riptalon",
+          "paths": 6,
+          "pct": 26.1
+        },
+        {
+          "name": "The Cosmic Horror",
           "paths": 5,
           "pct": 21.7
         },
@@ -2586,19 +2586,19 @@
           "pct": 21.7
         },
         {
-          "name": "The Cosmic Horror",
+          "name": "Soul Reaver",
           "paths": 5,
           "pct": 21.7
         },
         {
-          "name": "Riptalon",
+          "name": "Obsidian Shard",
           "paths": 5,
           "pct": 21.7
         },
         {
-          "name": "Devourer's Gauntlet",
-          "paths": 4,
-          "pct": 17.4
+          "name": "Spear of Desolation",
+          "paths": 5,
+          "pct": 21.7
         },
         {
           "name": "Totem of Death",
@@ -2616,7 +2616,7 @@
       "path_count": 25,
       "staples": [
         {
-          "name": "Spear of Desolation",
+          "name": "The Cosmic Horror",
           "paths": 24,
           "pct": 96.0
         },
@@ -2626,14 +2626,14 @@
           "pct": 96.0
         },
         {
-          "name": "The Cosmic Horror",
+          "name": "Spear of Desolation",
           "paths": 24,
           "pct": 96.0
         },
         {
           "name": "Obsidian Shard",
-          "paths": 21,
-          "pct": 84.0
+          "paths": 20,
+          "pct": 80.0
         },
         {
           "name": "Chronos' Pendant",
@@ -2642,11 +2642,16 @@
         },
         {
           "name": "Totem of Death",
-          "paths": 11,
-          "pct": 44.0
+          "paths": 9,
+          "pct": 36.0
         },
         {
-          "name": "Jade Scepter",
+          "name": "Rod of Tahuti",
+          "paths": 5,
+          "pct": 20.0
+        },
+        {
+          "name": "Spear Of The Magus",
           "paths": 3,
           "pct": 12.0
         },
@@ -2656,17 +2661,7 @@
           "pct": 12.0
         },
         {
-          "name": "Gem of Isolation",
-          "paths": 3,
-          "pct": 12.0
-        },
-        {
-          "name": "Spear Of The Magus",
-          "paths": 2,
-          "pct": 8.0
-        },
-        {
-          "name": "Rod of Tahuti",
+          "name": "Gem of Focus",
           "paths": 2,
           "pct": 8.0
         },
@@ -2676,17 +2671,22 @@
           "pct": 8.0
         },
         {
-          "name": "Divine Ruin",
+          "name": "Jade Scepter",
           "paths": 2,
           "pct": 8.0
         },
         {
-          "name": "Gem of Focus",
+          "name": "Gem of Isolation",
+          "paths": 2,
+          "pct": 8.0
+        },
+        {
+          "name": "Jotunn's Revenge",
           "paths": 1,
           "pct": 4.0
         },
         {
-          "name": "The Crusher",
+          "name": "Demon Blade",
           "paths": 1,
           "pct": 4.0
         }
@@ -2695,11 +2695,6 @@
     "Jungle": {
       "path_count": 22,
       "staples": [
-        {
-          "name": "Titan's Bane",
-          "paths": 21,
-          "pct": 95.5
-        },
         {
           "name": "Jotunn's Revenge",
           "paths": 21,
@@ -2711,9 +2706,19 @@
           "pct": 95.5
         },
         {
+          "name": "Titan's Bane",
+          "paths": 21,
+          "pct": 95.5
+        },
+        {
           "name": "The Crusher",
           "paths": 18,
           "pct": 81.8
+        },
+        {
+          "name": "Avatar's Parashu",
+          "paths": 10,
+          "pct": 45.5
         },
         {
           "name": "Arondight",
@@ -2721,17 +2726,12 @@
           "pct": 45.5
         },
         {
-          "name": "Avatar's Parashu",
-          "paths": 9,
-          "pct": 40.9
+          "name": "Damaru",
+          "paths": 7,
+          "pct": 31.8
         },
         {
           "name": "Pendulum Blade",
-          "paths": 8,
-          "pct": 36.4
-        },
-        {
-          "name": "Damaru",
           "paths": 7,
           "pct": 31.8
         },
@@ -2741,22 +2741,22 @@
           "pct": 18.2
         },
         {
-          "name": "Omen Drum",
-          "paths": 2,
-          "pct": 9.1
-        },
-        {
           "name": "Bloodforge",
           "paths": 2,
           "pct": 9.1
         },
         {
-          "name": "Thistlethorn Acorn",
+          "name": "Riptalon",
           "paths": 1,
           "pct": 4.5
         },
         {
           "name": "Ashwhorl Acorn",
+          "paths": 1,
+          "pct": 4.5
+        },
+        {
+          "name": "Thistlethorn Acorn",
           "paths": 1,
           "pct": 4.5
         },
@@ -2781,12 +2781,12 @@
           "pct": 100.0
         },
         {
-          "name": "Genji's Guard",
+          "name": "Eye of the Storm",
           "paths": 14,
           "pct": 66.7
         },
         {
-          "name": "Eye of the Storm",
+          "name": "Genji's Guard",
           "paths": 14,
           "pct": 66.7
         },
@@ -2871,12 +2871,12 @@
           "pct": 63.6
         },
         {
-          "name": "Stampede",
+          "name": "Stone of Binding",
           "paths": 8,
           "pct": 36.4
         },
         {
-          "name": "Stone of Binding",
+          "name": "Stampede",
           "paths": 8,
           "pct": 36.4
         },
@@ -2979,9 +2979,9 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 3,
+          "covered": 2,
           "total": 25,
-          "pct": 12.0,
+          "pct": 8.0,
           "missing_sample": [
             "Aphrodite",
             "Princess Bari",
@@ -2999,12 +2999,14 @@
         },
         "tanks_hp": {
           "label": "vs high HP / tanks",
-          "covered": 23,
+          "covered": 21,
           "total": 25,
-          "pct": 92.0,
+          "pct": 84.0,
           "missing_sample": [
             "Ix Chel",
-            "Ah Puch"
+            "Ah Puch",
+            "Agni",
+            "Anubis"
           ]
         }
       },
@@ -3018,6 +3020,13 @@
         },
         {
           "god": "Ah Puch",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Anubis",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3499,24 +3508,12 @@
         "pen",
         "shred"
       ],
-      "complete_paths": 1,
+      "complete_paths": 0,
       "total": 25,
-      "pct_complete": 4.0,
+      "pct_complete": 0.0,
       "leaders": [
         {
           "god": "Agni",
-          "score": 3,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": true,
-            "pen": true,
-            "shred": false
-          },
-          "complete": true
-        },
-        {
-          "god": "Morgan Le Fay",
           "score": 2,
           "max": 4,
           "parts": {
@@ -3528,7 +3525,19 @@
           "complete": false
         },
         {
-          "god": "Nu Wa",
+          "god": "Baron Samedi",
+          "score": 2,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Morgan Le Fay",
           "score": 2,
           "max": 4,
           "parts": {
@@ -3565,18 +3574,6 @@
         },
         {
           "god": "Aphrodite",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Baron Samedi",
           "score": 1,
           "max": 4,
           "parts": {
@@ -3622,6 +3619,18 @@
             "shred": false
           },
           "complete": false
+        },
+        {
+          "god": "Hecate",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
         }
       ],
       "weak": [
@@ -3651,18 +3660,6 @@
         },
         {
           "god": "Aphrodite",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Baron Samedi",
           "score": 1,
           "max": 4,
           "parts": {
@@ -3735,6 +3732,18 @@
         },
         {
           "god": "Janus",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Kukulkan",
           "score": 1,
           "max": 4,
           "parts": {

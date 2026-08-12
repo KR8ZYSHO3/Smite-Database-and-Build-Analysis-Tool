@@ -49,8 +49,12 @@ MAX_ACTIVE_ITEMS = DEFAULT_MAX_SHOP_ACTIVES
 # Roles that must ship real penetration in the final 6 (not just raw power).
 DAMAGE_ROLES_NEED_PEN = frozenset({"Carry", "Mid", "Jungle"})
 # Minimum pen stat total (flat or %) across the 6 items for those roles.
-# Ranked carry floor: enough shred that tanks don't hard-wall you.
+# Combined with early-order rules so shred is online, not parked item 5–6.
 MIN_BUILD_PEN = 20.0
+# At least this much pen must appear in the first 3 buy slots (early tank damage).
+MIN_EARLY_PEN = 8.0
+# Prefer a real shred / % pen piece by slot 4 (0-index 3).
+EARLY_SHRED_MAX_INDEX = 3
 
 # Critical slots — always take the best candidate (no diversify salt).
 # Uniqueness comes from kit tags + last flex, not random mid cores.
@@ -2584,28 +2588,29 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
 # Ranked-first order: spike items early, luxury/shell late.
 ARCHETYPE_SLOTS: dict[str, list[str]] = {
     # Mid / mage — pen + power first (not Soul Gem / sustain openers)
+    # Damage roles: flat pen → % pen before luxury/echo so tanks melt early
     "burst_mage": ["flat_pen", "pct_pen", "power", "cdr", "defense", "luxury"],
-    "dot_mage": ["flat_pen", "pct_pen", "dot_core", "echo_core", "power", "cdr"],
+    "dot_mage": ["flat_pen", "pct_pen", "dot_core", "power", "cdr", "echo_core"],
     "mana_mage": ["mana_stack", "flat_pen", "pct_pen", "power", "cdr", "defense"],
-    "channel_mage": ["flat_pen", "pct_pen", "power", "echo_core", "cdr", "defense"],
-    "spam_mage": ["cdr", "flat_pen", "pct_pen", "echo_core", "power", "defense"],
-    "sustain_mage": ["flat_pen", "pct_pen", "power", "sustain", "echo_core", "cdr"],
+    "channel_mage": ["flat_pen", "pct_pen", "power", "cdr", "echo_core", "defense"],
+    "spam_mage": ["flat_pen", "pct_pen", "cdr", "power", "echo_core", "defense"],
+    "sustain_mage": ["flat_pen", "pct_pen", "power", "cdr", "sustain", "echo_core"],
     "aa_mage": ["aa_core", "flat_pen", "pct_pen", "as_core", "power", "defense"],
-    "zone_mage": ["flat_pen", "pct_pen", "zone_core", "echo_core", "power", "cdr"],
-    # Carry — ranked hunter shape: opener → AS/LS → shred → Titan's → finisher
-    "crit_adc": ["as_core", "ls_core", "onhit", "pct_pen", "crit_core", "power"],
+    "zone_mage": ["flat_pen", "pct_pen", "zone_core", "power", "cdr", "echo_core"],
+    # Carry — opener → shred (Exec/OBow) → Titan % pen → crit (not crit before shred)
+    "crit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "crit_core", "power"],
     "onhit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "power", "crit_core"],
     "power_adc": ["stack", "as_core", "onhit", "pct_pen", "power", "crit_core"],
-    # Mage ADC flex: pen + INT power (duo farm) — not Book→Soul Gem mid paste
+    # Mage ADC flex: pen first so tanks die in duo
     "dot_mage_adc": ["flat_pen", "pct_pen", "dot_core", "power", "power", "luxury"],
     "aa_mage_adc": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "power"],
-    "ability_mage_adc": ["flat_pen", "power", "pct_pen", "power", "cdr", "luxury"],
-    # Jungle — Jotunn/Hydra OR stack, then power + pen (no mid Shifter/BoV)
-    "burst_assassin": ["gap", "flat_pen", "power", "echo_core", "pct_pen", "cdr"],
-    "sustain_assassin": ["gap", "ls_core", "flat_pen", "power", "pct_pen", "cdr"],
-    "aa_assassin": ["gap", "ls_core", "as_core", "flat_pen", "pct_pen", "power"],
-    "bruiser_jungle": ["gap", "flat_pen", "power", "echo_core", "pct_pen", "hybrid_bulk"],
-    "mage_jungle": ["flat_pen", "power", "echo_core", "pct_pen", "cdr", "power"],
+    "ability_mage_adc": ["flat_pen", "pct_pen", "power", "power", "cdr", "luxury"],
+    # Jungle — opener → flat pen → % pen → power (Crusher/Titan before luxury Echo)
+    "burst_assassin": ["gap", "flat_pen", "pct_pen", "power", "echo_core", "cdr"],
+    "sustain_assassin": ["gap", "flat_pen", "pct_pen", "ls_core", "power", "cdr"],
+    "aa_assassin": ["gap", "as_core", "flat_pen", "pct_pen", "ls_core", "power"],
+    "bruiser_jungle": ["gap", "flat_pen", "pct_pen", "power", "hybrid_bulk", "echo_core"],
+    "mage_jungle": ["flat_pen", "pct_pen", "power", "echo_core", "cdr", "power"],
     # Solo — offline damage + bulk (not pure aura shell)
     "tank_solo": ["hybrid_bulk", "defense", "mitigate", "power_bruiser", "antiheal", "cdr_def"],
     # Yogi's / Mystical as sustain_tank + defense early; hybrid bulk second
@@ -4889,7 +4894,7 @@ def _order_buy_path(
             )
         ) and pen < 8 and as_v < 15 and crit_v < 15
 
-        # --- Late finishers (never open) ---
+        # --- Late finishers (never open) — luxury after pen is online ---
         if any(
             k in nlow
             for k in (
@@ -4901,32 +4906,37 @@ def _order_buy_path(
                 "wish-granting",
                 "parashu",
                 "world stone",
-                "cosmic horror",
             )
         ):
             return 5, cost
+        # Totem / pure Echo execute with no pen — after shred is online
+        if "totem of death" in nlow and pen < 8:
+            return 4, cost
         if "soul gem" in nlow:
             return 4, cost  # mid/late luxury, not item 1 (high-SR still builds it late)
 
         if role == "Mid":
-            # 0: stack / flat pen openers (Book, Deso, Chronos, Doom)
+            # 0: power stack OR flat pen (Book + Deso both early so tanks feel item 2)
             if any(
                 k in nlow
                 for k in (
                     "book of",
                     "thoth",
                     "desolat",
-                    "chronos",
-                    "pendant",
                     "doom orb",
                     "transcend",
                 )
             ):
-                return 0, cost
-            if pen >= 8 and pen < 16 and int_v >= 40:  # Magus-class flat
+                return 0, 0 if "desolat" in nlow else 1
+            # Flat pen cores (Magus / Cosmic 10 pen) — online before luxury Echo/Totem
+            if pen >= 8 and pen < 16:
+                return 0, 2 if any(k in nlow for k in ("magus", "cosmic", "divine")) else 3
+            # Chronos Pendant after pen spike (CDR, not tank-melt)
+            if any(k in nlow for k in ("chronos", "pendant", "gem of focus")):
                 return 1, cost
-            if pen >= 16 or "obsi" in nlow:  # Obsidian after spike
-                return 2, -pen
+            # % pen ASAP — melt Thebes/Yogi's bricks
+            if pen >= 16 or "obsi" in nlow:
+                return 1, -pen
             if pure_shell:
                 return 4, cost
             if int_v >= 50:
@@ -4934,7 +4944,7 @@ def _order_buy_path(
             return 3, cost
 
         if role == "Carry":
-            # Ranked hunter order: opener → shred AS → Titan → crit finisher
+            # Opener → shred (Exec/OBow/Qin) → Titan % pen → crit (tanks die mid-game)
             if any(
                 k in nlow
                 for k in (
@@ -4952,17 +4962,16 @@ def _order_buy_path(
                     "executioner",
                     "odysseus",
                     "qin",
-                    "riptalon",
                     "dominance",
                     "silverbranch",
-                    "ichival",
                 )
             ):
-                return 1, cost
-            if any(k in nlow for k in ("bloodforge",)):
-                return 1, cost + 50
+                return 1, 0 if "executioner" in nlow else 1
+            # % pen before crit finishers
             if pen >= 12 or "titan" in nlow:
-                return 2, -pen
+                return 1, -pen
+            if any(k in nlow for k in ("riptalon", "ichival", "bloodforge")):
+                return 2, cost
             if crit_v >= 15 or any(k in nlow for k in ("deathbring", "demon", "musashi", "rage")):
                 return 3, -crit_v
             if pure_shell or "shifter" in nlow:
@@ -4978,8 +4987,11 @@ def _order_buy_path(
                 if "transcend" in nlow or "devourer" in nlow:
                     return 0, 2
                 return 0, 3  # HS
-            if pen >= 8:
+            # Crusher / flat pen online before Titan luxury / Echo toys
+            if pen >= 8 and pen < 16 or "crusher" in nlow:
                 return 1, -pen
+            if pen >= 16 or "titan" in nlow:
+                return 1, -pen - 5
             if pure_shell or "shifter" in nlow:
                 return 3, cost
             return 2, cost
@@ -5042,12 +5054,108 @@ def _order_buy_path(
         avg = inspiration_buy_rank(it.name, god_name=gname, role=role)
         phase, sub = heuristic_phase(it)
         cost = it.total_cost or 2500
+        pen = item_pen_value(it)
+        nlow = it.name.lower()
+        # Damage roles: pen/shred never parks late because of tracker avg_slot
+        if damage:
+            tank_melt = pen >= 8 or any(
+                k in nlow
+                for k in (
+                    "executioner",
+                    "odysseus",
+                    "qin",
+                    "desolat",
+                    "magus",
+                    "obsi",
+                    "titan",
+                    "crusher",
+                    "cosmic",
+                )
+            )
+            if tank_melt and avg is not None:
+                avg = min(float(avg), 2.8)
         if avg is not None:
             # Blend: tracker position dominates, heuristic breaks ties
             return (avg, phase, sub, cost, -it.role_score)
         return (float(phase), float(sub), cost, -it.role_score, 0.0)
 
-    return sorted(path, key=sort_key)
+    ordered = sorted(path, key=sort_key)
+    if damage:
+        ordered = _ensure_early_tank_melt_order(ordered)
+    return ordered
+
+
+def _is_tank_melt_item(it: ScoredItem) -> bool:
+    """True if item helps kill tanks early (pen or basic-attack shred)."""
+    if item_pen_value(it) >= 8:
+        return True
+    nlow = it.name.lower()
+    return any(
+        k in nlow
+        for k in (
+            "executioner",
+            "odysseus",
+            "qin",
+            "desolat",
+            "magus",
+            "obsi",
+            "titan",
+            "crusher",
+        )
+    )
+
+
+def _ensure_early_tank_melt_order(path: list[ScoredItem]) -> list[ScoredItem]:
+    """
+    Bubble pen/shred into early slots so damage dealers hurt tanks online.
+
+    - First 3 items: at least one melt piece (flat pen / Exec / OBow / Crusher)
+    - By index EARLY_SHRED_MAX_INDEX: % pen (Titan/Obsidian) or second shred
+    """
+    if len(path) < 3:
+        return path
+    out = list(path)
+
+    def first_melt_idx(items: list[ScoredItem]) -> int | None:
+        for i, it in enumerate(items):
+            if _is_tank_melt_item(it):
+                return i
+        return None
+
+    def first_hard_pen_idx(items: list[ScoredItem]) -> int | None:
+        for i, it in enumerate(items):
+            if item_pen_value(it) >= 15 or any(
+                k in it.name.lower() for k in ("titan", "obsi", "executioner")
+            ):
+                return i
+        return None
+
+    # 1) Ensure a melt item exists in first 3 slots
+    if not any(_is_tank_melt_item(x) for x in out[:3]):
+        idx = first_melt_idx(out)
+        if idx is not None and idx > 2:
+            item = out.pop(idx)
+            insert_at = 1 if len(out) >= 1 else 0
+            out.insert(insert_at, item)
+
+    # 2) Ensure hard shred / % pen by mid-build (index <= 3)
+    hard = first_hard_pen_idx(out)
+    if hard is not None and hard > EARLY_SHRED_MAX_INDEX:
+        item = out.pop(hard)
+        out.insert(EARLY_SHRED_MAX_INDEX, item)
+    elif hard is None:
+        best_i = None
+        best_p = 0.0
+        for i, it in enumerate(out):
+            p = item_pen_value(it)
+            if p > best_p:
+                best_p = p
+                best_i = i
+        if best_i is not None and best_i > EARLY_SHRED_MAX_INDEX and best_p >= 8:
+            item = out.pop(best_i)
+            out.insert(min(2, len(out)), item)
+
+    return out
 
 
 def _pen_matches_kit(it: ScoredItem, *, mage: bool, physical: bool) -> bool:
@@ -6077,13 +6185,33 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
         gods = data.get("recommended_gods") or []
         paths: dict[tuple, list[str]] = {}
         pen_fail = []
+        early_fail = []
         lux_fail = []
+        melt_keys = (
+            "executioner",
+            "odysseus",
+            "qin",
+            "desolat",
+            "magus",
+            "obsi",
+            "titan",
+            "crusher",
+            "cosmic",
+            "jotunn",
+        )
         for gb in gods:
             names = tuple(it["name"] for it in (gb.get("items") or []))
             paths.setdefault(names, []).append(gb.get("god") or "?")
             pen = float(gb.get("pen_total") or 0)
             if role in DAMAGE_ROLES_NEED_PEN and pen < MIN_BUILD_PEN:
                 pen_fail.append(gb.get("god"))
+            if role in DAMAGE_ROLES_NEED_PEN and names:
+                early = [str(n).lower() for n in names[:3]]
+                has_early_melt = any(
+                    any(k in n for k in melt_keys) for n in early
+                )
+                if not has_early_melt:
+                    early_fail.append(gb.get("god"))
             lux = [
                 it["name"]
                 for it in (gb.get("items") or [])
@@ -6097,13 +6225,20 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
         unique = len(paths)
         total = len(gods)
         shared = {", ".join(v): list(k) for k, v in paths.items() if len(v) > 1}
-        role_ok = unique >= max(1, total - 1) and not pen_fail and not lux_fail
+        role_ok = (
+            unique >= max(1, total - 1)
+            and not pen_fail
+            and not lux_fail
+            and not early_fail
+        )
         if not role_ok:
             summary["ok"] = False
         if shared:
             summary["warnings"].append(f"{role}: shared paths {list(shared.keys())}")
         if pen_fail:
             summary["warnings"].append(f"{role}: low pen {pen_fail}")
+        if early_fail:
+            summary["warnings"].append(f"{role}: no early tank-melt {early_fail}")
         if lux_fail:
             summary["warnings"].append(f"{role}: multi-luxury {lux_fail}")
         summary["roles"][role] = {
@@ -6111,6 +6246,7 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
             "total": total,
             "shared_groups": len(shared),
             "pen_fail": pen_fail,
+            "early_melt_fail": early_fail,
             "luxury_fail": lux_fail,
         }
     return summary
@@ -6200,9 +6336,10 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 80) -> dict[str,
             "Hard bans: damage type, god-only items, healer cores, removed shop. "
             f"Shop actives ≤{DEFAULT_MAX_SHOP_ACTIVES} (hard max {HARD_MAX_ACTIVE_ITEMS}). "
             f"Damage roles ≥{MIN_BUILD_PEN:.0f} matching pen. "
-            "Order is first-class: Mid Book/Deso before Obsidian; Carry Tyrfing/DG before Titan's; "
-            "Jungle Jotunn before late pen; Support Thebes/Shifter before Spectral. "
-            "Recommended god order = role tier list rank (same as Tiers → role:X). "
+            "Order is first-class: Mid Book/Deso + % pen before luxury Echo; "
+            "Carry Tyrfing → Exec/OBow → Titan before crit; "
+            "Jungle Jotunn → Crusher/pen → Titan before toys. "
+            "Damage roles must hurt tanks early (pen/shred in first 3–4 items). "
             "Carry: native Carry only on base kit; off-role flex only via aspects that "
             "convert basics to ranged (e.g. Geb Calamity, Kali Unbound)."
         ),
