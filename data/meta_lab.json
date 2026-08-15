@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-12T00:28:12.432488+00:00",
+  "generated_at": "2026-08-15T23:52:36.939272+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -2536,12 +2536,12 @@
       "path_count": 23,
       "staples": [
         {
-          "name": "Deathbringer",
+          "name": "Tyrfing",
           "paths": 18,
           "pct": 78.3
         },
         {
-          "name": "Tyrfing",
+          "name": "Deathbringer",
           "paths": 18,
           "pct": 78.3
         },
@@ -2586,17 +2586,17 @@
           "pct": 21.7
         },
         {
-          "name": "Soul Reaver",
-          "paths": 5,
-          "pct": 21.7
-        },
-        {
           "name": "Obsidian Shard",
           "paths": 5,
           "pct": 21.7
         },
         {
           "name": "Spear of Desolation",
+          "paths": 5,
+          "pct": 21.7
+        },
+        {
+          "name": "Soul Reaver",
           "paths": 5,
           "pct": 21.7
         },
@@ -2686,7 +2686,7 @@
           "pct": 4.0
         },
         {
-          "name": "Demon Blade",
+          "name": "Eye of the Storm",
           "paths": 1,
           "pct": 4.0
         }
@@ -2761,12 +2761,12 @@
           "pct": 4.5
         },
         {
-          "name": "Totem of Death",
+          "name": "The Cosmic Horror",
           "paths": 1,
           "pct": 4.5
         },
         {
-          "name": "Rod of Tahuti",
+          "name": "Book of Thoth",
           "paths": 1,
           "pct": 4.5
         }
@@ -2871,12 +2871,12 @@
           "pct": 63.6
         },
         {
-          "name": "Stone of Binding",
+          "name": "Stampede",
           "paths": 8,
           "pct": 36.4
         },
         {
-          "name": "Stampede",
+          "name": "Stone of Binding",
           "paths": 8,
           "pct": 36.4
         },
@@ -4724,12 +4724,12 @@
           "trajectory": "falling",
           "recent_5_score": -2.790539854926835,
           "recent_10_score": -4.694528841339429,
-          "net_weighted_score": -4.293991700543919,
-          "buff_events": 6,
+          "net_weighted_score": -4.608971963017638,
+          "buff_events": 5,
           "nerf_events": 14,
           "last_patch": "SMITE 2 Open Beta 41",
           "last_direction": "fix",
-          "patches_touched": 14
+          "patches_touched": 13
         },
         {
           "entity_name": "Thor",
@@ -5560,39 +5560,39 @@
         {
           "name": "Cupid",
           "rank": 1,
-          "score": 78.8
+          "score": 79.2
         },
         {
-          "name": "Princess Bari",
+          "name": "Ishtar",
           "rank": 2,
-          "score": 72.4
+          "score": 75.3
         },
         {
-          "name": "Sol",
+          "name": "Danzaburou",
           "rank": 3,
-          "score": 69.9
+          "score": 70.8
         }
       ],
       "a_tier": [
         {
-          "name": "Nut",
+          "name": "Princess Bari",
           "rank": 4,
-          "score": 69.7
-        },
-        {
-          "name": "Danzaburou",
-          "rank": 5,
-          "score": 69.3
-        },
-        {
-          "name": "Ishtar",
-          "rank": 6,
-          "score": 67.0
+          "score": 70.0
         },
         {
           "name": "Cernunnos",
+          "rank": 5,
+          "score": 67.4
+        },
+        {
+          "name": "Sol",
+          "rank": 6,
+          "score": 65.3
+        },
+        {
+          "name": "Nut",
           "rank": 7,
-          "score": 66.7
+          "score": 65.0
         }
       ],
       "tier_counts": {
@@ -5609,44 +5609,44 @@
         {
           "name": "Aphrodite",
           "rank": 1,
-          "score": 72.7
+          "score": 81.9
+        },
+        {
+          "name": "Ra",
+          "rank": 2,
+          "score": 71.3
         },
         {
           "name": "Princess Bari",
-          "rank": 2,
-          "score": 72.4
-        },
-        {
-          "name": "Sol",
           "rank": 3,
-          "score": 69.9
+          "score": 70.0
         }
       ],
       "a_tier": [
         {
-          "name": "Nut",
+          "name": "Eset",
           "rank": 4,
-          "score": 69.7
+          "score": 69.5
         },
         {
-          "name": "Ix Chel",
+          "name": "Poseidon",
           "rank": 5,
-          "score": 69.1
-        },
-        {
-          "name": "Ra",
-          "rank": 6,
-          "score": 63.1
-        },
-        {
-          "name": "Neith",
-          "rank": 7,
-          "score": 61.0
+          "score": 66.5
         },
         {
           "name": "Baron Samedi",
+          "rank": 6,
+          "score": 65.6
+        },
+        {
+          "name": "Sol",
+          "rank": 7,
+          "score": 65.3
+        },
+        {
+          "name": "Nut",
           "rank": 8,
-          "score": 59.2
+          "score": 65.0
         }
       ],
       "tier_counts": {
@@ -5663,39 +5663,39 @@
         {
           "name": "Tsukuyomi",
           "rank": 1,
-          "score": 79.9
+          "score": 81.8
+        },
+        {
+          "name": "Awilix",
+          "rank": 2,
+          "score": 72.4
         },
         {
           "name": "Fenrir",
-          "rank": 2,
-          "score": 78.7
-        },
-        {
-          "name": "Ne Zha",
           "rank": 3,
-          "score": 78.2
+          "score": 71.4
         }
       ],
       "a_tier": [
         {
-          "name": "Thanatos",
+          "name": "Ne Zha",
           "rank": 4,
-          "score": 75.6
+          "score": 70.4
         },
         {
-          "name": "Awilix",
+          "name": "Cernunnos",
           "rank": 5,
-          "score": 74.8
+          "score": 67.4
         },
         {
-          "name": "Achilles",
+          "name": "Thanatos",
           "rank": 6,
-          "score": 68.6
+          "score": 66.1
         },
         {
           "name": "Mercury",
           "rank": 7,
-          "score": 68.6
+          "score": 66.1
         }
       ],
       "tier_counts": {
@@ -5710,41 +5710,41 @@
       "count": 21,
       "s_tier": [
         {
-          "name": "Cu Chulainn",
+          "name": "Horus",
           "rank": 1,
-          "score": 74.8
+          "score": 70.3
         },
         {
           "name": "Chaac",
           "rank": 2,
-          "score": 73.8
+          "score": 69.3
         },
         {
           "name": "Sun Wukong",
           "rank": 3,
-          "score": 70.5
+          "score": 67.9
         }
       ],
       "a_tier": [
         {
-          "name": "Achilles",
+          "name": "Cu Chulainn",
           "rank": 4,
-          "score": 68.6
+          "score": 65.7
         },
         {
-          "name": "Jormungandr",
+          "name": "Xing Tian",
           "rank": 5,
-          "score": 64.7
-        },
-        {
-          "name": "Osiris",
-          "rank": 6,
-          "score": 64.6
+          "score": 65.6
         },
         {
           "name": "Odin",
+          "rank": 6,
+          "score": 63.8
+        },
+        {
+          "name": "Hades",
           "rank": 7,
-          "score": 64.3
+          "score": 62.5
         }
       ],
       "tier_counts": {
@@ -5761,39 +5761,39 @@
         {
           "name": "Aphrodite",
           "rank": 1,
-          "score": 72.7
+          "score": 81.9
         },
         {
-          "name": "Ix Chel",
+          "name": "Horus",
           "rank": 2,
-          "score": 69.1
+          "score": 70.3
         },
         {
-          "name": "Jormungandr",
+          "name": "Baron Samedi",
           "rank": 3,
-          "score": 64.7
+          "score": 65.6
         }
       ],
       "a_tier": [
         {
-          "name": "Ymir",
+          "name": "Xing Tian",
           "rank": 4,
-          "score": 64.0
+          "score": 65.6
+        },
+        {
+          "name": "Ymir",
+          "rank": 5,
+          "score": 65.0
+        },
+        {
+          "name": "Jormungandr",
+          "rank": 6,
+          "score": 59.0
         },
         {
           "name": "Charon",
-          "rank": 5,
-          "score": 62.8
-        },
-        {
-          "name": "Xing Tian",
-          "rank": 6,
-          "score": 59.6
-        },
-        {
-          "name": "Baron Samedi",
           "rank": 7,
-          "score": 59.2
+          "score": 58.1
         }
       ],
       "tier_counts": {

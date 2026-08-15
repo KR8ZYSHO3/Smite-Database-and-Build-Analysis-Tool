@@ -41,14 +41,8 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
         "source": "https://wiki.smite2.com",
         "exported_at": exported_at,
         "repo": "https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool",
-        "live_url": (
-            "https://raw.githack.com/KR8ZYSHO3/"
-            "Smite-Database-and-Build-Analysis-Tool/main/docs/standalone.html"
-        ),
-        "live_url_alt": (
-            "https://raw.githack.com/KR8ZYSHO3/"
-            "Smite-Database-and-Build-Analysis-Tool/main/docs/index.html"
-        ),
+        "live_url": "https://smitebuilddatabase.netlify.app/",
+        "live_url_alt": "https://smitebuilddatabase.netlify.app/",
     }
     try:
         for r in conn.execute("SELECT key, value FROM meta"):
@@ -219,12 +213,33 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
         for r in conn.execute(
             """
             SELECT scope, entity_type, entity_name, tier, rank_in_scope, score,
-                   patch_score, kit_score, build_score, confidence, rationale
+                   patch_score, kit_score, build_score, confidence, rationale,
+                   components_json
             FROM tier_list
             ORDER BY scope, rank_in_scope
             """
         ):
-            tiers.setdefault(r["scope"], []).append(dict(r))
+            d = dict(r)
+            # Surface ranked WR / ladder component for UI (stored in components_json)
+            try:
+                comp = json.loads(d.pop("components_json") or "{}")
+            except (json.JSONDecodeError, TypeError):
+                comp = {}
+                d.pop("components_json", None)
+            lad = comp.get("ladder") or {}
+            if comp.get("ladder_norm") is not None:
+                d["ladder_score"] = comp["ladder_norm"]
+            elif lad.get("ladder_score") is not None:
+                d["ladder_score"] = lad["ladder_score"]
+            if comp.get("ranked_wr") is not None:
+                d["ranked_wr"] = comp["ranked_wr"]
+            elif lad.get("blended_wr") is not None:
+                d["ranked_wr"] = lad["blended_wr"]
+            if lad.get("smitebrain_matches") is not None:
+                d["ranked_matches"] = lad["smitebrain_matches"]
+            if lad.get("source"):
+                d["ladder_source"] = lad["source"]
+            tiers.setdefault(r["scope"], []).append(d)
     except sqlite3.OperationalError:
         pass
 

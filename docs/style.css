@@ -2908,7 +2908,137 @@ body.ui-simple .app {
   flex-shrink: 0;
 }
 
-/* Tabs: Get a build | Find a god | More */
+/* Breadcrumbs */
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0 0;
+  font-size: 0.88rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.breadcrumbs .bc-sep { opacity: 0.45; }
+.breadcrumbs .bc-current {
+  color: var(--accent);
+  font-weight: 700;
+}
+.breadcrumbs .bc-part { color: var(--muted); }
+
+/* Builds mode toggle + sticky role */
+.builds-mode-bar {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.25);
+  width: fit-content;
+  max-width: 100%;
+}
+.builds-mode-btn {
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 8px 14px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.builds-mode-btn:hover { color: var(--text); }
+.builds-mode-btn.active {
+  color: #041018;
+  background: linear-gradient(135deg, var(--accent), #7b61ff);
+  border-color: transparent;
+}
+.builds-sticky-role {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin: 0 0 12px;
+  padding: 10px 12px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(10, 12, 20, 0.92);
+  backdrop-filter: blur(8px);
+}
+.step-label-inline {
+  margin: 0 0 8px !important;
+}
+.builds-any-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.builds-any-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: inherit;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(16, 20, 31, 0.9);
+  color: var(--text);
+  cursor: pointer;
+}
+.builds-any-chip:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--glow);
+}
+.builds-any-chip.active {
+  border-color: var(--accent);
+  box-shadow: var(--glow);
+}
+.builds-any-detail {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+.builds-any-detail-head {
+  margin-bottom: 12px;
+}
+.builds-any-detail-head h2 {
+  margin: 0 0 4px;
+  font-family: var(--display);
+  letter-spacing: 0.06em;
+}
+
+/* Meta subnav (Ladder | Lab) */
+.meta-subnav {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.22);
+  width: fit-content;
+  max-width: 100%;
+}
+.meta-sub-btn {
+  font: inherit;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.meta-sub-btn:hover { color: var(--text); }
+.meta-sub-btn.active {
+  color: #041018;
+  background: linear-gradient(135deg, #2ec4b6, #4cc9f0);
+}
+
+/* Tabs: Builds | Counter | Meta | More */
 .simple-tabs {
   border-radius: 12px;
   width: 100%;

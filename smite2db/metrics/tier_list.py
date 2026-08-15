@@ -1,4 +1,4 @@
-"""Composite tier list from patch momentum, kit power, and build synergy."""
+"""Composite tier list from patch momentum, kit power, build synergy, and ranked WR."""
 
 from __future__ import annotations
 
@@ -10,16 +10,17 @@ from typing import Any
 from .stat_parse import clamp, normalize_minmax
 
 
-# Default weights — rebalanced 2026-07:
-# Old patch 48% made overall S almost pure "recently buffed physical Solo."
-# Kit + build now share more of the vote so strong mages / mid kits can be S
-# without ignoring patch momentum.
+# Default weights — rebalanced 2026-08:
+# Added ranked ladder win-rate vote (SmiteBrain full roster + tracker.gg high-SR
+# sample). Patch no longer owns the ladder alone; live WR keeps pocket buffs
+# honest and lifts proven picks the kit model under-rates.
 WEIGHTS = {
-    "patch": 0.34,
-    "kit": 0.32,
-    "build": 0.24,
-    "novelty": 0.04,
-    "stability": 0.06,
+    "patch": 0.26,
+    "kit": 0.24,
+    "build": 0.18,
+    "ladder": 0.24,
+    "novelty": 0.03,
+    "stability": 0.05,
 }
 
 
@@ -80,8 +81,29 @@ def _parse_roles(roles_json: str | None) -> list[str]:
     return out or ["Unknown"]
 
 
+def _load_ladder_component(god_names: list[str]) -> dict[str, dict[str, Any]]:
+    """Load blended ranked WR scores; fetch snapshot if missing."""
+    try:
+        from ..ladder_wr import collect_ladder_winrates, load_ladder_scores
+    except ImportError:
+        from smite2db.ladder_wr import collect_ladder_winrates, load_ladder_scores  # type: ignore
+
+    scores = load_ladder_scores()
+    if not scores:
+        try:
+            collect_ladder_winrates(fetch=True, known_gods=set(god_names))
+            scores = load_ladder_scores()
+        except Exception as exc:  # noqa: BLE001
+            print(f"  WARN ladder WR fetch failed: {exc}")
+            return {}
+    return scores
+
+
 def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | None = None) -> dict[str, int]:
     w = {**WEIGHTS, **(weights or {})}
+    # Ensure weight keys exist even if caller passes partial override
+    for k, v in WEIGHTS.items():
+        w.setdefault(k, v)
     conn.execute("DELETE FROM tier_list")
 
     rows = conn.execute(
@@ -123,6 +145,9 @@ def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | Non
         """
     ).fetchall()
 
+    god_names = [r["name"] for r in rows]
+    ladder_map = _load_ladder_component(god_names)
+
     # Component vectors for normalization
     patch_vals = []
     for r in rows:
@@ -144,6 +169,12 @@ def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | Non
         0.55 * (r["build_synergy_score"] or 40.0) + 0.45 * (r["meta_item_score"] or 40.0)
         for r in rows
     ]
+    ladder_vals = []
+    for r in rows:
+        entry = ladder_map.get(r["name"]) or {}
+        # Prefer precomputed 0–100 ladder_score; fall back neutral
+        ladder_vals.append(float(entry["ladder_score"]) if entry and entry.get("ladder_score") is not None else 50.0)
+
     # novelty: newly released / new_events
     novelty_raw = []
     for r in rows:
@@ -184,6 +215,7 @@ def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | Non
     # kit already 0-100-ish; re-normalize for fairness
     kit_n = normalize_minmax(kit_vals)
     build_n = normalize_minmax(build_vals)
+    ladder_n = normalize_minmax(ladder_vals)
     novelty_n = normalize_minmax(novelty_raw)
     stability_n = normalize_minmax(stability_raw)
 
@@ -193,6 +225,7 @@ def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | Non
             w["patch"] * patch_n[i]
             + w["kit"] * kit_n[i]
             + w["build"] * build_n[i]
+            + w.get("ladder", 0.0) * ladder_n[i]
             + w["novelty"] * novelty_n[i]
             + w["stability"] * stability_n[i]
         )
@@ -208,6 +241,9 @@ def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | Non
         conf += min((r["patches_touched"] or 0) / 10.0, 0.35)
         conf += 0.15 if (r["ability_count"] or 0) >= 5 else 0.05
         conf += 0.15 if r["kit_power_score"] is not None else 0.0
+        lad = ladder_map.get(r["name"]) or {}
+        if lad.get("smitebrain_matches"):
+            conf += min(0.12, (lad["smitebrain_matches"] or 0) / 2000.0)
         conf = clamp(conf, 0, 1)
 
         rationale_parts = []
@@ -218,6 +254,13 @@ def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | Non
         rationale_parts.append(
             f"Kit {kit_n[i]:.0f}/100 (burst/dps/utility blend), build fit {build_n[i]:.0f}/100"
         )
+        if lad:
+            wr_pct = (lad.get("blended_wr") or 0) * 100
+            src = lad.get("source") or "ladder"
+            n = lad.get("smitebrain_matches") or lad.get("tracker_games") or "?"
+            rationale_parts.append(
+                f"Ranked WR {wr_pct:.1f}% (ladder {ladder_n[i]:.0f}/100, {src}, n={n})"
+            )
         if r["recent_5_score"]:
             sign = "buffed" if r["recent_5_score"] > 0 else "nerfed" if r["recent_5_score"] < 0 else "touched"
             rationale_parts.append(f"Last 5 patches net {sign} (score {r['recent_5_score']:+.2f})")
@@ -241,6 +284,7 @@ def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | Non
                 "patch_score": patch_n[i],
                 "kit_score": kit_n[i],
                 "build_score": build_n[i],
+                "ladder_score": ladder_n[i],
                 "novelty_score": novelty_n[i],
                 "stability_score": stability_n[i],
                 "confidence": conf,
@@ -248,6 +292,10 @@ def compute_tier_lists(conn: sqlite3.Connection, weights: dict[str, float] | Non
                 "components": {
                     "weights": w,
                     "raw_patch": patch_vals[i],
+                    "raw_ladder": ladder_vals[i],
+                    "ladder_norm": ladder_n[i],
+                    "ranked_wr": lad.get("blended_wr"),
+                    "ladder": lad,
                     "trajectory": traj,
                     "buff_events": r["buff_events"] or 0,
                     "nerf_events": r["nerf_events"] or 0,

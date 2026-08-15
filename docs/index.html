@@ -14,10 +14,11 @@
       <div class="site-header-main">
         <h1>SMITE 2 Builds</h1>
         <p class="site-tagline">
-          Pick your <strong>lane role</strong>, open a <strong>god</strong>, buy items <strong>top → bottom</strong>.
+          <strong>Builds</strong> for a path · <strong>Counter</strong> for lobby · <strong>Meta</strong> for the ladder.
         </p>
-        <p class="site-updated" id="site-updated" data-exported-at="2026-08-12T00:27:41.557216+00:00" data-latest-patch="SMITE 2 Open Beta 41" title="Export timestamp (UTC): 2026-08-12T00:27:41.557216+00:00">
-          Last updated: <strong>Aug 12, 2026 12:27 AM UTC</strong> · Patch data: <strong>Open Beta 41</strong> (August 11, 2026)
+        <nav class="breadcrumbs" id="site-breadcrumbs" aria-label="Location">Builds</nav>
+        <p class="site-updated" id="site-updated" data-exported-at="2026-08-15T23:51:53.072929+00:00" data-latest-patch="SMITE 2 Open Beta 41" title="Export timestamp (UTC): 2026-08-15T23:51:53.072929+00:00">
+          Last updated: <strong>Aug 15, 2026 11:51 PM UTC</strong> · Patch data: <strong>Open Beta 41</strong> (August 11, 2026)
         </p>
       </div>
       <button type="button" class="btn-ghost help-btn" id="btn-help" title="How this works">?</button>
@@ -31,63 +32,81 @@
         <div class="help-panel-inner">
           <h2>How to use this</h2>
           <ol class="help-steps">
-            <li>Tap a <strong>role</strong> (Support, Mid, Carry…)</li>
-            <li>Tap a <strong>god</strong> below</li>
-            <li>Buy the items in order — top first, bottom last</li>
+            <li><strong>Builds</strong> — pick role (or search any god) → open a card → buy top → bottom</li>
+            <li><strong>Counter</strong> — set your role, paste the lobby, get a path for this draft</li>
+            <li><strong>Meta</strong> — tier ladder &amp; lab (who looks strong this patch)</li>
           </ol>
           <p class="muted">
-            Paths are made for each god’s abilities (not a one-size-fits-all guide).
-            Not live win rates. Free fan tool.
+            Paths follow each god’s kit + patch model (plus ranked WR signal). Free fan tool — not affiliated with Hi-Rez.
           </p>
           <p class="muted help-extra">
-            <strong>More tools</strong> (top right / bottom nav): Counter the enemy team, meme Troll builds,
-            tier ladder, item search.
+            <strong>More:</strong> item search, troll/meme builds, about &amp; scoring.
           </p>
           <p class="muted help-extra">
-            <strong>Share links:</strong> open a build → <em>Copy link</em> (e.g.
-            <code>#builds/Carry/Artemis</code>). Counter lobbies paste as
-            <code>#counter/You/Role/Enemies/Allies</code>. No live game lobby feed — paste names in Counter.
+            <strong>Share links:</strong> <code>#builds/Carry/Artemis</code> ·
+            <code>#counter/You/Role/Enemies/Allies</code> · <code>#meta</code> or <code>#tiers</code>.
           </p>
           <button type="button" class="btn-primary" id="help-close">Got it</button>
         </div>
       </section>
 
       <nav class="tabs simple-tabs" aria-label="Main">
-        <button class="tab-btn active" data-tab="builds">Get a build</button>
+        <button class="tab-btn active" data-tab="builds">Builds</button>
         <button class="tab-btn" data-tab="counter">Counter</button>
-        <button class="tab-btn" data-tab="gods">Gods</button>
+        <button class="tab-btn" data-tab="meta">Meta</button>
         <div class="more-wrap">
           <button type="button" class="tab-btn more-trigger" id="more-tools-btn" aria-expanded="false" aria-haspopup="true">
             More ▾
           </button>
           <div class="more-menu" id="more-menu" hidden>
-            <button type="button" class="more-item" data-tab="troll">Troll / meme builds</button>
-            <button type="button" class="more-item" data-tab="tiers">Tier list</button>
             <button type="button" class="more-item" data-tab="items">Item search</button>
-            <button type="button" class="more-item" data-tab="meta">Meta lab</button>
+            <button type="button" class="more-item" data-tab="troll">Troll / meme builds</button>
             <button type="button" class="more-item" data-tab="about">About &amp; scoring</button>
+            <button type="button" class="more-item" data-tab="gods">God dossier (legacy)</button>
           </div>
         </div>
       </nav>
 
       <!-- BUILDS — primary experience -->
       <section id="panel-builds" class="panel active">
-        <p class="step-label"><span class="step-badge">1</span> What role are you playing?</p>
-        <div class="toolbar role-pills" id="role-pills"></div>
-
-        <details class="role-job-details" id="role-job-wrap">
-          <summary>What does this role do? <span class="muted">(optional)</span></summary>
-          <div class="card role-job" id="role-job">
-            <h2>Pick a role above</h2>
-            <p class="muted">Short job notes — not the full build.</p>
-          </div>
-        </details>
-
-        <p class="step-label"><span class="step-badge">2</span> Pick a god <span class="muted" id="build-god-count"></span></p>
-        <div class="toolbar">
-          <input id="build-god-search" type="search" placeholder="Search gods…" style="min-width:220px" />
+        <div class="builds-mode-bar" role="group" aria-label="How to find a build">
+          <button type="button" class="builds-mode-btn active" data-builds-mode="role" id="builds-mode-role">
+            By role
+          </button>
+          <button type="button" class="builds-mode-btn" data-builds-mode="search" id="builds-mode-search">
+            Search any god
+          </button>
         </div>
-        <div id="build-gods" class="build-god-grid"></div>
+
+        <div id="builds-view-role">
+          <div class="builds-sticky-role" id="builds-sticky-role">
+            <p class="step-label step-label-inline"><span class="step-badge">1</span> Role</p>
+            <div class="toolbar role-pills" id="role-pills"></div>
+          </div>
+
+          <details class="role-job-details" id="role-job-wrap">
+            <summary>What does this role do? <span class="muted">(optional)</span></summary>
+            <div class="card role-job" id="role-job">
+              <h2>Pick a role above</h2>
+              <p class="muted">Short job notes — not the full build.</p>
+            </div>
+          </details>
+
+          <p class="step-label"><span class="step-badge">2</span> Pick a god <span class="muted" id="build-god-count"></span></p>
+          <div class="toolbar">
+            <input id="build-god-search" type="search" placeholder="Filter gods in this role…" style="min-width:220px" />
+          </div>
+          <div id="build-gods" class="build-god-grid"></div>
+        </div>
+
+        <div id="builds-view-search" hidden>
+          <p class="step-label"><span class="step-badge">1</span> Search any god</p>
+          <div class="toolbar">
+            <input id="builds-any-search" type="search" placeholder="Type a god name…" style="min-width:260px" autocomplete="off" />
+          </div>
+          <div id="builds-any-list" class="build-god-grid builds-any-list"></div>
+          <div id="builds-any-detail" class="builds-any-detail" hidden></div>
+        </div>
       </section>
 
       <!-- COUNTER -->
@@ -311,8 +330,12 @@
         </div>
       </section>
 
-      <!-- TIERS -->
+      <!-- TIERS (Meta → Ladder) -->
       <section id="panel-tiers" class="panel">
+        <div class="meta-subnav" role="tablist" aria-label="Meta views">
+          <button type="button" class="meta-sub-btn active" data-meta-view="ladder">Ladder</button>
+          <button type="button" class="meta-sub-btn" data-meta-view="lab">Meta lab</button>
+        </div>
         <p class="step-label">Tier list — who looks strong this patch (not a full build guide)</p>
         <div class="toolbar">
           <label>Scope
@@ -336,7 +359,7 @@
             <table>
               <thead>
                 <tr>
-                  <th>#</th><th>Tier</th><th>Name</th><th>Score</th><th>Patch</th><th>Kit</th><th>Build</th>
+                  <th>#</th><th>Tier</th><th>Name</th><th>Score</th><th>Patch</th><th>Kit</th><th>Build</th><th>WR</th>
                 </tr>
               </thead>
               <tbody id="tier-body"></tbody>
@@ -397,10 +420,14 @@
 
       <!-- META LAB -->
       <section id="panel-meta" class="panel">
+        <div class="meta-subnav" role="tablist" aria-label="Meta views">
+          <button type="button" class="meta-sub-btn" data-meta-view="ladder">Ladder</button>
+          <button type="button" class="meta-sub-btn active" data-meta-view="lab">Meta lab</button>
+        </div>
         <div class="card meta-lab-panel">
           <h2>Meta lab</h2>
           <p class="muted" id="meta-lab-disclaimer">
-            Role staples, answer-item coverage, patch trajectories, and situational flex — kit + patch model, not live WR.
+            Role staples, answer-item coverage, patch trajectories, and situational flex — kit + patch model with ranked WR signal.
           </p>
           <div id="meta-lab-themes" class="meta-themes"></div>
 
@@ -500,7 +527,8 @@
             <div class="score-explain-block">
               <h3>Tiers (reevaluated)</h3>
               <ul class="how-list score-list">
-                <li><strong>Patch ~34%</strong> · <strong>Kit ~32%</strong> · <strong>Build fit ~24%</strong> · stability/novelty small</li>
+                <li><strong>Patch ~26%</strong> · <strong>Kit ~24%</strong> · <strong>Ranked WR ~24%</strong> · <strong>Build fit ~18%</strong> · stability/novelty small</li>
+                <li>Ranked WR blends SmiteBrain top Conquest matches + tracker.gg high-SR sample (no global tracker god-meta API).</li>
                 <li>Patch extremes are winsorized so a few tank buffs don’t own every S slot.</li>
                 <li>Item ladder mixes patch heat with core utility (pen, cost band) — not pure buff spam.</li>
               </ul>
@@ -523,7 +551,7 @@
             </div>
           </div>
           <p class="muted">
-            Model from wiki.smite2.com — not live WR.
+            Model from wiki.smite2.com + ranked WR (SmiteBrain / tracker.gg high-SR).
           </p>
           <p>
             <a href="https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool" target="_blank" rel="noopener">GitHub</a>
@@ -533,7 +561,7 @@
     </div>
 
     <footer class="footer">
-      SMITE 2 Builds · not live WR · not affiliated with Hi-Rez
+      SMITE 2 Builds · ranked WR + kit/patch model · not affiliated with Hi-Rez
       <span class="meta-telemetry muted" id="meta-line" style="display:block;margin-top:6px"></span>
     </footer>
   </div>
@@ -541,15 +569,14 @@
   <nav class="mobile-nav" aria-label="Mobile">
     <button type="button" class="mobile-tab active" data-tab="builds"><span class="mn-icon">1</span><span>Builds</span></button>
     <button type="button" class="mobile-tab" data-tab="counter"><span class="mn-icon">◎</span><span>Counter</span></button>
-    <button type="button" class="mobile-tab" data-tab="gods"><span class="mn-icon">◆</span><span>Gods</span></button>
+    <button type="button" class="mobile-tab" data-tab="meta"><span class="mn-icon">▲</span><span>Meta</span></button>
     <button type="button" class="mobile-tab" data-tab="more" id="mobile-more"><span class="mn-icon">···</span><span>More</span></button>
   </nav>
   <div class="mobile-more-sheet" id="mobile-more-sheet" hidden>
-    <button type="button" class="mobile-sheet-btn" data-tab="troll">Troll builds</button>
-    <button type="button" class="mobile-sheet-btn" data-tab="tiers">Tier list</button>
     <button type="button" class="mobile-sheet-btn" data-tab="items">Items</button>
-    <button type="button" class="mobile-sheet-btn" data-tab="meta">Meta lab</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="troll">Troll builds</button>
     <button type="button" class="mobile-sheet-btn" data-tab="about">About</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="gods">God dossier</button>
   </div>
 
   <div class="intel-modal" id="intel-modal" role="dialog" aria-modal="true" aria-labelledby="intel-modal-title" hidden>

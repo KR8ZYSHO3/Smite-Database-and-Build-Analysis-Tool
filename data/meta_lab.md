@@ -2,7 +2,7 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-08-12T00:28:12.432488+00:00_
+_Generated: 2026-08-15T23:52:36.939272+00:00_
 
 ## Weekly themes
 
@@ -18,8 +18,8 @@ _Generated: 2026-08-12T00:28:12.432488+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
-| Deathbringer | 18 | 78.3 |
 | Tyrfing | 18 | 78.3 |
+| Deathbringer | 18 | 78.3 |
 | Titan's Bane | 18 | 78.3 |
 | Odysseus' Bow | 17 | 73.9 |
 | The Executioner | 10 | 43.5 |
@@ -28,9 +28,9 @@ _Generated: 2026-08-12T00:28:12.432488+00:00_
 | Riptalon | 6 | 26.1 |
 | The Cosmic Horror | 5 | 21.7 |
 | Book of Thoth | 5 | 21.7 |
-| Soul Reaver | 5 | 21.7 |
 | Obsidian Shard | 5 | 21.7 |
 | Spear of Desolation | 5 | 21.7 |
+| Soul Reaver | 5 | 21.7 |
 | Totem of Death | 4 | 17.4 |
 | Sands Of Time | 4 | 17.4 |
 
@@ -52,7 +52,7 @@ _Generated: 2026-08-12T00:28:12.432488+00:00_
 | Jade Scepter | 2 | 8.0 |
 | Gem of Isolation | 2 | 8.0 |
 | Jotunn's Revenge | 1 | 4.0 |
-| Demon Blade | 1 | 4.0 |
+| Eye of the Storm | 1 | 4.0 |
 
 ### Jungle (22 paths)
 
@@ -71,8 +71,8 @@ _Generated: 2026-08-12T00:28:12.432488+00:00_
 | Riptalon | 1 | 4.5 |
 | Ashwhorl Acorn | 1 | 4.5 |
 | Thistlethorn Acorn | 1 | 4.5 |
-| Totem of Death | 1 | 4.5 |
-| Rod of Tahuti | 1 | 4.5 |
+| The Cosmic Horror | 1 | 4.5 |
+| Book of Thoth | 1 | 4.5 |
 
 ### Solo (21 paths)
 
@@ -101,8 +101,8 @@ _Generated: 2026-08-12T00:28:12.432488+00:00_
 | Gauntlet of Thebes | 21 | 95.5 |
 | Shifter's Shield | 20 | 90.9 |
 | Gem of Isolation | 14 | 63.6 |
-| Stone of Binding | 8 | 36.4 |
 | Stampede | 8 | 36.4 |
+| Stone of Binding | 8 | 36.4 |
 | Hussar's Wings | 7 | 31.8 |
 | Kinetic Cuirass | 7 | 31.8 |
 | Doublet of Binding | 7 | 31.8 |
