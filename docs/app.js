@@ -3913,39 +3913,47 @@ function buildMaxStatPathJS(god, role, useAspect, modeKey, rng) {
     .toLowerCase()
     .includes("ratatoskr");
 
-  // Soft type filter so max INT doesn't load full STR toys on mages (unless chaos later)
+  // Pure greed: only items that actually grant the target stat (no Chandra/Binding fillers).
+  // HP/prots modes may use shells; power modes must have real Str/Int/etc.
+  const powerGreed = new Set([
+    "max_int",
+    "max_str",
+    "max_pen",
+    "max_crit",
+    "max_ls",
+    "max_as",
+    "max_cdr",
+  ]);
   const typed = pool.filter((it) => {
     if (!itemAllowedForGod(it, god?.name)) return false;
     if (isRemovedOrUnavailableItem(it)) return false;
     const str = itemStat(it, "str");
     const int = itemStat(it, "int");
-    const type = (it.item_type || "").toLowerCase();
     if (modeKey === "max_int" && isPhysical && int < 15 && str >= 30) return false;
     if (modeKey === "max_str" && isMagical && str < 15 && int >= 30) return false;
-    if (modeKey === "max_as" || modeKey === "max_crit") {
-      // AS/crit memes still allow hybrid bulk
-      return true;
-    }
-    if (modeKey === "max_hp" || modeKey === "max_prots") return true;
-    // Prefer items that actually have the stat
-    return mode.score(it) > 0 || type === "defensive" || type === "hybrid";
+    if (modeKey === "max_hp" || modeKey === "max_prots") return mode.score(it) > 0;
+    // AS/crit/pen/cdr/ls/int/str — require the actual stat; never pad with 0-stat shells
+    if (powerGreed.has(modeKey)) return mode.score(it) > 0;
+    return mode.score(it) > 0;
   });
 
   const scored = typed
     .map((it) => {
-      let s = mode.score(it);
-      // Tiny noise so re-rolls aren't identical when ties exist
-      s += (rng() - 0.5) * 4;
+      const raw = mode.score(it);
+      if (raw <= 0) return { it, s: -1e9 };
+      let s = raw;
+      // Tiny noise so re-rolls aren't identical when ties exist (never enough to promote 0-stat items)
+      s += (rng() - 0.5) * 1.5;
       // Prefer denser stacks (stat per gold-ish)
       const cost = Number(it.total_cost || it.cost || 2500) || 2500;
-      s += (mode.score(it) / Math.max(cost / 1000, 1)) * 0.15;
+      s += (raw / Math.max(cost / 1000, 1)) * 0.15;
       // Ratatoskr acorns are the bit when they carry the stat
-      if (isRat && String(it.name || "").toLowerCase().includes("acorn") && mode.score(it) > 0) {
+      if (isRat && String(it.name || "").toLowerCase().includes("acorn") && raw > 0) {
         s += 8;
       }
       return { it, s };
     })
-    .filter((x) => mode.score(x.it) > 0 || x.s > 2)
+    .filter((x) => mode.score(x.it) > 0)
     .sort((a, b) => b.s - a.s);
 
   const picked = [];
@@ -3991,15 +3999,18 @@ function buildMaxStatPathJS(god, role, useAspect, modeKey, rng) {
     return ca - cb;
   });
 
-  // One random flavor swap among near-best leftovers
-  if (picked.length >= 3 && scored.length > 8) {
+  // Light flavor swap only among other positive-stat leftovers (never shells)
+  if (picked.length >= 3 && scored.length > 8 && rng() < 0.35) {
     const fi = Math.floor(rng() * picked.length);
-    const alts = scored.filter((x) => !seen.has(x.it.name)).slice(0, 6);
+    const alts = scored
+      .filter((x) => !seen.has(x.it.name) && mode.score(x.it) > 0)
+      .slice(0, 8);
     if (alts.length) {
-      const alt = alts[Math.floor(rng() * alts.length)].it;
+      const alt = alts[Math.floor(rng() * Math.min(alts.length, 4))].it;
       seen.delete(picked[fi].name);
       alt._trollWhy = `😈 max ${mode.unit} chaos swap`;
       picked[fi] = alt;
+      seen.add(alt.name);
     }
   }
 
