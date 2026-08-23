@@ -1455,12 +1455,18 @@ def item_allowed_for_god(it: dict | ScoredItem | str, god_name: str | None) -> b
 
 
 def is_t3_core(it: dict) -> bool:
-    """True for normal shop T3 cores — never god-specific / relics / starters."""
+    """True for normal shop T3 cores — never god-specific / relics / starters / T2."""
     if is_god_specific_item(it):
         return False
-    if it["tier"] == "3":
+    tier = str(it.get("tier") or "").strip()
+    if tier in ("1", "2", "T1", "T2", "Starter", "God Specific", "Relic", "Curio", "Consumable"):
+        return False
+    if tier == "3" or tier == "T3":
         return True
-    if it["item_type"] in ("Offensive", "Defensive", "Hybrid") and (it["total_cost"] or 0) >= 2200:
+    # Cost fallback only when tier is missing — never promote labeled T2 (e.g. Archmage's Gem)
+    if not tier and it.get("item_type") in ("Offensive", "Defensive", "Hybrid") and (
+        it.get("total_cost") or 0
+    ) >= 2200:
         return True
     return False
 

@@ -7232,23 +7232,27 @@ function shopPoolForGod(godName, opts = {}) {
 }
 
 function isT3Item(it) {
-  const tier = String(it.tier || "");
+  const tier = String(it.tier || "").trim();
   const cost = Number(it.total_cost ?? it.cost ?? 0);
   const itype = String(it.item_type || "").toLowerCase();
   // Never treat god-only items as universal T3 (troll was picking acorns on everyone)
   if (isGodSpecificItem(it)) return false;
   if (tier === "Relic" || itype === "relic") return false;
   if (tier === "Curio" || tier === "Consumable" || itype === "consumable") return false;
-  if (tier === "3" || tier === "T3") return true;
+  // Explicit non-T3 — do NOT promote T2 "Archmage's Gem" etc. via cost >= 2000
   if (
-    cost >= 2000 &&
-    tier !== "1" &&
-    tier !== "Starter" &&
-    tier !== "Relic" &&
-    tier !== "God Specific" &&
-    !itype.includes("god specific")
+    tier === "1" ||
+    tier === "2" ||
+    tier === "T1" ||
+    tier === "T2" ||
+    tier === "Starter" ||
+    tier === "God Specific" ||
+    itype.includes("god specific")
   )
-    return true;
+    return false;
+  if (tier === "3" || tier === "T3") return true;
+  // Cost fallback only when tier is missing/unknown — never for labeled T1/T2
+  if (!tier && cost >= 2200) return true;
   return false;
 }
 
