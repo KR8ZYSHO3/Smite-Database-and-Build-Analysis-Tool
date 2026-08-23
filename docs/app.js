@@ -2973,8 +2973,9 @@ function analyzeEnemyTeamJS(enemyGods) {
 function itemStat(it, key) {
   const st = it.stats || it.stats_parsed || {};
   if (st[key] != null) return Number(st[key]) || 0;
-  // stats_text fallback — wiki style "Str: 45" / "MProt: 60"
+  // stats_text + passive — wiki style "Str: 45" / Adaptive Stat: +X Strength or +Y Intelligence
   const t = String(it.stats_text || "");
+  const blob = `${t}\n${it.passive || ""}\n${it.active || ""}`;
   const map = {
     mprot: /m\s*prot[^\d\n]*(\d+(?:\.\d+)?)|mag(?:ical)?\s*prot[^\d\n]*(\d+(?:\.\d+)?)/i,
     pprot: /p\s*prot[^\d\n]*(\d+(?:\.\d+)?)|phys(?:ical)?\s*prot[^\d\n]*(\d+(?:\.\d+)?)/i,
@@ -2989,9 +2990,44 @@ function itemStat(it, key) {
     mp: /(?:^|\n)\s*(?:mana|mp)\s*[:=]?\s*(\d+(?:\.\d+)?)/im,
   };
   const re = map[key];
-  if (!re) return 0;
-  const m = t.match(re);
-  return m ? Number(m[1] || m[2] || 0) : 0;
+  let flat = 0;
+  if (re) {
+    const m = t.match(re) || blob.match(re);
+    flat = m ? Number(m[1] || m[2] || 0) : 0;
+  }
+  // Smite 2 Adaptive Stat: power often lives only in the passive, not Int:/Str: lines
+  if (key === "int" || key === "str") {
+    const adapt = parseAdaptivePower(blob);
+    const adaptVal = key === "int" ? adapt.int : adapt.str;
+    return Math.max(flat, adaptVal);
+  }
+  return flat;
+}
+
+/** Parse "Adaptive Stat: +60 Strength or +90 Intelligence" from item text. */
+function parseAdaptivePower(blob) {
+  const s = String(blob || "");
+  let str = 0;
+  let intv = 0;
+  // Strength or Intelligence (most common)
+  let m = s.match(
+    /adaptive\s*stat\s*:\s*\+?\s*(\d+(?:\.\d+)?)\s*strength\s*or\s*\+?\s*(\d+(?:\.\d+)?)\s*intelligence/i
+  );
+  if (m) {
+    str = Number(m[1]) || 0;
+    intv = Number(m[2]) || 0;
+    return { str, int: intv };
+  }
+  // Intelligence or Strength (rare order)
+  m = s.match(
+    /adaptive\s*stat\s*:\s*\+?\s*(\d+(?:\.\d+)?)\s*intelligence\s*or\s*\+?\s*(\d+(?:\.\d+)?)\s*strength/i
+  );
+  if (m) {
+    intv = Number(m[1]) || 0;
+    str = Number(m[2]) || 0;
+    return { str, int: intv };
+  }
+  return { str: 0, int: 0 };
 }
 
 /** Mulberry32 — deterministic PRNG from a seed (new seed each "Roll" click). */
@@ -3686,7 +3722,8 @@ const MAX_STAT_MODES = {
       "Book Club With Extra Steps",
       "I Cast… Numbers",
     ],
-    blurb: "Every slot chases Intelligence. Real builds optional; spreadsheet mandatory.",
+    blurb:
+      "Every slot chases Intelligence (flat Int + Adaptive Stat INT). Passives like Tahuti % not simulated.",
   },
   max_str: {
     label: "Physical power (STR)",
@@ -3698,7 +3735,8 @@ const MAX_STAT_MODES = {
       "Punch The Meta In The Face",
       "Bench Press The Fire Giant",
     ],
-    blurb: "All Strength, all the time. Subtlety left in draft.",
+    blurb:
+      "All Strength (flat Str + Adaptive Stat STR). On-use % buffs not simulated.",
   },
   max_hp: {
     label: "Health",

@@ -66,7 +66,10 @@ MAX_STAT_MODES: dict[str, dict[str, Any]] = {
             "Book Club With Extra Steps",
             "I Cast… Numbers",
         ],
-        "blurb": "Every slot chases Intelligence. Real builds optional; spreadsheet mandatory.",
+        "blurb": (
+            "Every slot chases Intelligence (flat Int + Adaptive Stat INT). "
+            "Passives like Tahuti % not simulated."
+        ),
     },
     "max_str": {
         "label": "Physical power (STR)",
@@ -78,7 +81,10 @@ MAX_STAT_MODES: dict[str, dict[str, Any]] = {
             "Punch The Meta In The Face",
             "Bench Press The Fire Giant",
         ],
-        "blurb": "All Strength, all the time. Subtlety left in draft.",
+        "blurb": (
+            "All Strength (flat Str + Adaptive Stat STR). "
+            "On-use % buffs not simulated."
+        ),
     },
     "max_hp": {
         "label": "Health",
@@ -597,14 +603,46 @@ def _pick_from_pool_god(
     return near[idx]
 
 
+def _parse_adaptive_power(blob: str) -> tuple[float, float]:
+    """Return (strength, intelligence) from Adaptive Stat passive text."""
+    s = blob or ""
+    m = re.search(
+        r"adaptive\s*stat\s*:\s*\+?\s*(\d+(?:\.\d+)?)\s*strength\s*or\s*\+?\s*(\d+(?:\.\d+)?)\s*intelligence",
+        s,
+        re.I,
+    )
+    if m:
+        return float(m.group(1)), float(m.group(2))
+    m = re.search(
+        r"adaptive\s*stat\s*:\s*\+?\s*(\d+(?:\.\d+)?)\s*intelligence\s*or\s*\+?\s*(\d+(?:\.\d+)?)\s*strength",
+        s,
+        re.I,
+    )
+    if m:
+        return float(m.group(2)), float(m.group(1))
+    return 0.0, 0.0
+
+
 def _item_stat_value(item: ScoredItem | dict, stat: str) -> float:
     if isinstance(item, ScoredItem):
         stats = item.stats
+        blob = f"{item.passive or ''}\n{item.active or ''}"
     else:
         stats = item.get("stats") or {}
+        if not stats:
+            from .conquest_builds import _parse_stats
+
+            stats = _parse_stats(item.get("stats_json"), item.get("stats_text")) or {}
+        blob = f"{item.get('stats_text') or ''}\n{item.get('passive') or ''}\n{item.get('active') or ''}"
     if stat == "prots":
         return _canon_stat_value(stats, "pprot") + _canon_stat_value(stats, "mprot")
-    return _canon_stat_value(stats, stat)
+    flat = _canon_stat_value(stats, stat)
+    # Adaptive Stat power is often only in the passive — count it for INT/STR greed
+    if stat in ("int", "str"):
+        adapt_str, adapt_int = _parse_adaptive_power(blob)
+        adapt = adapt_int if stat == "int" else adapt_str
+        return max(flat, adapt)
+    return flat
 
 
 # Name cues when wiki stats fail to parse (common for some T3s)
@@ -659,22 +697,13 @@ def _troll_pool_item_ok(
     """Legal + vibe-aware filter for troll / maxstat / random paths."""
     if isinstance(it, ScoredItem):
         name = it.name
-        str_v = _canon_stat_value(it.stats, "str")
-        int_v = _canon_stat_value(it.stats, "int")
+        str_v = _item_stat_value(it, "str")
+        int_v = _item_stat_value(it, "int")
         itype = (it.item_type or "").lower()
     else:
         name = it.get("name") or ""
-        from .conquest_builds import _parse_stats, _canon_stat_value as _cv
-
-        stats = _parse_stats(it.get("stats_json"), it.get("stats_text"))
-        # Prefer pre-parsed stats dict from load_items when present
-        if not stats and isinstance(it.get("stats"), dict):
-            stats = it["stats"]
-        str_v = _cv(stats, "str") if stats else 0.0
-        int_v = _cv(stats, "int") if stats else 0.0
-        if not str_v and not int_v and isinstance(it.get("stats"), dict):
-            str_v = _cv(it["stats"], "str")
-            int_v = _cv(it["stats"], "int")
+        str_v = _item_stat_value(it, "str")
+        int_v = _item_stat_value(it, "int")
         itype = (it.get("item_type") or "").lower()
     nlow = name.lower()
     if _is_removed_or_unavailable_item(name):
