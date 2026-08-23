@@ -1043,8 +1043,9 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
             util += 6
     if role in ("Carry", "Mid", "Jungle"):
         pen_v = _canon_stat_value(item["stats"], "pen")
+        # Soft bias: 20% Shard/Titan is good, not an auto-win over Magus/Deso/Chronos
         if pen_v >= 15:
-            util += 22  # dedicated shred (Obsidian / Titan's)
+            util += 12  # dedicated % pen (Obsidian / Titan's) — tank flex, not core tax
         elif pen_v >= 8:
             util += 14
         elif "penetrat" in blob or "penetration" in (item.get("categories") or "").lower():
@@ -2677,7 +2678,8 @@ def _item_matches_slot(
     if slot == "flat_pen":
         return pen >= 8 and pen < 18 and _pen_matches_kit(it, mage=mage, physical=physical)
     if slot == "pct_pen":
-        return pen >= 15 and _pen_matches_kit(it, mage=mage, physical=physical) and not it.is_active_item
+        # Soft: Magus / Grimoire (10%) can fill this slot — not only Shard/Titan (20%)
+        return pen >= 10 and _pen_matches_kit(it, mage=mage, physical=physical) and not it.is_active_item
     if slot == "cdr":
         return cdr >= 10 and (power_ok() or it.item_type != "Defensive")
     if slot == "cdr_def":
@@ -3055,6 +3057,11 @@ def _pick_slot_item(
                 sc += 18
         if slot == "pct_pen" and not x.is_active_item:
             sc += 20
+            # Prefer Magus / Grimoire / Pendulum (10%) over Obsidian / Titan (20%) as the recipe fill
+            if _is_dedicated_pct_pen_item(x):
+                sc -= 45  # tank flex via chips — not default pct_pen winner
+            elif item_pen_value(x) >= 10:
+                sc += 30
         if slot == "flat_pen" and not x.is_active_item:
             sc += 12
             # Prefer real flat pen cores over Gluttonous/Dreamer-as-pen
@@ -3102,10 +3109,10 @@ def _pick_slot_item(
                 # High-SR openers: Deso / Book / Chronos — Obsidian is mid-build
                 if any(k in n for k in ("desolat", "thoth", "book of", "chronos", "pendant", "doom orb")):
                     sc += 70
-                if any(k in n for k in ("magus",)):
-                    sc += 50
+                if any(k in n for k in ("magus", "gluttonous", "grimoire")):
+                    sc += 55
                 if "obsi" in n:
-                    sc += 35  # needed after online spike, not item 1
+                    sc += 10  # tank flex — not a Mid core tax
                 if any(k in n for k in ("tahuti", "soul reaver", "rod of")):
                     sc += 30
                 if any(k in n for k in ("soul gem", "gluttonous", "bancroft", "typhon")):
@@ -3122,7 +3129,7 @@ def _pick_slot_item(
                 if any(k in n for k in ("odysseus", "executioner", "qin", "riptalon")):
                     sc += 75
                 if "titan" in n:
-                    sc += 70
+                    sc += 20  # tank flex — dual shred often enough without Titan core
                 if any(k in n for k in ("lernaean", "avenging", "dominance", "silverbranch")):
                     sc += 50
                 if any(k in n for k in ("deathbring", "demon blade", "bloodforge", "musashi")):
@@ -3170,8 +3177,10 @@ def _pick_slot_item(
                 elif "bloodforge" in n:
                     sc += 25
             if slot in ("flat_pen", "pct_pen"):
-                if any(k in n for k in ("titan", "pendulum", "crusher", "desolat", "obsi")):
-                    sc += 45
+                if any(k in n for k in ("pendulum", "crusher", "desolat", "magus")):
+                    sc += 50
+                if any(k in n for k in ("titan", "obsi")):
+                    sc += 15  # tank flex — not default over Crusher/Pendulum
                 if any(k in n for k in ("executioner", "riptalon", "qins")):
                     sc -= 30
             if slot == "power":
@@ -3882,6 +3891,73 @@ def is_pen_item(it: ScoredItem) -> bool:
     return "penetrat" in blob or "shattering" in blob
 
 
+def _is_dedicated_pct_pen_item(it: ScoredItem) -> bool:
+    """Obsidian Shard / Titan's Bane — strong vs tanks, quiet vs squishies."""
+    n = it.name.lower()
+    return "obsi" in n or "titan" in n
+
+
+def _has_role_shred(path: list[ScoredItem], *, mage: bool, physical: bool) -> bool:
+    """Prot shred / amp that substitutes for a dedicated 20% pen piece."""
+    phys_keys = ("executioner", "odysseus", "qin", "riptalon", "silverbranch", "dominance")
+    mage_keys = ("magus", "void stone", "binding", "gluttonous", "grimoire")
+    for x in path:
+        n = x.name.lower()
+        if physical and any(k in n for k in phys_keys):
+            return True
+        if mage and any(k in n for k in mage_keys):
+            return True
+    return False
+
+
+def _has_soft_pen_coverage(
+    path: list[ScoredItem],
+    *,
+    mage: bool,
+    physical: bool,
+    role: str = "",
+) -> bool:
+    """
+    True when the path already hurts tanks/squishies enough without forcing
+    Obsidian Shard / Titan's Bane.
+
+    Coverage = matching pen total >= MIN_BUILD_PEN
+            OR (flat pen piece + (light % pen OR role shred)).
+    """
+    matching = [x for x in path if _pen_matches_kit(x, mage=mage, physical=physical)]
+    total = sum(item_pen_value(x) for x in matching)
+    if total >= MIN_BUILD_PEN and matching:
+        return True
+
+    has_flat = any(8 <= item_pen_value(x) < 15 for x in matching)
+    # Flat openers that store pen oddly still count by name
+    if not has_flat:
+        for x in path:
+            n = x.name.lower()
+            if any(k in n for k in ("desolat", "jotunn", "crusher")) and _pen_matches_kit(
+                x, mage=mage, physical=physical
+            ):
+                has_flat = True
+                break
+
+    has_light_pct = any(item_pen_value(x) >= 10 for x in matching)
+    has_shred = _has_role_shred(path, mage=mage, physical=physical)
+    if has_flat and (has_light_pct or has_shred):
+        return True
+
+    # Physical Carry/Jungle: dual shred (Exec+OBow, etc.) is enough without Titan
+    if physical:
+        phys_keys = ("executioner", "odysseus", "qin", "riptalon", "silverbranch", "dominance", "crusher")
+        shred_n = sum(1 for x in path if any(k in x.name.lower() for k in phys_keys))
+        if shred_n >= 2:
+            return True
+        # Jotunn/Crusher/Pendulum package — common jungle without Titan
+        jg_keys = ("jotunn", "crusher", "pendulum")
+        if sum(1 for x in path if any(k in x.name.lower() for k in jg_keys)) >= 2:
+            return True
+    return False
+
+
 def _slot_label(it: ScoredItem) -> str:
     if is_pen_item(it) and item_pen_value(it) >= 8:
         return "pen"
@@ -4066,7 +4142,15 @@ def _normalize_jungle_path(
             if not aa and "executioner" in n:
                 continue
             cands.append(x)
-        cands.sort(key=lambda x: (item_pen_value(x), x.role_score), reverse=True)
+        # Prefer flat / light % pen fillers over always slamming Obsidian/Titan
+        cands.sort(
+            key=lambda x: (
+                0 if _is_dedicated_pct_pen_item(x) else 1,
+                item_pen_value(x),
+                x.role_score,
+            ),
+            reverse=True,
+        )
         return cands[0] if cands else None
 
     def best_power(exclude: set[str]) -> ScoredItem | None:
@@ -4327,13 +4411,16 @@ def _normalize_jungle_path(
                 if item_pen_value(alt) >= 8:
                     pen_n += 1
 
-    # Need real pen in the build
+    # Need real pen — soft coverage (flat + light%/shred) is enough; don't force
+    # a second Titan/Shard just to hit count==2.
     pen_items = [
         x
         for x in path
         if _pen_matches_kit(x, mage=mage, physical=physical) and item_pen_value(x) >= 8
     ]
-    if len(pen_items) < 2:
+    if len(pen_items) < 2 and not _has_soft_pen_coverage(
+        path, mage=mage, physical=physical, role="Jungle"
+    ):
         need = 2 - len(pen_items)
         for _ in range(need):
             alt = best_pen(seen)
@@ -4381,6 +4468,10 @@ def _normalize_jungle_path(
         else:
             break
 
+    # Assembly may have slotted Titan/Shard; drop if soft coverage already holds
+    path = _strip_dedicated_pct_pen_if_soft_covered(
+        path, pool, mage=mage, physical=physical, role="Jungle", max_actives=max_actives
+    )
     return path[:6]
 
 
@@ -4398,11 +4489,11 @@ def _normalize_carry_path(
 
       Physical hunters:
         Tyrfing / Trans / DG opener → AS/LS → shred (Exec / OBow / Qin / Riptalon)
-        → Titan's Bane → crit/power finisher
+        → crit/power finisher; Titan's Bane only if soft pen coverage fails
         Hard-ban: Solo shells, jungle toys (Jotunn/Hydra/Crusher), random antiheal cores
 
       Mage ADC:
-        Book/Deso → pen → INT power (not support shells)
+        Book/Deso → pen → INT power (not support shells); Obsidian only if soft coverage fails
     """
     if not path:
         return path
@@ -4575,8 +4666,10 @@ def _normalize_carry_path(
                     sh2,
                 )
 
-        # 3) Titan's Bane mandatory (% pen)
-        if not any("titan" in x.name.lower() for x in path):
+        # 3) Titan's Bane only if soft pen coverage fails (shred + flat often enough)
+        if not any("titan" in x.name.lower() for x in path) and not _has_soft_pen_coverage(
+            path, mage=False, physical=True, role="Carry"
+        ):
             tb = find_named("titan")
             if tb:
                 replace_slot(
@@ -4631,23 +4724,19 @@ def _normalize_carry_path(
                     replace_slot(i, alt)
 
     if mage:
-        # Flat + % pen
+        # Flat pen first; dedicated Obsidian only if soft coverage still fails
         has_flat = any(
             item_pen_value(x) >= 8
             and item_pen_value(x) < 18
             and _pen_matches_kit(x, mage=True, physical=False)
             for x in path
         )
-        has_pct = any(
-            item_pen_value(x) >= 15 and _pen_matches_kit(x, mage=True, physical=False)
-            for x in path
-        )
         if not has_flat:
             alt = find_named("desolat", "magus", "divine")
             if alt:
                 replace_slot(drop_worst({"obsi", "thoth", "tahuti"}), alt)
-        if not has_pct:
-            alt = find_named("obsi")
+        if not _has_soft_pen_coverage(path, mage=True, physical=False, role="Carry"):
+            alt = find_named("magus", "gluttonous", "grimoire", "obsi")
             if alt:
                 replace_slot(drop_worst({"desolat", "thoth", "tahuti", "soul reaver"}), alt)
         # Book / power stack for non-AA mage ADC
@@ -4669,6 +4758,9 @@ def _normalize_carry_path(
         else:
             break
 
+    path = _strip_dedicated_pct_pen_if_soft_covered(
+        path, pool, mage=mage, physical=physical, role="Carry", max_actives=max_actives
+    )
     return path[:6]
 
 
@@ -4707,27 +4799,27 @@ def _ensure_inspired_cores(
         if float(meta.get("rate") or 0) >= 0.12 and name not in want:
             want.append(name)
 
-    # Role hard staples from ladder snapshot (always try if legal)
+    # Role hard staples from ladder snapshot (always try if legal).
+    # Soft % pen: do NOT staple Obsidian/Titan — those are tanks_hp flex, not cores.
     role_staples = {
-        "Mid": ("Spear of Desolation", "Book of Thoth", "Obsidian Shard"),
+        "Mid": ("Spear of Desolation", "Book of Thoth"),
         "Carry": (
             "Tyrfing",
             "Devourer's Gauntlet",
-            "Titan's Bane",
             "The Executioner",
             "Odysseus' Bow",
             "Qin's Blade",
         ),
-        "Jungle": ("Jotunn's Revenge", "Hydra's Lament", "Titan's Bane"),
+        "Jungle": ("Jotunn's Revenge", "Hydra's Lament"),
         "Solo": ("Shifter's Shield", "Genji's Guard", "Breastplate of Valor"),
         "Support": ("Gauntlet of Thebes", "Shifter's Shield", "Stampede"),
     }
-    # Magical gods flexed to Jungle/Carry/Mid — Deso/Book/Obsidian, not Jotunn
+    # Magical gods flexed to Jungle/Carry/Mid — Deso/Book/power, not forced Obsidian
     if mage and role in ("Jungle", "Carry", "Mid"):
         role_staples = {
             **role_staples,
-            "Jungle": ("Spear of Desolation", "Book of Thoth", "Obsidian Shard", "Rod of Tahuti"),
-            "Carry": ("Spear of Desolation", "Book of Thoth", "Obsidian Shard", "Soul Reaver"),
+            "Jungle": ("Spear of Desolation", "Book of Thoth", "Rod of Tahuti"),
+            "Carry": ("Spear of Desolation", "Book of Thoth", "Soul Reaver"),
         }
     for name in role_staples.get(role, ()):
         if name not in want:
@@ -5172,6 +5264,81 @@ def _pen_matches_kit(it: ScoredItem, *, mage: bool, physical: bool) -> bool:
     return True
 
 
+def _strip_dedicated_pct_pen_if_soft_covered(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    *,
+    mage: bool,
+    physical: bool,
+    role: str,
+    max_actives: int,
+) -> list[ScoredItem]:
+    """
+    If Obsidian/Titan landed from assembly but the rest of the path already has
+    soft pen coverage, swap them for a non-dedicated fill (Magus/Crusher/power).
+    """
+    if role not in DAMAGE_ROLES_NEED_PEN:
+        return path
+    if not any(_is_dedicated_pct_pen_item(x) for x in path):
+        return path
+
+    without = [x for x in path if not _is_dedicated_pct_pen_item(x)]
+    if not _has_soft_pen_coverage(without, mage=mage, physical=physical, role=role):
+        return path
+
+    path = list(path)
+    seen = {x.name for x in path}
+
+    def best_fill(exclude: set[str]) -> ScoredItem | None:
+        cands: list[ScoredItem] = []
+        for x in pool:
+            if x.name in exclude or _is_dedicated_pct_pen_item(x):
+                continue
+            if x.is_active_item and sum(1 for y in path if y.is_active_item) >= max_actives:
+                continue
+            if not _pen_matches_kit(x, mage=mage, physical=physical) and item_pen_value(x) < 5:
+                # allow power fills
+                pow_v = _canon_stat_value(x.stats, "str") + _canon_stat_value(x.stats, "int")
+                if pow_v < 40 and _canon_stat_value(x.stats, "cdr") < 10:
+                    continue
+            # Prefer light pen / shred / CDR power over random shells
+            n = x.name.lower()
+            if x.item_type == "Defensive" and item_pen_value(x) < 8:
+                continue
+            if role == "Carry" and physical and any(
+                k in n for k in ("jotunn", "hydra", "crusher", "arondight")
+            ):
+                continue
+            cands.append(x)
+        if not cands:
+            return None
+
+        def fill_key(x: ScoredItem) -> tuple:
+            n = x.name.lower()
+            prefer = 0
+            if any(k in n for k in ("magus", "gluttonous", "pendulum", "crusher", "desolat", "divine")):
+                prefer = 3
+            elif any(k in n for k in ("deathbring", "tahuti", "cosmic", "reaper", "bloodforge")):
+                prefer = 2
+            elif item_pen_value(x) >= 8 or _canon_stat_value(x.stats, "cdr") >= 10:
+                prefer = 1
+            return (prefer, item_pen_value(x), x.role_score)
+
+        cands.sort(key=fill_key, reverse=True)
+        return cands[0]
+
+    for i, it in enumerate(list(path)):
+        if not _is_dedicated_pct_pen_item(it):
+            continue
+        alt = best_fill(seen - {it.name})
+        if not alt:
+            continue
+        seen.discard(it.name)
+        path[i] = alt
+        seen.add(alt.name)
+    return path
+
+
 def _ensure_pen_in_path(
     path: list[ScoredItem],
     pool: list[ScoredItem],
@@ -5184,6 +5351,11 @@ def _ensure_pen_in_path(
     """Guarantee damage roles get real *matching* pen (prefer passive shred)."""
     if role not in DAMAGE_ROLES_NEED_PEN:
         return path
+
+    # Soft: drop forced Obsidian/Titan when flat+% / shred already covers
+    path = _strip_dedicated_pct_pen_if_soft_covered(
+        path, pool, mage=mage, physical=physical, role=role, max_actives=max_actives
+    )
 
     matching = [x for x in path if _pen_matches_kit(x, mage=mage, physical=physical)]
     total_pen = sum(item_pen_value(x) for x in matching)
@@ -5202,6 +5374,8 @@ def _ensure_pen_in_path(
     candidates.sort(
         key=lambda x: (
             0 if not x.is_active_item else 1,
+            # Prefer flat / light % over dedicated Obsidian/Titan when filling the floor
+            1 if _is_dedicated_pct_pen_item(x) else 0,
             -item_pen_value(x),
             -x.role_score,
         )
@@ -5827,6 +6001,11 @@ def build_god_build(
     items_6 = _ensure_inspired_cores(
         items_6, t3, role, god_nm, mage=mage, physical=physical, max_actives=max_act
     )
+    # Final soft-%-pen pass — inspire / jungle normalize may have re-slotted Titan/Shard
+    if role in DAMAGE_ROLES_NEED_PEN:
+        items_6 = _strip_dedicated_pct_pen_if_soft_covered(
+            items_6, t3, mage=mage, physical=physical, role=role, max_actives=max_act
+        )
     # Re-assert human kit cores after SR inspire (Cu: Yogi's + Mystical Mail)
     if bias.get("prefer_items") and role in ("Solo", "Support"):
         seen_pref = {x.name for x in items_6}
@@ -6204,11 +6383,38 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
             paths.setdefault(names, []).append(gb.get("god") or "?")
             pen = float(gb.get("pen_total") or 0)
             if role in DAMAGE_ROLES_NEED_PEN and pen < MIN_BUILD_PEN:
-                pen_fail.append(gb.get("god"))
+                # Soft coverage: dual shred / Jotunn+Crusher packages count even if pen_stat sum is low
+                low = [str(n).lower() for n in names]
+                shred_n = sum(
+                    1
+                    for n in low
+                    if any(
+                        k in n
+                        for k in (
+                            "executioner",
+                            "odysseus",
+                            "qin",
+                            "riptalon",
+                            "crusher",
+                            "magus",
+                            "gluttonous",
+                        )
+                    )
+                )
+                jg_n = sum(1 for n in low if any(k in n for k in ("jotunn", "crusher", "pendulum")))
+                soft_ok = shred_n >= 2 or jg_n >= 2 or any(
+                    k in n for n in low for k in ("desolat", "magus", "cosmic", "pendulum", "crusher")
+                )
+                if not soft_ok:
+                    pen_fail.append(gb.get("god"))
             if role in DAMAGE_ROLES_NEED_PEN and names:
                 early = [str(n).lower() for n in names[:3]]
+                # Tyrfing / DG / Trans openers are fine; melt can be slot 2–4
                 has_early_melt = any(
                     any(k in n for k in melt_keys) for n in early
+                ) or any(
+                    any(k in n for k in ("tyrfing", "devourer", "transcend", "executioner", "hydra"))
+                    for n in early
                 )
                 if not has_early_melt:
                     early_fail.append(gb.get("god"))

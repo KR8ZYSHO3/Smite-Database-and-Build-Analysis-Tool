@@ -200,9 +200,12 @@ Then signature inject (kit keys) and fill empties.
 
 Applied in order:
 
-1. **`_ensure_pen_in_path`** — damage roles ≥ `MIN_BUILD_PEN` (20) matching pen.
-2. **Jungle normalize** — standard openers; cap opener-family ≤2; strip ADC toys on ability kits.
-3. **`_ensure_inspired_cores`** — if high-SR openers/staples missing (Deso, Book, Tyrfing, Jotunn, Thebes, Shifter…), inject 1–2 legal ones by replacing weakest non-core.
+1. **`_ensure_pen_in_path`** — damage roles need matching pen. Soft coverage is enough:
+   - matching pen total ≥ `MIN_BUILD_PEN` (20), **or**
+   - flat pen piece + (light % pen ≥10 *or* role shred: Exec/OBow/Qin / Magus/Void/Grimoire).
+   Do **not** force Obsidian Shard / Titan's Bane when soft coverage already holds. Those stay on **`tanks_hp` flex chips** for fat fronts.
+2. **Jungle normalize** — standard openers; cap opener-family ≤2; strip ADC toys on ability kits; skip second pen inject when soft coverage is met.
+3. **`_ensure_inspired_cores`** — if high-SR openers/staples missing (Deso, Book, Tyrfing, Jotunn, Thebes, Shifter…), inject 1–2 legal ones by replacing weakest non-core. Shard/Titan are **not** role staples.
 4. **Trim excess defense** on Carry/Mid/Jungle (max 1 pure shell).
 5. **Active budget** — default ≤2 shop actives (≤3 melee physical Solo/Jungle).
 

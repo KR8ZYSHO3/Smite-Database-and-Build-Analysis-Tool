@@ -1,7 +1,7 @@
 {
   "game": "SMITE 2",
   "source": "https://wiki.smite2.com",
-  "exported_at": "2026-08-15T23:51:53.072929+00:00",
+  "exported_at": "2026-08-23T02:01:07.117654+00:00",
   "repo": "https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool",
   "live_url": "https://smitebuilddatabase.netlify.app/",
   "live_url_alt": "https://smitebuilddatabase.netlify.app/",
@@ -14,7 +14,7 @@
   "latest_patch_date": "August 11, 2026",
   "latest_patch_title": "= OB41 - The Light Weaver Update =",
   "build_algorithm": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "doc": "docs/BUILD_ALGORITHM.md",
     "phases": [
       {
@@ -159,7 +159,7 @@
         "Mantle Of Discord"
       ]
     },
-    "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and pen floors always win."
+    "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
   },
   "has_meta_lab": true
 }

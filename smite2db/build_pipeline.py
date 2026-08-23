@@ -24,7 +24,7 @@ from typing import Any
 # Phase registry (human + machine readable)
 # ---------------------------------------------------------------------------
 
-ALGORITHM_VERSION = "1.0.0"
+ALGORITHM_VERSION = "1.1.0"
 ALGORITHM_DOC = "docs/BUILD_ALGORITHM.md"
 
 PHASES: list[dict[str, str]] = [
@@ -115,7 +115,8 @@ def algorithm_card() -> dict[str, Any]:
         "philosophy": (
             "Kit-true, role-correct, spike-ordered paths. "
             "High-SR data nudges picks and buy order; it never hard-copies a ladder week. "
-            "Hard gates and pen floors always win."
+            "Hard gates and soft pen floors always win — "
+            "Obsidian/Titan are tank flex, not mandatory cores."
         ),
     }
 
