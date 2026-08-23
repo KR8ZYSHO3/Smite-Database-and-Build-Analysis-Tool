@@ -15,7 +15,7 @@ When two signals conflict, **higher wins**:
 | Rank | Layer | Rule |
 |-----:|--------|------|
 | 1 | **Hard gates** | Illegal items never appear (damage type, god-only, removed shop, healer-only, etc.) |
-| 2 | **Role job** | Carry shreds/crits, Mid online pen, Jungle ganks, Solo offline+bulk, Support aura/peel |
+| 2 | **Role job** | Carry shreds/crits, Mid online pen, Jungle ganks (no Omen-as-core), Solo offline+bulk, Support aura/peel (**no Jotunn/Titan/Hydra damage cores**) |
 | 3 | **Buy order / spikes** | Item *sequence* matters as much as the set; early online before late % pen / luxury |
 | 4 | **Kit identity** | Tags, effects, scaling (STR/INT), archetype slot recipe |
 | 5 | **Ladder + patch** | S/A item momentum; C/D soft penalty; role-gated so tank S doesn’t invade Mid |

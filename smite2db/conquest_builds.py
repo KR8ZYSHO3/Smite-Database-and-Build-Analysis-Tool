@@ -1961,7 +1961,7 @@ def rescore_for_god(
             s += 24
         if "attack speed" in blob and any(k in blob for k in ("reduc", "enemy", "their")):
             s += 22
-        # Support should not core pure DPS / mid-mage toys
+        # Support should not core pure DPS / mid-mage / jungle assassin toys
         if any(
             k in nlow
             for k in (
@@ -1979,9 +1979,18 @@ def rescore_for_god(
                 "spear of the magus",
                 "dreamer",
                 "wish-granting",
+                "jotunn",
+                "hydra",
+                "crusher",
+                "heartseeker",
+                "arondight",
+                "bloodforge",
+                "pendulum blade",
+                "the reaper",
+                "parashu",
             )
         ):
-            s -= 55
+            s -= 120
         # Greedy pure power without bulk
         if int_v >= 50 and _canon_stat_value(item.stats, "hp") < 200 and (
             _canon_stat_value(item.stats, "pprot") + _canon_stat_value(item.stats, "mprot") < 25
@@ -2012,6 +2021,9 @@ def rescore_for_god(
         s += pen_v * 1.5 + cdr_v * 0.7
         if any(k in blob for k in ("jungle", "monster", "minion")):
             s += 22
+        # Echo-only toys are not default gank cores (esp. after soft-%-pen fills)
+        if "omen" in nlow:
+            s -= 70
         # Standard ability jungle: Jotunn / Hydra / stack first, then pen+power
         if "jotunn" in nlow:
             s += 52
@@ -3189,13 +3201,19 @@ def _pick_slot_item(
                     sc += 15  # tank flex — not default over Crusher/Pendulum
                 if any(k in n for k in ("executioner", "riptalon", "qins")):
                     sc -= 30
+                if "omen" in n:
+                    sc -= 55
             if slot == "power":
                 if any(k in n for k in ("arondight", "bloodforge", "reaper")):
                     sc += 35
                 if any(k in n for k in ("executioner", "riptalon", "musashi", "avenging")):
                     sc -= 40
+                if "omen" in n:
+                    sc -= 55
             if any(k in n for k in ("parashu", "dreamer", "wish-granting", "eye of erebus")):
                 sc -= 20  # luxury last, not core
+            if "omen" in n:
+                sc -= 40
         if role == "Solo":
             if slot in ("hybrid_bulk", "power_bruiser", "sustain_tank", "defense"):
                 # Cu / HP-solo identity: Yogi's max-HP heal + Mystical aura
@@ -5270,6 +5288,166 @@ def _pen_matches_kit(it: ScoredItem, *, mage: bool, physical: bool) -> bool:
     return True
 
 
+_SUPPORT_DAMAGE_BAN = (
+    "jotunn",
+    "hydra",
+    "crusher",
+    "titan",
+    "heartseeker",
+    "arondight",
+    "deathbring",
+    "demon blade",
+    "musashi",
+    "bloodforge",
+    "tahuti",
+    "soul reaver",
+    "dreamer",
+    "parashu",
+    "desolat",
+    "obsidian",
+    "pendulum blade",
+    "the reaper",
+    "omen",
+)
+
+
+def _support_damage_banned(name: str) -> bool:
+    n = name.lower()
+    return any(k in n for k in _SUPPORT_DAMAGE_BAN)
+
+
+def _role_fill_candidate(
+    pool: list[ScoredItem],
+    exclude: set[str],
+    *,
+    role: str,
+    mage: bool,
+    physical: bool,
+    max_actives: int,
+    path: list[ScoredItem],
+) -> ScoredItem | None:
+    """Best legal replacement for an illegal / soft-pen strip slot."""
+    cands: list[ScoredItem] = []
+    for x in pool:
+        if x.name in exclude:
+            continue
+        if _is_dedicated_pct_pen_item(x):
+            continue
+        if role == "Support" and _support_damage_banned(x.name):
+            continue
+        if role == "Jungle" and "omen" in x.name.lower():
+            continue
+        if x.is_active_item and sum(1 for y in path if y.is_active_item) >= max_actives:
+            continue
+        if role == "Support":
+            # Prefer aura / mitigate / dual prot
+            if x.item_type not in ("Defensive", "Hybrid") and item_pen_value(x) < 5:
+                pow_v = _canon_stat_value(x.stats, "str") + _canon_stat_value(x.stats, "int")
+                if pow_v >= 50:
+                    continue
+            cands.append(x)
+            continue
+        if not _pen_matches_kit(x, mage=mage, physical=physical) and item_pen_value(x) < 5:
+            pow_v = _canon_stat_value(x.stats, "str") + _canon_stat_value(x.stats, "int")
+            if pow_v < 40 and _canon_stat_value(x.stats, "cdr") < 10:
+                continue
+        n = x.name.lower()
+        if x.item_type == "Defensive" and item_pen_value(x) < 8:
+            continue
+        if role == "Carry" and physical and any(
+            k in n for k in ("jotunn", "hydra", "crusher", "arondight")
+        ):
+            continue
+        cands.append(x)
+    if not cands:
+        return None
+
+    def fill_key(x: ScoredItem) -> tuple:
+        n = x.name.lower()
+        prefer = 0
+        if role == "Support":
+            if any(k in n for k in ("thebes", "shifter", "stampede", "prophetic", "amanita")):
+                prefer = 5
+            elif any(k in n for k in ("binding", "isolation", "spectral", "freya", "hussar", "genji", "breastplate")):
+                prefer = 4
+            elif x.item_type == "Defensive":
+                prefer = 3
+            return (prefer, x.role_score)
+        if role == "Jungle" and physical:
+            if any(
+                k in n
+                for k in (
+                    "crusher",
+                    "pendulum",
+                    "reaper",
+                    "bloodforge",
+                    "arondight",
+                    "deathbring",
+                    "heartseeker",
+                    "parashu",
+                )
+            ):
+                prefer = 4
+        elif role in ("Mid", "Jungle") and mage:
+            if any(k in n for k in ("magus", "gluttonous", "desolat", "divine", "cosmic")):
+                prefer = 4
+            elif any(k in n for k in ("tahuti", "soul reaver")):
+                prefer = 3
+        elif any(k in n for k in ("magus", "gluttonous", "pendulum", "crusher", "desolat", "divine")):
+            prefer = 3
+        elif any(k in n for k in ("deathbring", "tahuti", "cosmic", "reaper", "bloodforge")):
+            prefer = 2
+        elif item_pen_value(x) >= 8 or _canon_stat_value(x.stats, "cdr") >= 10:
+            prefer = 1
+        return (prefer, item_pen_value(x), x.role_score)
+
+    cands.sort(key=fill_key, reverse=True)
+    return cands[0]
+
+
+def _scrub_role_illegal_items(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    *,
+    role: str,
+    mage: bool,
+    physical: bool,
+    max_actives: int,
+    tags: set[str] | None = None,
+) -> list[ScoredItem]:
+    """Replace items that violate the role job (Support damage cores, JG Omen, …)."""
+    tags = tags or set()
+    path = list(path)
+    seen = {x.name for x in path}
+
+    def illegal(it: ScoredItem) -> bool:
+        n = it.name.lower()
+        if role == "Support" and _support_damage_banned(it.name):
+            return True
+        if role == "Jungle" and "omen" in n and "echo" not in tags:
+            return True
+        return False
+
+    for i, it in enumerate(list(path)):
+        if not illegal(it):
+            continue
+        alt = _role_fill_candidate(
+            pool,
+            seen - {it.name},
+            role=role,
+            mage=mage,
+            physical=physical,
+            max_actives=max_actives,
+            path=path,
+        )
+        if not alt:
+            continue
+        seen.discard(it.name)
+        path[i] = alt
+        seen.add(alt.name)
+    return path[:6]
+
+
 def _strip_dedicated_pct_pen_if_soft_covered(
     path: list[ScoredItem],
     pool: list[ScoredItem],
@@ -5295,48 +5473,18 @@ def _strip_dedicated_pct_pen_if_soft_covered(
     path = list(path)
     seen = {x.name for x in path}
 
-    def best_fill(exclude: set[str]) -> ScoredItem | None:
-        cands: list[ScoredItem] = []
-        for x in pool:
-            if x.name in exclude or _is_dedicated_pct_pen_item(x):
-                continue
-            if x.is_active_item and sum(1 for y in path if y.is_active_item) >= max_actives:
-                continue
-            if not _pen_matches_kit(x, mage=mage, physical=physical) and item_pen_value(x) < 5:
-                # allow power fills
-                pow_v = _canon_stat_value(x.stats, "str") + _canon_stat_value(x.stats, "int")
-                if pow_v < 40 and _canon_stat_value(x.stats, "cdr") < 10:
-                    continue
-            # Prefer light pen / shred / CDR power over random shells
-            n = x.name.lower()
-            if x.item_type == "Defensive" and item_pen_value(x) < 8:
-                continue
-            if role == "Carry" and physical and any(
-                k in n for k in ("jotunn", "hydra", "crusher", "arondight")
-            ):
-                continue
-            cands.append(x)
-        if not cands:
-            return None
-
-        def fill_key(x: ScoredItem) -> tuple:
-            n = x.name.lower()
-            prefer = 0
-            if any(k in n for k in ("magus", "gluttonous", "pendulum", "crusher", "desolat", "divine")):
-                prefer = 3
-            elif any(k in n for k in ("deathbring", "tahuti", "cosmic", "reaper", "bloodforge")):
-                prefer = 2
-            elif item_pen_value(x) >= 8 or _canon_stat_value(x.stats, "cdr") >= 10:
-                prefer = 1
-            return (prefer, item_pen_value(x), x.role_score)
-
-        cands.sort(key=fill_key, reverse=True)
-        return cands[0]
-
     for i, it in enumerate(list(path)):
         if not _is_dedicated_pct_pen_item(it):
             continue
-        alt = best_fill(seen - {it.name})
+        alt = _role_fill_candidate(
+            pool,
+            seen - {it.name},
+            role=role,
+            mage=mage,
+            physical=physical,
+            max_actives=max_actives,
+            path=path,
+        )
         if not alt:
             continue
         seen.discard(it.name)
@@ -5807,6 +5955,7 @@ def build_god_build(
             # personal AS/crit toys are not support cores
             if (as_v >= 20 or crit_v >= 15 or bap >= 15) and _slot_label(s) == "power":
                 return False
+            # Assassin / hypercarry damage cores are illegal on Support
             if any(
                 k in nlow
                 for k in (
@@ -5820,6 +5969,18 @@ def build_god_build(
                     "dreamer",
                     "wish-granting",
                     "deathbringer",
+                    "jotunn",
+                    "hydra",
+                    "crusher",
+                    "titan",
+                    "heartseeker",
+                    "arondight",
+                    "bloodforge",
+                    "demon blade",
+                    "musashi",
+                    "parashu",
+                    "pendulum blade",
+                    "the reaper",
                 )
             ):
                 return False
@@ -5877,6 +6038,9 @@ def build_god_build(
                     return False
             # Eye of the Storm / pure mid hybrid actives are not jungle openers
             if "eye of the storm" in nlow:
+                return False
+            # Omen Drum is Echo greed — not a default gank core
+            if "omen" in nlow and "echo" not in tags_kit:
                 return False
             return True
         if role == "Carry":
@@ -6012,6 +6176,16 @@ def build_god_build(
         items_6 = _strip_dedicated_pct_pen_if_soft_covered(
             items_6, t3, mage=mage, physical=physical, role=role, max_actives=max_act
         )
+    # Role-job scrub: Support damage cores, Jungle Omen, etc.
+    items_6 = _scrub_role_illegal_items(
+        items_6,
+        t3,
+        role=role,
+        mage=mage,
+        physical=physical,
+        max_actives=max_act,
+        tags=set(bias.get("tags") or []),
+    )
     # Re-assert human kit cores after SR inspire (Cu: Yogi's + Mystical Mail)
     if bias.get("prefer_items") and role in ("Solo", "Support"):
         seen_pref = {x.name for x in items_6}
@@ -6039,6 +6213,15 @@ def build_god_build(
         items_6 = _normalize_carry_path(
             items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
         )
+    items_6 = _scrub_role_illegal_items(
+        items_6,
+        t3,
+        role=role,
+        mage=mage,
+        physical=physical,
+        max_actives=max_act,
+        tags=set(bias.get("tags") or []),
+    )
     # --- P7 Buy order (spike timing; high-SR avg_slot when available) ---
     items_6 = _order_buy_path(items_6, role, god_name=god_nm)
     # Avoid double luxury actives (Dreamer's + Wish-Granting) on damage roles
@@ -6372,6 +6555,7 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
         pen_fail = []
         early_fail = []
         lux_fail = []
+        role_job_fail = []
         melt_keys = (
             "executioner",
             "odysseus",
@@ -6387,6 +6571,16 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
         for gb in gods:
             names = tuple(it["name"] for it in (gb.get("items") or []))
             paths.setdefault(names, []).append(gb.get("god") or "?")
+            low = [str(n).lower() for n in names]
+            # Role-job illegal staples
+            if role == "Support" and any(_support_damage_banned(n) for n in names):
+                role_job_fail.append(gb.get("god"))
+            if role == "Jungle" and any("omen" in n for n in low):
+                role_job_fail.append(gb.get("god"))
+            if role == "Carry" and any(
+                any(k in n for k in ("jotunn", "hydra's", "hydra ")) for n in low
+            ):
+                role_job_fail.append(gb.get("god"))
             pen = float(gb.get("pen_total") or 0)
             if role in DAMAGE_ROLES_NEED_PEN and pen < MIN_BUILD_PEN:
                 # Soft coverage: dual shred / Jotunn+Crusher packages count even if pen_stat sum is low
@@ -6442,6 +6636,7 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
             and not pen_fail
             and not lux_fail
             and not early_fail
+            and not role_job_fail
         )
         if not role_ok:
             summary["ok"] = False
@@ -6453,6 +6648,8 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
             summary["warnings"].append(f"{role}: no early tank-melt {early_fail}")
         if lux_fail:
             summary["warnings"].append(f"{role}: multi-luxury {lux_fail}")
+        if role_job_fail:
+            summary["warnings"].append(f"{role}: role-job illegal {role_job_fail}")
         summary["roles"][role] = {
             "unique": unique,
             "total": total,
@@ -6460,6 +6657,7 @@ def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
             "pen_fail": pen_fail,
             "early_melt_fail": early_fail,
             "luxury_fail": lux_fail,
+            "role_job_fail": role_job_fail,
         }
     return summary
 

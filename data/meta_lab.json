@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-23T02:01:43.747189+00:00",
+  "generated_at": "2026-08-23T19:52:29.606399+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -2536,12 +2536,12 @@
       "path_count": 23,
       "staples": [
         {
-          "name": "Tyrfing",
+          "name": "Odysseus' Bow",
           "paths": 18,
           "pct": 78.3
         },
         {
-          "name": "Odysseus' Bow",
+          "name": "Tyrfing",
           "paths": 18,
           "pct": 78.3
         },
@@ -2581,7 +2581,7 @@
           "pct": 21.7
         },
         {
-          "name": "Spear of Desolation",
+          "name": "The Cosmic Horror",
           "paths": 5,
           "pct": 21.7
         },
@@ -2591,7 +2591,7 @@
           "pct": 21.7
         },
         {
-          "name": "The Cosmic Horror",
+          "name": "Spear of Desolation",
           "paths": 5,
           "pct": 21.7
         },
@@ -2616,7 +2616,7 @@
       "path_count": 25,
       "staples": [
         {
-          "name": "Spear of Desolation",
+          "name": "The Cosmic Horror",
           "paths": 24,
           "pct": 96.0
         },
@@ -2626,7 +2626,7 @@
           "pct": 96.0
         },
         {
-          "name": "The Cosmic Horror",
+          "name": "Spear of Desolation",
           "paths": 24,
           "pct": 96.0
         },
@@ -2696,11 +2696,6 @@
       "path_count": 22,
       "staples": [
         {
-          "name": "Pendulum Blade",
-          "paths": 21,
-          "pct": 95.5
-        },
-        {
           "name": "Jotunn's Revenge",
           "paths": 21,
           "pct": 95.5
@@ -2712,36 +2707,46 @@
         },
         {
           "name": "The Crusher",
-          "paths": 20,
-          "pct": 90.9
+          "paths": 21,
+          "pct": 95.5
+        },
+        {
+          "name": "Heartseeker",
+          "paths": 12,
+          "pct": 54.5
+        },
+        {
+          "name": "Avatar's Parashu",
+          "paths": 12,
+          "pct": 54.5
+        },
+        {
+          "name": "Pendulum Blade",
+          "paths": 10,
+          "pct": 45.5
         },
         {
           "name": "The Reaper",
-          "paths": 19,
-          "pct": 86.4
+          "paths": 8,
+          "pct": 36.4
+        },
+        {
+          "name": "Arondight",
+          "paths": 7,
+          "pct": 31.8
         },
         {
           "name": "Damaru",
-          "paths": 6,
-          "pct": 27.3
-        },
-        {
-          "name": "Bloodforge",
           "paths": 5,
           "pct": 22.7
         },
         {
-          "name": "Avatar's Parashu",
+          "name": "Bloodforge",
           "paths": 4,
           "pct": 18.2
         },
         {
-          "name": "Omen Drum",
-          "paths": 3,
-          "pct": 13.6
-        },
-        {
-          "name": "Arondight",
+          "name": "Toxic Blade",
           "paths": 2,
           "pct": 9.1
         },
@@ -2751,7 +2756,7 @@
           "pct": 4.5
         },
         {
-          "name": "Runeforged Hammer",
+          "name": "Thistlethorn Acorn",
           "paths": 1,
           "pct": 4.5
         },
@@ -2761,12 +2766,7 @@
           "pct": 4.5
         },
         {
-          "name": "Thistlethorn Acorn",
-          "paths": 1,
-          "pct": 4.5
-        },
-        {
-          "name": "Spear of Desolation",
+          "name": "The Cosmic Horror",
           "paths": 1,
           "pct": 4.5
         }
@@ -2831,12 +2831,12 @@
           "pct": 14.3
         },
         {
-          "name": "Alchemist Coat",
+          "name": "Leviathan's Hide",
           "paths": 3,
           "pct": 14.3
         },
         {
-          "name": "Leviathan's Hide",
+          "name": "Alchemist Coat",
           "paths": 3,
           "pct": 14.3
         },
@@ -2857,8 +2857,8 @@
       "staples": [
         {
           "name": "Gauntlet of Thebes",
-          "paths": 21,
-          "pct": 95.5
+          "paths": 22,
+          "pct": 100.0
         },
         {
           "name": "Shifter's Shield",
@@ -2872,8 +2872,8 @@
         },
         {
           "name": "Stampede",
-          "paths": 8,
-          "pct": 36.4
+          "paths": 9,
+          "pct": 40.9
         },
         {
           "name": "Stone of Binding",
@@ -2906,12 +2906,12 @@
           "pct": 18.2
         },
         {
-          "name": "Spectral Armor",
-          "paths": 4,
-          "pct": 18.2
+          "name": "Resolute Mantle",
+          "paths": 3,
+          "pct": 13.6
         },
         {
-          "name": "Resolute Mantle",
+          "name": "Spectral Armor",
           "paths": 3,
           "pct": 13.6
         },
@@ -3186,22 +3186,22 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 0,
+          "covered": 2,
           "total": 22,
-          "pct": 0.0,
+          "pct": 9.1,
           "missing_sample": [
             "Tsukuyomi",
             "Awilix",
             "Fenrir",
             "Ne Zha",
-            "Cernunnos",
             "Thanatos",
             "Mercury",
             "Odin",
             "Susano",
             "Mordred",
             "Achilles",
-            "Loki"
+            "Loki",
+            "Gilgamesh"
           ]
         },
         "tanks_hp": {
@@ -3249,13 +3249,6 @@
         },
         {
           "god": "Ne Zha",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Cernunnos",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3318,14 +3311,21 @@
           ]
         },
         {
-          "god": "Nemesis",
+          "god": "Ratatoskr",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Ratatoskr",
+          "god": "Aladdin",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Hun Batz",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3550,9 +3550,9 @@
       "answers": {
         "crit": {
           "label": "vs crit",
-          "covered": 4,
+          "covered": 3,
           "total": 22,
-          "pct": 18.2,
+          "pct": 13.6,
           "missing_sample": [
             "Aphrodite",
             "Baron Samedi",
@@ -6070,7 +6070,7 @@
     }
   },
   "weekly_themes": [
-    "Support paths under-buy anti-crit (Spectral on ~18.2% of recs) \u2014 flex Spectral almost every game.",
+    "Support paths under-buy anti-crit (Spectral on ~13.6% of recs) \u2014 flex Spectral almost every game.",
     "Support/Solo anti-heal is rare in defaults (~9.1% support) \u2014 Stygian/Brawler's is a live flex.",
     "Gods rising (r5 patch): Cu Chulainn, Hun Batz, Fenrir, Thanatos.",
     "Items hot (r5 patch): Damaru, Omen Drum, The Cosmic Horror, Eye of the Storm.",

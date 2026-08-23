@@ -2,11 +2,11 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-08-23T02:01:43.747189+00:00_
+_Generated: 2026-08-23T19:52:29.606399+00:00_
 
 ## Weekly themes
 
-- Support paths under-buy anti-crit (Spectral on ~18.2% of recs) — flex Spectral almost every game.
+- Support paths under-buy anti-crit (Spectral on ~13.6% of recs) — flex Spectral almost every game.
 - Support/Solo anti-heal is rare in defaults (~9.1% support) — Stygian/Brawler's is a live flex.
 - Gods rising (r5 patch): Cu Chulainn, Hun Batz, Fenrir, Thanatos.
 - Items hot (r5 patch): Damaru, Omen Drum, The Cosmic Horror, Eye of the Storm.
@@ -18,8 +18,8 @@ _Generated: 2026-08-23T02:01:43.747189+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
-| Tyrfing | 18 | 78.3 |
 | Odysseus' Bow | 18 | 78.3 |
+| Tyrfing | 18 | 78.3 |
 | Deathbringer | 17 | 73.9 |
 | The Executioner | 11 | 47.8 |
 | Eye of the Storm | 8 | 34.8 |
@@ -27,9 +27,9 @@ _Generated: 2026-08-23T02:01:43.747189+00:00_
 | Devourer's Gauntlet | 7 | 30.4 |
 | Qin's Blade | 6 | 26.1 |
 | The Reaper | 5 | 21.7 |
-| Spear of Desolation | 5 | 21.7 |
-| Book of Thoth | 5 | 21.7 |
 | The Cosmic Horror | 5 | 21.7 |
+| Book of Thoth | 5 | 21.7 |
+| Spear of Desolation | 5 | 21.7 |
 | Soul Reaver | 5 | 21.7 |
 | Sands Of Time | 4 | 17.4 |
 | Totem of Death | 4 | 17.4 |
@@ -38,9 +38,9 @@ _Generated: 2026-08-23T02:01:43.747189+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
-| Spear of Desolation | 24 | 96.0 |
-| Book of Thoth | 24 | 96.0 |
 | The Cosmic Horror | 24 | 96.0 |
+| Book of Thoth | 24 | 96.0 |
+| Spear of Desolation | 24 | 96.0 |
 | Chronos' Pendant | 14 | 56.0 |
 | Totem of Death | 13 | 52.0 |
 | Spear Of The Magus | 8 | 32.0 |
@@ -58,21 +58,21 @@ _Generated: 2026-08-23T02:01:43.747189+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
-| Pendulum Blade | 21 | 95.5 |
 | Jotunn's Revenge | 21 | 95.5 |
 | Hydra's Lament | 21 | 95.5 |
-| The Crusher | 20 | 90.9 |
-| The Reaper | 19 | 86.4 |
-| Damaru | 6 | 27.3 |
-| Bloodforge | 5 | 22.7 |
-| Avatar's Parashu | 4 | 18.2 |
-| Omen Drum | 3 | 13.6 |
-| Arondight | 2 | 9.1 |
+| The Crusher | 21 | 95.5 |
+| Heartseeker | 12 | 54.5 |
+| Avatar's Parashu | 12 | 54.5 |
+| Pendulum Blade | 10 | 45.5 |
+| The Reaper | 8 | 36.4 |
+| Arondight | 7 | 31.8 |
+| Damaru | 5 | 22.7 |
+| Bloodforge | 4 | 18.2 |
+| Toxic Blade | 2 | 9.1 |
 | Riptalon | 1 | 4.5 |
-| Runeforged Hammer | 1 | 4.5 |
-| Ashwhorl Acorn | 1 | 4.5 |
 | Thistlethorn Acorn | 1 | 4.5 |
-| Spear of Desolation | 1 | 4.5 |
+| Ashwhorl Acorn | 1 | 4.5 |
+| The Cosmic Horror | 1 | 4.5 |
 
 ### Solo (21 paths)
 
@@ -89,8 +89,8 @@ _Generated: 2026-08-23T02:01:43.747189+00:00_
 | Prophetic Cloak | 4 | 19.0 |
 | Stone of Binding | 4 | 19.0 |
 | Breastplate of Valor | 3 | 14.3 |
-| Alchemist Coat | 3 | 14.3 |
 | Leviathan's Hide | 3 | 14.3 |
+| Alchemist Coat | 3 | 14.3 |
 | Amanita Charm | 3 | 14.3 |
 | Gauntlet of Thebes | 2 | 9.5 |
 
@@ -98,18 +98,18 @@ _Generated: 2026-08-23T02:01:43.747189+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
-| Gauntlet of Thebes | 21 | 95.5 |
+| Gauntlet of Thebes | 22 | 100.0 |
 | Shifter's Shield | 20 | 90.9 |
 | Gem of Isolation | 14 | 63.6 |
-| Stampede | 8 | 36.4 |
+| Stampede | 9 | 40.9 |
 | Stone of Binding | 8 | 36.4 |
 | Hussar's Wings | 7 | 31.8 |
 | Kinetic Cuirass | 7 | 31.8 |
 | Doublet of Binding | 7 | 31.8 |
 | Alchemist Coat | 5 | 22.7 |
 | Prophetic Cloak | 4 | 18.2 |
-| Spectral Armor | 4 | 18.2 |
 | Resolute Mantle | 3 | 13.6 |
+| Spectral Armor | 3 | 13.6 |
 | Shield of the Phoenix | 3 | 13.6 |
 | Chandra's Grace | 3 | 13.6 |
 | Freya's Tears | 3 | 13.6 |
@@ -125,7 +125,7 @@ _Generated: 2026-08-23T02:01:43.747189+00:00_
 - **vs high HP / tanks**: 3/25 (12.0%)
 
 ### Jungle
-- **vs heals / sustain**: 0/22 (0.0%)
+- **vs heals / sustain**: 2/22 (9.1%)
 - **vs high HP / tanks**: 0/22 (0.0%)
 
 ### Solo
@@ -135,7 +135,7 @@ _Generated: 2026-08-23T02:01:43.747189+00:00_
 - **vs CC / dive**: 0/21 (0.0%)
 
 ### Support
-- **vs crit**: 4/22 (18.2%)
+- **vs crit**: 3/22 (13.6%)
 - **vs attack speed**: 2/22 (9.1%)
 - **vs magic damage**: 1/22 (4.5%)
 - **vs heals / sustain**: 2/22 (9.1%)

@@ -869,16 +869,16 @@ This is the Jungle job description + common items — not a complete build. Open
 
 *Physical · Strength scaling (STR 157.1% / INT 112.5%)*
 
-Tsukuyomi · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: big ult spike, hard crowd control, dash / leap engage, CC immunity in kit, high mobility, burst combos. Tags: anti_cc, burst, gap_close, hard_cc, heal, long_cd, mobile, ult_nuke. Style burst 64%/dps 36%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): general +0.2, damage -0.2, utility +0.0. Scale STR 157% / INT 112%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); The Reaper (penetration required for damage role). Pen: Jotunn's Revenge, The Reaper, Pendulum Blade, The Crusher. Actives 1/3 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Tsukuyomi · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: big ult spike, hard crowd control, dash / leap engage, CC immunity in kit, high mobility, burst combos. Tags: anti_cc, burst, gap_close, hard_cc, heal, long_cd, mobile, ult_nuke. Style burst 64%/dps 36%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): general +0.2, damage -0.2, utility +0.0. Scale STR 157% / INT 112%. Path: Jotunn's Revenge (CDR + pen for gank/engage); The Crusher (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, The Crusher, Heartseeker, Avatar's Parashu. Actives 1/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
 - **Buy order** (actives 1/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Hydra's Lament (power, 2450g)
-  3. The Reaper (pen, pen 10.0, 2600g)
-  4. Pendulum Blade (pen, active, pen 10.0, 2750g)
-  5. Damaru (power, 2750g)
-  6. The Crusher (pen, pen 10.0, 2800g)
+  2. The Crusher (pen, pen 10.0, 2800g)
+  3. Hydra's Lament (power, 2450g)
+  4. Damaru (power, 2750g)
+  5. Heartseeker (pen, pen 10.0, 3000g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Awilix — S-tier (role rank #2, model 72.4)
@@ -917,14 +917,14 @@ Fenrir · Jungle · archetype «aa_assassin» (STR / physical). Kit effects: cha
 
 *Physical · Strength scaling (STR 147.9% / INT 0%)*
 
-Ne Zha · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: protection shred, big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, as_steroid, gap_close, hard_cc, heal, long_cd, mobile, prot_shred. Style burst 42%/dps 58%; patch new (net -1.0, r5 +0.0). Patch axes (r5): damage -0.8, survivability -0.3, general +0.3. Scale STR 148% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); The Crusher (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, The Crusher, Pendulum Blade. Actives 1/3 · pen ≈ 25. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Ne Zha · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: protection shred, big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, as_steroid, gap_close, hard_cc, heal, long_cd, mobile, prot_shred. Style burst 42%/dps 58%; patch new (net -1.0, r5 +0.0). Patch axes (r5): damage -0.8, survivability -0.3, general +0.3. Scale STR 148% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); The Crusher (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, The Crusher, Pendulum Blade. Actives 2/3 · pen ≈ 25. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 1/3, pen ≈ 25.0):
+- **Buy order** (actives 2/3, pen ≈ 25.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. The Crusher (pen, pen 10.0, 2800g)
   3. Hydra's Lament (power, 2450g)
-  4. Runeforged Hammer (power, 2550g)
+  4. Bloodforge (power, active, 2550g)
   5. Damaru (power, 2750g)
   6. Pendulum Blade (pen, active, pen 10.0, 2750g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
@@ -933,30 +933,30 @@ Ne Zha · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: 
 
 *Physical · Strength scaling (STR 80.4% / INT 51.1%)*
 
-Cernunnos · Jungle · archetype «aa_assassin» (STR / physical). Kit effects: protection shred, big ult spike, basic-attack kit, self heal / drain, hard crowd control, dash / leap engage. Tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 31%/dps 69%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.2, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); The Reaper (penetration required for damage role). Pen: Jotunn's Revenge, The Reaper, Pendulum Blade, The Crusher. Actives 2/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Cernunnos · Jungle · archetype «aa_assassin» (STR / physical). Kit effects: protection shred, big ult spike, basic-attack kit, self heal / drain, hard crowd control, dash / leap engage. Tags: aa, dot, gap_close, hard_cc, heal, high_cc, long_cd, prot_shred. Style burst 31%/dps 69%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.2, damage +0.0, cooldown +0.0. Scale STR 80% / INT 51%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Toxic Blade (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, Toxic Blade, Pendulum Blade, The Crusher, Avatar's Parashu. Actives 2/3 · pen ≈ 45. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 2/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Hydra's Lament (power, 2450g)
-  3. The Reaper (pen, pen 10.0, 2600g)
-  4. Bloodforge (power, active, 2550g)
-  5. Pendulum Blade (pen, active, pen 10.0, 2750g)
-  6. The Crusher (pen, pen 10.0, 2800g)
+  2. Toxic Blade (pen, pen 10.0, 2700g)
+  3. Hydra's Lament (power, 2450g)
+  4. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  5. The Crusher (pen, pen 10.0, 2800g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Thanatos — A-tier (role rank #6, model 66.1)
 
 *Physical · Strength scaling (STR 56.1% / INT 0%)*
 
-Thanatos · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: protection shred, self heal / drain, execute / threshold, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, burst, execute, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 61%/dps 39%; patch rising (net +1.9, r5 +1.8). Patch axes (r5): survivability +0.8, general +0.8, mana -0.4. Scale STR 56% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); The Reaper (penetration required for damage role). Pen: Jotunn's Revenge, The Reaper, Pendulum Blade, The Crusher, Avatar's Parashu. Actives 2/3 · pen ≈ 45. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Thanatos · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: protection shred, self heal / drain, execute / threshold, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, burst, execute, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 61%/dps 39%; patch rising (net +1.9, r5 +1.8). Patch axes (r5): survivability +0.8, general +0.8, mana -0.4. Scale STR 56% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); The Reaper (penetration required for damage role). Pen: Jotunn's Revenge, The Reaper, Heartseeker, The Crusher, Avatar's Parashu. Actives 1/3 · pen ≈ 45. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 2/3, pen ≈ 45.0):
+- **Buy order** (actives 1/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Hydra's Lament (power, 2450g)
   3. The Reaper (pen, pen 10.0, 2600g)
-  4. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  4. Heartseeker (pen, pen 10.0, 3000g)
   5. The Crusher (pen, pen 10.0, 2800g)
   6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
@@ -981,47 +981,47 @@ Mercury · Jungle · archetype «burst_assassin» (STR / physical). Kit effects:
 
 *Physical · Strength scaling (STR 53.9% / INT 21.0%)*
 
-Odin · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: big ult spike, attack-speed steroid, shields, hard crowd control, dash / leap engage, ally buffs / auras. Tags: as_steroid, burst, dot, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 63%/dps 37%; patch stable (net +0.9, r5 +0.0). Patch axes (r5): cooldown +0.8, damage +0.0, survivability +0.0. Scale STR 54% / INT 21%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, Pendulum Blade, The Reaper, The Crusher. Actives 2/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Odin · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: big ult spike, attack-speed steroid, shields, hard crowd control, dash / leap engage, ally buffs / auras. Tags: as_steroid, burst, dot, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 63%/dps 37%; patch stable (net +0.9, r5 +0.0). Patch axes (r5): cooldown +0.8, damage +0.0, survivability +0.0. Scale STR 54% / INT 21%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, Pendulum Blade, The Crusher, Avatar's Parashu. Actives 3/3 · pen ≈ 35. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 2/3, pen ≈ 35.0):
+- **Buy order** (actives 3/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Pendulum Blade (pen, active, pen 10.0, 2750g)
   3. Hydra's Lament (power, 2450g)
-  4. Bloodforge (power, active, 2550g)
-  5. The Reaper (pen, pen 10.0, 2600g)
-  6. The Crusher (pen, pen 10.0, 2800g)
+  4. Arondight (power, active, 2650g)
+  5. The Crusher (pen, pen 10.0, 2800g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Susano — B-tier (role rank #9, model 62.5)
 
 *Physical · Strength scaling (STR 109.8% / INT 0%)*
 
-Susano · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: damage over time, big ult spike, pet / deployable, dash / leap engage, multi-hit / ticks, burst combos. Tags: burst, dot, gap_close, heavy_dot, long_cd, pet_zone, ult_nuke, zone. Style burst 72%/dps 28%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): damage +0.0, utility +0.0, general +0.0. Scale STR 110% / INT 0%. Path: Hydra's Lament (CDR + pen for gank/engage); Jotunn's Revenge (CDR + pen for gank/engage); The Reaper (penetration required for damage role). Pen: Jotunn's Revenge, The Reaper, Pendulum Blade, The Crusher. Actives 1/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Susano · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: damage over time, big ult spike, pet / deployable, dash / leap engage, multi-hit / ticks, burst combos. Tags: burst, dot, gap_close, heavy_dot, long_cd, pet_zone, ult_nuke, zone. Style burst 72%/dps 28%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): damage +0.0, utility +0.0, general +0.0. Scale STR 110% / INT 0%. Path: Hydra's Lament (CDR + pen for gank/engage); The Crusher (penetration required for damage role); Jotunn's Revenge (CDR + pen for gank/engage). Pen: The Crusher, Jotunn's Revenge, Heartseeker, Avatar's Parashu. Actives 2/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 1/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 35.0):
   1. Hydra's Lament (power, 2450g)
-  2. Jotunn's Revenge (power, pen 5.0, 2400g)
-  3. The Reaper (pen, pen 10.0, 2600g)
-  4. Omen Drum (power, 2800g)
-  5. Pendulum Blade (pen, active, pen 10.0, 2750g)
-  6. The Crusher (pen, pen 10.0, 2800g)
+  2. The Crusher (pen, pen 10.0, 2800g)
+  3. Jotunn's Revenge (power, pen 5.0, 2400g)
+  4. Arondight (power, active, 2650g)
+  5. Heartseeker (pen, pen 10.0, 3000g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Mordred — B-tier (role rank #10, model 62.1)
 
 *Physical · Strength scaling (STR 77.5% / INT 45.8%)*
 
-Mordred · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: damage over time, channel / cast time, big ult spike, attack-speed steroid, self heal / drain, heavy healing. Tags: anti_cc, as_steroid, burst, channel, dot, gap_close, hard_cc, heal. Style burst 57%/dps 43%; patch falling (net -0.9, r5 -0.9). Patch axes (r5): damage -0.9. Scale STR 77% / INT 46%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); The Reaper (penetration required for damage role). Pen: Jotunn's Revenge, The Reaper, Pendulum Blade, The Crusher, Avatar's Parashu. Actives 2/3 · pen ≈ 45. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Mordred · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: damage over time, channel / cast time, big ult spike, attack-speed steroid, self heal / drain, heavy healing. Tags: anti_cc, as_steroid, burst, channel, dot, gap_close, hard_cc, heal. Style burst 57%/dps 43%; patch falling (net -0.9, r5 -0.9). Patch axes (r5): damage -0.9. Scale STR 77% / INT 46%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role). Pen: Jotunn's Revenge, Pendulum Blade, The Crusher, Heartseeker, Avatar's Parashu. Actives 2/3 · pen ≈ 45. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
 - **Buy order** (actives 2/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Hydra's Lament (power, 2450g)
-  3. The Reaper (pen, pen 10.0, 2600g)
-  4. Pendulum Blade (pen, active, pen 10.0, 2750g)
-  5. The Crusher (pen, pen 10.0, 2800g)
+  3. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  4. The Crusher (pen, pen 10.0, 2800g)
+  5. Heartseeker (pen, pen 10.0, 3000g)
   6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
@@ -1029,80 +1029,80 @@ Mordred · Jungle · archetype «burst_assassin» (STR / physical). Kit effects:
 
 *Physical · Strength scaling (STR 82.9% / INT 0%)*
 
-Achilles · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: big ult spike, basic-attack kit, self heal / drain, execute / threshold, shields, hard crowd control. Tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 29%/dps 71%; patch rising (net +0.7, r5 +1.0). Patch axes (r5): general +1.0. Scale STR 83% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); The Reaper (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, The Reaper, Pendulum Blade, The Crusher. Actives 2/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Achilles · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: big ult spike, basic-attack kit, self heal / drain, execute / threshold, shields, hard crowd control. Tags: aa, anti_cc, execute, gap_close, hard_cc, heal, heavy_shield, long_cd. Style burst 29%/dps 71%; patch rising (net +0.7, r5 +1.0). Patch axes (r5): general +1.0. Scale STR 83% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); The Crusher (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, The Crusher, Heartseeker. Actives 2/3 · pen ≈ 25. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 2/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 25.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. The Reaper (pen, pen 10.0, 2600g)
+  2. The Crusher (pen, pen 10.0, 2800g)
   3. Hydra's Lament (power, 2450g)
-  4. Arondight (power, active, 2650g)
-  5. Pendulum Blade (pen, active, pen 10.0, 2750g)
-  6. The Crusher (pen, pen 10.0, 2800g)
+  4. Bloodforge (power, active, 2550g)
+  5. Arondight (power, active, 2650g)
+  6. Heartseeker (pen, pen 10.0, 3000g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Loki — B-tier (role rank #12, model 59.4)
 
 *Physical · Strength scaling (STR 62.6% / INT 0%)*
 
-Loki · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: channel / cast time, big ult spike, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, channel, dot, gap_close, hard_cc, high_cc, long_cd, pet_zone. Style burst 83%/dps 17%; patch stable (net +0.3, r5 +0.1). Patch axes (r5): utility +0.1. Scale STR 63% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, Pendulum Blade, The Reaper, The Crusher. Actives 1/3 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Loki · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: channel / cast time, big ult spike, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, channel, dot, gap_close, hard_cc, high_cc, long_cd, pet_zone. Style burst 83%/dps 17%; patch stable (net +0.3, r5 +0.1). Patch axes (r5): utility +0.1. Scale STR 63% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Heartseeker (stacking pen power for assassins); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, Heartseeker, The Crusher, Avatar's Parashu. Actives 1/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
 - **Buy order** (actives 1/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  2. Heartseeker (pen, pen 10.0, 3000g)
   3. Hydra's Lament (power, 2450g)
   4. Damaru (power, 2750g)
-  5. The Reaper (pen, pen 10.0, 2600g)
-  6. The Crusher (pen, pen 10.0, 2800g)
+  5. The Crusher (pen, pen 10.0, 2800g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Gilgamesh — B-tier (role rank #13, model 58.2)
 
 *Physical · Strength scaling (STR 72.8% / INT 0%)*
 
-Gilgamesh · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: pet / deployable, hard crowd control, dash / leap engage, ally buffs / auras, lots of CC, burst combos. Tags: burst, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone, team_buff. Style burst 76%/dps 24%; patch new (net -0.0, r5 +0.0). Patch axes (r5): damage -0.6, general +0.3, survivability +0.2. Scale STR 73% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Bloodforge (lifesteal + power for execute/bruiser); Pendulum Blade (penetration required for damage role). Pen: Jotunn's Revenge, Pendulum Blade, The Reaper, The Crusher. Actives 2/3 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Gilgamesh · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: pet / deployable, hard crowd control, dash / leap engage, ally buffs / auras, lots of CC, burst combos. Tags: burst, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone, team_buff. Style burst 76%/dps 24%; patch new (net -0.0, r5 +0.0). Patch axes (r5): damage -0.6, general +0.3, survivability +0.2. Scale STR 73% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Arondight (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role). Pen: Jotunn's Revenge, Pendulum Blade, The Crusher, Avatar's Parashu. Actives 3/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 2/3, pen ≈ 35.0):
+- **Buy order** (actives 3/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Bloodforge (power, active, 2550g)
+  2. Arondight (power, active, 2650g)
   3. Pendulum Blade (pen, active, pen 10.0, 2750g)
-  4. The Reaper (pen, pen 10.0, 2600g)
-  5. The Crusher (pen, pen 10.0, 2800g)
-  6. Hydra's Lament (power, 2450g)
+  4. The Crusher (pen, pen 10.0, 2800g)
+  5. Hydra's Lament (power, 2450g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Nemesis — C-tier (role rank #14, model 56.2)
 
 *Physical · Strength scaling (STR 102.2% / INT 70.3%)*
 
-Nemesis · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: big ult spike, dash / leap engage, shields, healing in kit, long cooldowns. Tags: gap_close, heal, long_cd, shield, ult_nuke. Style burst 51%/dps 49%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.1, damage +0.0, survivability +0.0. Scale STR 102% / INT 70%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role). Pen: Jotunn's Revenge, Pendulum Blade, The Reaper, The Crusher, Avatar's Parashu. Actives 2/3 · pen ≈ 45. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Nemesis · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: big ult spike, dash / leap engage, shields, healing in kit, long cooldowns. Tags: gap_close, heal, long_cd, shield, ult_nuke. Style burst 51%/dps 49%; patch stable (net +0.2, r5 +0.0). Patch axes (r5): general +0.1, damage +0.0, survivability +0.0. Scale STR 102% / INT 70%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Toxic Blade (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, Toxic Blade, The Reaper, The Crusher, Heartseeker. Actives 0/3 · pen ≈ 45. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 2/3, pen ≈ 45.0):
+- **Buy order** (actives 0/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Hydra's Lament (power, 2450g)
-  3. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  2. Toxic Blade (pen, pen 10.0, 2700g)
+  3. Hydra's Lament (power, 2450g)
   4. The Reaper (pen, pen 10.0, 2600g)
   5. The Crusher (pen, pen 10.0, 2800g)
-  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
+  6. Heartseeker (pen, pen 10.0, 3000g)
 - **Relics:** Blink Rune (33.9), Purification Beads (30.0)
 
 #### Ratatoskr — C-tier (role rank #15, model 52.7)
 
 *Physical · Strength scaling (STR 89.7% / INT 0%)*
 
-Ratatoskr · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: big ult spike, hard crowd control, dash / leap engage, CC immunity in kit, lots of CC, burst combos. Tags: anti_cc, burst, gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 74%/dps 26%; patch rising (net +1.8, r5 +1.7). Patch axes (r5): survivability +1.8, general -0.7, damage +0.5. Scale STR 90% / INT 0%. Path: Ashwhorl Acorn (Jungle path fit for kit profile); The Reaper (penetration required for damage role); Jotunn's Revenge (CDR + pen for gank/engage). Pen: The Reaper, Jotunn's Revenge, Pendulum Blade. Actives 1/3 · pen ≈ 25. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Ratatoskr · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: big ult spike, hard crowd control, dash / leap engage, CC immunity in kit, lots of CC, burst combos. Tags: anti_cc, burst, gap_close, hard_cc, high_cc, long_cd, ult_nuke. Style burst 74%/dps 26%; patch rising (net +1.8, r5 +1.7). Patch axes (r5): survivability +1.8, general -0.7, damage +0.5. Scale STR 90% / INT 0%. Path: Ashwhorl Acorn (Jungle path fit for kit profile); The Crusher (penetration required for damage role); Jotunn's Revenge (CDR + pen for gank/engage). Pen: The Crusher, Jotunn's Revenge, Avatar's Parashu. Actives 1/3 · pen ≈ 25. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
 - **Buy order** (actives 1/3, pen ≈ 25.0):
   1. Ashwhorl Acorn (mitigate, 2000g)
-  2. The Reaper (pen, pen 10.0, 2600g)
+  2. The Crusher (pen, pen 10.0, 2800g)
   3. Jotunn's Revenge (power, pen 5.0, 2400g)
   4. Hydra's Lament (power, 2450g)
   5. Thistlethorn Acorn (power, 2000g)
-  6. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Aladdin — C-tier (role rank #16, model 52.3)
@@ -1125,31 +1125,31 @@ Aladdin · Jungle · archetype «mage_jungle» (INT / magical). Kit effects: big
 
 *Physical · Strength scaling (STR 62.6% / INT 0%)*
 
-Hun Batz · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: channel / cast time, basic-attack kit, pet / deployable, hard crowd control, dash / leap engage, multi-hit / ticks. Tags: aa, channel, dot, gap_close, hard_cc, long_cd, pet_zone. Style burst 39%/dps 61%; patch rising (net +2.9, r5 +3.1). Patch axes (r5): damage +3.1. Scale STR 63% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); The Reaper (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, The Reaper, Pendulum Blade, The Crusher. Actives 1/3 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Hun Batz · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: channel / cast time, basic-attack kit, pet / deployable, hard crowd control, dash / leap engage, multi-hit / ticks. Tags: aa, channel, dot, gap_close, hard_cc, long_cd, pet_zone. Style burst 39%/dps 61%; patch rising (net +2.9, r5 +3.1). Patch axes (r5): damage +3.1. Scale STR 63% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); The Reaper (penetration required for damage role). Pen: Jotunn's Revenge, The Reaper, Pendulum Blade, The Crusher, Heartseeker. Actives 1/3 · pen ≈ 45. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 1/3, pen ≈ 35.0):
+- **Buy order** (actives 1/3, pen ≈ 45.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. The Reaper (pen, pen 10.0, 2600g)
-  3. Hydra's Lament (power, 2450g)
-  4. Damaru (power, 2750g)
-  5. Pendulum Blade (pen, active, pen 10.0, 2750g)
-  6. The Crusher (pen, pen 10.0, 2800g)
+  2. Hydra's Lament (power, 2450g)
+  3. The Reaper (pen, pen 10.0, 2600g)
+  4. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  5. The Crusher (pen, pen 10.0, 2800g)
+  6. Heartseeker (pen, pen 10.0, 3000g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Pele — C-tier (role rank #18, model 46.8)
 
 *Physical · Strength scaling (STR 91.7% / INT 0%)*
 
-Pele · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: big ult spike, self heal / drain, execute / threshold, dash / leap engage, CC immunity in kit, high mobility. Tags: anti_cc, burst, execute, gap_close, heal, long_cd, mobile, self_sustain. Style burst 75%/dps 25%; patch falling (net -7.3, r5 -2.2). Patch axes (r5): damage -2.2. Scale STR 92% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); The Reaper (penetration required for damage role). Pen: Jotunn's Revenge, The Reaper, Pendulum Blade, The Crusher. Actives 1/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Pele · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: big ult spike, self heal / drain, execute / threshold, dash / leap engage, CC immunity in kit, high mobility. Tags: anti_cc, burst, execute, gap_close, heal, long_cd, mobile, self_sustain. Style burst 75%/dps 25%; patch falling (net -7.3, r5 -2.2). Patch axes (r5): damage -2.2. Scale STR 92% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); The Reaper (penetration required for damage role). Pen: Jotunn's Revenge, The Reaper, The Crusher. Actives 2/3 · pen ≈ 25. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 1/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 25.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. Hydra's Lament (power, 2450g)
   3. The Reaper (pen, pen 10.0, 2600g)
-  4. Omen Drum (power, 2800g)
-  5. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  4. Bloodforge (power, active, 2550g)
+  5. Arondight (power, active, 2650g)
   6. The Crusher (pen, pen 10.0, 2800g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
@@ -1157,31 +1157,31 @@ Pele · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: 
 
 *Physical · Strength scaling (STR 48.8% / INT 0%)*
 
-Da Ji · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: damage over time, channel / cast time, execute / threshold, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, channel, dot, execute, gap_close, hard_cc, heavy_dot, high_cc. Style burst 55%/dps 45%; patch volatile (net -3.2, r5 +0.0). Patch axes (r5): damage +0.0. Scale STR 49% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, Pendulum Blade, The Reaper, The Crusher. Actives 1/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Da Ji · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: damage over time, channel / cast time, execute / threshold, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, channel, dot, execute, gap_close, hard_cc, heavy_dot, high_cc. Style burst 55%/dps 45%; patch volatile (net -3.2, r5 +0.0). Patch axes (r5): damage +0.0. Scale STR 49% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Heartseeker (stacking pen power for assassins); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, Heartseeker, The Crusher, Avatar's Parashu. Actives 2/3 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 1/3, pen ≈ 35.0):
+- **Buy order** (actives 2/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  2. Heartseeker (pen, pen 10.0, 3000g)
   3. Hydra's Lament (power, 2450g)
-  4. Omen Drum (power, 2800g)
-  5. The Reaper (pen, pen 10.0, 2600g)
-  6. The Crusher (pen, pen 10.0, 2800g)
+  4. Arondight (power, active, 2650g)
+  5. The Crusher (pen, pen 10.0, 2800g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Thor — D-tier (role rank #20, model 40.3)
 
 *Physical · Strength scaling (STR 76.1% / INT 0%)*
 
-Thor · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: channel / cast time, big ult spike, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, channel, gap_close, hard_cc, high_cc, long_cd, pet_zone, ult_nuke. Style burst 68%/dps 32%; patch falling (net -3.2, r5 -2.7). Patch axes (r5): damage -2.1, heal -0.3, survivability -0.3. Scale STR 76% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); The Crusher (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, The Crusher, Pendulum Blade, Avatar's Parashu. Actives 2/3 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Thor · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: channel / cast time, big ult spike, pet / deployable, hard crowd control, dash / leap engage, CC immunity in kit. Tags: anti_cc, channel, gap_close, hard_cc, high_cc, long_cd, pet_zone, ult_nuke. Style burst 68%/dps 32%; patch falling (net -3.2, r5 -2.7). Patch axes (r5): damage -2.1, heal -0.3, survivability -0.3. Scale STR 76% / INT 0%. Path: Jotunn's Revenge (CDR + pen for gank/engage); The Crusher (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, The Crusher, Heartseeker, Avatar's Parashu. Actives 1/3 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 2/3, pen ≈ 35.0):
+- **Buy order** (actives 1/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
   2. The Crusher (pen, pen 10.0, 2800g)
   3. Hydra's Lament (power, 2450g)
   4. Damaru (power, 2750g)
-  5. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  5. Heartseeker (pen, pen 10.0, 3000g)
   6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
@@ -1189,32 +1189,32 @@ Thor · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: ch
 
 *Physical · Strength scaling (STR 73.6% / INT 8.5%)*
 
-Bastet · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: big ult spike, self heal / drain, pet / deployable, hard crowd control, dash / leap engage, multi-hit / ticks. Tags: dot, gap_close, hard_cc, heal, long_cd, pet_zone, self_sustain, ult_nuke. Style burst 68%/dps 32%; patch falling (net -5.7, r5 -5.7). Patch axes (r5): damage -4.1, utility -2.1, general +0.7. Scale STR 74% / INT 8%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Hydra's Lament (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role). Pen: Jotunn's Revenge, Pendulum Blade, The Crusher, The Reaper. Actives 2/3 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Bastet · Jungle · archetype «burst_assassin» (STR / physical). Kit effects: big ult spike, self heal / drain, pet / deployable, hard crowd control, dash / leap engage, multi-hit / ticks. Tags: dot, gap_close, hard_cc, heal, long_cd, pet_zone, self_sustain, ult_nuke. Style burst 68%/dps 32%; patch falling (net -5.7, r5 -5.7). Patch axes (r5): damage -4.1, utility -2.1, general +0.7. Scale STR 74% / INT 8%. Path: Jotunn's Revenge (CDR + pen for gank/engage); The Crusher (penetration required for damage role); Hydra's Lament (CDR + pen for gank/engage). Pen: Jotunn's Revenge, The Crusher, Heartseeker, Avatar's Parashu. Actives 2/3 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
 - **Buy order** (actives 2/3, pen ≈ 35.0):
   1. Jotunn's Revenge (power, pen 5.0, 2400g)
-  2. Hydra's Lament (power, 2450g)
-  3. Pendulum Blade (pen, active, pen 10.0, 2750g)
+  2. The Crusher (pen, pen 10.0, 2800g)
+  3. Hydra's Lament (power, 2450g)
   4. Bloodforge (power, active, 2550g)
-  5. The Crusher (pen, pen 10.0, 2800g)
-  6. The Reaper (pen, pen 10.0, 2600g)
+  5. Heartseeker (pen, pen 10.0, 3000g)
+  6. Avatar's Parashu (pen, active, pen 10.0, 3700g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 #### Kali — D-tier (role rank #22, model 20.1)
 
 *Physical · Strength scaling (STR 54.5% / INT 17.1%)*
 
-Kali · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: protection shred, self heal / drain, heavy healing, execute / threshold, hard crowd control, dash / leap engage. Tags: anti_cc, execute, gap_close, hard_cc, heal, heavy_heal, long_cd, prot_shred. Style burst 0%/dps 100%; patch falling (net -4.6, r5 -2.8). Patch axes (r5): damage -2.8, general +0.0. Scale STR 54% / INT 17%. Path: Hydra's Lament (CDR + pen for gank/engage); Jotunn's Revenge (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role). Pen: Jotunn's Revenge, Pendulum Blade, The Reaper, The Crusher. Actives 2/3 · pen ≈ 35. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
+Kali · Jungle · archetype «sustain_assassin» (STR / physical). Kit effects: protection shred, self heal / drain, heavy healing, execute / threshold, hard crowd control, dash / leap engage. Tags: anti_cc, execute, gap_close, hard_cc, heal, heavy_heal, long_cd, prot_shred. Style burst 0%/dps 100%; patch falling (net -4.6, r5 -2.8). Patch axes (r5): damage -2.8, general +0.0. Scale STR 54% / INT 17%. Path: Hydra's Lament (CDR + pen for gank/engage); Jotunn's Revenge (CDR + pen for gank/engage); Pendulum Blade (penetration required for damage role). Pen: Jotunn's Revenge, Pendulum Blade, The Reaper, The Crusher, Heartseeker. Actives 1/3 · pen ≈ 45. Soft high-SR inspiration on 6 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bumba's Cudgel
-- **Buy order** (actives 2/3, pen ≈ 35.0):
+- **Buy order** (actives 1/3, pen ≈ 45.0):
   1. Hydra's Lament (power, 2450g)
   2. Jotunn's Revenge (power, pen 5.0, 2400g)
   3. Pendulum Blade (pen, active, pen 10.0, 2750g)
-  4. Bloodforge (power, active, 2550g)
-  5. The Reaper (pen, pen 10.0, 2600g)
-  6. The Crusher (pen, pen 10.0, 2800g)
+  4. The Reaper (pen, pen 10.0, 2600g)
+  5. The Crusher (pen, pen 10.0, 2800g)
+  6. Heartseeker (pen, pen 10.0, 3000g)
 - **Relics:** Purification Beads (38.0), Blink Rune (33.9)
 
 ---
@@ -1884,16 +1884,16 @@ Sylvanus · Support · archetype «lockdown_support» (INT / magical). Kit effec
 
 *Physical · Strength scaling (STR 42.4% / INT 13.3%)*
 
-Guan Yu · Support · archetype «heal_support» (STR / physical). Kit effects: damage over time, attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, dot, gap_close, hard_cc, heal, heavy_dot, long_cd, pet_zone. Style burst 15%/dps 85%; patch falling (net -2.3, r5 -2.0). Patch axes (r5): heal -1.2, damage -0.8. Scale STR 42% / INT 13%. Path: Shifter's Shield (offline hybrid tank; patch falling — extra bulk/CDR); Breastplate of Valor (physical CDR defense; patch falling — extra bulk/CDR); Jotunn's Revenge (CDR + pen for gank/engage). Pen: Jotunn's Revenge. Actives 0/2 · pen ≈ 5. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Guan Yu · Support · archetype «heal_support» (STR / physical). Kit effects: damage over time, attack-speed steroid, self heal / drain, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, dot, gap_close, hard_cc, heal, heavy_dot, long_cd, pet_zone. Style burst 15%/dps 85%; patch falling (net -2.3, r5 -2.0). Patch axes (r5): heal -1.2, damage -0.8. Scale STR 42% / INT 13%. Path: Gauntlet of Thebes (team aura / support core); Shifter's Shield (offline hybrid tank; patch falling — extra bulk/CDR); Heartwood Charm (Support path fit for kit profile). Actives 2/2 · pen ≈ 0. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
-- **Buy order** (actives 0/2, pen ≈ 5.0):
-  1. Shifter's Shield (defense, 2750g)
-  2. Breastplate of Valor (defense, 2400g)
-  3. Jotunn's Revenge (power, pen 5.0, 2400g)
-  4. Hydra's Lament (power, 2450g)
-  5. Kinetic Cuirass (mitigate, 2400g)
-  6. Spectral Armor (mitigate, 2300g)
+- **Buy order** (actives 2/2, pen ≈ 0.0):
+  1. Gauntlet of Thebes (defense, 2200g)
+  2. Shifter's Shield (defense, 2750g)
+  3. Heartwood Charm (defense, active, 2650g)
+  4. Kinetic Cuirass (mitigate, 2400g)
+  5. Stampede (defense, active, 2400g)
+  6. Contagion (defense, 2400g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Artio — C-tier (role rank #18, model 43.1)
