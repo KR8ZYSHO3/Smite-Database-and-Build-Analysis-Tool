@@ -5506,10 +5506,14 @@ async function main() {
     loading.style.display = "none";
     $("#app-main").style.display = "block";
 
-    // Prefer live meta; fall back to HTML data-exported-at baked at export time
+    // Prefer the newest of meta / HTML shell / scraped (bundle.meta can lag a stamp-only push)
     const shellExported = $("#site-updated")?.getAttribute("data-exported-at") || "";
-    const exported =
-      state.meta?.exported_at || shellExported || state.meta?.scraped_at || "";
+    const candidates = [
+      state.meta?.exported_at,
+      shellExported,
+      state.meta?.scraped_at,
+    ].filter(Boolean);
+    const exported = candidates.sort().at(-1) || "";
     const fmtStamp = (iso) => {
       if (!iso) return "";
       const d = new Date(iso);
@@ -5522,17 +5526,27 @@ async function main() {
           day: "numeric",
           hour: "numeric",
           minute: "2-digit",
-          second: "2-digit",
         });
       } catch {
         return d.toISOString().replace("T", " ").slice(0, 19) + " UTC";
       }
     };
     const stamp = fmtStamp(exported);
+    const patchLabel = (
+      state.meta?.latest_patch ||
+      $("#site-updated")?.getAttribute("data-latest-patch") ||
+      ""
+    ).replace(/^SMITE 2\s+/i, "");
+    const patchDate = state.meta?.latest_patch_date || "";
+    const patchBit = patchLabel
+      ? ` · Patch data: <strong>${escapeHtml(patchLabel)}</strong>${
+          patchDate ? ` (${escapeHtml(patchDate)})` : ""
+        }`
+      : "";
     const upd = $("#site-updated");
     if (upd) {
       upd.innerHTML = stamp
-        ? `Last updated: <strong>${escapeHtml(stamp)}</strong>`
+        ? `Last updated: <strong>${escapeHtml(stamp)}</strong>${patchBit}`
         : "Last updated: <strong>unknown</strong>";
       if (exported) {
         upd.title = `Export timestamp (UTC): ${String(exported)}`;
