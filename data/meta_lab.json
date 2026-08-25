@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-23T19:52:29.606399+00:00",
+  "generated_at": "2026-08-25T16:00:34.880736+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -2536,12 +2536,12 @@
       "path_count": 23,
       "staples": [
         {
-          "name": "Odysseus' Bow",
+          "name": "Tyrfing",
           "paths": 18,
           "pct": 78.3
         },
         {
-          "name": "Tyrfing",
+          "name": "Odysseus' Bow",
           "paths": 18,
           "pct": 78.3
         },
@@ -2552,41 +2552,41 @@
         },
         {
           "name": "The Executioner",
-          "paths": 11,
-          "pct": 47.8
+          "paths": 13,
+          "pct": 56.5
         },
         {
           "name": "Eye of the Storm",
-          "paths": 8,
-          "pct": 34.8
+          "paths": 9,
+          "pct": 39.1
         },
         {
           "name": "Transcendence",
-          "paths": 8,
-          "pct": 34.8
+          "paths": 9,
+          "pct": 39.1
         },
         {
-          "name": "Devourer's Gauntlet",
+          "name": "Qin's Blade",
           "paths": 7,
           "pct": 30.4
         },
         {
-          "name": "Qin's Blade",
+          "name": "Devourer's Gauntlet",
           "paths": 6,
           "pct": 26.1
         },
         {
-          "name": "The Reaper",
-          "paths": 5,
-          "pct": 21.7
-        },
-        {
-          "name": "The Cosmic Horror",
+          "name": "Soul Reaver",
           "paths": 5,
           "pct": 21.7
         },
         {
           "name": "Book of Thoth",
+          "paths": 5,
+          "pct": 21.7
+        },
+        {
+          "name": "The Cosmic Horror",
           "paths": 5,
           "pct": 21.7
         },
@@ -2596,17 +2596,17 @@
           "pct": 21.7
         },
         {
-          "name": "Soul Reaver",
-          "paths": 5,
-          "pct": 21.7
-        },
-        {
-          "name": "Sands Of Time",
+          "name": "The Reaper",
           "paths": 4,
           "pct": 17.4
         },
         {
           "name": "Totem of Death",
+          "paths": 4,
+          "pct": 17.4
+        },
+        {
+          "name": "Sands Of Time",
           "paths": 4,
           "pct": 17.4
         }
@@ -2616,12 +2616,12 @@
       "path_count": 25,
       "staples": [
         {
-          "name": "The Cosmic Horror",
+          "name": "Book of Thoth",
           "paths": 24,
           "pct": 96.0
         },
         {
-          "name": "Book of Thoth",
+          "name": "The Cosmic Horror",
           "paths": 24,
           "pct": 96.0
         },
@@ -2637,8 +2637,8 @@
         },
         {
           "name": "Totem of Death",
-          "paths": 13,
-          "pct": 52.0
+          "paths": 12,
+          "pct": 48.0
         },
         {
           "name": "Spear Of The Magus",
@@ -2647,8 +2647,13 @@
         },
         {
           "name": "Divine Ruin",
-          "paths": 7,
-          "pct": 28.0
+          "paths": 6,
+          "pct": 24.0
+        },
+        {
+          "name": "Rod of Tahuti",
+          "paths": 5,
+          "pct": 20.0
         },
         {
           "name": "Gluttonous Grimoire",
@@ -2656,9 +2661,9 @@
           "pct": 16.0
         },
         {
-          "name": "Rod of Tahuti",
-          "paths": 4,
-          "pct": 16.0
+          "name": "Doom Orb",
+          "paths": 3,
+          "pct": 12.0
         },
         {
           "name": "Jade Scepter",
@@ -2666,14 +2671,9 @@
           "pct": 12.0
         },
         {
-          "name": "Doom Orb",
-          "paths": 3,
-          "pct": 12.0
-        },
-        {
           "name": "Soul Reaver",
-          "paths": 3,
-          "pct": 12.0
+          "paths": 2,
+          "pct": 8.0
         },
         {
           "name": "Stygian Anchor",
@@ -2686,89 +2686,89 @@
           "pct": 8.0
         },
         {
-          "name": "Dreamer's Idol",
+          "name": "Genji's Guard",
           "paths": 1,
           "pct": 4.0
         }
       ]
     },
     "Jungle": {
-      "path_count": 22,
+      "path_count": 23,
       "staples": [
         {
-          "name": "Jotunn's Revenge",
-          "paths": 21,
-          "pct": 95.5
+          "name": "The Crusher",
+          "paths": 22,
+          "pct": 95.7
         },
         {
           "name": "Hydra's Lament",
-          "paths": 21,
-          "pct": 95.5
+          "paths": 22,
+          "pct": 95.7
         },
         {
-          "name": "The Crusher",
-          "paths": 21,
-          "pct": 95.5
-        },
-        {
-          "name": "Heartseeker",
-          "paths": 12,
-          "pct": 54.5
+          "name": "Jotunn's Revenge",
+          "paths": 22,
+          "pct": 95.7
         },
         {
           "name": "Avatar's Parashu",
+          "paths": 14,
+          "pct": 60.9
+        },
+        {
+          "name": "Heartseeker",
+          "paths": 13,
+          "pct": 56.5
+        },
+        {
+          "name": "The Reaper",
           "paths": 12,
-          "pct": 54.5
+          "pct": 52.2
         },
         {
           "name": "Pendulum Blade",
           "paths": 10,
-          "pct": 45.5
-        },
-        {
-          "name": "The Reaper",
-          "paths": 8,
-          "pct": 36.4
+          "pct": 43.5
         },
         {
           "name": "Arondight",
           "paths": 7,
-          "pct": 31.8
+          "pct": 30.4
         },
         {
           "name": "Damaru",
           "paths": 5,
-          "pct": 22.7
-        },
-        {
-          "name": "Bloodforge",
-          "paths": 4,
-          "pct": 18.2
+          "pct": 21.7
         },
         {
           "name": "Toxic Blade",
-          "paths": 2,
-          "pct": 9.1
+          "paths": 3,
+          "pct": 13.0
         },
         {
           "name": "Riptalon",
           "paths": 1,
-          "pct": 4.5
+          "pct": 4.3
         },
         {
-          "name": "Thistlethorn Acorn",
+          "name": "Divine Ruin",
           "paths": 1,
-          "pct": 4.5
+          "pct": 4.3
         },
         {
-          "name": "Ashwhorl Acorn",
+          "name": "Spear Of The Magus",
           "paths": 1,
-          "pct": 4.5
+          "pct": 4.3
+        },
+        {
+          "name": "Book of Thoth",
+          "paths": 1,
+          "pct": 4.3
         },
         {
           "name": "The Cosmic Horror",
           "paths": 1,
-          "pct": 4.5
+          "pct": 4.3
         }
       ]
     },
@@ -2781,47 +2781,42 @@
           "pct": 100.0
         },
         {
+          "name": "Genji's Guard",
+          "paths": 15,
+          "pct": 71.4
+        },
+        {
           "name": "Eye of the Storm",
           "paths": 14,
           "pct": 66.7
         },
         {
-          "name": "Genji's Guard",
-          "paths": 14,
-          "pct": 66.7
-        },
-        {
           "name": "Mystical Mail",
-          "paths": 12,
-          "pct": 57.1
+          "paths": 13,
+          "pct": 61.9
         },
         {
           "name": "Doublet of Binding",
-          "paths": 7,
-          "pct": 33.3
-        },
-        {
-          "name": "Kinetic Cuirass",
-          "paths": 5,
-          "pct": 23.8
-        },
-        {
-          "name": "Hussar's Wings",
-          "paths": 5,
-          "pct": 23.8
+          "paths": 6,
+          "pct": 28.6
         },
         {
           "name": "Draconic Scale",
-          "paths": 4,
-          "pct": 19.0
+          "paths": 5,
+          "pct": 23.8
         },
         {
           "name": "Prophetic Cloak",
+          "paths": 5,
+          "pct": 23.8
+        },
+        {
+          "name": "Kinetic Cuirass",
           "paths": 4,
           "pct": 19.0
         },
         {
-          "name": "Stone of Binding",
+          "name": "Chandra's Grace",
           "paths": 4,
           "pct": 19.0
         },
@@ -2831,7 +2826,7 @@
           "pct": 14.3
         },
         {
-          "name": "Leviathan's Hide",
+          "name": "Gauntlet of Thebes",
           "paths": 3,
           "pct": 14.3
         },
@@ -2841,12 +2836,17 @@
           "pct": 14.3
         },
         {
-          "name": "Amanita Charm",
+          "name": "Stone of Binding",
           "paths": 3,
           "pct": 14.3
         },
         {
-          "name": "Gauntlet of Thebes",
+          "name": "Freya's Tears",
+          "paths": 3,
+          "pct": 14.3
+        },
+        {
+          "name": "Runeforged Hammer",
           "paths": 2,
           "pct": 9.5
         }
@@ -2867,33 +2867,33 @@
         },
         {
           "name": "Gem of Isolation",
-          "paths": 14,
-          "pct": 63.6
+          "paths": 13,
+          "pct": 59.1
         },
         {
           "name": "Stampede",
-          "paths": 9,
-          "pct": 40.9
+          "paths": 10,
+          "pct": 45.5
         },
         {
           "name": "Stone of Binding",
-          "paths": 8,
-          "pct": 36.4
-        },
-        {
-          "name": "Hussar's Wings",
-          "paths": 7,
-          "pct": 31.8
+          "paths": 10,
+          "pct": 45.5
         },
         {
           "name": "Kinetic Cuirass",
-          "paths": 7,
-          "pct": 31.8
+          "paths": 6,
+          "pct": 27.3
         },
         {
           "name": "Doublet of Binding",
-          "paths": 7,
-          "pct": 31.8
+          "paths": 5,
+          "pct": 22.7
+        },
+        {
+          "name": "Spectral Armor",
+          "paths": 5,
+          "pct": 22.7
         },
         {
           "name": "Alchemist Coat",
@@ -2901,32 +2901,32 @@
           "pct": 22.7
         },
         {
-          "name": "Prophetic Cloak",
-          "paths": 4,
-          "pct": 18.2
-        },
-        {
-          "name": "Resolute Mantle",
-          "paths": 3,
-          "pct": 13.6
-        },
-        {
-          "name": "Spectral Armor",
-          "paths": 3,
-          "pct": 13.6
-        },
-        {
           "name": "Shield of the Phoenix",
           "paths": 3,
           "pct": 13.6
         },
         {
-          "name": "Chandra's Grace",
+          "name": "Mystical Mail",
           "paths": 3,
           "pct": 13.6
         },
         {
           "name": "Freya's Tears",
+          "paths": 3,
+          "pct": 13.6
+        },
+        {
+          "name": "Hussar's Wings",
+          "paths": 3,
+          "pct": 13.6
+        },
+        {
+          "name": "Leviathan's Hide",
+          "paths": 3,
+          "pct": 13.6
+        },
+        {
+          "name": "Chandra's Grace",
           "paths": 3,
           "pct": 13.6
         }
@@ -2948,44 +2948,42 @@
           "missing_sample": [
             "Cupid",
             "Ishtar",
-            "Danzaburou",
             "Cernunnos",
-            "Sol",
-            "Nut",
+            "Danzaburou",
             "Apollo",
+            "Sol",
+            "Ullr",
+            "Nut",
+            "Medusa",
             "Chiron",
             "Izanami",
-            "Medusa",
-            "Ullr",
-            "Xbalanque"
+            "Anhur"
           ]
         },
         "tanks_hp": {
           "label": "vs high HP / tanks",
-          "covered": 16,
+          "covered": 18,
           "total": 23,
-          "pct": 69.6,
+          "pct": 78.3,
           "missing_sample": [
-            "Danzaburou",
             "Cernunnos",
+            "Danzaburou",
             "Apollo",
-            "Ullr",
             "Rama",
-            "Neith",
             "Tsukuyomi"
           ]
         }
       },
       "multi_gap_sample": [
         {
-          "god": "Danzaburou",
+          "god": "Cernunnos",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Cernunnos",
+          "god": "Danzaburou",
           "missing": [
             "heal",
             "tanks_hp"
@@ -2999,21 +2997,7 @@
           ]
         },
         {
-          "god": "Ullr",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
           "god": "Rama",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Neith",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3037,21 +3021,21 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 9,
+          "covered": 8,
           "total": 25,
-          "pct": 36.0,
+          "pct": 32.0,
           "missing_sample": [
-            "Aphrodite",
+            "Poseidon",
             "Eset",
+            "Aphrodite",
             "Sol",
             "Vulcan",
             "Discordia",
-            "Janus",
-            "Hecate",
-            "Ix Chel",
-            "The Morrigan",
             "Scylla",
-            "Neith",
+            "Hecate",
+            "Janus",
+            "The Morrigan",
+            "Ix Chel",
             "Agni"
           ]
         },
@@ -3061,24 +3045,24 @@
           "total": 25,
           "pct": 12.0,
           "missing_sample": [
-            "Aphrodite",
-            "Ra",
-            "Princess Bari",
-            "Eset",
             "Poseidon",
+            "Ra",
+            "Eset",
+            "Princess Bari",
+            "Aphrodite",
             "Sol",
             "Nut",
             "Vulcan",
             "Discordia",
             "Kukulkan",
-            "Janus",
+            "Scylla",
             "Hecate"
           ]
         }
       },
       "multi_gap_sample": [
         {
-          "god": "Aphrodite",
+          "god": "Poseidon",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3086,6 +3070,13 @@
         },
         {
           "god": "Eset",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Aphrodite",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3113,7 +3104,7 @@
           ]
         },
         {
-          "god": "Janus",
+          "god": "Scylla",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3127,14 +3118,14 @@
           ]
         },
         {
-          "god": "Ix Chel",
+          "god": "Janus",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Scylla",
+          "god": "Ix Chel",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3186,62 +3177,62 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 2,
-          "total": 22,
-          "pct": 9.1,
+          "covered": 4,
+          "total": 23,
+          "pct": 17.4,
           "missing_sample": [
-            "Tsukuyomi",
-            "Awilix",
             "Fenrir",
+            "Cernunnos",
+            "Tsukuyomi",
             "Ne Zha",
+            "Awilix",
             "Thanatos",
-            "Mercury",
             "Odin",
             "Susano",
+            "Mercury",
             "Mordred",
-            "Achilles",
-            "Loki",
+            "Ravana",
             "Gilgamesh"
           ]
         },
         "tanks_hp": {
           "label": "vs high HP / tanks",
           "covered": 0,
-          "total": 22,
+          "total": 23,
           "pct": 0.0,
           "missing_sample": [
-            "Tsukuyomi",
-            "Awilix",
             "Fenrir",
-            "Ne Zha",
             "Cernunnos",
+            "Tsukuyomi",
+            "Ne Zha",
+            "Awilix",
             "Thanatos",
-            "Mercury",
             "Odin",
-            "Susano",
-            "Mordred",
             "Achilles",
-            "Loki"
+            "Susano",
+            "Mercury",
+            "Mordred",
+            "Ravana"
           ]
         }
       },
       "multi_gap_sample": [
         {
-          "god": "Tsukuyomi",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Awilix",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
           "god": "Fenrir",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Cernunnos",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Tsukuyomi",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3255,14 +3246,14 @@
           ]
         },
         {
-          "god": "Thanatos",
+          "god": "Awilix",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Mercury",
+          "god": "Thanatos",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3283,6 +3274,13 @@
           ]
         },
         {
+          "god": "Mercury",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
           "god": "Mordred",
           "missing": [
             "heal",
@@ -3290,14 +3288,7 @@
           ]
         },
         {
-          "god": "Achilles",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Loki",
+          "god": "Ravana",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3311,6 +3302,13 @@
           ]
         },
         {
+          "god": "Loki",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
           "god": "Ratatoskr",
           "missing": [
             "heal",
@@ -3318,14 +3316,7 @@
           ]
         },
         {
-          "god": "Aladdin",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Hun Batz",
+          "god": "Pele",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3350,36 +3341,36 @@
           "missing_sample": [
             "Horus",
             "Chaac",
-            "Sun Wukong",
             "Cu Chulainn",
+            "Sun Wukong",
             "Xing Tian",
             "Odin",
-            "Hades",
-            "Mordred",
             "Achilles",
+            "Mordred",
+            "Hades",
+            "Hua Mulan",
             "Gilgamesh",
-            "Amaterasu",
-            "Hua Mulan"
+            "Amaterasu"
           ]
         },
         "physical": {
           "label": "vs physical damage",
-          "covered": 5,
+          "covered": 4,
           "total": 21,
-          "pct": 23.8,
+          "pct": 19.0,
           "missing_sample": [
             "Horus",
             "Chaac",
             "Sun Wukong",
             "Xing Tian",
-            "Hades",
-            "Mordred",
             "Achilles",
+            "Mordred",
+            "Hades",
+            "Hua Mulan",
             "Jormungandr",
             "Osiris",
             "Gilgamesh",
-            "Amaterasu",
-            "Hua Mulan"
+            "Amaterasu"
           ]
         },
         "magic": {
@@ -3392,7 +3383,7 @@
             "Cu Chulainn",
             "Hades",
             "Jormungandr",
-            "Cerberus"
+            "Thor"
           ]
         },
         "cc_dive": {
@@ -3403,16 +3394,16 @@
           "missing_sample": [
             "Horus",
             "Chaac",
-            "Sun Wukong",
             "Cu Chulainn",
+            "Sun Wukong",
             "Xing Tian",
             "Odin",
-            "Hades",
-            "Mordred",
             "Achilles",
+            "Mordred",
+            "Hades",
+            "Hua Mulan",
             "Jormungandr",
-            "Osiris",
-            "Gilgamesh"
+            "Osiris"
           ]
         }
       },
@@ -3435,18 +3426,18 @@
           ]
         },
         {
-          "god": "Sun Wukong",
-          "missing": [
-            "heal",
-            "physical",
-            "cc_dive"
-          ]
-        },
-        {
           "god": "Cu Chulainn",
           "missing": [
             "heal",
             "magic",
+            "cc_dive"
+          ]
+        },
+        {
+          "god": "Sun Wukong",
+          "missing": [
+            "heal",
+            "physical",
             "cc_dive"
           ]
         },
@@ -3466,11 +3457,10 @@
           ]
         },
         {
-          "god": "Hades",
+          "god": "Achilles",
           "missing": [
             "heal",
             "physical",
-            "magic",
             "cc_dive"
           ]
         },
@@ -3483,7 +3473,16 @@
           ]
         },
         {
-          "god": "Achilles",
+          "god": "Hades",
+          "missing": [
+            "heal",
+            "physical",
+            "magic",
+            "cc_dive"
+          ]
+        },
+        {
+          "god": "Hua Mulan",
           "missing": [
             "heal",
             "physical",
@@ -3522,14 +3521,6 @@
           ]
         },
         {
-          "god": "Hua Mulan",
-          "missing": [
-            "heal",
-            "physical",
-            "cc_dive"
-          ]
-        },
-        {
           "god": "Bellona",
           "missing": [
             "heal",
@@ -3550,42 +3541,42 @@
       "answers": {
         "crit": {
           "label": "vs crit",
-          "covered": 3,
+          "covered": 5,
           "total": 22,
-          "pct": 13.6,
+          "pct": 22.7,
           "missing_sample": [
-            "Aphrodite",
             "Baron Samedi",
             "Xing Tian",
             "Ymir",
             "Jormungandr",
             "Charon",
             "Yemoja",
-            "Ix Chel",
-            "Khepri",
             "Atlas",
+            "Khepri",
+            "Ix Chel",
             "Sobek",
-            "Bacchus"
+            "Bacchus",
+            "Sylvanus"
           ]
         },
         "attack_speed": {
           "label": "vs attack speed",
-          "covered": 2,
+          "covered": 1,
           "total": 22,
-          "pct": 9.1,
+          "pct": 4.5,
           "missing_sample": [
-            "Aphrodite",
-            "Horus",
             "Baron Samedi",
+            "Horus",
             "Xing Tian",
+            "Aphrodite",
             "Ymir",
             "Jormungandr",
             "Charon",
             "Ares",
             "Yemoja",
-            "Ix Chel",
             "Atlas",
-            "Sobek"
+            "Khepri",
+            "Ix Chel"
           ]
         },
         "magic": {
@@ -3594,44 +3585,44 @@
           "total": 22,
           "pct": 4.5,
           "missing_sample": [
-            "Aphrodite",
-            "Horus",
             "Baron Samedi",
+            "Horus",
             "Xing Tian",
+            "Aphrodite",
             "Ymir",
             "Jormungandr",
             "Charon",
             "Ares",
             "Yemoja",
-            "Ix Chel",
+            "Atlas",
             "Khepri",
-            "Atlas"
+            "Ix Chel"
           ]
         },
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 2,
+          "covered": 1,
           "total": 22,
-          "pct": 9.1,
+          "pct": 4.5,
           "missing_sample": [
-            "Aphrodite",
-            "Horus",
             "Baron Samedi",
+            "Horus",
             "Xing Tian",
+            "Aphrodite",
             "Ymir",
             "Jormungandr",
             "Charon",
             "Ares",
             "Yemoja",
-            "Ix Chel",
             "Atlas",
-            "Sobek"
+            "Khepri",
+            "Ix Chel"
           ]
         }
       },
       "multi_gap_sample": [
         {
-          "god": "Aphrodite",
+          "god": "Baron Samedi",
           "missing": [
             "crit",
             "attack_speed",
@@ -3648,7 +3639,7 @@
           ]
         },
         {
-          "god": "Baron Samedi",
+          "god": "Xing Tian",
           "missing": [
             "crit",
             "attack_speed",
@@ -3657,9 +3648,8 @@
           ]
         },
         {
-          "god": "Xing Tian",
+          "god": "Aphrodite",
           "missing": [
-            "crit",
             "attack_speed",
             "magic",
             "heal"
@@ -3710,7 +3700,7 @@
           ]
         },
         {
-          "god": "Ix Chel",
+          "god": "Atlas",
           "missing": [
             "crit",
             "attack_speed",
@@ -3722,11 +3712,13 @@
           "god": "Khepri",
           "missing": [
             "crit",
-            "magic"
+            "attack_speed",
+            "magic",
+            "heal"
           ]
         },
         {
-          "god": "Atlas",
+          "god": "Ix Chel",
           "missing": [
             "crit",
             "attack_speed",
@@ -3772,22 +3764,10 @@
         "pen",
         "shred"
       ],
-      "complete_paths": 2,
+      "complete_paths": 1,
       "total": 25,
-      "pct_complete": 8.0,
+      "pct_complete": 4.0,
       "leaders": [
-        {
-          "god": "Agni",
-          "score": 3,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": true,
-            "pen": true,
-            "shred": true
-          },
-          "complete": true
-        },
         {
           "god": "Baron Samedi",
           "score": 3,
@@ -3799,6 +3779,18 @@
             "shred": false
           },
           "complete": true
+        },
+        {
+          "god": "Agni",
+          "score": 2,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": true,
+            "shred": true
+          },
+          "complete": false
         },
         {
           "god": "Kukulkan",
@@ -3861,18 +3853,6 @@
           "complete": false
         },
         {
-          "god": "Poseidon",
-          "score": 2,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
           "god": "Princess Bari",
           "score": 2,
           "max": 4,
@@ -3891,6 +3871,18 @@
           "parts": {
             "anti_heal": true,
             "pct_hp": false,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "The Morrigan",
+          "score": 2,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
             "pen": true,
             "shred": false
           },
@@ -4007,7 +3999,7 @@
           "complete": false
         },
         {
-          "god": "Scylla",
+          "god": "Poseidon",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4032,18 +4024,6 @@
       "pct_complete": 0.0,
       "leaders": [
         {
-          "god": "Achilles",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
           "god": "Artio",
           "score": 1,
           "max": 4,
@@ -4056,7 +4036,7 @@
           "complete": false
         },
         {
-          "god": "Cu Chulainn",
+          "god": "Cerberus",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4064,6 +4044,18 @@
             "pct_hp": false,
             "pen": false,
             "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Hades",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": false,
+            "shred": false
           },
           "complete": false
         },
@@ -4104,6 +4096,18 @@
           "complete": false
         },
         {
+          "god": "Achilles",
+          "score": 0,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
           "god": "Amaterasu",
           "score": 0,
           "max": 4,
@@ -4129,18 +4133,6 @@
         },
         {
           "god": "Cabrakan",
-          "score": 0,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Cerberus",
           "score": 0,
           "max": 4,
           "parts": {
@@ -4154,18 +4146,6 @@
       ],
       "weak": [
         {
-          "god": "Achilles",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
           "god": "Artio",
           "score": 1,
           "max": 4,
@@ -4178,7 +4158,7 @@
           "complete": false
         },
         {
-          "god": "Cu Chulainn",
+          "god": "Cerberus",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4186,6 +4166,18 @@
             "pct_hp": false,
             "pen": false,
             "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Hades",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": false,
+            "shred": false
           },
           "complete": false
         },
@@ -4226,6 +4218,18 @@
           "complete": false
         },
         {
+          "god": "Achilles",
+          "score": 0,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
           "god": "Amaterasu",
           "score": 0,
           "max": 4,
@@ -4251,18 +4255,6 @@
         },
         {
           "god": "Cabrakan",
-          "score": 0,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Cerberus",
           "score": 0,
           "max": 4,
           "parts": {
@@ -4283,15 +4275,15 @@
         "shred"
       ],
       "complete_paths": 0,
-      "total": 22,
+      "total": 23,
       "pct_complete": 0.0,
       "leaders": [
         {
           "god": "Aladdin",
-          "score": 1,
+          "score": 2,
           "max": 4,
           "parts": {
-            "anti_heal": false,
+            "anti_heal": true,
             "pct_hp": false,
             "pen": true,
             "shred": false
@@ -4409,18 +4401,6 @@
       ],
       "weak": [
         {
-          "god": "Aladdin",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
           "god": "Achilles",
           "score": 0,
           "max": 4,
@@ -4518,6 +4498,18 @@
         },
         {
           "god": "Kali",
+          "score": 0,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Loki",
           "score": 0,
           "max": 4,
           "parts": {
@@ -4542,7 +4534,7 @@
       "pct_complete": 0.0,
       "leaders": [
         {
-          "god": "Charon",
+          "god": "Aphrodite",
           "score": 2,
           "max": 4,
           "parts": {
@@ -4550,6 +4542,18 @@
             "pct_hp": true,
             "pen": false,
             "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Geb",
+          "score": 2,
+          "max": 4,
+          "parts": {
+            "anti_heal": true,
+            "pct_hp": true,
+            "pen": false,
+            "shred": false
           },
           "complete": false
         },
@@ -4626,19 +4630,7 @@
           "complete": false
         },
         {
-          "god": "Geb",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Ix Chel",
+          "god": "Charon",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4650,7 +4642,7 @@
           "complete": false
         },
         {
-          "god": "Jormungandr",
+          "god": "Ix Chel",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4736,14 +4728,14 @@
           "complete": false
         },
         {
-          "god": "Geb",
+          "god": "Charon",
           "score": 1,
           "max": 4,
           "parts": {
-            "anti_heal": true,
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
+            "shred": true
           },
           "complete": false
         },
@@ -4772,14 +4764,14 @@
           "complete": false
         },
         {
-          "god": "Khepri",
+          "god": "Sobek",
           "score": 1,
           "max": 4,
           "parts": {
-            "anti_heal": true,
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
+            "shred": true
           },
           "complete": false
         }
@@ -4792,9 +4784,9 @@
         {
           "entity_name": "Cu Chulainn",
           "trajectory": "rising",
-          "recent_5_score": 11.64071350272299,
-          "recent_10_score": 11.64071350272299,
-          "net_weighted_score": 11.64071350272299,
+          "recent_5_score": 10.370696737814848,
+          "recent_10_score": 10.370696737814848,
+          "net_weighted_score": 10.370696737814848,
           "buff_events": 15,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -4804,69 +4796,21 @@
         {
           "entity_name": "Hun Batz",
           "trajectory": "rising",
-          "recent_5_score": 3.1097748733612764,
-          "recent_10_score": 3.1097748733612764,
-          "net_weighted_score": 2.934003241973634,
+          "recent_5_score": 2.7704944483825975,
+          "recent_10_score": 2.7704944483825975,
+          "net_weighted_score": 2.8792074833325825,
           "buff_events": 5,
-          "nerf_events": 2,
+          "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 40",
           "last_direction": "neutral",
-          "patches_touched": 14
-        },
-        {
-          "entity_name": "Fenrir",
-          "trajectory": "rising",
-          "recent_5_score": 2.166534691516336,
-          "recent_10_score": 1.47608078742295,
-          "net_weighted_score": 1.3401888173174041,
-          "buff_events": 4,
-          "nerf_events": 14,
-          "last_patch": "SMITE 2 Open Beta 40",
-          "last_direction": "neutral",
-          "patches_touched": 21
-        },
-        {
-          "entity_name": "Thanatos",
-          "trajectory": "rising",
-          "recent_5_score": 1.772367025235065,
-          "recent_10_score": 1.772367025235065,
-          "net_weighted_score": 1.8966111412630464,
-          "buff_events": 13,
-          "nerf_events": 9,
-          "last_patch": "SMITE 2 Open Beta 41",
-          "last_direction": "buff",
-          "patches_touched": 21
-        },
-        {
-          "entity_name": "Ratatoskr",
-          "trajectory": "rising",
-          "recent_5_score": 1.7497392661084552,
-          "recent_10_score": 1.7535967229383214,
-          "net_weighted_score": 1.7535967229383214,
-          "buff_events": 3,
-          "nerf_events": 3,
-          "last_patch": "SMITE 2 Open Beta 38",
-          "last_direction": "neutral",
-          "patches_touched": 6
-        },
-        {
-          "entity_name": "Apollo",
-          "trajectory": "rising",
-          "recent_5_score": 1.6299605249474367,
-          "recent_10_score": 0.9245545756194387,
-          "net_weighted_score": 0.9092701605613243,
-          "buff_events": 3,
-          "nerf_events": 3,
-          "last_patch": "SMITE 2 Open Beta 41",
-          "last_direction": "buff",
-          "patches_touched": 11
+          "patches_touched": 13
         },
         {
           "entity_name": "Ishtar",
           "trajectory": "new",
-          "recent_5_score": 1.443349123078563,
-          "recent_10_score": 0.7730845955331983,
-          "net_weighted_score": 0.7730845955331983,
+          "recent_5_score": 1.8471089077343614,
+          "recent_10_score": 0.6887400751745693,
+          "net_weighted_score": 0.6887400751745693,
           "buff_events": 4,
           "nerf_events": 6,
           "last_patch": "SMITE 2 Open Beta 40",
@@ -4874,35 +4818,95 @@
           "patches_touched": 6
         },
         {
-          "entity_name": "Ix Chel",
+          "entity_name": "Thanatos",
+          "trajectory": "rising",
+          "recent_5_score": 1.5789995108561257,
+          "recent_10_score": 1.5789995108561257,
+          "net_weighted_score": 1.6894447585776575,
+          "buff_events": 13,
+          "nerf_events": 9,
+          "last_patch": "SMITE 2 Open Beta 41",
+          "last_direction": "buff",
+          "patches_touched": 22
+        },
+        {
+          "entity_name": "Fenrir",
+          "trajectory": "rising",
+          "recent_5_score": 1.3889759204721746,
+          "recent_10_score": 1.9301629794784794,
+          "net_weighted_score": 1.4785877921648656,
+          "buff_events": 9,
+          "nerf_events": 14,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "neutral",
+          "patches_touched": 23
+        },
+        {
+          "entity_name": "Ravana",
           "trajectory": "rising",
           "recent_5_score": 1.02,
           "recent_10_score": 1.02,
           "net_weighted_score": 1.02,
           "buff_events": 0,
           "nerf_events": 0,
-          "last_patch": "SMITE 2 Open Beta 41",
+          "last_patch": "SMITE 2 Open Beta 42",
           "last_direction": "new",
           "patches_touched": 1
         },
         {
-          "entity_name": "Achilles",
+          "entity_name": "Baron Samedi",
           "trajectory": "rising",
           "recent_5_score": 1.0,
-          "recent_10_score": 1.0,
-          "net_weighted_score": 0.712268130331325,
+          "recent_10_score": 1.6639610169290067,
+          "net_weighted_score": 1.5667774806479995,
+          "buff_events": 4,
+          "nerf_events": 12,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "buff",
+          "patches_touched": 19
+        },
+        {
+          "entity_name": "Poseidon",
+          "trajectory": "rising",
+          "recent_5_score": 1.0,
+          "recent_10_score": 1.957616938959077,
+          "net_weighted_score": 1.9009252107202343,
+          "buff_events": 6,
+          "nerf_events": 4,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "buff",
+          "patches_touched": 10
+        },
+        {
+          "entity_name": "Achilles",
+          "trajectory": "rising",
+          "recent_5_score": 0.8908987181403393,
+          "recent_10_score": 0.8908987181403393,
+          "net_weighted_score": 0.8845587642843935,
           "buff_events": 2,
-          "nerf_events": 3,
+          "nerf_events": 2,
           "last_patch": "SMITE 2 Open Beta 41",
           "last_direction": "buff",
           "patches_touched": 12
         },
         {
+          "entity_name": "Apollo",
+          "trajectory": "rising",
+          "recent_5_score": 0.8908987181403393,
+          "recent_10_score": 1.098576351701752,
+          "net_weighted_score": 0.8100676204873443,
+          "buff_events": 3,
+          "nerf_events": 3,
+          "last_patch": "SMITE 2 Open Beta 41",
+          "last_direction": "buff",
+          "patches_touched": 11
+        },
+        {
           "entity_name": "Xing Tian",
           "trajectory": "new",
-          "recent_5_score": 0.9784728436535648,
-          "recent_10_score": 0.9784728436535648,
-          "net_weighted_score": 0.9784728436535648,
+          "recent_5_score": 0.8717202021460936,
+          "recent_10_score": 0.8717202021460936,
+          "net_weighted_score": 0.8717202021460936,
           "buff_events": 0,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 40",
@@ -4911,37 +4915,25 @@
         },
         {
           "entity_name": "Mercury",
-          "trajectory": "rising",
-          "recent_5_score": 0.8908987181403393,
-          "recent_10_score": 0.44544935907016964,
-          "net_weighted_score": 0.2143220492260083,
+          "trajectory": "volatile",
+          "recent_5_score": 0.7937005259840998,
+          "recent_10_score": 0.3968502629920499,
+          "net_weighted_score": 0.415151804672674,
           "buff_events": 1,
-          "nerf_events": 4,
+          "nerf_events": 2,
           "last_patch": "SMITE 2 Open Beta 40",
           "last_direction": "neutral",
-          "patches_touched": 10
-        },
-        {
-          "entity_name": "Hercules",
-          "trajectory": "stable",
-          "recent_5_score": 0.28043478260869564,
-          "recent_10_score": -0.7564071198694235,
-          "net_weighted_score": -0.5248451510498802,
-          "buff_events": 8,
-          "nerf_events": 7,
-          "last_patch": "SMITE 2 Open Beta 41",
-          "last_direction": "neutral",
-          "patches_touched": 16
+          "patches_touched": 9
         }
       ],
       "falling": [
         {
           "entity_name": "Aladdin",
           "trajectory": "falling",
-          "recent_5_score": -6.490318831851384,
-          "recent_10_score": -6.935768190921554,
-          "net_weighted_score": -7.6281313226503595,
-          "buff_events": 2,
+          "recent_5_score": -5.782216727618504,
+          "recent_10_score": -6.179066990610554,
+          "net_weighted_score": -6.9375967681205095,
+          "buff_events": 1,
           "nerf_events": 23,
           "last_patch": "SMITE 2 Open Beta 39",
           "last_direction": "neutral",
@@ -4950,21 +4942,21 @@
         {
           "entity_name": "Bastet",
           "trajectory": "falling",
-          "recent_5_score": -5.691075765078541,
-          "recent_10_score": -5.691075765078541,
-          "net_weighted_score": -5.691075765078541,
+          "recent_5_score": -5.642627748585803,
+          "recent_10_score": -5.070172103948023,
+          "net_weighted_score": -5.070172103948023,
           "buff_events": 0,
           "nerf_events": 7,
-          "last_patch": "SMITE 2 Open Beta 40",
+          "last_patch": "SMITE 2 Open Beta 42",
           "last_direction": "neutral",
-          "patches_touched": 4
+          "patches_touched": 5
         },
         {
           "entity_name": "Chronos",
           "trajectory": "falling",
-          "recent_5_score": -3.299428488070516,
-          "recent_10_score": -3.299428488070516,
-          "net_weighted_score": -3.301546480972585,
+          "recent_5_score": -3.5006876347724267,
+          "recent_10_score": -2.93945661061774,
+          "net_weighted_score": -2.9413435277792237,
           "buff_events": 1,
           "nerf_events": 6,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -4974,131 +4966,167 @@
         {
           "entity_name": "Cabrakan",
           "trajectory": "falling",
-          "recent_5_score": -2.832347868979269,
-          "recent_10_score": -3.88160587065977,
-          "net_weighted_score": -4.033444984752614,
+          "recent_5_score": -2.5233350858011523,
+          "recent_10_score": -3.4581176944968046,
+          "net_weighted_score": -4.058186892349227,
           "buff_events": 0,
-          "nerf_events": 8,
-          "last_patch": "SMITE 2 Open Beta 41",
-          "last_direction": "nerf",
-          "patches_touched": 10
+          "nerf_events": 16,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "neutral",
+          "patches_touched": 11
         },
         {
           "entity_name": "Kali",
           "trajectory": "falling",
-          "recent_5_score": -2.790539854926835,
-          "recent_10_score": -4.694528841339429,
-          "net_weighted_score": -4.608971963017638,
-          "buff_events": 5,
-          "nerf_events": 14,
+          "recent_5_score": -2.4860883796738453,
+          "recent_10_score": -4.1823497270221495,
+          "net_weighted_score": -4.335226792275531,
+          "buff_events": 4,
+          "nerf_events": 16,
           "last_patch": "SMITE 2 Open Beta 41",
           "last_direction": "fix",
           "patches_touched": 13
         },
         {
-          "entity_name": "Thor",
-          "trajectory": "falling",
-          "recent_5_score": -2.7390956413149543,
-          "recent_10_score": -2.7390956413149543,
-          "net_weighted_score": -3.1871727335315394,
-          "buff_events": 3,
-          "nerf_events": 10,
-          "last_patch": "SMITE 2 Open Beta 41",
-          "last_direction": "neutral",
-          "patches_touched": 18
-        },
-        {
-          "entity_name": "Pele",
-          "trajectory": "falling",
-          "recent_5_score": -2.1774722492748353,
-          "recent_10_score": -7.356602591889047,
-          "net_weighted_score": -7.2906836361716785,
-          "buff_events": 5,
-          "nerf_events": 21,
-          "last_patch": "SMITE 2 Open Beta 38",
-          "last_direction": "neutral",
-          "patches_touched": 18
-        },
-        {
           "entity_name": "Guan Yu",
           "trajectory": "falling",
-          "recent_5_score": -1.9774078070027965,
-          "recent_10_score": -1.9774078070027965,
-          "net_weighted_score": -2.305588507916846,
+          "recent_5_score": -1.7616700804994911,
+          "recent_10_score": -1.7616700804994911,
+          "net_weighted_score": -2.056408198230769,
           "buff_events": 2,
           "nerf_events": 8,
-          "last_patch": "SMITE 2 Open Beta 40",
+          "last_patch": "SMITE 2 Open Beta 42",
           "last_direction": "neutral",
-          "patches_touched": 11
+          "patches_touched": 12
         },
         {
           "entity_name": "Zeus",
           "trajectory": "falling",
-          "recent_5_score": -1.8094650983347265,
-          "recent_10_score": -1.8094650983347265,
-          "net_weighted_score": -1.7943859780800084,
+          "recent_5_score": -1.6120501366260909,
+          "recent_10_score": -1.6120501366260909,
+          "net_weighted_score": -1.5986161677204787,
           "buff_events": 7,
           "nerf_events": 8,
-          "last_patch": "SMITE 2 Open Beta 40",
+          "last_patch": "SMITE 2 Open Beta 42",
           "last_direction": "neutral",
-          "patches_touched": 14
+          "patches_touched": 15
+        },
+        {
+          "entity_name": "Nu Wa",
+          "trajectory": "falling",
+          "recent_5_score": -1.086136547578659,
+          "recent_10_score": -2.7557259630764452,
+          "net_weighted_score": -2.946363309860489,
+          "buff_events": 30,
+          "nerf_events": 42,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "neutral",
+          "patches_touched": 23
+        },
+        {
+          "entity_name": "Aphrodite",
+          "trajectory": "new",
+          "recent_5_score": -1.0,
+          "recent_10_score": -0.5363323331474247,
+          "net_weighted_score": -0.5349623215342411,
+          "buff_events": 5,
+          "nerf_events": 6,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "neutral",
+          "patches_touched": 17
+        },
+        {
+          "entity_name": "Mordred",
+          "trajectory": "volatile",
+          "recent_5_score": -0.7937005259840998,
+          "recent_10_score": -0.7877477720392191,
+          "net_weighted_score": -0.7785202919371892,
+          "buff_events": 5,
+          "nerf_events": 5,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "neutral",
+          "patches_touched": 23
+        },
+        {
+          "entity_name": "Athena",
+          "trajectory": "volatile",
+          "recent_5_score": -0.7572639104192884,
+          "recent_10_score": -0.7572639104192884,
+          "net_weighted_score": -0.7462460805602451,
+          "buff_events": 8,
+          "nerf_events": 12,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "neutral",
+          "patches_touched": 20
         },
         {
           "entity_name": "Horus",
           "trajectory": "new",
-          "recent_5_score": -1.3642798171114032,
-          "recent_10_score": -0.7834057071113026,
-          "net_weighted_score": -0.7834057071113026,
+          "recent_5_score": -0.6933036308138022,
+          "recent_10_score": -0.697935140249285,
+          "net_weighted_score": -0.697935140249285,
           "buff_events": 3,
           "nerf_events": 6,
           "last_patch": "SMITE 2 Open Beta 41",
           "last_direction": "neutral",
           "patches_touched": 5
-        },
-        {
-          "entity_name": "Nu Wa",
-          "trajectory": "falling",
-          "recent_5_score": -1.219147053938813,
-          "recent_10_score": -3.4025021262684088,
-          "net_weighted_score": -3.2066428741817408,
-          "buff_events": 32,
-          "nerf_events": 43,
-          "last_patch": "SMITE 2 Open Beta 40",
-          "last_direction": "neutral",
-          "patches_touched": 22
-        },
-        {
-          "entity_name": "Anubis",
-          "trajectory": "falling",
-          "recent_5_score": -1.2051418738124875,
-          "recent_10_score": -3.6102422082606482,
-          "net_weighted_score": -3.503988490686149,
-          "buff_events": 5,
-          "nerf_events": 13,
-          "last_patch": "SMITE 2 Open Beta 38",
-          "last_direction": "neutral",
-          "patches_touched": 19
         }
       ],
       "volatile": [
         {
+          "entity_name": "Pele",
+          "trajectory": "volatile",
+          "recent_5_score": 0.0,
+          "recent_10_score": -5.999348661147693,
+          "net_weighted_score": -6.620260705832096,
+          "buff_events": 4,
+          "nerf_events": 21,
+          "last_patch": "SMITE 2 Open Beta 38",
+          "last_direction": "neutral",
+          "patches_touched": 16
+        },
+        {
+          "entity_name": "Anubis",
+          "trajectory": "volatile",
+          "recent_5_score": 0.0,
+          "recent_10_score": -3.216360155515559,
+          "net_weighted_score": -3.279188985967651,
+          "buff_events": 4,
+          "nerf_events": 13,
+          "last_patch": "SMITE 2 Open Beta 38",
+          "last_direction": "neutral",
+          "patches_touched": 19
+        },
+        {
+          "entity_name": "Thor",
+          "trajectory": "volatile",
+          "recent_5_score": 0.0,
+          "recent_10_score": -2.4402567957112837,
+          "net_weighted_score": -3.078968424581774,
+          "buff_events": 1,
+          "nerf_events": 10,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "neutral",
+          "patches_touched": 18
+        },
+        {
           "entity_name": "Da Ji",
           "trajectory": "volatile",
-          "recent_5_score": 0.010606601717798213,
-          "recent_10_score": -2.5447080391580834,
-          "net_weighted_score": -3.1985214725409086,
+          "recent_5_score": 0.009449407874211549,
+          "recent_10_score": -1.587851385637402,
+          "net_weighted_score": -2.4245672613642117,
           "buff_events": 1,
-          "nerf_events": 11,
-          "last_patch": "SMITE 2 Open Beta 38",
-          "last_direction": "fix",
-          "patches_touched": 10
+          "nerf_events": 8,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "neutral",
+          "patches_touched": 11
         },
         {
           "entity_name": "Morgan Le Fay",
           "trajectory": "volatile",
-          "recent_5_score": -0.6824572353597229,
-          "recent_10_score": -2.242603608954394,
-          "net_weighted_score": -1.904700026147196,
+          "recent_5_score": 0.0,
+          "recent_10_score": -1.9979326805143682,
+          "net_weighted_score": -1.6968948117364078,
           "buff_events": 4,
           "nerf_events": 7,
           "last_patch": "SMITE 2 Open Beta 40",
@@ -5106,59 +5134,59 @@
           "patches_touched": 9
         },
         {
-          "entity_name": "Cerberus",
+          "entity_name": "Ratatoskr",
+          "trajectory": "volatile",
+          "recent_5_score": -0.6299605249474366,
+          "recent_10_score": 1.2409972048776576,
+          "net_weighted_score": 1.5622770726008504,
+          "buff_events": 3,
+          "nerf_events": 3,
+          "last_patch": "SMITE 2 Open Beta 38",
+          "last_direction": "neutral",
+          "patches_touched": 6
+        },
+        {
+          "entity_name": "Xbalanque",
           "trajectory": "volatile",
           "recent_5_score": 0.0,
-          "recent_10_score": -1.4389826750280332,
-          "net_weighted_score": -1.4153227435067959,
-          "buff_events": 1,
-          "nerf_events": 3,
-          "last_patch": "SMITE 2 Open Beta 36",
+          "recent_10_score": 1.2249857374429665,
+          "net_weighted_score": 1.308203193821713,
+          "buff_events": 3,
+          "nerf_events": 1,
+          "last_patch": "SMITE 2 Open Beta 35",
           "last_direction": "neutral",
-          "patches_touched": 9
+          "patches_touched": 7
+        },
+        {
+          "entity_name": "Ymir",
+          "trajectory": "volatile",
+          "recent_5_score": 0.0,
+          "recent_10_score": 1.0007528371103867,
+          "net_weighted_score": 1.2761672825255679,
+          "buff_events": 23,
+          "nerf_events": 11,
+          "last_patch": "SMITE 2 Open Beta 34",
+          "last_direction": "neutral",
+          "patches_touched": 16
         },
         {
           "entity_name": "Hecate",
           "trajectory": "volatile",
           "recent_5_score": 0.0,
-          "recent_10_score": -1.3977560618220388,
-          "net_weighted_score": -1.3844785319422601,
-          "buff_events": 5,
-          "nerf_events": 10,
+          "recent_10_score": 0.0,
+          "net_weighted_score": -1.107643203629152,
+          "buff_events": 8,
+          "nerf_events": 11,
           "last_patch": "SMITE 2 Open Beta 32",
           "last_direction": "neutral",
-          "patches_touched": 17
-        },
-        {
-          "entity_name": "Kukulkan",
-          "trajectory": "volatile",
-          "recent_5_score": 0.0,
-          "recent_10_score": 1.0751844348615598,
-          "net_weighted_score": 1.36936233847862,
-          "buff_events": 17,
-          "nerf_events": 3,
-          "last_patch": "SMITE 2 Open Beta 36",
-          "last_direction": "neutral",
-          "patches_touched": 13
-        },
-        {
-          "entity_name": "Medusa",
-          "trajectory": "volatile",
-          "recent_5_score": 0.0,
-          "recent_10_score": 0.8253476418892107,
-          "net_weighted_score": 1.2805819919658956,
-          "buff_events": 7,
-          "nerf_events": 5,
-          "last_patch": "SMITE 2 Open Beta 34",
-          "last_direction": "neutral",
-          "patches_touched": 12
+          "patches_touched": 18
         },
         {
           "entity_name": "Geb",
           "trajectory": "volatile",
           "recent_5_score": 0.0,
-          "recent_10_score": -1.1954132632705823,
-          "net_weighted_score": -1.2168560482036852,
+          "recent_10_score": -1.064992143895722,
+          "net_weighted_score": -1.0840954935059823,
           "buff_events": 1,
           "nerf_events": 6,
           "last_patch": "SMITE 2 Open Beta 34",
@@ -5166,73 +5194,37 @@
           "patches_touched": 9
         },
         {
-          "entity_name": "Ymir",
+          "entity_name": "Kukulkan",
           "trajectory": "volatile",
           "recent_5_score": 0.0,
-          "recent_10_score": 1.123307079394341,
-          "net_weighted_score": 1.1914201641206916,
-          "buff_events": 13,
-          "nerf_events": 7,
-          "last_patch": "SMITE 2 Open Beta 34",
-          "last_direction": "neutral",
-          "patches_touched": 16
-        },
-        {
-          "entity_name": "Xbalanque",
-          "trajectory": "volatile",
-          "recent_5_score": 0.0,
-          "recent_10_score": 1.375,
-          "net_weighted_score": 1.1866275585762978,
-          "buff_events": 4,
-          "nerf_events": 5,
-          "last_patch": "SMITE 2 Open Beta 35",
-          "last_direction": "neutral",
-          "patches_touched": 9
-        },
-        {
-          "entity_name": "Poseidon",
-          "trajectory": "volatile",
-          "recent_5_score": 0.0,
-          "recent_10_score": 1.0748886707997571,
-          "net_weighted_score": 1.0112543573985875,
-          "buff_events": 5,
+          "recent_10_score": 0.9578804347826088,
+          "net_weighted_score": 1.002571847672434,
+          "buff_events": 17,
           "nerf_events": 4,
-          "last_patch": "SMITE 2 Open Beta 38",
+          "last_patch": "SMITE 2 Open Beta 36",
           "last_direction": "neutral",
-          "patches_touched": 9
+          "patches_touched": 13
         },
         {
-          "entity_name": "Agni",
+          "entity_name": "Mordred",
           "trajectory": "volatile",
-          "recent_5_score": -0.4724703937105774,
-          "recent_10_score": -0.4649703937105774,
-          "net_weighted_score": -0.8160545261052652,
-          "buff_events": 1,
-          "nerf_events": 7,
-          "last_patch": "SMITE 2 Open Beta 39",
+          "recent_5_score": -0.7937005259840998,
+          "recent_10_score": -0.7877477720392191,
+          "net_weighted_score": -0.7785202919371892,
+          "buff_events": 5,
+          "nerf_events": 5,
+          "last_patch": "SMITE 2 Open Beta 42",
           "last_direction": "neutral",
-          "patches_touched": 14
-        },
-        {
-          "entity_name": "Sobek",
-          "trajectory": "volatile",
-          "recent_5_score": -0.7195652173913043,
-          "recent_10_score": -0.7195652173913043,
-          "net_weighted_score": -0.6743767258432891,
-          "buff_events": 4,
-          "nerf_events": 12,
-          "last_patch": "SMITE 2 Open Beta 41",
-          "last_direction": "neutral",
-          "patches_touched": 15
+          "patches_touched": 23
         }
       ],
       "new_or_fresh": [
         {
           "entity_name": "Cu Chulainn",
           "trajectory": "rising",
-          "recent_5_score": 11.64071350272299,
-          "recent_10_score": 11.64071350272299,
-          "net_weighted_score": 11.64071350272299,
+          "recent_5_score": 10.370696737814848,
+          "recent_10_score": 10.370696737814848,
+          "net_weighted_score": 10.370696737814848,
           "buff_events": 15,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -5240,40 +5232,52 @@
           "patches_touched": 2
         },
         {
-          "entity_name": "Ix Chel",
+          "entity_name": "Ravana",
           "trajectory": "rising",
           "recent_5_score": 1.02,
           "recent_10_score": 1.02,
           "net_weighted_score": 1.02,
           "buff_events": 0,
           "nerf_events": 0,
-          "last_patch": "SMITE 2 Open Beta 41",
+          "last_patch": "SMITE 2 Open Beta 42",
           "last_direction": "new",
           "patches_touched": 1
         },
         {
           "entity_name": "Xing Tian",
           "trajectory": "new",
-          "recent_5_score": 0.9784728436535648,
-          "recent_10_score": 0.9784728436535648,
-          "net_weighted_score": 0.9784728436535648,
+          "recent_5_score": 0.8717202021460936,
+          "recent_10_score": 0.8717202021460936,
+          "net_weighted_score": 0.8717202021460936,
           "buff_events": 0,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 40",
           "last_direction": "neutral",
           "patches_touched": 2
+        },
+        {
+          "entity_name": "Ix Chel",
+          "trajectory": "new",
+          "recent_5_score": -0.03198154011131587,
+          "recent_10_score": -0.03198154011131587,
+          "net_weighted_score": -0.03198154011131587,
+          "buff_events": 0,
+          "nerf_events": 1,
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "neutral",
+          "patches_touched": 2
         }
       ],
-      "total_tracked": 89
+      "total_tracked": 90
     },
     "items": {
       "rising": [
         {
           "entity_name": "Damaru",
           "trajectory": "rising",
-          "recent_5_score": 10.962719344492012,
-          "recent_10_score": 10.029764076337853,
-          "net_weighted_score": 10.118095497770701,
+          "recent_5_score": 9.766672611340235,
+          "recent_10_score": 9.766672611340235,
+          "net_weighted_score": 9.014198308985456,
           "buff_events": 7,
           "nerf_events": 3,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -5283,9 +5287,9 @@
         {
           "entity_name": "Omen Drum",
           "trajectory": "rising",
-          "recent_5_score": 8.67126225348864,
-          "recent_10_score": 8.67126225348864,
-          "net_weighted_score": 8.67126225348864,
+          "recent_5_score": 7.72521642629174,
+          "recent_10_score": 7.72521642629174,
+          "net_weighted_score": 7.72521642629174,
           "buff_events": 5,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -5295,9 +5299,9 @@
         {
           "entity_name": "The Cosmic Horror",
           "trajectory": "rising",
-          "recent_5_score": 7.959284906261397,
-          "recent_10_score": 8.16696253982281,
-          "net_weighted_score": 8.169911626595956,
+          "recent_5_score": 7.0909167203020305,
+          "recent_10_score": 7.5909167203020305,
+          "net_weighted_score": 7.278563795454192,
           "buff_events": 9,
           "nerf_events": 4,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -5307,9 +5311,9 @@
         {
           "entity_name": "Eye of the Storm",
           "trajectory": "rising",
-          "recent_5_score": 6.75754304166598,
-          "recent_10_score": 6.75754304166598,
-          "net_weighted_score": 6.740643965887926,
+          "recent_5_score": 6.020286433598391,
+          "recent_10_score": 6.020286433598391,
+          "net_weighted_score": 6.005231068649966,
           "buff_events": 4,
           "nerf_events": 1,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -5319,21 +5323,21 @@
         {
           "entity_name": "Totem of Death",
           "trajectory": "rising",
-          "recent_5_score": 6.050436260479433,
-          "recent_10_score": 6.050436260479433,
-          "net_weighted_score": 6.061755030917105,
+          "recent_5_score": 5.390325908650955,
+          "recent_10_score": 5.390325908650955,
+          "net_weighted_score": 5.4004097867248015,
           "buff_events": 5,
           "nerf_events": 3,
-          "last_patch": "SMITE 2 Open Beta 41",
-          "last_direction": "buff",
-          "patches_touched": 7
+          "last_patch": "SMITE 2 Open Beta 42",
+          "last_direction": "neutral",
+          "patches_touched": 8
         },
         {
           "entity_name": "The Crusher",
           "trajectory": "rising",
-          "recent_5_score": 2.3134729391092805,
-          "recent_10_score": 2.3134729391092805,
-          "net_weighted_score": 2.0926238022795665,
+          "recent_5_score": 2.061070075904821,
+          "recent_10_score": 2.061070075904821,
+          "net_weighted_score": 1.8643158630008283,
           "buff_events": 5,
           "nerf_events": 4,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -5341,23 +5345,11 @@
           "patches_touched": 9
         },
         {
-          "entity_name": "Kinetic Cuirass",
-          "trajectory": "rising",
-          "recent_5_score": 1.5783689751471717,
-          "recent_10_score": 0.5278485931428889,
-          "net_weighted_score": 0.5278485931428889,
-          "buff_events": 2,
-          "nerf_events": 2,
-          "last_patch": "SMITE 2 Open Beta 39",
-          "last_direction": "buff",
-          "patches_touched": 4
-        },
-        {
           "entity_name": "Amanita Charm",
           "trajectory": "rising",
-          "recent_5_score": 1.483874896405056,
-          "recent_10_score": 1.483874896405056,
-          "net_weighted_score": 1.491687396405056,
+          "recent_5_score": 1.3219822430878934,
+          "recent_10_score": 1.3219822430878934,
+          "net_weighted_score": 1.3289423893233647,
           "buff_events": 3,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5367,9 +5359,9 @@
         {
           "entity_name": "Draconic Scale",
           "trajectory": "rising",
-          "recent_5_score": 1.483874896405056,
-          "recent_10_score": 1.483874896405056,
-          "net_weighted_score": 1.483874896405056,
+          "recent_5_score": 1.3219822430878934,
+          "recent_10_score": 1.3219822430878934,
+          "net_weighted_score": 1.3219822430878934,
           "buff_events": 2,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5379,9 +5371,9 @@
         {
           "entity_name": "Freya's Tears",
           "trajectory": "rising",
-          "recent_5_score": 1.483874896405056,
-          "recent_10_score": 1.483874896405056,
-          "net_weighted_score": 1.483874896405056,
+          "recent_5_score": 1.3219822430878934,
+          "recent_10_score": 1.3219822430878934,
+          "net_weighted_score": 1.3219822430878934,
           "buff_events": 2,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5391,9 +5383,9 @@
         {
           "entity_name": "Hussar's Wings",
           "trajectory": "rising",
-          "recent_5_score": 1.483874896405056,
-          "recent_10_score": 1.483874896405056,
-          "net_weighted_score": 1.4483617210106425,
+          "recent_5_score": 1.3219822430878934,
+          "recent_10_score": 1.3219822430878934,
+          "net_weighted_score": 1.290343600651917,
           "buff_events": 2,
           "nerf_events": 1,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5401,11 +5393,23 @@
           "patches_touched": 2
         },
         {
+          "entity_name": "Kinetic Cuirass",
+          "trajectory": "rising",
+          "recent_5_score": 1.3219822430878934,
+          "recent_10_score": 0.7379928581058418,
+          "net_weighted_score": 0.4702596350031813,
+          "buff_events": 2,
+          "nerf_events": 2,
+          "last_patch": "SMITE 2 Open Beta 39",
+          "last_direction": "buff",
+          "patches_touched": 4
+        },
+        {
           "entity_name": "Shield",
           "trajectory": "rising",
-          "recent_5_score": 1.0,
-          "recent_10_score": 1.0,
-          "net_weighted_score": 1.4095929668263962,
+          "recent_5_score": 0.8908987181403393,
+          "recent_10_score": 0.8908987181403393,
+          "net_weighted_score": 1.2558045672452742,
           "buff_events": 14,
           "nerf_events": 15,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -5417,9 +5421,9 @@
         {
           "entity_name": "Shifter's Shield",
           "trajectory": "falling",
-          "recent_5_score": -2.2795208825721125,
-          "recent_10_score": -2.2795208825721125,
-          "net_weighted_score": -2.3684735811734887,
+          "recent_5_score": -2.0308222322576297,
+          "recent_10_score": -2.0308222322576297,
+          "net_weighted_score": -2.1100700774167196,
           "buff_events": 3,
           "nerf_events": 5,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -5429,9 +5433,9 @@
         {
           "entity_name": "Dwarven Plate",
           "trajectory": "falling",
-          "recent_5_score": -2.037579573058398,
-          "recent_10_score": -2.037579573058398,
-          "net_weighted_score": -1.8391544415623733,
+          "recent_5_score": -1.8152770297466672,
+          "recent_10_score": -1.8152770297466672,
+          "net_weighted_score": -1.6385003344500304,
           "buff_events": 2,
           "nerf_events": 3,
           "last_patch": "SMITE 2 Open Beta 40",
@@ -5441,9 +5445,9 @@
         {
           "entity_name": "Genji's Guard",
           "trajectory": "falling",
-          "recent_5_score": -1.4529136328045822,
-          "recent_10_score": -1.4529136328045822,
-          "net_weighted_score": -1.3451397416860076,
+          "recent_5_score": -1.2943988930342258,
+          "recent_10_score": -1.2943988930342258,
+          "net_weighted_score": -1.1983832715876912,
           "buff_events": 41,
           "nerf_events": 30,
           "last_patch": "SMITE 2 Open Beta 40",
@@ -5451,23 +5455,11 @@
           "patches_touched": 6
         },
         {
-          "entity_name": "Axe",
-          "trajectory": "falling",
-          "recent_5_score": -1.4174111811317323,
-          "recent_10_score": -1.4174111811317323,
-          "net_weighted_score": -1.4174111811317323,
-          "buff_events": 0,
-          "nerf_events": 1,
-          "last_patch": "SMITE 2 Open Beta 37",
-          "last_direction": "nerf",
-          "patches_touched": 1
-        },
-        {
           "entity_name": "Titan's Bane",
           "trajectory": "falling",
-          "recent_5_score": -1.407549875062762,
-          "recent_10_score": -1.407549875062762,
-          "net_weighted_score": -1.2437080903076132,
+          "recent_5_score": -1.2539843794120096,
+          "recent_10_score": -1.2539843794120096,
+          "net_weighted_score": -1.1080179433958222,
           "buff_events": 27,
           "nerf_events": 19,
           "last_patch": "SMITE 2 Open Beta 40",
@@ -5475,35 +5467,35 @@
           "patches_touched": 6
         },
         {
-          "entity_name": "Lucerne Hammer",
+          "entity_name": "Book of Thoth",
           "trajectory": "falling",
-          "recent_5_score": -1.2824196400715673,
-          "recent_10_score": -1.2824196400715673,
-          "net_weighted_score": -1.3496981612194383,
-          "buff_events": 0,
-          "nerf_events": 2,
-          "last_patch": "SMITE 2 Open Beta 37",
+          "recent_5_score": -1.1024309186580141,
+          "recent_10_score": -0.5411998945033275,
+          "net_weighted_score": -0.5381539427622476,
+          "buff_events": 2,
+          "nerf_events": 1,
+          "last_patch": "SMITE 2 Open Beta 38",
           "last_direction": "nerf",
-          "patches_touched": 3
+          "patches_touched": 4
         },
         {
-          "entity_name": "Skeggox",
+          "entity_name": "Transcendence",
           "trajectory": "falling",
-          "recent_5_score": -1.2284230236475016,
-          "recent_10_score": -1.2284230236475016,
-          "net_weighted_score": -1.2209820812164007,
-          "buff_events": 0,
+          "recent_5_score": -1.1024309186580141,
+          "recent_10_score": 0.43790422915783755,
+          "net_weighted_score": 0.4408571691185287,
+          "buff_events": 3,
           "nerf_events": 1,
-          "last_patch": "SMITE 2 Open Beta 37",
+          "last_patch": "SMITE 2 Open Beta 38",
           "last_direction": "nerf",
-          "patches_touched": 2
+          "patches_touched": 4
         },
         {
           "entity_name": "Obsidian Shard",
           "trajectory": "falling",
-          "recent_5_score": -1.1105836356826486,
-          "recent_10_score": -1.1105836356826486,
-          "net_weighted_score": -1.1728700539557475,
+          "recent_5_score": -0.9894175374173095,
+          "recent_10_score": -0.9894175374173095,
+          "net_weighted_score": -1.0449084276143663,
           "buff_events": 1,
           "nerf_events": 4,
           "last_patch": "SMITE 2 Open Beta 40",
@@ -5513,9 +5505,9 @@
         {
           "entity_name": "Gilded Arrow",
           "trajectory": "falling",
-          "recent_5_score": -0.9412306738297341,
-          "recent_10_score": -0.9412306738297341,
-          "net_weighted_score": -0.9288291031112326,
+          "recent_5_score": -0.838541200789278,
+          "recent_10_score": -0.838541200789278,
+          "net_weighted_score": -0.8274926573332382,
           "buff_events": 1,
           "nerf_events": 1,
           "last_patch": "SMITE 2 Open Beta 40",
@@ -5525,9 +5517,9 @@
         {
           "entity_name": "Eye of Providence",
           "trajectory": "volatile",
-          "recent_5_score": -0.7937005259840998,
-          "recent_10_score": 0.46825599575503085,
-          "net_weighted_score": 0.5286269227390079,
+          "recent_5_score": -0.7071067811865476,
+          "recent_10_score": 0.41716866637968486,
+          "net_weighted_score": 0.47095304784265407,
           "buff_events": 5,
           "nerf_events": 2,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5535,37 +5527,49 @@
           "patches_touched": 8
         },
         {
-          "entity_name": "Breastplate of Valor",
-          "trajectory": "volatile",
-          "recent_5_score": -0.7717036530106931,
-          "recent_10_score": -0.7717036530106931,
-          "net_weighted_score": -0.8006876195911395,
-          "buff_events": 3,
-          "nerf_events": 6,
-          "last_patch": "SMITE 2 Open Beta 40",
-          "last_direction": "nerf",
-          "patches_touched": 9
+          "entity_name": "Oath-Sworn Spear",
+          "trajectory": "falling",
+          "recent_5_score": -0.5354664462053211,
+          "recent_10_score": -1.0922781450430332,
+          "net_weighted_score": -1.09221237578239,
+          "buff_events": 0,
+          "nerf_events": 2,
+          "last_patch": "SMITE 2 Open Beta 38",
+          "last_direction": "neutral",
+          "patches_touched": 3
         },
         {
-          "entity_name": "Blinking Abyss",
+          "entity_name": "Tekko-Kagi",
           "trajectory": "volatile",
-          "recent_5_score": -0.6304484861211834,
-          "recent_10_score": -1.3268770575497548,
-          "net_weighted_score": -1.3268770575497548,
-          "buff_events": 1,
-          "nerf_events": 5,
-          "last_patch": "SMITE 2 Open Beta 37",
+          "recent_5_score": -0.2624835520614318,
+          "recent_10_score": -0.2624835520614318,
+          "net_weighted_score": -1.0261832501176118,
+          "buff_events": 3,
+          "nerf_events": 4,
+          "last_patch": "SMITE 2 Open Beta 38",
           "last_direction": "nerf",
-          "patches_touched": 5
+          "patches_touched": 4
+        },
+        {
+          "entity_name": "Riptalon",
+          "trajectory": "stable",
+          "recent_5_score": -0.2204861837316029,
+          "recent_10_score": -0.2204861837316029,
+          "net_weighted_score": -0.36938512736936824,
+          "buff_events": 1,
+          "nerf_events": 3,
+          "last_patch": "SMITE 2 Open Beta 38",
+          "last_direction": "nerf",
+          "patches_touched": 3
         }
       ],
       "volatile": [
         {
           "entity_name": "Blinking Abyss",
           "trajectory": "volatile",
-          "recent_5_score": -0.6304484861211834,
-          "recent_10_score": -1.3268770575497548,
-          "net_weighted_score": -1.3268770575497548,
+          "recent_5_score": 0.0,
+          "recent_10_score": -1.1821130697009017,
+          "net_weighted_score": -1.1821130697009017,
           "buff_events": 1,
           "nerf_events": 5,
           "last_patch": "SMITE 2 Open Beta 37",
@@ -5576,8 +5580,8 @@
           "entity_name": "Cleric's Cloak",
           "trajectory": "volatile",
           "recent_5_score": 0.0,
-          "recent_10_score": -1.2249857374429665,
-          "net_weighted_score": -1.2473537566616129,
+          "recent_10_score": -1.0913382232281372,
+          "net_weighted_score": -1.111265862877368,
           "buff_events": 14,
           "nerf_events": 20,
           "last_patch": "SMITE 2 Open Beta 34",
@@ -5588,8 +5592,8 @@
           "entity_name": "Resolute Mantle",
           "trajectory": "volatile",
           "recent_5_score": 0.0,
-          "recent_10_score": -1.93655565629981,
-          "net_weighted_score": -1.2435990788576299,
+          "recent_10_score": -1.7252749518049246,
+          "net_weighted_score": -1.1079208252347694,
           "buff_events": 1,
           "nerf_events": 3,
           "last_patch": "SMITE 2 Open Beta 34",
@@ -5599,9 +5603,9 @@
         {
           "entity_name": "Tekko-Kagi",
           "trajectory": "volatile",
-          "recent_5_score": -0.2946278254943947,
-          "recent_10_score": -1.2275830936485521,
-          "net_weighted_score": -1.151851752867784,
+          "recent_5_score": -0.2624835520614318,
+          "recent_10_score": -0.2624835520614318,
+          "net_weighted_score": -1.0261832501176118,
           "buff_events": 3,
           "nerf_events": 4,
           "last_patch": "SMITE 2 Open Beta 38",
@@ -5609,11 +5613,23 @@
           "patches_touched": 4
         },
         {
-          "entity_name": "Soul Gem",
+          "entity_name": "Stone of Binding",
           "trajectory": "volatile",
           "recent_5_score": 0.7071067811865476,
-          "recent_10_score": 0.7071067811865476,
-          "net_weighted_score": 0.8868828889984731,
+          "recent_10_score": 0.7912914348097505,
+          "net_weighted_score": 0.8371092365542848,
+          "buff_events": 3,
+          "nerf_events": 1,
+          "last_patch": "SMITE 2 Open Beta 39",
+          "last_direction": "buff",
+          "patches_touched": 8
+        },
+        {
+          "entity_name": "Soul Gem",
+          "trajectory": "volatile",
+          "recent_5_score": 0.6299605249474366,
+          "recent_10_score": 0.6299605249474366,
+          "net_weighted_score": 0.7901228289493405,
           "buff_events": 5,
           "nerf_events": 1,
           "last_patch": "SMITE 2 Open Beta 38",
@@ -5623,9 +5639,9 @@
         {
           "entity_name": "The Executioner",
           "trajectory": "volatile",
-          "recent_5_score": 0.7937005259840998,
-          "recent_10_score": 0.7937005259840998,
-          "net_weighted_score": 0.8362859295514995,
+          "recent_5_score": 0.7071067811865476,
+          "recent_10_score": 0.7071067811865476,
+          "net_weighted_score": 0.745046062636233,
           "buff_events": 3,
           "nerf_events": 4,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5635,9 +5651,9 @@
         {
           "entity_name": "Shield of the Phoenix",
           "trajectory": "volatile",
-          "recent_5_score": 0.7937005259840998,
-          "recent_10_score": 0.7937005259840998,
-          "net_weighted_score": 0.8177948066970181,
+          "recent_5_score": 0.7071067811865476,
+          "recent_10_score": 0.7071067811865476,
+          "net_weighted_score": 0.7285723449882,
           "buff_events": 3,
           "nerf_events": 1,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5645,23 +5661,11 @@
           "patches_touched": 5
         },
         {
-          "entity_name": "Breastplate of Valor",
-          "trajectory": "volatile",
-          "recent_5_score": -0.7717036530106931,
-          "recent_10_score": -0.7717036530106931,
-          "net_weighted_score": -0.8006876195911395,
-          "buff_events": 3,
-          "nerf_events": 6,
-          "last_patch": "SMITE 2 Open Beta 40",
-          "last_direction": "nerf",
-          "patches_touched": 9
-        },
-        {
           "entity_name": "Mystical Mail",
           "trajectory": "volatile",
-          "recent_5_score": 0.7937005259840998,
-          "recent_10_score": 0.7937005259840998,
-          "net_weighted_score": 0.780134808089185,
+          "recent_5_score": 0.7071067811865476,
+          "recent_10_score": 0.7071067811865476,
+          "net_weighted_score": 0.6950211005033146,
           "buff_events": 2,
           "nerf_events": 1,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5671,9 +5675,9 @@
         {
           "entity_name": "Oni Hunter's Garb",
           "trajectory": "volatile",
-          "recent_5_score": 0.7937005259840998,
-          "recent_10_score": 0.7937005259840998,
-          "net_weighted_score": 0.7699568203156054,
+          "recent_5_score": 0.7071067811865476,
+          "recent_10_score": 0.7071067811865476,
+          "net_weighted_score": 0.6859535442425844,
           "buff_events": 1,
           "nerf_events": 1,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5683,9 +5687,9 @@
         {
           "entity_name": "Leviathan's Hide",
           "trajectory": "volatile",
-          "recent_5_score": 0.7937005259840998,
-          "recent_10_score": 0.7937005259840998,
-          "net_weighted_score": 0.7462286398438107,
+          "recent_5_score": 0.7071067811865476,
+          "recent_10_score": 0.7071067811865476,
+          "net_weighted_score": 0.6648141386764599,
           "buff_events": 1,
           "nerf_events": 2,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5693,25 +5697,25 @@
           "patches_touched": 6
         },
         {
-          "entity_name": "Book of Thoth",
+          "entity_name": "Jotunn's Revenge",
           "trajectory": "volatile",
-          "recent_5_score": -0.6074763421290217,
-          "recent_10_score": -0.6074763421290217,
-          "net_weighted_score": -0.6040573768986777,
-          "buff_events": 2,
-          "nerf_events": 1,
+          "recent_5_score": 0.4690466952054284,
+          "recent_10_score": 0.4690466952054284,
+          "net_weighted_score": 0.5271990074241883,
+          "buff_events": 62,
+          "nerf_events": 28,
           "last_patch": "SMITE 2 Open Beta 38",
           "last_direction": "nerf",
-          "patches_touched": 4
+          "patches_touched": 5
         }
       ],
       "new_or_fresh": [
         {
           "entity_name": "Damaru",
           "trajectory": "rising",
-          "recent_5_score": 10.962719344492012,
-          "recent_10_score": 10.029764076337853,
-          "net_weighted_score": 10.118095497770701,
+          "recent_5_score": 9.766672611340235,
+          "recent_10_score": 9.766672611340235,
+          "net_weighted_score": 9.014198308985456,
           "buff_events": 7,
           "nerf_events": 3,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -5721,9 +5725,9 @@
         {
           "entity_name": "Omen Drum",
           "trajectory": "rising",
-          "recent_5_score": 8.67126225348864,
-          "recent_10_score": 8.67126225348864,
-          "net_weighted_score": 8.67126225348864,
+          "recent_5_score": 7.72521642629174,
+          "recent_10_score": 7.72521642629174,
+          "net_weighted_score": 7.72521642629174,
           "buff_events": 5,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 41",
@@ -5733,9 +5737,9 @@
         {
           "entity_name": "Draconic Scale",
           "trajectory": "rising",
-          "recent_5_score": 1.483874896405056,
-          "recent_10_score": 1.483874896405056,
-          "net_weighted_score": 1.483874896405056,
+          "recent_5_score": 1.3219822430878934,
+          "recent_10_score": 1.3219822430878934,
+          "net_weighted_score": 1.3219822430878934,
           "buff_events": 2,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5745,9 +5749,9 @@
         {
           "entity_name": "Freya's Tears",
           "trajectory": "rising",
-          "recent_5_score": 1.483874896405056,
-          "recent_10_score": 1.483874896405056,
-          "net_weighted_score": 1.483874896405056,
+          "recent_5_score": 1.3219822430878934,
+          "recent_10_score": 1.3219822430878934,
+          "net_weighted_score": 1.3219822430878934,
           "buff_events": 2,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5757,9 +5761,9 @@
         {
           "entity_name": "Hussar's Wings",
           "trajectory": "rising",
-          "recent_5_score": 1.483874896405056,
-          "recent_10_score": 1.483874896405056,
-          "net_weighted_score": 1.4483617210106425,
+          "recent_5_score": 1.3219822430878934,
+          "recent_10_score": 1.3219822430878934,
+          "net_weighted_score": 1.290343600651917,
           "buff_events": 2,
           "nerf_events": 1,
           "last_patch": "SMITE 2 Open Beta 39",
@@ -5769,51 +5773,39 @@
         {
           "entity_name": "Toxic Blade",
           "trajectory": "rising",
-          "recent_5_score": 0.8908987181403393,
-          "recent_10_score": 0.8908987181403393,
-          "net_weighted_score": 0.8908987181403393,
+          "recent_5_score": 0.7937005259840998,
+          "recent_10_score": 0.7937005259840998,
+          "net_weighted_score": 0.7937005259840998,
           "buff_events": 1,
           "nerf_events": 0,
-          "last_patch": "SMITE 2 Open Beta 40",
+          "last_patch": "SMITE 2 Open Beta 42",
           "last_direction": "neutral",
-          "patches_touched": 1
+          "patches_touched": 2
         },
         {
           "entity_name": "Gluttonous Grimoire",
           "trajectory": "rising",
-          "recent_5_score": 0.7071067811865476,
-          "recent_10_score": 0.7071067811865476,
-          "net_weighted_score": 0.9055319126825725,
+          "recent_5_score": 0.6299605249474366,
+          "recent_10_score": 0.6299605249474366,
+          "net_weighted_score": 0.8067372202440735,
           "buff_events": 2,
           "nerf_events": 0,
           "last_patch": "SMITE 2 Open Beta 38",
           "last_direction": "buff",
           "patches_touched": 2
-        },
-        {
-          "entity_name": "Bumba's Cudgel",
-          "trajectory": "rising",
-          "recent_5_score": 0.0,
-          "recent_10_score": 0.8591347391416552,
-          "net_weighted_score": 1.109134739141655,
-          "buff_events": 2,
-          "nerf_events": 0,
-          "last_patch": "SMITE 2 Open Beta 32",
-          "last_direction": "buff",
-          "patches_touched": 2
         }
       ],
-      "total_tracked": 222
+      "total_tracked": 221
     },
     "patch_axes_avg_r5": {
-      "damage": -0.192,
-      "general": 0.1,
-      "utility": -0.059,
-      "survivability": 0.029,
-      "attack_speed": 0.011,
-      "heal": -0.009,
-      "mana": -0.005,
-      "cooldown": 0.003
+      "damage": -0.12,
+      "general": 0.091,
+      "utility": -0.046,
+      "survivability": 0.016,
+      "attack_speed": 0.014,
+      "mana": -0.004,
+      "cooldown": -0.003,
+      "heal": 0.0
     },
     "axis_note": "Average recent-5 patch axes across gods \u2014 positive = meta tilted toward that axis."
   },
@@ -5824,39 +5816,39 @@
         {
           "name": "Cupid",
           "rank": 1,
-          "score": 79.2
+          "score": 79.0
         },
         {
           "name": "Ishtar",
           "rank": 2,
-          "score": 75.3
+          "score": 75.7
         },
         {
-          "name": "Danzaburou",
+          "name": "Cernunnos",
           "rank": 3,
           "score": 70.8
         }
       ],
       "a_tier": [
         {
-          "name": "Princess Bari",
+          "name": "Danzaburou",
           "rank": 4,
-          "score": 70.0
+          "score": 68.4
         },
         {
-          "name": "Cernunnos",
+          "name": "Princess Bari",
           "rank": 5,
-          "score": 67.4
+          "score": 67.7
+        },
+        {
+          "name": "Apollo",
+          "rank": 6,
+          "score": 64.9
         },
         {
           "name": "Sol",
-          "rank": 6,
-          "score": 65.3
-        },
-        {
-          "name": "Nut",
           "rank": 7,
-          "score": 65.0
+          "score": 64.3
         }
       ],
       "tier_counts": {
@@ -5871,17 +5863,17 @@
       "count": 25,
       "s_tier": [
         {
-          "name": "Aphrodite",
+          "name": "Poseidon",
           "rank": 1,
-          "score": 81.9
+          "score": 74.2
+        },
+        {
+          "name": "Baron Samedi",
+          "rank": 2,
+          "score": 71.9
         },
         {
           "name": "Ra",
-          "rank": 2,
-          "score": 71.3
-        },
-        {
-          "name": "Princess Bari",
           "rank": 3,
           "score": 70.0
         }
@@ -5890,27 +5882,27 @@
         {
           "name": "Eset",
           "rank": 4,
-          "score": 69.5
+          "score": 69.1
         },
         {
-          "name": "Poseidon",
+          "name": "Princess Bari",
           "rank": 5,
-          "score": 66.5
+          "score": 67.7
         },
         {
-          "name": "Baron Samedi",
+          "name": "Aphrodite",
           "rank": 6,
-          "score": 65.6
+          "score": 64.4
         },
         {
           "name": "Sol",
           "rank": 7,
-          "score": 65.3
+          "score": 64.3
         },
         {
           "name": "Nut",
           "rank": 8,
-          "score": 65.0
+          "score": 63.1
         }
       ],
       "tier_counts": {
@@ -5922,48 +5914,53 @@
       }
     },
     "Jungle": {
-      "count": 22,
+      "count": 23,
       "s_tier": [
         {
-          "name": "Tsukuyomi",
-          "rank": 1,
-          "score": 81.8
-        },
-        {
-          "name": "Awilix",
-          "rank": 2,
-          "score": 72.4
-        },
-        {
           "name": "Fenrir",
+          "rank": 1,
+          "score": 71.5
+        },
+        {
+          "name": "Cernunnos",
+          "rank": 2,
+          "score": 70.8
+        },
+        {
+          "name": "Tsukuyomi",
           "rank": 3,
-          "score": 71.4
+          "score": 69.9
         }
       ],
       "a_tier": [
         {
           "name": "Ne Zha",
           "rank": 4,
-          "score": 70.4
+          "score": 69.4
         },
         {
-          "name": "Cernunnos",
+          "name": "Awilix",
           "rank": 5,
-          "score": 67.4
+          "score": 69.3
         },
         {
           "name": "Thanatos",
           "rank": 6,
-          "score": 66.1
+          "score": 66.7
         },
         {
-          "name": "Mercury",
+          "name": "Odin",
           "rank": 7,
-          "score": 66.1
+          "score": 64.2
+        },
+        {
+          "name": "Achilles",
+          "rank": 8,
+          "score": 62.2
         }
       ],
       "tier_counts": {
-        "A": 4,
+        "A": 5,
         "B": 6,
         "C": 5,
         "D": 4,
@@ -5976,39 +5973,39 @@
         {
           "name": "Horus",
           "rank": 1,
-          "score": 70.3
+          "score": 70.2
         },
         {
           "name": "Chaac",
           "rank": 2,
-          "score": 69.3
+          "score": 66.7
         },
         {
-          "name": "Sun Wukong",
+          "name": "Cu Chulainn",
           "rank": 3,
-          "score": 67.9
+          "score": 65.9
         }
       ],
       "a_tier": [
         {
-          "name": "Cu Chulainn",
+          "name": "Sun Wukong",
           "rank": 4,
-          "score": 65.7
+          "score": 65.5
         },
         {
           "name": "Xing Tian",
           "rank": 5,
-          "score": 65.6
+          "score": 64.7
         },
         {
           "name": "Odin",
           "rank": 6,
-          "score": 63.8
+          "score": 64.2
         },
         {
-          "name": "Hades",
+          "name": "Achilles",
           "rank": 7,
-          "score": 62.5
+          "score": 62.2
         }
       ],
       "tier_counts": {
@@ -6023,41 +6020,41 @@
       "count": 22,
       "s_tier": [
         {
-          "name": "Aphrodite",
+          "name": "Baron Samedi",
           "rank": 1,
-          "score": 81.9
+          "score": 71.9
         },
         {
           "name": "Horus",
           "rank": 2,
-          "score": 70.3
+          "score": 70.2
         },
         {
-          "name": "Baron Samedi",
+          "name": "Xing Tian",
           "rank": 3,
-          "score": 65.6
+          "score": 64.7
         }
       ],
       "a_tier": [
         {
-          "name": "Xing Tian",
+          "name": "Aphrodite",
           "rank": 4,
-          "score": 65.6
+          "score": 64.4
         },
         {
           "name": "Ymir",
           "rank": 5,
-          "score": 65.0
+          "score": 63.1
         },
         {
           "name": "Jormungandr",
           "rank": 6,
-          "score": 59.0
+          "score": 58.6
         },
         {
           "name": "Charon",
           "rank": 7,
-          "score": 58.1
+          "score": 57.7
         }
       ],
       "tier_counts": {
@@ -6070,10 +6067,10 @@
     }
   },
   "weekly_themes": [
-    "Support paths under-buy anti-crit (Spectral on ~13.6% of recs) \u2014 flex Spectral almost every game.",
-    "Support/Solo anti-heal is rare in defaults (~9.1% support) \u2014 Stygian/Brawler's is a live flex.",
-    "Gods rising (r5 patch): Cu Chulainn, Hun Batz, Fenrir, Thanatos.",
+    "Support paths under-buy anti-crit (Spectral on ~22.7% of recs) \u2014 flex Spectral almost every game.",
+    "Support/Solo anti-heal is rare in defaults (~4.5% support) \u2014 Stygian/Brawler's is a live flex.",
+    "Gods rising (r5 patch): Cu Chulainn, Hun Batz, Ishtar, Thanatos.",
     "Items hot (r5 patch): Damaru, Omen Drum, The Cosmic Horror, Eye of the Storm.",
-    "Patch axes (avg r5): damage -0.19, general +0.10, utility -0.06."
+    "Patch axes (avg r5): damage -0.12, general +0.09, utility -0.05."
   ]
 }
