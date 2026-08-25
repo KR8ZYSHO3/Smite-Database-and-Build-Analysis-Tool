@@ -3155,6 +3155,13 @@ function trollPoolItemOk(it, god, role, primaryAxis) {
     "jotunn",
     "hydra's",
     "tyrfing",
+    "devourer",
+    "qin's",
+    "qin’s",
+    "odysseus",
+    "the crusher",
+    "the reaper",
+    "pendulum blade",
   ];
   if (isPhysical && primaryAxis !== "aa_clown") {
     if (int >= 40 && str < 20) return false;
@@ -3686,15 +3693,97 @@ function threatMetersHtml(threat) {
 }
 
 /* -------------------- Troll builds (client) -------------------- */
-const TROLL_AXIS_KEYS = {
-  unkillable: ["shifter", "hussar", "freya", "spectral", "magi", "mantle", "alchemist", "phoenix", "pridwen", "bancroft", "heartwood", "draconic", "oni hunter", "gladiator"],
-  peel_prison: ["stygian", "binding", "isolation", "midgardian", "spectral", "magi", "mantle", "contagion", "genji", "breastplate", "chronos"],
-  antiheal_tax: ["contagion", "divine ruin", "pestilence", "brawler", "toxic"],
-  infinite_poke: ["chronos", "pendant", "gem of focus", "breastplate", "genji", "thoth", "doom orb", "isolation", "magus", "soul gem", "myrddin"],
-  aa_clown: ["deathbringer", "demon", "riptalon", "avenging", "musashi", "qins", "ichival", "wind", "executioner", "bloodforge", "devourer"],
-  aura_tax: ["thebes", "chandra", "sovereign", "heartward", "contagion", "spectral", "midgardian"],
-  active_toybox: ["dreamer", "wish-granting", "parashu", "arondight", "pridwen"],
+/** Slot families — small key groups so each slot picks a distinct bit (not the same staple every roll). */
+const TROLL_SLOT_FAMILIES = {
+  bulk_sustain: ["shifter", "hussar", "freya", "phoenix", "pridwen", "gladiator", "alchemist", "heartwood", "draconic", "oni hunter", "berserker"],
+  soft_sustain: ["bancroft", "typhon", "sanguine", "lifebinder", "asclepius", "yogi"],
+  mitigate: ["spectral", "magi", "mantle of discord", "spirit robe", "nemean", "radiant bulwark", "dwarven", "resolute mantle", "sphere of negation"],
+  cc_tax: ["isolation", "binding", "stygian", "pharaoh"],
+  anti_hit: ["midgardian", "mystical mail", "erosion", "screeching", "void shield", "void stone"],
+  bulk_peel: ["genji", "breastplate", "prophetic", "leviathan", "wyrmskin", "kinetic"],
+  cdr_shell: ["breastplate", "genji", "chronos", "gem of focus", "shogun"],
+  antiheal_core: ["contagion", "divine ruin", "brawler", "toxic"],
+  antiheal_flex: ["desolat", "magus", "pestilence", "void shard", "obsidian"],
+  poke_cdr: ["chronos", "gem of focus", "pendant", "myrddin", "scepter of dominion"],
+  poke_zone: ["magus", "soul gem", "desolat", "doom orb", "thoth", "cosmic", "totem", "jade"],
+  poke_shell: ["ethereal", "helm of radiance", "triton", "book of thoth", "doom orb"],
+  aa_as: ["riptalon", "avenging", "ichival", "wind", "shogun", "golden blade", "nimble"],
+  aa_crit: ["deathbringer", "demon", "rage", "musashi", "silverbranch"],
+  aa_onhit: ["qin", "executioner", "bloodforge", "devourer", "odysseus", "fail-not", "atalanta"],
+  aura_core: ["thebes", "chandra", "stampede", "prophetic"],
+  aura_team: ["shogun", "heartwood", "amanita", "umbral", "xibalban"],
+  aura_body: ["midgardian", "mystical mail", "spectral", "contagion"],
+  toy_active: ["dreamer", "wish-granting", "parashu", "arondight", "erebus", "pendulum of the ages"],
+  toy_spike: ["tahuti", "soul reaver", "totem", "cosmic", "pridwen", "helm of darkness"],
 };
+
+/** Per-axis 6-slot recipes — primary identity baked into slots 0–3; flex later. */
+const TROLL_AXIS_SLOTS = {
+  unkillable: ["bulk_sustain", "mitigate", "soft_sustain", "bulk_sustain", "mitigate", "soft_sustain"],
+  peel_prison: ["cc_tax", "anti_hit", "bulk_peel", "cdr_shell", "cc_tax", "anti_hit"],
+  antiheal_tax: ["antiheal_core", "antiheal_flex", "bulk_peel", "mitigate", "antiheal_core", "cdr_shell"],
+  infinite_poke: ["poke_cdr", "poke_zone", "poke_zone", "poke_shell", "poke_cdr", "cdr_shell"],
+  aa_clown: ["aa_as", "aa_onhit", "aa_crit", "aa_as", "aa_onhit", "soft_sustain"],
+  aura_tax: ["aura_core", "aura_team", "aura_body", "mitigate", "aura_core", "bulk_peel"],
+  active_toybox: ["toy_active", "toy_spike", "toy_active", "poke_cdr", "toy_spike", "bulk_sustain"],
+};
+
+/** Flat key lists for fills / secondary flex (staples partitioned — Isolation peel-only, Thebes aura-only, etc.). */
+const TROLL_AXIS_KEYS = {
+  unkillable: [
+    ...TROLL_SLOT_FAMILIES.bulk_sustain,
+    ...TROLL_SLOT_FAMILIES.soft_sustain,
+    ...TROLL_SLOT_FAMILIES.mitigate,
+  ],
+  peel_prison: [
+    ...TROLL_SLOT_FAMILIES.cc_tax,
+    ...TROLL_SLOT_FAMILIES.anti_hit,
+    ...TROLL_SLOT_FAMILIES.bulk_peel,
+    ...TROLL_SLOT_FAMILIES.cdr_shell,
+  ],
+  antiheal_tax: [
+    ...TROLL_SLOT_FAMILIES.antiheal_core,
+    ...TROLL_SLOT_FAMILIES.antiheal_flex,
+    ...TROLL_SLOT_FAMILIES.bulk_peel,
+    ...TROLL_SLOT_FAMILIES.mitigate,
+  ],
+  infinite_poke: [
+    ...TROLL_SLOT_FAMILIES.poke_cdr,
+    ...TROLL_SLOT_FAMILIES.poke_zone,
+    ...TROLL_SLOT_FAMILIES.poke_shell,
+    ...TROLL_SLOT_FAMILIES.cdr_shell,
+  ],
+  aa_clown: [
+    ...TROLL_SLOT_FAMILIES.aa_as,
+    ...TROLL_SLOT_FAMILIES.aa_crit,
+    ...TROLL_SLOT_FAMILIES.aa_onhit,
+    ...TROLL_SLOT_FAMILIES.soft_sustain,
+  ],
+  aura_tax: [
+    ...TROLL_SLOT_FAMILIES.aura_core,
+    ...TROLL_SLOT_FAMILIES.aura_team,
+    ...TROLL_SLOT_FAMILIES.aura_body,
+    ...TROLL_SLOT_FAMILIES.mitigate,
+    ...TROLL_SLOT_FAMILIES.bulk_peel,
+  ],
+  active_toybox: [
+    ...TROLL_SLOT_FAMILIES.toy_active,
+    ...TROLL_SLOT_FAMILIES.toy_spike,
+    ...TROLL_SLOT_FAMILIES.poke_cdr,
+    ...TROLL_SLOT_FAMILIES.bulk_sustain,
+  ],
+};
+
+const TROLL_AXIS_LABELS = {
+  unkillable: "Unkillable",
+  peel_prison: "Peel prison",
+  antiheal_tax: "Antiheal tax",
+  infinite_poke: "Infinite poke",
+  aa_clown: "AA clown",
+  aura_tax: "Aura tax",
+  active_toybox: "Active toybox",
+};
+
 const TROLL_TITLES = {
   unkillable: ["Please Report Simulator", "Unkillable Clown Fiesta", "I Am A Raid Boss", "Your Ult Was A Suggestion"],
   peel_prison: ["Nobody Gets To Hit Anything", "Peel Prison Warden", "ADC Timeout Corner", "Crowd Control Tax Office"],
@@ -3887,9 +3976,9 @@ function detectTrollAxesJS(god, role, useAspect, rng) {
     if (/basics? are ranged|on-hit|crit|attack speed/i.test(blob)) scores.aa_clown += 2.0;
     if (/cooldown rate|reduced cooldown/i.test(blob)) scores.infinite_poke += 1.3;
   }
-  // Fresh roll noise so the same god isn't always the same axis
+  // Fresh roll noise so the same god isn't always the same axis (wider → more secondary axes win)
   for (const ax of Object.keys(scores)) {
-    scores[ax] += (rng ? rng() : Math.random()) * 1.1;
+    scores[ax] += (rng ? rng() : Math.random()) * 1.85;
     scores[ax] += (hashStr(god.name + ax) % 11) * 0.04;
   }
   return Object.entries(scores).sort((a, b) => b[1] - a[1]);
@@ -3968,8 +4057,8 @@ function buildMaxStatPathJS(god, role, useAspect, modeKey, rng) {
       if (it.is_active_item || String(it.categories || "").toLowerCase().includes("active")) {
         if (actives >= maxAct) continue;
       }
-      // Among top cluster, sometimes skip to diversify
-      if (pass === 0 && picked.length >= 2 && rng() < 0.12) continue;
+      // Among top cluster, sometimes skip to diversify re-rolls
+      if (pass === 0 && picked.length >= 2 && rng() < 0.22) continue;
       picked.push(it);
       seen.add(it.name);
       if (it.is_active_item || String(it.categories || "").toLowerCase().includes("active")) actives++;
@@ -3999,14 +4088,16 @@ function buildMaxStatPathJS(god, role, useAspect, modeKey, rng) {
     return ca - cb;
   });
 
-  // Light flavor swap only among other positive-stat leftovers (never shells)
-  if (picked.length >= 3 && scored.length > 8 && rng() < 0.35) {
-    const fi = Math.floor(rng() * picked.length);
-    const alts = scored
-      .filter((x) => !seen.has(x.it.name) && mode.score(x.it) > 0)
-      .slice(0, 8);
-    if (alts.length) {
-      const alt = alts[Math.floor(rng() * Math.min(alts.length, 4))].it;
+  // Flavor swap among other positive-stat leftovers (never shells) — higher odds for variety
+  if (picked.length >= 3 && scored.length > 8 && rng() < 0.55) {
+    const swaps = rng() < 0.4 ? 2 : 1;
+    for (let s = 0; s < swaps; s++) {
+      const fi = Math.floor(rng() * picked.length);
+      const alts = scored
+        .filter((x) => !seen.has(x.it.name) && mode.score(x.it) > 0)
+        .slice(0, 10);
+      if (!alts.length) break;
+      const alt = alts[Math.floor(rng() * Math.min(alts.length, 5))].it;
       seen.delete(picked[fi].name);
       alt._trollWhy = `😈 max ${mode.unit} chaos swap`;
       picked[fi] = alt;
@@ -4072,154 +4163,212 @@ function buildMaxStatPathJS(god, role, useAspect, modeKey, rng) {
 function buildAnnoyPathJS(god, role, useAspect, chaos, rng) {
   let ranked = detectTrollAxesJS(god, role, useAspect, rng);
   const best = ranked[0][1];
-  const axisPool = ranked.filter(([, s], i) => i === 0 || s >= best - 1.0).slice(0, 4);
+  const axisPool = ranked.filter(([, s], i) => i === 0 || s >= best - 1.15).slice(0, 4);
   let primary = axisPool[Math.floor(rng() * axisPool.length)][0];
   let secondary = ranked.find(([a]) => a !== primary)?.[0] || primary;
-  // Occasionally pick pure random secondary for variety
-  if (rng() < 0.25) {
+  if (rng() < 0.35) {
     const rest = ranked.filter(([a]) => a !== primary);
-    if (rest.length) secondary = rest[Math.floor(rng() * Math.min(rest.length, 4))][0];
+    if (rest.length) secondary = rest[Math.floor(rng() * Math.min(rest.length, 5))][0];
   }
-  if (chaos && secondary !== primary && rng() < 0.7) {
+  if (chaos && secondary !== primary && rng() < 0.55) {
     const t = primary;
     primary = secondary;
     secondary = t;
   }
+
   const titles = TROLL_TITLES[primary] || ["Certified Troll Path"];
   const title = titles[Math.floor(rng() * titles.length)];
   const aspect = useAspect && (god.aspects || [])[0] ? god.aspects[0] : null;
-
   const baselineNames = useAspect
     ? (god.conquest_by_role_aspect?.[role]?.items || []).map((i) => i.name)
     : getBaselinePath(god, role);
-  // Troll-legal pool (no Providence, no stolen acorns, support power ban)
   const pool = shopPoolForGod(god, { troll: true, role, primaryAxis: primary });
-  const byName = Object.fromEntries(pool.map((it) => [it.name, it]));
-  // Kit-true troll: start EMPTY, pin signatures + axis items (not ranked baseline)
-  let picked = [];
-  const seen = new Set();
+  const axisLabel = TROLL_AXIS_LABELS[primary] || primary.replace(/_/g, " ");
 
+  // Kit signatures — only keys that reinforce the primary axis (avoid Isolation on AA clown)
   const tagKeys = {
     hard_cc: ["isolation", "binding", "stygian"],
     high_cc: ["isolation", "binding"],
-    dot: ["magus", "desolat", "isolation", "contagion"],
+    dot: ["magus", "desolat", "contagion"],
     heavy_dot: ["magus", "desolat"],
-    pet_zone: ["isolation", "magus", "soul gem"],
+    pet_zone: ["magus", "soul gem", "desolat"],
     mana_stack: ["thoth", "doom orb", "book of"],
-    spam: ["chronos", "genji", "breastplate"],
+    spam: ["chronos", "gem of focus", "genji"],
     channel: ["chronos", "gem of focus", "myrddin"],
     shield: ["phoenix", "pridwen", "shifter"],
-    team_buff: ["thebes", "chandra"],
+    team_buff: ["thebes", "chandra", "stampede"],
     aa: ["riptalon", "avenging", "demon"],
-    as_steroid: ["riptalon", "ichival"],
+    as_steroid: ["riptalon", "ichival", "shogun"],
     heal: ["asclepius", "lifebinder", "chandra"],
     self_sustain: ["bancroft", "typhon", "shifter"],
   };
+  const axisKeySet = new Set((TROLL_AXIS_KEYS[primary] || []).map((k) => k.toLowerCase()));
   const tags = god.kit_tags || [];
   let sigKeys = [];
   for (const t of tags) {
-    for (const k of tagKeys[t] || []) if (!sigKeys.includes(k)) sigKeys.push(k);
+    for (const k of tagKeys[t] || []) {
+      if (!sigKeys.includes(k) && (axisKeySet.has(k) || [...axisKeySet].some((a) => k.includes(a) || a.includes(k)))) {
+        sigKeys.push(k);
+      }
+    }
   }
-  // Ratatoskr: acorns are always a signature bit
   if (String(god.name || "").toLowerCase().includes("ratatoskr")) {
     sigKeys.unshift("acorn");
   }
-  if (sigKeys.length) {
-    for (let i = sigKeys.length - 1; i > 0; i--) {
-      const j = Math.floor(rng() * (i + 1));
-      [sigKeys[i], sigKeys[j]] = [sigKeys[j], sigKeys[i]];
-    }
+  for (let i = sigKeys.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [sigKeys[i], sigKeys[j]] = [sigKeys[j], sigKeys[i]];
   }
 
-  function injectKey(key, why) {
-    if ([...seen].some((n) => n.toLowerCase().includes(key))) return false;
-    const hits = pool
-      .filter(
-        (it) =>
-          !seen.has(it.name) &&
-          it.name.toLowerCase().includes(key) &&
-          trollPoolItemOk(it, god, role, primary)
-      )
-      .sort((a, b) => (b.total_cost || 0) - (a.total_cost || 0));
-    if (!hits.length) return false;
-    const it = hits[Math.floor(rng() * Math.min(hits.length, 5))];
-    it._trollWhy = why;
-    if (picked.length < 6) {
-      picked.push(it);
-    } else {
-      let drop = Math.floor(rng() * picked.length);
-      for (let i = 0; i < picked.length; i++) {
-        const n = picked[i].name.toLowerCase();
-        if (!sigKeys.some((k) => n.includes(k))) {
-          drop = i;
-          break;
-        }
-      }
-      seen.delete(picked[drop].name);
-      picked[drop] = it;
+  let picked = [];
+  const seen = new Set();
+  const usedFamilies = new Set(); // soft anti-repeat: same family substring already used
+
+  function candidatesForKeys(keys) {
+    const hits = [];
+    const dtype = (god.primary_damage_type || "").toLowerCase();
+    for (const it of pool) {
+      if (seen.has(it.name)) continue;
+      if (!trollPoolItemOk(it, god, role, primary)) continue;
+      const n = it.name.toLowerCase();
+      if (!keys.some((k) => n.includes(k.toLowerCase()))) continue;
+      // Extra type sanity for broad keys (book/thoth/magus vs physical cores)
+      const str = itemStat(it, "str");
+      const int = itemStat(it, "int");
+      if (dtype === "physical" && int >= 35 && str < 15 && primary !== "aa_clown") continue;
+      if (dtype === "magical" && str >= 35 && int < 15 && primary !== "aa_clown") continue;
+      hits.push(it);
     }
+    // Prefer mid/high cost but weighted random among top cluster (not always #1)
+    hits.sort((a, b) => (b.total_cost || 0) - (a.total_cost || 0));
+    return hits;
+  }
+
+  function pickWeighted(hits, topN = 6) {
+    if (!hits.length) return null;
+    const slice = hits.slice(0, Math.min(topN, hits.length));
+    // Weight: higher cost slightly preferred, but RNG dominates
+    const weights = slice.map((it, i) => Math.max(0.35, 1.2 - i * 0.12) + rng() * 0.8);
+    let total = weights.reduce((a, b) => a + b, 0);
+    let r = rng() * total;
+    for (let i = 0; i < slice.length; i++) {
+      r -= weights[i];
+      if (r <= 0) return slice[i];
+    }
+    return slice[0];
+  }
+
+  function injectFromKeys(keys, why, { avoidUsedKeys = true } = {}) {
+    let keysUse = keys.slice();
+    if (avoidUsedKeys) {
+      keysUse = keysUse.filter((k) => !usedFamilies.has(k.toLowerCase()));
+      if (!keysUse.length) keysUse = keys.slice();
+    }
+    for (let i = keysUse.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [keysUse[i], keysUse[j]] = [keysUse[j], keysUse[i]];
+    }
+    const hits = candidatesForKeys(keysUse);
+    // Prefer items whose matched key isn't already used
+    const fresh = hits.filter((it) => {
+      const n = it.name.toLowerCase();
+      const matched = keysUse.filter((k) => n.includes(k.toLowerCase()));
+      return matched.some((k) => !usedFamilies.has(k.toLowerCase()));
+    });
+    const it = pickWeighted(fresh.length ? fresh : hits, chaos ? 8 : 6);
+    if (!it) return false;
+    const n = it.name.toLowerCase();
+    for (const k of keysUse) {
+      if (n.includes(k.toLowerCase())) usedFamilies.add(k.toLowerCase());
+    }
+    it._trollWhy = why;
+    picked.push(it);
     seen.add(it.name);
     return true;
   }
 
+  // 1) At most one kit signature that reinforces primary
   let sigN = 0;
   for (const k of sigKeys) {
-    if (sigN >= 2) break;
-    if (injectKey(k, `😈 kit:${k}`)) sigN++;
+    if (sigN >= 1) break;
+    if (injectFromKeys([k], `😈 kit bit · ${k}`, { avoidUsedKeys: false })) sigN++;
   }
 
-  let keys = [...(TROLL_AXIS_KEYS[primary] || [])];
-  for (const k of TROLL_AXIS_KEYS[secondary] || []) {
-    if (!keys.includes(k)) keys.push(k);
+  // 2) Slot recipe for primary (and chaos: swap some slots to secondary families)
+  let slots = [...(TROLL_AXIS_SLOTS[primary] || [])];
+  const secSlots = TROLL_AXIS_SLOTS[secondary] || [];
+  if (secondary !== primary && secSlots.length) {
+    // Slots 4–5 lean secondary; chaos flips 2–3 mid slots too
+    const flipIdx = chaos ? [2, 3, 4, 5] : [4, 5];
+    for (const idx of flipIdx) {
+      if (idx < slots.length && rng() < (chaos ? 0.75 : 0.85)) {
+        slots[idx] = secSlots[idx % secSlots.length];
+      }
+    }
   }
-  for (let i = keys.length - 1; i > 0; i--) {
-    const j = Math.floor(rng() * (i + 1));
-    [keys[i], keys[j]] = [keys[j], keys[i]];
-  }
-  let trollN = 0;
-  const maxTroll = chaos ? 4 : 3;
-  for (const key of keys) {
-    if (trollN >= maxTroll) break;
-    if (injectKey(key, `😈 troll ${primary.replace(/_/g, " ")}`)) trollN++;
+  // If signature already filled a slot, still run all 6 families until full
+  for (const famName of slots) {
+    if (picked.length >= 6) break;
+    const famKeys = TROLL_SLOT_FAMILIES[famName] || [];
+    if (!famKeys.length) continue;
+    const bit = famName.replace(/_/g, " ");
+    injectFromKeys(famKeys, `😈 ${axisLabel.toLowerCase()} · ${bit}`);
   }
 
+  // 3) Axis-key fill (primary then secondary), still identity-coherent
+  if (picked.length < 6) {
+    const fillKeys = [...(TROLL_AXIS_KEYS[primary] || [])];
+    for (const k of TROLL_AXIS_KEYS[secondary] || []) {
+      if (!fillKeys.includes(k)) fillKeys.push(k);
+    }
+    for (let i = fillKeys.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [fillKeys[i], fillKeys[j]] = [fillKeys[j], fillKeys[i]];
+    }
+    for (const k of fillKeys) {
+      if (picked.length >= 6) break;
+      injectFromKeys([k], `😈 ${axisLabel.toLowerCase()} · fill`);
+    }
+  }
+
+  // 4) Last-resort legal pool fill (Support/Solo stay off pure glass unless axis wants it)
   if (picked.length < 6) {
     const rest = pool
       .filter((it) => !seen.has(it.name) && trollPoolItemOk(it, god, role, primary))
-      .sort((a, b) => {
-        const ha = rng();
-        const hb = rng();
-        return (b.total_cost || 0) * 0.01 + hb - ((a.total_cost || 0) * 0.01 + ha);
-      });
+      .sort(() => rng() - 0.5);
+    const axisKeys = TROLL_AXIS_KEYS[primary] || [];
     for (const it of rest) {
       if (picked.length >= 6) break;
       const n = it.name.toLowerCase();
-      if (primary !== "aa_clown" && (role === "Support" || role === "Solo")) {
-        if ((it.item_type || "").toLowerCase() === "offensive" && !keys.some((k) => n.includes(k)))
+      if (primary !== "aa_clown" && primary !== "active_toybox" && (role === "Support" || role === "Solo")) {
+        if ((it.item_type || "").toLowerCase() === "offensive" && !axisKeys.some((k) => n.includes(k)))
           continue;
       }
-      it._trollWhy = `😈 troll flex · ${god.name}`;
+      it._trollWhy = `😈 ${axisLabel.toLowerCase()} · flex`;
       picked.push(it);
       seen.add(it.name);
     }
   }
 
-  // Flavor-swap among axis-coherent leftovers (not pure trash lottery)
+  // 5) Flavor swap: only among primary/secondary axis leftovers
   const swaps = chaos ? 2 : 1;
+  const swapKeys = [...(TROLL_AXIS_KEYS[primary] || []), ...(TROLL_AXIS_KEYS[secondary] || [])];
   for (let s = 0; s < swaps && picked.length >= 3; s++) {
     const fi = Math.floor(rng() * picked.length);
     const nlow = picked[fi].name.toLowerCase();
     if (sigKeys.some((k) => nlow.includes(k))) continue;
-    const alts = pool
-      .filter((it) => !seen.has(it.name) && trollPoolItemOk(it, god, role, primary))
-      .slice(0, 16);
+    const alts = candidatesForKeys(swapKeys).filter((it) => !seen.has(it.name));
     if (!alts.length) break;
-    const alt = alts[Math.floor(rng() * Math.min(alts.length, 8))];
+    const alt = pickWeighted(alts, 8);
+    if (!alt) break;
     seen.delete(picked[fi].name);
-    alt._trollWhy = `😈 ${god.name} chaos flavor`;
+    alt._trollWhy = `😈 ${axisLabel.toLowerCase()} · chaos swap`;
     picked[fi] = alt;
     seen.add(alt.name);
   }
+
+  // Cheap-first buy order so it still reads as a path
+  picked.sort((a, b) => (a.total_cost || 0) - (b.total_cost || 0));
 
   const starter = useAspect
     ? god.conquest_by_role_aspect?.[role]?.starter || getStarter(god, role)
@@ -4231,26 +4380,25 @@ function buildAnnoyPathJS(god, role, useAspect, chaos, rng) {
     for (const it of pool) {
       if (picked.length >= 6) break;
       if (seen.has(it.name) || !trollPoolItemOk(it, god, role, primary)) continue;
-      it._trollWhy = it._trollWhy || `😈 troll fill · ${god.name}`;
+      it._trollWhy = it._trollWhy || `😈 ${axisLabel.toLowerCase()} · fill`;
       picked.push(it);
       seen.add(it.name);
     }
   }
+
   const items = picked.slice(0, 6).map((it) => ({
     name: it.name,
     cost: it.total_cost ?? it.cost,
-    why: it._trollWhy || `😈 troll ${primary.replace(/_/g, " ")}`,
+    why: it._trollWhy || `😈 ${axisLabel.toLowerCase()}`,
     troll: true,
     slot: "troll",
     is_active: String(it.categories || "").toLowerCase().includes("active"),
   }));
 
-  let monologue = `${title}. ${TROLL_BLURBS[primary] || "Be annoying on purpose."} Primary annoyance: ${primary.replace(
-    /_/g,
-    " "
-  )}; backup bit: ${secondary.replace(/_/g, " ")}. Kit-aware troll for ${god.name} — not a ranked path with lipstick.`;
+  const secLabel = TROLL_AXIS_LABELS[secondary] || secondary.replace(/_/g, " ");
+  let monologue = `${title}. The bit: ${TROLL_BLURBS[primary] || "Be annoying on purpose."} Primary: ${axisLabel}; backup: ${secLabel}. Kit-aware troll for ${god.name} — not a ranked path with lipstick.`;
   if (aspect) monologue += ` Running ${aspect.name} because the bit is better.`;
-  if (chaos) monologue += " Chaos mode: secondary axis got the wheel.";
+  if (chaos) monologue += " Chaos mode: secondary axis stole some slots.";
 
   return {
     title,
@@ -4258,6 +4406,7 @@ function buildAnnoyPathJS(god, role, useAspect, chaos, rng) {
     secondary,
     kind: "annoy",
     monologue,
+    bit: TROLL_BLURBS[primary] || "",
     disclaimer: "TROLL / MEME — not ranked advice. Legal items, illegal vibes.",
     aspect,
     starter,
@@ -4360,7 +4509,8 @@ function buildTrollPathJS(god, role, useAspect, chaos, opts = {}) {
 
   if (kind === "surprise") {
     const r = rng();
-    kind = r < 0.35 ? "maxstat" : r < 0.55 ? "random" : "annoy";
+    // ~40% annoy / 35% maxstat / 25% random — all modes show up with purpose
+    kind = r < 0.4 ? "annoy" : r < 0.75 ? "maxstat" : "random";
   }
   if (kind === "random") {
     const path = buildTrueRandomPathJS(god, role, useAspect, rng);
@@ -4431,12 +4581,22 @@ function runTrollFromForm({ updateHash = true, seed = null } = {}) {
   });
   const kindLabel =
     t.kind === "maxstat" ? "max stat" : t.kind === "random" ? "true random" : "annoy";
-  const axisLabel =
+  const primaryPretty =
     t.kind === "maxstat"
-      ? `max ${t.stat_label || t.primary}`
+      ? `Max ${t.stat_label || t.primary}`
       : t.kind === "random"
-        ? "shop lottery"
-        : String(t.primary || "").replace(/_/g, " ");
+        ? "Shop lottery"
+        : TROLL_AXIS_LABELS[t.primary] || String(t.primary || "").replace(/_/g, " ");
+  const secondaryPretty =
+    t.secondary && t.secondary !== "max_stat" && t.secondary !== "lottery"
+      ? TROLL_AXIS_LABELS[t.secondary] || String(t.secondary).replace(/_/g, " ")
+      : null;
+  const bitLine =
+    t.kind === "annoy"
+      ? t.bit || TROLL_BLURBS[t.primary] || ""
+      : t.kind === "maxstat"
+        ? MAX_STAT_MODES[t.primary]?.blurb || "Pure greed — stack one number."
+        : "Six legal shop items, zero tryhard intent.";
   const shareData = {
     mode: "troll",
     god: god.name,
@@ -4449,10 +4609,8 @@ function runTrollFromForm({ updateHash = true, seed = null } = {}) {
     tags: [
       "TROLL",
       kindLabel.toUpperCase(),
-      axisLabel,
-      t.secondary && t.secondary !== "max_stat" && t.secondary !== "lottery"
-        ? String(t.secondary).replace(/_/g, " ")
-        : null,
+      primaryPretty,
+      secondaryPretty,
     ].filter(Boolean),
     footerLeft: "TROLL / MEME — NOT RANKED",
     aspect: useAspect,
@@ -4479,8 +4637,9 @@ function runTrollFromForm({ updateHash = true, seed = null } = {}) {
           .map(escapeHtml)
           .join(" → ")}</p></details>`
       : "";
+  const axisClass = t.kind === "annoy" ? `troll-axis-${t.primary || "unkillable"}` : `troll-kind-${t.kind}`;
   box.innerHTML = `
-    <article class="card build-card god-build-card is-troll ${roleClass(role)}">
+    <article class="card build-card god-build-card is-troll ${roleClass(role)} ${axisClass}">
       <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
       <header class="gbc-head">
         <h3>😈 ${escapeHtml(t.title)}</h3>
@@ -4488,17 +4647,18 @@ function runTrollFromForm({ updateHash = true, seed = null } = {}) {
     rollSeed.toString(16)
   )}</div>
       </header>
-      <div class="build-meta">
+      <div class="build-meta troll-meta">
         <span class="pill troll-pill">TROLL</span>
-        <span class="pill hot">${escapeHtml(kindLabel)}</span>
-        <span class="pill">${escapeHtml(axisLabel)}</span>
+        <span class="pill hot troll-kind-pill">${escapeHtml(kindLabel)}</span>
+        <span class="pill troll-axis-pill" title="Primary bit">${escapeHtml(primaryPretty)}</span>
         ${
-          t.secondary && t.secondary !== "max_stat" && t.secondary !== "lottery"
-            ? `<span class="pill">${escapeHtml(String(t.secondary).replace(/_/g, " "))}</span>`
+          secondaryPretty
+            ? `<span class="pill troll-axis-pill is-secondary" title="Backup bit">${escapeHtml(secondaryPretty)}</span>`
             : ""
         }
         ${t.aspect ? `<span class="pill aspect">${escapeHtml(t.aspect.name)}</span>` : ""}
       </div>
+      <p class="troll-bit"><span class="troll-bit-label">The bit</span> ${escapeHtml(bitLine)}</p>
       <p class="aspect-blurb troll-blurb">${escapeHtml(t.disclaimer)}</p>
       <p class="why">${escapeHtml(t.monologue)}</p>
       ${statLine}

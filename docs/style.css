@@ -687,10 +687,61 @@ tr.selected td {
   border-color: rgba(244, 114, 182, 0.55);
   background: rgba(157, 23, 77, 0.35);
 }
+.pill.troll-axis-pill {
+  color: #fce7f3;
+  border-color: rgba(244, 114, 182, 0.5);
+  background: rgba(190, 24, 93, 0.32);
+  font-weight: 650;
+  text-transform: none;
+}
+.pill.troll-axis-pill.is-secondary {
+  opacity: 0.78;
+  font-weight: 550;
+  border-color: rgba(168, 85, 247, 0.4);
+  background: rgba(88, 28, 135, 0.28);
+  color: #e9d5ff;
+}
+.pill.troll-kind-pill {
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.troll-bit {
+  margin: 0.45rem 0 0.65rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(244, 114, 182, 0.28);
+  background: rgba(157, 23, 77, 0.12);
+  color: #fce7f3;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+.troll-bit-label {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fbcfe8;
+  background: rgba(157, 23, 77, 0.45);
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  vertical-align: middle;
+}
 .god-build-card.is-troll {
   border-color: rgba(244, 114, 182, 0.4);
   box-shadow: 0 0 24px rgba(244, 114, 182, 0.1);
 }
+.god-build-card.troll-axis-unkillable { border-color: rgba(52, 211, 153, 0.45); }
+.god-build-card.troll-axis-peel_prison { border-color: rgba(96, 165, 250, 0.5); }
+.god-build-card.troll-axis-antiheal_tax { border-color: rgba(248, 113, 113, 0.5); }
+.god-build-card.troll-axis-infinite_poke { border-color: rgba(167, 139, 250, 0.5); }
+.god-build-card.troll-axis-aa_clown { border-color: rgba(251, 191, 36, 0.5); }
+.god-build-card.troll-axis-aura_tax { border-color: rgba(45, 212, 191, 0.5); }
+.god-build-card.troll-axis-active_toybox { border-color: rgba(244, 114, 182, 0.55); }
+.god-build-card.troll-kind-maxstat { border-color: rgba(168, 85, 247, 0.5); }
+.god-build-card.troll-kind-random { border-color: rgba(148, 163, 184, 0.45); }
 .troll-blurb {
   background: rgba(157, 23, 77, 0.18) !important;
   border-color: rgba(244, 114, 182, 0.35) !important;
