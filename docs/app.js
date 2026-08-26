@@ -1701,7 +1701,7 @@ function setupBuilds() {
       const nNative = gods.filter((g) => g.is_native).length;
       countEl.textContent =
         nNative > 0
-          ? `(${gods.length} in ${activeRole} · tier order · ${nNative} primary)`
+          ? `(${gods.length} in ${activeRole} · tier order · ${nNative} native)`
           : `(${gods.length} in ${activeRole} · tier order)`;
     }
 
@@ -1731,6 +1731,43 @@ function setupBuilds() {
     render();
   });
   $("#build-gods")?.addEventListener("click", (e) => {
+    const pathTog = e.target.closest("[data-path-mode]");
+    if (pathTog) {
+      e.preventDefault();
+      e.stopPropagation();
+      const card = pathTog.closest("details.build-expand");
+      if (!card) return;
+      const mode = pathTog.getAttribute("data-path-mode") === "aspect" ? "aspect" : "base";
+      card.setAttribute("data-path-mode", mode);
+      card.classList.toggle("is-aspect", mode === "aspect");
+      card.querySelectorAll(".path-tog").forEach((b) => {
+        b.classList.toggle("active", b.getAttribute("data-path-mode") === mode);
+      });
+      const nameEl = card.querySelector("[data-path-aspect-name]");
+      if (nameEl) nameEl.hidden = mode !== "aspect";
+      card.querySelectorAll("[data-path-panel]").forEach((p) => {
+        p.hidden = p.getAttribute("data-path-panel") !== mode;
+      });
+      const pill = card.querySelector("[data-path-summary-pill]");
+      if (pill) {
+        pill.textContent = mode === "aspect" ? "ASPECT" : "BASE";
+        pill.classList.toggle("path-aspect", mode === "aspect");
+        pill.classList.toggle("path-base", mode !== "aspect");
+      }
+      const panel = card.querySelector(`[data-path-panel="${mode}"]`);
+      const starter = panel?.querySelector(".starter-line")?.textContent?.replace(/^Start\s*/i, "").trim();
+      const names = [...(panel?.querySelectorAll(".buy-name") || [])]
+        .slice(0, 3)
+        .map((n) => n.textContent.trim())
+        .filter(Boolean);
+      const sub = card.querySelector("[data-path-summary-sub]");
+      if (sub) {
+        sub.innerHTML = `Start <strong>${escapeHtml(starter || "—")}</strong>${
+          names.length ? ` · ${escapeHtml(names.join(" → "))}${names.length >= 3 ? "…" : ""}` : ""
+        }`;
+      }
+      return;
+    }
     const counterBtn = e.target.closest("[data-counter-god]");
     if (counterBtn) {
       e.preventDefault();
@@ -1939,79 +1976,117 @@ function openCounterWithGod(godName, role) {
   });
 }
 
-function copyPathText(starter, items, god, role) {
+function copyPathText(starter, items, god, role, pathLabel) {
   const lines = [
-    `${god} · ${role}`,
+    `${god} · ${role}${pathLabel ? ` · ${pathLabel}` : ""}`,
     starter ? `Start: ${starter}` : "",
     ...(items || []).map((it, i) => `${i + 1}. ${it.name || it}`),
   ].filter(Boolean);
   return lines.join("\n");
 }
 
-function godBuildCard(gb, role, opts = {}) {
+/** Aspect buy-orders for a god+role from gods.json (may be multiple aspects). */
+function resolveAspectPathsForRole(godName, role) {
+  const g = findGodByName(godName);
+  if (!g) return [];
+  const out = [];
+  const byAspectAll = g.conquest_by_aspect || {};
+  for (const [aname, roleMap] of Object.entries(byAspectAll)) {
+    const build = roleMap?.[role];
+    if (!build) continue;
+    const meta = (g.aspects || []).find((a) => a.name === aname) || { name: aname };
+    out.push({
+      aspect_name: aname,
+      aspect_description: build.aspect_description || meta.description || "",
+      build,
+    });
+  }
+  if (!out.length && (g.conquest_by_role_aspect || {})[role]) {
+    const build = g.conquest_by_role_aspect[role];
+    const meta = (g.aspects || [])[0] || { name: "Aspect" };
+    out.push({
+      aspect_name: meta.name || build.aspect_name || "Aspect",
+      aspect_description: build.aspect_description || meta.description || "",
+      build,
+    });
+  }
+  return out;
+}
+
+function shortAspectLabel(name) {
+  return (
+    String(name || "Aspect")
+      .replace(/^Aspect of (the\s+)?/i, "")
+      .trim() || "Aspect"
+  );
+}
+
+function renderGodPathPanel(gb, role, opts = {}) {
   const itemsG = gb.items || gb.full_path || [];
   const penG = gb.pen_total ?? itemsG.reduce((s, it) => s + (it.pen || 0), 0);
   const mitG = itemsG.reduce((s, it) => s + (it.damp || 0) + (it.plat || 0) + (it.ten || 0), 0);
   const showMit = role === "Support" || role === "Solo";
   const effects = gb.kit_effects || [];
-  const isNative = opts.isNative != null ? !!opts.isNative : !gb.flex_role && !gb.is_aspect;
-  const buildDeep = `#builds/${encodeURIComponent(role)}/${encodeURIComponent(gb.god)}`;
+  const isAspect = !!opts.isAspect;
+  const isNative = !!opts.isNative;
+  const aspectName = opts.aspectName || gb.aspect_name || "";
+  const aspectDesc = opts.aspectDescription || gb.aspect_description || "";
+  const pathLabel = isAspect ? aspectName || "Aspect" : "Base kit";
+  const shortWhy = String(gb.why || "").split(".")[0];
+  const buildDeep = `#builds/${encodeURIComponent(role)}/${encodeURIComponent(gb.god || opts.godName || "")}`;
   const shareData = {
-    mode: gb.is_aspect ? "aspect" : "base",
-    god: gb.god,
+    mode: isAspect ? "aspect" : "base",
+    god: gb.god || opts.godName,
     role,
-    title: `${gb.god} · ${role}`,
-    subtitle: `Tier ${gb.tier || "?"} · #${gb.rank ?? "—"} · ${gb.damage_type || ""} · ${
-      gb.is_aspect ? gb.aspect_name || "aspect" : isNative ? "primary role" : "flex"
-    }`,
+    title: `${gb.god || opts.godName} · ${role}`,
+    subtitle: `Tier ${gb.tier || opts.tier || "?"} · #${gb.rank ?? opts.rank ?? "—"} · ${
+      gb.damage_type || opts.damageType || ""
+    } · ${isAspect ? aspectName || "aspect" : isNative ? "native role" : "off-role"}`,
     why: gb.why || "",
     starter: gb.starter?.name || "",
     items: itemsForShare(itemsG),
     tags: [
-      gb.is_aspect ? "aspect" : isNative ? "primary" : "flex",
+      isAspect ? "ASPECT" : "BASE",
+      isNative ? "native" : "off-role",
       role,
+      isAspect ? shortAspectLabel(aspectName) : null,
       gb.archetype ? String(gb.archetype).replace(/_/g, " ") : null,
-      gb.patch_trajectory || null,
     ].filter(Boolean),
     footerLeft: `CONQUEST // ${role.toUpperCase()}`,
     deeplink: buildDeep,
+    aspect: isAspect,
   };
-  const shortWhy = String(gb.why || "").split(".")[0];
+  const copyPayload = copyPathText(
+    gb.starter?.name,
+    itemsG,
+    gb.god || opts.godName,
+    role,
+    pathLabel
+  );
+  const absLink = absoluteShareUrl(shareData);
   const preview = itemsG
     .slice(0, 3)
     .map((it) => it.name)
     .join(" → ");
-  const copyPayload = copyPathText(gb.starter?.name, itemsG, gb.god, role);
-  const absLink = absoluteShareUrl(shareData);
-  const roleBadge = gb.is_aspect
-    ? `<span class="pill ice">aspect</span>`
-    : isNative
-      ? `<span class="pill hot">primary</span>`
-      : `<span class="pill">flex</span>`;
-  return `
-    <details class="card build-card god-build-card simple-build build-expand ${roleClass(role)}${
-      opts.open ? " deep-link-focus" : ""
-    }${isNative ? " is-native-role" : " is-flex-role"}" data-god="${escapeAttr(gb.god)}" ${
-      opts.open ? "open" : ""
-    }>
-      <summary class="build-expand-summary">
-        <span class="bes-main">
-          <span class="bes-name">${escapeHtml(gb.god)}</span>
-          ${roleBadge}
-          <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
-        </span>
-        <span class="bes-sub muted">
-          Start <strong>${escapeHtml(gb.starter?.name || "—")}</strong>
-          ${preview ? ` · ${escapeHtml(preview)}${itemsG.length > 3 ? "…" : ""}` : ""}
-        </span>
-        <span class="bes-cta">Show buy order ▾</span>
-      </summary>
-      <div class="build-expand-body">
+  return {
+    preview,
+    starterName: gb.starter?.name || "—",
+    html: `
         <p class="card-plain-what">
-          <strong>${escapeHtml(role)}</strong> — buy top first${
-            gb.is_aspect ? " · aspect" : isNative ? " · primary role" : " · off-role flex"
+          <strong>${escapeHtml(role)}</strong> — buy top first ·
+          <span class="path-kind-label">${isAspect ? "ASPECT" : "BASE"}</span>${
+            isAspect && aspectName
+              ? ` · ${escapeHtml(aspectName)}`
+              : isNative
+                ? " · native role"
+                : " · off-role"
           }
         </p>
+        ${
+          isAspect && aspectDesc
+            ? `<p class="aspect-blurb">${escapeHtml(String(aspectDesc).slice(0, 200))}</p>`
+            : ""
+        }
         ${shortWhy ? `<p class="why simple-why">${escapeHtml(shortWhy)}.</p>` : ""}
         <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>
         ${loadoutRail(itemsG)}
@@ -2023,6 +2098,7 @@ function godBuildCard(gb, role, opts = {}) {
         <details class="extra-details">
           <summary>More detail</summary>
           <div class="build-meta">
+            <span class="pill ${isAspect ? "path-aspect" : "path-base"}">${isAspect ? "ASPECT" : "BASE"}</span>
             ${gb.archetype ? `<span class="pill">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
             <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
             ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
@@ -2042,8 +2118,132 @@ function godBuildCard(gb, role, opts = {}) {
           <button type="button" class="btn-ghost btn-copy-path" data-copy-path="${escapeAttr(copyPayload)}" data-copy-msg="List copied">Copy list</button>
           <button type="button" class="btn-ghost" data-copy-path="${escapeAttr(absLink)}" data-copy-msg="Link copied">Copy link</button>
           <button type="button" class="btn-share" data-share-id="${registerShare(shareData)}">Share card</button>
-          <button type="button" class="btn-ghost" data-counter-god="${escapeAttr(gb.god)}" data-counter-role="${escapeAttr(role)}">Counter lobby</button>
-          <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god)}">All roles →</button>
+          <button type="button" class="btn-ghost" data-counter-god="${escapeAttr(gb.god || opts.godName)}" data-counter-role="${escapeAttr(role)}">Counter lobby</button>
+          <button type="button" class="linkish" data-open-god="${escapeAttr(gb.god || opts.godName)}">All roles →</button>
+        </div>`,
+  };
+}
+
+function godBuildCard(gb, role, opts = {}) {
+  const godName = gb.god;
+  const isNative = opts.isNative != null ? !!opts.isNative : !gb.flex_role && !gb.is_aspect;
+  const aspectAlts = resolveAspectPathsForRole(godName, role);
+  // Row may already be an aspect-only unlock
+  const rowIsAspect = !!gb.is_aspect;
+  const defaultMode = rowIsAspect && !opts.forceBase ? "aspect" : "base";
+
+  // Base payload: prefer exported recommended row when it's base; else god.conquest_by_role
+  let baseGb = null;
+  if (!rowIsAspect) {
+    baseGb = gb;
+  } else {
+    const g = findGodByName(godName);
+    baseGb = (g?.conquest_by_role || {})[role] || null;
+    if (baseGb) {
+      baseGb = {
+        ...baseGb,
+        god: godName,
+        tier: gb.tier,
+        rank: gb.rank,
+        damage_type: gb.damage_type,
+      };
+    }
+  }
+
+  // Aspect payload: prefer matching aspect from row, else first alternate
+  let aspectPick = null;
+  if (aspectAlts.length) {
+    aspectPick =
+      aspectAlts.find((a) => a.aspect_name === gb.aspect_name) || aspectAlts[0];
+  } else if (rowIsAspect) {
+    aspectPick = {
+      aspect_name: gb.aspect_name || "Aspect",
+      aspect_description: gb.aspect_description || "",
+      build: gb,
+    };
+  }
+
+  const hasBase = !!baseGb;
+  const hasAspect = !!aspectPick;
+  const initialMode = defaultMode === "aspect" && hasAspect ? "aspect" : hasBase ? "base" : "aspect";
+
+  const basePanel = hasBase
+    ? renderGodPathPanel(baseGb, role, {
+        isAspect: false,
+        isNative,
+        godName,
+        tier: gb.tier,
+        rank: gb.rank,
+        damageType: gb.damage_type,
+      })
+    : null;
+  const aspectPanel = hasAspect
+    ? renderGodPathPanel(
+        {
+          ...aspectPick.build,
+          god: godName,
+          tier: gb.tier,
+          rank: gb.rank,
+          damage_type: gb.damage_type,
+          aspect_name: aspectPick.aspect_name,
+          aspect_description: aspectPick.aspect_description,
+        },
+        role,
+        {
+          isAspect: true,
+          isNative,
+          aspectName: aspectPick.aspect_name,
+          aspectDescription: aspectPick.aspect_description,
+          godName,
+          tier: gb.tier,
+          rank: gb.rank,
+          damageType: gb.damage_type,
+        }
+      )
+    : null;
+
+  const activePanel = initialMode === "aspect" ? aspectPanel : basePanel;
+  const pathToggle =
+    hasBase && hasAspect
+      ? `<div class="path-toggle" role="group" aria-label="Base or aspect path">
+          <button type="button" class="path-tog path-base ${initialMode === "base" ? "active" : ""}" data-path-mode="base">BASE</button>
+          <button type="button" class="path-tog path-aspect ${initialMode === "aspect" ? "active" : ""}" data-path-mode="aspect" title="${escapeAttr(aspectPick.aspect_name)}">ASPECT</button>
+        </div>
+        <div class="path-aspect-name muted" data-path-aspect-name ${initialMode === "aspect" ? "" : "hidden"}>${escapeHtml(aspectPick.aspect_name)}</div>`
+      : hasAspect
+        ? `<span class="pill path-aspect">ASPECT</span><span class="muted path-aspect-name">${escapeHtml(aspectPick.aspect_name)}</span>`
+        : `<span class="pill path-base">BASE</span>`;
+
+  const roleBadge = isNative
+    ? `<span class="pill hot">Native</span>`
+    : `<span class="pill">Off-role</span>`;
+
+  return `
+    <details class="card build-card god-build-card simple-build build-expand ${roleClass(role)}${
+      opts.open ? " deep-link-focus" : ""
+    }${isNative ? " is-native-role" : " is-flex-role"}${
+      initialMode === "aspect" ? " is-aspect" : ""
+    }" data-god="${escapeAttr(godName)}" data-path-mode="${initialMode}" ${opts.open ? "open" : ""}>
+      <summary class="build-expand-summary">
+        <span class="bes-main">
+          <span class="bes-name">${escapeHtml(godName)}</span>
+          ${roleBadge}
+          <span class="pill ${initialMode === "aspect" ? "path-aspect" : "path-base"}" data-path-summary-pill>${initialMode === "aspect" ? "ASPECT" : "BASE"}</span>
+          <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
+        </span>
+        <span class="bes-sub muted" data-path-summary-sub>
+          Start <strong>${escapeHtml(activePanel?.starterName || "—")}</strong>
+          ${activePanel?.preview ? ` · ${escapeHtml(activePanel.preview)}${(gb.items || gb.full_path || []).length > 3 ? "…" : ""}` : ""}
+        </span>
+        <span class="bes-cta">Show buy order ▾</span>
+      </summary>
+      <div class="build-expand-body">
+        <div class="path-switch-row">${pathToggle}</div>
+        <div class="path-panel" data-path-panel="base" ${initialMode === "base" ? "" : "hidden"}>
+          ${basePanel?.html || `<p class="muted">No base-kit path for ${escapeHtml(role)}.</p>`}
+        </div>
+        <div class="path-panel" data-path-panel="aspect" ${initialMode === "aspect" ? "" : "hidden"}>
+          ${aspectPanel?.html || `<p class="muted">No aspect path for ${escapeHtml(role)}.</p>`}
         </div>
       </div>
     </details>`;
