@@ -144,14 +144,83 @@ FLEX_ITEM_GUIDE: dict[str, dict[str, Any]] = {
         "when_not": "Glass builds; long AA freefire with no spike; pressing it with nobody hitting you.",
         "buy_as": "2nd–3rd item on Ymir/Atlas/Xing-style tanks after some bulk.",
     },
-    "Vital Amplifier": {
-        "tags": ["concept", "aura"],
+    # --- OB43 new / remade enchanter package (featured first in UI) ---
+    "Lotus Sickle": {
+        "tags": ["concept", "aura", "sustain"],
         "roles": ["Support", "Mid"],
-        "simple": "When you heal yourself or an ally with an ability, they get attack speed and attack damage (stacks 3×).",
-        "how": "Heals = AA steroids for your team. Needs a healing kit and allies who basic-attack.",
-        "when": "You’re Yemoja/Aphro/Ra/Baron-style healer with an ADC who autos.",
-        "when_not": "No heals in kit; team is all ability mages who never AA.",
-        "buy_as": "Healer Support/Mid 2nd–3rd after aura/core.",
+        "simple": "Buff, heal, or shield an ally → gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
+        "how": "You’re charging free damage onto your ADC’s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket — they stack together.",
+        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry.",
+        "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
+        "buy_as": "Support 2nd after Thebes (cheap CDR). New in OB43.",
+        "featured": True,
+        "patch": "OB43",
+    },
+    "Soul Locket": {
+        "tags": ["concept", "active", "sustain"],
+        "roles": ["Support", "Mid"],
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form — move speed, walk through walls/players, and damage reduction from your stacks.",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you’re dove or need to escape. Long cooldown — treat it like a save button, not spam.",
+        "when": "Enchanter supports who stay in fights and get focused.",
+        "when_not": "You never heal/buff allies; you already have 3 better actives.",
+        "buy_as": "Support 2nd–3rd with Sickle. Pop when dove or escaping. New in OB43.",
+        "featured": True,
+        "patch": "OB43",
+    },
+    "Vital Amplifier": {
+        "tags": ["concept", "sustain"],
+        "roles": ["Carry", "Solo", "Support", "Jungle"],
+        "simple": "Heal yourself with an ability → stacking attack speed and basic-attack damage (up to 3 stacks).",
+        "how": "Self-heal ticks (e.g. Artemis Aspect of the Wild traps) can stack this fast. Adaptive STR or INT from your other items.",
+        "when": "Self-heal kits that also basic-attack (Wild Artemis, some bruisers).",
+        "when_not": "No self-heal in kit; pure ability mage who never autos.",
+        "buy_as": "After a STR/INT core so adaptive lands correctly. Remade OB43.",
+        "featured": True,
+        "patch": "OB43",
+    },
+    "Rod Of Asclepius": {
+        "tags": ["concept", "sustain"],
+        "roles": ["Support"],
+        "simple": "+10% heal/shield strength. When you heal an ally, you heal even more the lower their HP is.",
+        "how": "Missing-HP heal amp. Stacks with Soul Locket / Heartwood / Chandra amp.",
+        "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
+        "when_not": "No heal abilities — dead item.",
+        "buy_as": "Support heal core 3rd–5th. Remade OB43.",
+        "featured": True,
+        "patch": "OB43",
+    },
+    "Lifebinder": {
+        "tags": ["concept", "active", "sustain"],
+        "roles": ["Support", "Mid"],
+        "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
+        "how": "Mark → ally hits → heal bomb. Stronger if you already built heal amp.",
+        "when": "Healers who group fight and can mark the dive target.",
+        "when_not": "No heal identity; active slots full.",
+        "buy_as": "Healer flex active. Remade OB43.",
+        "featured": True,
+        "patch": "OB43",
+    },
+    "Chandra's Grace": {
+        "tags": ["aura", "sustain"],
+        "roles": ["Support"],
+        "simple": "+20% heal/shield strength. Every 15s, lowest-HP nearby ally gets regen and tiny cooldown shred.",
+        "how": "Aura amp for healers plus a periodic “help the dying ally” buff.",
+        "when": "Support heal/amp paths.",
+        "when_not": "You’re full damage with no heals.",
+        "buy_as": "Support aura after Thebes. Remade OB43.",
+        "featured": True,
+        "patch": "OB43",
+    },
+    "Serrated Edge": {
+        "tags": ["concept", "sustain"],
+        "roles": ["Jungle", "Solo"],
+        "simple": "For each non-ult ability on cooldown you gain Strength and lifesteal (up to 3 stacks).",
+        "how": "Ability-cycling junglers stay stacked mid-fight. High LS + free STR.",
+        "when": "Jungle assassins/warriors with short ability cooldowns.",
+        "when_not": "You never cast; pure AA with no ability loop.",
+        "buy_as": "Jungle 1st–3rd on CD-heavy kits.",
+        "featured": True,
+        "patch": "OB43",
     },
     "Umbral Link": {
         "tags": ["concept", "aura", "sustain"],
@@ -257,29 +326,35 @@ FLEX_ITEM_GUIDE: dict[str, dict[str, Any]] = {
     "Heartwood Charm": {
         "tags": ["concept", "active", "sustain"],
         "roles": ["Support", "Mid"],
-        "simple": "Healing abilities cool down faster; heals you cast store a bank; active dumps that heal to nearby allies.",
-        "how": "Spam heals to fill the bank → press active for a team heal bomb.",
+        "simple": "+20% heal/shield strength, faster heal cooldowns; heals you cast store a bank; active dumps that heal to nearby allies.",
+        "how": "Spam heals to fill the bank → press active for a team heal bomb. Stacks with other heal-amp items.",
         "when": "Healer supports (Yemoja, Aphro, etc.).",
-        "when_not": "No heal abilities.",
-        "buy_as": "Healer identity item 2nd–4th.",
+        "when_not": "No heal abilities; you already have 3 actives.",
+        "buy_as": "Healer identity item 2nd–4th. Remade OB43.",
+        "featured": True,
+        "patch": "OB43",
     },
     "Daybreak Gavel": {
         "tags": ["concept"],
-        "roles": ["Support", "Mid"],
-        "simple": "Healing different gods builds stacks; your next non-heal ability spends stacks for a big STR/INT buff.",
-        "how": "Heal unique allies → cast damage/utility spell to cash power.",
-        "when": "Team healers who also cast non-heal abilities.",
-        "when_not": "You only damage and never heal.",
-        "buy_as": "Baron/Aphro/Yemoja-style paths.",
+        "roles": ["Carry", "Solo", "Support", "Mid"],
+        "simple": "Heal yourself with a healing ability to build stacks; your next non-heal ability spends them for a big STR or INT buff.",
+        "how": "Self-heal → stacks → cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
+        "when": "Self-heal kits (Wild Artemis traps, some bruisers) that also cast non-heals.",
+        "when_not": "No self-heal; pure ally-heal support with no dump spell.",
+        "buy_as": "Pair with Vital Amplifier on self-heal AA paths. Remade OB43.",
+        "featured": True,
+        "patch": "OB43",
     },
     "Eros' Bow": {
         "tags": ["concept", "active", "aura"],
-        "roles": ["Support", "Carry"],
-        "simple": "Mark an ally; your basic attacks heal that ally for a % of your max HP.",
-        "how": "You’re an AA battery for the carry. Mark them and auto anything.",
-        "when": "You basic-attack a lot and peel with the ADC.",
-        "when_not": "Ability-only support who never autos.",
-        "buy_as": "Hybrid support / weird duo.",
+        "roles": ["Support"],
+        "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
+        "how": "Same trigger family as Sickle/Locket. Fiddly — mark, auto, then heal. Strong pocket amp if you commit.",
+        "when": "Enchanter supports who can AA safely next to the carry.",
+        "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
+        "buy_as": "Optional 4th after Sickle/Locket — skip if too many actives. Remade OB43.",
+        "featured": True,
+        "patch": "OB43",
     },
     "Gluttonous Grimoire": {
         "tags": ["concept", "sustain"],
@@ -447,6 +522,8 @@ def build_flex_item_guide() -> dict[str, Any]:
             "when": data.get("when") or "",
             "when_not": data.get("when_not") or "",
             "buy_as": data.get("buy_as") or "",
+            "featured": bool(data.get("featured")),
+            "patch": data.get("patch") or "",
         }
         by_name[name] = entry
         by_name[display] = entry
@@ -455,14 +532,19 @@ def build_flex_item_guide() -> dict[str, Any]:
             seen_display.add(display)
             items.append(entry)
 
-    items.sort(key=lambda x: x["name"].lower())
+    # Featured (new / remade patch items) first, then A–Z
+    items.sort(key=lambda x: (0 if x.get("featured") else 1, x["name"].lower()))
+    featured = [it for it in items if it.get("featured")]
     tags = sorted({t for it in items for t in it["tags"]})
     return {
-        "title": "Flex & weird items — simple English",
+        "title": "Items explained — simple English",
         "disclaimer": (
-            "Plain-language guides for situational and concept items. "
-            "Not live win rates. When in doubt: answer the lobby (heal/crit/AS/magic/CC) before toys."
+            "Plain-language guides for new and situational items. "
+            "Not live win rates. Primary builds come from this site’s kit + patch model — "
+            "not copied from other build sites."
         ),
+        "featured_title": "New / remade this patch (OB43)",
+        "featured": featured,
         "items": items,
         "by_name": {k: v for k, v in by_name.items() if isinstance(k, str)},
         "tags": tags,

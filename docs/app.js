@@ -458,6 +458,7 @@ const VALID_TABS = new Set(["builds", "counter", "troll", "gods", "tiers", "item
 const routeState = {
   suppressHash: false,
   build: null, // { getRole, setRole, getGod, focusGod, setMode, getMode }
+  metaView: "lab", // lab | guide (tiers uses ladder via panel-tiers)
 };
 
 // Main chrome: Builds | Counter | Meta | More
@@ -500,7 +501,7 @@ function updateBreadcrumbs(tab, extra) {
   } else if (t === "tiers") {
     parts.push("Meta", "Ladder");
   } else if (t === "meta") {
-    parts.push("Meta", "Lab");
+    parts.push("Meta", routeState.metaView === "guide" ? "Item guide" : "Lab");
   } else if (t === "items") {
     parts.push("More", "Items");
   } else if (t === "troll") {
@@ -523,9 +524,19 @@ function updateBreadcrumbs(tab, extra) {
 }
 
 function syncMetaSubnav(tab) {
-  const view = tab === "meta" ? "lab" : "ladder";
+  const view =
+    tab === "meta" ? routeState.metaView || "lab" : tab === "tiers" ? "ladder" : "lab";
   $$(".meta-sub-btn").forEach((b) => {
     b.classList.toggle("active", b.getAttribute("data-meta-view") === view);
+  });
+}
+
+function openMetaGuide({ updateHash = true } = {}) {
+  routeState.metaView = "guide";
+  activateTab("meta", { updateHash });
+  queueMicrotask(() => {
+    const el = $("#item-guide-heading") || $("#meta-guide-featured") || $("#meta-item-guide");
+    el?.scrollIntoView?.({ behavior: "smooth", block: "start" });
   });
 }
 
@@ -593,15 +604,31 @@ function setupTabs() {
     btn.addEventListener("click", () => onTab(btn.dataset.tab, btn));
   });
   $$(".mobile-tab, .mobile-sheet-btn, .more-item").forEach((btn) => {
-    btn.addEventListener("click", () => onTab(btn.dataset.tab, btn));
+    btn.addEventListener("click", () => {
+      if (btn.getAttribute("data-meta-view") === "guide") {
+        openMetaGuide({ updateHash: true });
+        return;
+      }
+      onTab(btn.dataset.tab, btn);
+    });
   });
-  // Meta subnav: Ladder ↔ Lab
+  // Meta subnav: Ladder ↔ Lab ↔ Item guide
   document.addEventListener("click", (e) => {
     const sub = e.target.closest("[data-meta-view]");
     if (!sub) return;
+    // Ignore More/mobile buttons — handled above (they also have data-tab)
+    if (sub.classList.contains("more-item") || sub.classList.contains("mobile-sheet-btn")) return;
     e.preventDefault();
     const view = sub.getAttribute("data-meta-view");
-    activateTab(view === "lab" ? "meta" : "tiers", { updateHash: true });
+    if (view === "lab") {
+      routeState.metaView = "lab";
+      activateTab("meta", { updateHash: true });
+    } else if (view === "guide") {
+      openMetaGuide({ updateHash: true });
+    } else {
+      routeState.metaView = "lab";
+      activateTab("tiers", { updateHash: true });
+    }
   });
   const moreBtn = $("#more-tools-btn");
   const menu = $("#more-menu");
@@ -672,9 +699,11 @@ function parseRoute(hash) {
     return { tab: "builds", mode: "search", god: segs[1] || null, role: null, legacyGods: true };
   }
   if (tab === "meta") {
-    // #meta → lab; #meta/ladder → tiers (also #tiers)
-    if ((segs[1] || "").toLowerCase() === "ladder") return { tab: "tiers" };
-    return { tab: "meta" };
+    // #meta → lab; #meta/ladder → tiers; #meta/guide → item guide
+    const sub = (segs[1] || "").toLowerCase();
+    if (sub === "ladder") return { tab: "tiers" };
+    if (sub === "guide" || sub === "items") return { tab: "meta", metaView: "guide" };
+    return { tab: "meta", metaView: "lab" };
   }
   if (tab === "counter") {
     // #counter/You/Role/Enemy1,Enemy2/Ally1,Ally2
@@ -735,7 +764,7 @@ function syncHashFromUi(tab) {
   } else if (hash === "tiers") {
     hash = "meta/ladder";
   } else if (hash === "meta") {
-    hash = "meta";
+    hash = routeState.metaView === "guide" ? "meta/guide" : "meta";
   } else if (hash === "counter") {
     const you = ($("#ctr-you")?.value || "").trim();
     const role = $("#ctr-role")?.value || "Support";
@@ -833,6 +862,16 @@ function applyRoute(route) {
     if ($("#troll-aspect")) $("#troll-aspect").checked = route.aspect !== false;
     if ($("#troll-chaos")) $("#troll-chaos").checked = !!route.chaos;
     if (route.god) runTrollFromForm({ updateHash: false });
+  }
+  if (route.tab === "meta") {
+    routeState.metaView = route.metaView || "lab";
+    syncMetaSubnav("meta");
+    if (route.metaView === "guide") {
+      queueMicrotask(() => {
+        const el = $("#item-guide-heading") || $("#meta-item-guide");
+        el?.scrollIntoView?.({ behavior: "smooth", block: "start" });
+      });
+    }
   }
 
   queueMicrotask(() => {
@@ -2373,10 +2412,13 @@ function simpleGuideCardHtml(g, { compact = false } = {}) {
   const tags = (g.tags || [])
     .map((t) => `<span class="tag">${escapeHtml(t)}</span>`)
     .join("");
-  return `<div class="simple-guide-card">
+  const patch = g.patch
+    ? `<span class="tag hot">${escapeHtml(g.patch)}</span>`
+    : "";
+  return `<div class="simple-guide-card${g.featured ? " is-featured" : ""}">
     <div class="sg-head">
       <strong>${compact ? "Simple English" : escapeHtml(g.name)}</strong>
-      <span class="sg-tags">${tags}</span>
+      <span class="sg-tags">${patch}${tags}</span>
     </div>
     <p class="sg-simple"><strong>What it does:</strong> ${escapeHtml(g.simple)}</p>
     ${g.how ? `<p class="sg-how muted"><strong>How:</strong> ${escapeHtml(g.how)}</p>` : ""}
@@ -2684,12 +2726,29 @@ function setupMetaLab() {
       .join("");
   }
 
-  // Weird / flex items — simple English guide
+  // Items explained — simple English guide (featured OB43 block + full list)
   const guideRoot = lab.flex_item_guide || {};
   const guideItems = guideRoot.items || [];
+  const featuredItems = guideRoot.featured || guideItems.filter((g) => g.featured);
   const tagSel = $("#meta-guide-tag");
   const searchIn = $("#meta-guide-search");
   const guideBox = $("#meta-item-guide");
+  const featuredBox = $("#meta-guide-featured");
+  const guideDisc = $("#meta-guide-disclaimer");
+  if (guideDisc && guideRoot.disclaimer) guideDisc.textContent = guideRoot.disclaimer;
+  if (featuredBox) {
+    if (featuredItems.length) {
+      featuredBox.hidden = false;
+      featuredBox.innerHTML = `
+        <h4>${escapeHtml(guideRoot.featured_title || "New / remade this patch")}</h4>
+        <div class="meta-guide-featured-grid">
+          ${featuredItems.map((g) => simpleGuideCardHtml(g)).join("")}
+        </div>`;
+    } else {
+      featuredBox.hidden = true;
+      featuredBox.innerHTML = "";
+    }
+  }
   if (tagSel && guideRoot.tag_labels) {
     const opts = ['<option value="">All types</option>'].concat(
       (guideRoot.tags || []).map((t) => {
@@ -2712,6 +2771,9 @@ function setupMetaLab() {
           (it.simple || "").toLowerCase().includes(q) ||
           (it.when || "").toLowerCase().includes(q)
       );
+      if (featuredBox) featuredBox.hidden = true;
+    } else if (featuredBox && featuredItems.length) {
+      featuredBox.hidden = false;
     }
     guideBox.innerHTML = list.length
       ? list.map((g) => simpleGuideCardHtml(g)).join("")

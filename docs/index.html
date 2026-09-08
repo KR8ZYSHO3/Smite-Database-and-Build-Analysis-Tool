@@ -17,8 +17,8 @@
           <strong>Builds</strong> for a path · <strong>Counter</strong> for lobby · <strong>Meta</strong> for the ladder.
         </p>
         <nav class="breadcrumbs" id="site-breadcrumbs" aria-label="Location">Builds</nav>
-        <p class="site-updated" id="site-updated" data-exported-at="2026-09-08T14:59:57.942105+00:00" data-latest-patch="SMITE 2 Open Beta 42" title="Export timestamp (UTC): 2026-09-08T14:59:57.942105+00:00">
-          Last updated: <strong>Sep 8, 2026 2:59 PM UTC</strong> · Patch data: <strong>Open Beta 42</strong> (August 25th, 2026)
+        <p class="site-updated" id="site-updated" data-exported-at="2026-09-08T17:54:47.318991+00:00" data-latest-patch="SMITE 2 Open Beta 42" title="Export timestamp (UTC): 2026-09-08T17:54:47.318991+00:00">
+          Last updated: <strong>Sep 8, 2026 5:54 PM UTC</strong> · Patch data: <strong>Open Beta 42</strong> (August 25th, 2026)
         </p>
       </div>
       <button type="button" class="btn-ghost help-btn" id="btn-help" title="How this works">?</button>
@@ -43,8 +43,13 @@
             <strong>More:</strong> item search, troll/meme builds, about &amp; scoring.
           </p>
           <p class="muted help-extra">
+            <strong>New items?</strong>
+            <a href="#meta/guide" class="help-guide-link">Open Item guide</a>
+            — plain English for Lotus Sickle, Soul Locket, and remade heal items.
+          </p>
+          <p class="muted help-extra">
             <strong>Share links:</strong> <code>#builds/Carry/Artemis</code> ·
-            <code>#counter/You/Role/Enemies/Allies</code> · <code>#meta</code> or <code>#tiers</code>.
+            <code>#counter/You/Role/Enemies/Allies</code> · <code>#meta/guide</code> · <code>#tiers</code>.
           </p>
           <button type="button" class="btn-primary" id="help-close">Got it</button>
         </div>
@@ -59,6 +64,7 @@
             More ▾
           </button>
           <div class="more-menu" id="more-menu" hidden>
+            <button type="button" class="more-item" data-tab="meta" data-meta-view="guide">Item guide (simple)</button>
             <button type="button" class="more-item" data-tab="items">Item search</button>
             <button type="button" class="more-item" data-tab="troll">Troll / meme builds</button>
             <button type="button" class="more-item" data-tab="about">About &amp; scoring</button>
@@ -336,6 +342,7 @@
         <div class="meta-subnav" role="tablist" aria-label="Meta views">
           <button type="button" class="meta-sub-btn active" data-meta-view="ladder">Ladder</button>
           <button type="button" class="meta-sub-btn" data-meta-view="lab">Meta lab</button>
+          <button type="button" class="meta-sub-btn" data-meta-view="guide">Item guide</button>
         </div>
         <p class="step-label">Tier list — who looks strong this patch (not a full build guide)</p>
         <div class="toolbar">
@@ -424,11 +431,17 @@
         <div class="meta-subnav" role="tablist" aria-label="Meta views">
           <button type="button" class="meta-sub-btn" data-meta-view="ladder">Ladder</button>
           <button type="button" class="meta-sub-btn active" data-meta-view="lab">Meta lab</button>
+          <button type="button" class="meta-sub-btn" data-meta-view="guide">Item guide</button>
         </div>
-        <div class="card meta-lab-panel">
+        <div class="card meta-lab-panel" id="meta-lab-root">
           <h2>Meta lab</h2>
           <p class="muted" id="meta-lab-disclaimer">
             Role staples, answer-item coverage, patch trajectories, and situational flex — kit + patch model with ranked WR signal.
+            Builds are generated here (not copied from other sites).
+          </p>
+          <p class="meta-guide-jump">
+            <a href="#meta/guide" class="btn-secondary meta-guide-cta">New items explained →</a>
+            <span class="muted">Lotus Sickle, Soul Locket, heal remakes — plain English.</span>
           </p>
           <div id="meta-lab-themes" class="meta-themes"></div>
 
@@ -469,11 +482,11 @@
           <p class="muted">Swap these in when the lobby demands it — same chips shown on each build card.</p>
           <div id="meta-flex-catalog" class="meta-flex-catalog"></div>
 
-          <h3>Weird / flex items explained</h3>
-          <p class="muted">
-            Simple English for items people skip because the tooltip is confusing —
-            what it does, when to buy, when to skip.
+          <h3 id="item-guide-heading">Items explained (simple English)</h3>
+          <p class="muted" id="meta-guide-disclaimer">
+            What it does, when to buy, when to skip — especially new OB43 items.
           </p>
+          <div id="meta-guide-featured" class="meta-guide-featured" hidden></div>
           <div class="toolbar meta-guide-toolbar">
             <input id="meta-guide-search" type="search" placeholder="Search items…" style="min-width:200px" />
             <select id="meta-guide-tag">
@@ -500,13 +513,15 @@
             <li><strong>Counter</strong> — optional: adjust for the enemy 5.</li>
             <li><strong>Troll</strong> — meme only, not ranked advice.</li>
             <li><strong>Tiers</strong> — patch ladder (not a full build guide).</li>
-            <li><strong>Meta lab</strong> — staples, answer coverage, trajectories, flex catalog, weird items explained.</li>
+            <li><strong>Meta lab</strong> — staples, answer coverage, trajectories, flex catalog.</li>
+            <li><strong>Item guide</strong> — Meta → Item guide (or More → Item guide) for plain-English item explainers, including new OB43 items.</li>
           </ol>
 
           <h2>How builds are weighted</h2>
           <p class="about-blurb">
-            Nothing here is <strong>live win rate</strong>. Paths come from wiki stats, ability text, and
-            patch-note impact — not from pro sites.
+            Nothing here is <strong>live win rate</strong>. Paths come from this site’s kit + patch model
+            (wiki stats, ability text, patch impact) with only a <strong>soft</strong> ranked-frequency nudge —
+            not copied buy orders from other build sites.
           </p>
           <div class="score-explain">
             <div class="score-explain-block">
@@ -574,7 +589,8 @@
     <button type="button" class="mobile-tab" data-tab="more" id="mobile-more"><span class="mn-icon">···</span><span>More</span></button>
   </nav>
   <div class="mobile-more-sheet" id="mobile-more-sheet" hidden>
-    <button type="button" class="mobile-sheet-btn" data-tab="items">Items</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="meta" data-meta-view="guide">Item guide</button>
+    <button type="button" class="mobile-sheet-btn" data-tab="items">Item search</button>
     <button type="button" class="mobile-sheet-btn" data-tab="troll">Troll builds</button>
     <button type="button" class="mobile-sheet-btn" data-tab="about">About</button>
     <button type="button" class="mobile-sheet-btn" data-tab="gods">God dossier</button>

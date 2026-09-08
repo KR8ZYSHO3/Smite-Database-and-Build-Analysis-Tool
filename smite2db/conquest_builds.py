@@ -78,11 +78,29 @@ RANKED_CORE_SLOTS = frozenset(
     }
 )
 
-# Pure heal-amp / team-heal actives — only real heal kits should buy these early.
+# Pure heal-amp / team-heal / OB43 enchanter procs — only real heal/buff kits.
 # Chandra / Thebes / etc. stay available as normal support auras.
-HEAL_CORE_KEYS = ("asclepius", "lifebinder")
-# Primary SMITE 2 healers (user-confirmed).
-TRUE_HEALER_NAMES = frozenset({"aphrodite", "guan yu", "yemoja"})
+HEAL_CORE_KEYS = (
+    "asclepius",
+    "lifebinder",
+    "heartwood",
+    "lotus sickle",
+    "soul locket",
+)
+# Ally buff/heal/shield proc items (Sickle / Locket) — same allowlist.
+ENCHANTER_PROC_KEYS = ("lotus sickle", "soul locket")
+# Primary SMITE 2 healers / enchanters (name allowlist — kit heal_count is noisy).
+TRUE_HEALER_NAMES = frozenset(
+    {
+        "aphrodite",
+        "guan yu",
+        "yemoja",
+        "sylvanus",
+        "ix chel",
+        "horus",
+        "artio",
+    }
+)
 
 # Mage lifesteal power cores — NOT default mid items (need real self-sustain).
 MAGE_LS_CORE_KEYS = ("bancroft", "typhon", "gluttonous")
@@ -101,6 +119,11 @@ REMOVED_OR_UNAVAILABLE_ITEM_KEYS = (
 def _is_heal_core_item(name: str) -> bool:
     n = (name or "").lower()
     return any(k in n for k in HEAL_CORE_KEYS)
+
+
+def _is_enchanter_proc_item(name: str) -> bool:
+    n = (name or "").lower()
+    return any(k in n for k in ENCHANTER_PROC_KEYS)
 
 
 def _is_mage_ls_core_item(name: str) -> bool:
@@ -2217,7 +2240,9 @@ def rescore_for_god(
                 s -= 25
             else:
                 s += 6
-        if mage and true_healer and any(k in nlow for k in ("asclepius", "lifebinder")):
+        if mage and true_healer and any(
+            k in nlow for k in ("asclepius", "lifebinder", "heartwood", "lotus sickle", "soul locket")
+        ):
             if role in ("Support", "Solo"):
                 s += 40
             elif role == "Mid":
@@ -2233,11 +2258,18 @@ def rescore_for_god(
             s -= 90
         if mage and any(k in nlow for k in ("bloodforge", "devourer")) and int_v < 20:
             s -= 90
-        # Hard: Asclepius/Lifebinder are dead weight on non-heal kits
-        if _is_heal_core_item(item.name) and not true_healer:
-            s -= 200
-        elif _is_heal_core_item(item.name) and true_healer:
+        if _is_heal_core_item(item.name) and true_healer:
             s += 55  # real healers actually want these early
+            # OB43: Sickle is Offensive (Support tax) — still identity for enchanters
+            if _is_enchanter_proc_item(item.name) and role == "Support":
+                s += 45
+    # Always gate heal/enchanter cores — don't rely on noisy heal tags
+    if _is_heal_core_item(item.name):
+        if true_healer and role in ("Support", "Solo"):
+            if _is_enchanter_proc_item(item.name) and role == "Support":
+                s += 35  # ensure Sickle/Locket beat Support Offensive tax
+        else:
+            s -= 200
     # Hard: Bancroft / Typhon / Gluttonous only on self-sustain mages
     if _is_mage_ls_core_item(item.name):
         if wants_ls and mage:
@@ -2902,10 +2934,20 @@ def _item_matches_slot(
             return False
         return "shield" in blob or any(k in n for k in ("pridwen", "phoenix", "shifter"))
     if slot == "heal_aura":
-        # Asclepius / Lifebinder / Chandra-class team sustain (heal_support archetype only)
-        return any(k in n for k in ("asclepius", "lifebinder", "chandra", "thebes", "sovereignty")) or (
-            "heal" in blob and any(k in blob for k in ("ally", "allies", "aura"))
-        )
+        # Asclepius / Lifebinder / OB43 Sickle+Locket / Chandra-class (heal_support only)
+        return any(
+            k in n
+            for k in (
+                "asclepius",
+                "lifebinder",
+                "heartwood",
+                "lotus sickle",
+                "soul locket",
+                "chandra",
+                "thebes",
+                "sovereignty",
+            )
+        ) or ("heal" in blob and any(k in blob for k in ("ally", "allies", "aura")))
     if slot == "sustain_tank":
         # Yogi's max-HP heal, Gladiator/Ancile LS, Cu-style HP bricks
         return (ls_v >= 5 and hp >= 150) or any(
@@ -2938,10 +2980,33 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     "echo": ["cosmic horror", "totem of death", "damaru", "omen drum", "eye of the storm"],
     "aa": ["riptalon", "demon", "deathbringer", "qins", "ichival", "wind", "avenging", "musashi"],
     "as_steroid": ["riptalon", "demon", "ichival", "avenging", "wind"],
-    # asclepius/lifebinder only land on true healers via kit_ok; chandra is safe aura
-    # bancroft only injects when self_sustain (kit_ok) — keep off generic heal signatures
-    "heal": ["chandra", "soul gem", "asclepius", "lifebinder"],
-    "heavy_heal": ["asclepius", "lifebinder", "chandra"],
+    # heal cores + OB43 enchanter procs (gated to true healers via kit_ok / heal_aura)
+    "heal": [
+        "lotus sickle",
+        "soul locket",
+        "heartwood",
+        "chandra",
+        "soul gem",
+        "asclepius",
+        "lifebinder",
+    ],
+    "heavy_heal": [
+        "lotus sickle",
+        "soul locket",
+        "heartwood",
+        "asclepius",
+        "lifebinder",
+        "chandra",
+    ],
+    "team_buff": [
+        "lotus sickle",
+        "soul locket",
+        "heartwood",
+        "thebes",
+        "sovereign",
+        "heartward",
+        "chandra",
+    ],
     # LS cores + max-HP sustain (Yogi's) + offline hybrid
     "self_sustain": [
         "yogi",
@@ -2976,7 +3041,6 @@ TAG_ITEM_SIGNATURES: dict[str, list[str]] = {
     "immobile": ["alchemist", "magi", "cloak", "mantle", "oni", "genji"],
     "mobile": ["jotunn", "hydra", "arondight", "heartseeker"],
     "gap_close": ["jotunn", "hydra", "arondight", "heartseeker", "transcend"],
-    "team_buff": ["thebes", "sovereign", "heartward", "chandra"],
     "anti_cc": ["magi", "mantle", "alchemist", "prophetic"],
 }
 

@@ -3518,6 +3518,37 @@ details.build-expand[open] .bes-cta::after { content: ""; }
 .meta-axes { margin: 10px 0 4px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 
 /* ----- Simple item guide ----- */
+.meta-guide-jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 1rem;
+}
+.meta-guide-cta {
+  display: inline-flex;
+  text-decoration: none;
+}
+.meta-guide-featured {
+  margin: 0 0 1rem;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.meta-guide-featured h4 {
+  margin: 0 0 10px;
+  font-size: 0.95rem;
+}
+.meta-guide-featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+.simple-guide-card.is-featured {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.help-guide-link { color: var(--accent); font-weight: 600; }
 .item-simple-guide { margin-bottom: 12px; }
 .simple-guide-card {
   border: 1px solid rgba(76, 201, 240, 0.35);

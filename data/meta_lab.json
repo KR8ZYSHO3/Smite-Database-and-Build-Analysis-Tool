@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-08T15:00:43.141194+00:00",
+  "generated_at": "2026-09-08T17:55:33.153212+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -376,9 +376,382 @@
     }
   },
   "flex_item_guide": {
-    "title": "Flex & weird items \u2014 simple English",
-    "disclaimer": "Plain-language guides for situational and concept items. Not live win rates. When in doubt: answer the lobby (heal/crit/AS/magic/CC) before toys.",
+    "title": "Items explained \u2014 simple English",
+    "disclaimer": "Plain-language guides for new and situational items. Not live win rates. Primary builds come from this site\u2019s kit + patch model \u2014 not copied from other build sites.",
+    "featured_title": "New / remade this patch (OB43)",
+    "featured": [
+      {
+        "name": "Chandra's Grace",
+        "tags": [
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "+20% heal/shield strength. Every 15s, lowest-HP nearby ally gets regen and tiny cooldown shred.",
+        "how": "Aura amp for healers plus a periodic \u201chelp the dying ally\u201d buff.",
+        "when": "Support heal/amp paths.",
+        "when_not": "You\u2019re full damage with no heals.",
+        "buy_as": "Support aura after Thebes. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Daybreak Gavel",
+        "tags": [
+          "concept"
+        ],
+        "roles": [
+          "Carry",
+          "Solo",
+          "Support",
+          "Mid"
+        ],
+        "simple": "Heal yourself with a healing ability to build stacks; your next non-heal ability spends them for a big STR or INT buff.",
+        "how": "Self-heal \u2192 stacks \u2192 cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
+        "when": "Self-heal kits (Wild Artemis traps, some bruisers) that also cast non-heals.",
+        "when_not": "No self-heal; pure ally-heal support with no dump spell.",
+        "buy_as": "Pair with Vital Amplifier on self-heal AA paths. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Eros' Bow",
+        "tags": [
+          "concept",
+          "active",
+          "aura"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
+        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit.",
+        "when": "Enchanter supports who can AA safely next to the carry.",
+        "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
+        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Heartwood Charm",
+        "tags": [
+          "concept",
+          "active",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "+20% heal/shield strength, faster heal cooldowns; heals you cast store a bank; active dumps that heal to nearby allies.",
+        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb. Stacks with other heal-amp items.",
+        "when": "Healer supports (Yemoja, Aphro, etc.).",
+        "when_not": "No heal abilities; you already have 3 actives.",
+        "buy_as": "Healer identity item 2nd\u20134th. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Lifebinder",
+        "tags": [
+          "concept",
+          "active",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
+        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp.",
+        "when": "Healers who group fight and can mark the dive target.",
+        "when_not": "No heal identity; active slots full.",
+        "buy_as": "Healer flex active. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Lotus Sickle",
+        "tags": [
+          "concept",
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
+        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together.",
+        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry.",
+        "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
+        "buy_as": "Support 2nd after Thebes (cheap CDR). New in OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Rod Of Asclepius",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "+10% heal/shield strength. When you heal an ally, you heal even more the lower their HP is.",
+        "how": "Missing-HP heal amp. Stacks with Soul Locket / Heartwood / Chandra amp.",
+        "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
+        "when_not": "No heal abilities \u2014 dead item.",
+        "buy_as": "Support heal core 3rd\u20135th. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Serrated Edge",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Jungle",
+          "Solo"
+        ],
+        "simple": "For each non-ult ability on cooldown you gain Strength and lifesteal (up to 3 stacks).",
+        "how": "Ability-cycling junglers stay stacked mid-fight. High LS + free STR.",
+        "when": "Jungle assassins/warriors with short ability cooldowns.",
+        "when_not": "You never cast; pure AA with no ability loop.",
+        "buy_as": "Jungle 1st\u20133rd on CD-heavy kits.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Soul Locket",
+        "tags": [
+          "concept",
+          "active",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks.",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam.",
+        "when": "Enchanter supports who stay in fights and get focused.",
+        "when_not": "You never heal/buff allies; you already have 3 better actives.",
+        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. New in OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Vital Amplifier",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Carry",
+          "Solo",
+          "Support",
+          "Jungle"
+        ],
+        "simple": "Heal yourself with an ability \u2192 stacking attack speed and basic-attack damage (up to 3 stacks).",
+        "how": "Self-heal ticks (e.g. Artemis Aspect of the Wild traps) can stack this fast. Adaptive STR or INT from your other items.",
+        "when": "Self-heal kits that also basic-attack (Wild Artemis, some bruisers).",
+        "when_not": "No self-heal in kit; pure ability mage who never autos.",
+        "buy_as": "After a STR/INT core so adaptive lands correctly. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      }
+    ],
     "items": [
+      {
+        "name": "Chandra's Grace",
+        "tags": [
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "+20% heal/shield strength. Every 15s, lowest-HP nearby ally gets regen and tiny cooldown shred.",
+        "how": "Aura amp for healers plus a periodic \u201chelp the dying ally\u201d buff.",
+        "when": "Support heal/amp paths.",
+        "when_not": "You\u2019re full damage with no heals.",
+        "buy_as": "Support aura after Thebes. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Daybreak Gavel",
+        "tags": [
+          "concept"
+        ],
+        "roles": [
+          "Carry",
+          "Solo",
+          "Support",
+          "Mid"
+        ],
+        "simple": "Heal yourself with a healing ability to build stacks; your next non-heal ability spends them for a big STR or INT buff.",
+        "how": "Self-heal \u2192 stacks \u2192 cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
+        "when": "Self-heal kits (Wild Artemis traps, some bruisers) that also cast non-heals.",
+        "when_not": "No self-heal; pure ally-heal support with no dump spell.",
+        "buy_as": "Pair with Vital Amplifier on self-heal AA paths. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Eros' Bow",
+        "tags": [
+          "concept",
+          "active",
+          "aura"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
+        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit.",
+        "when": "Enchanter supports who can AA safely next to the carry.",
+        "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
+        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Heartwood Charm",
+        "tags": [
+          "concept",
+          "active",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "+20% heal/shield strength, faster heal cooldowns; heals you cast store a bank; active dumps that heal to nearby allies.",
+        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb. Stacks with other heal-amp items.",
+        "when": "Healer supports (Yemoja, Aphro, etc.).",
+        "when_not": "No heal abilities; you already have 3 actives.",
+        "buy_as": "Healer identity item 2nd\u20134th. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Lifebinder",
+        "tags": [
+          "concept",
+          "active",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
+        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp.",
+        "when": "Healers who group fight and can mark the dive target.",
+        "when_not": "No heal identity; active slots full.",
+        "buy_as": "Healer flex active. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Lotus Sickle",
+        "tags": [
+          "concept",
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
+        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together.",
+        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry.",
+        "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
+        "buy_as": "Support 2nd after Thebes (cheap CDR). New in OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Rod Of Asclepius",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "+10% heal/shield strength. When you heal an ally, you heal even more the lower their HP is.",
+        "how": "Missing-HP heal amp. Stacks with Soul Locket / Heartwood / Chandra amp.",
+        "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
+        "when_not": "No heal abilities \u2014 dead item.",
+        "buy_as": "Support heal core 3rd\u20135th. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Serrated Edge",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Jungle",
+          "Solo"
+        ],
+        "simple": "For each non-ult ability on cooldown you gain Strength and lifesteal (up to 3 stacks).",
+        "how": "Ability-cycling junglers stay stacked mid-fight. High LS + free STR.",
+        "when": "Jungle assassins/warriors with short ability cooldowns.",
+        "when_not": "You never cast; pure AA with no ability loop.",
+        "buy_as": "Jungle 1st\u20133rd on CD-heavy kits.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Soul Locket",
+        "tags": [
+          "concept",
+          "active",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks.",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam.",
+        "when": "Enchanter supports who stay in fights and get focused.",
+        "when_not": "You never heal/buff allies; you already have 3 better actives.",
+        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. New in OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      {
+        "name": "Vital Amplifier",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Carry",
+          "Solo",
+          "Support",
+          "Jungle"
+        ],
+        "simple": "Heal yourself with an ability \u2192 stacking attack speed and basic-attack damage (up to 3 stacks).",
+        "how": "Self-heal ticks (e.g. Artemis Aspect of the Wild traps) can stack this fast. Adaptive STR or INT from your other items.",
+        "when": "Self-heal kits that also basic-attack (Wild Artemis, some bruisers).",
+        "when_not": "No self-heal in kit; pure ability mage who never autos.",
+        "buy_as": "After a STR/INT core so adaptive lands correctly. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
       {
         "name": "Alchemist Coat",
         "tags": [
@@ -394,7 +767,9 @@
         "how": "Potion engine + tankiness when you chug.",
         "when": "You buy pots and want free value.",
         "when_not": "Never use consumables.",
-        "buy_as": "Niche sustain tank."
+        "buy_as": "Niche sustain tank.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Amanita Charm",
@@ -411,7 +786,9 @@
         "how": "Place for team heal + DR in a pit or under tower.",
         "when": "Teamfight support who holds ground.",
         "when_not": "You never group or use actives.",
-        "buy_as": "Support active heal toy."
+        "buy_as": "Support active heal toy.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Bancroft's Talon",
@@ -426,7 +803,9 @@
         "how": "Comeback / low-HP fighter mage. Risky: rewards being hurt.",
         "when": "Aggressive LS mages who fight in the red.",
         "when_not": "You play full HP safe poke only (still usable, less ideal).",
-        "buy_as": "With Grimoire / LS mage paths."
+        "buy_as": "With Grimoire / LS mage paths.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Bloodforge",
@@ -443,7 +822,9 @@
         "how": "All-in vamp. Press shield when you dive.",
         "when": "Physical divers who auto/spell vamp.",
         "when_not": "Pure tank with no damage; mage INT path.",
-        "buy_as": "Jungle/Carry all-in slot."
+        "buy_as": "Jungle/Carry all-in slot.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Brawler's Beat Stick",
@@ -461,7 +842,9 @@
         "how": "Anti-heal for bruisers/hybrids. Adaptive STR or INT from your build.",
         "when": "Enemy heals/lifesteals and you\u2019re a damage or hybrid role.",
         "when_not": "No heals; pure tank with no damage to apply it.",
-        "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid."
+        "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Circe's Hexstone",
@@ -478,7 +861,9 @@
         "how": "Engage/peel dash toy. Build so you can afford the active slot.",
         "when": "You want a displacement engage on a tank.",
         "when_not": "Active slots already full of better tools.",
-        "buy_as": "Fun tank active."
+        "buy_as": "Fun tank active.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Contagion",
@@ -493,22 +878,9 @@
         "how": "Not real anti-heal. Soft punish freefire/LS. You must detonate with AA or hard CC.",
         "when": "You\u2019re the freefire tank into LS ADC/bruisers.",
         "when_not": "You need 25% heal cut (buy Stygian/Brawler\u2019s/Divine instead); you\u2019re mid glass.",
-        "buy_as": "Tank flex; never your only anti-heal into Aphro."
-      },
-      {
-        "name": "Daybreak Gavel",
-        "tags": [
-          "concept"
-        ],
-        "roles": [
-          "Support",
-          "Mid"
-        ],
-        "simple": "Healing different gods builds stacks; your next non-heal ability spends stacks for a big STR/INT buff.",
-        "how": "Heal unique allies \u2192 cast damage/utility spell to cash power.",
-        "when": "Team healers who also cast non-heal abilities.",
-        "when_not": "You only damage and never heal.",
-        "buy_as": "Baron/Aphro/Yemoja-style paths."
+        "buy_as": "Tank flex; never your only anti-heal into Aphro.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Divine Ruin",
@@ -523,7 +895,9 @@
         "how": "The mid-lane answer to Aphro/Yogi\u2019s/sustain. Also INT power.",
         "when": "Any real healing on the enemy (or you\u2019re not sure \u2014 safe default mid).",
         "when_not": "Full glass lobby with zero sustain and you need pure burst sooner.",
-        "buy_as": "Mid 2nd\u20134th item into heal comps."
+        "buy_as": "Mid 2nd\u20134th item into heal comps.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Doublet of Binding",
@@ -538,24 +912,9 @@
         "how": "Bodyguard button. Stack damp/prots so the redirected damage is soft.",
         "when": "You peel one carry hard (Athena/Geb/Ymir).",
         "when_not": "You\u2019re the one dying first with no bulk.",
-        "buy_as": "Support peel path."
-      },
-      {
-        "name": "Eros' Bow",
-        "tags": [
-          "concept",
-          "active",
-          "aura"
-        ],
-        "roles": [
-          "Support",
-          "Carry"
-        ],
-        "simple": "Mark an ally; your basic attacks heal that ally for a % of your max HP.",
-        "how": "You\u2019re an AA battery for the carry. Mark them and auto anything.",
-        "when": "You basic-attack a lot and peel with the ADC.",
-        "when_not": "Ability-only support who never autos.",
-        "buy_as": "Hybrid support / weird duo."
+        "buy_as": "Support peel path.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Erosion",
@@ -572,7 +931,9 @@
         "how": "Anti-shield aura. Great into shield-heavy kits/items.",
         "when": "Lots of shields (Berserk shields, item shields, kit shields).",
         "when_not": "Nobody shields \u2014 wasted slot.",
-        "buy_as": "Situational tank/bruiser."
+        "buy_as": "Situational tank/bruiser.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Ethereal Staff",
@@ -588,7 +949,9 @@
         "how": "You get thicker, they get thinner across the fight. Needs multiple ability hits.",
         "when": "Long fights vs HP stackers.",
         "when_not": "You cast once and die; no multi-hit kit.",
-        "buy_as": "With Reaver/pen on shred mages."
+        "buy_as": "With Reaver/pen on shred mages.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Eye of Erebus",
@@ -605,7 +968,9 @@
         "how": "Trap/zone tool + adaptive power. Place on chokes or objectives.",
         "when": "Roam/setup tanks and bruisers.",
         "when_not": "You never use actives or set vision traps.",
-        "buy_as": "Fun roam identity item."
+        "buy_as": "Fun roam identity item.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Eye of Providence",
@@ -620,7 +985,9 @@
         "how": "Vision item. Keeps wards in your inventory loop.",
         "when": "Enemy wards everything / you want free sentry uptime.",
         "when_not": "You already have perfect vision and need combat stats more.",
-        "buy_as": "Support flex for vision games."
+        "buy_as": "Support flex for vision games.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Gauntlet of Thebes",
@@ -634,7 +1001,9 @@
         "how": "Support farm item. Stack on minions/gods \u2192 evolve power.",
         "when": "Almost every Support game as core.",
         "when_not": "You\u2019re not actually supporting (full damage mid).",
-        "buy_as": "Support item 1\u20132."
+        "buy_as": "Support item 1\u20132.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Genji's Guard",
@@ -650,7 +1019,9 @@
         "how": "Mage damage answer. They hit you with magic \u2192 you get CDs back.",
         "when": "Fed mid mage or magical damage everywhere.",
         "when_not": "All physical lobby (ADC + phys jungle only).",
-        "buy_as": "Support/Solo default into magic."
+        "buy_as": "Support/Solo default into magic.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Gluttonous Grimoire",
@@ -666,24 +1037,9 @@
         "how": "Cast/LS \u2192 bank \u2192 AA to dump a chunk. Stores more at full HP.",
         "when": "INT + lifesteal mages (Hades, Anubis-style).",
         "when_not": "No LS; you never basic attack.",
-        "buy_as": "With Bancroft/Blood-Bound + pen."
-      },
-      {
-        "name": "Heartwood Charm",
-        "tags": [
-          "concept",
-          "active",
-          "sustain"
-        ],
-        "roles": [
-          "Support",
-          "Mid"
-        ],
-        "simple": "Healing abilities cool down faster; heals you cast store a bank; active dumps that heal to nearby allies.",
-        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb.",
-        "when": "Healer supports (Yemoja, Aphro, etc.).",
-        "when_not": "No heal abilities.",
-        "buy_as": "Healer identity item 2nd\u20134th."
+        "buy_as": "With Bancroft/Blood-Bound + pen.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Magi's Cloak",
@@ -702,7 +1058,9 @@
         "how": "Anti-lockdown bubble on a cooldown. Saves you from root/stun openers.",
         "when": "Heavy hard CC / dive (Bastet, Fenrir, Ymir lock, etc.).",
         "when_not": "Soft poke only, no real CC threat.",
-        "buy_as": "Anyone getting locked before they can act."
+        "buy_as": "Anyone getting locked before they can act.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Mantle Of Discord",
@@ -719,7 +1077,9 @@
         "how": "Panic button passive at low HP. Long cooldown.",
         "when": "You\u2019re the dive target and need a last-stand peel.",
         "when_not": "You never drop low / never frontline.",
-        "buy_as": "Late tank slot."
+        "buy_as": "Late tank slot.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Mantle of Discord",
@@ -735,7 +1095,9 @@
         "how": "Panic button passive at low HP. Long cooldown.",
         "when": "You\u2019re the dive target and need a last-stand peel.",
         "when_not": "You never drop low / never frontline.",
-        "buy_as": "Late tank slot."
+        "buy_as": "Late tank slot.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Midgardian Mail",
@@ -750,7 +1112,9 @@
         "how": "They freefire you \u2192 they get slower. You want them hitting you (frontline).",
         "when": "ADC or AA jungler is freefiring your face.",
         "when_not": "Nobody basics you (pure mage poke from range).",
-        "buy_as": "Support/Solo tank path when AA is the problem."
+        "buy_as": "Support/Solo tank path when AA is the problem.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Obsidian Shard",
@@ -764,7 +1128,9 @@
         "how": "Makes mage damage actually land on tanks. First cast of the cycle is juicier.",
         "when": "Any mid that needs to kill tanks / bulk.",
         "when_not": "Never finishing pen into triple tank (you\u2019ll bounce).",
-        "buy_as": "Mid core, often 4th\u20136th."
+        "buy_as": "Mid core, often 4th\u20136th.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Omen Drum",
@@ -781,7 +1147,9 @@
         "how": "Multi-hit ability combos shine. Press before full rotation.",
         "when": "Ability spam kits in teamfights.",
         "when_not": "One-spell pokes; you forget actives.",
-        "buy_as": "Identity active on multi-cast gods."
+        "buy_as": "Identity active on multi-cast gods.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Phoenix Feather",
@@ -797,7 +1165,9 @@
         "how": "Tank mprot item with a panic heal/true damage button.",
         "when": "Magic damage + you want a self-peel active.",
         "when_not": "You need pure aura peel and never press actives.",
-        "buy_as": "Solo/Support into mages."
+        "buy_as": "Solo/Support into mages.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Prophetic Cloak",
@@ -812,7 +1182,9 @@
         "how": "Adaptive tank: fight people \u2192 stack the right prots \u2192 evolve.",
         "when": "Frontliners in long games who hit a lot of gods.",
         "when_not": "You need an immediate answer (Spectral/Genji\u2019s) this fight.",
-        "buy_as": "Early tank scaler; evolve is the payoff."
+        "buy_as": "Early tank scaler; evolve is the payoff.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Sanguine Lash",
@@ -828,7 +1200,9 @@
         "how": "Melee sit-on-them item. Build LS and stay in range.",
         "when": "Melee LS assassins/bruisers.",
         "when_not": "Ranged poke; no LS.",
-        "buy_as": "Fenrir/Kali-style after LS core."
+        "buy_as": "Fenrir/Kali-style after LS core.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Shifter's Shield",
@@ -844,7 +1218,9 @@
         "how": "Hybrid tank/damage. Healthy = offline damage; hurt = tank mode.",
         "when": "Solo/Support default bulk almost always.",
         "when_not": "Full glass ADC/mid who never wants prots.",
-        "buy_as": "Universal frontline core."
+        "buy_as": "Universal frontline core.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Soul Reaver",
@@ -860,7 +1236,9 @@
         "how": "Tank shred for mages. Still goes through prots \u2014 buy pen too.",
         "when": "Fat tanks, Thebes stacks, Yogi\u2019s bricks.",
         "when_not": "All glass enemies and you need pure burst/CDR sooner.",
-        "buy_as": "Mid/offline mage with Obsidian/Deso."
+        "buy_as": "Mid/offline mage with Obsidian/Deso.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Spectral Armor",
@@ -876,7 +1254,9 @@
         "how": "Passive aura. Stand near your carry \u2014 they get part of the anti-crit too.",
         "when": "Enemy has a crit Carry (or anyone building crit). Default Support flex almost every game.",
         "when_not": "No crit threat at all (full ability damage lobby).",
-        "buy_as": "2nd\u20134th item on Support after Thebes/Shifter\u2019s."
+        "buy_as": "2nd\u20134th item on Support after Thebes/Shifter\u2019s.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Spirit Robe",
@@ -892,7 +1272,9 @@
         "how": "CC makes you tankier briefly. Note: enemies can \u2018proc\u2019 this on purpose.",
         "when": "Lots of hard CC and you\u2019re frontline.",
         "when_not": "You want to avoid giving them free value; Magi\u2019s is cleaner for \u2018don\u2019t get CC\u2019d\u2019.",
-        "buy_as": "Tank flex into CC-heavy lobbies."
+        "buy_as": "Tank flex into CC-heavy lobbies.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Staff of Myrddin",
@@ -907,7 +1289,9 @@
         "how": "Double-cast button. Huge on burst mages with a key spell.",
         "when": "Your combo is one ability twice (or reset a big CD).",
         "when_not": "Low impact abilities; you need pen/heal cut first.",
-        "buy_as": "Late mid luxury active."
+        "buy_as": "Late mid luxury active.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Stampede",
@@ -922,7 +1306,9 @@
         "how": "Engage or disengage button for the whole team.",
         "when": "You need team move for fights/rotates (classic support).",
         "when_not": "Rarely \u2014 it\u2019s a standard support tool when speed wins fights.",
-        "buy_as": "Support 3rd\u20135th often."
+        "buy_as": "Support 3rd\u20135th often.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Stone of Binding",
@@ -939,7 +1325,9 @@
         "how": "Only works if you land hard CC (stun/root/knockup/etc.).",
         "when": "You have reliable hard CC (Ymir, Atlas, Hades, etc.).",
         "when_not": "Soft CC only / no CC in kit.",
-        "buy_as": "CC gods \u2014 synergy item, not random bulk."
+        "buy_as": "CC gods \u2014 synergy item, not random bulk.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Stygian Anchor",
@@ -955,7 +1343,9 @@
         "how": "Real anti-heal on ability damage (not Contagion). Also shreds AS.",
         "when": "Aphro, Yogi\u2019s, Cu sustain, heavy lifesteal, heal comps.",
         "when_not": "Zero healing on the enemy team.",
-        "buy_as": "Support/Solo whenever heals are real \u2014 don\u2019t wait until item 6."
+        "buy_as": "Support/Solo whenever heals are real \u2014 don\u2019t wait until item 6.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Titan's Bane",
@@ -971,7 +1361,9 @@
         "how": "Same idea as Obsidian for physical. Don\u2019t skip into bulk.",
         "when": "Physical damage roles mid/late.",
         "when_not": "You only AA and never cast (still usually good).",
-        "buy_as": "Carry/Jungle pen slot."
+        "buy_as": "Carry/Jungle pen slot.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Toxic Blade",
@@ -986,7 +1378,9 @@
         "how": "AA-based anti-heal. You must basic-attack them.",
         "when": "You\u2019re Carry/AA jungle into heals.",
         "when_not": "Ability-only mage; you never auto.",
-        "buy_as": "Carry flex vs heal / high AS."
+        "buy_as": "Carry flex vs heal / high AS.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Umbral Link",
@@ -1004,23 +1398,9 @@
         "how": "You\u2019re a mobile vamp aura. Must build lifesteal and stay healthy next to teammates.",
         "when": "Physical LS bruisers (Fenrir, Kali, Chaac paths) who group fight.",
         "when_not": "No LS; always under 50% HP; you never stand near allies.",
-        "buy_as": "After or with Bloodforge/DG-style LS cores."
-      },
-      {
-        "name": "Vital Amplifier",
-        "tags": [
-          "concept",
-          "aura"
-        ],
-        "roles": [
-          "Support",
-          "Mid"
-        ],
-        "simple": "When you heal yourself or an ally with an ability, they get attack speed and attack damage (stacks 3\u00d7).",
-        "how": "Heals = AA steroids for your team. Needs a healing kit and allies who basic-attack.",
-        "when": "You\u2019re Yemoja/Aphro/Ra/Baron-style healer with an ADC who autos.",
-        "when_not": "No heals in kit; team is all ability mages who never AA.",
-        "buy_as": "Healer Support/Mid 2nd\u20133rd after aura/core."
+        "buy_as": "After or with Bloodforge/DG-style LS cores.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Void Shield",
@@ -1037,7 +1417,9 @@
         "how": "Aura shred for physical carries/junglers.",
         "when": "You\u2019re peeling in front of a physical ADC/jungle.",
         "when_not": "Full magical team.",
-        "buy_as": "Frontline aura slot."
+        "buy_as": "Frontline aura slot.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Void Stone",
@@ -1054,7 +1436,9 @@
         "how": "Aura shred for magical damage dealers on your team (or you).",
         "when": "You\u2019re frontline with mage allies, or magical bruiser.",
         "when_not": "All physical team and you\u2019re not magical.",
-        "buy_as": "Frontline aura slot."
+        "buy_as": "Frontline aura slot.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Xibalban Effigy",
@@ -1070,7 +1454,9 @@
         "how": "Press when a big burst is landing. You delay death, not become immortal. Moonlight = half the payback.",
         "when": "You\u2019re a frontline tank and enemy has big ult combos.",
         "when_not": "Glass builds; long AA freefire with no spike; pressing it with nobody hitting you.",
-        "buy_as": "2nd\u20133rd item on Ymir/Atlas/Xing-style tanks after some bulk."
+        "buy_as": "2nd\u20133rd item on Ymir/Atlas/Xing-style tanks after some bulk.",
+        "featured": false,
+        "patch": ""
       },
       {
         "name": "Yogi's Necklace",
@@ -1086,7 +1472,9 @@
         "how": "Regen brick. On Cu, mana also becomes more HP via his passive. Wins long fights, not burst.",
         "when": "You want to outlast lane and never die to chip.",
         "when_not": "You need damage spike or real anti-heal answer on you.",
-        "buy_as": "Solo sustain first item (turtle style)."
+        "buy_as": "Solo sustain first item (turtle style).",
+        "featured": false,
+        "patch": ""
       }
     ],
     "by_name": {
@@ -1104,7 +1492,9 @@
         "how": "Passive aura. Stand near your carry \u2014 they get part of the anti-crit too.",
         "when": "Enemy has a crit Carry (or anyone building crit). Default Support flex almost every game.",
         "when_not": "No crit threat at all (full ability damage lobby).",
-        "buy_as": "2nd\u20134th item on Support after Thebes/Shifter\u2019s."
+        "buy_as": "2nd\u20134th item on Support after Thebes/Shifter\u2019s.",
+        "featured": false,
+        "patch": ""
       },
       "spectral armor": {
         "name": "Spectral Armor",
@@ -1120,7 +1510,9 @@
         "how": "Passive aura. Stand near your carry \u2014 they get part of the anti-crit too.",
         "when": "Enemy has a crit Carry (or anyone building crit). Default Support flex almost every game.",
         "when_not": "No crit threat at all (full ability damage lobby).",
-        "buy_as": "2nd\u20134th item on Support after Thebes/Shifter\u2019s."
+        "buy_as": "2nd\u20134th item on Support after Thebes/Shifter\u2019s.",
+        "featured": false,
+        "patch": ""
       },
       "Midgardian Mail": {
         "name": "Midgardian Mail",
@@ -1135,7 +1527,9 @@
         "how": "They freefire you \u2192 they get slower. You want them hitting you (frontline).",
         "when": "ADC or AA jungler is freefiring your face.",
         "when_not": "Nobody basics you (pure mage poke from range).",
-        "buy_as": "Support/Solo tank path when AA is the problem."
+        "buy_as": "Support/Solo tank path when AA is the problem.",
+        "featured": false,
+        "patch": ""
       },
       "midgardian mail": {
         "name": "Midgardian Mail",
@@ -1150,7 +1544,9 @@
         "how": "They freefire you \u2192 they get slower. You want them hitting you (frontline).",
         "when": "ADC or AA jungler is freefiring your face.",
         "when_not": "Nobody basics you (pure mage poke from range).",
-        "buy_as": "Support/Solo tank path when AA is the problem."
+        "buy_as": "Support/Solo tank path when AA is the problem.",
+        "featured": false,
+        "patch": ""
       },
       "Stygian Anchor": {
         "name": "Stygian Anchor",
@@ -1166,7 +1562,9 @@
         "how": "Real anti-heal on ability damage (not Contagion). Also shreds AS.",
         "when": "Aphro, Yogi\u2019s, Cu sustain, heavy lifesteal, heal comps.",
         "when_not": "Zero healing on the enemy team.",
-        "buy_as": "Support/Solo whenever heals are real \u2014 don\u2019t wait until item 6."
+        "buy_as": "Support/Solo whenever heals are real \u2014 don\u2019t wait until item 6.",
+        "featured": false,
+        "patch": ""
       },
       "stygian anchor": {
         "name": "Stygian Anchor",
@@ -1182,7 +1580,9 @@
         "how": "Real anti-heal on ability damage (not Contagion). Also shreds AS.",
         "when": "Aphro, Yogi\u2019s, Cu sustain, heavy lifesteal, heal comps.",
         "when_not": "Zero healing on the enemy team.",
-        "buy_as": "Support/Solo whenever heals are real \u2014 don\u2019t wait until item 6."
+        "buy_as": "Support/Solo whenever heals are real \u2014 don\u2019t wait until item 6.",
+        "featured": false,
+        "patch": ""
       },
       "Brawler's Beat Stick": {
         "name": "Brawler's Beat Stick",
@@ -1200,7 +1600,9 @@
         "how": "Anti-heal for bruisers/hybrids. Adaptive STR or INT from your build.",
         "when": "Enemy heals/lifesteals and you\u2019re a damage or hybrid role.",
         "when_not": "No heals; pure tank with no damage to apply it.",
-        "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid."
+        "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid.",
+        "featured": false,
+        "patch": ""
       },
       "brawler's beat stick": {
         "name": "Brawler's Beat Stick",
@@ -1218,7 +1620,9 @@
         "how": "Anti-heal for bruisers/hybrids. Adaptive STR or INT from your build.",
         "when": "Enemy heals/lifesteals and you\u2019re a damage or hybrid role.",
         "when_not": "No heals; pure tank with no damage to apply it.",
-        "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid."
+        "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid.",
+        "featured": false,
+        "patch": ""
       },
       "Brawler\u2019s Beat Stick": {
         "name": "Brawler's Beat Stick",
@@ -1236,7 +1640,9 @@
         "how": "Anti-heal for bruisers/hybrids. Adaptive STR or INT from your build.",
         "when": "Enemy heals/lifesteals and you\u2019re a damage or hybrid role.",
         "when_not": "No heals; pure tank with no damage to apply it.",
-        "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid."
+        "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid.",
+        "featured": false,
+        "patch": ""
       },
       "Divine Ruin": {
         "name": "Divine Ruin",
@@ -1251,7 +1657,9 @@
         "how": "The mid-lane answer to Aphro/Yogi\u2019s/sustain. Also INT power.",
         "when": "Any real healing on the enemy (or you\u2019re not sure \u2014 safe default mid).",
         "when_not": "Full glass lobby with zero sustain and you need pure burst sooner.",
-        "buy_as": "Mid 2nd\u20134th item into heal comps."
+        "buy_as": "Mid 2nd\u20134th item into heal comps.",
+        "featured": false,
+        "patch": ""
       },
       "divine ruin": {
         "name": "Divine Ruin",
@@ -1266,7 +1674,9 @@
         "how": "The mid-lane answer to Aphro/Yogi\u2019s/sustain. Also INT power.",
         "when": "Any real healing on the enemy (or you\u2019re not sure \u2014 safe default mid).",
         "when_not": "Full glass lobby with zero sustain and you need pure burst sooner.",
-        "buy_as": "Mid 2nd\u20134th item into heal comps."
+        "buy_as": "Mid 2nd\u20134th item into heal comps.",
+        "featured": false,
+        "patch": ""
       },
       "Toxic Blade": {
         "name": "Toxic Blade",
@@ -1281,7 +1691,9 @@
         "how": "AA-based anti-heal. You must basic-attack them.",
         "when": "You\u2019re Carry/AA jungle into heals.",
         "when_not": "Ability-only mage; you never auto.",
-        "buy_as": "Carry flex vs heal / high AS."
+        "buy_as": "Carry flex vs heal / high AS.",
+        "featured": false,
+        "patch": ""
       },
       "toxic blade": {
         "name": "Toxic Blade",
@@ -1296,7 +1708,9 @@
         "how": "AA-based anti-heal. You must basic-attack them.",
         "when": "You\u2019re Carry/AA jungle into heals.",
         "when_not": "Ability-only mage; you never auto.",
-        "buy_as": "Carry flex vs heal / high AS."
+        "buy_as": "Carry flex vs heal / high AS.",
+        "featured": false,
+        "patch": ""
       },
       "Genji's Guard": {
         "name": "Genji's Guard",
@@ -1312,7 +1726,9 @@
         "how": "Mage damage answer. They hit you with magic \u2192 you get CDs back.",
         "when": "Fed mid mage or magical damage everywhere.",
         "when_not": "All physical lobby (ADC + phys jungle only).",
-        "buy_as": "Support/Solo default into magic."
+        "buy_as": "Support/Solo default into magic.",
+        "featured": false,
+        "patch": ""
       },
       "genji's guard": {
         "name": "Genji's Guard",
@@ -1328,7 +1744,9 @@
         "how": "Mage damage answer. They hit you with magic \u2192 you get CDs back.",
         "when": "Fed mid mage or magical damage everywhere.",
         "when_not": "All physical lobby (ADC + phys jungle only).",
-        "buy_as": "Support/Solo default into magic."
+        "buy_as": "Support/Solo default into magic.",
+        "featured": false,
+        "patch": ""
       },
       "Phoenix Feather": {
         "name": "Phoenix Feather",
@@ -1344,7 +1762,9 @@
         "how": "Tank mprot item with a panic heal/true damage button.",
         "when": "Magic damage + you want a self-peel active.",
         "when_not": "You need pure aura peel and never press actives.",
-        "buy_as": "Solo/Support into mages."
+        "buy_as": "Solo/Support into mages.",
+        "featured": false,
+        "patch": ""
       },
       "phoenix feather": {
         "name": "Phoenix Feather",
@@ -1360,7 +1780,9 @@
         "how": "Tank mprot item with a panic heal/true damage button.",
         "when": "Magic damage + you want a self-peel active.",
         "when_not": "You need pure aura peel and never press actives.",
-        "buy_as": "Solo/Support into mages."
+        "buy_as": "Solo/Support into mages.",
+        "featured": false,
+        "patch": ""
       },
       "Magi's Cloak": {
         "name": "Magi's Cloak",
@@ -1379,7 +1801,9 @@
         "how": "Anti-lockdown bubble on a cooldown. Saves you from root/stun openers.",
         "when": "Heavy hard CC / dive (Bastet, Fenrir, Ymir lock, etc.).",
         "when_not": "Soft poke only, no real CC threat.",
-        "buy_as": "Anyone getting locked before they can act."
+        "buy_as": "Anyone getting locked before they can act.",
+        "featured": false,
+        "patch": ""
       },
       "magi's cloak": {
         "name": "Magi's Cloak",
@@ -1398,7 +1822,9 @@
         "how": "Anti-lockdown bubble on a cooldown. Saves you from root/stun openers.",
         "when": "Heavy hard CC / dive (Bastet, Fenrir, Ymir lock, etc.).",
         "when_not": "Soft poke only, no real CC threat.",
-        "buy_as": "Anyone getting locked before they can act."
+        "buy_as": "Anyone getting locked before they can act.",
+        "featured": false,
+        "patch": ""
       },
       "Spirit Robe": {
         "name": "Spirit Robe",
@@ -1414,7 +1840,9 @@
         "how": "CC makes you tankier briefly. Note: enemies can \u2018proc\u2019 this on purpose.",
         "when": "Lots of hard CC and you\u2019re frontline.",
         "when_not": "You want to avoid giving them free value; Magi\u2019s is cleaner for \u2018don\u2019t get CC\u2019d\u2019.",
-        "buy_as": "Tank flex into CC-heavy lobbies."
+        "buy_as": "Tank flex into CC-heavy lobbies.",
+        "featured": false,
+        "patch": ""
       },
       "spirit robe": {
         "name": "Spirit Robe",
@@ -1430,7 +1858,9 @@
         "how": "CC makes you tankier briefly. Note: enemies can \u2018proc\u2019 this on purpose.",
         "when": "Lots of hard CC and you\u2019re frontline.",
         "when_not": "You want to avoid giving them free value; Magi\u2019s is cleaner for \u2018don\u2019t get CC\u2019d\u2019.",
-        "buy_as": "Tank flex into CC-heavy lobbies."
+        "buy_as": "Tank flex into CC-heavy lobbies.",
+        "featured": false,
+        "patch": ""
       },
       "Mantle Of Discord": {
         "name": "Mantle Of Discord",
@@ -1447,7 +1877,9 @@
         "how": "Panic button passive at low HP. Long cooldown.",
         "when": "You\u2019re the dive target and need a last-stand peel.",
         "when_not": "You never drop low / never frontline.",
-        "buy_as": "Late tank slot."
+        "buy_as": "Late tank slot.",
+        "featured": false,
+        "patch": ""
       },
       "mantle of discord": {
         "name": "Mantle of Discord",
@@ -1463,7 +1895,9 @@
         "how": "Panic button passive at low HP. Long cooldown.",
         "when": "You\u2019re the dive target and need a last-stand peel.",
         "when_not": "You never drop low / never frontline.",
-        "buy_as": "Late tank slot."
+        "buy_as": "Late tank slot.",
+        "featured": false,
+        "patch": ""
       },
       "Mantle of Discord": {
         "name": "Mantle of Discord",
@@ -1479,7 +1913,9 @@
         "how": "Panic button passive at low HP. Long cooldown.",
         "when": "You\u2019re the dive target and need a last-stand peel.",
         "when_not": "You never drop low / never frontline.",
-        "buy_as": "Late tank slot."
+        "buy_as": "Late tank slot.",
+        "featured": false,
+        "patch": ""
       },
       "Xibalban Effigy": {
         "name": "Xibalban Effigy",
@@ -1495,7 +1931,9 @@
         "how": "Press when a big burst is landing. You delay death, not become immortal. Moonlight = half the payback.",
         "when": "You\u2019re a frontline tank and enemy has big ult combos.",
         "when_not": "Glass builds; long AA freefire with no spike; pressing it with nobody hitting you.",
-        "buy_as": "2nd\u20133rd item on Ymir/Atlas/Xing-style tanks after some bulk."
+        "buy_as": "2nd\u20133rd item on Ymir/Atlas/Xing-style tanks after some bulk.",
+        "featured": false,
+        "patch": ""
       },
       "xibalban effigy": {
         "name": "Xibalban Effigy",
@@ -1511,39 +1949,267 @@
         "how": "Press when a big burst is landing. You delay death, not become immortal. Moonlight = half the payback.",
         "when": "You\u2019re a frontline tank and enemy has big ult combos.",
         "when_not": "Glass builds; long AA freefire with no spike; pressing it with nobody hitting you.",
-        "buy_as": "2nd\u20133rd item on Ymir/Atlas/Xing-style tanks after some bulk."
+        "buy_as": "2nd\u20133rd item on Ymir/Atlas/Xing-style tanks after some bulk.",
+        "featured": false,
+        "patch": ""
+      },
+      "Lotus Sickle": {
+        "name": "Lotus Sickle",
+        "tags": [
+          "concept",
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
+        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together.",
+        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry.",
+        "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
+        "buy_as": "Support 2nd after Thebes (cheap CDR). New in OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "lotus sickle": {
+        "name": "Lotus Sickle",
+        "tags": [
+          "concept",
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
+        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together.",
+        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry.",
+        "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
+        "buy_as": "Support 2nd after Thebes (cheap CDR). New in OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "Soul Locket": {
+        "name": "Soul Locket",
+        "tags": [
+          "concept",
+          "active",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks.",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam.",
+        "when": "Enchanter supports who stay in fights and get focused.",
+        "when_not": "You never heal/buff allies; you already have 3 better actives.",
+        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. New in OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "soul locket": {
+        "name": "Soul Locket",
+        "tags": [
+          "concept",
+          "active",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks.",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam.",
+        "when": "Enchanter supports who stay in fights and get focused.",
+        "when_not": "You never heal/buff allies; you already have 3 better actives.",
+        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. New in OB43.",
+        "featured": true,
+        "patch": "OB43"
       },
       "Vital Amplifier": {
         "name": "Vital Amplifier",
         "tags": [
           "concept",
-          "aura"
+          "sustain"
         ],
         "roles": [
+          "Carry",
+          "Solo",
           "Support",
-          "Mid"
+          "Jungle"
         ],
-        "simple": "When you heal yourself or an ally with an ability, they get attack speed and attack damage (stacks 3\u00d7).",
-        "how": "Heals = AA steroids for your team. Needs a healing kit and allies who basic-attack.",
-        "when": "You\u2019re Yemoja/Aphro/Ra/Baron-style healer with an ADC who autos.",
-        "when_not": "No heals in kit; team is all ability mages who never AA.",
-        "buy_as": "Healer Support/Mid 2nd\u20133rd after aura/core."
+        "simple": "Heal yourself with an ability \u2192 stacking attack speed and basic-attack damage (up to 3 stacks).",
+        "how": "Self-heal ticks (e.g. Artemis Aspect of the Wild traps) can stack this fast. Adaptive STR or INT from your other items.",
+        "when": "Self-heal kits that also basic-attack (Wild Artemis, some bruisers).",
+        "when_not": "No self-heal in kit; pure ability mage who never autos.",
+        "buy_as": "After a STR/INT core so adaptive lands correctly. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
       },
       "vital amplifier": {
         "name": "Vital Amplifier",
         "tags": [
           "concept",
-          "aura"
+          "sustain"
+        ],
+        "roles": [
+          "Carry",
+          "Solo",
+          "Support",
+          "Jungle"
+        ],
+        "simple": "Heal yourself with an ability \u2192 stacking attack speed and basic-attack damage (up to 3 stacks).",
+        "how": "Self-heal ticks (e.g. Artemis Aspect of the Wild traps) can stack this fast. Adaptive STR or INT from your other items.",
+        "when": "Self-heal kits that also basic-attack (Wild Artemis, some bruisers).",
+        "when_not": "No self-heal in kit; pure ability mage who never autos.",
+        "buy_as": "After a STR/INT core so adaptive lands correctly. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "Rod Of Asclepius": {
+        "name": "Rod Of Asclepius",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "+10% heal/shield strength. When you heal an ally, you heal even more the lower their HP is.",
+        "how": "Missing-HP heal amp. Stacks with Soul Locket / Heartwood / Chandra amp.",
+        "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
+        "when_not": "No heal abilities \u2014 dead item.",
+        "buy_as": "Support heal core 3rd\u20135th. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "rod of asclepius": {
+        "name": "Rod Of Asclepius",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "+10% heal/shield strength. When you heal an ally, you heal even more the lower their HP is.",
+        "how": "Missing-HP heal amp. Stacks with Soul Locket / Heartwood / Chandra amp.",
+        "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
+        "when_not": "No heal abilities \u2014 dead item.",
+        "buy_as": "Support heal core 3rd\u20135th. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "Lifebinder": {
+        "name": "Lifebinder",
+        "tags": [
+          "concept",
+          "active",
+          "sustain"
         ],
         "roles": [
           "Support",
           "Mid"
         ],
-        "simple": "When you heal yourself or an ally with an ability, they get attack speed and attack damage (stacks 3\u00d7).",
-        "how": "Heals = AA steroids for your team. Needs a healing kit and allies who basic-attack.",
-        "when": "You\u2019re Yemoja/Aphro/Ra/Baron-style healer with an ADC who autos.",
-        "when_not": "No heals in kit; team is all ability mages who never AA.",
-        "buy_as": "Healer Support/Mid 2nd\u20133rd after aura/core."
+        "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
+        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp.",
+        "when": "Healers who group fight and can mark the dive target.",
+        "when_not": "No heal identity; active slots full.",
+        "buy_as": "Healer flex active. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "lifebinder": {
+        "name": "Lifebinder",
+        "tags": [
+          "concept",
+          "active",
+          "sustain"
+        ],
+        "roles": [
+          "Support",
+          "Mid"
+        ],
+        "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
+        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp.",
+        "when": "Healers who group fight and can mark the dive target.",
+        "when_not": "No heal identity; active slots full.",
+        "buy_as": "Healer flex active. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "Chandra's Grace": {
+        "name": "Chandra's Grace",
+        "tags": [
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "+20% heal/shield strength. Every 15s, lowest-HP nearby ally gets regen and tiny cooldown shred.",
+        "how": "Aura amp for healers plus a periodic \u201chelp the dying ally\u201d buff.",
+        "when": "Support heal/amp paths.",
+        "when_not": "You\u2019re full damage with no heals.",
+        "buy_as": "Support aura after Thebes. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "chandra's grace": {
+        "name": "Chandra's Grace",
+        "tags": [
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "+20% heal/shield strength. Every 15s, lowest-HP nearby ally gets regen and tiny cooldown shred.",
+        "how": "Aura amp for healers plus a periodic \u201chelp the dying ally\u201d buff.",
+        "when": "Support heal/amp paths.",
+        "when_not": "You\u2019re full damage with no heals.",
+        "buy_as": "Support aura after Thebes. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "Serrated Edge": {
+        "name": "Serrated Edge",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Jungle",
+          "Solo"
+        ],
+        "simple": "For each non-ult ability on cooldown you gain Strength and lifesteal (up to 3 stacks).",
+        "how": "Ability-cycling junglers stay stacked mid-fight. High LS + free STR.",
+        "when": "Jungle assassins/warriors with short ability cooldowns.",
+        "when_not": "You never cast; pure AA with no ability loop.",
+        "buy_as": "Jungle 1st\u20133rd on CD-heavy kits.",
+        "featured": true,
+        "patch": "OB43"
+      },
+      "serrated edge": {
+        "name": "Serrated Edge",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Jungle",
+          "Solo"
+        ],
+        "simple": "For each non-ult ability on cooldown you gain Strength and lifesteal (up to 3 stacks).",
+        "how": "Ability-cycling junglers stay stacked mid-fight. High LS + free STR.",
+        "when": "Jungle assassins/warriors with short ability cooldowns.",
+        "when_not": "You never cast; pure AA with no ability loop.",
+        "buy_as": "Jungle 1st\u20133rd on CD-heavy kits.",
+        "featured": true,
+        "patch": "OB43"
       },
       "Umbral Link": {
         "name": "Umbral Link",
@@ -1561,7 +2227,9 @@
         "how": "You\u2019re a mobile vamp aura. Must build lifesteal and stay healthy next to teammates.",
         "when": "Physical LS bruisers (Fenrir, Kali, Chaac paths) who group fight.",
         "when_not": "No LS; always under 50% HP; you never stand near allies.",
-        "buy_as": "After or with Bloodforge/DG-style LS cores."
+        "buy_as": "After or with Bloodforge/DG-style LS cores.",
+        "featured": false,
+        "patch": ""
       },
       "umbral link": {
         "name": "Umbral Link",
@@ -1579,7 +2247,9 @@
         "how": "You\u2019re a mobile vamp aura. Must build lifesteal and stay healthy next to teammates.",
         "when": "Physical LS bruisers (Fenrir, Kali, Chaac paths) who group fight.",
         "when_not": "No LS; always under 50% HP; you never stand near allies.",
-        "buy_as": "After or with Bloodforge/DG-style LS cores."
+        "buy_as": "After or with Bloodforge/DG-style LS cores.",
+        "featured": false,
+        "patch": ""
       },
       "Contagion": {
         "name": "Contagion",
@@ -1594,7 +2264,9 @@
         "how": "Not real anti-heal. Soft punish freefire/LS. You must detonate with AA or hard CC.",
         "when": "You\u2019re the freefire tank into LS ADC/bruisers.",
         "when_not": "You need 25% heal cut (buy Stygian/Brawler\u2019s/Divine instead); you\u2019re mid glass.",
-        "buy_as": "Tank flex; never your only anti-heal into Aphro."
+        "buy_as": "Tank flex; never your only anti-heal into Aphro.",
+        "featured": false,
+        "patch": ""
       },
       "contagion": {
         "name": "Contagion",
@@ -1609,7 +2281,9 @@
         "how": "Not real anti-heal. Soft punish freefire/LS. You must detonate with AA or hard CC.",
         "when": "You\u2019re the freefire tank into LS ADC/bruisers.",
         "when_not": "You need 25% heal cut (buy Stygian/Brawler\u2019s/Divine instead); you\u2019re mid glass.",
-        "buy_as": "Tank flex; never your only anti-heal into Aphro."
+        "buy_as": "Tank flex; never your only anti-heal into Aphro.",
+        "featured": false,
+        "patch": ""
       },
       "Erosion": {
         "name": "Erosion",
@@ -1626,7 +2300,9 @@
         "how": "Anti-shield aura. Great into shield-heavy kits/items.",
         "when": "Lots of shields (Berserk shields, item shields, kit shields).",
         "when_not": "Nobody shields \u2014 wasted slot.",
-        "buy_as": "Situational tank/bruiser."
+        "buy_as": "Situational tank/bruiser.",
+        "featured": false,
+        "patch": ""
       },
       "erosion": {
         "name": "Erosion",
@@ -1643,7 +2319,9 @@
         "how": "Anti-shield aura. Great into shield-heavy kits/items.",
         "when": "Lots of shields (Berserk shields, item shields, kit shields).",
         "when_not": "Nobody shields \u2014 wasted slot.",
-        "buy_as": "Situational tank/bruiser."
+        "buy_as": "Situational tank/bruiser.",
+        "featured": false,
+        "patch": ""
       },
       "Yogi's Necklace": {
         "name": "Yogi's Necklace",
@@ -1659,7 +2337,9 @@
         "how": "Regen brick. On Cu, mana also becomes more HP via his passive. Wins long fights, not burst.",
         "when": "You want to outlast lane and never die to chip.",
         "when_not": "You need damage spike or real anti-heal answer on you.",
-        "buy_as": "Solo sustain first item (turtle style)."
+        "buy_as": "Solo sustain first item (turtle style).",
+        "featured": false,
+        "patch": ""
       },
       "yogi's necklace": {
         "name": "Yogi's Necklace",
@@ -1675,7 +2355,9 @@
         "how": "Regen brick. On Cu, mana also becomes more HP via his passive. Wins long fights, not burst.",
         "when": "You want to outlast lane and never die to chip.",
         "when_not": "You need damage spike or real anti-heal answer on you.",
-        "buy_as": "Solo sustain first item (turtle style)."
+        "buy_as": "Solo sustain first item (turtle style).",
+        "featured": false,
+        "patch": ""
       },
       "Soul Reaver": {
         "name": "Soul Reaver",
@@ -1691,7 +2373,9 @@
         "how": "Tank shred for mages. Still goes through prots \u2014 buy pen too.",
         "when": "Fat tanks, Thebes stacks, Yogi\u2019s bricks.",
         "when_not": "All glass enemies and you need pure burst/CDR sooner.",
-        "buy_as": "Mid/offline mage with Obsidian/Deso."
+        "buy_as": "Mid/offline mage with Obsidian/Deso.",
+        "featured": false,
+        "patch": ""
       },
       "soul reaver": {
         "name": "Soul Reaver",
@@ -1707,7 +2391,9 @@
         "how": "Tank shred for mages. Still goes through prots \u2014 buy pen too.",
         "when": "Fat tanks, Thebes stacks, Yogi\u2019s bricks.",
         "when_not": "All glass enemies and you need pure burst/CDR sooner.",
-        "buy_as": "Mid/offline mage with Obsidian/Deso."
+        "buy_as": "Mid/offline mage with Obsidian/Deso.",
+        "featured": false,
+        "patch": ""
       },
       "Ethereal Staff": {
         "name": "Ethereal Staff",
@@ -1723,7 +2409,9 @@
         "how": "You get thicker, they get thinner across the fight. Needs multiple ability hits.",
         "when": "Long fights vs HP stackers.",
         "when_not": "You cast once and die; no multi-hit kit.",
-        "buy_as": "With Reaver/pen on shred mages."
+        "buy_as": "With Reaver/pen on shred mages.",
+        "featured": false,
+        "patch": ""
       },
       "ethereal staff": {
         "name": "Ethereal Staff",
@@ -1739,7 +2427,9 @@
         "how": "You get thicker, they get thinner across the fight. Needs multiple ability hits.",
         "when": "Long fights vs HP stackers.",
         "when_not": "You cast once and die; no multi-hit kit.",
-        "buy_as": "With Reaver/pen on shred mages."
+        "buy_as": "With Reaver/pen on shred mages.",
+        "featured": false,
+        "patch": ""
       },
       "Stone of Binding": {
         "name": "Stone of Binding",
@@ -1756,7 +2446,9 @@
         "how": "Only works if you land hard CC (stun/root/knockup/etc.).",
         "when": "You have reliable hard CC (Ymir, Atlas, Hades, etc.).",
         "when_not": "Soft CC only / no CC in kit.",
-        "buy_as": "CC gods \u2014 synergy item, not random bulk."
+        "buy_as": "CC gods \u2014 synergy item, not random bulk.",
+        "featured": false,
+        "patch": ""
       },
       "stone of binding": {
         "name": "Stone of Binding",
@@ -1773,7 +2465,9 @@
         "how": "Only works if you land hard CC (stun/root/knockup/etc.).",
         "when": "You have reliable hard CC (Ymir, Atlas, Hades, etc.).",
         "when_not": "Soft CC only / no CC in kit.",
-        "buy_as": "CC gods \u2014 synergy item, not random bulk."
+        "buy_as": "CC gods \u2014 synergy item, not random bulk.",
+        "featured": false,
+        "patch": ""
       },
       "Void Stone": {
         "name": "Void Stone",
@@ -1790,7 +2484,9 @@
         "how": "Aura shred for magical damage dealers on your team (or you).",
         "when": "You\u2019re frontline with mage allies, or magical bruiser.",
         "when_not": "All physical team and you\u2019re not magical.",
-        "buy_as": "Frontline aura slot."
+        "buy_as": "Frontline aura slot.",
+        "featured": false,
+        "patch": ""
       },
       "void stone": {
         "name": "Void Stone",
@@ -1807,7 +2503,9 @@
         "how": "Aura shred for magical damage dealers on your team (or you).",
         "when": "You\u2019re frontline with mage allies, or magical bruiser.",
         "when_not": "All physical team and you\u2019re not magical.",
-        "buy_as": "Frontline aura slot."
+        "buy_as": "Frontline aura slot.",
+        "featured": false,
+        "patch": ""
       },
       "Void Shield": {
         "name": "Void Shield",
@@ -1824,7 +2522,9 @@
         "how": "Aura shred for physical carries/junglers.",
         "when": "You\u2019re peeling in front of a physical ADC/jungle.",
         "when_not": "Full magical team.",
-        "buy_as": "Frontline aura slot."
+        "buy_as": "Frontline aura slot.",
+        "featured": false,
+        "patch": ""
       },
       "void shield": {
         "name": "Void Shield",
@@ -1841,7 +2541,9 @@
         "how": "Aura shred for physical carries/junglers.",
         "when": "You\u2019re peeling in front of a physical ADC/jungle.",
         "when_not": "Full magical team.",
-        "buy_as": "Frontline aura slot."
+        "buy_as": "Frontline aura slot.",
+        "featured": false,
+        "patch": ""
       },
       "Obsidian Shard": {
         "name": "Obsidian Shard",
@@ -1855,7 +2557,9 @@
         "how": "Makes mage damage actually land on tanks. First cast of the cycle is juicier.",
         "when": "Any mid that needs to kill tanks / bulk.",
         "when_not": "Never finishing pen into triple tank (you\u2019ll bounce).",
-        "buy_as": "Mid core, often 4th\u20136th."
+        "buy_as": "Mid core, often 4th\u20136th.",
+        "featured": false,
+        "patch": ""
       },
       "obsidian shard": {
         "name": "Obsidian Shard",
@@ -1869,7 +2573,9 @@
         "how": "Makes mage damage actually land on tanks. First cast of the cycle is juicier.",
         "when": "Any mid that needs to kill tanks / bulk.",
         "when_not": "Never finishing pen into triple tank (you\u2019ll bounce).",
-        "buy_as": "Mid core, often 4th\u20136th."
+        "buy_as": "Mid core, often 4th\u20136th.",
+        "featured": false,
+        "patch": ""
       },
       "Titan's Bane": {
         "name": "Titan's Bane",
@@ -1885,7 +2591,9 @@
         "how": "Same idea as Obsidian for physical. Don\u2019t skip into bulk.",
         "when": "Physical damage roles mid/late.",
         "when_not": "You only AA and never cast (still usually good).",
-        "buy_as": "Carry/Jungle pen slot."
+        "buy_as": "Carry/Jungle pen slot.",
+        "featured": false,
+        "patch": ""
       },
       "titan's bane": {
         "name": "Titan's Bane",
@@ -1901,7 +2609,9 @@
         "how": "Same idea as Obsidian for physical. Don\u2019t skip into bulk.",
         "when": "Physical damage roles mid/late.",
         "when_not": "You only AA and never cast (still usually good).",
-        "buy_as": "Carry/Jungle pen slot."
+        "buy_as": "Carry/Jungle pen slot.",
+        "featured": false,
+        "patch": ""
       },
       "Heartwood Charm": {
         "name": "Heartwood Charm",
@@ -1914,11 +2624,13 @@
           "Support",
           "Mid"
         ],
-        "simple": "Healing abilities cool down faster; heals you cast store a bank; active dumps that heal to nearby allies.",
-        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb.",
+        "simple": "+20% heal/shield strength, faster heal cooldowns; heals you cast store a bank; active dumps that heal to nearby allies.",
+        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb. Stacks with other heal-amp items.",
         "when": "Healer supports (Yemoja, Aphro, etc.).",
-        "when_not": "No heal abilities.",
-        "buy_as": "Healer identity item 2nd\u20134th."
+        "when_not": "No heal abilities; you already have 3 actives.",
+        "buy_as": "Healer identity item 2nd\u20134th. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
       },
       "heartwood charm": {
         "name": "Heartwood Charm",
@@ -1931,11 +2643,13 @@
           "Support",
           "Mid"
         ],
-        "simple": "Healing abilities cool down faster; heals you cast store a bank; active dumps that heal to nearby allies.",
-        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb.",
+        "simple": "+20% heal/shield strength, faster heal cooldowns; heals you cast store a bank; active dumps that heal to nearby allies.",
+        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb. Stacks with other heal-amp items.",
         "when": "Healer supports (Yemoja, Aphro, etc.).",
-        "when_not": "No heal abilities.",
-        "buy_as": "Healer identity item 2nd\u20134th."
+        "when_not": "No heal abilities; you already have 3 actives.",
+        "buy_as": "Healer identity item 2nd\u20134th. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
       },
       "Daybreak Gavel": {
         "name": "Daybreak Gavel",
@@ -1943,14 +2657,18 @@
           "concept"
         ],
         "roles": [
+          "Carry",
+          "Solo",
           "Support",
           "Mid"
         ],
-        "simple": "Healing different gods builds stacks; your next non-heal ability spends stacks for a big STR/INT buff.",
-        "how": "Heal unique allies \u2192 cast damage/utility spell to cash power.",
-        "when": "Team healers who also cast non-heal abilities.",
-        "when_not": "You only damage and never heal.",
-        "buy_as": "Baron/Aphro/Yemoja-style paths."
+        "simple": "Heal yourself with a healing ability to build stacks; your next non-heal ability spends them for a big STR or INT buff.",
+        "how": "Self-heal \u2192 stacks \u2192 cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
+        "when": "Self-heal kits (Wild Artemis traps, some bruisers) that also cast non-heals.",
+        "when_not": "No self-heal; pure ally-heal support with no dump spell.",
+        "buy_as": "Pair with Vital Amplifier on self-heal AA paths. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
       },
       "daybreak gavel": {
         "name": "Daybreak Gavel",
@@ -1958,14 +2676,18 @@
           "concept"
         ],
         "roles": [
+          "Carry",
+          "Solo",
           "Support",
           "Mid"
         ],
-        "simple": "Healing different gods builds stacks; your next non-heal ability spends stacks for a big STR/INT buff.",
-        "how": "Heal unique allies \u2192 cast damage/utility spell to cash power.",
-        "when": "Team healers who also cast non-heal abilities.",
-        "when_not": "You only damage and never heal.",
-        "buy_as": "Baron/Aphro/Yemoja-style paths."
+        "simple": "Heal yourself with a healing ability to build stacks; your next non-heal ability spends them for a big STR or INT buff.",
+        "how": "Self-heal \u2192 stacks \u2192 cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
+        "when": "Self-heal kits (Wild Artemis traps, some bruisers) that also cast non-heals.",
+        "when_not": "No self-heal; pure ally-heal support with no dump spell.",
+        "buy_as": "Pair with Vital Amplifier on self-heal AA paths. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
       },
       "Eros' Bow": {
         "name": "Eros' Bow",
@@ -1975,14 +2697,15 @@
           "aura"
         ],
         "roles": [
-          "Support",
-          "Carry"
+          "Support"
         ],
-        "simple": "Mark an ally; your basic attacks heal that ally for a % of your max HP.",
-        "how": "You\u2019re an AA battery for the carry. Mark them and auto anything.",
-        "when": "You basic-attack a lot and peel with the ADC.",
-        "when_not": "Ability-only support who never autos.",
-        "buy_as": "Hybrid support / weird duo."
+        "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
+        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit.",
+        "when": "Enchanter supports who can AA safely next to the carry.",
+        "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
+        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
       },
       "eros' bow": {
         "name": "Eros' Bow",
@@ -1992,14 +2715,15 @@
           "aura"
         ],
         "roles": [
-          "Support",
-          "Carry"
+          "Support"
         ],
-        "simple": "Mark an ally; your basic attacks heal that ally for a % of your max HP.",
-        "how": "You\u2019re an AA battery for the carry. Mark them and auto anything.",
-        "when": "You basic-attack a lot and peel with the ADC.",
-        "when_not": "Ability-only support who never autos.",
-        "buy_as": "Hybrid support / weird duo."
+        "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
+        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit.",
+        "when": "Enchanter supports who can AA safely next to the carry.",
+        "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
+        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43.",
+        "featured": true,
+        "patch": "OB43"
       },
       "Gluttonous Grimoire": {
         "name": "Gluttonous Grimoire",
@@ -2015,7 +2739,9 @@
         "how": "Cast/LS \u2192 bank \u2192 AA to dump a chunk. Stores more at full HP.",
         "when": "INT + lifesteal mages (Hades, Anubis-style).",
         "when_not": "No LS; you never basic attack.",
-        "buy_as": "With Bancroft/Blood-Bound + pen."
+        "buy_as": "With Bancroft/Blood-Bound + pen.",
+        "featured": false,
+        "patch": ""
       },
       "gluttonous grimoire": {
         "name": "Gluttonous Grimoire",
@@ -2031,7 +2757,9 @@
         "how": "Cast/LS \u2192 bank \u2192 AA to dump a chunk. Stores more at full HP.",
         "when": "INT + lifesteal mages (Hades, Anubis-style).",
         "when_not": "No LS; you never basic attack.",
-        "buy_as": "With Bancroft/Blood-Bound + pen."
+        "buy_as": "With Bancroft/Blood-Bound + pen.",
+        "featured": false,
+        "patch": ""
       },
       "Sanguine Lash": {
         "name": "Sanguine Lash",
@@ -2047,7 +2775,9 @@
         "how": "Melee sit-on-them item. Build LS and stay in range.",
         "when": "Melee LS assassins/bruisers.",
         "when_not": "Ranged poke; no LS.",
-        "buy_as": "Fenrir/Kali-style after LS core."
+        "buy_as": "Fenrir/Kali-style after LS core.",
+        "featured": false,
+        "patch": ""
       },
       "sanguine lash": {
         "name": "Sanguine Lash",
@@ -2063,7 +2793,9 @@
         "how": "Melee sit-on-them item. Build LS and stay in range.",
         "when": "Melee LS assassins/bruisers.",
         "when_not": "Ranged poke; no LS.",
-        "buy_as": "Fenrir/Kali-style after LS core."
+        "buy_as": "Fenrir/Kali-style after LS core.",
+        "featured": false,
+        "patch": ""
       },
       "Doublet of Binding": {
         "name": "Doublet of Binding",
@@ -2078,7 +2810,9 @@
         "how": "Bodyguard button. Stack damp/prots so the redirected damage is soft.",
         "when": "You peel one carry hard (Athena/Geb/Ymir).",
         "when_not": "You\u2019re the one dying first with no bulk.",
-        "buy_as": "Support peel path."
+        "buy_as": "Support peel path.",
+        "featured": false,
+        "patch": ""
       },
       "doublet of binding": {
         "name": "Doublet of Binding",
@@ -2093,7 +2827,9 @@
         "how": "Bodyguard button. Stack damp/prots so the redirected damage is soft.",
         "when": "You peel one carry hard (Athena/Geb/Ymir).",
         "when_not": "You\u2019re the one dying first with no bulk.",
-        "buy_as": "Support peel path."
+        "buy_as": "Support peel path.",
+        "featured": false,
+        "patch": ""
       },
       "Eye of Erebus": {
         "name": "Eye of Erebus",
@@ -2110,7 +2846,9 @@
         "how": "Trap/zone tool + adaptive power. Place on chokes or objectives.",
         "when": "Roam/setup tanks and bruisers.",
         "when_not": "You never use actives or set vision traps.",
-        "buy_as": "Fun roam identity item."
+        "buy_as": "Fun roam identity item.",
+        "featured": false,
+        "patch": ""
       },
       "eye of erebus": {
         "name": "Eye of Erebus",
@@ -2127,7 +2865,9 @@
         "how": "Trap/zone tool + adaptive power. Place on chokes or objectives.",
         "when": "Roam/setup tanks and bruisers.",
         "when_not": "You never use actives or set vision traps.",
-        "buy_as": "Fun roam identity item."
+        "buy_as": "Fun roam identity item.",
+        "featured": false,
+        "patch": ""
       },
       "Eye of Providence": {
         "name": "Eye of Providence",
@@ -2142,7 +2882,9 @@
         "how": "Vision item. Keeps wards in your inventory loop.",
         "when": "Enemy wards everything / you want free sentry uptime.",
         "when_not": "You already have perfect vision and need combat stats more.",
-        "buy_as": "Support flex for vision games."
+        "buy_as": "Support flex for vision games.",
+        "featured": false,
+        "patch": ""
       },
       "eye of providence": {
         "name": "Eye of Providence",
@@ -2157,7 +2899,9 @@
         "how": "Vision item. Keeps wards in your inventory loop.",
         "when": "Enemy wards everything / you want free sentry uptime.",
         "when_not": "You already have perfect vision and need combat stats more.",
-        "buy_as": "Support flex for vision games."
+        "buy_as": "Support flex for vision games.",
+        "featured": false,
+        "patch": ""
       },
       "Alchemist Coat": {
         "name": "Alchemist Coat",
@@ -2174,7 +2918,9 @@
         "how": "Potion engine + tankiness when you chug.",
         "when": "You buy pots and want free value.",
         "when_not": "Never use consumables.",
-        "buy_as": "Niche sustain tank."
+        "buy_as": "Niche sustain tank.",
+        "featured": false,
+        "patch": ""
       },
       "alchemist coat": {
         "name": "Alchemist Coat",
@@ -2191,7 +2937,9 @@
         "how": "Potion engine + tankiness when you chug.",
         "when": "You buy pots and want free value.",
         "when_not": "Never use consumables.",
-        "buy_as": "Niche sustain tank."
+        "buy_as": "Niche sustain tank.",
+        "featured": false,
+        "patch": ""
       },
       "Prophetic Cloak": {
         "name": "Prophetic Cloak",
@@ -2206,7 +2954,9 @@
         "how": "Adaptive tank: fight people \u2192 stack the right prots \u2192 evolve.",
         "when": "Frontliners in long games who hit a lot of gods.",
         "when_not": "You need an immediate answer (Spectral/Genji\u2019s) this fight.",
-        "buy_as": "Early tank scaler; evolve is the payoff."
+        "buy_as": "Early tank scaler; evolve is the payoff.",
+        "featured": false,
+        "patch": ""
       },
       "prophetic cloak": {
         "name": "Prophetic Cloak",
@@ -2221,7 +2971,9 @@
         "how": "Adaptive tank: fight people \u2192 stack the right prots \u2192 evolve.",
         "when": "Frontliners in long games who hit a lot of gods.",
         "when_not": "You need an immediate answer (Spectral/Genji\u2019s) this fight.",
-        "buy_as": "Early tank scaler; evolve is the payoff."
+        "buy_as": "Early tank scaler; evolve is the payoff.",
+        "featured": false,
+        "patch": ""
       },
       "Omen Drum": {
         "name": "Omen Drum",
@@ -2238,7 +2990,9 @@
         "how": "Multi-hit ability combos shine. Press before full rotation.",
         "when": "Ability spam kits in teamfights.",
         "when_not": "One-spell pokes; you forget actives.",
-        "buy_as": "Identity active on multi-cast gods."
+        "buy_as": "Identity active on multi-cast gods.",
+        "featured": false,
+        "patch": ""
       },
       "omen drum": {
         "name": "Omen Drum",
@@ -2255,7 +3009,9 @@
         "how": "Multi-hit ability combos shine. Press before full rotation.",
         "when": "Ability spam kits in teamfights.",
         "when_not": "One-spell pokes; you forget actives.",
-        "buy_as": "Identity active on multi-cast gods."
+        "buy_as": "Identity active on multi-cast gods.",
+        "featured": false,
+        "patch": ""
       },
       "Staff of Myrddin": {
         "name": "Staff of Myrddin",
@@ -2270,7 +3026,9 @@
         "how": "Double-cast button. Huge on burst mages with a key spell.",
         "when": "Your combo is one ability twice (or reset a big CD).",
         "when_not": "Low impact abilities; you need pen/heal cut first.",
-        "buy_as": "Late mid luxury active."
+        "buy_as": "Late mid luxury active.",
+        "featured": false,
+        "patch": ""
       },
       "staff of myrddin": {
         "name": "Staff of Myrddin",
@@ -2285,7 +3043,9 @@
         "how": "Double-cast button. Huge on burst mages with a key spell.",
         "when": "Your combo is one ability twice (or reset a big CD).",
         "when_not": "Low impact abilities; you need pen/heal cut first.",
-        "buy_as": "Late mid luxury active."
+        "buy_as": "Late mid luxury active.",
+        "featured": false,
+        "patch": ""
       },
       "Circe's Hexstone": {
         "name": "Circe's Hexstone",
@@ -2302,7 +3062,9 @@
         "how": "Engage/peel dash toy. Build so you can afford the active slot.",
         "when": "You want a displacement engage on a tank.",
         "when_not": "Active slots already full of better tools.",
-        "buy_as": "Fun tank active."
+        "buy_as": "Fun tank active.",
+        "featured": false,
+        "patch": ""
       },
       "circe's hexstone": {
         "name": "Circe's Hexstone",
@@ -2319,7 +3081,9 @@
         "how": "Engage/peel dash toy. Build so you can afford the active slot.",
         "when": "You want a displacement engage on a tank.",
         "when_not": "Active slots already full of better tools.",
-        "buy_as": "Fun tank active."
+        "buy_as": "Fun tank active.",
+        "featured": false,
+        "patch": ""
       },
       "Bloodforge": {
         "name": "Bloodforge",
@@ -2336,7 +3100,9 @@
         "how": "All-in vamp. Press shield when you dive.",
         "when": "Physical divers who auto/spell vamp.",
         "when_not": "Pure tank with no damage; mage INT path.",
-        "buy_as": "Jungle/Carry all-in slot."
+        "buy_as": "Jungle/Carry all-in slot.",
+        "featured": false,
+        "patch": ""
       },
       "bloodforge": {
         "name": "Bloodforge",
@@ -2353,7 +3119,9 @@
         "how": "All-in vamp. Press shield when you dive.",
         "when": "Physical divers who auto/spell vamp.",
         "when_not": "Pure tank with no damage; mage INT path.",
-        "buy_as": "Jungle/Carry all-in slot."
+        "buy_as": "Jungle/Carry all-in slot.",
+        "featured": false,
+        "patch": ""
       },
       "Bancroft's Talon": {
         "name": "Bancroft's Talon",
@@ -2368,7 +3136,9 @@
         "how": "Comeback / low-HP fighter mage. Risky: rewards being hurt.",
         "when": "Aggressive LS mages who fight in the red.",
         "when_not": "You play full HP safe poke only (still usable, less ideal).",
-        "buy_as": "With Grimoire / LS mage paths."
+        "buy_as": "With Grimoire / LS mage paths.",
+        "featured": false,
+        "patch": ""
       },
       "bancroft's talon": {
         "name": "Bancroft's Talon",
@@ -2383,7 +3153,9 @@
         "how": "Comeback / low-HP fighter mage. Risky: rewards being hurt.",
         "when": "Aggressive LS mages who fight in the red.",
         "when_not": "You play full HP safe poke only (still usable, less ideal).",
-        "buy_as": "With Grimoire / LS mage paths."
+        "buy_as": "With Grimoire / LS mage paths.",
+        "featured": false,
+        "patch": ""
       },
       "Amanita Charm": {
         "name": "Amanita Charm",
@@ -2400,7 +3172,9 @@
         "how": "Place for team heal + DR in a pit or under tower.",
         "when": "Teamfight support who holds ground.",
         "when_not": "You never group or use actives.",
-        "buy_as": "Support active heal toy."
+        "buy_as": "Support active heal toy.",
+        "featured": false,
+        "patch": ""
       },
       "amanita charm": {
         "name": "Amanita Charm",
@@ -2417,7 +3191,9 @@
         "how": "Place for team heal + DR in a pit or under tower.",
         "when": "Teamfight support who holds ground.",
         "when_not": "You never group or use actives.",
-        "buy_as": "Support active heal toy."
+        "buy_as": "Support active heal toy.",
+        "featured": false,
+        "patch": ""
       },
       "Stampede": {
         "name": "Stampede",
@@ -2432,7 +3208,9 @@
         "how": "Engage or disengage button for the whole team.",
         "when": "You need team move for fights/rotates (classic support).",
         "when_not": "Rarely \u2014 it\u2019s a standard support tool when speed wins fights.",
-        "buy_as": "Support 3rd\u20135th often."
+        "buy_as": "Support 3rd\u20135th often.",
+        "featured": false,
+        "patch": ""
       },
       "stampede": {
         "name": "Stampede",
@@ -2447,7 +3225,9 @@
         "how": "Engage or disengage button for the whole team.",
         "when": "You need team move for fights/rotates (classic support).",
         "when_not": "Rarely \u2014 it\u2019s a standard support tool when speed wins fights.",
-        "buy_as": "Support 3rd\u20135th often."
+        "buy_as": "Support 3rd\u20135th often.",
+        "featured": false,
+        "patch": ""
       },
       "Gauntlet of Thebes": {
         "name": "Gauntlet of Thebes",
@@ -2461,7 +3241,9 @@
         "how": "Support farm item. Stack on minions/gods \u2192 evolve power.",
         "when": "Almost every Support game as core.",
         "when_not": "You\u2019re not actually supporting (full damage mid).",
-        "buy_as": "Support item 1\u20132."
+        "buy_as": "Support item 1\u20132.",
+        "featured": false,
+        "patch": ""
       },
       "gauntlet of thebes": {
         "name": "Gauntlet of Thebes",
@@ -2475,7 +3257,9 @@
         "how": "Support farm item. Stack on minions/gods \u2192 evolve power.",
         "when": "Almost every Support game as core.",
         "when_not": "You\u2019re not actually supporting (full damage mid).",
-        "buy_as": "Support item 1\u20132."
+        "buy_as": "Support item 1\u20132.",
+        "featured": false,
+        "patch": ""
       },
       "Shifter's Shield": {
         "name": "Shifter's Shield",
@@ -2491,7 +3275,9 @@
         "how": "Hybrid tank/damage. Healthy = offline damage; hurt = tank mode.",
         "when": "Solo/Support default bulk almost always.",
         "when_not": "Full glass ADC/mid who never wants prots.",
-        "buy_as": "Universal frontline core."
+        "buy_as": "Universal frontline core.",
+        "featured": false,
+        "patch": ""
       },
       "shifter's shield": {
         "name": "Shifter's Shield",
@@ -2507,7 +3293,9 @@
         "how": "Hybrid tank/damage. Healthy = offline damage; hurt = tank mode.",
         "when": "Solo/Support default bulk almost always.",
         "when_not": "Full glass ADC/mid who never wants prots.",
-        "buy_as": "Universal frontline core."
+        "buy_as": "Universal frontline core.",
+        "featured": false,
+        "patch": ""
       }
     },
     "tags": [
@@ -2536,32 +3324,32 @@
       "path_count": 24,
       "staples": [
         {
-          "name": "Tyrfing",
-          "paths": 19,
-          "pct": 79.2
-        },
-        {
           "name": "Odysseus' Bow",
           "paths": 18,
           "pct": 75.0
         },
         {
-          "name": "Eye of the Storm",
-          "paths": 13,
-          "pct": 54.2
+          "name": "Tyrfing",
+          "paths": 18,
+          "pct": 75.0
         },
         {
           "name": "Deathbringer",
-          "paths": 13,
-          "pct": 54.2
+          "paths": 12,
+          "pct": 50.0
         },
         {
-          "name": "The Executioner",
+          "name": "Eye of the Storm",
           "paths": 11,
           "pct": 45.8
         },
         {
           "name": "Demon Blade",
+          "paths": 9,
+          "pct": 37.5
+        },
+        {
+          "name": "The Executioner",
           "paths": 9,
           "pct": 37.5
         },
@@ -2572,8 +3360,8 @@
         },
         {
           "name": "Qin's Blade",
-          "paths": 5,
-          "pct": 20.8
+          "paths": 7,
+          "pct": 29.2
         },
         {
           "name": "Devourer's Gauntlet",
@@ -2582,11 +3370,6 @@
         },
         {
           "name": "Book of Thoth",
-          "paths": 5,
-          "pct": 20.8
-        },
-        {
-          "name": "The Cosmic Horror",
           "paths": 5,
           "pct": 20.8
         },
@@ -2601,12 +3384,17 @@
           "pct": 20.8
         },
         {
+          "name": "The Cosmic Horror",
+          "paths": 5,
+          "pct": 20.8
+        },
+        {
           "name": "Riptalon",
           "paths": 4,
           "pct": 16.7
         },
         {
-          "name": "Totem of Death",
+          "name": "Sands Of Time",
           "paths": 4,
           "pct": 16.7
         }
@@ -2627,16 +3415,16 @@
         },
         {
           "name": "Book of Thoth",
-          "paths": 22,
-          "pct": 88.0
-        },
-        {
-          "name": "Totem of Death",
-          "paths": 11,
-          "pct": 44.0
+          "paths": 20,
+          "pct": 80.0
         },
         {
           "name": "Divine Ruin",
+          "paths": 15,
+          "pct": 60.0
+        },
+        {
+          "name": "Totem of Death",
           "paths": 11,
           "pct": 44.0
         },
@@ -2646,22 +3434,27 @@
           "pct": 28.0
         },
         {
+          "name": "Chronos' Pendant",
+          "paths": 6,
+          "pct": 24.0
+        },
+        {
+          "name": "Gem of Isolation",
+          "paths": 6,
+          "pct": 24.0
+        },
+        {
           "name": "Soul Reaver",
           "paths": 5,
           "pct": 20.0
         },
         {
+          "name": "Doom Orb",
+          "paths": 4,
+          "pct": 16.0
+        },
+        {
           "name": "Rod of Tahuti",
-          "paths": 5,
-          "pct": 20.0
-        },
-        {
-          "name": "Gem of Isolation",
-          "paths": 5,
-          "pct": 20.0
-        },
-        {
-          "name": "Chronos' Pendant",
           "paths": 4,
           "pct": 16.0
         },
@@ -2671,30 +3464,30 @@
           "pct": 12.0
         },
         {
-          "name": "Stygian Anchor",
-          "paths": 3,
-          "pct": 12.0
-        },
-        {
-          "name": "Doom Orb",
+          "name": "Gluttonous Grimoire",
           "paths": 3,
           "pct": 12.0
         },
         {
           "name": "Gem of Focus",
-          "paths": 3,
-          "pct": 12.0
+          "paths": 2,
+          "pct": 8.0
         },
         {
-          "name": "Gluttonous Grimoire",
-          "paths": 3,
-          "pct": 12.0
+          "name": "Stygian Anchor",
+          "paths": 2,
+          "pct": 8.0
         }
       ]
     },
     "Jungle": {
       "path_count": 23,
       "staples": [
+        {
+          "name": "The Crusher",
+          "paths": 22,
+          "pct": 95.7
+        },
         {
           "name": "Jotunn's Revenge",
           "paths": 22,
@@ -2706,14 +3499,9 @@
           "pct": 95.7
         },
         {
-          "name": "The Crusher",
-          "paths": 22,
-          "pct": 95.7
-        },
-        {
           "name": "Heartseeker",
-          "paths": 14,
-          "pct": 60.9
+          "paths": 15,
+          "pct": 65.2
         },
         {
           "name": "Avatar's Parashu",
@@ -2722,8 +3510,8 @@
         },
         {
           "name": "Pendulum Blade",
-          "paths": 10,
-          "pct": 43.5
+          "paths": 11,
+          "pct": 47.8
         },
         {
           "name": "The Reaper",
@@ -2731,22 +3519,17 @@
           "pct": 30.4
         },
         {
-          "name": "Arondight",
+          "name": "Toxic Blade",
           "paths": 6,
           "pct": 26.1
         },
         {
-          "name": "Damaru",
+          "name": "Arondight",
           "paths": 5,
           "pct": 21.7
         },
         {
-          "name": "Toxic Blade",
-          "paths": 4,
-          "pct": 17.4
-        },
-        {
-          "name": "Bloodforge",
+          "name": "Damaru",
           "paths": 4,
           "pct": 17.4
         },
@@ -2756,17 +3539,22 @@
           "pct": 13.0
         },
         {
+          "name": "Deathbringer",
+          "paths": 1,
+          "pct": 4.3
+        },
+        {
           "name": "Spear Of The Magus",
           "paths": 1,
           "pct": 4.3
         },
         {
-          "name": "Book of Thoth",
+          "name": "Spear of Desolation",
           "paths": 1,
           "pct": 4.3
         },
         {
-          "name": "Spear of Desolation",
+          "name": "Book of Thoth",
           "paths": 1,
           "pct": 4.3
         }
@@ -2781,57 +3569,57 @@
           "pct": 100.0
         },
         {
+          "name": "Genji's Guard",
+          "paths": 15,
+          "pct": 75.0
+        },
+        {
           "name": "Eye of the Storm",
           "paths": 14,
           "pct": 70.0
         },
         {
-          "name": "Genji's Guard",
-          "paths": 13,
-          "pct": 65.0
+          "name": "Mystical Mail",
+          "paths": 9,
+          "pct": 45.0
         },
         {
-          "name": "Mystical Mail",
-          "paths": 11,
-          "pct": 55.0
+          "name": "Kinetic Cuirass",
+          "paths": 7,
+          "pct": 35.0
         },
         {
           "name": "Breastplate of Valor",
-          "paths": 5,
-          "pct": 25.0
+          "paths": 6,
+          "pct": 30.0
         },
         {
-          "name": "Chandra's Grace",
-          "paths": 5,
-          "pct": 25.0
-        },
-        {
-          "name": "Freya's Tears",
+          "name": "Doublet of Binding",
           "paths": 5,
           "pct": 25.0
         },
         {
           "name": "Stone of Binding",
+          "paths": 5,
+          "pct": 25.0
+        },
+        {
+          "name": "Chandra's Grace",
           "paths": 4,
           "pct": 20.0
         },
         {
-          "name": "Doublet of Binding",
+          "name": "Prophetic Cloak",
           "paths": 4,
           "pct": 20.0
-        },
-        {
-          "name": "Kinetic Cuirass",
-          "paths": 4,
-          "pct": 20.0
-        },
-        {
-          "name": "Stygian Anchor",
-          "paths": 3,
-          "pct": 15.0
         },
         {
           "name": "Brawler\u2019s Beat Stick",
+          "paths": 4,
+          "pct": 20.0
+        },
+        {
+          "name": "Hussar's Wings",
           "paths": 3,
           "pct": 15.0
         },
@@ -2841,12 +3629,12 @@
           "pct": 15.0
         },
         {
-          "name": "Gem of Isolation",
+          "name": "Leviathan's Hide",
           "paths": 3,
           "pct": 15.0
         },
         {
-          "name": "Prophetic Cloak",
+          "name": "Stygian Anchor",
           "paths": 2,
           "pct": 10.0
         }
@@ -2857,13 +3645,13 @@
       "staples": [
         {
           "name": "Gauntlet of Thebes",
-          "paths": 20,
-          "pct": 95.2
+          "paths": 19,
+          "pct": 90.5
         },
         {
           "name": "Stone of Binding",
-          "paths": 16,
-          "pct": 76.2
+          "paths": 13,
+          "pct": 61.9
         },
         {
           "name": "Gem of Isolation",
@@ -2871,52 +3659,52 @@
           "pct": 57.1
         },
         {
-          "name": "Freya's Tears",
+          "name": "Spectral Armor",
           "paths": 9,
           "pct": 42.9
         },
         {
-          "name": "Shifter's Shield",
-          "paths": 7,
-          "pct": 33.3
-        },
-        {
-          "name": "Spectral Armor",
-          "paths": 7,
-          "pct": 33.3
-        },
-        {
           "name": "Chandra's Grace",
-          "paths": 6,
-          "pct": 28.6
+          "paths": 8,
+          "pct": 38.1
         },
         {
-          "name": "Hussar's Wings",
-          "paths": 6,
-          "pct": 28.6
-        },
-        {
-          "name": "Alchemist Coat",
+          "name": "Doublet of Binding",
           "paths": 6,
           "pct": 28.6
         },
         {
           "name": "Stygian Anchor",
+          "paths": 6,
+          "pct": 28.6
+        },
+        {
+          "name": "Freya's Tears",
+          "paths": 6,
+          "pct": 28.6
+        },
+        {
+          "name": "Shield of the Phoenix",
+          "paths": 6,
+          "pct": 28.6
+        },
+        {
+          "name": "Shifter's Shield",
           "paths": 5,
           "pct": 23.8
         },
         {
-          "name": "Draconic Scale",
+          "name": "Alchemist Coat",
           "paths": 4,
           "pct": 19.0
         },
         {
-          "name": "Doublet of Binding",
+          "name": "Hussar's Wings",
           "paths": 4,
           "pct": 19.0
         },
         {
-          "name": "Shield of the Phoenix",
+          "name": "Kinetic Cuirass",
           "paths": 4,
           "pct": 19.0
         },
@@ -2926,7 +3714,7 @@
           "pct": 14.3
         },
         {
-          "name": "Damaru",
+          "name": "Breastplate of Valor",
           "paths": 3,
           "pct": 14.3
         }
@@ -2962,9 +3750,9 @@
         },
         "tanks_hp": {
           "label": "vs high HP / tanks",
-          "covered": 16,
+          "covered": 14,
           "total": 24,
-          "pct": 66.7,
+          "pct": 58.3,
           "missing_sample": [
             "Cupid",
             "Ishtar",
@@ -2972,7 +3760,9 @@
             "Izanami",
             "Apollo",
             "Anhur",
+            "Hachiman",
             "Neith",
+            "Kali",
             "Tsukuyomi"
           ]
         }
@@ -3021,7 +3811,21 @@
           ]
         },
         {
+          "god": "Hachiman",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
           "god": "Neith",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Kali",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3045,20 +3849,17 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 13,
+          "covered": 16,
           "total": 25,
-          "pct": 52.0,
+          "pct": 64.0,
           "missing_sample": [
             "Poseidon",
-            "Eset",
             "Princess Bari",
             "Discordia",
             "Hecate",
             "Janus",
-            "Neith",
             "Aphrodite",
             "Zeus",
-            "Ah Puch",
             "Anubis",
             "Chronos"
           ]
@@ -3080,20 +3881,13 @@
             "Scylla",
             "Hecate",
             "Janus",
-            "Merlin"
+            "Morgan Le Fay"
           ]
         }
       },
       "multi_gap_sample": [
         {
           "god": "Poseidon",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Eset",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3128,13 +3922,6 @@
           ]
         },
         {
-          "god": "Neith",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
           "god": "Aphrodite",
           "missing": [
             "heal",
@@ -3143,20 +3930,6 @@
         },
         {
           "god": "Zeus",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Ah Puch",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Anubis",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3180,14 +3953,12 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 5,
+          "covered": 7,
           "total": 23,
-          "pct": 21.7,
+          "pct": 30.4,
           "missing_sample": [
             "Tsukuyomi",
-            "Ne Zha",
             "Awilix",
-            "Fenrir",
             "Thanatos",
             "Odin",
             "Mordred",
@@ -3195,7 +3966,9 @@
             "Achilles",
             "Loki",
             "Gilgamesh",
-            "Ravana"
+            "Ravana",
+            "Hun Batz",
+            "Nemesis"
           ]
         },
         "tanks_hp": {
@@ -3228,21 +4001,7 @@
           ]
         },
         {
-          "god": "Ne Zha",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
           "god": "Awilix",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Fenrir",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3324,6 +4083,20 @@
             "heal",
             "tanks_hp"
           ]
+        },
+        {
+          "god": "Thor",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Kali",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
         }
       ],
       "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat \u2014 use flex chips."
@@ -3348,26 +4121,6 @@
             "Osiris",
             "Achilles",
             "Jormungandr",
-            "Gilgamesh",
-            "Hua Mulan",
-            "Amaterasu",
-            "Hercules",
-            "Bellona",
-            "Guan Yu"
-          ]
-        },
-        "physical": {
-          "label": "vs physical damage",
-          "covered": 6,
-          "total": 20,
-          "pct": 30.0,
-          "missing_sample": [
-            "Chaac",
-            "Sun Wukong",
-            "Mordred",
-            "Osiris",
-            "Hades",
-            "Achilles",
             "Hua Mulan",
             "Amaterasu",
             "Hercules",
@@ -3376,18 +4129,37 @@
             "Artio"
           ]
         },
-        "magic": {
-          "label": "vs magic damage",
-          "covered": 14,
+        "physical": {
+          "label": "vs physical damage",
+          "covered": 6,
           "total": 20,
-          "pct": 70.0,
+          "pct": 30.0,
           "missing_sample": [
             "Horus",
+            "Chaac",
+            "Sun Wukong",
+            "Odin",
+            "Mordred",
+            "Gilgamesh",
+            "Hua Mulan",
+            "Amaterasu",
+            "Hercules",
+            "Guan Yu",
+            "Artio",
+            "Thor"
+          ]
+        },
+        "magic": {
+          "label": "vs magic damage",
+          "covered": 15,
+          "total": 20,
+          "pct": 75.0,
+          "missing_sample": [
             "Cu Chulainn",
             "Osiris",
+            "Achilles",
             "Jormungandr",
-            "Artio",
-            "Cerberus"
+            "Bellona"
           ]
         },
         "cc_dive": {
@@ -3416,7 +4188,7 @@
           "god": "Horus",
           "missing": [
             "heal",
-            "magic",
+            "physical",
             "cc_dive"
           ]
         },
@@ -3445,6 +4217,7 @@
           "god": "Odin",
           "missing": [
             "heal",
+            "physical",
             "cc_dive"
           ]
         },
@@ -3460,15 +4233,7 @@
           "god": "Osiris",
           "missing": [
             "heal",
-            "physical",
             "magic",
-            "cc_dive"
-          ]
-        },
-        {
-          "god": "Hades",
-          "missing": [
-            "physical",
             "cc_dive"
           ]
         },
@@ -3476,7 +4241,7 @@
           "god": "Achilles",
           "missing": [
             "heal",
-            "physical",
+            "magic",
             "cc_dive"
           ]
         },
@@ -3491,7 +4256,7 @@
         {
           "god": "Gilgamesh",
           "missing": [
-            "heal",
+            "physical",
             "cc_dive"
           ]
         },
@@ -3523,6 +4288,14 @@
           "god": "Bellona",
           "missing": [
             "heal",
+            "magic",
+            "cc_dive"
+          ]
+        },
+        {
+          "god": "Guan Yu",
+          "missing": [
+            "heal",
             "physical",
             "cc_dive"
           ]
@@ -3540,9 +4313,9 @@
       "answers": {
         "crit": {
           "label": "vs crit",
-          "covered": 7,
+          "covered": 9,
           "total": 21,
-          "pct": 33.3,
+          "pct": 42.9,
           "missing_sample": [
             "Baron Samedi",
             "Horus",
@@ -3551,71 +4324,71 @@
             "Jormungandr",
             "Yemoja",
             "Khepri",
-            "Athena",
-            "Ix Chel",
             "Sobek",
             "Bacchus",
-            "Sylvanus"
+            "Sylvanus",
+            "Artio",
+            "Geb"
           ]
         },
         "attack_speed": {
           "label": "vs attack speed",
-          "covered": 5,
+          "covered": 6,
           "total": 21,
-          "pct": 23.8,
+          "pct": 28.6,
           "missing_sample": [
             "Baron Samedi",
             "Ymir",
             "Ares",
             "Atlas",
             "Charon",
-            "Yemoja",
             "Khepri",
-            "Athena",
             "Ix Chel",
             "Sobek",
             "Aphrodite",
-            "Sylvanus"
+            "Sylvanus",
+            "Artio",
+            "Ganesha"
           ]
         },
         "magic": {
           "label": "vs magic damage",
-          "covered": 2,
+          "covered": 0,
           "total": 21,
-          "pct": 9.5,
+          "pct": 0.0,
           "missing_sample": [
             "Baron Samedi",
             "Horus",
             "Ymir",
             "Ares",
             "Atlas",
+            "Jormungandr",
             "Charon",
             "Yemoja",
             "Khepri",
             "Athena",
             "Ix Chel",
-            "Sobek",
-            "Bacchus"
+            "Sobek"
           ]
         },
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 5,
+          "covered": 6,
           "total": 21,
-          "pct": 23.8,
+          "pct": 28.6,
           "missing_sample": [
             "Baron Samedi",
             "Ymir",
             "Ares",
             "Atlas",
             "Charon",
-            "Yemoja",
             "Khepri",
-            "Athena",
             "Ix Chel",
             "Sobek",
             "Aphrodite",
-            "Sylvanus"
+            "Sylvanus",
+            "Artio",
+            "Ganesha"
           ]
         }
       },
@@ -3663,6 +4436,13 @@
           ]
         },
         {
+          "god": "Jormungandr",
+          "missing": [
+            "crit",
+            "magic"
+          ]
+        },
+        {
           "god": "Charon",
           "missing": [
             "attack_speed",
@@ -3674,9 +4454,7 @@
           "god": "Yemoja",
           "missing": [
             "crit",
-            "attack_speed",
-            "magic",
-            "heal"
+            "magic"
           ]
         },
         {
@@ -3689,18 +4467,8 @@
           ]
         },
         {
-          "god": "Athena",
-          "missing": [
-            "crit",
-            "attack_speed",
-            "magic",
-            "heal"
-          ]
-        },
-        {
           "god": "Ix Chel",
           "missing": [
-            "crit",
             "attack_speed",
             "magic",
             "heal"
@@ -3735,6 +4503,7 @@
           "missing": [
             "crit",
             "attack_speed",
+            "magic",
             "heal"
           ]
         },
@@ -3742,7 +4511,9 @@
           "god": "Artio",
           "missing": [
             "crit",
-            "magic"
+            "attack_speed",
+            "magic",
+            "heal"
           ]
         }
       ],
@@ -3757,9 +4528,9 @@
         "pen",
         "shred"
       ],
-      "complete_paths": 6,
+      "complete_paths": 5,
       "total": 25,
-      "pct_complete": 24.0,
+      "pct_complete": 20.0,
       "leaders": [
         {
           "god": "Agni",
@@ -3798,18 +4569,6 @@
           "complete": true
         },
         {
-          "god": "Morgan Le Fay",
-          "score": 3,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": true,
-            "pen": true,
-            "shred": false
-          },
-          "complete": true
-        },
-        {
           "god": "Nu Wa",
           "score": 3,
           "max": 4,
@@ -3834,6 +4593,42 @@
           "complete": true
         },
         {
+          "god": "Ah Puch",
+          "score": 2,
+          "max": 4,
+          "parts": {
+            "anti_heal": true,
+            "pct_hp": false,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Anubis",
+          "score": 2,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Eset",
+          "score": 2,
+          "max": 4,
+          "parts": {
+            "anti_heal": true,
+            "pct_hp": false,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
           "god": "Ix Chel",
           "score": 2,
           "max": 4,
@@ -3856,57 +4651,9 @@
             "shred": false
           },
           "complete": false
-        },
-        {
-          "god": "Nut",
-          "score": 2,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Scylla",
-          "score": 2,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
         }
       ],
       "weak": [
-        {
-          "god": "Ah Puch",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Anubis",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
         {
           "god": "Aphrodite",
           "score": 1,
@@ -3933,18 +4680,6 @@
         },
         {
           "god": "Discordia",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Eset",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4002,6 +4737,30 @@
             "shred": false
           },
           "complete": false
+        },
+        {
+          "god": "Zeus",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Neith",
+          "score": 0,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
         }
       ]
     },
@@ -4012,17 +4771,41 @@
         "pen",
         "shred"
       ],
-      "complete_paths": 0,
+      "complete_paths": 1,
       "total": 20,
-      "pct_complete": 0.0,
+      "pct_complete": 5.0,
       "leaders": [
         {
-          "god": "Cabrakan",
+          "god": "Cerberus",
+          "score": 3,
+          "max": 4,
+          "parts": {
+            "anti_heal": true,
+            "pct_hp": true,
+            "pen": false,
+            "shred": true
+          },
+          "complete": true
+        },
+        {
+          "god": "Gilgamesh",
           "score": 2,
           "max": 4,
           "parts": {
+            "anti_heal": true,
+            "pct_hp": false,
+            "pen": false,
+            "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Achilles",
+          "score": 1,
+          "max": 4,
+          "parts": {
             "anti_heal": false,
-            "pct_hp": true,
+            "pct_hp": false,
             "pen": false,
             "shred": true
           },
@@ -4033,22 +4816,10 @@
           "score": 1,
           "max": 4,
           "parts": {
-            "anti_heal": true,
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Cerberus",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": false,
-            "shred": false
+            "shred": true
           },
           "complete": false
         },
@@ -4077,18 +4848,6 @@
           "complete": false
         },
         {
-          "god": "Gilgamesh",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
           "god": "Hades",
           "score": 1,
           "max": 4,
@@ -4097,18 +4856,6 @@
             "pct_hp": false,
             "pen": false,
             "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Horus",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
           },
           "complete": false
         },
@@ -4130,6 +4877,18 @@
           "max": 4,
           "parts": {
             "anti_heal": true,
+            "pct_hp": false,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Amaterasu",
+          "score": 0,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
             "shred": false
@@ -4139,26 +4898,26 @@
       ],
       "weak": [
         {
-          "god": "Artio",
+          "god": "Achilles",
           "score": 1,
           "max": 4,
           "parts": {
-            "anti_heal": true,
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
+            "shred": true
           },
           "complete": false
         },
         {
-          "god": "Cerberus",
+          "god": "Artio",
           "score": 1,
           "max": 4,
           "parts": {
-            "anti_heal": true,
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
+            "shred": true
           },
           "complete": false
         },
@@ -4187,18 +4946,6 @@
           "complete": false
         },
         {
-          "god": "Gilgamesh",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
           "god": "Hades",
           "score": 1,
           "max": 4,
@@ -4207,18 +4954,6 @@
             "pct_hp": false,
             "pen": false,
             "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Horus",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
           },
           "complete": false
         },
@@ -4247,7 +4982,31 @@
           "complete": false
         },
         {
-          "god": "Achilles",
+          "god": "Amaterasu",
+          "score": 0,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Bellona",
+          "score": 0,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Cabrakan",
           "score": 0,
           "max": 4,
           "parts": {
@@ -4527,18 +5286,6 @@
       "pct_complete": 0.0,
       "leaders": [
         {
-          "god": "Artio",
-          "score": 2,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
           "god": "Bacchus",
           "score": 2,
           "max": 4,
@@ -4563,6 +5310,42 @@
           "complete": false
         },
         {
+          "god": "Aphrodite",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Artio",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Athena",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": true,
+            "pct_hp": false,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
           "god": "Atlas",
           "score": 1,
           "max": 4,
@@ -4612,30 +5395,6 @@
         },
         {
           "god": "Charon",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
-          "god": "Ganesha",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
-          "god": "Geb",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4649,6 +5408,42 @@
       ],
       "weak": [
         {
+          "god": "Aphrodite",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Artio",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Athena",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": true,
+            "pct_hp": false,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
           "god": "Atlas",
           "score": 1,
           "max": 4,
@@ -4729,42 +5524,6 @@
             "pct_hp": false,
             "pen": false,
             "shred": true
-          },
-          "complete": false
-        },
-        {
-          "god": "Guan Yu",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Ix Chel",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
-          "god": "Jormungandr",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": false,
-            "shred": false
           },
           "complete": false
         }
@@ -6072,8 +6831,7 @@
     }
   },
   "weekly_themes": [
-    "Support paths under-buy anti-crit (Spectral on ~33.3% of recs) \u2014 flex Spectral almost every game.",
-    "Support/Solo anti-heal is rare in defaults (~23.8% support) \u2014 Stygian/Brawler's is a live flex.",
+    "Support/Solo anti-heal is rare in defaults (~28.6% support) \u2014 Stygian/Brawler's is a live flex.",
     "Gods rising (r5 patch): Cu Chulainn, Hun Batz, Ishtar, Thanatos.",
     "Items hot (r5 patch): Damaru, Omen Drum, The Cosmic Horror, Eye of the Storm.",
     "Patch axes (avg r5): damage -0.22, general +0.09, utility -0.05."
