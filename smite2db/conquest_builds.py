@@ -35,6 +35,7 @@ from .kit_effects import (
     prefer_ban_adjust,
 )
 from .tracker_inspire import inspiration_boost, inspiration_buy_rank
+from .skill_order import compute_skill_order
 # algorithm_card imported lazily in build_god_build to avoid circular import
 
 # SMITE 2 active-item rules (shop T3 On-Use items in the 6-item grid):
@@ -6346,7 +6347,17 @@ def build_god_build(
             is_starter=True,
         )
         starter_card = _item_card(starters[0], why=starter_why)
-    return {
+    skill = None
+    try:
+        skill = compute_skill_order(
+            conn,
+            int(god["god_id"]),
+            role=role,
+            tags=tags,
+        )
+    except Exception:  # noqa: BLE001
+        skill = None
+    out = {
         "god": god["entity_name"],
         "role": role,
         "tier": god.get("tier"),
@@ -6384,6 +6395,9 @@ def build_god_build(
             god, bias, role, items_6, starters, pen_total, n_act, max_act, archetype=archetype
         ),
     }
+    if skill:
+        out.update(skill)
+    return out
 
 
 def _algorithm_card() -> dict[str, Any]:

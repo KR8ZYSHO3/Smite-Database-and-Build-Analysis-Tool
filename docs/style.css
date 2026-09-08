@@ -3549,6 +3549,35 @@ details.build-expand[open] .bes-cta::after { content: ""; }
   border-color: color-mix(in srgb, var(--accent) 45%, transparent);
 }
 .help-guide-link { color: var(--accent); font-weight: 600; }
+.skill-order-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin: 8px 0 10px;
+  font-size: 0.88rem;
+}
+.tag-skill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.skill-order-seq {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  color: var(--text);
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  padding: 2px 8px;
+  border-radius: 6px;
+  word-break: break-word;
+}
+.skill-priority { font-size: 0.78rem; }
 .item-simple-guide { margin-bottom: 12px; }
 .simple-guide-card {
   border: 1px solid rgba(76, 201, 240, 0.35);

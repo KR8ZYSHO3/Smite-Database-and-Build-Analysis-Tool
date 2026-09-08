@@ -2,7 +2,7 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-09-08T17:55:33.153212+00:00_
+_Generated: 2026-09-08T18:58:45.843704+00:00_
 
 ## Weekly themes
 
@@ -26,12 +26,12 @@ _Generated: 2026-09-08T17:55:33.153212+00:00_
 | Transcendence | 8 | 33.3 |
 | Qin's Blade | 7 | 29.2 |
 | Devourer's Gauntlet | 5 | 20.8 |
-| Book of Thoth | 5 | 20.8 |
 | Spear of Desolation | 5 | 20.8 |
-| Soul Reaver | 5 | 20.8 |
 | The Cosmic Horror | 5 | 20.8 |
+| Book of Thoth | 5 | 20.8 |
+| Soul Reaver | 5 | 20.8 |
 | Riptalon | 4 | 16.7 |
-| Sands Of Time | 4 | 16.7 |
+| Totem of Death | 4 | 16.7 |
 
 ### Mid (25 paths)
 
@@ -57,9 +57,9 @@ _Generated: 2026-09-08T17:55:33.153212+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
-| The Crusher | 22 | 95.7 |
 | Jotunn's Revenge | 22 | 95.7 |
 | Hydra's Lament | 22 | 95.7 |
+| The Crusher | 22 | 95.7 |
 | Heartseeker | 15 | 65.2 |
 | Avatar's Parashu | 13 | 56.5 |
 | Pendulum Blade | 11 | 47.8 |
@@ -69,9 +69,9 @@ _Generated: 2026-09-08T17:55:33.153212+00:00_
 | Damaru | 4 | 17.4 |
 | Serrated Edge | 3 | 13.0 |
 | Deathbringer | 1 | 4.3 |
+| Divine Ruin | 1 | 4.3 |
 | Spear Of The Magus | 1 | 4.3 |
 | Spear of Desolation | 1 | 4.3 |
-| Book of Thoth | 1 | 4.3 |
 
 ### Solo (20 paths)
 
@@ -86,8 +86,8 @@ _Generated: 2026-09-08T17:55:33.153212+00:00_
 | Doublet of Binding | 5 | 25.0 |
 | Stone of Binding | 5 | 25.0 |
 | Chandra's Grace | 4 | 20.0 |
-| Prophetic Cloak | 4 | 20.0 |
 | Brawler’s Beat Stick | 4 | 20.0 |
+| Prophetic Cloak | 4 | 20.0 |
 | Hussar's Wings | 3 | 15.0 |
 | Shield of the Phoenix | 3 | 15.0 |
 | Leviathan's Hide | 3 | 15.0 |

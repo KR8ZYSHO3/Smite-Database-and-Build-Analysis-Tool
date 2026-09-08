@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-08T17:55:33.153212+00:00",
+  "generated_at": "2026-09-08T18:58:45.843704+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -3369,17 +3369,7 @@
           "pct": 20.8
         },
         {
-          "name": "Book of Thoth",
-          "paths": 5,
-          "pct": 20.8
-        },
-        {
           "name": "Spear of Desolation",
-          "paths": 5,
-          "pct": 20.8
-        },
-        {
-          "name": "Soul Reaver",
           "paths": 5,
           "pct": 20.8
         },
@@ -3389,12 +3379,22 @@
           "pct": 20.8
         },
         {
+          "name": "Book of Thoth",
+          "paths": 5,
+          "pct": 20.8
+        },
+        {
+          "name": "Soul Reaver",
+          "paths": 5,
+          "pct": 20.8
+        },
+        {
           "name": "Riptalon",
           "paths": 4,
           "pct": 16.7
         },
         {
-          "name": "Sands Of Time",
+          "name": "Totem of Death",
           "paths": 4,
           "pct": 16.7
         }
@@ -3484,17 +3484,17 @@
       "path_count": 23,
       "staples": [
         {
-          "name": "The Crusher",
-          "paths": 22,
-          "pct": 95.7
-        },
-        {
           "name": "Jotunn's Revenge",
           "paths": 22,
           "pct": 95.7
         },
         {
           "name": "Hydra's Lament",
+          "paths": 22,
+          "pct": 95.7
+        },
+        {
+          "name": "The Crusher",
           "paths": 22,
           "pct": 95.7
         },
@@ -3544,17 +3544,17 @@
           "pct": 4.3
         },
         {
+          "name": "Divine Ruin",
+          "paths": 1,
+          "pct": 4.3
+        },
+        {
           "name": "Spear Of The Magus",
           "paths": 1,
           "pct": 4.3
         },
         {
           "name": "Spear of Desolation",
-          "paths": 1,
-          "pct": 4.3
-        },
-        {
-          "name": "Book of Thoth",
           "paths": 1,
           "pct": 4.3
         }
@@ -3609,12 +3609,12 @@
           "pct": 20.0
         },
         {
-          "name": "Prophetic Cloak",
+          "name": "Brawler\u2019s Beat Stick",
           "paths": 4,
           "pct": 20.0
         },
         {
-          "name": "Brawler\u2019s Beat Stick",
+          "name": "Prophetic Cloak",
           "paths": 4,
           "pct": 20.0
         },

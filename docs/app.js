@@ -2054,10 +2054,11 @@ function openCounterWithGod(godName, role) {
   });
 }
 
-function copyPathText(starter, items, god, role, pathLabel) {
+function copyPathText(starter, items, god, role, pathLabel, skillOrder) {
   const lines = [
     `${god} · ${role}${pathLabel ? ` · ${pathLabel}` : ""}`,
     starter ? `Start: ${starter}` : "",
+    skillOrder ? `Skills: ${skillOrder}` : "",
     ...(items || []).map((it, i) => `${i + 1}. ${it.name || it}`),
   ].filter(Boolean);
   return lines.join("\n");
@@ -2139,7 +2140,8 @@ function renderGodPathPanel(gb, role, opts = {}) {
     itemsG,
     gb.god || opts.godName,
     role,
-    pathLabel
+    pathLabel,
+    gb.skill_order
   );
   const absLink = absoluteShareUrl(shareData);
   const preview = itemsG
@@ -2167,6 +2169,30 @@ function renderGodPathPanel(gb, role, opts = {}) {
         }
         ${shortWhy ? `<p class="why simple-why">${escapeHtml(shortWhy)}.</p>` : ""}
         <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>
+        ${
+          gb.skill_order
+            ? `<div class="skill-order-line" title="${escapeAttr(
+                [
+                  gb.skill_note || "",
+                  gb.skill_names
+                    ? `1=${gb.skill_names["1"] || "?"} · 2=${gb.skill_names["2"] || "?"} · 3=${
+                        gb.skill_names["3"] || "?"
+                      } · 4=${gb.skill_names["4"] || "Ult"}`
+                    : "",
+                ]
+                  .filter(Boolean)
+                  .join(" — ")
+              )}">
+                <span class="tag-skill">Skills</span>
+                <code class="skill-order-seq">${escapeHtml(gb.skill_order)}</code>
+                ${
+                  gb.skill_priority
+                    ? `<span class="muted skill-priority">max ${escapeHtml(gb.skill_priority)}</span>`
+                    : ""
+                }
+              </div>`
+            : ""
+        }
         ${loadoutRail(itemsG)}
         <ol class="buy-list simple-buy">
           ${itemsG.map((it, i) => buyRow(it, i + 1, { simple: true })).join("")}
@@ -2312,6 +2338,16 @@ function godBuildCard(gb, role, opts = {}) {
         <span class="bes-sub muted" data-path-summary-sub>
           Start <strong>${escapeHtml(activePanel?.starterName || "—")}</strong>
           ${activePanel?.preview ? ` · ${escapeHtml(activePanel.preview)}${(gb.items || gb.full_path || []).length > 3 ? "…" : ""}` : ""}
+          ${
+            (initialMode === "aspect" ? aspectPick?.build : baseGb || gb)?.skill_priority
+              ? ` · Skills <strong>${escapeHtml(
+                  ((initialMode === "aspect" ? aspectPick?.build : baseGb || gb).skill_priority || "").replace(
+                    /^4\s*>\s*/,
+                    ""
+                  )
+                )}</strong>`
+              : ""
+          }
         </span>
         <span class="bes-cta">Show buy order ▾</span>
       </summary>
