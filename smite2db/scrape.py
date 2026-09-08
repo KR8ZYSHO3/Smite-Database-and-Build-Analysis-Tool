@@ -46,6 +46,14 @@ ITEM_CATEGORY_META: list[tuple[str, str, str]] = [
     ("God Specific items", "God Specific", "God Specific"),
 ]
 
+# Brand-new items sometimes exist as pages before wiki categories catch up.
+FORCE_ITEM_PAGES: list[tuple[str, str, str]] = [
+    # (page title, tier, item_type)
+    ("Serrated Edge", "3", "Offensive"),
+    ("Lotus Sickle", "3", "Offensive"),
+    ("Soul Locket", "3", "Hybrid"),
+]
+
 
 def _discover_gods_from_latest_patches(
     wiki: WikiClient,
@@ -362,6 +370,11 @@ def collect_item_catalog(wiki: WikiClient, verbose: bool = True) -> dict[str, di
                 "tier": merged_tier,
                 "item_type": merged_type or existing.get("item_type", ""),
             }
+    for title, tier, item_type in FORCE_ITEM_PAGES:
+        if title not in catalog:
+            catalog[title] = {"tier": tier, "item_type": item_type}
+            if verbose:
+                print(f"  Force-include item page: {title}")
     return catalog
 
 
