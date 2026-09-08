@@ -1770,16 +1770,18 @@ function setupBuilds() {
     render();
   });
   $("#build-gods")?.addEventListener("click", (e) => {
-    const pathTog = e.target.closest("[data-path-mode]");
+    // Only BASE/ASPECT toggle buttons — NOT the details card itself
+    // (the card also has data-path-mode, which was swallowing summary clicks)
+    const pathTog = e.target.closest("button.path-tog[data-path-mode]");
     if (pathTog) {
       e.preventDefault();
       e.stopPropagation();
       const card = pathTog.closest("details.build-expand");
       if (!card) return;
       const mode = pathTog.getAttribute("data-path-mode") === "aspect" ? "aspect" : "base";
-      card.setAttribute("data-path-mode", mode);
+      card.setAttribute("data-current-path", mode);
       card.classList.toggle("is-aspect", mode === "aspect");
-      card.querySelectorAll(".path-tog").forEach((b) => {
+      card.querySelectorAll("button.path-tog").forEach((b) => {
         b.classList.toggle("active", b.getAttribute("data-path-mode") === mode);
       });
       const nameEl = card.querySelector("[data-path-aspect-name]");
@@ -1938,6 +1940,43 @@ function setupBuilds() {
     focusSearchGod(btn.getAttribute("data-search-god"));
   });
   $("#builds-any-detail")?.addEventListener("click", (e) => {
+    const pathTog = e.target.closest("button.path-tog[data-path-mode]");
+    if (pathTog) {
+      e.preventDefault();
+      e.stopPropagation();
+      const card = pathTog.closest("details.build-expand");
+      if (!card) return;
+      const mode = pathTog.getAttribute("data-path-mode") === "aspect" ? "aspect" : "base";
+      card.setAttribute("data-current-path", mode);
+      card.classList.toggle("is-aspect", mode === "aspect");
+      card.querySelectorAll("button.path-tog").forEach((b) => {
+        b.classList.toggle("active", b.getAttribute("data-path-mode") === mode);
+      });
+      const nameEl = card.querySelector("[data-path-aspect-name]");
+      if (nameEl) nameEl.hidden = mode !== "aspect";
+      card.querySelectorAll("[data-path-panel]").forEach((p) => {
+        p.hidden = p.getAttribute("data-path-panel") !== mode;
+      });
+      const pill = card.querySelector("[data-path-summary-pill]");
+      if (pill) {
+        pill.textContent = mode === "aspect" ? "ASPECT" : "BASE";
+        pill.classList.toggle("path-aspect", mode === "aspect");
+        pill.classList.toggle("path-base", mode !== "aspect");
+      }
+      const panel = card.querySelector(`[data-path-panel="${mode}"]`);
+      const starter = panel?.querySelector(".starter-line")?.textContent?.replace(/^Start\s*/i, "").trim();
+      const names = [...(panel?.querySelectorAll(".buy-name") || [])]
+        .slice(0, 3)
+        .map((n) => n.textContent.trim())
+        .filter(Boolean);
+      const sub = card.querySelector("[data-path-summary-sub]");
+      if (sub) {
+        sub.innerHTML = `Start <strong>${escapeHtml(starter || "—")}</strong>${
+          names.length ? ` · ${escapeHtml(names.join(" → "))}${names.length >= 3 ? "…" : ""}` : ""
+        }`;
+      }
+      return;
+    }
     const counterBtn = e.target.closest("[data-counter-god]");
     if (counterBtn) {
       e.preventDefault();
@@ -2262,7 +2301,7 @@ function godBuildCard(gb, role, opts = {}) {
       opts.open ? " deep-link-focus" : ""
     }${isNative ? " is-native-role" : " is-flex-role"}${
       initialMode === "aspect" ? " is-aspect" : ""
-    }" data-god="${escapeAttr(godName)}" data-path-mode="${initialMode}" ${opts.open ? "open" : ""}>
+    }" data-god="${escapeAttr(godName)}" data-current-path="${initialMode}" ${opts.open ? "open" : ""}>
       <summary class="build-expand-summary">
         <span class="bes-main">
           <span class="bes-name">${escapeHtml(godName)}</span>
