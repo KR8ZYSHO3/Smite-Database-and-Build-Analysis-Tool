@@ -17,8 +17,8 @@
           <strong>Builds</strong> for a path · <strong>Counter</strong> for lobby · <strong>Meta</strong> for the ladder.
         </p>
         <nav class="breadcrumbs" id="site-breadcrumbs" aria-label="Location">Builds</nav>
-        <p class="site-updated" id="site-updated" data-exported-at="2026-09-08T17:54:47.318991+00:00" data-latest-patch="SMITE 2 Open Beta 42" title="Export timestamp (UTC): 2026-09-08T17:54:47.318991+00:00">
-          Last updated: <strong>Sep 8, 2026 5:54 PM UTC</strong> · Patch data: <strong>Open Beta 42</strong> (August 25th, 2026)
+        <p class="site-updated" id="site-updated" data-exported-at="2026-09-08T18:57:58.248883+00:00" data-latest-patch="SMITE 2 Open Beta 42" title="Export timestamp (UTC): 2026-09-08T18:57:58.248883+00:00">
+          Last updated: <strong>Sep 8, 2026 6:57 PM UTC</strong> · Patch data: <strong>Open Beta 42</strong> (August 25th, 2026)
         </p>
       </div>
       <button type="button" class="btn-ghost help-btn" id="btn-help" title="How this works">?</button>
@@ -34,13 +34,14 @@
           <ol class="help-steps">
             <li><strong>Builds</strong> — pick role (or search any god) → open a card → buy top → bottom</li>
             <li><strong>Counter</strong> — set your role, paste the lobby, get a path for this draft</li>
+            <li><strong>Troll</strong> — meme paths, full random, shareable chaos (not ranked advice)</li>
             <li><strong>Meta</strong> — tier ladder &amp; lab (who looks strong this patch)</li>
           </ol>
           <p class="muted">
             Paths follow each god’s kit + patch model (plus ranked WR signal). Free fan tool — not affiliated with Hi-Rez.
           </p>
           <p class="muted help-extra">
-            <strong>More:</strong> item search, troll/meme builds, about &amp; scoring.
+            <strong>More:</strong> item search, about &amp; scoring.
           </p>
           <p class="muted help-extra">
             <strong>New items?</strong>
@@ -49,7 +50,9 @@
           </p>
           <p class="muted help-extra">
             <strong>Share links:</strong> <code>#builds/Carry/Artemis</code> ·
-            <code>#counter/You/Role/Enemies/Allies</code> · <code>#meta/guide</code> · <code>#tiers</code>.
+            <code>#troll/Geb/Support/aspect,annoy,rdeadbeef</code> ·
+            <code>#troll/party/rabc123</code> ·
+            <code>#counter/You/Role/Enemies/Allies</code> · <code>#meta/guide</code>.
           </p>
           <button type="button" class="btn-primary" id="help-close">Got it</button>
         </div>
@@ -58,6 +61,7 @@
       <nav class="tabs simple-tabs" aria-label="Main">
         <button class="tab-btn active" data-tab="builds">Builds</button>
         <button class="tab-btn" data-tab="counter">Counter</button>
+        <button class="tab-btn" data-tab="troll">Troll</button>
         <button class="tab-btn" data-tab="meta">Meta</button>
         <div class="more-wrap">
           <button type="button" class="tab-btn more-trigger" id="more-tools-btn" aria-expanded="false" aria-haspopup="true">
@@ -66,7 +70,6 @@
           <div class="more-menu" id="more-menu" hidden>
             <button type="button" class="more-item" data-tab="meta" data-meta-view="guide">Item guide (simple)</button>
             <button type="button" class="more-item" data-tab="items">Item search</button>
-            <button type="button" class="more-item" data-tab="troll">Troll / meme builds</button>
             <button type="button" class="more-item" data-tab="about">About &amp; scoring</button>
             <button type="button" class="more-item" data-tab="gods">God dossier (legacy)</button>
           </div>
@@ -217,14 +220,17 @@
       <!-- TROLL -->
       <section id="panel-troll" class="panel">
         <div class="card counter-panel troll-panel">
-          <h2>Troll / meme builds</h2>
+          <h2>😈 Troll / meme builds</h2>
           <p class="muted">
-            Off-meta paths that are funny and annoying — <strong>not ranked advice</strong>.
-            Each roll picks a clear <strong>troll bit</strong> (peel prison, aura tax, AA clown…).
-            <strong>Annoy</strong> = kit-true frustration · <strong>Max stat</strong> = pure greed ·
-            <strong>True random</strong> = shop lottery (still legal items). Re-roll for fresh variety.
-            Each re-roll is a new seed. Gates still ban removed shop / stolen acorns / pure cross-type cores.
+            Legal items, illegal vibes — <strong>not ranked advice</strong>.
+            Every roll locks a <strong>bit</strong> (peel prison, enchanter greed, Serrated spin…).
+            Share the link and friends get the <strong>same seed</strong>.
           </p>
+          <div class="troll-hero-ctas" id="troll-hero-ctas">
+            <button type="button" class="btn-primary btn-troll-hero" id="troll-surprise-cta">🎲 Surprise me</button>
+            <button type="button" class="btn-secondary btn-troll-hero" id="troll-full-random-cta">🎰 Full random</button>
+            <button type="button" class="btn-secondary btn-troll-hero" id="troll-party-cta">👥 Draft a troll team</button>
+          </div>
           <div class="counter-form troll-form">
             <label>God
               <span class="troll-god-row">
@@ -274,10 +280,17 @@
               <input type="checkbox" id="troll-chaos" />
               Chaos mode (extra axis / swaps)
             </label>
+            <label class="troll-check" id="troll-lock-wrap">
+              <input type="checkbox" id="troll-lock-axis" />
+              Lock bit on re-roll
+            </label>
             <div class="troll-actions">
               <button type="button" class="btn-primary btn-troll" id="troll-run">Generate troll path</button>
               <button type="button" class="btn-secondary btn-troll-roll" id="troll-full-random" title="Random god, role, mode, and path">
                 🎰 Full random
+              </button>
+              <button type="button" class="btn-secondary btn-troll-roll" id="troll-party" title="One seed, five roles of chaos">
+                👥 Troll team
               </button>
             </div>
           </div>
@@ -585,13 +598,13 @@
   <nav class="mobile-nav" aria-label="Mobile">
     <button type="button" class="mobile-tab active" data-tab="builds"><span class="mn-icon">1</span><span>Builds</span></button>
     <button type="button" class="mobile-tab" data-tab="counter"><span class="mn-icon">◎</span><span>Counter</span></button>
+    <button type="button" class="mobile-tab" data-tab="troll"><span class="mn-icon">😈</span><span>Troll</span></button>
     <button type="button" class="mobile-tab" data-tab="meta"><span class="mn-icon">▲</span><span>Meta</span></button>
     <button type="button" class="mobile-tab" data-tab="more" id="mobile-more"><span class="mn-icon">···</span><span>More</span></button>
   </nav>
   <div class="mobile-more-sheet" id="mobile-more-sheet" hidden>
     <button type="button" class="mobile-sheet-btn" data-tab="meta" data-meta-view="guide">Item guide</button>
     <button type="button" class="mobile-sheet-btn" data-tab="items">Item search</button>
-    <button type="button" class="mobile-sheet-btn" data-tab="troll">Troll builds</button>
     <button type="button" class="mobile-sheet-btn" data-tab="about">About</button>
     <button type="button" class="mobile-sheet-btn" data-tab="gods">God dossier</button>
   </div>

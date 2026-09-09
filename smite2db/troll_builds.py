@@ -52,6 +52,12 @@ TROLL_AXES = (
     "aa_clown",        # AA/on-hit on "wrong" gods
     "aura_tax",        # free stats for existing
     "active_toybox",   # expensive On-Use memes
+    # OB43 / meme expansions (parity with web troll tab)
+    "enchanter_greed",  # Sickle + Locket + Heartwood amp pile
+    "heal_battery",     # self-heal steroids
+    "serrated_spin",    # ability-on-CD LS clown
+    "shell_copium",     # shell / brick-wall nostalgia
+    "antiheal_police",  # Sundering + Ruin overkill
 )
 
 # Pure-greed max-stat modes (CLI / parity with web troll tab)
@@ -201,6 +207,26 @@ AXIS_ITEM_KEYS: dict[str, list[str]] = {
     "active_toybox": [
         "dreamer", "wish-granting", "parashu", "arondight", "pridwen", "erebus",
     ],
+    "enchanter_greed": [
+        "lotus sickle", "soul locket", "heartwood", "asclepius", "yogi",
+        "chandra", "stampede", "genji", "amanita",
+    ],
+    "heal_battery": [
+        "vital amp", "daybreak", "bancroft", "typhon", "sanguine",
+        "lifebinder", "asclepius", "phoenix", "yogi",
+    ],
+    "serrated_spin": [
+        "serrated", "chronos", "gem of focus", "bloodforge", "devourer",
+        "typhon", "bancroft", "sanguine",
+    ],
+    "shell_copium": [
+        "spectral", "nemean", "pridwen", "breastplate", "mantle", "magi",
+        "shell of rebuke", "phantom shell", "oni hunter",
+    ],
+    "antiheal_police": [
+        "sundering", "divine ruin", "contagion", "brawler", "toxic",
+        "pestilence", "desolat", "void shard",
+    ],
 }
 
 # Items that are "correct tryhard" — downrank on troll unless axis wants them
@@ -246,6 +272,11 @@ TROLL_SLOTS: dict[str, list[str]] = {
     "aa_clown": ["as_core", "onhit", "crit_core", "ls_core", "power", "defense"],
     "aura_tax": ["aura", "mitigate", "defense", "cdr_def", "counter", "heal_aura"],
     "active_toybox": ["luxury", "power", "flat_pen", "defense", "cdr", "sustain"],
+    "enchanter_greed": ["heal_aura", "aura", "cdr_def", "sustain", "defense", "hybrid_bulk"],
+    "heal_battery": ["sustain", "heal_aura", "hybrid_bulk", "defense", "cdr", "power"],
+    "serrated_spin": ["ls_core", "cdr", "power", "sustain", "flat_pen", "defense"],
+    "shell_copium": ["defense", "mitigate", "cdr_def", "tenacity", "counter", "aura"],
+    "antiheal_police": ["antiheal", "flat_pen", "defense", "mitigate", "cdr", "hybrid_bulk"],
 }
 
 TROLL_TITLES: dict[str, list[str]] = {
@@ -291,6 +322,36 @@ TROLL_TITLES: dict[str, list[str]] = {
         "Ultimate? We Have Actives At Home",
         "Cooldown For Chaos",
     ],
+    "enchanter_greed": [
+        "Support Diff But Make It Greedy",
+        "Lotus Sickle Propaganda",
+        "I Buff, Therefore I Am",
+        "Enchanter Tax Bracket",
+    ],
+    "heal_battery": [
+        "Self-Care Speedrun",
+        "Vital Amplifier Enjoyer",
+        "Daybreak And Chill",
+        "I Heal Myself Harder",
+    ],
+    "serrated_spin": [
+        "Serrated Spin Cycle",
+        "Ability On Cooldown LS Clown",
+        "Hit Spell, Drink Blood",
+        "CDR Vampire Cosplay",
+    ],
+    "shell_copium": [
+        "Shell Of Rebuke Believer",
+        "Phantom Copium",
+        "I Live In My Shell Now",
+        "Prot Shell Collection",
+    ],
+    "antiheal_police": [
+        "Antiheal SWAT",
+        "Sundering And A Prayer",
+        "Zero Heal Lobby Cop",
+        "Your Yogi's Is Illegal",
+    ],
 }
 
 AXIS_BLURBS: dict[str, str] = {
@@ -301,6 +362,11 @@ AXIS_BLURBS: dict[str, str] = {
     "aa_clown": "Lean into basic-attack or on-hit identity the ranked path ignores. Wrong, but sticky.",
     "aura_tax": "Bodyblock, auras, and free team value for existing in the fight.",
     "active_toybox": "Splashy On-Use and meme power spikes within the active budget. Chaos is the point.",
+    "enchanter_greed": "Team-buff toys and aura greed. You're not the carry — you're the reason they look good.",
+    "heal_battery": "Self-heal steroids stacked until your HP bar is a personality.",
+    "serrated_spin": "Cast → lifesteal fantasy. Serrated Edge + CDR spam like a cartoon villain.",
+    "shell_copium": "Every shell in the shop. Reflect, soak, and pretend you're fine.",
+    "antiheal_police": "Sundering + Ruin overkill into lobbies that barely heal. Zero mercy.",
 }
 
 
@@ -332,39 +398,52 @@ def detect_troll_axes(
         scores["peel_prison"] += 1.0
         scores["aura_tax"] += 0.9
         scores["antiheal_tax"] += 0.5
+        scores["shell_copium"] += 0.55
+        scores["enchanter_greed"] += 0.85
         # AA clown on Support only if kit/aspect truly enables it
         scores["aa_clown"] -= 1.2
     if role in ("Mid", "Carry"):
         scores["infinite_poke"] += 0.9
         scores["aa_clown"] += 0.4
         scores["active_toybox"] += 0.35
+        scores["serrated_spin"] += 0.45
     if role == "Jungle":
         scores["peel_prison"] += 0.4
         scores["antiheal_tax"] += 0.6
         scores["aa_clown"] += 0.5
         scores["unkillable"] += 0.3
+        scores["antiheal_police"] += 0.45
 
     # Tag / effect driven — stronger kit signal
     if tags & {"heal", "heavy_heal", "self_sustain"} or effects.get("heal", 0) >= 0.6:
         scores["unkillable"] += 2.0
         scores["antiheal_tax"] += 0.5
+        scores["heal_battery"] += 1.8
+        scores["enchanter_greed"] += 0.7
     if tags & {"hard_cc", "high_cc"} or effects.get("hard_cc", 0) >= 0.7:
         scores["peel_prison"] += 2.2
     if tags & {"dot", "heavy_dot", "zone", "pet_zone", "channel"} or effects.get("dot", 0) >= 0.6:
         scores["infinite_poke"] += 2.0
+        scores["serrated_spin"] += 0.8
     if tags & {"mana_stack"}:
         scores["infinite_poke"] += 1.4
     if tags & {"spam"} or float(bias.get("avg_cd") or 12) <= 8.5:
         scores["infinite_poke"] += 1.2
+        scores["serrated_spin"] += 1.4
     if tags & {"team_buff"}:
         scores["aura_tax"] += 1.6
+        scores["enchanter_greed"] += 2.0
     if tags & {"shield", "heavy_shield", "immobile"}:
         scores["unkillable"] += 1.3
+        scores["shell_copium"] += 1.2
     if tags & {"execute", "burst", "ult_nuke"}:
         scores["active_toybox"] += 1.0
     if tags & {"prot_shred"}:
         scores["antiheal_tax"] += 0.6
         scores["peel_prison"] += 0.4
+        scores["antiheal_police"] += 0.8
+    if tags & {"heal", "heavy_heal"} or effects.get("heal", 0) >= 0.5:
+        scores["antiheal_police"] += 0.9
 
     # AA clown: need real AA identity — not every god with "basic attack" in passive text
     aa_real = (
