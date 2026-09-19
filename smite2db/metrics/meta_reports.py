@@ -29,7 +29,7 @@ ANSWER_CATALOG: dict[str, dict[str, Any]] = {
             "Stygian Anchor",
             "Toxic Blade",
         ],
-        "why": "25% healing reduction — stops Yogi's, Aphro, Cu sustain, lifesteal.",
+        "why": "Healing reduction — stops Yogi's, Aphro, Cu sustain, lifesteal. Sundering relics apply 40% in OB43.",
     },
     "crit": {
         "label": "vs crit",

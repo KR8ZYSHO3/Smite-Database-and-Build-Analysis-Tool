@@ -4,6 +4,8 @@
 **kit-true**, **role-correct**, **spike-ordered**, and **softly informed by high-SR play** —  
 without becoming a frozen meta photocopier.
 
+**Version:** 1.2.0 (OB43) — Sickle live for true healers; Chandra/Heartwood/Shell soft-penalized after 9/9 hotfixes; Sundering relic weight up (40% antiheal); heal_support prefers ≤1 shop active; World Stone allowed as Support healer ult-CDR luxury (still Mid-banned).
+
 **Inventory model (SMITE 2):** starter slot separate · 6 shop items · ≤2–3 On-Use actives · relics separate.
 
 ---

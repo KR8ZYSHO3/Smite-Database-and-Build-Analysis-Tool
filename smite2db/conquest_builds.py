@@ -111,6 +111,8 @@ VAMP_STARTER_KEYS = ("vampiric", "shroud")
 # Wiki / scrape may still list these, but they are not reliably in the live SMITE 2 shop.
 # Hard-ban from all recommended Conquest paths (substring match on item name).
 # Eye of Providence: ward T3 — players report missing from shop; do not recommend.
+# NOTE: Lotus Sickle was listed "disabled" in the OB43 9/9 hotfix notes (buy/sell INT bug),
+# but the live shop still sells it — do NOT add it here; recommend normally for true healers.
 REMOVED_OR_UNAVAILABLE_ITEM_KEYS = (
     "eye of providence",
     "providence",  # only matches Eye of Providence (not Eye of Erebus / Storm)
@@ -402,7 +404,7 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
             "purification": 25,
             "aegis": 20,
             "blink": 12,
-            "sundering": 15,
+            "sundering": 18,  # OB43: 40% healing reduction
             "agility": 10,
             "phantom": 8,
         },
@@ -498,7 +500,7 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
         "relic_prefs": {
             "blink": 32,       # gank setup
             "beads": 22,
-            "sundering": 20,   # execute / shell break
+            "sundering": 24,   # OB43: 40% healing reduction + execute / shell break
             "agility": 18,
             "aegis": 12,
             "phantom": 10,
@@ -556,10 +558,10 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
         "relic_prefs": {
             "beads": 26,
             "aegis": 24,
-            "shell": 16,
+            "shell": 12,  # OB43 Shell nerf — still usable, not default over Beads/Aegis
             "phantom": 14,
             "blink": 10,
-            "sundering": 12,
+            "sundering": 22,  # OB43: 40% healing reduction
             "agility": 6,
         },
         "build_slots": {"starter": 1, "cores": 2, "defense": 3, "flex": 1},
@@ -617,11 +619,11 @@ ROLE_PROFILES: dict[str, dict[str, Any]] = {
             "beads": 30,
             "purification": 28,
             "aegis": 24,
-            "shell": 20,
+            "shell": 12,  # OB43 mitigation nerf
             "phantom": 16,
             "talisman": 20,
             "blink": 8,
-            "sundering": 6,
+            "sundering": 18,  # OB43: 40% healing reduction — real antiheal relic
         },
         "build_slots": {"starter": 1, "cores": 1, "defense": 4, "flex": 1},
         "tier_scope": "role:Support",
@@ -2264,13 +2266,36 @@ def rescore_for_god(
             # OB43: Sickle is Offensive (Support tax) — still identity for enchanters
             if _is_enchanter_proc_item(item.name) and role == "Support":
                 s += 45
+            # Prefer passive Sickle + Asclepius over nerfed Heartwood active
+            if "asclepius" in nlow and role == "Support":
+                s += 25
+            if "lotus sickle" in nlow and role == "Support":
+                s += 20
+            if "heartwood" in nlow:
+                s -= 35  # OB43 hotfix: amp 20→10%, lost heal-CD reduction; burns an active
+            if "lifebinder" in nlow and role == "Support":
+                s -= 15  # keep as flex active, not auto dual-active with Locket
     # Always gate heal/enchanter cores — don't rely on noisy heal tags
     if _is_heal_core_item(item.name):
         if true_healer and role in ("Support", "Solo"):
             if _is_enchanter_proc_item(item.name) and role == "Support":
                 s += 35  # ensure Sickle/Locket beat Support Offensive tax
+            if "asclepius" in nlow and role == "Support":
+                s += 15
         else:
             s -= 200
+    # OB43 hotfix: Chandra amp nerfed; stop winning generic Solo/Support aura slots
+    if "chandra" in nlow:
+        if true_healer and role == "Support":
+            s += 8  # still fine on real healers after Thebes/Sickle/Asclepius
+        else:
+            s -= 40
+    # OB43: Shell of Rebuke mitigation nerfed — late flex only, not default shell
+    if "shell of rebuke" in nlow:
+        s -= 28
+    # World Stone: Support healers love −30% ult CD (passive); Mid still gated elsewhere
+    if "world stone" in nlow and true_healer and role == "Support":
+        s += 55
     # Hard: Bancroft / Typhon / Gluttonous only on self-sustain mages
     if _is_mage_ls_core_item(item.name):
         if wants_ls and mage:
@@ -3155,23 +3180,31 @@ def _pick_slot_item(
         if slot in ("mitigate", "counter", "aura") and x.item_type == "Defensive":
             sc += 12
         if slot == "heal_aura":
-            # True healers: Asclepius/Lifebinder. Everyone else should not be here.
-            if any(k in n for k in ("asclepius", "lifebinder")):
-                sc += 70
+            # True healers: Asclepius + Sickle first. Heartwood nerfed; Chandra secondary.
+            if "asclepius" in n:
+                sc += 85
+            elif "lotus sickle" in n:
+                sc += 80
+            elif "soul locket" in n:
+                sc += 55
+            elif any(k in n for k in ("lifebinder", "heartwood")):
+                sc += 25  # flex / nerfed — not default over Sickle+Asclepius
             elif "chandra" in n:
-                sc += 35
+                sc += 30
             elif any(k in n for k in ("thebes", "sovereignty")):
                 sc += 20
+            if "world stone" in n:
+                sc += 45  # −30% ult CD luxury on heal Support
         if slot == "aura" and role == "Support":
             # Meta support openers — Thebes / Stampede / Amanita beat Chandra/Spectral
             if any(k in n for k in ("thebes", "stampede", "amanita")):
                 sc += 160
             elif any(k in n for k in ("sovereignty", "heartward", "shogun")):
                 sc += 70
-            elif "chandra" in n:
-                sc += 15  # fine aura, not default over Thebes
             elif "contagion" in n:
-                sc += 40
+                sc += 45
+            elif "chandra" in n:
+                sc += 5  # OB43 hotfix — not default over Thebes/Contagion
         if slot == "dot_core" and any(k in n for k in ("desolat", "magus", "isolation", "divine")):
             sc += 40
         if slot == "zone_core" and any(k in n for k in ("isolation", "magus", "desolat")):
@@ -3950,14 +3983,109 @@ def _god_flavor_flex(
     return path
 
 
+def _ensure_enchanter_cores(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    *,
+    max_actives: int,
+    bias: dict | None = None,
+) -> list[ScoredItem]:
+    """
+    Force Lotus Sickle + Asclepius onto true-healer Support paths.
+
+    High-SR inspire over-indexes Stampede / Shell / Freya's and can erase the
+    OB43 enchanter identity. Protect Thebes; swap lowest-scored non-cores.
+    """
+    if not path:
+        return path
+    new_path = list(path)[:6]
+    have = {x.name.lower() for x in new_path}
+    want_keys = ("lotus sickle", "asclepius")
+    protect = ("thebes", "lotus sickle", "asclepius", "soul locket")
+
+    def _find(key: str) -> ScoredItem | None:
+        for cand in sorted(pool, key=lambda x: x.role_score, reverse=True):
+            if key in cand.name.lower():
+                if cand.is_active_item and sum(
+                    1 for x in new_path if x.is_active_item
+                ) >= max_actives and not any(
+                    key in x.name.lower() for x in new_path if x.is_active_item
+                ):
+                    # replacing into an active slot is ok; adding over cap is not
+                    if sum(1 for x in new_path if x.is_active_item) >= max_actives:
+                        # only allow if we will replace an active or this is passive
+                        if not cand.is_active_item:
+                            return cand
+                        # prefer replacing an active later
+                        return cand
+                return cand
+        return None
+
+    for key in want_keys:
+        if any(key in h for h in have):
+            continue
+        cand = _find(key)
+        if not cand:
+            continue
+        # Prefer swap targets: Stampede / Shell / Freya / Kinetic / Resolute / Spectral
+        soft = (
+            "stampede",
+            "shell of rebuke",
+            "freya",
+            "kinetic",
+            "resolute",
+            "spectral",
+            "contagion",
+            "leviathan",
+            "hussar",
+            "draconic",
+            "prophetic",
+        )
+        idxs = [
+            i
+            for i, x in enumerate(new_path)
+            if not any(p in x.name.lower() for p in protect)
+            and any(s in x.name.lower() for s in soft)
+        ]
+        if not idxs:
+            idxs = [
+                i
+                for i, x in enumerate(new_path)
+                if not any(p in x.name.lower() for p in protect)
+            ]
+        if not idxs:
+            continue
+        # Drop lowest role_score soft item
+        idx = min(idxs, key=lambda i: new_path[i].role_score)
+        if cand.is_active_item:
+            actives = sum(1 for x in new_path if x.is_active_item)
+            if not new_path[idx].is_active_item and actives >= max_actives:
+                # swap out an active instead if needed
+                act_idxs = [
+                    i
+                    for i, x in enumerate(new_path)
+                    if x.is_active_item and not any(p in x.name.lower() for p in protect)
+                ]
+                if not act_idxs:
+                    continue
+                idx = min(act_idxs, key=lambda i: new_path[i].role_score)
+        new_path[idx] = cand
+        have = {x.name.lower() for x in new_path}
+    return new_path[:6]
+
+
 def max_shop_actives_for_god(role: str, damage_type: str | None, bias: dict | None = None) -> int:
     """
     Practical active budget for the 6-item grid.
 
     Most builds: 2 (leave room for free Curio which also eats the active budget).
+    True-healer Support: 1 (prefer Sickle/Asclepius/World Stone over Locket+Heartwood piles).
     Melee-leaning physical Solo/Jungle: up to hard cap 3.
-    Magical gods never get the melee-3 exception.
+    Magical gods never get the melee-3 exception (except healer Support cap above).
     """
+    # Enchanter Support: keep the path button-light (Sickle is passive; Locket optional alone)
+    if role == "Support" and _is_true_healer(bias):
+        return 1
     dtype = (damage_type or "").lower()
     if dtype == "magical":
         return DEFAULT_MAX_SHOP_ACTIVES
@@ -5215,8 +5343,15 @@ def _order_buy_path(
                 )
             ):
                 return 0, cost
-            if any(k in nlow for k in ("genji", "breastplate", "valor", "shell of rebuke")):
+            # OB43 enchanter cores — online early after Thebes
+            if any(k in nlow for k in ("lotus sickle", "asclepius")):
+                return 0, cost + 1
+            if any(k in nlow for k in ("soul locket", "chandra", "world stone")):
                 return 1, cost
+            if any(k in nlow for k in ("genji", "breastplate", "valor")):
+                return 1, cost
+            if "shell of rebuke" in nlow:
+                return 3, cost  # OB43 nerf — not a default early shell
             if any(k in nlow for k in ("spectral", "midgardian", "nemean")):
                 return 3, cost  # counter, not opener
             if pure_shell:
@@ -6251,6 +6386,11 @@ def build_god_build(
         max_actives=max_act,
         tags=set(bias.get("tags") or []),
     )
+    # OB43: true-healer Support must keep Sickle + Asclepius (inspire loves Stampede/Shell)
+    if role == "Support" and _is_true_healer(bias):
+        items_6 = _ensure_enchanter_cores(
+            items_6, t3, max_actives=max_act, bias=bias
+        )
     # Re-assert human kit cores after SR inspire (Cu: Yogi's + Mystical Mail)
     if bias.get("prefer_items") and role in ("Solo", "Support"):
         seen_pref = {x.name for x in items_6}

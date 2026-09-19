@@ -24,7 +24,7 @@ from typing import Any
 # Phase registry (human + machine readable)
 # ---------------------------------------------------------------------------
 
-ALGORITHM_VERSION = "1.1.0"
+ALGORITHM_VERSION = "1.2.0"
 ALGORITHM_DOC = "docs/BUILD_ALGORITHM.md"
 
 PHASES: list[dict[str, str]] = [
