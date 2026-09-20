@@ -3791,6 +3791,22 @@ function counterItemScore(it, threat, role) {
   if (role === "Support" || role === "Solo") {
     if ((it.item_type || "").toLowerCase() === "defensive" || cats.includes("defensive")) s += 12;
     if (n.includes("dreamer") || n.includes("parashu") || n.includes("deathbringer")) s -= 50;
+  } else {
+    // Mid/Carry/Jungle: prefer offensive counters (Ruin/Toxic), punish pure shells
+    const pen = itemStat(it, "pen");
+    if (
+      threat.need_antiheal &&
+      (n.includes("divine ruin") || n.includes("brawler") || n.includes("toxic") || n.includes("pestilence"))
+    ) {
+      s += 35;
+      if (!why.includes("anti-heal")) why.push("offensive anti-heal flex");
+    }
+    if (
+      ((it.item_type || "").toLowerCase() === "defensive" || cats.includes("defensive")) &&
+      pen < 5
+    ) {
+      s -= role === "Mid" || role === "Carry" ? 42 : 18;
+    }
   }
   // Prefer full T3
   s += Math.min(15, (Number(it.total_cost || it.cost || 0) / 300) | 0);
@@ -3830,59 +3846,101 @@ function analyzeAllyTeamJS(allyGods) {
   };
 }
 
+function isDamageRoleOpenerJS(nlow) {
+  return [
+    "desolat",
+    "jotunn",
+    "thoth",
+    "book of",
+    "chronos",
+    "pendant",
+    "tyrfing",
+    "devourer",
+    "transcend",
+    "hydra",
+    "crusher",
+    "cosmic",
+    "spear of",
+    "magus",
+    "doom orb",
+    "heartseeker",
+    "odysseus",
+    "executioner",
+    "qin",
+    "riptalon",
+  ].some((k) => nlow.includes(k));
+}
+
 function injectCounterCores(baselineNames, threat, role) {
-  // Shell (dive + turrets) before antiheal greed — matches CLI counter engine
+  // Support/Solo: shell + peel. Mid/Carry: offensive flex only (Ruin/Toxic) — never Genji piles.
   const wanted = [];
   const dive = !!threat.need_dive_shell;
   const peelAdc = !!threat.need_peel_adc;
-  if (threat.need_pprot && (role === "Support" || role === "Solo" || role === "Jungle")) {
-    wanted.push("breastplate");
-  }
-  if (threat.need_mprot && threat.magical_count >= 2) {
-    wanted.push("genji");
-    if (threat.magical_count >= 3) wanted.push("oni hunter");
-  }
-  if ((dive || peelAdc) && (role === "Support" || role === "Solo")) wanted.push("midgardian");
-  if (threat.need_anti_crit || peelAdc) wanted.push("spectral");
-  if (threat.need_anti_as && (role === "Support" || role === "Solo") && !wanted.includes("midgardian")) {
-    wanted.push("midgardian");
-  }
-  if (threat.need_antiheal) {
-    wanted.push(role === "Support" || role === "Solo" ? "contagion" : "divine ruin");
-  }
-  if (threat.need_magi) wanted.push("magi");
+  const damageRole = role === "Mid" || role === "Carry" || role === "Jungle";
 
-  // isT3Item already bans god-specific (acorns/mods) — counters use shared shop only
+  if (damageRole) {
+    if (threat.need_antiheal) {
+      wanted.push("divine ruin");
+      if (role === "Carry" || role === "Jungle") {
+        wanted.push("brawler");
+        wanted.push("toxic");
+      }
+    }
+    if (role === "Jungle" && dive && threat.need_pprot) wanted.push("breastplate");
+  } else {
+    if (threat.need_pprot && (role === "Support" || role === "Solo")) wanted.push("breastplate");
+    if (threat.need_mprot && threat.magical_count >= 2) {
+      wanted.push("genji");
+      if (threat.magical_count >= 3) wanted.push("oni hunter");
+    }
+    if ((dive || peelAdc) && (role === "Support" || role === "Solo")) wanted.push("midgardian");
+    if (threat.need_anti_crit || peelAdc) wanted.push("spectral");
+    if (threat.need_anti_as && (role === "Support" || role === "Solo") && !wanted.includes("midgardian")) {
+      wanted.push("midgardian");
+    }
+    if (threat.need_antiheal) wanted.push("contagion");
+    if (threat.need_magi) wanted.push("magi");
+  }
+
   const items = (state.items || []).filter(isT3Item);
   const byName = Object.fromEntries(items.map((it) => [it.name, it]));
   let path = baselineNames.map((n) => byName[n]).filter(Boolean);
-  if (!path.length) {
-    // No baseline — pure counter top items
-    path = [];
-  }
+  if (!path.length) path = [];
   const seen = new Set(path.map((p) => p.name));
   const maxInject =
-    (role === "Support" || role === "Solo") && dive ? 4 : role === "Support" || role === "Solo" ? 3 : 2;
+    role === "Support" || role === "Solo" ? (dive ? 4 : 3) : 1; // Mid/Carry/Jungle: one flex
   let injected = 0;
 
   for (const key of wanted) {
     if (injected >= maxInject) break;
     if ([...seen].some((n) => n.toLowerCase().includes(key))) continue;
-    const scored = items
+    let scored = items
       .filter((it) => it.name.toLowerCase().includes(key) && !seen.has(it.name))
       .map((it) => ({ it, ...counterItemScore(it, threat, role) }))
       .sort((a, b) => b.score - a.score);
+    // Mid/Carry: never inject pure Defensive shells
+    if (role === "Mid" || role === "Carry") {
+      scored = scored.filter(
+        (x) =>
+          String(x.it.item_type || "").toLowerCase() !== "defensive" ||
+          itemStat(x.it, "pen") >= 5
+      );
+    }
     if (!scored.length) continue;
     const pick = scored[0].it;
-    // Drop lowest counter-score / glass
     if (path.length >= 6) {
       let drop = -1;
       let worst = Infinity;
       path.forEach((it, i) => {
         const n = it.name.toLowerCase();
-        if (["spectral", "genji", "contagion", "magi", "divine", "oni hunter"].some((k) => n.includes(k))) {
+        if (
+          ["spectral", "genji", "contagion", "magi", "divine", "oni hunter", "brawler", "toxic"].some(
+            (k) => n.includes(k)
+          )
+        ) {
           return;
         }
+        if (isDamageRoleOpenerJS(n)) return;
         const sc = counterItemScore(it, threat, role).score;
         if (sc < worst) {
           worst = sc;
@@ -3902,12 +3960,22 @@ function injectCounterCores(baselineNames, threat, role) {
     }
   }
 
-  // Fill to 6 with best remaining counter scores if short
+  // Fill to 6 — Support/Solo may use counter scores; damage roles prefer baseline kit scores
   if (path.length < 6) {
     const rest = items
       .filter((it) => !seen.has(it.name))
       .map((it) => ({ it, ...counterItemScore(it, threat, role) }))
-      .filter((x) => x.score > 15)
+      .filter((x) => {
+        if (damageRole && role !== "Jungle") {
+          const def =
+            String(x.it.item_type || "").toLowerCase() === "defensive" ||
+            String(x.it.categories || "")
+              .toLowerCase()
+              .includes("defensive");
+          if (def && itemStat(x.it, "pen") < 5) return false;
+        }
+        return x.score > (damageRole ? 25 : 15);
+      })
       .sort((a, b) => b.score - a.score);
     for (const r of rest) {
       if (path.length >= 6) break;

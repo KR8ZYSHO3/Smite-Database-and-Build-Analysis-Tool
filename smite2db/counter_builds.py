@@ -362,12 +362,16 @@ def counter_score_delta(
         if item.is_active_item and (item.total_cost or 0) >= 3400:
             delta -= 40
     else:
-        # Damage roles: counter items as flex, keep pen viable
+        # Damage roles (Mid/Carry/Jungle): counter via *offense* (Ruin/Toxic), not shells
         if pen >= 8 and (threat.get("need_antiheal") and fam in ("divine", "desolation")):
-            delta += 15
+            delta += 28
+        if has_key("divine ruin", "brawler", "toxic", "pestilence") and threat.get("need_antiheal"):
+            delta += 22
+            if "anti-heal" not in " ".join(why).lower():
+                why.append("offensive anti-heal flex")
         if item.item_type == "Defensive" and pen < 5 and role in DAMAGE_ROLES_NEED_PEN:
-            # allow one counter defense but don't flood
-            delta -= 8
+            # Hard punish pure defense — Counter was flooding Mid/Carry with shells
+            delta -= 42 if role in ("Mid", "Carry") else 18
 
     return delta, why[:2]
 
@@ -471,8 +475,8 @@ def build_counter_build(
     )
     path = _ensure_pen_in_path(path, t3, role, max_act, mage=mage, physical=physical)
     if role in DAMAGE_ROLES_NEED_PEN:
-        # allow 2 defense when hard-countering ADC+mages
-        max_def = 2 if (threat.get("need_anti_crit") and threat.get("need_mprot")) else 1
+        # Mid/Carry: hard cap 1 pure defense. Jungle: 1 (was up to 2 and felt tanky).
+        max_def = 1
         path = _trim_excess_defense(path, t3, max_defense=max_def, max_actives=max_act)
     path = _order_buy_path(path, role)
 
@@ -565,6 +569,35 @@ def build_counter_build(
     }
 
 
+def _is_damage_role_opener(nlow: str) -> bool:
+    """Pen / power openers Counter must never delete on Mid/Carry/Jungle."""
+    return any(
+        k in nlow
+        for k in (
+            "desolat",
+            "jotunn",
+            "thoth",
+            "book of",
+            "chronos",
+            "pendant",
+            "tyrfing",
+            "devourer",
+            "transcend",
+            "hydra",
+            "crusher",
+            "cosmic",
+            "spear of",
+            "magus",
+            "doom orb",
+            "heartseeker",
+            "odysseus",
+            "executioner",
+            "qin",
+            "riptalon",
+        )
+    )
+
+
 def _inject_counter_cores(
     path: list[ScoredItem],
     pool: list[ScoredItem],
@@ -576,33 +609,46 @@ def _inject_counter_cores(
     physical: bool,
     allies: dict[str, Any] | None = None,
 ) -> list[ScoredItem]:
-    """Force 1–3 highest-priority counter items into the path."""
+    """Force counter items into the path (heavy on Support/Solo; light on damage roles)."""
     path = list(path)
     seen = {x.name for x in path}
     actives = sum(1 for x in path if x.is_active_item)
     allies = allies or threat.get("allies") or {}
+    damage_role = role in DAMAGE_ROLES_NEED_PEN  # Mid / Carry / Jungle
 
-    # Priority order: survive dive + turret poke BEFORE antiheal greed.
-    # Lesson: Contagion-first loses to Achilles dive + Vulcan turrets.
-    wanted: list[str] = []  # family or name keys in priority order
+    # Priority order: survive dive BEFORE antiheal greed (frontline).
+    # Damage roles: only *offensive* counters (Ruin/Toxic) — never Genji/Spectral piles.
+    wanted: list[str] = []
     dive = bool(threat.get("need_dive_shell"))
     peel_adc = bool(allies.get("need_peel_adc"))
-    if threat.get("need_pprot") and role in ("Support", "Solo", "Jungle"):
-        wanted.append("breastplate")
-    if threat.get("need_mprot") and threat.get("magical_count", 0) >= 2:
-        wanted.append("genji")
-        if threat.get("magical_count", 0) >= 3:
-            wanted.append("oni")
-    if (dive or peel_adc) and role in ("Support", "Solo"):
-        wanted.append("midgardian")
-    if threat.get("need_anti_crit") or peel_adc:
-        wanted.append("spectral")
-    if threat.get("need_anti_as") and role in ("Support", "Solo") and "midgardian" not in wanted:
-        wanted.append("midgardian")
-    if threat.get("need_antiheal"):
-        wanted.append("contagion" if role in ("Support", "Solo") else "divine")
-    if threat.get("need_magi"):
-        wanted.append("magi")
+
+    if damage_role:
+        if threat.get("need_antiheal"):
+            # Prefer name keys that match Divine Ruin / Brawler / Toxic
+            wanted.append("divine")
+            if physical:
+                wanted.append("brawler")
+                wanted.append("toxic")
+        # One optional shell only on Jungle dive lobbies — Mid/Carry skip pure defense inject
+        if role == "Jungle" and dive and threat.get("need_pprot"):
+            wanted.append("breastplate")
+    else:
+        if threat.get("need_pprot") and role in ("Support", "Solo"):
+            wanted.append("breastplate")
+        if threat.get("need_mprot") and threat.get("magical_count", 0) >= 2:
+            wanted.append("genji")
+            if threat.get("magical_count", 0) >= 3:
+                wanted.append("oni")
+        if (dive or peel_adc) and role in ("Support", "Solo"):
+            wanted.append("midgardian")
+        if threat.get("need_anti_crit") or peel_adc:
+            wanted.append("spectral")
+        if threat.get("need_anti_as") and role in ("Support", "Solo") and "midgardian" not in wanted:
+            wanted.append("midgardian")
+        if threat.get("need_antiheal"):
+            wanted.append("contagion")
+        if threat.get("need_magi"):
+            wanted.append("magi")
 
     # Deduplicate keys
     seen_keys: list[str] = []
@@ -610,8 +656,13 @@ def _inject_counter_cores(
         if k not in seen_keys:
             seen_keys.append(k)
 
-    # Frontline can take more counter cores when diving + magic
-    max_inject = 4 if role in ("Support", "Solo") and dive else (3 if role in ("Support", "Solo") else 2)
+    # Support/Solo: up to 3–4. Mid/Carry: 1 offensive flex. Jungle: 1.
+    if role in ("Support", "Solo"):
+        max_inject = 4 if dive else 3
+    elif role in ("Mid", "Carry"):
+        max_inject = 1
+    else:
+        max_inject = 1  # Jungle
     injected = 0
     for key in seen_keys:
         if injected >= max_inject:
@@ -627,9 +678,18 @@ def _inject_counter_cores(
         ]
         if not cands:
             continue
+        # Mid/Carry: never inject pure Defensive shells via this path
+        if role in ("Mid", "Carry"):
+            cands = [
+                x
+                for x in cands
+                if x.item_type != "Defensive" or item_pen_value(x) >= 5
+            ]
+            if not cands:
+                continue
         cands.sort(key=lambda x: x.role_score, reverse=True)
         pick = cands[0]
-        # Drop lowest priority non-pen (damage) or luxury
+        # Drop lowest priority non-pen (damage) or luxury — never openers
         drop_idx = None
         pen_idxs = [i for i, it in enumerate(path) if is_pen_item(it)]
         for i, it in enumerate(path):
@@ -639,11 +699,13 @@ def _inject_counter_cores(
         if drop_idx is None:
             ranked = sorted(range(len(path)), key=lambda i: path[i].role_score)
             for i in ranked:
-                if role in DAMAGE_ROLES_NEED_PEN and len(pen_idxs) <= 1 and i in pen_idxs:
+                nlow = path[i].name.lower()
+                if role in DAMAGE_ROLES_NEED_PEN and len(pen_idxs) <= 2 and i in pen_idxs:
+                    continue
+                if _is_damage_role_opener(nlow):
                     continue
                 # don't drop another counter core we just care about
-                nlow = path[i].name.lower()
-                if any(k in nlow for k in ("spectral", "genji", "contagion", "magi", "divine")):
+                if any(k in nlow for k in ("spectral", "genji", "contagion", "magi", "divine", "brawler", "toxic")):
                     continue
                 drop_idx = i
                 break
