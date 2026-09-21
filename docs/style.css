@@ -1,23 +1,24 @@
-/* SMITE 2 — Obsidian Arena UI */
+/* SMITE 2 — Mythic Dark HUD */
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Rajdhani:wght@400;500;600;700&display=swap");
 
 :root {
-  --bg0: #06070c;
-  --bg: #0a0c14;
-  --bg2: #10141f;
-  --bg3: #161c2c;
-  --bg4: #1c2438;
-  --border: #2a3550;
-  --border-glow: #3d5a9a;
-  --text: #eef2ff;
-  --muted: #8b97b3;
-  --accent: #4cc9f0;
-  --accent2: #f72585;
-  --gold: #ffd60a;
+  --bg0: #05040a;
+  --bg: #0a0812;
+  --bg2: #12101c;
+  --bg3: #1a1628;
+  --bg4: #241e36;
+  --border: #3a3158;
+  --border-glow: #c9a227;
+  --text: #f4efe6;
+  --muted: #a89bb8;
+  --accent: #f0c75e;          /* mythic gold — primary */
+  --accent2: #b56cff;         /* arcane violet */
+  --intel: #4cc9f0;           /* cyan reserved for pen / intel */
+  --gold: #f0c75e;
   --ember: #ff6b35;
   --violet: #9b5de5;
   --mint: #2ec4b6;
-  --s: #ffd60a;
+  --s: #f0c75e;
   --a: #2ec4b6;
   --b: #4cc9f0;
   --c: #c77dff;
@@ -27,8 +28,9 @@
   --font: "Rajdhani", "Segoe UI", system-ui, sans-serif;
   --display: "Orbitron", "Rajdhani", sans-serif;
   --mono: "Cascadia Code", "Consolas", ui-monospace, monospace;
-  --glow: 0 0 24px rgba(76, 201, 240, 0.18);
-  --glow-pink: 0 0 20px rgba(247, 37, 133, 0.22);
+  --glow: 0 0 28px rgba(240, 199, 94, 0.2);
+  --glow-pink: 0 0 22px rgba(181, 108, 255, 0.22);
+  --glow-arcane: 0 0 32px rgba(155, 93, 229, 0.18);
 }
 
 * { box-sizing: border-box; }
@@ -43,10 +45,10 @@ html, body {
   font-weight: 500;
   letter-spacing: 0.02em;
   background:
-    radial-gradient(1200px 600px at 10% -10%, rgba(247, 37, 133, 0.12), transparent 55%),
-    radial-gradient(900px 500px at 95% 0%, rgba(76, 201, 240, 0.1), transparent 50%),
-    radial-gradient(700px 400px at 50% 100%, rgba(155, 93, 229, 0.08), transparent 55%),
-    linear-gradient(180deg, var(--bg0), var(--bg) 40%, #080a12);
+    radial-gradient(1100px 560px at 8% -8%, rgba(240, 199, 94, 0.14), transparent 55%),
+    radial-gradient(900px 500px at 96% 4%, rgba(181, 108, 255, 0.14), transparent 52%),
+    radial-gradient(700px 420px at 50% 110%, rgba(255, 107, 53, 0.07), transparent 55%),
+    linear-gradient(180deg, var(--bg0), var(--bg) 42%, #07060e);
   background-attachment: fixed;
 }
 
@@ -3142,7 +3144,7 @@ body.landing-compact .site-tagline {
    ========================================================================== */
 
 body.ui-simple .app {
-  max-width: 960px;
+  max-width: 1180px;
 }
 
 .simple-header {
@@ -3504,10 +3506,9 @@ body.ui-simple .app {
 }
 .simple-buy .buy-tags:empty { display: none; }
 
-body.ui-simple .build-card::before,
-body.ui-simple .build-card::after,
+/* Mythic HUD: keep corner chrome under simple mode (was hidden) */
 body.ui-simple .build-card .hud-br {
-  display: none;
+  opacity: 0.85;
 }
 
 body.ui-simple .loadout-rail {
@@ -3831,4 +3832,267 @@ details.build-expand[open] .bes-cta::after { content: ""; }
   flex-wrap: wrap;
   gap: 8px;
   margin: 8px 0;
+}
+
+/* ==========================================================================
+   MYTHIC DARK HUD — poster cards, relic rail, cinematic meta
+   ========================================================================== */
+
+a { color: var(--accent); }
+a:hover { color: #ffe9a8; text-shadow: 0 0 12px rgba(240, 199, 94, 0.45); }
+
+header.top {
+  border-color: rgba(240, 199, 94, 0.28);
+  background:
+    linear-gradient(135deg, rgba(240, 199, 94, 0.1), transparent 42%),
+    linear-gradient(225deg, rgba(181, 108, 255, 0.1), transparent 48%),
+    var(--bg2);
+  box-shadow: var(--glow), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+header.top::after {
+  background: linear-gradient(90deg, var(--accent2), var(--gold), var(--ember));
+}
+header.top h1 {
+  background: linear-gradient(90deg, #fff8e7 0%, #f0c75e 42%, #b56cff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.site-updated strong { color: var(--gold); }
+.simple-header .site-tagline strong { color: var(--gold); }
+
+.simple-tabs .tab-btn.active,
+.tabs .tab-btn.active {
+  color: #1a1208;
+  background: linear-gradient(135deg, #ffe29a, var(--gold) 55%, #d4a017);
+  border-color: rgba(240, 199, 94, 0.7);
+  box-shadow: 0 0 20px rgba(240, 199, 94, 0.35);
+}
+.simple-tabs .tab-btn:hover,
+.tabs .tab-btn:hover {
+  border-color: rgba(240, 199, 94, 0.45);
+  color: #ffe9a8;
+}
+
+.step-badge {
+  background: linear-gradient(135deg, var(--gold), var(--accent2));
+  color: #1a1008;
+}
+
+/* ----- Poster build cards ----- */
+.god-build-card.build-expand,
+.card.build-card {
+  position: relative;
+  border: 1px solid rgba(240, 199, 94, 0.22);
+  background:
+    linear-gradient(180deg, rgba(240, 199, 94, 0.06), transparent 28%),
+    linear-gradient(145deg, rgba(181, 108, 255, 0.05), transparent 50%),
+    var(--bg2);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow: hidden;
+}
+.god-build-card.build-expand::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent2), var(--gold), var(--ember));
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 2;
+}
+.god-build-card.build-expand.role-carry { box-shadow: inset 3px 0 0 #f59e0b, 0 8px 28px rgba(0,0,0,0.35); }
+.god-build-card.build-expand.role-mid { box-shadow: inset 3px 0 0 #a78bfa, 0 8px 28px rgba(0,0,0,0.35); }
+.god-build-card.build-expand.role-jungle { box-shadow: inset 3px 0 0 #34d399, 0 8px 28px rgba(0,0,0,0.35); }
+.god-build-card.build-expand.role-solo { box-shadow: inset 3px 0 0 #60a5fa, 0 8px 28px rgba(0,0,0,0.35); }
+.god-build-card.build-expand.role-support { box-shadow: inset 3px 0 0 #f472b6, 0 8px 28px rgba(0,0,0,0.35); }
+.god-build-card.build-expand.is-aspect {
+  border-color: rgba(181, 108, 255, 0.4);
+  box-shadow: inset 3px 0 0 #b56cff, 0 0 28px rgba(181, 108, 255, 0.12), 0 8px 28px rgba(0,0,0,0.35);
+}
+.god-build-card.build-expand[open] {
+  border-color: rgba(240, 199, 94, 0.45);
+  box-shadow: 0 0 36px rgba(240, 199, 94, 0.12), 0 12px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+details.build-expand > summary:hover {
+  background: rgba(240, 199, 94, 0.07);
+}
+.bes-name {
+  font-size: 1.02rem;
+  letter-spacing: 0.06em;
+  background: linear-gradient(90deg, #fff, #f0c75e 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bes-cta { color: var(--gold); }
+details.build-expand[open] .bes-cta { color: var(--muted); }
+.bes-mono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  font-family: var(--display);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #1a1208;
+  background: linear-gradient(145deg, #ffe29a, var(--gold) 55%, #b8891a);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 14px rgba(240, 199, 94, 0.35);
+  flex-shrink: 0;
+}
+.god-build-card[data-pantheon="Greek"] .bes-mono { filter: hue-rotate(-8deg); }
+.god-build-card[data-pantheon="Egyptian"] .bes-mono { filter: hue-rotate(25deg); }
+.god-build-card[data-pantheon="Norse"] .bes-mono { filter: hue-rotate(-40deg) saturate(1.1); }
+.god-build-card[data-pantheon="Chinese"] .bes-mono { filter: hue-rotate(60deg); }
+.god-build-card[data-pantheon="Hindu"] .bes-mono { filter: hue-rotate(90deg); }
+.god-build-card[data-pantheon="Japanese"] .bes-mono { filter: hue-rotate(-20deg) brightness(1.05); }
+
+.tier-pill.tier-S {
+  color: #1a1208;
+  background: linear-gradient(135deg, #ffe29a, var(--gold));
+  border-color: rgba(240, 199, 94, 0.8);
+  box-shadow: 0 0 16px rgba(240, 199, 94, 0.45);
+  font-weight: 800;
+}
+
+/* HUD corner brackets on cards */
+.build-card .hud-br {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  z-index: 3;
+  border-color: rgba(240, 199, 94, 0.55);
+  border-style: solid;
+  opacity: 0.9;
+}
+.build-card .hud-br.tl { left: 6px; top: 6px; border-width: 2px 0 0 2px; }
+.build-card .hud-br.tr { right: 6px; top: 6px; border-width: 2px 2px 0 0; }
+.build-card .hud-br.bl { left: 6px; bottom: 6px; border-width: 0 0 2px 2px; }
+.build-card .hud-br.br { right: 6px; bottom: 6px; border-width: 0 2px 2px 0; }
+
+/* Buy rows + loadout */
+.buy-row {
+  border-color: rgba(58, 49, 88, 0.85);
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.buy-row:hover {
+  border-color: rgba(240, 199, 94, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+.buy-list .buy-row:nth-child(1) .buy-n,
+.buy-list .buy-row:nth-child(2) .buy-n {
+  background: linear-gradient(145deg, #ffe29a, var(--gold));
+  color: #1a1208;
+  border-color: rgba(255,255,255,0.3);
+}
+.buy-row.is-pen { border-color: rgba(240, 199, 94, 0.55); }
+
+.loadout-rail {
+  padding: 10px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(240, 199, 94, 0.18);
+  background: rgba(8, 6, 14, 0.45);
+}
+.loadout-slot {
+  border-color: rgba(240, 199, 94, 0.28);
+  background: rgba(18, 14, 28, 0.85);
+}
+.loadout-slot .ls-icon {
+  color: var(--gold);
+  text-shadow: 0 0 10px rgba(240, 199, 94, 0.35);
+  border: 1px solid rgba(240, 199, 94, 0.25);
+  border-radius: 8px;
+  background: rgba(240, 199, 94, 0.08);
+}
+.loadout-conn {
+  background: linear-gradient(90deg, transparent, rgba(240, 199, 94, 0.45), transparent);
+  height: 2px;
+}
+.loadout-slot.is-pen {
+  border-color: rgba(240, 199, 94, 0.65);
+  box-shadow: 0 0 12px rgba(240, 199, 94, 0.2);
+}
+
+/* ----- Cinematic Meta ladder ----- */
+.tier-board {
+  border: 1px solid rgba(240, 199, 94, 0.25);
+  background:
+    linear-gradient(180deg, rgba(240, 199, 94, 0.07), transparent 20%),
+    var(--bg2);
+  box-shadow: var(--glow);
+}
+.tier-band {
+  border-radius: 12px;
+  border: 1px solid rgba(58, 49, 88, 0.8);
+  padding: 10px 12px;
+  margin: 8px 0;
+  background: rgba(10, 8, 16, 0.55);
+}
+.tier-band:has(.tier-S),
+.tier-band:has(.tier-band-label.tier-S) {
+  border-color: rgba(240, 199, 94, 0.45);
+  background: linear-gradient(90deg, rgba(240, 199, 94, 0.12), rgba(10, 8, 16, 0.55) 40%);
+  box-shadow: 0 0 24px rgba(240, 199, 94, 0.1);
+}
+.tier-band-label.tier-S {
+  color: var(--gold);
+  text-shadow: 0 0 12px rgba(240, 199, 94, 0.5);
+}
+.tier-chip {
+  border-color: rgba(240, 199, 94, 0.22);
+  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.tier-chip:hover {
+  transform: translateY(-2px);
+  border-color: rgba(240, 199, 94, 0.55);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+}
+.tier-chip.tier-S {
+  border-color: rgba(240, 199, 94, 0.55);
+  background: rgba(240, 199, 94, 0.12);
+  box-shadow: 0 0 12px rgba(240, 199, 94, 0.2);
+}
+
+.help-panel-inner {
+  border-color: rgba(240, 199, 94, 0.4);
+}
+
+/* Mobile mythic dock */
+@media (max-width: 860px) {
+  .mobile-nav {
+    border-top: 1px solid rgba(240, 199, 94, 0.28);
+    background: rgba(8, 6, 14, 0.92);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.45);
+  }
+  .mobile-tab.active {
+    color: var(--gold);
+  }
+  .mobile-tab.active .mn-icon {
+    text-shadow: 0 0 12px rgba(240, 199, 94, 0.55);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .buy-row,
+  .tier-chip,
+  details.build-expand {
+    transition: none !important;
+  }
+}
+
+@keyframes mythic-open {
+  from { opacity: 0.65; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+details.build-expand[open] > .build-expand-body {
+  animation: mythic-open 0.22s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  details.build-expand[open] > .build-expand-body { animation: none; }
 }

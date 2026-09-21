@@ -62,6 +62,10 @@ function itemInitials(name) {
   return String(name || "?").slice(0, 2).toUpperCase();
 }
 
+function godInitials(name) {
+  return itemInitials(name);
+}
+
 function loadoutRail(items) {
   const list = items || [];
   if (!list.length) return "";
@@ -2471,14 +2475,21 @@ function godBuildCard(gb, role, opts = {}) {
     ? `<span class="pill hot">Native</span>`
     : `<span class="pill">Off-role</span>`;
 
+  const godMeta = findGodByName(godName);
+  const pantheon = godMeta?.pantheon || "";
+  const mono = godInitials(godName);
+
   return `
     <details class="card build-card god-build-card simple-build build-expand ${roleClass(role)}${
       opts.open ? " deep-link-focus" : ""
     }${isNative ? " is-native-role" : " is-flex-role"}${
       initialMode === "aspect" ? " is-aspect" : ""
-    }" data-god="${escapeAttr(godName)}" data-current-path="${initialMode}" ${opts.open ? "open" : ""}>
+    }" data-god="${escapeAttr(godName)}" data-pantheon="${escapeAttr(pantheon)}" data-current-path="${initialMode}" ${opts.open ? "open" : ""}>
+      <span class="hud-br tl" aria-hidden="true"></span><span class="hud-br tr" aria-hidden="true"></span>
+      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
       <summary class="build-expand-summary">
         <span class="bes-main">
+          <span class="bes-mono" title="${escapeAttr(pantheon || "God")}">${escapeHtml(mono)}</span>
           <span class="bes-name">${escapeHtml(godName)}</span>
           ${roleBadge}
           <span class="pill ${initialMode === "aspect" ? "path-aspect" : "path-base"}" data-path-summary-pill>${initialMode === "aspect" ? "ASPECT" : "BASE"}</span>
