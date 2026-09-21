@@ -66,6 +66,104 @@ function godInitials(name) {
   return itemInitials(name);
 }
 
+/** Wiki hosts art; urllib scrapers get 403 — browsers can load these hotlinks. */
+const WIKI_IMG = "https://wiki.smite2.com/images";
+
+function wikiImageUrl(filename, thumbPx) {
+  const file = String(filename || "");
+  if (!file) return "";
+  const enc = encodeURIComponent(file).replace(/'/g, "%27");
+  if (thumbPx) {
+    return `${WIKI_IMG}/thumb/${enc}/${thumbPx}px-${enc}`;
+  }
+  return `${WIKI_IMG}/${enc}`;
+}
+
+function godWikiKey(name) {
+  return String(name || "")
+    .trim()
+    .replace(/\s+/g, "_");
+}
+
+function godIconCandidates(name, size = 64) {
+  const key = godWikiKey(name);
+  const keyTight = key.replace(/_/g, "");
+  const files = [
+    `T_${key}(S2)_Default_Icon.png`,
+    `T_${keyTight}(S2)_Default_Icon.png`,
+  ];
+  return files.map((f) => wikiImageUrl(f, size));
+}
+
+function godCardCandidates(name, size = 180) {
+  const key = godWikiKey(name);
+  const files = [`T_${key}(S2)_Default.png`, `T_${key.replace(/_/g, "")}(S2)_Default.png`];
+  return files.map((f) => wikiImageUrl(f, size));
+}
+
+function itemIconCandidates(name, size = 64) {
+  const raw = String(name || "").trim();
+  const noApos = raw.replace(/[''′]/g, "");
+  const underscored = noApos.replace(/\s+/g, "_");
+  const glued = noApos.replace(/\s+/g, "");
+  const files = [
+    `T3_${underscored}.png`, // T3_Genji's_Guard style (apostrophe may vary)
+    `T3_${raw.replace(/\s+/g, "_")}.png`,
+    `${glued}_T3.png`, // MysticalMail_T3
+    `${underscored}_T3.png`,
+    `T3_${glued}.png`,
+  ];
+  // Unique preserve order
+  const seen = new Set();
+  const urls = [];
+  for (const f of files) {
+    if (seen.has(f)) continue;
+    seen.add(f);
+    urls.push(wikiImageUrl(f, size));
+  }
+  return urls;
+}
+
+/** Progressive wiki art with monogram/text fallback when all candidates 404. */
+function artFrame(opts) {
+  const {
+    candidates = [],
+    fallback = "?",
+    className = "",
+    alt = "",
+    title = "",
+  } = opts || {};
+  const cands = (candidates || []).filter(Boolean);
+  const fb = escapeHtml(fallback);
+  if (!cands.length) {
+    return `<span class="art-frame ${escapeAttr(className)}" title="${escapeAttr(title)}"><span class="art-fallback">${fb}</span></span>`;
+  }
+  const first = escapeAttr(cands[0]);
+  const rest = escapeAttr(JSON.stringify(cands.slice(1)));
+  return `<span class="art-frame ${escapeAttr(className)}" title="${escapeAttr(title)}">
+    <span class="art-fallback" aria-hidden="true">${fb}</span>
+    <img class="art-img" src="${first}" data-art-rest='${rest}' alt="${escapeAttr(alt)}" loading="lazy" decoding="async" onerror="window.__artImgErr&&__artImgErr(this)" />
+  </span>`;
+}
+
+window.__artImgErr = function artImgErr(img) {
+  try {
+    let rest = [];
+    try {
+      rest = JSON.parse(img.getAttribute("data-art-rest") || "[]");
+    } catch (_) {
+      rest = [];
+    }
+    if (rest.length) {
+      const next = rest.shift();
+      img.setAttribute("data-art-rest", JSON.stringify(rest));
+      img.src = next;
+      return;
+    }
+  } catch (_) {}
+  img.remove();
+};
+
 function loadoutRail(items) {
   const list = items || [];
   if (!list.length) return "";
@@ -78,7 +176,13 @@ function loadoutRail(items) {
       it.signature ? " · THE BIT" : ""
     }${it.is_diff ? " · lobby swap" : ""}">
       <span class="ls-n">${i + 1}</span>
-      <span class="ls-icon">${escapeHtml(itemInitials(it.name))}</span>
+      ${artFrame({
+        candidates: itemIconCandidates(it.name, 64),
+        fallback: itemInitials(it.name),
+        className: "ls-art",
+        alt: it.name || "",
+        title: it.name || "",
+      })}
       <span class="ls-name">${escapeHtml(it.name || "—")}</span>
       ${it.signature ? `<span class="ls-bit" aria-label="signature">BIT</span>` : ""}
     </div>`);
@@ -2489,7 +2593,13 @@ function godBuildCard(gb, role, opts = {}) {
       <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
       <summary class="build-expand-summary">
         <span class="bes-main">
-          <span class="bes-mono" title="${escapeAttr(pantheon || "God")}">${escapeHtml(mono)}</span>
+          ${artFrame({
+            candidates: godIconCandidates(godName, 64),
+            fallback: mono,
+            className: "bes-mono bes-art",
+            alt: godName,
+            title: pantheon || godName,
+          })}
           <span class="bes-name">${escapeHtml(godName)}</span>
           ${roleBadge}
           <span class="pill ${initialMode === "aspect" ? "path-aspect" : "path-base"}" data-path-summary-pill>${initialMode === "aspect" ? "ASPECT" : "BASE"}</span>
@@ -2560,6 +2670,13 @@ function buyRow(it, n, opts = {}) {
     : "";
   return `<li class="buy-row ${slotClass}" title="${escapeAttr(it.why || it.effect || "")}">
     <span class="buy-n">${n}</span>
+    ${artFrame({
+      candidates: itemIconCandidates(it.name, 64),
+      fallback: itemInitials(it.name),
+      className: "buy-art",
+      alt: it.name || "",
+      title: it.name || "",
+    })}
     <div class="buy-main">
       <span class="buy-name">${escapeHtml(it.name)}</span>
       ${why}
