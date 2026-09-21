@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-19T19:41:39.268158+00:00",
+  "generated_at": "2026-09-21T00:10:50.247699+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -381,6 +381,25 @@
     "featured_title": "New / remade this patch (OB43)",
     "featured": [
       {
+        "name": "Barbed Carver",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Jungle",
+          "Solo",
+          "Carry"
+        ],
+        "simple": "Ability hits apply Jagged Wounds (max 3). Basics and abilities deal bonus physical damage per stack (scales with your lifesteal).",
+        "how": "Cast to stack wounds, then auto/ability for bonus damage. Replaced Serrated Edge (old name still ghosts on trackers/wiki).",
+        "when": "Physical ability junglers/bruisers who also basic-attack in the combo.",
+        "when_not": "Pure mage INT kits; you never land abilities.",
+        "buy_as": "Jungle 1st\u20133rd on ability-physical kits. Live shop name \u2014 not Serrated Edge.",
+        "featured": true,
+        "patch": "OB15+"
+      },
+      {
         "name": "Chandra's Grace",
         "tags": [
           "aura",
@@ -505,24 +524,6 @@
         "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
         "when_not": "No heal abilities \u2014 dead item.",
         "buy_as": "Support heal core 3rd\u20135th. Remade OB43.",
-        "featured": true,
-        "patch": "OB43"
-      },
-      {
-        "name": "Serrated Edge",
-        "tags": [
-          "concept",
-          "sustain"
-        ],
-        "roles": [
-          "Jungle",
-          "Solo"
-        ],
-        "simple": "For each non-ult ability on cooldown you gain Strength and lifesteal (up to 3 stacks).",
-        "how": "Ability-cycling junglers stay stacked mid-fight. High LS + free STR.",
-        "when": "Jungle assassins/warriors with short ability cooldowns.",
-        "when_not": "You never cast; pure AA with no ability loop.",
-        "buy_as": "Jungle 1st\u20133rd on CD-heavy kits.",
         "featured": true,
         "patch": "OB43"
       },
@@ -568,6 +569,25 @@
     ],
     "items": [
       {
+        "name": "Barbed Carver",
+        "tags": [
+          "concept",
+          "sustain"
+        ],
+        "roles": [
+          "Jungle",
+          "Solo",
+          "Carry"
+        ],
+        "simple": "Ability hits apply Jagged Wounds (max 3). Basics and abilities deal bonus physical damage per stack (scales with your lifesteal).",
+        "how": "Cast to stack wounds, then auto/ability for bonus damage. Replaced Serrated Edge (old name still ghosts on trackers/wiki).",
+        "when": "Physical ability junglers/bruisers who also basic-attack in the combo.",
+        "when_not": "Pure mage INT kits; you never land abilities.",
+        "buy_as": "Jungle 1st\u20133rd on ability-physical kits. Live shop name \u2014 not Serrated Edge.",
+        "featured": true,
+        "patch": "OB15+"
+      },
+      {
         "name": "Chandra's Grace",
         "tags": [
           "aura",
@@ -692,24 +712,6 @@
         "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
         "when_not": "No heal abilities \u2014 dead item.",
         "buy_as": "Support heal core 3rd\u20135th. Remade OB43.",
-        "featured": true,
-        "patch": "OB43"
-      },
-      {
-        "name": "Serrated Edge",
-        "tags": [
-          "concept",
-          "sustain"
-        ],
-        "roles": [
-          "Jungle",
-          "Solo"
-        ],
-        "simple": "For each non-ult ability on cooldown you gain Strength and lifesteal (up to 3 stacks).",
-        "how": "Ability-cycling junglers stay stacked mid-fight. High LS + free STR.",
-        "when": "Jungle assassins/warriors with short ability cooldowns.",
-        "when_not": "You never cast; pure AA with no ability loop.",
-        "buy_as": "Jungle 1st\u20133rd on CD-heavy kits.",
         "featured": true,
         "patch": "OB43"
       },
@@ -2175,41 +2177,43 @@
         "featured": true,
         "patch": "OB43"
       },
-      "Serrated Edge": {
-        "name": "Serrated Edge",
+      "Barbed Carver": {
+        "name": "Barbed Carver",
         "tags": [
           "concept",
           "sustain"
         ],
         "roles": [
           "Jungle",
-          "Solo"
+          "Solo",
+          "Carry"
         ],
-        "simple": "For each non-ult ability on cooldown you gain Strength and lifesteal (up to 3 stacks).",
-        "how": "Ability-cycling junglers stay stacked mid-fight. High LS + free STR.",
-        "when": "Jungle assassins/warriors with short ability cooldowns.",
-        "when_not": "You never cast; pure AA with no ability loop.",
-        "buy_as": "Jungle 1st\u20133rd on CD-heavy kits.",
+        "simple": "Ability hits apply Jagged Wounds (max 3). Basics and abilities deal bonus physical damage per stack (scales with your lifesteal).",
+        "how": "Cast to stack wounds, then auto/ability for bonus damage. Replaced Serrated Edge (old name still ghosts on trackers/wiki).",
+        "when": "Physical ability junglers/bruisers who also basic-attack in the combo.",
+        "when_not": "Pure mage INT kits; you never land abilities.",
+        "buy_as": "Jungle 1st\u20133rd on ability-physical kits. Live shop name \u2014 not Serrated Edge.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB15+"
       },
-      "serrated edge": {
-        "name": "Serrated Edge",
+      "barbed carver": {
+        "name": "Barbed Carver",
         "tags": [
           "concept",
           "sustain"
         ],
         "roles": [
           "Jungle",
-          "Solo"
+          "Solo",
+          "Carry"
         ],
-        "simple": "For each non-ult ability on cooldown you gain Strength and lifesteal (up to 3 stacks).",
-        "how": "Ability-cycling junglers stay stacked mid-fight. High LS + free STR.",
-        "when": "Jungle assassins/warriors with short ability cooldowns.",
-        "when_not": "You never cast; pure AA with no ability loop.",
-        "buy_as": "Jungle 1st\u20133rd on CD-heavy kits.",
+        "simple": "Ability hits apply Jagged Wounds (max 3). Basics and abilities deal bonus physical damage per stack (scales with your lifesteal).",
+        "how": "Cast to stack wounds, then auto/ability for bonus damage. Replaced Serrated Edge (old name still ghosts on trackers/wiki).",
+        "when": "Physical ability junglers/bruisers who also basic-attack in the combo.",
+        "when_not": "Pure mage INT kits; you never land abilities.",
+        "buy_as": "Jungle 1st\u20133rd on ability-physical kits. Live shop name \u2014 not Serrated Edge.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB15+"
       },
       "Umbral Link": {
         "name": "Umbral Link",
@@ -3349,12 +3353,12 @@
           "pct": 45.8
         },
         {
-          "name": "The Executioner",
+          "name": "Qin's Blade",
           "paths": 10,
           "pct": 41.7
         },
         {
-          "name": "Qin's Blade",
+          "name": "The Executioner",
           "paths": 9,
           "pct": 37.5
         },
@@ -3364,22 +3368,22 @@
           "pct": 33.3
         },
         {
-          "name": "Soul Reaver",
-          "paths": 5,
-          "pct": 20.8
-        },
-        {
-          "name": "Spear of Desolation",
-          "paths": 5,
-          "pct": 20.8
-        },
-        {
           "name": "The Cosmic Horror",
           "paths": 5,
           "pct": 20.8
         },
         {
           "name": "Book of Thoth",
+          "paths": 5,
+          "pct": 20.8
+        },
+        {
+          "name": "Soul Reaver",
+          "paths": 5,
+          "pct": 20.8
+        },
+        {
+          "name": "Spear of Desolation",
           "paths": 5,
           "pct": 20.8
         },
@@ -3404,12 +3408,12 @@
       "path_count": 25,
       "staples": [
         {
-          "name": "Spear of Desolation",
+          "name": "The Cosmic Horror",
           "paths": 24,
           "pct": 96.0
         },
         {
-          "name": "The Cosmic Horror",
+          "name": "Spear of Desolation",
           "paths": 24,
           "pct": 96.0
         },
@@ -3494,14 +3498,14 @@
           "pct": 95.7
         },
         {
-          "name": "Serrated Edge",
-          "paths": 20,
-          "pct": 87.0
+          "name": "The Crusher",
+          "paths": 21,
+          "pct": 91.3
         },
         {
-          "name": "The Crusher",
-          "paths": 17,
-          "pct": 73.9
+          "name": "Heartseeker",
+          "paths": 16,
+          "pct": 69.6
         },
         {
           "name": "Pendulum Blade",
@@ -3515,16 +3519,16 @@
         },
         {
           "name": "The Reaper",
-          "paths": 9,
-          "pct": 39.1
-        },
-        {
-          "name": "Toxic Blade",
-          "paths": 4,
-          "pct": 17.4
+          "paths": 10,
+          "pct": 43.5
         },
         {
           "name": "Arondight",
+          "paths": 5,
+          "pct": 21.7
+        },
+        {
+          "name": "Toxic Blade",
           "paths": 4,
           "pct": 17.4
         },
@@ -3539,22 +3543,22 @@
           "pct": 13.0
         },
         {
-          "name": "Heartseeker",
-          "paths": 2,
-          "pct": 8.7
-        },
-        {
           "name": "Deathbringer",
           "paths": 1,
           "pct": 4.3
         },
         {
-          "name": "Spear of Desolation",
+          "name": "The Cosmic Horror",
           "paths": 1,
           "pct": 4.3
         },
         {
-          "name": "The Cosmic Horror",
+          "name": "Spear Of The Magus",
+          "paths": 1,
+          "pct": 4.3
+        },
+        {
+          "name": "Book of Thoth",
           "paths": 1,
           "pct": 4.3
         }
@@ -3674,12 +3678,12 @@
           "pct": 33.3
         },
         {
-          "name": "Kinetic Cuirass",
+          "name": "Rod Of Asclepius",
           "paths": 5,
           "pct": 23.8
         },
         {
-          "name": "Rod Of Asclepius",
+          "name": "Kinetic Cuirass",
           "paths": 5,
           "pct": 23.8
         },
@@ -3750,9 +3754,9 @@
         },
         "tanks_hp": {
           "label": "vs high HP / tanks",
-          "covered": 15,
+          "covered": 14,
           "total": 24,
-          "pct": 62.5,
+          "pct": 58.3,
           "missing_sample": [
             "Danzaburou",
             "Ishtar",
@@ -3760,9 +3764,10 @@
             "Neith",
             "Medusa",
             "Apollo",
+            "Ullr",
             "Rama",
-            "Hachiman",
-            "Kali"
+            "Kali",
+            "Tsukuyomi"
           ]
         }
       },
@@ -3810,6 +3815,13 @@
           ]
         },
         {
+          "god": "Ullr",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
           "god": "Rama",
           "missing": [
             "heal",
@@ -3817,14 +3829,14 @@
           ]
         },
         {
-          "god": "Hachiman",
+          "god": "Kali",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Kali",
+          "god": "Tsukuyomi",
           "missing": [
             "heal",
             "tanks_hp"

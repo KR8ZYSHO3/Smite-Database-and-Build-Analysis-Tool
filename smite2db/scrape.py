@@ -49,7 +49,7 @@ ITEM_CATEGORY_META: list[tuple[str, str, str]] = [
 # Brand-new items sometimes exist as pages before wiki categories catch up.
 FORCE_ITEM_PAGES: list[tuple[str, str, str]] = [
     # (page title, tier, item_type)
-    ("Serrated Edge", "3", "Offensive"),
+    ("Barbed Carver", "3", "Offensive"),
     ("Lotus Sickle", "3", "Offensive"),
     ("Soul Locket", "3", "Hybrid"),
 ]

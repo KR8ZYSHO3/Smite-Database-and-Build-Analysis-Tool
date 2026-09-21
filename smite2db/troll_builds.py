@@ -216,7 +216,7 @@ AXIS_ITEM_KEYS: dict[str, list[str]] = {
         "lifebinder", "asclepius", "phoenix", "yogi",
     ],
     "serrated_spin": [
-        "serrated", "chronos", "gem of focus", "bloodforge", "devourer",
+        "barbed carver", "barbed", "chronos", "gem of focus", "bloodforge", "devourer",
         "typhon", "bancroft", "sanguine",
     ],
     "shell_copium": [
@@ -364,7 +364,7 @@ AXIS_BLURBS: dict[str, str] = {
     "active_toybox": "Splashy On-Use and meme power spikes within the active budget. Chaos is the point.",
     "enchanter_greed": "Team-buff toys and aura greed. You're not the carry — you're the reason they look good.",
     "heal_battery": "Self-heal steroids stacked until your HP bar is a personality.",
-    "serrated_spin": "Cast → lifesteal fantasy. Serrated Edge + CDR spam like a cartoon villain.",
+    "serrated_spin": "Cast → wound → hit fantasy. Barbed Carver + CDR spam like a cartoon villain.",
     "shell_copium": "Every shell in the shop. Reflect, soak, and pretend you're fine.",
     "antiheal_police": "Sundering + Ruin overkill into lobbies that barely heal. Zero mercy.",
 }

@@ -116,6 +116,9 @@ VAMP_STARTER_KEYS = ("vampiric", "shroud")
 REMOVED_OR_UNAVAILABLE_ITEM_KEYS = (
     "eye of providence",
     "providence",  # only matches Eye of Providence (not Eye of Erebus / Storm)
+    # OB15 rename/rework — wiki/tracker still list the old name; live shop is Barbed Carver
+    "serrated edge",
+    "serrated",
 )
 
 

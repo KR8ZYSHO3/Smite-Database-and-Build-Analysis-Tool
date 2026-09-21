@@ -3575,6 +3575,8 @@ function isRemovedOrUnavailableItem(it) {
   // Eye of Providence (and similar) — not reliably in live shop
   if (n.includes("eye of providence") || n === "providence") return true;
   if (n.includes("providence") && n.includes("eye")) return true;
+  // OB15: Serrated Edge → Barbed Carver (wiki/tracker still ghost the old name)
+  if (n.includes("serrated")) return true;
   return false;
 }
 
@@ -4281,7 +4283,7 @@ const TROLL_SLOT_FAMILIES = {
   toy_spike: ["tahuti", "soul reaver", "totem", "cosmic", "pridwen", "helm of darkness"],
   enchanter_core: ["lotus sickle", "soul locket", "heartwood", "asclepius", "yogi", "chandra", "stampede"],
   heal_steroid: ["vital amp", "daybreak", "bancroft", "typhon", "sanguine", "lifebinder", "asclepius", "phoenix"],
-  ls_cdr: ["serrated", "chronos", "gem of focus", "bloodforge", "devourer", "typhon", "bancroft"],
+  ls_cdr: ["barbed carver", "barbed", "chronos", "gem of focus", "bloodforge", "devourer", "typhon", "bancroft"],
   shell_wall: ["shell of rebuke", "phantom shell", "spectral", "magi", "mantle", "nemean", "pridwen", "breastplate"],
   antiheal_overkill: ["sundering", "divine ruin", "contagion", "brawler", "toxic", "pestilence", "desolat"],
 };
@@ -4402,7 +4404,7 @@ const TROLL_AXIS_SIGNATURES = {
   active_toybox: ["dreamer", "wish-granting", "parashu", "arondight"],
   enchanter_greed: ["lotus sickle", "soul locket", "heartwood", "chandra", "stampede"],
   heal_battery: ["vital amp", "daybreak", "bancroft", "typhon", "sanguine"],
-  serrated_spin: ["serrated", "bloodforge", "devourer", "chronos"],
+  serrated_spin: ["barbed", "bloodforge", "devourer", "chronos"],
   // Prefer shop T3s first — Shell of Rebuke / Phantom Shell are relics, not path items
   shell_copium: ["spectral", "nemean", "pridwen", "breastplate", "mantle", "shell of rebuke", "phantom shell"],
   antiheal_police: ["divine ruin", "contagion", "brawler", "desolat", "sundering", "toxic"],
@@ -4418,7 +4420,7 @@ const TROLL_TITLES = {
   active_toybox: ["Button Mashing Menace", "On-Use Toybox", "Ultimate? We Have Actives At Home", "Cooldown For Chaos"],
   enchanter_greed: ["Support Diff But Make It Greedy", "Lotus Sickle Propaganda", "I Buff, Therefore I Am", "Enchanter Tax Bracket"],
   heal_battery: ["HP Go Up Forever", "Lifesteal PowerPoint", "Battery Not Included", "Your Burst Was A Snack"],
-  serrated_spin: ["Serrated Edge Propaganda", "CDR Meets Lifesteal", "Spin To Win (Illegally)", "Edge Lord Speedrun"],
+  serrated_spin: ["Barbed Carver Propaganda", "CDR Meets Wounds", "Spin To Win (Illegally)", "Edge Lord Speedrun"],
   shell_copium: ["Shell Of Rebuke Believer", "Phantom Copium", "I Live In My Shell Now", "Prot Shell Collection"],
   antiheal_police: ["Sundering Task Force", "Healing Is Illegal", "Antiheal Overtime", "Pharmacy Raid"],
 };
@@ -4432,7 +4434,7 @@ const TROLL_BLURBS = {
   active_toybox: "Splashy On-Use chaos within the active budget.",
   enchanter_greed: "Team-buff toys and aura greed. You're not the carry — you're the reason they look good.",
   heal_battery: "Self-heal / lifesteal steroids stacked until the HP bar becomes a personality.",
-  serrated_spin: "Serrated fantasy: CDR + lifesteal spin. Ability spam that refuses to die.",
+  serrated_spin: "Barbed Carver fantasy: ability wounds + LS follow-ups. Ability spam that refuses to die.",
   shell_copium: "Every shell in the shop. Reflect, soak, and pretend you're fine.",
   antiheal_police: "Sundering + classic antiheal overkill. Healing in this lobby is a crime.",
 };

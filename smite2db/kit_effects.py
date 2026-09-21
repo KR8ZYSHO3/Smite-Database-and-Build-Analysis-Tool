@@ -77,7 +77,7 @@ ITEM_TO_FAMILY: list[tuple[str, str]] = [
     ("heartwood", "heal_item"),
     ("lotus sickle", "heal_item"),
     ("soul locket", "heal_item"),
-    ("serrated edge", "ls"),
+    ("barbed carver", "ls"),
     ("executioner", "executioner"),
     ("riptalon", "as_crit"),
     ("deathbringer", "as_crit"),

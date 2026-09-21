@@ -405,15 +405,34 @@ def inspiration_boost(
     data = data if data is not None else load_inspiration()
     if not data or not item_name:
         return 0.0, None
+    # Tracker/wiki ghosts: Serrated Edge was renamed to Barbed Carver (OB15)
     n = item_name
+    n_aliases = [n]
+    if "serrated" in n.lower():
+        n_aliases.append("Barbed Carver")
+    elif "barbed" in n.lower():
+        n_aliases.append("Serrated Edge")
     role_key = role
     god = (god_name or "").strip()
     delta = 0.0
     why_bits: list[str] = []
 
+    def _ent_from(bucket: dict | None, names: list[str]) -> dict | None:
+        if not bucket:
+            return None
+        items = bucket.get("items") or {}
+        for nm in names:
+            if nm in items:
+                return items[nm]
+            # case-insensitive
+            for k, v in items.items():
+                if str(k).lower() == nm.lower():
+                    return v
+        return None
+
     gr = (data.get("by_god_role") or {}).get(f"{god}|{role_key}") if god else None
     if gr and gr.get("games", 0) >= 2:
-        ent = (gr.get("items") or {}).get(n)
+        ent = _ent_from(gr, n_aliases)
         if ent:
             w = float(ent.get("weight") or 0)
             conf = min(1.0, gr["games"] / 8.0)
@@ -425,7 +444,16 @@ def inspiration_boost(
             if add >= 4:
                 delta += add
                 why_bits.append(f"high-SR {god} {role} ({ent.get('count')}/{gr['games']})")
-        op = (gr.get("openers") or {}).get(n)
+        op = None
+        for nm in n_aliases:
+            op = (gr.get("openers") or {}).get(nm)
+            if not op:
+                for k, v in (gr.get("openers") or {}).items():
+                    if str(k).lower() == nm.lower():
+                        op = v
+                        break
+            if op:
+                break
         if op and float(op.get("rate") or 0) >= 0.2:
             delta += OPENER_BONUS * min(1.0, float(op["rate"]) * 1.4)
             why_bits.append("common high-SR opener")
@@ -433,7 +461,7 @@ def inspiration_boost(
     if delta < 6:
         rr = (data.get("by_role") or {}).get(role_key)
         if rr and rr.get("games", 0) >= 5:
-            ent = (rr.get("items") or {}).get(n)
+            ent = _ent_from(rr, n_aliases)
             if ent:
                 w = float(ent.get("weight") or 0)
                 conf = min(1.0, rr["games"] / 25.0)
@@ -444,7 +472,16 @@ def inspiration_boost(
                 if add >= 3:
                     delta += add
                     why_bits.append(f"high-SR {role} staple")
-            op = (rr.get("openers") or {}).get(n)
+            op = None
+            for nm in n_aliases:
+                op = (rr.get("openers") or {}).get(nm)
+                if not op:
+                    for k, v in (rr.get("openers") or {}).items():
+                        if str(k).lower() == nm.lower():
+                            op = v
+                            break
+                if op:
+                    break
             if op and float(op.get("rate") or 0) >= 0.12:
                 delta += OPENER_BONUS * 0.7 * min(1.0, float(op["rate"]) * 2)
                 if "opener" not in " ".join(why_bits):
