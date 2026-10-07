@@ -100,6 +100,7 @@ TRUE_HEALER_NAMES = frozenset(
         "ix chel",
         "horus",
         "artio",
+        "hel",  # OB44 Light stance / Divergence Light — true ally heal kit
     }
 )
 
@@ -2275,7 +2276,8 @@ def rescore_for_god(
             if "lotus sickle" in nlow and role == "Support":
                 s += 20
             if "heartwood" in nlow:
-                s -= 35  # OB43 hotfix: amp 20→10%, lost heal-CD reduction; burns an active
+                # OB45: CDR 10→20%, INT 40→45 — still an active; keep mild flex tax
+                s -= 12
             if "lifebinder" in nlow and role == "Support":
                 s -= 15  # keep as flex active, not auto dual-active with Locket
     # Always gate heal/enchanter cores — don't rely on noisy heal tags
@@ -2296,9 +2298,22 @@ def rescore_for_god(
     # OB43: Shell of Rebuke mitigation nerfed — late flex only, not default shell
     if "shell of rebuke" in nlow:
         s -= 28
-    # World Stone: Support healers love −30% ult CD (passive); Mid still gated elsewhere
+    # World Stone: Support healers love ult CDR (passive; OB44 30%→25%); Mid gated elsewhere
     if "world stone" in nlow and true_healer and role == "Support":
-        s += 55
+        s += 48
+    # OB44 Aphrodite: Kiss no longer shares prots; soulmate gets 0.5 STR + 1 INT per
+    # 1 mana regen from items — MPR items become real pocket power.
+    gname_low = str(bias.get("god_name") or "").lower()
+    if gname_low == "aphrodite" and role in ("Support", "Mid"):
+        mpr_v = _canon_stat_value(item.stats, "mpr")
+        if mpr_v >= 2:
+            s += 18 + mpr_v * 4
+        if mpr_v >= 4:
+            s += 12
+        # Passive MPR bricks beat random shells on her Support path
+        if role == "Support" and mpr_v >= 2.5 and item.item_type != "Offensive":
+            if not _is_heal_core_item(item.name):
+                s += 10
     # Hard: Bancroft / Typhon / Gluttonous only on self-sustain mages
     if _is_mage_ls_core_item(item.name):
         if wants_ls and mage:
@@ -3183,21 +3198,23 @@ def _pick_slot_item(
         if slot in ("mitigate", "counter", "aura") and x.item_type == "Defensive":
             sc += 12
         if slot == "heal_aura":
-            # True healers: Asclepius + Sickle first. Heartwood nerfed; Chandra secondary.
+            # True healers: Asclepius + Sickle first. Heartwood OB45-buffed but still active.
             if "asclepius" in n:
                 sc += 85
             elif "lotus sickle" in n:
                 sc += 80
             elif "soul locket" in n:
                 sc += 55
-            elif any(k in n for k in ("lifebinder", "heartwood")):
-                sc += 25  # flex / nerfed — not default over Sickle+Asclepius
+            elif "heartwood" in n:
+                sc += 38  # OB45 CDR/INT buff — flex active after Sickle/Asclepius
+            elif "lifebinder" in n:
+                sc += 25  # flex active — not default dual-active
             elif "chandra" in n:
                 sc += 30
             elif any(k in n for k in ("thebes", "sovereignty")):
                 sc += 20
             if "world stone" in n:
-                sc += 45  # −30% ult CD luxury on heal Support
+                sc += 40  # OB44: ult CDR 25% (was 30%) — still luxury on heal Support
         if slot == "aura" and role == "Support":
             # Meta support openers — Thebes / Stampede / Amanita beat Chandra/Spectral
             if any(k in n for k in ("thebes", "stampede", "amanita")):

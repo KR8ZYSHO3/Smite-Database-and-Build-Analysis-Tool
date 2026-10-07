@@ -3079,7 +3079,7 @@ function setupMetaLab() {
       .join("");
   }
 
-  // Items explained — simple English guide (featured OB43 block + full list)
+  // Items explained — simple English guide (featured OB43–OB45 block + full list)
   const guideRoot = lab.flex_item_guide || {};
   const guideItems = guideRoot.items || [];
   const featuredItems = guideRoot.featured || guideItems.filter((g) => g.featured);

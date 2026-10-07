@@ -4,7 +4,7 @@
 **kit-true**, **role-correct**, **spike-ordered**, and **softly informed by high-SR play** —  
 without becoming a frozen meta photocopier.
 
-**Version:** 1.2.0 (OB43) — Sickle live for true healers; Chandra/Heartwood/Shell soft-penalized after 9/9 hotfixes; Sundering relic weight up (40% antiheal); heal_support prefers ≤1 shop active; World Stone allowed as Support healer ult-CDR luxury (still Mid-banned).
+**Version:** 1.3.0 (OB45) — Roster Hel (OB44) + Nike (OB45); Hel on true-healer allowlist; Aphrodite OB44 mana-regen soulmate scoring; Heartwood OB45 CDR/INT buff (milder active tax); World Stone ult CDR 25%; Sickle still live for true healers; Sundering relic 40% antiheal; heal Support ≤1 shop active.
 
 **Inventory model (SMITE 2):** starter slot separate · 6 shop items · ≤2–3 On-Use actives · relics separate.
 

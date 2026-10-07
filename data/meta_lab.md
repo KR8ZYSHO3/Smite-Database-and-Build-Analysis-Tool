@@ -2,15 +2,14 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-09-19T19:41:39.268158+00:00_
+_Generated: 2026-10-07T14:18:16.012930+00:00_
 
 ## Weekly themes
 
-- Support paths under-buy anti-crit (Spectral on ~33.3% of recs) — flex Spectral almost every game.
-- Support/Solo anti-heal is rare in defaults (~23.8% support) — Stygian/Brawler's is a live flex.
-- Gods rising (r5 patch): Cu Chulainn, Hun Batz, Ishtar, Thanatos.
-- Items hot (r5 patch): Damaru, Omen Drum, The Cosmic Horror, Eye of the Storm.
-- Patch axes (avg r5): damage -0.18, general +0.11, utility -0.03.
+- Support paths under-buy anti-crit (Spectral on ~9.1% of recs) — flex Spectral almost every game.
+- Gods rising (r5 patch): Cu Chulainn, Hachiman, Chronos, Ganesha.
+- Items hot (r5 patch): Damaru, Omen Drum, Gluttonous Grimoire, The Cosmic Horror.
+- Patch axes (avg r5): general +0.11, cooldown -0.07, damage +0.05.
 
 ## Role staples (top items in recommended paths)
 
@@ -18,154 +17,154 @@ _Generated: 2026-09-19T19:41:39.268158+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
+| Odysseus' Bow | 19 | 79.2 |
 | Tyrfing | 19 | 79.2 |
-| Odysseus' Bow | 17 | 70.8 |
+| Deathbringer | 16 | 66.7 |
 | Devourer's Gauntlet | 13 | 54.2 |
-| Deathbringer | 11 | 45.8 |
-| Eye of the Storm | 11 | 45.8 |
-| The Executioner | 10 | 41.7 |
-| Qin's Blade | 9 | 37.5 |
-| Demon Blade | 8 | 33.3 |
-| Soul Reaver | 5 | 20.8 |
+| Eye of the Storm | 12 | 50.0 |
+| The Executioner | 11 | 45.8 |
+| Qin's Blade | 6 | 25.0 |
+| Tekko-Kagi | 6 | 25.0 |
 | Spear of Desolation | 5 | 20.8 |
 | The Cosmic Horror | 5 | 20.8 |
 | Book of Thoth | 5 | 20.8 |
-| Avenging Blade | 5 | 20.8 |
+| Soul Reaver | 5 | 20.8 |
 | Sands Of Time | 4 | 16.7 |
-| Totem of Death | 4 | 16.7 |
+| Spear Of The Magus | 3 | 12.5 |
+| Totem of Death | 3 | 12.5 |
 
-### Mid (25 paths)
+### Mid (26 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Spear of Desolation | 24 | 96.0 |
-| The Cosmic Horror | 24 | 96.0 |
-| Book of Thoth | 23 | 92.0 |
-| Chronos' Pendant | 18 | 72.0 |
-| Divine Ruin | 11 | 44.0 |
-| Totem of Death | 11 | 44.0 |
-| Spear Of The Magus | 7 | 28.0 |
-| Soul Reaver | 5 | 20.0 |
-| Gem of Isolation | 3 | 12.0 |
-| Dreamer's Idol | 3 | 12.0 |
-| Wish-Granting Pearl | 2 | 8.0 |
-| Gluttonous Grimoire | 2 | 8.0 |
-| Mystical Mail | 1 | 4.0 |
-| Stygian Anchor | 1 | 4.0 |
-| Rod of Tahuti | 1 | 4.0 |
+| Spear of Desolation | 25 | 96.2 |
+| The Cosmic Horror | 25 | 96.2 |
+| Book of Thoth | 24 | 92.3 |
+| Chronos' Pendant | 19 | 73.1 |
+| Divine Ruin | 10 | 38.5 |
+| Totem of Death | 10 | 38.5 |
+| Rod of Tahuti | 7 | 26.9 |
+| Gem of Isolation | 5 | 19.2 |
+| Spear Of The Magus | 5 | 19.2 |
+| Soul Reaver | 4 | 15.4 |
+| Gluttonous Grimoire | 3 | 11.5 |
+| Polynomicon | 2 | 7.7 |
+| Helm of Darkness | 2 | 7.7 |
+| Dreamer's Idol | 2 | 7.7 |
+| Soul Gem | 1 | 3.8 |
 
 ### Jungle (23 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Jotunn's Revenge | 22 | 95.7 |
 | Hydra's Lament | 22 | 95.7 |
-| Serrated Edge | 20 | 87.0 |
-| The Crusher | 17 | 73.9 |
-| Pendulum Blade | 12 | 52.2 |
-| Avatar's Parashu | 11 | 47.8 |
-| The Reaper | 9 | 39.1 |
-| Toxic Blade | 4 | 17.4 |
-| Arondight | 4 | 17.4 |
-| Damaru | 3 | 13.0 |
-| Bloodforge | 3 | 13.0 |
-| Heartseeker | 2 | 8.7 |
+| The Crusher | 22 | 95.7 |
+| Jotunn's Revenge | 22 | 95.7 |
+| Heartseeker | 15 | 65.2 |
+| Arondight | 9 | 39.1 |
+| The Reaper | 8 | 34.8 |
+| Tekko-Kagi | 8 | 34.8 |
+| Bloodforge | 7 | 30.4 |
+| Pendulum Blade | 6 | 26.1 |
+| Avatar's Parashu | 4 | 17.4 |
+| Damaru | 4 | 17.4 |
 | Deathbringer | 1 | 4.3 |
+| Spear Of The Magus | 1 | 4.3 |
+| Rod of Tahuti | 1 | 4.3 |
 | Spear of Desolation | 1 | 4.3 |
-| The Cosmic Horror | 1 | 4.3 |
 
-### Solo (20 paths)
-
-| Item | Paths | % |
-|------|------:|--:|
-| Shifter's Shield | 19 | 95.0 |
-| Genji's Guard | 15 | 75.0 |
-| Eye of the Storm | 14 | 70.0 |
-| Mystical Mail | 10 | 50.0 |
-| Stone of Binding | 8 | 40.0 |
-| Doublet of Binding | 6 | 30.0 |
-| Breastplate of Valor | 6 | 30.0 |
-| Shield of the Phoenix | 5 | 25.0 |
-| Draconic Scale | 5 | 25.0 |
-| Kinetic Cuirass | 4 | 20.0 |
-| Leviathan's Hide | 3 | 15.0 |
-| Hussar's Wings | 3 | 15.0 |
-| Brawler’s Beat Stick | 3 | 15.0 |
-| Yogi's Necklace | 2 | 10.0 |
-| Amanita Charm | 2 | 10.0 |
-
-### Support (21 paths)
+### Solo (21 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Gauntlet of Thebes | 19 | 90.5 |
-| Stone of Binding | 13 | 61.9 |
-| Gem of Isolation | 12 | 57.1 |
-| Shifter's Shield | 8 | 38.1 |
-| Freya's Tears | 7 | 33.3 |
-| Spectral Armor | 7 | 33.3 |
-| Kinetic Cuirass | 5 | 23.8 |
-| Rod Of Asclepius | 5 | 23.8 |
-| Lotus Sickle | 5 | 23.8 |
-| Stygian Anchor | 5 | 23.8 |
-| Chandra's Grace | 4 | 19.0 |
-| Amanita Charm | 4 | 19.0 |
-| Heartwood Charm | 3 | 14.3 |
-| Draconic Scale | 3 | 14.3 |
-| Doublet of Binding | 3 | 14.3 |
+| Shifter's Shield | 19 | 90.5 |
+| Genji's Guard | 16 | 76.2 |
+| Eye of the Storm | 12 | 57.1 |
+| Stone of Binding | 8 | 38.1 |
+| Breastplate of Valor | 7 | 33.3 |
+| Brawler’s Beat Stick | 7 | 33.3 |
+| Phoenix Feather | 6 | 28.6 |
+| Wyrmskin Hide | 5 | 23.8 |
+| Doublet of Binding | 5 | 23.8 |
+| Xibalban Effigy | 5 | 23.8 |
+| Mystical Mail | 4 | 19.0 |
+| Shield of the Phoenix | 4 | 19.0 |
+| Kinetic Cuirass | 3 | 14.3 |
+| Stygian Anchor | 3 | 14.3 |
+| Regrowth Striders | 3 | 14.3 |
+
+### Support (22 paths)
+
+| Item | Paths | % |
+|------|------:|--:|
+| Gem of Isolation | 18 | 81.8 |
+| Gauntlet of Thebes | 18 | 81.8 |
+| Stone of Binding | 13 | 59.1 |
+| Stygian Anchor | 10 | 45.5 |
+| Shifter's Shield | 7 | 31.8 |
+| Lotus Sickle | 6 | 27.3 |
+| Phoenix Feather | 6 | 27.3 |
+| Rod Of Asclepius | 6 | 27.3 |
+| Alchemist Coat | 5 | 22.7 |
+| Doublet of Binding | 4 | 18.2 |
+| Helm of Darkness | 4 | 18.2 |
+| Midgardian Mail | 4 | 18.2 |
+| Damaru | 3 | 13.6 |
+| Regrowth Striders | 3 | 13.6 |
+| Spectral Armor | 2 | 9.1 |
 
 ## Answer coverage
 
 ### Carry
-- **vs heals / sustain**: 3/24 (12.5%)
-- **vs high HP / tanks**: 15/24 (62.5%)
+- **vs heals / sustain**: 1/24 (4.2%)
+- **vs high HP / tanks**: 16/24 (66.7%)
 
 ### Mid
-- **vs heals / sustain**: 11/25 (44.0%)
-- **vs high HP / tanks**: 6/25 (24.0%)
+- **vs heals / sustain**: 10/26 (38.5%)
+- **vs high HP / tanks**: 6/26 (23.1%)
 
 ### Jungle
-- **vs heals / sustain**: 5/23 (21.7%)
+- **vs heals / sustain**: 1/23 (4.3%)
 - **vs high HP / tanks**: 0/23 (0.0%)
 
 ### Solo
-- **vs heals / sustain**: 4/20 (20.0%)
-- **vs physical damage**: 7/20 (35.0%)
-- **vs magic damage**: 15/20 (75.0%)
-- **vs CC / dive**: 0/20 (0.0%)
+- **vs heals / sustain**: 10/21 (47.6%)
+- **vs physical damage**: 11/21 (52.4%)
+- **vs magic damage**: 19/21 (90.5%)
+- **vs CC / dive**: 0/21 (0.0%)
 
 ### Support
-- **vs crit**: 7/21 (33.3%)
-- **vs attack speed**: 5/21 (23.8%)
-- **vs magic damage**: 2/21 (9.5%)
-- **vs heals / sustain**: 5/21 (23.8%)
+- **vs crit**: 2/22 (9.1%)
+- **vs attack speed**: 12/22 (54.5%)
+- **vs magic damage**: 7/22 (31.8%)
+- **vs heals / sustain**: 10/22 (45.5%)
 
 ## Trajectories — gods rising
 
-- Cu Chulainn: r5 +9.24 (rising)
-- Hun Batz: r5 +2.47 (rising)
-- Ishtar: r5 +1.65 (new)
-- Thanatos: r5 +1.53 (rising)
-- Fenrir: r5 +1.24 (rising)
-- Hachiman: r5 +1.02 (rising)
-- Ravana: r5 +0.93 (new)
-- Baron Samedi: r5 +0.89 (rising)
-- Poseidon: r5 +0.89 (rising)
-- Achilles: r5 +0.79 (volatile)
-- Apollo: r5 +0.79 (volatile)
-- Mercury: r5 +0.71 (volatile)
+- Cu Chulainn: r5 +6.74 (rising)
+- Hachiman: r5 +5.42 (rising)
+- Chronos: r5 +4.73 (rising)
+- Ganesha: r5 +4.29 (rising)
+- Sun Wukong: r5 +3.30 (rising)
+- Ah Puch: r5 +3.06 (rising)
+- Princess Bari: r5 +2.88 (rising)
+- Thor: r5 +2.35 (rising)
+- Ratatoskr: r5 +2.07 (rising)
+- Chaac: r5 +1.86 (rising)
+- Amaterasu: r5 +1.67 (rising)
+- Thanatos: r5 +1.18 (rising)
 
 ## Trajectories — items rising
 
-- Damaru: r5 +8.70
-- Omen Drum: r5 +6.88
-- The Cosmic Horror: r5 +6.40
-- Eye of the Storm: r5 +5.36
-- Totem of Death: r5 +3.70
-- Toxic Blade: r5 +2.98
-- Brawler’s Beat Stick: r5 +2.27
-- Divine Ruin: r5 +2.27
-- Stygian Anchor: r5 +2.27
-- Lifebinder: r5 +1.87
-- Soul Locket: r5 +1.87
-- The Crusher: r5 +1.86
+- Damaru: r5 +6.91
+- Omen Drum: r5 +5.46
+- Gluttonous Grimoire: r5 +5.30
+- The Cosmic Horror: r5 +5.08
+- Brawler’s Beat Stick: r5 +4.31
+- Stygian Anchor: r5 +4.25
+- Helm of Darkness: r5 +3.02
+- Totem of Death: r5 +2.94
+- Wyrmskin Hide: r5 +2.45
+- Eye of the Storm: r5 +2.25
+- Hastened Fatalis: r5 +2.15
+- Xibalban Effigy: r5 +2.00
