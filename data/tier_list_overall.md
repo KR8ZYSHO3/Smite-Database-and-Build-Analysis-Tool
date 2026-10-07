@@ -1,142 +1,145 @@
 # SMITE 2 Tier List — `overall`
 
-Generated from **ranked win rates** (SmiteBrain top Conquest + tracker.gg high-SR sample), ability metrics, build synergy, and **patch-note momentum** (recency-weighted buff/nerf analysis of official wiki patch notes).
+Generated from **ranked win rates** (SmiteBrain + SmiteSource Masters+ + tracker.gg high-SR sample), ability metrics, build synergy, and **patch-note momentum** (recency-weighted buff/nerf analysis of official wiki patch notes).
 
 | Rank | Tier | God | Score | Patch | Kit | Build |
 |-----:|:----:|-----|------:|------:|----:|------:|
-| 1 | **S** | Aphrodite | 81.9 |  81.6 |  64.1 |  96.3 |
-| 2 | **S** | Tsukuyomi | 81.8 |  72.4 |  83.3 |  92.0 |
-| 3 | **S** | Cupid | 79.2 |  89.4 |  95.7 |  37.3 |
-| 4 | **S** | Ishtar | 75.3 | 100.0 |  45.0 |  68.8 |
-| 5 | **S** | Awilix | 72.4 |  72.0 |  72.4 |  93.4 |
-| 6 | **S** | Fenrir | 71.4 | 100.0 |  73.7 |  44.6 |
-| 7 | **S** | Ra | 71.3 |  74.0 |  63.1 |  67.6 |
-| 8 | **S** | Danzaburou | 70.8 |  73.1 |  85.9 |  63.0 |
-| 9 | **S** | Ne Zha | 70.4 |  52.3 |  96.9 |  92.0 |
-| 10 | **S** | Horus | 70.3 |  43.9 |  73.6 |  71.0 |
-| 11 | **S** | Princess Bari | 70.0 |  74.5 |  66.9 |  96.7 |
-| 12 | **A** | Eset | 69.5 |  78.5 |  49.0 |  96.3 |
-| 13 | **A** | Chaac | 69.3 |  80.7 |  93.8 |  57.7 |
-| 14 | **A** | Sun Wukong | 67.9 |  70.6 |  92.3 |  59.7 |
-| 15 | **A** | Cernunnos | 67.4 |  73.6 |  75.7 |  34.0 |
-| 16 | **A** | Poseidon | 66.5 |  89.1 |  35.1 |  67.6 |
-| 17 | **A** | Thanatos | 66.1 | 100.0 |  43.3 |  42.5 |
-| 18 | **A** | Mercury | 66.1 |  86.9 |  59.9 |  46.3 |
-| 19 | **A** | Cu Chulainn | 65.7 | 100.0 |  64.4 |  32.2 |
-| 20 | **A** | Baron Samedi | 65.6 |  83.2 |  49.0 |  69.8 |
-| 21 | **A** | Xing Tian | 65.6 |  98.9 |  24.3 |  34.3 |
-| 22 | **A** | Sol | 65.3 |  71.5 |  68.4 |  96.7 |
-| 23 | **A** | Ymir | 65.0 |  91.1 |  57.2 |  40.5 |
-| 24 | **A** | Nut | 65.0 |  65.8 |  73.8 |  96.7 |
-| 25 | **A** | Apollo | 64.4 | 100.0 |  29.1 |  33.6 |
-| 26 | **A** | Vulcan | 64.4 |  73.0 |  28.4 |  95.9 |
-| 27 | **A** | Odin | 63.8 |  86.4 |  60.2 |  31.3 |
-| 28 | **A** | Discordia | 63.8 |  58.6 |  53.9 | 100.0 |
-| 29 | **A** | Kukulkan | 63.0 |  92.5 |  43.4 |  67.8 |
-| 30 | **B** | Hades | 62.5 |  74.6 |  30.3 |  46.3 |
-| 31 | **B** | Susano | 62.5 |  73.1 |  38.1 |  43.6 |
-| 32 | **B** | Chiron | 62.4 |  74.4 |  47.6 |  39.8 |
-| 33 | **B** | Izanami | 62.3 |  69.3 |  45.5 |  37.3 |
-| 34 | **B** | Mordred | 62.1 |  47.6 |  86.5 |  43.6 |
-| 35 | **B** | Achilles | 62.0 |  96.7 |  49.5 |  46.3 |
-| 36 | **B** | Medusa | 61.1 |  89.9 |  47.1 |  64.4 |
-| 37 | **B** | Loki | 59.4 |  76.7 |  27.6 |  92.0 |
-| 38 | **B** | Jormungandr | 59.0 |  73.3 |  60.4 |  38.1 |
-| 39 | **B** | Ullr | 58.8 |  71.7 |  32.7 |  31.5 |
-| 40 | **B** | Osiris | 58.6 |  67.7 |  80.9 |  55.9 |
-| 41 | **B** | Janus | 58.6 |  70.8 |  32.9 |  95.9 |
-| 42 | **B** | Gilgamesh | 58.2 |  69.0 |  49.9 |  44.9 |
-| 43 | **B** | Charon | 58.1 |  98.7 |  27.8 |  35.5 |
-| 44 | **B** | Amaterasu | 58.1 |  82.0 |  42.9 |  62.6 |
-| 45 | **B** | Ares | 57.7 |  74.1 |  49.2 |  40.3 |
-| 46 | **B** | Xbalanque | 57.6 |  92.8 |  53.6 |  39.8 |
-| 47 | **B** | Hua Mulan | 57.6 |  70.7 |  68.0 |  45.7 |
-| 48 | **B** | Hecate | 57.2 |  48.9 |  40.6 |  95.9 |
-| 49 | **B** | Yemoja | 57.2 |  71.5 |  45.7 |  37.7 |
-| 50 | **B** | Ix Chel | 57.1 | 100.0 |  54.8 |  74.4 |
-| 51 | **B** | Bellona | 56.9 |  77.8 |  59.1 |  70.1 |
-| 52 | **B** | The Morrigan | 56.7 |  72.2 |  47.6 |  66.7 |
-| 53 | **B** | Artemis | 56.7 |  65.9 |  41.1 |  37.3 |
-| 54 | **C** | Nemesis | 56.2 |  73.5 |  34.2 |  45.9 |
-| 55 | **C** | Scylla | 56.2 |  81.8 |  32.3 |  67.8 |
-| 56 | **C** | Khepri | 55.0 |  78.3 |  10.3 |  33.1 |
-| 57 | **C** | Merlin | 54.9 |  87.7 |  10.6 |  68.4 |
-| 58 | **C** | Atlas | 54.8 |  52.6 |  40.1 |  41.5 |
-| 59 | **C** | Anhur | 54.7 |  74.7 |  74.7 |  37.3 |
-| 60 | **C** | Hou Yi | 53.7 |  66.1 |  26.6 |  39.8 |
-| 61 | **C** | Hercules | 53.4 |  64.7 |  63.1 |  64.4 |
-| 62 | **C** | Ratatoskr | 52.7 | 100.0 |  23.4 |  35.8 |
-| 63 | **C** | Aladdin | 52.3 |   0.0 | 100.0 |  95.8 |
-| 64 | **C** | Morgan Le Fay | 50.4 |  30.6 |  51.3 |  68.9 |
-| 65 | **C** | Hun Batz | 49.5 | 100.0 |  15.0 |  44.9 |
-| 66 | **C** | Jing Wei | 49.2 |  63.5 |  45.9 |  31.5 |
-| 67 | **C** | Sobek | 48.8 |  52.5 |  40.3 |  40.3 |
-| 68 | **C** | Rama | 48.8 |  72.8 |  14.0 |  34.0 |
-| 69 | **C** | Athena | 48.5 |  50.2 |  48.3 |  47.2 |
-| 70 | **C** | Neith | 47.4 |  72.3 |  64.8 |  37.3 |
-| 71 | **C** | Pele | 46.8 |   0.0 |  45.5 |  81.1 |
-| 72 | **C** | Bacchus | 46.4 |  72.3 |  15.3 |  46.1 |
-| 73 | **C** | Sylvanus | 45.8 |  71.9 |   6.9 |  38.0 |
-| 74 | **C** | Agni | 45.7 |  55.6 |   0.0 |  72.9 |
-| 75 | **C** | Guan Yu | 44.1 |  14.3 |  30.3 |  70.1 |
-| 76 | **D** | Artio | 43.1 |  71.6 |   9.2 |  33.5 |
-| 77 | **D** | Zeus | 42.4 |  22.2 |   7.2 |  95.9 |
-| 78 | **D** | Da Ji | 41.5 |  23.7 |  12.5 |  85.3 |
-| 79 | **D** | Thor | 40.3 |   0.0 |  19.3 |  94.7 |
-| 80 | **D** | Nu Wa | 39.3 |   4.1 |  36.5 |  67.9 |
-| 81 | **D** | Ganesha | 38.8 |  70.9 |  38.4 |  35.8 |
-| 82 | **D** | Ah Puch | 38.7 |  46.1 |  28.2 |  77.1 |
-| 83 | **D** | Cerberus | 38.3 |  48.4 |  10.7 |  41.3 |
-| 84 | **D** | Cabrakan | 32.3 |   0.0 |  73.9 |  35.0 |
-| 85 | **D** | Geb | 32.1 |  51.9 |  21.7 |   0.0 |
-| 86 | **D** | Anubis | 32.0 |   0.0 |  13.0 |  77.4 |
-| 87 | **D** | Bastet | 27.3 |   0.0 |  20.1 |  90.0 |
-| 88 | **D** | Chronos | 26.0 |   0.0 |   3.0 |  96.7 |
-| 89 | **D** | Kali | 20.1 |   0.0 |   5.6 |  44.9 |
+| 1 | **S** | Sun Wukong | 79.5 | 100.0 |  92.7 |  42.5 |
+| 2 | **S** | Princess Bari | 74.9 | 100.0 |  69.1 |  82.6 |
+| 3 | **S** | Ganesha | 71.4 | 100.0 |  40.2 | 100.0 |
+| 4 | **S** | Chaac | 71.1 |  91.1 |  96.0 |  59.4 |
+| 5 | **S** | Cupid | 68.8 |  61.3 |  98.6 |  54.2 |
+| 6 | **S** | Nut | 67.3 |  51.8 |  75.0 |  81.8 |
+| 7 | **S** | Scylla | 67.1 |  62.0 |  65.1 |  67.7 |
+| 8 | **S** | Cernunnos | 66.3 |  53.6 |  77.5 |  51.3 |
+| 9 | **S** | Ah Puch | 62.6 | 100.0 |  32.7 |  80.4 |
+| 10 | **S** | Tsukuyomi | 62.5 |  52.2 |  83.5 |  50.6 |
+| 11 | **S** | Ymir | 62.5 |  59.6 |  57.0 |  53.9 |
+| 12 | **A** | Cu Chulainn | 62.4 | 100.0 |  62.4 |  64.6 |
+| 13 | **A** | Ravana | 61.1 |  70.5 |  36.8 |  57.0 |
+| 14 | **A** | Amaterasu | 61.0 |  88.0 |  40.9 |  54.1 |
+| 15 | **A** | Hachiman | 60.9 | 100.0 |  65.9 |  45.5 |
+| 16 | **A** | Chronos | 59.6 | 100.0 |   3.0 |  84.3 |
+| 17 | **A** | Thor | 58.9 |  76.0 |  19.2 |  53.2 |
+| 18 | **A** | Ratatoskr | 58.6 | 100.0 |  24.4 |  46.6 |
+| 19 | **A** | Danzaburou | 58.4 |  53.9 |  86.6 |  43.7 |
+| 20 | **A** | Jormungandr | 58.3 |  56.5 |  62.2 |  63.2 |
+| 21 | **A** | Sol | 58.2 |  53.2 |  68.3 |  78.2 |
+| 22 | **A** | Eset | 58.0 |  58.4 |  48.9 |  83.7 |
+| 23 | **A** | Osiris | 56.6 |  53.2 |  82.1 |  66.0 |
+| 24 | **A** | Discordia | 55.8 |  49.0 |  54.7 |  81.3 |
+| 25 | **A** | Anhur | 55.8 |  54.4 |  74.6 |  54.2 |
+| 26 | **A** | Awilix | 55.3 |  53.9 |  70.2 |  84.6 |
+| 27 | **A** | Neith | 54.8 |  53.5 |  64.8 |  55.9 |
+| 28 | **A** | Hou Yi | 54.7 |  51.2 |  26.3 |  42.2 |
+| 29 | **A** | Ishtar | 53.8 |  61.2 |  42.9 |  54.2 |
+| 30 | **A** | Baron Samedi | 53.8 |  70.0 |  49.1 |  86.4 |
+| 31 | **B** | Gilgamesh | 53.1 |  53.3 |  49.9 |  60.8 |
+| 32 | **B** | Medusa | 53.0 |  57.7 |  47.8 |  54.2 |
+| 33 | **B** | Thanatos | 52.8 |  77.4 |  42.6 |  54.8 |
+| 34 | **B** | Mercury | 52.8 |  60.8 |  57.6 |  53.0 |
+| 35 | **B** | Xbalanque | 51.8 |  59.7 |  52.5 |  43.1 |
+| 36 | **B** | Hercules | 51.5 |  52.6 |  62.3 |  65.6 |
+| 37 | **B** | Athena | 51.4 |  43.0 |  48.7 |  73.8 |
+| 38 | **B** | Bellona | 50.9 |  55.8 |  58.4 |  78.4 |
+| 39 | **B** | Fenrir | 50.9 |  69.8 |  71.0 |  53.2 |
+| 40 | **B** | Hun Batz | 50.7 |  76.9 |  15.0 |  51.5 |
+| 41 | **B** | Ix Chel | 50.5 |  39.9 |  53.8 |  97.3 |
+| 42 | **B** | Vulcan | 50.4 |  53.3 |  29.5 |  81.2 |
+| 43 | **B** | Yemoja | 50.0 |  54.0 |  47.5 |  87.6 |
+| 44 | **B** | Ares | 49.2 |  43.6 |  49.1 |  81.4 |
+| 45 | **B** | Aladdin | 49.2 |   0.0 | 100.0 |  71.6 |
+| 46 | **B** | Ne Zha | 49.2 |  32.9 |  98.3 |  43.9 |
+| 47 | **B** | The Morrigan | 49.1 |  53.3 |  48.0 |  63.3 |
+| 48 | **B** | Mordred | 49.1 |  46.9 |  85.7 |  53.2 |
+| 49 | **B** | Odin | 48.5 |  57.5 |  60.0 |  44.6 |
+| 50 | **B** | Hua Mulan | 48.4 |  54.1 |  68.1 |  37.6 |
+| 51 | **B** | Charon | 47.8 |  60.9 |  29.5 |  77.4 |
+| 52 | **B** | Sylvanus | 47.6 |  53.7 |   6.5 |  94.1 |
+| 53 | **B** | Kukulkan | 47.5 |  61.9 |  44.2 |  67.7 |
+| 54 | **B** | Bacchus | 47.2 |  53.6 |  14.7 |  65.1 |
+| 55 | **B** | Apollo | 47.0 |  67.3 |  28.6 |  48.7 |
+| 56 | **C** | Janus | 46.9 |  52.9 |  34.0 |  83.7 |
+| 57 | **C** | Artio | 45.8 |  53.8 |   9.3 |  63.1 |
+| 58 | **C** | Achilles | 45.1 |  65.7 |  48.2 |  57.0 |
+| 59 | **C** | Jing Wei | 45.0 |  51.2 |  45.5 |  53.2 |
+| 60 | **C** | Poseidon | 44.8 |  71.6 |  35.3 |  74.5 |
+| 61 | **C** | Chiron | 44.4 |  54.5 |  47.8 |  42.2 |
+| 62 | **C** | Khepri | 44.0 |  55.2 |   9.6 |  85.0 |
+| 63 | **C** | Nike | 43.6 |  73.3 |  36.7 |  61.8 |
+| 64 | **C** | Nu Wa | 43.4 |  35.5 |  36.7 |  72.0 |
+| 65 | **C** | Loki | 42.9 |  54.4 |  26.8 |  77.6 |
+| 66 | **C** | Atlas | 42.4 |  28.7 |  39.6 |  64.4 |
+| 67 | **C** | Hel | 42.3 |  71.2 |   3.5 |  80.0 |
+| 68 | **C** | Horus | 41.7 |   0.0 |  73.9 |  78.2 |
+| 69 | **C** | Nemesis | 41.6 |  54.1 |  34.4 |  56.5 |
+| 70 | **C** | Rama | 41.3 |  53.8 |  13.8 |  43.2 |
+| 71 | **C** | Izanami | 41.3 |   0.0 |  45.2 |  51.3 |
+| 72 | **C** | Pele | 40.8 |  11.0 |  46.0 |  83.9 |
+| 73 | **C** | Ullr | 39.8 |  53.3 |  31.3 |  53.0 |
+| 74 | **C** | Sobek | 39.7 |  46.9 |  40.2 |  61.3 |
+| 75 | **C** | Cabrakan | 39.1 |  14.0 |  73.5 |  56.2 |
+| 76 | **C** | Guan Yu | 38.8 |  35.3 |  29.6 |  79.9 |
+| 77 | **C** | Merlin | 38.2 |  57.5 |  10.4 |  65.3 |
+| 78 | **C** | Hades | 37.6 |  24.2 |  29.6 |  66.2 |
+| 79 | **D** | Hecate | 37.6 |  13.9 |  40.5 |  81.2 |
+| 80 | **D** | Morgan Le Fay | 36.4 |  25.8 |  51.2 |  63.4 |
+| 81 | **D** | Geb | 35.2 |  48.2 |  21.4 |   0.0 |
+| 82 | **D** | Aphrodite | 33.4 |   0.0 |  43.1 |  83.7 |
+| 83 | **D** | Bastet | 32.8 |  11.5 |  18.0 |  76.9 |
+| 84 | **D** | Zeus | 31.9 |  40.2 |   7.9 |  75.0 |
+| 85 | **D** | Ra | 31.5 |   0.0 |  64.4 |  75.1 |
+| 86 | **D** | Da Ji | 31.5 |  41.8 |  11.7 |  49.2 |
+| 87 | **D** | Anubis | 31.4 |  33.9 |  12.8 |  62.7 |
+| 88 | **D** | Agni | 25.9 |   9.8 |   0.0 |  79.5 |
+| 89 | **D** | Kali | 25.0 |  19.5 |   5.2 |  58.0 |
+| 90 | **D** | Artemis | 24.4 |   0.0 |  39.4 |  55.9 |
+| 91 | **D** | Susano | 21.3 |   0.0 |  33.4 |  47.9 |
+| 92 | **D** | Cerberus | 17.8 |   0.0 |   9.8 |  46.9 |
 
 ## Rationale (top 15)
 
-### 1. Aphrodite (S)
-Patch trajectory: new; Last touch: neutral in SMITE 2 Open Beta 38; Kit 64/100 (burst/dps/utility blend), build fit 96/100; Ranked WR 57.6% (ladder 91/100, smitebrain+tracker, n=233); Suggested cores: Book of Thoth, Spear of Desolation, Totem of Death
+### 1. Sun Wukong (S)
+Patch trajectory: rising; Last touch: neutral in SMITE 2 Open Beta 44; Kit 93/100 (burst/dps/utility blend), build fit 42/100; Ranked WR 56.4% (ladder 74/100, smitebrain+smitesource, n=85); Last 5 patches net buffed (score +3.30); Suggested cores: Shifter's Shield, Eye of the Storm
 
-### 2. Tsukuyomi (S)
-Patch trajectory: stable; Last touch: neutral in SMITE 2 Open Beta 38; Kit 83/100 (burst/dps/utility blend), build fit 92/100; Ranked WR 56.6% (ladder 91/100, smitebrain+tracker, n=397); Suggested cores: Jotunn's Revenge, The Crusher, Hydra's Lament
+### 2. Princess Bari (S)
+Patch trajectory: rising; Last touch: neutral in SMITE 2 Open Beta 44; Kit 69/100 (burst/dps/utility blend), build fit 83/100; Ranked WR 53.7% (ladder 39/100, smitesource, n=?); Last 5 patches net buffed (score +2.88); Suggested cores: Book of Thoth, The Cosmic Horror, Spear of Desolation
 
-### 3. Cupid (S)
-Patch trajectory: stable; Last touch: shift in SMITE 2 Open Beta 41; Kit 96/100 (burst/dps/utility blend), build fit 37/100; Ranked WR 56.5% (ladder 91/100, smitebrain+tracker, n=301); Last 5 patches net buffed (score +0.15); Suggested cores: Devourer's Gauntlet, Tyrfing, The Executioner
+### 3. Ganesha (S)
+Patch trajectory: rising; Last touch: neutral in SMITE 2 Open Beta 44; Kit 40/100 (burst/dps/utility blend), build fit 100/100; Ranked WR 59.4% (ladder 53/100, smitebrain+smitesource, n=34); Last 5 patches net buffed (score +4.29); Suggested cores: Gem of Isolation, Helm of Darkness
 
-### 4. Ishtar (S)
-Patch trajectory: new; Last touch: neutral in SMITE 2 Open Beta 40; Kit 45/100 (burst/dps/utility blend), build fit 69/100; Ranked WR 56.3% (ladder 89/100, smitebrain+tracker, n=326); Last 5 patches net buffed (score +1.44); Suggested cores: Tyrfing, Eye of the Storm, Odysseus' Bow
+### 4. Chaac (S)
+Patch trajectory: rising; Last touch: neutral in SMITE 2 Open Beta 44; Kit 96/100 (burst/dps/utility blend), build fit 59/100; Ranked WR 50.0% (ladder 32/100, neutral, n=?); Last 5 patches net buffed (score +1.86); Suggested cores: Shifter's Shield, Eye of the Storm
 
-### 5. Awilix (S)
-Patch trajectory: stable; Last touch: neutral in SMITE 2 Open Beta 30; Kit 72/100 (burst/dps/utility blend), build fit 93/100; Ranked WR 52.5% (ladder 63/100, smitebrain+tracker, n=209); Suggested cores: Jotunn's Revenge, Hydra's Lament, The Crusher
+### 5. Cupid (S)
+Patch trajectory: stable; Last touch: neutral in SMITE 2 Open Beta 44; Kit 99/100 (burst/dps/utility blend), build fit 54/100; Ranked WR 59.7% (ladder 67/100, smitebrain+smitesource, n=58); Last 5 patches net buffed (score +0.23); Suggested cores: Devourer's Gauntlet, Odysseus' Bow, Tyrfing
 
-### 6. Fenrir (S)
-Patch trajectory: rising; Last touch: neutral in SMITE 2 Open Beta 40; Kit 74/100 (burst/dps/utility blend), build fit 45/100; Ranked WR 54.3% (ladder 57/100, smitebrain+tracker, n=91); Last 5 patches net buffed (score +2.17); Suggested cores: Jotunn's Revenge, Riptalon, Hydra's Lament
+### 6. Nut (S)
+Patch trajectory: stable; Last touch: neutral in SMITE 2 Open Beta 33; Kit 75/100 (burst/dps/utility blend), build fit 82/100; Ranked WR 54.2% (ladder 63/100, smitebrain+smitesource, n=82); Suggested cores: Book of Thoth, The Cosmic Horror, Spear of Desolation
 
-### 7. Ra (S)
-Patch trajectory: stable; Last touch: fix in SMITE 2 Open Beta 31; Kit 63/100 (burst/dps/utility blend), build fit 68/100; Ranked WR 54.0% (ladder 78/100, smitebrain+tracker, n=463); Suggested cores: Book of Thoth, Spear of Desolation, Chronos' Pendant
+### 7. Scylla (S)
+Patch trajectory: new; Last touch: neutral in SMITE 2 Open Beta 42; Kit 65/100 (burst/dps/utility blend), build fit 68/100; Ranked WR 63.1% (ladder 72/100, smitebrain+smitesource, n=59); Suggested cores: Book of Thoth, Chronos' Pendant, Spear of Desolation
 
-### 8. Danzaburou (S)
-Patch trajectory: new; Last touch: fix in SMITE 2 Open Beta 39; Kit 86/100 (burst/dps/utility blend), build fit 63/100; Ranked WR 54.6% (ladder 64/100, smitebrain+tracker, n=125); Last 5 patches net buffed (score +0.01); Suggested cores: Odysseus' Bow, Tyrfing, Eye of the Storm
+### 8. Cernunnos (S)
+Patch trajectory: stable; Last touch: neutral in SMITE 2 Open Beta 38; Kit 77/100 (burst/dps/utility blend), build fit 51/100; Ranked WR 59.4% (ladder 88/100, smitebrain+smitesource, n=86); Suggested cores: Tyrfing, Devourer's Gauntlet, Qin's Blade
 
-### 9. Ne Zha (S)
-Patch trajectory: new; Last touch: neutral in SMITE 2 Open Beta 38; Kit 97/100 (burst/dps/utility blend), build fit 92/100; Ranked WR 51.3% (ladder 51/100, smitebrain+tracker, n=137); Suggested cores: Jotunn's Revenge, The Crusher, Hydra's Lament
+### 9. Ah Puch (S)
+Patch trajectory: rising; Last touch: neutral in SMITE 2 Open Beta 44; Kit 33/100 (burst/dps/utility blend), build fit 80/100; Ranked WR 50.0% (ladder 32/100, neutral, n=?); Last 5 patches net buffed (score +3.06); Suggested cores: Book of Thoth, Chronos' Pendant, Spear of Desolation
 
-### 10. Horus (S)
-Patch trajectory: new; Last touch: neutral in SMITE 2 Open Beta 41; Kit 74/100 (burst/dps/utility blend), build fit 71/100; Ranked WR 58.9% (ladder 99/100, smitebrain+tracker, n=383); Last 5 patches net nerfed (score -1.36); Suggested cores: Shifter's Shield, Eye of the Storm
+### 10. Tsukuyomi (S)
+Patch trajectory: stable; Last touch: neutral in SMITE 2 Open Beta 42; Kit 83/100 (burst/dps/utility blend), build fit 51/100; Ranked WR 56.9% (ladder 68/100, smitebrain+smitesource, n=63); Suggested cores: The Crusher, Hydra's Lament, Jotunn's Revenge
 
-### 11. Princess Bari (S)
-Patch trajectory: new; Last touch: neutral in SMITE 2 Open Beta 30; Kit 67/100 (burst/dps/utility blend), build fit 97/100; Ranked WR 50.7% (ladder 47/100, smitebrain+tracker, n=82); Suggested cores: Book of Thoth, Spear of Desolation, The Cosmic Horror
+### 11. Ymir (S)
+Patch trajectory: stable; Last touch: neutral in SMITE 2 Open Beta 34; Kit 57/100 (burst/dps/utility blend), build fit 54/100; Ranked WR 56.8% (ladder 73/100, smitebrain+smitesource, n=76); Suggested cores: Gem of Isolation, Triton's Conch
 
-### 12. Eset (A)
-Patch trajectory: stable; Last touch: neutral in SMITE 2 Open Beta 39; Kit 49/100 (burst/dps/utility blend), build fit 96/100; Ranked WR 54.4% (ladder 69/100, smitebrain+tracker, n=167); Suggested cores: Book of Thoth, Spear of Desolation, The Cosmic Horror
+### 12. Cu Chulainn (A)
+Patch trajectory: rising; Last touch: buff in SMITE 2 Open Beta 41; Kit 62/100 (burst/dps/utility blend), build fit 65/100; Ranked WR 45.6% (ladder 11/100, smitebrain+smitesource, n=64); Last 5 patches net buffed (score +6.74); Suggested cores: Shifter's Shield, Runeforged Hammer, Brawler’s Beat Stick
 
-### 13. Chaac (A)
-Patch trajectory: stable; Last touch: neutral in SMITE 2 Open Beta 38; Kit 94/100 (burst/dps/utility blend), build fit 58/100; Ranked WR 52.5% (ladder 45/100, tracker, n=20); Suggested cores: Shifter's Shield, Eye of the Storm
+### 13. Ravana (A)
+Patch trajectory: new; Last touch: shift in SMITE 2 Open Beta 44; Kit 37/100 (burst/dps/utility blend), build fit 57/100; Ranked WR 54.4% (ladder 77/100, smitebrain+smitesource+tracker, n=104); Last 5 patches net buffed (score +0.87); Suggested cores: Jotunn's Revenge, Hydra's Lament, The Crusher
 
-### 14. Sun Wukong (A)
-Patch trajectory: stable; Last touch: fix in SMITE 2 Open Beta 39; Kit 92/100 (burst/dps/utility blend), build fit 60/100; Ranked WR 50.9% (ladder 51/100, smitebrain+tracker, n=162); Last 5 patches net buffed (score +0.01); Suggested cores: Shifter's Shield, Eye of the Storm
+### 14. Amaterasu (A)
+Patch trajectory: rising; Last touch: neutral in SMITE 2 Open Beta 44; Kit 41/100 (burst/dps/utility blend), build fit 54/100; Ranked WR 67.3% (ladder 57/100, smitebrain+smitesource, n=28); Last 5 patches net buffed (score +1.67); Suggested cores: Shifter's Shield, Eye of the Storm
 
-### 15. Cernunnos (A)
-Patch trajectory: stable; Last touch: neutral in SMITE 2 Open Beta 38; Kit 76/100 (burst/dps/utility blend), build fit 34/100; Ranked WR 55.8% (ladder 81/100, smitebrain+tracker, n=210); Suggested cores: Transcendence, Tyrfing, Odysseus' Bow
+### 15. Hachiman (A)
+Patch trajectory: rising; Last touch: neutral in SMITE 2 Open Beta 45; Kit 66/100 (burst/dps/utility blend), build fit 45/100; Ranked WR 47.4% (ladder 17/100, smitebrain+smitesource, n=96); Last 5 patches net buffed (score +5.42); Suggested cores: Tyrfing, Devourer's Gauntlet, Tekko-Kagi

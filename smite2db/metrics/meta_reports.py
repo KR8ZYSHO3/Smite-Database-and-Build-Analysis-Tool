@@ -340,6 +340,15 @@ def compute_trajectories(conn: sqlite3.Connection, limit: int = 12) -> dict[str,
             (etype,),
         ).fetchall()
         data = [dict(r) for r in rows]
+        if etype == "item":
+            # Shop-disabled / renamed items still appear in patch history — hide from "hot"
+            from ..conquest_builds import _is_removed_or_unavailable_item
+
+            data = [
+                r
+                for r in data
+                if not _is_removed_or_unavailable_item(r.get("entity_name") or "")
+            ]
         rising = sorted(
             [r for r in data if (r.get("recent_5_score") or 0) > 0.05],
             key=lambda r: -(r.get("recent_5_score") or 0),

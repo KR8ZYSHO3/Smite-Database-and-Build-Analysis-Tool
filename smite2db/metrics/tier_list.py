@@ -11,7 +11,7 @@ from .stat_parse import clamp, normalize_minmax
 
 
 # Default weights — rebalanced 2026-08:
-# Added ranked ladder win-rate vote (SmiteBrain full roster + tracker.gg high-SR
+# Added ranked ladder win-rate vote (SmiteBrain + SmiteSource Masters+ + tracker.gg high-SR
 # sample). Patch no longer owns the ladder alone; live WR keeps pocket buffs
 # honest and lifts proven picks the kit model under-rates.
 WEIGHTS = {

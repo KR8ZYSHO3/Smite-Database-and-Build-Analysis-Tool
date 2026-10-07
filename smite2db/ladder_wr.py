@@ -5,12 +5,14 @@ Sources
 -------
 1. **SmiteBrain** (primary full roster) — top ranked Conquest matches for the
    current OB window via ``https://smitebrain.com/gods/__data.json``.
-2. **tracker.gg high-SR sample** (secondary) — aggregate wins from
+2. **SmiteSource Masters+** (role meta) — OB window Masters+ Conquest WR by
+   role from ``https://smitesource.com/meta/{role}``, aggregated across roles.
+3. **tracker.gg high-SR sample** (tertiary) — aggregate wins from
    ``data/tracker_inspiration.json`` (high Skill Rating Ranked Conquest matches).
 
-Tracker.gg has no public global god-meta WR API (insights/leaderboard endpoints
-return 403). Player-level god stats and match wins still work, so the high-SR
-inspiration scrape is the honest tracker signal.
+Early OB windows often have thin SmiteBrain samples; Masters+ role pages fill
+that gap. Tracker.gg has no public global god-meta WR API (insights/leaderboard
+endpoints return 403).
 
 Usage:
   python -m smite2db.ladder_wr              # scrape + save snapshot
@@ -37,6 +39,13 @@ UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 )
+
+# SmiteSource Masters+ role meta pages (RSC payload)
+SS_META_ROLES = ("carry", "mid", "jungle", "solo", "support")
+# Early OB patches often sit under 80 matches per god on SmiteBrain.
+MIN_MATCHES_SB_DEFAULT = 25
+MIN_GAMES_SS_DEFAULT = 20
+MIN_GAMES_TRN_DEFAULT = 15
 
 # Display-name aliases → our wiki god names
 NAME_ALIASES = {
@@ -237,26 +246,184 @@ def tracker_high_sr_wr(
     }
 
 
+def scrape_smitesource_masters(
+    *,
+    roles: tuple[str, ...] = SS_META_ROLES,
+    timeout: float = 30.0,
+) -> dict[str, Any]:
+    """
+    Aggregate Masters+ Conquest WR across SmiteSource role meta pages.
+
+    Win rates on the page are percentages (e.g. 62.5); we store fractions.
+    Role rows are summed by god (games-weighted). Aspect-only labels that are
+    not real god names are skipped when ``known`` filtering is applied later.
+    """
+    by_god: dict[str, dict[str, Any]] = {}
+    role_rows: dict[str, list[dict[str, Any]]] = {}
+    errors: list[str] = []
+
+    for role in roles:
+        url = f"https://smitesource.com/meta/{role}"
+        try:
+            req = urllib.request.Request(
+                url,
+                headers={
+                    "User-Agent": UA,
+                    "Accept": "text/x-component",
+                    "RSC": "1",
+                    "Next-Url": f"/meta/{role}",
+                    "Referer": url,
+                },
+            )
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                body = resp.read().decode("utf-8", "replace")
+        except (urllib.error.URLError, TimeoutError, OSError) as exc:
+            errors.append(f"{role}: {exc}")
+            continue
+
+        text = body.replace('\\"', '"')
+        parsed: list[dict[str, Any]] = []
+        # stats block then linkAriaLabel (common RSC order)
+        pat_a = re.compile(
+            r'\{"winRate":([0-9.]+),"pickRate":([0-9.]+),"kda":([0-9.]+),"games":(\d+)\}'
+            r'.{0,280}?"linkAriaLabel":"([^"]+)"',
+            re.DOTALL,
+        )
+        # linkAriaLabel then stats (alternate order)
+        pat_b = re.compile(
+            r'"linkAriaLabel":"([^"]+)"'
+            r'.{0,280}?\{"winRate":([0-9.]+),"pickRate":([0-9.]+),"kda":([0-9.]+),"games":(\d+)\}',
+            re.DOTALL,
+        )
+        seen_keys: set[tuple[str, int, str]] = set()
+        for m in pat_a.finditer(text):
+            wr_pct, pr, kda, games_s, name = m.groups()
+            key = (name, int(games_s), wr_pct)
+            if key in seen_keys:
+                continue
+            seen_keys.add(key)
+            parsed.append(
+                {
+                    "god": name,
+                    "role": role,
+                    "win_rate_pct": float(wr_pct),
+                    "pick_rate": float(pr),
+                    "kda": float(kda),
+                    "games": int(games_s),
+                }
+            )
+        for m in pat_b.finditer(text):
+            name, wr_pct, pr, kda, games_s = m.groups()
+            key = (name, int(games_s), wr_pct)
+            if key in seen_keys:
+                continue
+            seen_keys.add(key)
+            parsed.append(
+                {
+                    "god": name,
+                    "role": role,
+                    "win_rate_pct": float(wr_pct),
+                    "pick_rate": float(pr),
+                    "kda": float(kda),
+                    "games": int(games_s),
+                }
+            )
+
+        role_rows[role] = parsed
+        for row in parsed:
+            raw_name = row["god"]
+            # Skip pure aspect labels; fold "God, Aspect of X" into base god
+            if raw_name.lower().startswith("aspect of"):
+                continue
+            name = re.sub(
+                r"\s*,\s*Aspect of\b.*$",
+                "",
+                raw_name,
+                flags=re.IGNORECASE,
+            ).strip()
+            if not name:
+                continue
+            games = int(row["games"])
+            if games <= 0:
+                continue
+            wr = float(row["win_rate_pct"]) / 100.0
+            wins = wr * games
+            slot = by_god.setdefault(
+                name,
+                {"god": name, "games": 0.0, "wins": 0.0, "roles": {}},
+            )
+            slot["games"] += games
+            slot["wins"] += wins
+            # Keep strongest role sample when multiple rows share a role
+            prev_role = slot["roles"].get(role)
+            if prev_role is None or games >= int(prev_role.get("games") or 0):
+                slot["roles"][role] = {
+                    "games": games,
+                    "win_rate": round(wr, 4),
+                    "pick_rate": row["pick_rate"],
+                    "kda": row["kda"],
+                }
+
+    gods: dict[str, dict[str, Any]] = {}
+    for name, slot in by_god.items():
+        games = float(slot["games"])
+        wins = float(slot["wins"])
+        if games <= 0:
+            continue
+        raw = wins / games
+        # Mild Bayesian shrink toward 50% for thin Masters+ samples
+        prior = 20.0
+        bayes = (wins + 0.5 * prior) / (games + prior)
+        gods[name] = {
+            "god": name,
+            "games": int(round(games)),
+            "wins": int(round(wins)),
+            "win_rate": raw,
+            "bayesian_wr": bayes,
+            "roles": slot["roles"],
+        }
+
+    return {
+        "source": "https://smitesource.com/meta",
+        "rank": "Masters+",
+        "mode": "conquest-ranked",
+        "roles": list(roles),
+        "scraped_at": datetime.now(timezone.utc).isoformat(),
+        "gods": gods,
+        "god_count": len(gods),
+        "role_row_counts": {r: len(role_rows.get(r) or []) for r in roles},
+        "errors": errors,
+        "note": (
+            "Masters+ role meta aggregated across Carry/Mid/Jungle/Solo/Support. "
+            "WR is games-weighted across roles; Bayesian shrink prior=20 toward 50%."
+        ),
+    }
+
+
 def blend_ladder_scores(
     smitebrain: dict[str, Any],
     tracker: dict[str, Any],
+    smitesource: dict[str, Any] | None = None,
     *,
     known_gods: set[str] | None = None,
-    min_matches_sb: int = 80,
-    min_games_trn: int = 15,
+    min_matches_sb: int = MIN_MATCHES_SB_DEFAULT,
+    min_games_ss: int = MIN_GAMES_SS_DEFAULT,
+    min_games_trn: int = MIN_GAMES_TRN_DEFAULT,
 ) -> dict[str, dict[str, Any]]:
     """
     Per-god ladder strength 0–100.
 
     Primary: SmiteBrain WR (matches-weighted confidence).
-    Secondary: tracker high-SR Bayesian WR when sample is large enough.
-    Blend when both present; single-source otherwise; neutral 50 if neither.
+    Secondary: SmiteSource Masters+ role-aggregated WR (strong in early OB).
+    Tertiary: tracker high-SR Bayesian WR when sample is large enough.
+    Blend when multiple present; single-source otherwise; neutral 50 if none.
     """
     sb_gods = smitebrain.get("gods") or {}
     tr_gods = tracker.get("gods") or {}
+    ss_gods = (smitesource or {}).get("gods") or {}
 
     names: set[str] = set()
-    for n in list(sb_gods) + list(tr_gods):
+    for n in list(sb_gods) + list(tr_gods) + list(ss_gods):
         names.add(normalize_god_name(n, known_gods))
     if known_gods:
         names |= set(known_gods)
@@ -269,6 +436,11 @@ def blend_ladder_scores(
             if normalize_god_name(k, known_gods) == name:
                 sb = v
                 break
+        ss = None
+        for k, v in ss_gods.items():
+            if normalize_god_name(k, known_gods) == name:
+                ss = v
+                break
         tr = None
         for k, v in tr_gods.items():
             if normalize_god_name(k, known_gods) == name:
@@ -278,11 +450,20 @@ def blend_ladder_scores(
         sb_wr = None
         sb_n = 0
         sb_conf = 0.0
-        if sb and (sb.get("matches") or 0) >= min_matches_sb:
+        if sb and isinstance(sb.get("win_rate"), (int, float)) and (sb.get("matches") or 0) >= min_matches_sb:
             sb_wr = float(sb["win_rate"])
             sb_n = int(sb.get("matches") or 0)
             # confidence rises with sample, caps ~1 at ~600 games
             sb_conf = min(1.0, (sb_n / 600.0) ** 0.5)
+
+        ss_wr = None
+        ss_n = 0
+        ss_conf = 0.0
+        if ss and (ss.get("games") or 0) >= min_games_ss:
+            ss_wr = float(ss.get("bayesian_wr") or ss.get("win_rate") or 0.5)
+            ss_n = int(ss.get("games") or 0)
+            # Masters+ is cleaner than tracker but still role-split early patch
+            ss_conf = min(0.9, (ss_n / 120.0) ** 0.5)
 
         tr_wr = None
         tr_n = 0
@@ -294,26 +475,46 @@ def blend_ladder_scores(
 
         pr = (sb or {}).get("pick_rate")
         pr_f = float(pr) if isinstance(pr, (int, float)) else 0.0
+        # Fall back to max role pick rate from SmiteSource when SB missing
+        if pr_f <= 0 and ss and isinstance(ss.get("roles"), dict):
+            prs = [
+                float(r.get("pick_rate") or 0) / 100.0
+                for r in ss["roles"].values()
+                if isinstance(r.get("pick_rate"), (int, float))
+            ]
+            if prs:
+                pr_f = max(prs)
+                pr = pr_f
 
-        if sb_wr is None and tr_wr is None:
+        weights: list[tuple[str, float, float]] = []  # label, wr, weight
+        if sb_wr is not None:
+            # When SB sample is thin, keep it but don't dominate Masters+
+            thin = 0.55 if sb_n < 80 else 1.0
+            weights.append(("smitebrain", sb_wr, (0.72 * sb_conf + 0.18) * thin))
+        if ss_wr is not None:
+            # Boost SS when SB is missing or thin (early OB)
+            boost = 1.35 if sb_wr is None or sb_n < 80 else 1.0
+            weights.append(("smitesource", ss_wr, (0.55 * ss_conf + 0.12) * boost))
+        if tr_wr is not None:
+            weights.append(("tracker", tr_wr, 0.28 * tr_conf + 0.05))
+
+        if not weights:
             ladder = 50.0
             used = "neutral"
             blended_wr = 0.5
-        elif sb_wr is not None and tr_wr is not None:
-            # Weight primary harder; tracker is a high-SR tilt check
-            w_sb = 0.72 * sb_conf + 0.18
-            w_tr = 0.28 * tr_conf + 0.05
-            blended_wr = (sb_wr * w_sb + tr_wr * w_tr) / (w_sb + w_tr)
-            used = "smitebrain+tracker"
-            ladder = _wr_to_ladder(blended_wr, matches=sb_n, pick_rate=pr_f)
-        elif sb_wr is not None:
-            blended_wr = sb_wr
-            used = "smitebrain"
-            ladder = _wr_to_ladder(sb_wr, matches=sb_n, pick_rate=pr_f)
+            match_n = 0
         else:
-            blended_wr = tr_wr or 0.5
-            used = "tracker"
-            ladder = _wr_to_ladder(blended_wr, matches=tr_n, narrow=True, pick_rate=0.0)
+            w_sum = sum(w for _, _, w in weights)
+            blended_wr = sum(wr * w for _, wr, w in weights) / w_sum
+            used = "+".join(lab for lab, _, _ in weights)
+            match_n = max(sb_n, ss_n, tr_n)
+            narrow = sb_wr is None and ss_wr is None
+            ladder = _wr_to_ladder(
+                blended_wr,
+                matches=match_n,
+                narrow=narrow,
+                pick_rate=pr_f,
+            )
 
         # Mild pick-rate presence bump (contested meta > pocket 60% on 50 games)
         if pr_f > 0:
@@ -329,6 +530,8 @@ def blend_ladder_scores(
             "smitebrain_matches": sb_n or None,
             "smitebrain_pick_rate": pr if isinstance(pr, (int, float)) else None,
             "smitebrain_tier": (sb or {}).get("tier_label"),
+            "smitesource_wr": round(ss_wr, 4) if ss_wr is not None else None,
+            "smitesource_games": ss_n or None,
             "tracker_wr": round(tr_wr, 4) if tr_wr is not None else None,
             "tracker_games": tr_n or None,
         }
@@ -374,33 +577,52 @@ def collect_ladder_winrates(
     known_gods: set[str] | None = None,
     out_path: Path | None = None,
 ) -> dict[str, Any]:
+    existing = out_path or DEFAULT_OUT
+    prev: dict[str, Any] = {}
+    if existing.exists():
+        try:
+            prev = json.loads(existing.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            prev = {}
+
     if fetch:
         print("Fetching SmiteBrain ranked god stats…")
         sb = scrape_smitebrain_gods()
         print(f"  {sb['god_count']} gods (raw rows {sb['row_count_raw']})")
+        print("Fetching SmiteSource Masters+ role meta…")
+        ss = scrape_smitesource_masters()
+        print(
+            f"  {ss.get('god_count', 0)} gods "
+            f"(role rows {ss.get('role_row_counts')})"
+        )
+        if ss.get("errors"):
+            print(f"  SS errors: {ss['errors']}")
     else:
-        existing = (out_path or DEFAULT_OUT)
-        if existing.exists():
-            prev = json.loads(existing.read_text(encoding="utf-8"))
-            sb = prev.get("smitebrain") or {"gods": {}}
-            print("Using cached SmiteBrain block")
-        else:
-            sb = {"gods": {}, "note": "no cache"}
-            print("WARN: no SmiteBrain cache and --no-fetch")
+        sb = prev.get("smitebrain") or {"gods": {}}
+        ss = prev.get("smitesource_masters") or {"gods": {}}
+        print("Using cached SmiteBrain + SmiteSource blocks")
 
     print("Loading tracker.gg high-SR sample…")
     tr = tracker_high_sr_wr()
     print(f"  {tr.get('god_count', 0)} gods from inspiration snapshot")
 
-    blended = blend_ladder_scores(sb, tr, known_gods=known_gods)
+    blended = blend_ladder_scores(sb, tr, ss, known_gods=known_gods)
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "philosophy": (
             "Tier ladder uses ranked WR as one vote alongside patch/kit/build. "
-            "SmiteBrain = full top-ranked Conquest window; tracker.gg = high-SR "
-            "match sample (global god-meta API is 403)."
+            "SmiteBrain = full top-ranked Conquest window; SmiteSource = Masters+ "
+            "role meta (strong early-OB signal); tracker.gg = high-SR match sample "
+            "(global god-meta API is 403). Early OB min SmiteBrain matches=%d."
+            % MIN_MATCHES_SB_DEFAULT
         ),
         "smitebrain": sb,
+        "smitesource_masters": {
+            k: ss[k]
+            for k in ss
+            if k != "gods"
+        },
+        "smitesource_masters_gods": ss.get("gods") or {},
         "tracker_high_sr": {
             k: tr[k]
             for k in tr

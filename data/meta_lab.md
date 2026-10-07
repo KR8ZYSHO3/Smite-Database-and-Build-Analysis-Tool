@@ -2,13 +2,13 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-10-07T16:02:34.865599+00:00_
+_Generated: 2026-10-07T16:30:22.643700+00:00_
 
 ## Weekly themes
 
 - Support paths under-buy anti-crit (Spectral on ~9.1% of recs) — flex Spectral almost every game.
 - Gods rising (r5 patch): Cu Chulainn, Hachiman, Chronos, Ganesha.
-- Items hot (r5 patch): Damaru, Omen Drum, Gluttonous Grimoire, The Cosmic Horror.
+- Items hot (r5 patch): Damaru, Omen Drum, The Cosmic Horror, Brawler’s Beat Stick.
 - Patch axes (avg r5): general +0.11, cooldown -0.07, damage +0.05.
 
 ## Role staples (top items in recommended paths)
@@ -17,21 +17,21 @@ _Generated: 2026-10-07T16:02:34.865599+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
-| Odysseus' Bow | 19 | 79.2 |
 | Tyrfing | 19 | 79.2 |
+| Odysseus' Bow | 19 | 79.2 |
 | Deathbringer | 16 | 66.7 |
 | Devourer's Gauntlet | 13 | 54.2 |
 | Eye of the Storm | 12 | 50.0 |
 | The Executioner | 11 | 45.8 |
 | Qin's Blade | 6 | 25.0 |
 | Tekko-Kagi | 6 | 25.0 |
-| Soul Reaver | 5 | 20.8 |
 | Book of Thoth | 5 | 20.8 |
+| Soul Reaver | 5 | 20.8 |
 | The Cosmic Horror | 5 | 20.8 |
 | Spear of Desolation | 5 | 20.8 |
 | Sands Of Time | 4 | 16.7 |
-| Divine Ruin | 3 | 12.5 |
 | Totem of Death | 3 | 12.5 |
+| Divine Ruin | 3 | 12.5 |
 
 ### Mid (26 paths)
 
@@ -43,15 +43,15 @@ _Generated: 2026-10-07T16:02:34.865599+00:00_
 | Chronos' Pendant | 19 | 73.1 |
 | Divine Ruin | 12 | 46.2 |
 | Totem of Death | 12 | 46.2 |
-| Rod of Tahuti | 6 | 23.1 |
 | Gem of Isolation | 6 | 23.1 |
+| Rod of Tahuti | 6 | 23.1 |
 | Spear Of The Magus | 4 | 15.4 |
 | Soul Reaver | 4 | 15.4 |
-| Polynomicon | 2 | 7.7 |
 | Typhon’s Heart | 2 | 7.7 |
+| Polynomicon | 2 | 7.7 |
 | Dreamer's Idol | 2 | 7.7 |
-| Stygian Anchor | 1 | 3.8 |
 | Ethereal Staff | 1 | 3.8 |
+| Heartseeker | 1 | 3.8 |
 
 ### Jungle (23 paths)
 
@@ -62,16 +62,16 @@ _Generated: 2026-10-07T16:02:34.865599+00:00_
 | Jotunn's Revenge | 22 | 95.7 |
 | Heartseeker | 15 | 65.2 |
 | Arondight | 9 | 39.1 |
-| The Reaper | 8 | 34.8 |
 | Tekko-Kagi | 8 | 34.8 |
+| The Reaper | 8 | 34.8 |
 | Bloodforge | 7 | 30.4 |
 | Pendulum Blade | 6 | 26.1 |
 | Avatar's Parashu | 4 | 17.4 |
 | Damaru | 4 | 17.4 |
 | Deathbringer | 1 | 4.3 |
+| Ashwhorl Acorn | 1 | 4.3 |
 | Book of Thoth | 1 | 4.3 |
-| Spear Of The Magus | 1 | 4.3 |
-| Soul Gem | 1 | 4.3 |
+| The Cosmic Horror | 1 | 4.3 |
 
 ### Solo (21 paths)
 
@@ -91,7 +91,7 @@ _Generated: 2026-10-07T16:02:34.865599+00:00_
 | Shield of the Phoenix | 4 | 19.0 |
 | Kinetic Cuirass | 3 | 14.3 |
 | Regrowth Striders | 3 | 14.3 |
-| Stygian Anchor | 3 | 14.3 |
+| Alchemist Coat | 3 | 14.3 |
 
 ### Support (22 paths)
 
@@ -102,16 +102,16 @@ _Generated: 2026-10-07T16:02:34.865599+00:00_
 | Stone of Binding | 13 | 59.1 |
 | Stygian Anchor | 10 | 45.5 |
 | Shifter's Shield | 7 | 31.8 |
-| Rod Of Asclepius | 6 | 27.3 |
-| Lotus Sickle | 6 | 27.3 |
 | Phoenix Feather | 6 | 27.3 |
+| Lotus Sickle | 6 | 27.3 |
+| Rod Of Asclepius | 6 | 27.3 |
 | Alchemist Coat | 5 | 22.7 |
-| Doublet of Binding | 4 | 18.2 |
 | Helm of Darkness | 4 | 18.2 |
+| Doublet of Binding | 4 | 18.2 |
 | Midgardian Mail | 4 | 18.2 |
-| Damaru | 3 | 13.6 |
 | Regrowth Striders | 3 | 13.6 |
-| Spectral Armor | 2 | 9.1 |
+| Damaru | 3 | 13.6 |
+| Xibalban Effigy | 2 | 9.1 |
 
 ## Answer coverage
 
@@ -158,7 +158,6 @@ _Generated: 2026-10-07T16:02:34.865599+00:00_
 
 - Damaru: r5 +6.91
 - Omen Drum: r5 +5.46
-- Gluttonous Grimoire: r5 +5.30
 - The Cosmic Horror: r5 +5.08
 - Brawler’s Beat Stick: r5 +4.31
 - Stygian Anchor: r5 +4.25
@@ -168,3 +167,4 @@ _Generated: 2026-10-07T16:02:34.865599+00:00_
 - Eye of the Storm: r5 +2.25
 - Hastened Fatalis: r5 +2.15
 - Xibalban Effigy: r5 +2.00
+- Stone of Binding: r5 +1.81

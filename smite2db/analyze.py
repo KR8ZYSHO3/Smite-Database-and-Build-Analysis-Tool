@@ -300,7 +300,7 @@ def cmd_export(args: argparse.Namespace) -> int:
         lines = [
             f"# SMITE 2 Tier List — `{scope}`",
             "",
-            "Generated from **ranked win rates** (SmiteBrain top Conquest + tracker.gg high-SR sample), "
+            "Generated from **ranked win rates** (SmiteBrain + SmiteSource Masters+ + tracker.gg high-SR sample), "
             "ability metrics, build synergy, and **patch-note momentum** "
             "(recency-weighted buff/nerf analysis of official wiki patch notes).",
             "",
