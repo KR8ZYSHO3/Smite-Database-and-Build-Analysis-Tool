@@ -2,7 +2,7 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-10-07T14:18:16.012930+00:00_
+_Generated: 2026-10-07T16:02:34.865599+00:00_
 
 ## Weekly themes
 
@@ -25,33 +25,33 @@ _Generated: 2026-10-07T14:18:16.012930+00:00_
 | The Executioner | 11 | 45.8 |
 | Qin's Blade | 6 | 25.0 |
 | Tekko-Kagi | 6 | 25.0 |
-| Spear of Desolation | 5 | 20.8 |
-| The Cosmic Horror | 5 | 20.8 |
-| Book of Thoth | 5 | 20.8 |
 | Soul Reaver | 5 | 20.8 |
+| Book of Thoth | 5 | 20.8 |
+| The Cosmic Horror | 5 | 20.8 |
+| Spear of Desolation | 5 | 20.8 |
 | Sands Of Time | 4 | 16.7 |
-| Spear Of The Magus | 3 | 12.5 |
+| Divine Ruin | 3 | 12.5 |
 | Totem of Death | 3 | 12.5 |
 
 ### Mid (26 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Spear of Desolation | 25 | 96.2 |
+| Book of Thoth | 25 | 96.2 |
 | The Cosmic Horror | 25 | 96.2 |
-| Book of Thoth | 24 | 92.3 |
+| Spear of Desolation | 25 | 96.2 |
 | Chronos' Pendant | 19 | 73.1 |
-| Divine Ruin | 10 | 38.5 |
-| Totem of Death | 10 | 38.5 |
-| Rod of Tahuti | 7 | 26.9 |
-| Gem of Isolation | 5 | 19.2 |
-| Spear Of The Magus | 5 | 19.2 |
+| Divine Ruin | 12 | 46.2 |
+| Totem of Death | 12 | 46.2 |
+| Rod of Tahuti | 6 | 23.1 |
+| Gem of Isolation | 6 | 23.1 |
+| Spear Of The Magus | 4 | 15.4 |
 | Soul Reaver | 4 | 15.4 |
-| Gluttonous Grimoire | 3 | 11.5 |
 | Polynomicon | 2 | 7.7 |
-| Helm of Darkness | 2 | 7.7 |
+| Typhon’s Heart | 2 | 7.7 |
 | Dreamer's Idol | 2 | 7.7 |
-| Soul Gem | 1 | 3.8 |
+| Stygian Anchor | 1 | 3.8 |
+| Ethereal Staff | 1 | 3.8 |
 
 ### Jungle (23 paths)
 
@@ -69,9 +69,9 @@ _Generated: 2026-10-07T14:18:16.012930+00:00_
 | Avatar's Parashu | 4 | 17.4 |
 | Damaru | 4 | 17.4 |
 | Deathbringer | 1 | 4.3 |
+| Book of Thoth | 1 | 4.3 |
 | Spear Of The Magus | 1 | 4.3 |
-| Rod of Tahuti | 1 | 4.3 |
-| Spear of Desolation | 1 | 4.3 |
+| Soul Gem | 1 | 4.3 |
 
 ### Solo (21 paths)
 
@@ -80,18 +80,18 @@ _Generated: 2026-10-07T14:18:16.012930+00:00_
 | Shifter's Shield | 19 | 90.5 |
 | Genji's Guard | 16 | 76.2 |
 | Eye of the Storm | 12 | 57.1 |
-| Stone of Binding | 8 | 38.1 |
-| Breastplate of Valor | 7 | 33.3 |
+| Stone of Binding | 7 | 33.3 |
 | Brawler’s Beat Stick | 7 | 33.3 |
+| Wyrmskin Hide | 6 | 28.6 |
 | Phoenix Feather | 6 | 28.6 |
-| Wyrmskin Hide | 5 | 23.8 |
 | Doublet of Binding | 5 | 23.8 |
+| Breastplate of Valor | 5 | 23.8 |
+| Mystical Mail | 5 | 23.8 |
 | Xibalban Effigy | 5 | 23.8 |
-| Mystical Mail | 4 | 19.0 |
 | Shield of the Phoenix | 4 | 19.0 |
 | Kinetic Cuirass | 3 | 14.3 |
-| Stygian Anchor | 3 | 14.3 |
 | Regrowth Striders | 3 | 14.3 |
+| Stygian Anchor | 3 | 14.3 |
 
 ### Support (22 paths)
 
@@ -102,9 +102,9 @@ _Generated: 2026-10-07T14:18:16.012930+00:00_
 | Stone of Binding | 13 | 59.1 |
 | Stygian Anchor | 10 | 45.5 |
 | Shifter's Shield | 7 | 31.8 |
+| Rod Of Asclepius | 6 | 27.3 |
 | Lotus Sickle | 6 | 27.3 |
 | Phoenix Feather | 6 | 27.3 |
-| Rod Of Asclepius | 6 | 27.3 |
 | Alchemist Coat | 5 | 22.7 |
 | Doublet of Binding | 4 | 18.2 |
 | Helm of Darkness | 4 | 18.2 |
@@ -116,11 +116,11 @@ _Generated: 2026-10-07T14:18:16.012930+00:00_
 ## Answer coverage
 
 ### Carry
-- **vs heals / sustain**: 1/24 (4.2%)
+- **vs heals / sustain**: 3/24 (12.5%)
 - **vs high HP / tanks**: 16/24 (66.7%)
 
 ### Mid
-- **vs heals / sustain**: 10/26 (38.5%)
+- **vs heals / sustain**: 12/26 (46.2%)
 - **vs high HP / tanks**: 6/26 (23.1%)
 
 ### Jungle
@@ -129,7 +129,7 @@ _Generated: 2026-10-07T14:18:16.012930+00:00_
 
 ### Solo
 - **vs heals / sustain**: 10/21 (47.6%)
-- **vs physical damage**: 11/21 (52.4%)
+- **vs physical damage**: 10/21 (47.6%)
 - **vs magic damage**: 19/21 (90.5%)
 - **vs CC / dive**: 0/21 (0.0%)
 

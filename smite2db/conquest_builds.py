@@ -114,12 +114,16 @@ VAMP_STARTER_KEYS = ("vampiric", "shroud")
 # Eye of Providence: ward T3 — players report missing from shop; do not recommend.
 # NOTE: Lotus Sickle was listed "disabled" in the OB43 9/9 hotfix notes (buy/sell INT bug),
 # but the live shop still sells it — do NOT add it here; recommend normally for true healers.
+# Gluttonous Grimoire: OB45 launch disabled it; @SMITEGame said a hotfix would re-enable it.
+# Trust live shop — ban while players report it missing; remove this key when shop sells it again.
 REMOVED_OR_UNAVAILABLE_ITEM_KEYS = (
     "eye of providence",
     "providence",  # only matches Eye of Providence (not Eye of Erebus / Storm)
     # OB15 rename/rework — wiki/tracker still list the old name; live shop is Barbed Carver
     "serrated edge",
     "serrated",
+    "gluttonous grimoire",
+    "gluttonous",
 )
 
 

@@ -761,28 +761,26 @@
               "inspired": true
             },
             {
-              "name": "Gluttonous Grimoire",
-              "score": 571.5,
-              "cost": 2600,
+              "name": "Divine Ruin",
+              "score": 344.5,
+              "cost": 2500,
               "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
+              "slot": "counter",
+              "momentum": 1.78,
               "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
               "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
+                "int": 85.0
               },
-              "pen": 10.0,
+              "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
               "is_active": false,
-              "why": "sustain / omnivamp line"
+              "why": "anti-heal + pen for healing/sustain kits; inspired: high-SR Sol Carry (1/4)",
+              "inspired": true
             },
             {
               "name": "The Cosmic Horror",
@@ -902,28 +900,26 @@
               "inspired": true
             },
             {
-              "name": "Gluttonous Grimoire",
-              "score": 571.5,
-              "cost": 2600,
+              "name": "Divine Ruin",
+              "score": 344.5,
+              "cost": 2500,
               "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
+              "slot": "counter",
+              "momentum": 1.78,
               "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
               "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
+                "int": 85.0
               },
-              "pen": 10.0,
+              "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
               "is_active": false,
-              "why": "sustain / omnivamp line"
+              "why": "anti-heal + pen for healing/sustain kits; inspired: high-SR Sol Carry (1/4)",
+              "inspired": true
             },
             {
               "name": "The Cosmic Horror",
@@ -1044,28 +1040,26 @@
               "inspired": true
             },
             {
-              "name": "Gluttonous Grimoire",
-              "score": 571.5,
-              "cost": 2600,
+              "name": "Divine Ruin",
+              "score": 344.5,
+              "cost": 2500,
               "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
+              "slot": "counter",
+              "momentum": 1.78,
               "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
               "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
+                "int": 85.0
               },
-              "pen": 10.0,
+              "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
               "is_active": false,
-              "why": "sustain / omnivamp line"
+              "why": "anti-heal + pen for healing/sustain kits; inspired: high-SR Sol Carry (1/4)",
+              "inspired": true
             },
             {
               "name": "The Cosmic Horror",
@@ -1156,7 +1150,7 @@
           "max_shop_actives": 2,
           "hard_max_actives": 3,
           "active_count": 0,
-          "pen_total": 40.0,
+          "pen_total": 30.0,
           "min_build_pen": 20.0,
           "algorithm": {
             "version": "1.3.0",
@@ -1306,7 +1300,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Sol \u00b7 Carry \u00b7 archetype \u00abdot_mage_adc\u00bb (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 62%/dps 38%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Book of Thoth (mana stack \u2192 power scaling); Gluttonous Grimoire (sustain / omnivamp line); The Cosmic Horror (penetration required for damage role). Pen: Book of Thoth, Gluttonous Grimoire, The Cosmic Horror, Spear of Desolation, Spear Of The Magus. Actives 0/2 \u00b7 pen \u2248 40. Soft high-SR inspiration on 1 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Sol \u00b7 Carry \u00b7 archetype \u00abdot_mage_adc\u00bb (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 62%/dps 38%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Book of Thoth (mana stack \u2192 power scaling); Divine Ruin (anti-heal + pen for healing/sustain kits); The Cosmic Horror (penetration required for damage role). Pen: Book of Thoth, The Cosmic Horror, Spear of Desolation, Spear Of The Magus. Actives 0/2 \u00b7 pen \u2248 30. Soft high-SR inspiration on 2 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 1 > 3 > 2",
           "skill_order": "1/3/2/1/4/1/1/1/4/3/3/3/4/3/2/2/4/2/2/4",
           "skill_order_list": [
@@ -1350,8 +1344,10 @@
               "label": "vs heals / sustain",
               "short": "heal",
               "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Divine Ruin"
+              ],
               "suggest": [
                 "Divine Ruin",
                 "Brawler's Beat Stick"
@@ -1397,7 +1393,7 @@
             }
           ],
           "answer_flags": {
-            "heal": false,
+            "heal": true,
             "tanks_hp": true,
             "cc_dive": false,
             "physical": false
@@ -16149,30 +16145,6 @@
               "why": "mana stack \u2192 power scaling"
             },
             {
-              "name": "Gluttonous Grimoire",
-              "score": 544.5,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
               "name": "The Cosmic Horror",
               "score": 570.2,
               "cost": 2650,
@@ -16196,6 +16168,49 @@
               "why": "penetration required for damage role"
             },
             {
+              "name": "Chronos' Pendant",
+              "score": 269.3,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.01,
+              "ladder_tier": "B",
+              "ladder_rank": 75,
+              "ladder_score": 24.8,
+              "stats": {
+                "int": 55.0,
+                "cdr": 25.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every 10s: -1s Ability Cooldowns.",
+              "is_active": false,
+              "why": "CDR core for spam / channel kits"
+            },
+            {
+              "name": "Divine Ruin",
+              "score": 322.2,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "counter",
+              "momentum": 1.78,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
+              "stats": {
+                "int": 85.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
+              "is_active": false,
+              "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
               "name": "Spear of Desolation",
               "score": 335.7,
               "cost": 2650,
@@ -16217,28 +16232,6 @@
               "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
               "is_active": false,
               "why": "flat pen + CDR for ability burst"
-            },
-            {
-              "name": "Spear Of The Magus",
-              "score": 394.0,
-              "cost": 2700,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 1.27,
-              "ladder_tier": "S",
-              "ladder_rank": 5,
-              "ladder_score": 78.5,
-              "stats": {
-                "pen": 10.0,
-                "int": 90.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit a God: That God is marked for 8s. Marked Gods take 5% increased damage from all sources.",
-              "is_active": false,
-              "why": "multi-hit / shred \u2014 stacks Magus passive"
             },
             {
               "name": "Soul Reaver",
@@ -16289,30 +16282,6 @@
               "why": "mana stack \u2192 power scaling"
             },
             {
-              "name": "Gluttonous Grimoire",
-              "score": 544.5,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
               "name": "The Cosmic Horror",
               "score": 570.2,
               "cost": 2650,
@@ -16336,6 +16305,49 @@
               "why": "penetration required for damage role"
             },
             {
+              "name": "Chronos' Pendant",
+              "score": 269.3,
+              "cost": 2400,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 0.01,
+              "ladder_tier": "B",
+              "ladder_rank": 75,
+              "ladder_score": 24.8,
+              "stats": {
+                "int": 55.0,
+                "cdr": 25.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every 10s: -1s Ability Cooldowns.",
+              "is_active": false,
+              "why": "CDR core for spam / channel kits"
+            },
+            {
+              "name": "Divine Ruin",
+              "score": 322.2,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "counter",
+              "momentum": 1.78,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
+              "stats": {
+                "int": 85.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
+              "is_active": false,
+              "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
               "name": "Spear of Desolation",
               "score": 335.7,
               "cost": 2650,
@@ -16357,28 +16369,6 @@
               "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
               "is_active": false,
               "why": "flat pen + CDR for ability burst"
-            },
-            {
-              "name": "Spear Of The Magus",
-              "score": 394.0,
-              "cost": 2700,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 1.27,
-              "ladder_tier": "S",
-              "ladder_rank": 5,
-              "ladder_score": 78.5,
-              "stats": {
-                "pen": 10.0,
-                "int": 90.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit a God: That God is marked for 8s. Marked Gods take 5% increased damage from all sources.",
-              "is_active": false,
-              "why": "multi-hit / shred \u2014 stacks Magus passive"
             },
             {
               "name": "Soul Reaver",
@@ -16430,30 +16420,6 @@
               "why": "mana stack \u2192 power scaling"
             },
             {
-              "name": "Gluttonous Grimoire",
-              "score": 544.5,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
               "name": "The Cosmic Horror",
               "score": 570.2,
               "cost": 2650,
@@ -16477,27 +16443,47 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Spear of Desolation",
-              "score": 335.7,
-              "cost": 2650,
+              "name": "Chronos' Pendant",
+              "score": 269.3,
+              "cost": 2400,
               "type": "Offensive",
-              "slot": "pen",
-              "momentum": -0.12,
-              "ladder_tier": "A",
-              "ladder_rank": 32,
-              "ladder_score": 48.4,
+              "slot": "power",
+              "momentum": 0.01,
+              "ladder_tier": "B",
+              "ladder_rank": 75,
+              "ladder_score": 24.8,
               "stats": {
-                "pen": 10.0,
-                "int": 75.0,
-                "cdr": 10.0
+                "int": 55.0,
+                "cdr": 25.0
               },
-              "pen": 10.0,
+              "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "God Kill:\n*-3s Non Ultimate Cooldowns\n*-10s Ultimate Cooldowns\nGod Assist:\n*-1.5s Non Ultimate Cooldowns\n*-5s Ultimate Cooldowns",
+              "effect": "Every 10s: -1s Ability Cooldowns.",
               "is_active": false,
-              "why": "flat pen + CDR for ability burst"
+              "why": "CDR core for spam / channel kits"
+            },
+            {
+              "name": "Divine Ruin",
+              "score": 322.2,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "counter",
+              "momentum": 1.78,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
+              "stats": {
+                "int": 85.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
+              "is_active": false,
+              "why": "anti-heal + pen for healing/sustain kits"
             }
           ],
           "defense": [],
@@ -16542,7 +16528,7 @@
           "max_shop_actives": 2,
           "hard_max_actives": 3,
           "active_count": 0,
-          "pen_total": 40.0,
+          "pen_total": 20.0,
           "min_build_pen": 20.0,
           "algorithm": {
             "version": "1.3.0",
@@ -16692,7 +16678,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Geb \u00b7 Carry \u00b7 archetype \u00abaa_mage\u00bb (INT / magical). ASPECT \u00abAspect of Calamity\u00bb. Geb's attacks are ranged, travel slowly, and pierce with damage falloff. Shockwave deals circular damage, Crits, triggers on-hits, and grant Kit effects: basic-attack kit, attack-speed steroid, self heal / drain, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, as_steroid, burst, dot, gap_close, hard_cc, heal. Style burst 40%/dps 75%; patch stable (net -0.8, r5 +0.0). Patch axes (r5): damage -0.4, survivability -0.3, crit -0.1. Scale STR 0% / INT 36%. Path: Book of Thoth (mana stack \u2192 power scaling); Gluttonous Grimoire (sustain / omnivamp line); The Cosmic Horror (penetration required for damage role). Pen: Book of Thoth, Gluttonous Grimoire, The Cosmic Horror, Spear of Desolation, Spear Of The Magus. Actives 0/2 \u00b7 pen \u2248 40.",
+          "why": "Geb \u00b7 Carry \u00b7 archetype \u00abaa_mage\u00bb (INT / magical). ASPECT \u00abAspect of Calamity\u00bb. Geb's attacks are ranged, travel slowly, and pierce with damage falloff. Shockwave deals circular damage, Crits, triggers on-hits, and grant Kit effects: basic-attack kit, attack-speed steroid, self heal / drain, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, as_steroid, burst, dot, gap_close, hard_cc, heal. Style burst 40%/dps 75%; patch stable (net -0.8, r5 +0.0). Patch axes (r5): damage -0.4, survivability -0.3, crit -0.1. Scale STR 0% / INT 36%. Path: Book of Thoth (mana stack \u2192 power scaling); The Cosmic Horror (penetration required for damage role); Chronos' Pendant (CDR core for spam / channel kits). Pen: Book of Thoth, The Cosmic Horror, Spear of Desolation. Actives 0/2 \u00b7 pen \u2248 20.",
           "skill_priority": "4 > 1 > 2 > 3",
           "skill_order": "1/2/3/1/4/1/1/1/4/2/2/2/4/2/3/3/4/3/3/4",
           "skill_order_list": [
@@ -16739,8 +16725,10 @@
               "label": "vs heals / sustain",
               "short": "heal",
               "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Divine Ruin"
+              ],
               "suggest": [
                 "Divine Ruin",
                 "Brawler's Beat Stick"
@@ -16786,7 +16774,7 @@
             }
           ],
           "answer_flags": {
-            "heal": false,
+            "heal": true,
             "tanks_hp": true,
             "cc_dive": false,
             "physical": false
@@ -18856,30 +18844,6 @@
           },
           "items": [
             {
-              "name": "Gluttonous Grimoire",
-              "score": 611.4,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
               "name": "Book of Thoth",
               "score": 142.6,
               "cost": 2300,
@@ -18974,55 +18938,54 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Gem of Isolation",
-              "score": 357.1,
-              "cost": 2450,
-              "type": "Hybrid",
-              "slot": "mitigate",
-              "momentum": 1.02,
-              "ladder_tier": "A",
-              "ladder_rank": 33,
-              "ladder_score": 47.0,
+              "name": "Divine Ruin",
+              "score": 390.3,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "counter",
+              "momentum": 1.78,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
               "stats": {
-                "ten": 15.0,
-                "hp": 250.0,
-                "int": 50.0
+                "int": 85.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
-              "ten": 15.0,
-              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
+              "ten": 0,
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
               "is_active": false,
-              "why": "zones & CC \u2014 Isolation slow/shred value"
+              "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
+              "name": "Rod of Tahuti",
+              "score": 345.5,
+              "cost": 3000,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.0,
+              "ladder_tier": "B",
+              "ladder_rank": 62,
+              "ladder_score": 26.8,
+              "stats": {
+                "pen": 5.0,
+                "int": 85.0,
+                "mp": 250.0,
+                "mpr": 2.0
+              },
+              "pen": 5.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "+Intelligence equal to 25% of your Intelligence from items.",
+              "is_active": false,
+              "why": "late INT power spike; inspired: high-SR Mid staple",
+              "inspired": true
             }
           ],
           "full_path": [
             {
-              "name": "Gluttonous Grimoire",
-              "score": 611.4,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
               "name": "Book of Thoth",
               "score": 142.6,
               "cost": 2300,
@@ -19117,56 +19080,55 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Gem of Isolation",
-              "score": 357.1,
-              "cost": 2450,
-              "type": "Hybrid",
-              "slot": "mitigate",
-              "momentum": 1.02,
-              "ladder_tier": "A",
-              "ladder_rank": 33,
-              "ladder_score": 47.0,
+              "name": "Divine Ruin",
+              "score": 390.3,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "counter",
+              "momentum": 1.78,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
               "stats": {
-                "ten": 15.0,
-                "hp": 250.0,
-                "int": 50.0
+                "int": 85.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
-              "ten": 15.0,
-              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
+              "ten": 0,
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
               "is_active": false,
-              "why": "zones & CC \u2014 Isolation slow/shred value"
+              "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
+              "name": "Rod of Tahuti",
+              "score": 345.5,
+              "cost": 3000,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": -0.0,
+              "ladder_tier": "B",
+              "ladder_rank": 62,
+              "ladder_score": 26.8,
+              "stats": {
+                "pen": 5.0,
+                "int": 85.0,
+                "mp": 250.0,
+                "mpr": 2.0
+              },
+              "pen": 5.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "+Intelligence equal to 25% of your Intelligence from items.",
+              "is_active": false,
+              "why": "late INT power spike; inspired: high-SR Mid staple",
+              "inspired": true
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
-              "name": "Gluttonous Grimoire",
-              "score": 611.4,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
               "name": "Book of Thoth",
               "score": 142.6,
               "cost": 2300,
@@ -19236,6 +19198,29 @@
               "is_active": false,
               "why": "flat pen + CDR for ability burst; inspired: high-SR Mid staple; high-SR role opener",
               "inspired": true
+            },
+            {
+              "name": "The Cosmic Horror",
+              "score": 665.3,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 5.15,
+              "ladder_tier": "S",
+              "ladder_rank": 2,
+              "ladder_score": 83.7,
+              "stats": {
+                "pen": 10.0,
+                "int": 55.0,
+                "echo": 20.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Each time you Echo: +1 Stack.\nAt 3 Stacks: Next time you Echo:\n*Spawn a tentacle that deals deals Bonus Magical Damage (45% Intelligence over 1.5s)\n*Stacks are removed when a tenta",
+              "is_active": false,
+              "why": "penetration required for damage role"
             }
           ],
           "defense": [],
@@ -19280,7 +19265,7 @@
           "max_shop_actives": 2,
           "hard_max_actives": 3,
           "active_count": 0,
-          "pen_total": 30.0,
+          "pen_total": 25.0,
           "min_build_pen": 20.0,
           "algorithm": {
             "version": "1.3.0",
@@ -19430,7 +19415,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Sol \u00b7 Mid \u00b7 archetype \u00abdot_mage\u00bb (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 62%/dps 38%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Gluttonous Grimoire (sustain / omnivamp line); Book of Thoth (mana stack \u2192 power scaling); Chronos' Pendant (CDR core for spam / channel kits). Pen: Gluttonous Grimoire, Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 0/2 \u00b7 pen \u2248 30. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Sol \u00b7 Mid \u00b7 archetype \u00abdot_mage\u00bb (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 62%/dps 38%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Book of Thoth (mana stack \u2192 power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror, Rod of Tahuti. Actives 0/2 \u00b7 pen \u2248 25. Soft high-SR inspiration on 4 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 1 > 3 > 2",
           "skill_order": "1/3/2/1/4/1/1/1/4/3/3/3/4/3/2/2/4/2/2/4",
           "skill_order_list": [
@@ -19474,8 +19459,10 @@
               "label": "vs heals / sustain",
               "short": "heal",
               "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Divine Ruin"
+              ],
               "suggest": [
                 "Divine Ruin",
                 "Brawler's Beat Stick"
@@ -19519,7 +19506,7 @@
             }
           ],
           "answer_flags": {
-            "heal": false,
+            "heal": true,
             "tanks_hp": false,
             "cc_dive": false,
             "magic": false
@@ -24034,51 +24021,28 @@
           },
           "items": [
             {
-              "name": "Gem of Focus",
-              "score": 273.1,
-              "cost": 2550,
+              "name": "Book of Thoth",
+              "score": 154.9,
+              "cost": 2300,
               "type": "Offensive",
               "slot": "power",
-              "momentum": -0.4,
-              "ladder_tier": "D",
-              "ladder_rank": 115,
-              "ladder_score": 20.5,
+              "momentum": -0.38,
+              "ladder_tier": "B",
+              "ladder_rank": 55,
+              "ladder_score": 29.4,
               "stats": {
-                "int": 65.0,
-                "cdr": 20.0
+                "int": 30.0,
+                "mp": 350.0,
+                "mpr": 4.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Ability Used: Gain a stack of Momentum.\nMomentum grants +7% Pathfinding for 8s. Stacks up to 3 times.",
+              "effect": "+Intelligence equal to 5% of Mana from Items.\nDeal 900 Damage to Minions or Jungle Monsters:\n+1 Evolve Stack\n+1 Mana Infusion Stack (Max 50 Stacks)\n*Damage dealt to Gods counts dou",
               "is_active": false,
-              "why": "ability CDR / focus passive; kit CD nerfed \u2014 buy CDR; inspired: high-SR Ix Chel Mid (2/5); common high-SR opener",
+              "why": "mana stack \u2192 power scaling; inspired: high-SR Ix Chel Mid (1/5)",
               "inspired": true
-            },
-            {
-              "name": "Gluttonous Grimoire",
-              "score": 633.6,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
             },
             {
               "name": "Spear of Desolation",
@@ -24128,31 +24092,6 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Soul Gem",
-              "score": 431.3,
-              "cost": 2500,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.56,
-              "ladder_tier": "A",
-              "ladder_rank": 42,
-              "ladder_score": 39.2,
-              "stats": {
-                "pen": 5.0,
-                "int": 60.0,
-                "cdr": 10.0,
-                "ls": 7.5
-              },
-              "pen": 5.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit: +1 Stack.\nThree Stacks: Next Ability Hit:\n*Deals Bonus Damage (40% Intelligence)\n*+20(+6 per Level) Heal you and allies within 3.2m\n*Removes the Stacks",
-              "is_active": false,
-              "why": "ability heal/proc for mages; inspired: high-SR Mid staple",
-              "inspired": true
-            },
-            {
               "name": "Divine Ruin",
               "score": 424.9,
               "cost": 2500,
@@ -24172,55 +24111,77 @@
               "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
               "is_active": false,
               "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
+              "name": "Gem of Isolation",
+              "score": 475.9,
+              "cost": 2450,
+              "type": "Hybrid",
+              "slot": "mitigate",
+              "momentum": 1.02,
+              "ladder_tier": "A",
+              "ladder_rank": 33,
+              "ladder_score": 47.0,
+              "stats": {
+                "ten": 15.0,
+                "hp": 250.0,
+                "int": 50.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 15.0,
+              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
+              "is_active": false,
+              "why": "zones & CC \u2014 Isolation slow/shred value"
+            },
+            {
+              "name": "Stygian Anchor",
+              "score": 162.2,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "counter",
+              "momentum": 4.26,
+              "ladder_tier": "S",
+              "ladder_rank": 14,
+              "ladder_score": 72.3,
+              "stats": {
+                "pprot": 35.0,
+                "mprot": 30.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On God Damage Dealt: Apply 40% Healing Reduction for 5s & Apply 1 Stack of Stygian Sludge for 3s. (Max 5)\nStacks fall off one at a time.\n*Triggers once per Ability, per god.\nPer St",
+              "is_active": false,
+              "why": "peel / anti-dive anchor"
             }
           ],
           "full_path": [
             {
-              "name": "Gem of Focus",
-              "score": 273.1,
-              "cost": 2550,
+              "name": "Book of Thoth",
+              "score": 154.9,
+              "cost": 2300,
               "type": "Offensive",
               "slot": "power",
-              "momentum": -0.4,
-              "ladder_tier": "D",
-              "ladder_rank": 115,
-              "ladder_score": 20.5,
+              "momentum": -0.38,
+              "ladder_tier": "B",
+              "ladder_rank": 55,
+              "ladder_score": 29.4,
               "stats": {
-                "int": 65.0,
-                "cdr": 20.0
+                "int": 30.0,
+                "mp": 350.0,
+                "mpr": 4.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Ability Used: Gain a stack of Momentum.\nMomentum grants +7% Pathfinding for 8s. Stacks up to 3 times.",
+              "effect": "+Intelligence equal to 5% of Mana from Items.\nDeal 900 Damage to Minions or Jungle Monsters:\n+1 Evolve Stack\n+1 Mana Infusion Stack (Max 50 Stacks)\n*Damage dealt to Gods counts dou",
               "is_active": false,
-              "why": "ability CDR / focus passive; kit CD nerfed \u2014 buy CDR; inspired: high-SR Ix Chel Mid (2/5); common high-SR opener",
+              "why": "mana stack \u2192 power scaling; inspired: high-SR Ix Chel Mid (1/5)",
               "inspired": true
-            },
-            {
-              "name": "Gluttonous Grimoire",
-              "score": 633.6,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
             },
             {
               "name": "Spear of Desolation",
@@ -24270,31 +24231,6 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Soul Gem",
-              "score": 431.3,
-              "cost": 2500,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.56,
-              "ladder_tier": "A",
-              "ladder_rank": 42,
-              "ladder_score": 39.2,
-              "stats": {
-                "pen": 5.0,
-                "int": 60.0,
-                "cdr": 10.0,
-                "ls": 7.5
-              },
-              "pen": 5.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit: +1 Stack.\nThree Stacks: Next Ability Hit:\n*Deals Bonus Damage (40% Intelligence)\n*+20(+6 per Level) Heal you and allies within 3.2m\n*Removes the Stacks",
-              "is_active": false,
-              "why": "ability heal/proc for mages; inspired: high-SR Mid staple",
-              "inspired": true
-            },
-            {
               "name": "Divine Ruin",
               "score": 424.9,
               "cost": 2500,
@@ -24314,56 +24250,78 @@
               "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
               "is_active": false,
               "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
+              "name": "Gem of Isolation",
+              "score": 475.9,
+              "cost": 2450,
+              "type": "Hybrid",
+              "slot": "mitigate",
+              "momentum": 1.02,
+              "ladder_tier": "A",
+              "ladder_rank": 33,
+              "ladder_score": 47.0,
+              "stats": {
+                "ten": 15.0,
+                "hp": 250.0,
+                "int": 50.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 15.0,
+              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
+              "is_active": false,
+              "why": "zones & CC \u2014 Isolation slow/shred value"
+            },
+            {
+              "name": "Stygian Anchor",
+              "score": 162.2,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "counter",
+              "momentum": 4.26,
+              "ladder_tier": "S",
+              "ladder_rank": 14,
+              "ladder_score": 72.3,
+              "stats": {
+                "pprot": 35.0,
+                "mprot": 30.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On God Damage Dealt: Apply 40% Healing Reduction for 5s & Apply 1 Stack of Stygian Sludge for 3s. (Max 5)\nStacks fall off one at a time.\n*Triggers once per Ability, per god.\nPer St",
+              "is_active": false,
+              "why": "peel / anti-dive anchor"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
-              "name": "Gem of Focus",
-              "score": 273.1,
-              "cost": 2550,
+              "name": "Book of Thoth",
+              "score": 154.9,
+              "cost": 2300,
               "type": "Offensive",
               "slot": "power",
-              "momentum": -0.4,
-              "ladder_tier": "D",
-              "ladder_rank": 115,
-              "ladder_score": 20.5,
+              "momentum": -0.38,
+              "ladder_tier": "B",
+              "ladder_rank": 55,
+              "ladder_score": 29.4,
               "stats": {
-                "int": 65.0,
-                "cdr": 20.0
+                "int": 30.0,
+                "mp": 350.0,
+                "mpr": 4.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Ability Used: Gain a stack of Momentum.\nMomentum grants +7% Pathfinding for 8s. Stacks up to 3 times.",
+              "effect": "+Intelligence equal to 5% of Mana from Items.\nDeal 900 Damage to Minions or Jungle Monsters:\n+1 Evolve Stack\n+1 Mana Infusion Stack (Max 50 Stacks)\n*Damage dealt to Gods counts dou",
               "is_active": false,
-              "why": "ability CDR / focus passive; kit CD nerfed \u2014 buy CDR; inspired: high-SR Ix Chel Mid (2/5); common high-SR opener",
+              "why": "mana stack \u2192 power scaling; inspired: high-SR Ix Chel Mid (1/5)",
               "inspired": true
-            },
-            {
-              "name": "Gluttonous Grimoire",
-              "score": 633.6,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
             },
             {
               "name": "Spear of Desolation",
@@ -24411,9 +24369,53 @@
               "effect": "Each time you Echo: +1 Stack.\nAt 3 Stacks: Next time you Echo:\n*Spawn a tentacle that deals deals Bonus Magical Damage (45% Intelligence over 1.5s)\n*Stacks are removed when a tenta",
               "is_active": false,
               "why": "penetration required for damage role"
+            },
+            {
+              "name": "Divine Ruin",
+              "score": 424.9,
+              "cost": 2500,
+              "type": "Offensive",
+              "slot": "counter",
+              "momentum": 1.78,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
+              "stats": {
+                "int": 85.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
+              "is_active": false,
+              "why": "anti-heal + pen for healing/sustain kits"
             }
           ],
-          "defense": [],
+          "defense": [
+            {
+              "name": "Stygian Anchor",
+              "score": 162.2,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "counter",
+              "momentum": 4.26,
+              "ladder_tier": "S",
+              "ladder_rank": 14,
+              "ladder_score": 72.3,
+              "stats": {
+                "pprot": 35.0,
+                "mprot": 30.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On God Damage Dealt: Apply 40% Healing Reduction for 5s & Apply 1 Stack of Stygian Sludge for 3s. (Max 5)\nStacks fall off one at a time.\n*Triggers once per Ability, per god.\nPer St",
+              "is_active": false,
+              "why": "peel / anti-dive anchor"
+            }
+          ],
           "relics": [
             {
               "name": "Purification Beads",
@@ -24455,7 +24457,7 @@
           "max_shop_actives": 2,
           "hard_max_actives": 3,
           "active_count": 0,
-          "pen_total": 35.0,
+          "pen_total": 20.0,
           "min_build_pen": 20.0,
           "algorithm": {
             "version": "1.3.0",
@@ -24605,7 +24607,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Ix Chel \u00b7 Mid \u00b7 archetype \u00abchannel_mage\u00bb (INT / magical). Kit effects: channel / cast time, self heal / drain, heavy healing, pet / deployable, hard crowd control, ally buffs / auras. Tags: anti_cc, channel, dot, echo, hard_cc, heal, heavy_heal, high_cc. Style burst 49%/dps 51%; patch new (net -0.7, r5 -0.7). Patch axes (r5): damage -0.8, general +0.8, cooldown -0.7. Scale STR 0% / INT 64%. Path: Gem of Focus (ability CDR / focus passive; kit CD nerfed \u2014 buy CDR); Gluttonous Grimoire (sustain / omnivamp line); Spear of Desolation (flat pen + CDR for ability burst). Pen: Gluttonous Grimoire, Spear of Desolation, The Cosmic Horror, Soul Gem. Actives 0/2 \u00b7 pen \u2248 35. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Ix Chel \u00b7 Mid \u00b7 archetype \u00abchannel_mage\u00bb (INT / magical). Kit effects: channel / cast time, self heal / drain, heavy healing, pet / deployable, hard crowd control, ally buffs / auras. Tags: anti_cc, channel, dot, echo, hard_cc, heal, heavy_heal, high_cc. Style burst 49%/dps 51%; patch new (net -0.7, r5 -0.7). Patch axes (r5): damage -0.8, general +0.8, cooldown -0.7. Scale STR 0% / INT 64%. Path: Book of Thoth (mana stack \u2192 power scaling); Spear of Desolation (flat pen + CDR for ability burst); The Cosmic Horror (penetration required for damage role). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 0/2 \u00b7 pen \u2248 20. Soft high-SR inspiration on 2 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 2 > 3 > 1",
           "skill_order": "2/3/1/2/4/2/2/2/4/3/3/3/4/3/1/1/4/1/1/4",
           "skill_order_list": [
@@ -24651,7 +24653,8 @@
               "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
               "in_path": true,
               "path_items": [
-                "Divine Ruin"
+                "Divine Ruin",
+                "Stygian Anchor"
               ],
               "suggest": [
                 "Divine Ruin",
@@ -28559,26 +28562,24 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Bancroft's Talon",
-              "score": 311.3,
-              "cost": 2300,
+              "name": "Typhon\u2019s Heart",
+              "score": 341.5,
+              "cost": 2600,
               "type": "Offensive",
               "slot": "power",
               "momentum": 0.02,
               "ladder_tier": "B",
-              "ladder_rank": 70,
+              "ladder_rank": 72,
               "ladder_score": 24.9,
               "stats": {
-                "int": 55.0,
-                "ls": 7.5,
-                "mp": 150.0,
-                "mpr": 2.0
+                "int": 80.0,
+                "ls": 7.5
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Gain bonus Intelligence and Lifesteal scaled from missing Health.\n*Caps at +60 Intelligence and +10% Lifesteal at 40% Health",
+              "effect": "On Minion or Jungle Kill: +1 Stack\nOn God Kill: +30 Stacks\nOn Assist: +15 Stacks\nAt 30 Stacks: Summon a Monster of Typhon\n*Health = 200 (+55 per Level)\n*Damage = 300% of your Lifes",
               "is_active": false,
               "why": "self-sustain power (missing HP)"
             },
@@ -28701,26 +28702,24 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Bancroft's Talon",
-              "score": 311.3,
-              "cost": 2300,
+              "name": "Typhon\u2019s Heart",
+              "score": 341.5,
+              "cost": 2600,
               "type": "Offensive",
               "slot": "power",
               "momentum": 0.02,
               "ladder_tier": "B",
-              "ladder_rank": 70,
+              "ladder_rank": 72,
               "ladder_score": 24.9,
               "stats": {
-                "int": 55.0,
-                "ls": 7.5,
-                "mp": 150.0,
-                "mpr": 2.0
+                "int": 80.0,
+                "ls": 7.5
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Gain bonus Intelligence and Lifesteal scaled from missing Health.\n*Caps at +60 Intelligence and +10% Lifesteal at 40% Health",
+              "effect": "On Minion or Jungle Kill: +1 Stack\nOn God Kill: +30 Stacks\nOn Assist: +15 Stacks\nAt 30 Stacks: Summon a Monster of Typhon\n*Health = 200 (+55 per Level)\n*Damage = 300% of your Lifes",
               "is_active": false,
               "why": "self-sustain power (missing HP)"
             },
@@ -31506,51 +31505,50 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Helm of Darkness",
-              "score": 247.3,
-              "cost": 2700,
+              "name": "Gem of Isolation",
+              "score": 279.6,
+              "cost": 2450,
               "type": "Hybrid",
-              "slot": "defense",
-              "momentum": 3.04,
-              "ladder_tier": "S",
-              "ladder_rank": 13,
-              "ladder_score": 73.4,
+              "slot": "mitigate",
+              "momentum": 1.02,
+              "ladder_tier": "A",
+              "ladder_rank": 33,
+              "ladder_score": 47.0,
               "stats": {
-                "pprot": 25.0,
-                "mprot": 25.0,
-                "int": 45.0
+                "ten": 15.0,
+                "hp": 250.0,
+                "int": 50.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 15.0,
+              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
+              "is_active": false,
+              "why": "zones & CC \u2014 Isolation slow/shred value"
+            },
+            {
+              "name": "Totem of Death",
+              "score": 523.2,
+              "cost": 2800,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 2.5,
+              "ladder_tier": "S",
+              "ladder_rank": 9,
+              "ladder_score": 75.1,
+              "stats": {
+                "int": 55.0,
+                "cdr": 20.0,
+                "echo": 10.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "On Use: Become Stealthed and pass through players and walls for 7s.\nCannot use while Casting\nCooldown: 90s.\nDuring Moonlight Phase:\n*While Stealthed: +15% Movement Speed\n*Pass thro",
-              "is_active": true,
-              "why": "Mid defensive slot \u2014 survive focus"
-            },
-            {
-              "name": "Alchemist Coat",
-              "score": 235.4,
-              "cost": 2350,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.88,
-              "ladder_tier": "A",
-              "ladder_rank": 20,
-              "ladder_score": 61.8,
-              "stats": {
-                "damp": 15.0,
-                "hp": 250.0,
-                "int": 40.0,
-                "mpr": 2.5
-              },
-              "pen": 0,
-              "damp": 15.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Use a Consumable: Gain 10 Dampening for 8s.\n*Open inventory slot: Gain a Multi Potion once every 60s",
+              "effect": "Each time you Echo:\n* Deals Bonus Magical Damage equal to 8% of target's Missing Health\n*Can only affect Gods.\n*Can only occur once every second.",
               "is_active": false,
-              "why": "tenacity / anti-CC bulk"
+              "why": "Mid path fit for kit profile"
             }
           ],
           "full_path": [
@@ -31649,51 +31647,50 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Helm of Darkness",
-              "score": 247.3,
-              "cost": 2700,
+              "name": "Gem of Isolation",
+              "score": 279.6,
+              "cost": 2450,
               "type": "Hybrid",
-              "slot": "defense",
-              "momentum": 3.04,
-              "ladder_tier": "S",
-              "ladder_rank": 13,
-              "ladder_score": 73.4,
+              "slot": "mitigate",
+              "momentum": 1.02,
+              "ladder_tier": "A",
+              "ladder_rank": 33,
+              "ladder_score": 47.0,
               "stats": {
-                "pprot": 25.0,
-                "mprot": 25.0,
-                "int": 45.0
+                "ten": 15.0,
+                "hp": 250.0,
+                "int": 50.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 15.0,
+              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
+              "is_active": false,
+              "why": "zones & CC \u2014 Isolation slow/shred value"
+            },
+            {
+              "name": "Totem of Death",
+              "score": 523.2,
+              "cost": 2800,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 2.5,
+              "ladder_tier": "S",
+              "ladder_rank": 9,
+              "ladder_score": 75.1,
+              "stats": {
+                "int": 55.0,
+                "cdr": 20.0,
+                "echo": 10.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "On Use: Become Stealthed and pass through players and walls for 7s.\nCannot use while Casting\nCooldown: 90s.\nDuring Moonlight Phase:\n*While Stealthed: +15% Movement Speed\n*Pass thro",
-              "is_active": true,
-              "why": "Mid defensive slot \u2014 survive focus"
-            },
-            {
-              "name": "Alchemist Coat",
-              "score": 235.4,
-              "cost": 2350,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.88,
-              "ladder_tier": "A",
-              "ladder_rank": 20,
-              "ladder_score": 61.8,
-              "stats": {
-                "damp": 15.0,
-                "hp": 250.0,
-                "int": 40.0,
-                "mpr": 2.5
-              },
-              "pen": 0,
-              "damp": 15.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Use a Consumable: Gain 10 Dampening for 8s.\n*Open inventory slot: Gain a Multi Potion once every 60s",
+              "effect": "Each time you Echo:\n* Deals Bonus Magical Damage equal to 8% of target's Missing Health\n*Can only affect Gods.\n*Can only occur once every second.",
               "is_active": false,
-              "why": "tenacity / anti-CC bulk"
+              "why": "Mid path fit for kit profile"
             }
           ],
           "inventory_slots": 7,
@@ -31793,32 +31790,7 @@
               "why": "penetration required for damage role"
             }
           ],
-          "defense": [
-            {
-              "name": "Alchemist Coat",
-              "score": 235.4,
-              "cost": 2350,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.88,
-              "ladder_tier": "A",
-              "ladder_rank": 20,
-              "ladder_score": 61.8,
-              "stats": {
-                "damp": 15.0,
-                "hp": 250.0,
-                "int": 40.0,
-                "mpr": 2.5
-              },
-              "pen": 0,
-              "damp": 15.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Use a Consumable: Gain 10 Dampening for 8s.\n*Open inventory slot: Gain a Multi Potion once every 60s",
-              "is_active": false,
-              "why": "tenacity / anti-CC bulk"
-            }
-          ],
+          "defense": [],
           "relics": [
             {
               "name": "Aegis of Acceleration",
@@ -31859,7 +31831,7 @@
           ],
           "max_shop_actives": 2,
           "hard_max_actives": 3,
-          "active_count": 1,
+          "active_count": 0,
           "pen_total": 20.0,
           "min_build_pen": 20.0,
           "algorithm": {
@@ -32010,7 +31982,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Hel \u00b7 Mid \u00b7 archetype \u00abdot_mage\u00bb (INT / magical). Kit effects: damage over time, attack-speed steroid, self heal / drain, ally buffs / auras, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, as_steroid, dot, heal, heavy_dot, self_sustain, team_buff. Style burst 42%/dps 58%; patch new (net +0.9, r5 +0.9). Patch axes (r5): general +0.9. Scale STR 0% / INT 75%. Path: Book of Thoth (mana stack \u2192 power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst; patch rising \u2014 lean damage). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 1/2 \u00b7 pen \u2248 20. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Hel \u00b7 Mid \u00b7 archetype \u00abdot_mage\u00bb (INT / magical). Kit effects: damage over time, attack-speed steroid, self heal / drain, ally buffs / auras, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, as_steroid, dot, heal, heavy_dot, self_sustain, team_buff. Style burst 42%/dps 58%; patch new (net +0.9, r5 +0.9). Patch axes (r5): general +0.9. Scale STR 0% / INT 75%. Path: Book of Thoth (mana stack \u2192 power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst; patch rising \u2014 lean damage). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 0/2 \u00b7 pen \u2248 20. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 1 > 2 > 3",
           "skill_order": "1/2/3/1/4/1/1/1/4/2/2/2/4/2/3/3/4/3/3/4",
           "skill_order_list": [
@@ -34392,30 +34364,6 @@
           },
           "items": [
             {
-              "name": "Gluttonous Grimoire",
-              "score": 677.9,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
               "name": "Book of Thoth",
               "score": 143.2,
               "cost": 2300,
@@ -34510,57 +34458,52 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Rod of Tahuti",
-              "score": 356.7,
-              "cost": 3000,
+              "name": "Typhon\u2019s Heart",
+              "score": 363.6,
+              "cost": 2600,
               "type": "Offensive",
               "slot": "power",
-              "momentum": -0.0,
+              "momentum": 0.02,
               "ladder_tier": "B",
-              "ladder_rank": 62,
-              "ladder_score": 26.8,
+              "ladder_rank": 72,
+              "ladder_score": 24.9,
               "stats": {
-                "pen": 5.0,
-                "int": 85.0,
-                "mp": 250.0,
-                "mpr": 2.0
+                "int": 80.0,
+                "ls": 7.5
               },
-              "pen": 5.0,
+              "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "+Intelligence equal to 25% of your Intelligence from items.",
+              "effect": "On Minion or Jungle Kill: +1 Stack\nOn God Kill: +30 Stacks\nOn Assist: +15 Stacks\nAt 30 Stacks: Summon a Monster of Typhon\n*Health = 200 (+55 per Level)\n*Damage = 300% of your Lifes",
               "is_active": false,
-              "why": "late INT power spike; inspired: high-SR Mid staple",
-              "inspired": true
+              "why": "self-sustain power (missing HP)"
+            },
+            {
+              "name": "Magi's Cloak",
+              "score": 198.0,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": -0.02,
+              "ladder_tier": "C",
+              "ladder_rank": 108,
+              "ladder_score": 21.8,
+              "stats": {
+                "pprot": 35.0,
+                "mprot": 35.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every 90s: Gain a Hard Crowd Control protective bubble.\n*When triggered, gain Crowd Control Immunity for 1.5s.",
+              "is_active": false,
+              "why": "absorb CC (Magi's)"
             }
           ],
           "full_path": [
             {
-              "name": "Gluttonous Grimoire",
-              "score": 677.9,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
               "name": "Book of Thoth",
               "score": 143.2,
               "cost": 2300,
@@ -34655,58 +34598,53 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Rod of Tahuti",
-              "score": 356.7,
-              "cost": 3000,
+              "name": "Typhon\u2019s Heart",
+              "score": 363.6,
+              "cost": 2600,
               "type": "Offensive",
               "slot": "power",
-              "momentum": -0.0,
+              "momentum": 0.02,
               "ladder_tier": "B",
-              "ladder_rank": 62,
-              "ladder_score": 26.8,
+              "ladder_rank": 72,
+              "ladder_score": 24.9,
               "stats": {
-                "pen": 5.0,
-                "int": 85.0,
-                "mp": 250.0,
-                "mpr": 2.0
+                "int": 80.0,
+                "ls": 7.5
               },
-              "pen": 5.0,
+              "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "+Intelligence equal to 25% of your Intelligence from items.",
+              "effect": "On Minion or Jungle Kill: +1 Stack\nOn God Kill: +30 Stacks\nOn Assist: +15 Stacks\nAt 30 Stacks: Summon a Monster of Typhon\n*Health = 200 (+55 per Level)\n*Damage = 300% of your Lifes",
               "is_active": false,
-              "why": "late INT power spike; inspired: high-SR Mid staple",
-              "inspired": true
+              "why": "self-sustain power (missing HP)"
+            },
+            {
+              "name": "Magi's Cloak",
+              "score": 198.0,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": -0.02,
+              "ladder_tier": "C",
+              "ladder_rank": 108,
+              "ladder_score": 21.8,
+              "stats": {
+                "pprot": 35.0,
+                "mprot": 35.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every 90s: Gain a Hard Crowd Control protective bubble.\n*When triggered, gain Crowd Control Immunity for 1.5s.",
+              "is_active": false,
+              "why": "absorb CC (Magi's)"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
-              "name": "Gluttonous Grimoire",
-              "score": 677.9,
-              "cost": 2600,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 5.87,
-              "ladder_tier": "S",
-              "ladder_rank": 1,
-              "ladder_score": 83.7,
-              "stats": {
-                "pen": 10.0,
-                "hp": 150.0,
-                "int": 55.0,
-                "ls": 7.5
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
-              "is_active": false,
-              "why": "sustain / omnivamp line"
-            },
-            {
               "name": "Book of Thoth",
               "score": 143.2,
               "cost": 2300,
@@ -34776,9 +34714,55 @@
               "is_active": false,
               "why": "flat pen + CDR for ability burst; inspired: high-SR Mid staple; high-SR role opener",
               "inspired": true
+            },
+            {
+              "name": "The Cosmic Horror",
+              "score": 696.4,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 5.15,
+              "ladder_tier": "S",
+              "ladder_rank": 2,
+              "ladder_score": 83.7,
+              "stats": {
+                "pen": 10.0,
+                "int": 55.0,
+                "echo": 20.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Each time you Echo: +1 Stack.\nAt 3 Stacks: Next time you Echo:\n*Spawn a tentacle that deals deals Bonus Magical Damage (45% Intelligence over 1.5s)\n*Stacks are removed when a tenta",
+              "is_active": false,
+              "why": "penetration required for damage role"
             }
           ],
-          "defense": [],
+          "defense": [
+            {
+              "name": "Magi's Cloak",
+              "score": 198.0,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": -0.02,
+              "ladder_tier": "C",
+              "ladder_rank": 108,
+              "ladder_score": 21.8,
+              "stats": {
+                "pprot": 35.0,
+                "mprot": 35.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Every 90s: Gain a Hard Crowd Control protective bubble.\n*When triggered, gain Crowd Control Immunity for 1.5s.",
+              "is_active": false,
+              "why": "absorb CC (Magi's)"
+            }
+          ],
           "relics": [
             {
               "name": "Aegis of Acceleration",
@@ -34820,7 +34804,7 @@
           "max_shop_actives": 2,
           "hard_max_actives": 3,
           "active_count": 0,
-          "pen_total": 35.0,
+          "pen_total": 20.0,
           "min_build_pen": 20.0,
           "algorithm": {
             "version": "1.3.0",
@@ -34970,7 +34954,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Anubis \u00b7 Mid \u00b7 archetype \u00abdot_mage\u00bb (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, pet / deployable, hard crowd control. Tags: anti_cc, channel, dot, hard_cc, heal, heavy_dot, high_cc, immobile. Style burst 98%/dps 2%; patch volatile (net -2.3, r5 +0.0). Patch axes (r5): survivability -1.0, damage -0.8, heal -0.5. Scale STR 0% / INT 60%. Path: Gluttonous Grimoire (sustain / omnivamp line); Book of Thoth (mana stack \u2192 power scaling); Chronos' Pendant (CDR core for spam / channel kits). Pen: Gluttonous Grimoire, Book of Thoth, Spear of Desolation, The Cosmic Horror, Rod of Tahuti. Actives 0/2 \u00b7 pen \u2248 35. Soft high-SR inspiration on 4 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Anubis \u00b7 Mid \u00b7 archetype \u00abdot_mage\u00bb (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, pet / deployable, hard crowd control. Tags: anti_cc, channel, dot, hard_cc, heal, heavy_dot, high_cc, immobile. Style burst 98%/dps 2%; patch volatile (net -2.3, r5 +0.0). Patch axes (r5): survivability -1.0, damage -0.8, heal -0.5. Scale STR 0% / INT 60%. Path: Book of Thoth (mana stack \u2192 power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 0/2 \u00b7 pen \u2248 20. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 1 > 2 > 3",
           "skill_order": "1/2/3/1/4/1/1/1/4/2/2/2/4/2/3/3/4/3/3/4",
           "skill_order_list": [
@@ -35038,8 +35022,10 @@
               "label": "vs CC / dive",
               "short": "CC",
               "why": "Absorb or survive hard CC and all-ins.",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Magi's Cloak"
+              ],
               "suggest": [
                 "Magi's Cloak",
                 "Spirit Robe"
@@ -35061,7 +35047,7 @@
           "answer_flags": {
             "heal": false,
             "tanks_hp": false,
-            "cc_dive": false,
+            "cc_dive": true,
             "magic": false
           }
         },
@@ -35139,28 +35125,6 @@
           },
           "items": [
             {
-              "name": "Spear Of The Magus",
-              "score": 462.8,
-              "cost": 2700,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 1.27,
-              "ladder_tier": "S",
-              "ladder_rank": 5,
-              "ladder_score": 78.5,
-              "stats": {
-                "pen": 10.0,
-                "int": 90.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit a God: That God is marked for 8s. Marked Gods take 5% increased damage from all sources.",
-              "is_active": false,
-              "why": "multi-hit / shred \u2014 stacks Magus passive"
-            },
-            {
               "name": "Book of Thoth",
               "score": 169.0,
               "cost": 2300,
@@ -35255,55 +35219,52 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Rod of Tahuti",
-              "score": 358.1,
-              "cost": 3000,
+              "name": "Divine Ruin",
+              "score": 391.7,
+              "cost": 2500,
               "type": "Offensive",
-              "slot": "power",
-              "momentum": -0.0,
-              "ladder_tier": "B",
-              "ladder_rank": 62,
-              "ladder_score": 26.8,
+              "slot": "counter",
+              "momentum": 1.78,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
               "stats": {
-                "pen": 5.0,
-                "int": 85.0,
-                "mp": 250.0,
-                "mpr": 2.0
+                "int": 85.0
               },
-              "pen": 5.0,
+              "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "+Intelligence equal to 25% of your Intelligence from items.",
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
               "is_active": false,
-              "why": "late INT power spike; inspired: high-SR Mid staple",
-              "inspired": true
+              "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
+              "name": "Totem of Death",
+              "score": 519.5,
+              "cost": 2800,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 2.5,
+              "ladder_tier": "S",
+              "ladder_rank": 9,
+              "ladder_score": 75.1,
+              "stats": {
+                "int": 55.0,
+                "cdr": 20.0,
+                "echo": 10.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Each time you Echo:\n* Deals Bonus Magical Damage equal to 8% of target's Missing Health\n*Can only affect Gods.\n*Can only occur once every second.",
+              "is_active": false,
+              "why": "Mid path fit for kit profile"
             }
           ],
           "full_path": [
             {
-              "name": "Spear Of The Magus",
-              "score": 462.8,
-              "cost": 2700,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 1.27,
-              "ladder_tier": "S",
-              "ladder_rank": 5,
-              "ladder_score": 78.5,
-              "stats": {
-                "pen": 10.0,
-                "int": 90.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit a God: That God is marked for 8s. Marked Gods take 5% increased damage from all sources.",
-              "is_active": false,
-              "why": "multi-hit / shred \u2014 stacks Magus passive"
-            },
-            {
               "name": "Book of Thoth",
               "score": 169.0,
               "cost": 2300,
@@ -35398,56 +35359,53 @@
               "why": "penetration required for damage role"
             },
             {
-              "name": "Rod of Tahuti",
-              "score": 358.1,
-              "cost": 3000,
+              "name": "Divine Ruin",
+              "score": 391.7,
+              "cost": 2500,
               "type": "Offensive",
-              "slot": "power",
-              "momentum": -0.0,
-              "ladder_tier": "B",
-              "ladder_rank": 62,
-              "ladder_score": 26.8,
+              "slot": "counter",
+              "momentum": 1.78,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 82.9,
               "stats": {
-                "pen": 5.0,
-                "int": 85.0,
-                "mp": 250.0,
-                "mpr": 2.0
+                "int": 85.0
               },
-              "pen": 5.0,
+              "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "+Intelligence equal to 25% of your Intelligence from items.",
+              "effect": "On God Damaged: Apply 40% Healing Reduction for 5s and trigger Chain Lightning when off cooldown\nChain Lightning:\n*Magical Damage = 40 + 20% Intelligence\n*Hits enemy and up to 4 ne",
               "is_active": false,
-              "why": "late INT power spike; inspired: high-SR Mid staple",
-              "inspired": true
+              "why": "anti-heal + pen for healing/sustain kits"
+            },
+            {
+              "name": "Totem of Death",
+              "score": 519.5,
+              "cost": 2800,
+              "type": "Offensive",
+              "slot": "power",
+              "momentum": 2.5,
+              "ladder_tier": "S",
+              "ladder_rank": 9,
+              "ladder_score": 75.1,
+              "stats": {
+                "int": 55.0,
+                "cdr": 20.0,
+                "echo": 10.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Each time you Echo:\n* Deals Bonus Magical Damage equal to 8% of target's Missing Health\n*Can only affect Gods.\n*Can only occur once every second.",
+              "is_active": false,
+              "why": "Mid path fit for kit profile"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
-              "name": "Spear Of The Magus",
-              "score": 462.8,
-              "cost": 2700,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 1.27,
-              "ladder_tier": "S",
-              "ladder_rank": 5,
-              "ladder_score": 78.5,
-              "stats": {
-                "pen": 10.0,
-                "int": 90.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Hit a God: That God is marked for 8s. Marked Gods take 5% increased damage from all sources.",
-              "is_active": false,
-              "why": "multi-hit / shred \u2014 stacks Magus passive"
-            },
-            {
               "name": "Book of Thoth",
               "score": 169.0,
               "cost": 2300,
@@ -35517,6 +35475,29 @@
               "is_active": false,
               "why": "flat pen + CDR for ability burst; inspired: high-SR Mid staple; high-SR role opener",
               "inspired": true
+            },
+            {
+              "name": "The Cosmic Horror",
+              "score": 641.9,
+              "cost": 2650,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 5.15,
+              "ladder_tier": "S",
+              "ladder_rank": 2,
+              "ladder_score": 83.7,
+              "stats": {
+                "pen": 10.0,
+                "int": 55.0,
+                "echo": 20.0
+              },
+              "pen": 10.0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Each time you Echo: +1 Stack.\nAt 3 Stacks: Next time you Echo:\n*Spawn a tentacle that deals deals Bonus Magical Damage (45% Intelligence over 1.5s)\n*Stacks are removed when a tenta",
+              "is_active": false,
+              "why": "penetration required for damage role"
             }
           ],
           "defense": [],
@@ -35561,7 +35542,7 @@
           "max_shop_actives": 2,
           "hard_max_actives": 3,
           "active_count": 0,
-          "pen_total": 35.0,
+          "pen_total": 20.0,
           "min_build_pen": 20.0,
           "algorithm": {
             "version": "1.3.0",
@@ -35711,7 +35692,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Aphrodite \u00b7 Mid \u00b7 archetype \u00abburst_mage\u00bb (INT / magical). Kit effects: big ult spike, hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, burst, dot, gap_close, hard_cc, heal, long_cd, team_buff. Style burst 60%/dps 40%; patch falling (net -5.7, r5 -6.1). Patch axes (r5): damage -3.4, general -1.4, survivability -0.9. Scale STR 0% / INT 58%. Path: Spear Of The Magus (multi-hit / shred \u2014 stacks Magus passive); Book of Thoth (mana stack \u2192 power scaling); Chronos' Pendant (CDR core for spam / channel kits). Pen: Spear Of The Magus, Book of Thoth, Spear of Desolation, The Cosmic Horror, Rod of Tahuti. Actives 0/2 \u00b7 pen \u2248 35. Soft high-SR inspiration on 4 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Aphrodite \u00b7 Mid \u00b7 archetype \u00abburst_mage\u00bb (INT / magical). Kit effects: big ult spike, hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, burst, dot, gap_close, hard_cc, heal, long_cd, team_buff. Style burst 60%/dps 40%; patch falling (net -5.7, r5 -6.1). Patch axes (r5): damage -3.4, general -1.4, survivability -0.9. Scale STR 0% / INT 58%. Path: Book of Thoth (mana stack \u2192 power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 0/2 \u00b7 pen \u2248 20. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 2 > 1 > 3",
           "skill_order": "2/1/3/2/4/2/2/2/4/1/1/1/4/1/3/3/4/3/3/4",
           "skill_order_list": [
@@ -35755,8 +35736,10 @@
               "label": "vs heals / sustain",
               "short": "heal",
               "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Divine Ruin"
+              ],
               "suggest": [
                 "Divine Ruin",
                 "Brawler's Beat Stick"
@@ -35800,7 +35783,7 @@
             }
           ],
           "answer_flags": {
-            "heal": false,
+            "heal": true,
             "tanks_hp": false,
             "cc_dive": false,
             "magic": false
@@ -69278,27 +69261,26 @@
               "inspired": true
             },
             {
-              "name": "Ethereal Staff",
-              "score": 366.3,
-              "cost": 2550,
-              "type": "Hybrid",
-              "slot": "mitigate",
-              "momentum": 1.11,
-              "ladder_tier": "A",
-              "ladder_rank": 31,
-              "ladder_score": 49.1,
+              "name": "Gauntlet of Thebes",
+              "score": 295.6,
+              "cost": 2200,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.6,
+              "ladder_tier": "B",
+              "ladder_rank": 50,
+              "ladder_score": 32.7,
               "stats": {
-                "ten": 15.0,
-                "hp": 250.0,
-                "int": 60.0
+                "hp": 200.0,
+                "mp": 150.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
-              "ten": 15.0,
-              "effect": "Ability Hit a God: Steal 5% Max Health and Mana from a single target.\n*Triggers once per Ability\n*Stacks last 60s\n*Stacks decay 1 at a time",
+              "ten": 0,
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
               "is_active": false,
-              "why": "mitigation vs enemy damage types"
+              "why": "team aura / support core"
             },
             {
               "name": "Phoenix Feather",
@@ -69324,6 +69306,30 @@
               "why": "shield / phoenix-style bulk"
             },
             {
+              "name": "Alchemist Coat",
+              "score": 374.5,
+              "cost": 2350,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 1.88,
+              "ladder_tier": "A",
+              "ladder_rank": 20,
+              "ladder_score": 61.8,
+              "stats": {
+                "damp": 15.0,
+                "hp": 250.0,
+                "int": 40.0,
+                "mpr": 2.5
+              },
+              "pen": 0,
+              "damp": 15.0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Use a Consumable: Gain 10 Dampening for 8s.\n*Open inventory slot: Gain a Multi Potion once every 60s",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk"
+            },
+            {
               "name": "Gem of Isolation",
               "score": 388.9,
               "cost": 2450,
@@ -69345,29 +69351,6 @@
               "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
               "is_active": false,
               "why": "zones & CC \u2014 Isolation slow/shred value"
-            },
-            {
-              "name": "Stone of Binding",
-              "score": 447.6,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.41,
-              "ladder_tier": "S",
-              "ladder_rank": 10,
-              "ladder_score": 75.0,
-              "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
-              "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
             },
             {
               "name": "Rod Of Asclepius",
@@ -69421,27 +69404,26 @@
               "inspired": true
             },
             {
-              "name": "Ethereal Staff",
-              "score": 366.3,
-              "cost": 2550,
-              "type": "Hybrid",
-              "slot": "mitigate",
-              "momentum": 1.11,
-              "ladder_tier": "A",
-              "ladder_rank": 31,
-              "ladder_score": 49.1,
+              "name": "Gauntlet of Thebes",
+              "score": 295.6,
+              "cost": 2200,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.6,
+              "ladder_tier": "B",
+              "ladder_rank": 50,
+              "ladder_score": 32.7,
               "stats": {
-                "ten": 15.0,
-                "hp": 250.0,
-                "int": 60.0
+                "hp": 200.0,
+                "mp": 150.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
-              "ten": 15.0,
-              "effect": "Ability Hit a God: Steal 5% Max Health and Mana from a single target.\n*Triggers once per Ability\n*Stacks last 60s\n*Stacks decay 1 at a time",
+              "ten": 0,
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
               "is_active": false,
-              "why": "mitigation vs enemy damage types"
+              "why": "team aura / support core"
             },
             {
               "name": "Phoenix Feather",
@@ -69467,6 +69449,30 @@
               "why": "shield / phoenix-style bulk"
             },
             {
+              "name": "Alchemist Coat",
+              "score": 374.5,
+              "cost": 2350,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 1.88,
+              "ladder_tier": "A",
+              "ladder_rank": 20,
+              "ladder_score": 61.8,
+              "stats": {
+                "damp": 15.0,
+                "hp": 250.0,
+                "int": 40.0,
+                "mpr": 2.5
+              },
+              "pen": 0,
+              "damp": 15.0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Use a Consumable: Gain 10 Dampening for 8s.\n*Open inventory slot: Gain a Multi Potion once every 60s",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk"
+            },
+            {
               "name": "Gem of Isolation",
               "score": 388.9,
               "cost": 2450,
@@ -69488,29 +69494,6 @@
               "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
               "is_active": false,
               "why": "zones & CC \u2014 Isolation slow/shred value"
-            },
-            {
-              "name": "Stone of Binding",
-              "score": 447.6,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.41,
-              "ladder_tier": "S",
-              "ladder_rank": 10,
-              "ladder_score": 75.0,
-              "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
-              "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
             },
             {
               "name": "Rod Of Asclepius",
@@ -69565,29 +69548,6 @@
               "inspired": true
             },
             {
-              "name": "Ethereal Staff",
-              "score": 366.3,
-              "cost": 2550,
-              "type": "Hybrid",
-              "slot": "mitigate",
-              "momentum": 1.11,
-              "ladder_tier": "A",
-              "ladder_rank": 31,
-              "ladder_score": 49.1,
-              "stats": {
-                "ten": 15.0,
-                "hp": 250.0,
-                "int": 60.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 15.0,
-              "effect": "Ability Hit a God: Steal 5% Max Health and Mana from a single target.\n*Triggers once per Ability\n*Stacks last 60s\n*Stacks decay 1 at a time",
-              "is_active": false,
-              "why": "mitigation vs enemy damage types"
-            },
-            {
               "name": "Gem of Isolation",
               "score": 388.9,
               "cost": 2450,
@@ -69637,6 +69597,28 @@
           ],
           "defense": [
             {
+              "name": "Gauntlet of Thebes",
+              "score": 295.6,
+              "cost": 2200,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.6,
+              "ladder_tier": "B",
+              "ladder_rank": 50,
+              "ladder_score": 32.7,
+              "stats": {
+                "hp": 200.0,
+                "mp": 150.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
+              "is_active": false,
+              "why": "team aura / support core"
+            },
+            {
               "name": "Phoenix Feather",
               "score": 378.0,
               "cost": 2350,
@@ -69658,29 +69640,6 @@
               "effect": "On Use: Fire 3 Pulses that Heal you and True Damage enemies within 3.2m.\n*Heal = +75 Health +7.5 Missing Health\n*True Damage = +3% Max Health from Items\nCooldown: 120s\nYou can own ",
               "is_active": true,
               "why": "shield / phoenix-style bulk"
-            },
-            {
-              "name": "Stone of Binding",
-              "score": 447.6,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.41,
-              "ladder_tier": "S",
-              "ladder_rank": 10,
-              "ladder_score": 75.0,
-              "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
-              "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
             }
           ],
           "relics": [
@@ -69874,7 +69833,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Artio \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (INT / magical). Kit effects: protection shred, channel / cast time, big ult spike, heavy healing, hard crowd control, ally buffs / auras. Tags: channel, hard_cc, heal, heavy_heal, high_cc, long_cd, prot_shred, team_buff. Style burst 59%/dps 41%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): general +0.1, damage +0.0, mana -0.0. Scale STR 60% / INT 50%. Path: Shifter's Shield (offline hybrid tank); Ethereal Staff (Solo path fit for kit profile); Phoenix Feather (shield / phoenix-style bulk). Actives 1/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 1 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Artio \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (INT / magical). Kit effects: protection shred, channel / cast time, big ult spike, heavy healing, hard crowd control, ally buffs / auras. Tags: channel, hard_cc, heal, heavy_heal, high_cc, long_cd, prot_shred, team_buff. Style burst 59%/dps 41%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): general +0.1, damage +0.0, mana -0.0. Scale STR 60% / INT 50%. Path: Shifter's Shield (offline hybrid tank); Gauntlet of Thebes (team aura / support core); Phoenix Feather (shield / phoenix-style bulk). Actives 1/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 1 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 3 > 1 > 2",
           "skill_order": "3/1/2/3/4/3/3/3/4/1/1/1/4/1/2/2/4/2/2/4",
           "skill_order_list": [
@@ -69968,11 +69927,8 @@
               "label": "vs high HP / tanks",
               "short": "tanks",
               "why": "%HP, pen, and prot shred so fat targets take real damage.",
-              "in_path": true,
-              "path_items": [
-                "Ethereal Staff",
-                "Stone of Binding"
-              ],
+              "in_path": false,
+              "path_items": [],
               "suggest": [
                 "Soul Reaver",
                 "Ethereal Staff"
@@ -70007,7 +69963,7 @@
             "magic": true,
             "physical": false,
             "cc_dive": false,
-            "tanks_hp": true,
+            "tanks_hp": false,
             "crit": false,
             "attack_speed": false
           }
@@ -70119,31 +70075,6 @@
               "inspired": true
             },
             {
-              "name": "Breastplate of Valor",
-              "score": 315.3,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": -0.5,
-              "ladder_tier": "D",
-              "ladder_rank": 125,
-              "ladder_score": 17.3,
-              "stats": {
-                "pprot": 45.0,
-                "cdr": 20.0,
-                "mp": 200.0,
-                "mpr": 2.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On 500 (+25 per Level) Health lost: -1s Ability Cooldowns.",
-              "is_active": false,
-              "why": "physical CDR defense; patch falling \u2014 extra bulk/CDR; inspired: high-SR Hades Solo (1/6)",
-              "inspired": true
-            },
-            {
               "name": "Genji's Guard",
               "score": 229.4,
               "cost": 2350,
@@ -70169,29 +70100,6 @@
               "inspired": true
             },
             {
-              "name": "Gladiator's Shield",
-              "score": 307.4,
-              "cost": 2450,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": -0.01,
-              "ladder_tier": "C",
-              "ladder_rank": 106,
-              "ladder_score": 21.9,
-              "stats": {
-                "pprot": 25.0,
-                "hp": 200.0,
-                "cdr": 10.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Abilities deal bonus Physical Damage.\n*Damage = +10 + 40% of your Item Protections\n*Triggers once per Ability Cast, per God",
-              "is_active": false,
-              "why": "Solo defensive slot \u2014 survive focus"
-            },
-            {
               "name": "Contagion",
               "score": 357.3,
               "cost": 2400,
@@ -70212,6 +70120,50 @@
               "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
               "is_active": false,
               "why": "team anti-heal aura"
+            },
+            {
+              "name": "Midgardian Mail",
+              "score": 331.8,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "counter",
+              "momentum": 1.07,
+              "ladder_tier": "A",
+              "ladder_rank": 30,
+              "ladder_score": 50.4,
+              "stats": {
+                "pprot": 50.0,
+                "hp": 250.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Hit by a basic attack: the enemy has their Attack Speed reduced by 10% for 3s. Stacks up to 4 times.",
+              "is_active": false,
+              "why": "cut enemy attack speed"
+            },
+            {
+              "name": "Brawler\u2019s Beat Stick",
+              "score": 427.5,
+              "cost": 2500,
+              "type": "Hybrid",
+              "slot": "counter",
+              "momentum": 4.15,
+              "ladder_tier": "S",
+              "ladder_rank": 11,
+              "ladder_score": 73.4,
+              "stats": {
+                "pprot": 15.0,
+                "mprot": 15.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).\nOn God Damage Dealt: Apply 40% Healing Reduction for 5s\nWhile in Combat: +2% Strength, +2% Intelligenc",
+              "is_active": false,
+              "why": "healing reduction"
             },
             {
               "name": "Stone of Binding",
@@ -70264,31 +70216,6 @@
               "inspired": true
             },
             {
-              "name": "Breastplate of Valor",
-              "score": 315.3,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": -0.5,
-              "ladder_tier": "D",
-              "ladder_rank": 125,
-              "ladder_score": 17.3,
-              "stats": {
-                "pprot": 45.0,
-                "cdr": 20.0,
-                "mp": 200.0,
-                "mpr": 2.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On 500 (+25 per Level) Health lost: -1s Ability Cooldowns.",
-              "is_active": false,
-              "why": "physical CDR defense; patch falling \u2014 extra bulk/CDR; inspired: high-SR Hades Solo (1/6)",
-              "inspired": true
-            },
-            {
               "name": "Genji's Guard",
               "score": 229.4,
               "cost": 2350,
@@ -70314,29 +70241,6 @@
               "inspired": true
             },
             {
-              "name": "Gladiator's Shield",
-              "score": 307.4,
-              "cost": 2450,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": -0.01,
-              "ladder_tier": "C",
-              "ladder_rank": 106,
-              "ladder_score": 21.9,
-              "stats": {
-                "pprot": 25.0,
-                "hp": 200.0,
-                "cdr": 10.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Abilities deal bonus Physical Damage.\n*Damage = +10 + 40% of your Item Protections\n*Triggers once per Ability Cast, per God",
-              "is_active": false,
-              "why": "Solo defensive slot \u2014 survive focus"
-            },
-            {
               "name": "Contagion",
               "score": 357.3,
               "cost": 2400,
@@ -70357,6 +70261,50 @@
               "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
               "is_active": false,
               "why": "team anti-heal aura"
+            },
+            {
+              "name": "Midgardian Mail",
+              "score": 331.8,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "counter",
+              "momentum": 1.07,
+              "ladder_tier": "A",
+              "ladder_rank": 30,
+              "ladder_score": 50.4,
+              "stats": {
+                "pprot": 50.0,
+                "hp": 250.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Hit by a basic attack: the enemy has their Attack Speed reduced by 10% for 3s. Stacks up to 4 times.",
+              "is_active": false,
+              "why": "cut enemy attack speed"
+            },
+            {
+              "name": "Brawler\u2019s Beat Stick",
+              "score": 427.5,
+              "cost": 2500,
+              "type": "Hybrid",
+              "slot": "counter",
+              "momentum": 4.15,
+              "ladder_tier": "S",
+              "ladder_rank": 11,
+              "ladder_score": 73.4,
+              "stats": {
+                "pprot": 15.0,
+                "mprot": 15.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).\nOn God Damage Dealt: Apply 40% Healing Reduction for 5s\nWhile in Combat: +2% Strength, +2% Intelligenc",
+              "is_active": false,
+              "why": "healing reduction"
             },
             {
               "name": "Stone of Binding",
@@ -70408,34 +70356,31 @@
               "is_active": false,
               "why": "offline hybrid tank; patch falling \u2014 extra bulk/CDR; inspired: high-SR Hades Solo (3/6)",
               "inspired": true
-            }
-          ],
-          "defense": [
+            },
             {
-              "name": "Breastplate of Valor",
-              "score": 315.3,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": -0.5,
-              "ladder_tier": "D",
-              "ladder_rank": 125,
-              "ladder_score": 17.3,
+              "name": "Brawler\u2019s Beat Stick",
+              "score": 427.5,
+              "cost": 2500,
+              "type": "Hybrid",
+              "slot": "counter",
+              "momentum": 4.15,
+              "ladder_tier": "S",
+              "ladder_rank": 11,
+              "ladder_score": 73.4,
               "stats": {
-                "pprot": 45.0,
-                "cdr": 20.0,
-                "mp": 200.0,
-                "mpr": 2.0
+                "pprot": 15.0,
+                "mprot": 15.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "On 500 (+25 per Level) Health lost: -1s Ability Cooldowns.",
+              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).\nOn God Damage Dealt: Apply 40% Healing Reduction for 5s\nWhile in Combat: +2% Strength, +2% Intelligenc",
               "is_active": false,
-              "why": "physical CDR defense; patch falling \u2014 extra bulk/CDR; inspired: high-SR Hades Solo (1/6)",
-              "inspired": true
-            },
+              "why": "healing reduction"
+            }
+          ],
+          "defense": [
             {
               "name": "Genji's Guard",
               "score": 229.4,
@@ -70460,6 +70405,28 @@
               "is_active": false,
               "why": "magic prot + CDR for mages; patch falling \u2014 extra bulk/CDR; inspired: high-SR Hades Solo (1/6)",
               "inspired": true
+            },
+            {
+              "name": "Contagion",
+              "score": 357.3,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.08,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.1,
+              "stats": {
+                "hp": 425.0,
+                "hpr": 6.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "is_active": false,
+              "why": "team anti-heal aura"
             }
           ],
           "relics": [
@@ -70653,7 +70620,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Hades \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot, high_cc. Style burst 47%/dps 53%; patch falling (net -1.5, r5 -1.5). Patch axes (r5): cooldown -1.3, survivability -1.2, general +1.0. Scale STR 0% / INT 85%. Path: Shifter's Shield (offline hybrid tank; patch falling \u2014 extra bulk/CDR); Breastplate of Valor (physical CDR defense; patch falling \u2014 extra bulk/CDR); Genji's Guard (magic prot + CDR for mages; patch falling \u2014 extra bulk/CDR). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Hades \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot, high_cc. Style burst 47%/dps 53%; patch falling (net -1.5, r5 -1.5). Patch axes (r5): cooldown -1.3, survivability -1.2, general +1.0. Scale STR 0% / INT 85%. Path: Shifter's Shield (offline hybrid tank; patch falling \u2014 extra bulk/CDR); Genji's Guard (magic prot + CDR for mages; patch falling \u2014 extra bulk/CDR); Contagion (team anti-heal aura). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 2 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 3 > 1 > 2",
           "skill_order": "3/1/2/3/4/3/3/3/4/1/1/1/4/1/2/2/4/2/2/4",
           "skill_order_list": [
@@ -70697,8 +70664,10 @@
               "label": "vs heals / sustain",
               "short": "heal",
               "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Brawler\u2019s Beat Stick"
+              ],
               "suggest": [
                 "Divine Ruin",
                 "Brawler's Beat Stick"
@@ -70725,7 +70694,7 @@
               "why": "Physical bulk into ADCs, hunters, physical junglers.",
               "in_path": true,
               "path_items": [
-                "Breastplate of Valor"
+                "Midgardian Mail"
               ],
               "suggest": [
                 "Breastplate of Valor",
@@ -70774,8 +70743,10 @@
               "label": "vs attack speed",
               "short": "AS",
               "why": "Slow freefire AAs; Midgardian stacks when they hit you.",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Midgardian Mail"
+              ],
               "suggest": [
                 "Midgardian Mail",
                 "Toxic Blade"
@@ -70783,13 +70754,13 @@
             }
           ],
           "answer_flags": {
-            "heal": false,
+            "heal": true,
             "magic": true,
             "physical": true,
             "cc_dive": false,
             "tanks_hp": true,
             "crit": false,
-            "attack_speed": false
+            "attack_speed": true
           }
         },
         {
@@ -72461,29 +72432,26 @@
               "inspired": true
             },
             {
-              "name": "Breastplate of Valor",
-              "score": 284.3,
-              "cost": 2400,
+              "name": "Mystical Mail",
+              "score": 247.8,
+              "cost": 2550,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": -0.5,
-              "ladder_tier": "D",
-              "ladder_rank": 125,
-              "ladder_score": 17.3,
+              "momentum": 0.49,
+              "ladder_tier": "B",
+              "ladder_rank": 59,
+              "ladder_score": 27.2,
               "stats": {
-                "pprot": 45.0,
-                "cdr": 20.0,
-                "mp": 200.0,
-                "mpr": 2.0
+                "pprot": 40.0,
+                "hp": 300.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "On 500 (+25 per Level) Health lost: -1s Ability Cooldowns.",
+              "effect": "Enemies within 4m: 15 (+1 per Level) Magical Damage and lose 25% of Health Shield per 1s.\nRange Scaling Damage:\n*+50% at Close Range\n*-50% at Maximum Range",
               "is_active": false,
-              "why": "physical CDR defense; patch falling \u2014 extra bulk/CDR; inspired: high-SR Solo staple",
-              "inspired": true
+              "why": "Solo defensive slot \u2014 survive focus"
             },
             {
               "name": "Genji's Guard",
@@ -72509,28 +72477,6 @@
               "is_active": false,
               "why": "magic prot + CDR for mages; patch falling \u2014 extra bulk/CDR; inspired: high-SR Solo staple",
               "inspired": true
-            },
-            {
-              "name": "Brawler\u2019s Beat Stick",
-              "score": 398.4,
-              "cost": 2500,
-              "type": "Hybrid",
-              "slot": "counter",
-              "momentum": 4.15,
-              "ladder_tier": "S",
-              "ladder_rank": 11,
-              "ladder_score": 73.4,
-              "stats": {
-                "pprot": 15.0,
-                "mprot": 15.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).\nOn God Damage Dealt: Apply 40% Healing Reduction for 5s\nWhile in Combat: +2% Strength, +2% Intelligenc",
-              "is_active": false,
-              "why": "healing reduction"
             },
             {
               "name": "Stone of Binding",
@@ -72577,6 +72523,30 @@
               "effect": "Heal yourself with an Ability:\n*+25% Movement Speed (decays to 0%) for 4s\n*Cooldown: 10s\nGain any Movement Speed buff:\n*+5% Health Heal over 10s",
               "is_active": false,
               "why": "Solo defensive slot \u2014 survive focus"
+            },
+            {
+              "name": "Wyrmskin Hide",
+              "score": 326.2,
+              "cost": 2600,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 2.0,
+              "ladder_tier": "S",
+              "ladder_rank": 15,
+              "ladder_score": 72.3,
+              "stats": {
+                "damp": 5.0,
+                "mprot": 25.0,
+                "hp": 300.0,
+                "str": 20.0
+              },
+              "pen": 0,
+              "damp": 5.0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Hit a God (once every 8s): Gain 1 Dampening per level against them.",
+              "is_active": false,
+              "why": "mitigation vs enemy damage types"
             }
           ],
           "full_path": [
@@ -72606,29 +72576,26 @@
               "inspired": true
             },
             {
-              "name": "Breastplate of Valor",
-              "score": 284.3,
-              "cost": 2400,
+              "name": "Mystical Mail",
+              "score": 247.8,
+              "cost": 2550,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": -0.5,
-              "ladder_tier": "D",
-              "ladder_rank": 125,
-              "ladder_score": 17.3,
+              "momentum": 0.49,
+              "ladder_tier": "B",
+              "ladder_rank": 59,
+              "ladder_score": 27.2,
               "stats": {
-                "pprot": 45.0,
-                "cdr": 20.0,
-                "mp": 200.0,
-                "mpr": 2.0
+                "pprot": 40.0,
+                "hp": 300.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "On 500 (+25 per Level) Health lost: -1s Ability Cooldowns.",
+              "effect": "Enemies within 4m: 15 (+1 per Level) Magical Damage and lose 25% of Health Shield per 1s.\nRange Scaling Damage:\n*+50% at Close Range\n*-50% at Maximum Range",
               "is_active": false,
-              "why": "physical CDR defense; patch falling \u2014 extra bulk/CDR; inspired: high-SR Solo staple",
-              "inspired": true
+              "why": "Solo defensive slot \u2014 survive focus"
             },
             {
               "name": "Genji's Guard",
@@ -72654,28 +72621,6 @@
               "is_active": false,
               "why": "magic prot + CDR for mages; patch falling \u2014 extra bulk/CDR; inspired: high-SR Solo staple",
               "inspired": true
-            },
-            {
-              "name": "Brawler\u2019s Beat Stick",
-              "score": 398.4,
-              "cost": 2500,
-              "type": "Hybrid",
-              "slot": "counter",
-              "momentum": 4.15,
-              "ladder_tier": "S",
-              "ladder_rank": 11,
-              "ladder_score": 73.4,
-              "stats": {
-                "pprot": 15.0,
-                "mprot": 15.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).\nOn God Damage Dealt: Apply 40% Healing Reduction for 5s\nWhile in Combat: +2% Strength, +2% Intelligenc",
-              "is_active": false,
-              "why": "healing reduction"
             },
             {
               "name": "Stone of Binding",
@@ -72722,6 +72667,30 @@
               "effect": "Heal yourself with an Ability:\n*+25% Movement Speed (decays to 0%) for 4s\n*Cooldown: 10s\nGain any Movement Speed buff:\n*+5% Health Heal over 10s",
               "is_active": false,
               "why": "Solo defensive slot \u2014 survive focus"
+            },
+            {
+              "name": "Wyrmskin Hide",
+              "score": 326.2,
+              "cost": 2600,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 2.0,
+              "ladder_tier": "S",
+              "ladder_rank": 15,
+              "ladder_score": 72.3,
+              "stats": {
+                "damp": 5.0,
+                "mprot": 25.0,
+                "hp": 300.0,
+                "str": 20.0
+              },
+              "pen": 0,
+              "damp": 5.0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Hit a God (once every 8s): Gain 1 Dampening per level against them.",
+              "is_active": false,
+              "why": "mitigation vs enemy damage types"
             }
           ],
           "inventory_slots": 7,
@@ -72750,55 +72719,30 @@
               "is_active": false,
               "why": "offline hybrid tank; patch falling \u2014 extra bulk/CDR; inspired: high-SR Solo staple; high-SR role opener",
               "inspired": true
-            },
-            {
-              "name": "Brawler\u2019s Beat Stick",
-              "score": 398.4,
-              "cost": 2500,
-              "type": "Hybrid",
-              "slot": "counter",
-              "momentum": 4.15,
-              "ladder_tier": "S",
-              "ladder_rank": 11,
-              "ladder_score": 73.4,
-              "stats": {
-                "pprot": 15.0,
-                "mprot": 15.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).\nOn God Damage Dealt: Apply 40% Healing Reduction for 5s\nWhile in Combat: +2% Strength, +2% Intelligenc",
-              "is_active": false,
-              "why": "healing reduction"
             }
           ],
           "defense": [
             {
-              "name": "Breastplate of Valor",
-              "score": 284.3,
-              "cost": 2400,
+              "name": "Mystical Mail",
+              "score": 247.8,
+              "cost": 2550,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": -0.5,
-              "ladder_tier": "D",
-              "ladder_rank": 125,
-              "ladder_score": 17.3,
+              "momentum": 0.49,
+              "ladder_tier": "B",
+              "ladder_rank": 59,
+              "ladder_score": 27.2,
               "stats": {
-                "pprot": 45.0,
-                "cdr": 20.0,
-                "mp": 200.0,
-                "mpr": 2.0
+                "pprot": 40.0,
+                "hp": 300.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "On 500 (+25 per Level) Health lost: -1s Ability Cooldowns.",
+              "effect": "Enemies within 4m: 15 (+1 per Level) Magical Damage and lose 25% of Health Shield per 1s.\nRange Scaling Damage:\n*+50% at Close Range\n*-50% at Maximum Range",
               "is_active": false,
-              "why": "physical CDR defense; patch falling \u2014 extra bulk/CDR; inspired: high-SR Solo staple",
-              "inspired": true
+              "why": "Solo defensive slot \u2014 survive focus"
             },
             {
               "name": "Genji's Guard",
@@ -73017,7 +72961,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Cerberus \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (INT / magical). Kit effects: self heal / drain, pet / deployable, hard crowd control, dash / leap engage, burst combos, lots of CC. Tags: dot, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone, self_sustain. Style burst 100%/dps 0%; patch falling (net -3.9, r5 -2.9). Patch axes (r5): cooldown -2.0, damage -0.9. Scale STR 0% / INT 43%. Path: Shifter's Shield (offline hybrid tank; patch falling \u2014 extra bulk/CDR); Breastplate of Valor (physical CDR defense; patch falling \u2014 extra bulk/CDR); Genji's Guard (magic prot + CDR for mages; patch falling \u2014 extra bulk/CDR). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Cerberus \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (INT / magical). Kit effects: self heal / drain, pet / deployable, hard crowd control, dash / leap engage, burst combos, lots of CC. Tags: dot, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone, self_sustain. Style burst 100%/dps 0%; patch falling (net -3.9, r5 -2.9). Patch axes (r5): cooldown -2.0, damage -0.9. Scale STR 0% / INT 43%. Path: Shifter's Shield (offline hybrid tank; patch falling \u2014 extra bulk/CDR); Mystical Mail (Solo path fit for kit profile); Genji's Guard (magic prot + CDR for mages; patch falling \u2014 extra bulk/CDR). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 2 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 3 > 1 > 2",
           "skill_order": "3/1/2/3/4/3/3/3/4/1/1/1/4/1/2/2/4/2/2/4",
           "skill_order_list": [
@@ -73061,10 +73005,8 @@
               "label": "vs heals / sustain",
               "short": "heal",
               "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
-              "in_path": true,
-              "path_items": [
-                "Brawler\u2019s Beat Stick"
-              ],
+              "in_path": false,
+              "path_items": [],
               "suggest": [
                 "Divine Ruin",
                 "Brawler's Beat Stick"
@@ -73089,10 +73031,8 @@
               "label": "vs physical damage",
               "short": "phys",
               "why": "Physical bulk into ADCs, hunters, physical junglers.",
-              "in_path": true,
-              "path_items": [
-                "Breastplate of Valor"
-              ],
+              "in_path": false,
+              "path_items": [],
               "suggest": [
                 "Breastplate of Valor",
                 "Berserker's Shield"
@@ -73149,9 +73089,9 @@
             }
           ],
           "answer_flags": {
-            "heal": true,
+            "heal": false,
             "magic": true,
-            "physical": true,
+            "physical": false,
             "cc_dive": false,
             "tanks_hp": true,
             "crit": false,
@@ -90719,23 +90659,20 @@
   "quality_gate": {
     "roles": {
       "Carry": {
-        "unique": 21,
+        "unique": 22,
         "total": 24,
-        "shared_groups": 3,
+        "shared_groups": 2,
         "pen_fail": [],
         "early_melt_fail": [],
         "luxury_fail": [],
         "role_job_fail": []
       },
       "Mid": {
-        "unique": 23,
+        "unique": 22,
         "total": 26,
         "shared_groups": 1,
         "pen_fail": [],
-        "early_melt_fail": [
-          "Sol",
-          "Anubis"
-        ],
+        "early_melt_fail": [],
         "luxury_fail": [],
         "role_job_fail": []
       },
@@ -90769,9 +90706,8 @@
     },
     "ok": false,
     "warnings": [
-      "Carry: shared paths ['Sol, Geb', 'Cernunnos, Izanami', 'Neith, Artemis']",
-      "Mid: shared paths ['Princess Bari, Eset, Chronos, Janus']",
-      "Mid: no early tank-melt ['Sol', 'Anubis']",
+      "Carry: shared paths ['Cernunnos, Izanami', 'Neith, Artemis']",
+      "Mid: shared paths ['Princess Bari, Eset, Chronos, Janus, Aphrodite']",
       "Jungle: shared paths ['Thor, Mordred, Fenrir']"
     ]
   }

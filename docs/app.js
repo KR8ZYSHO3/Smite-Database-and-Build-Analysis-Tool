@@ -3705,6 +3705,8 @@ function isRemovedOrUnavailableItem(it) {
   if (n.includes("providence") && n.includes("eye")) return true;
   // OB15: Serrated Edge → Barbed Carver (wiki/tracker still ghost the old name)
   if (n.includes("serrated")) return true;
+  // OB45 launch: Gluttonous Grimoire disabled pending hotfix — trust live shop
+  if (n.includes("gluttonous")) return true;
   return false;
 }
 

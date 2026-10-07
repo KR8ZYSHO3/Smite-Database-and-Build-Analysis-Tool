@@ -38,12 +38,12 @@ This is the Carry job description + common items — not a complete build. Open 
 
 *Magical · Intelligence scaling (STR 21.8% / INT 50.7%)*
 
-Sol · Carry · archetype «dot_mage_adc» (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 62%/dps 38%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Book of Thoth (mana stack → power scaling); Gluttonous Grimoire (sustain / omnivamp line); The Cosmic Horror (penetration required for damage role). Pen: Book of Thoth, Gluttonous Grimoire, The Cosmic Horror, Spear of Desolation, Spear Of The Magus. Actives 0/2 · pen ≈ 40. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
+Sol · Carry · archetype «dot_mage_adc» (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 62%/dps 38%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Book of Thoth (mana stack → power scaling); Divine Ruin (anti-heal + pen for healing/sustain kits); The Cosmic Horror (penetration required for damage role). Pen: Book of Thoth, The Cosmic Horror, Spear of Desolation, Spear Of The Magus. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Sands Of Time
-- **Buy order** (actives 0/2, pen ≈ 40.0):
+- **Buy order** (actives 0/2, pen ≈ 30.0):
   1. Book of Thoth (power, 2300g)
-  2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
+  2. Divine Ruin (counter, 2500g)
   3. The Cosmic Horror (pen, pen 10.0, 2650g)
   4. Spear of Desolation (pen, pen 10.0, 2650g)
   5. Spear Of The Magus (pen, pen 10.0, 2700g)
@@ -374,15 +374,15 @@ Izanami · Carry · archetype «crit_adc» (STR / physical). Kit effects: protec
 
 *Magical · Intelligence scaling (STR 0% / INT 36.3%)*
 
-Geb · Carry · archetype «aa_mage» (INT / magical). ASPECT «Aspect of Calamity». Geb's attacks are ranged, travel slowly, and pierce with damage falloff. Shockwave deals circular damage, Crits, triggers on-hits, and grant Kit effects: basic-attack kit, attack-speed steroid, self heal / drain, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, as_steroid, burst, dot, gap_close, hard_cc, heal. Style burst 40%/dps 75%; patch stable (net -0.8, r5 +0.0). Patch axes (r5): damage -0.4, survivability -0.3, crit -0.1. Scale STR 0% / INT 36%. Path: Book of Thoth (mana stack → power scaling); Gluttonous Grimoire (sustain / omnivamp line); The Cosmic Horror (penetration required for damage role). Pen: Book of Thoth, Gluttonous Grimoire, The Cosmic Horror, Spear of Desolation, Spear Of The Magus. Actives 0/2 · pen ≈ 40.
+Geb · Carry · archetype «aa_mage» (INT / magical). ASPECT «Aspect of Calamity». Geb's attacks are ranged, travel slowly, and pierce with damage falloff. Shockwave deals circular damage, Crits, triggers on-hits, and grant Kit effects: basic-attack kit, attack-speed steroid, self heal / drain, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, as_steroid, burst, dot, gap_close, hard_cc, heal. Style burst 40%/dps 75%; patch stable (net -0.8, r5 +0.0). Patch axes (r5): damage -0.4, survivability -0.3, crit -0.1. Scale STR 0% / INT 36%. Path: Book of Thoth (mana stack → power scaling); The Cosmic Horror (penetration required for damage role); Chronos' Pendant (CDR core for spam / channel kits). Pen: Book of Thoth, The Cosmic Horror, Spear of Desolation. Actives 0/2 · pen ≈ 20.
 
 - **Starter:** Gilded Arrow
-- **Buy order** (actives 0/2, pen ≈ 40.0):
+- **Buy order** (actives 0/2, pen ≈ 20.0):
   1. Book of Thoth (power, 2300g)
-  2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  3. The Cosmic Horror (pen, pen 10.0, 2650g)
-  4. Spear of Desolation (pen, pen 10.0, 2650g)
-  5. Spear Of The Magus (pen, pen 10.0, 2700g)
+  2. The Cosmic Horror (pen, pen 10.0, 2650g)
+  3. Chronos' Pendant (power, 2400g)
+  4. Divine Ruin (counter, 2500g)
+  5. Spear of Desolation (pen, pen 10.0, 2650g)
   6. Soul Reaver (power, 2950g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
@@ -454,16 +454,16 @@ This is the Mid job description + common items — not a complete build. Open a 
 
 *Magical · Intelligence scaling (STR 21.8% / INT 50.7%)*
 
-Sol · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 62%/dps 38%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Gluttonous Grimoire (sustain / omnivamp line); Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits). Pen: Gluttonous Grimoire, Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 0/2 · pen ≈ 30. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Sol · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, big ult spike, self heal / drain, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, burst, dot, heal, heavy_dot, high_cc, long_cd, self_sustain. Style burst 62%/dps 38%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage -0.0, general -0.0, attack_speed -0.0. Scale STR 22% / INT 51%. Path: Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror, Rod of Tahuti. Actives 0/2 · pen ≈ 25. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 0/2, pen ≈ 30.0):
-  1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  2. Book of Thoth (power, 2300g)
-  3. Chronos' Pendant (power, 2400g)
-  4. Spear of Desolation (pen, pen 10.0, 2650g)
-  5. The Cosmic Horror (pen, pen 10.0, 2650g)
-  6. Gem of Isolation (mitigate, 2450g)
+- **Buy order** (actives 0/2, pen ≈ 25.0):
+  1. Book of Thoth (power, 2300g)
+  2. Chronos' Pendant (power, 2400g)
+  3. Spear of Desolation (pen, pen 10.0, 2650g)
+  4. The Cosmic Horror (pen, pen 10.0, 2650g)
+  5. Divine Ruin (counter, 2500g)
+  6. Rod of Tahuti (power, pen 5.0, 3000g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Princess Bari — S-tier (role rank #2, model 71.1)
@@ -566,16 +566,16 @@ Nut · Mid · archetype «burst_mage» (INT / magical). Kit effects: big ult spi
 
 *Magical · Intelligence scaling (STR 0% / INT 64.4%)*
 
-Ix Chel · Mid · archetype «channel_mage» (INT / magical). Kit effects: channel / cast time, self heal / drain, heavy healing, pet / deployable, hard crowd control, ally buffs / auras. Tags: anti_cc, channel, dot, echo, hard_cc, heal, heavy_heal, high_cc. Style burst 49%/dps 51%; patch new (net -0.7, r5 -0.7). Patch axes (r5): damage -0.8, general +0.8, cooldown -0.7. Scale STR 0% / INT 64%. Path: Gem of Focus (ability CDR / focus passive; kit CD nerfed — buy CDR); Gluttonous Grimoire (sustain / omnivamp line); Spear of Desolation (flat pen + CDR for ability burst). Pen: Gluttonous Grimoire, Spear of Desolation, The Cosmic Horror, Soul Gem. Actives 0/2 · pen ≈ 35. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Ix Chel · Mid · archetype «channel_mage» (INT / magical). Kit effects: channel / cast time, self heal / drain, heavy healing, pet / deployable, hard crowd control, ally buffs / auras. Tags: anti_cc, channel, dot, echo, hard_cc, heal, heavy_heal, high_cc. Style burst 49%/dps 51%; patch new (net -0.7, r5 -0.7). Patch axes (r5): damage -0.8, general +0.8, cooldown -0.7. Scale STR 0% / INT 64%. Path: Book of Thoth (mana stack → power scaling); Spear of Desolation (flat pen + CDR for ability burst); The Cosmic Horror (penetration required for damage role). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 0/2, pen ≈ 35.0):
-  1. Gem of Focus (power, 2550g)
-  2. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  3. Spear of Desolation (pen, pen 10.0, 2650g)
-  4. The Cosmic Horror (pen, pen 10.0, 2650g)
-  5. Soul Gem (power, pen 5.0, 2500g)
-  6. Divine Ruin (counter, 2500g)
+- **Buy order** (actives 0/2, pen ≈ 20.0):
+  1. Book of Thoth (power, 2300g)
+  2. Spear of Desolation (pen, pen 10.0, 2650g)
+  3. The Cosmic Horror (pen, pen 10.0, 2650g)
+  4. Divine Ruin (counter, 2500g)
+  5. Gem of Isolation (mitigate, 2450g)
+  6. Stygian Anchor (counter, 2550g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### The Morrigan — A-tier (role rank #9, model 62.4)
@@ -670,7 +670,7 @@ Discordia · Mid · archetype «sustain_mage» (INT / magical). Kit effects: big
   2. Book of Thoth (power, 2300g)
   3. Spear of Desolation (pen, pen 10.0, 2650g)
   4. The Cosmic Horror (pen, pen 10.0, 2650g)
-  5. Bancroft's Talon (power, 2300g)
+  5. Typhon’s Heart (power, 2600g)
   6. Totem of Death (power, 2800g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
@@ -726,16 +726,16 @@ Janus · Mid · archetype «burst_mage» (INT / magical). Kit effects: big ult s
 
 *Magical · Intelligence scaling (STR 0% / INT 74.6%)*
 
-Hel · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, attack-speed steroid, self heal / drain, ally buffs / auras, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, as_steroid, dot, heal, heavy_dot, self_sustain, team_buff. Style burst 42%/dps 58%; patch new (net +0.9, r5 +0.9). Patch axes (r5): general +0.9. Scale STR 0% / INT 75%. Path: Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst; patch rising — lean damage). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 1/2 · pen ≈ 20. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Hel · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, attack-speed steroid, self heal / drain, ally buffs / auras, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, as_steroid, dot, heal, heavy_dot, self_sustain, team_buff. Style burst 42%/dps 58%; patch new (net +0.9, r5 +0.9). Patch axes (r5): general +0.9. Scale STR 0% / INT 75%. Path: Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst; patch rising — lean damage). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 1/2, pen ≈ 20.0):
+- **Buy order** (actives 0/2, pen ≈ 20.0):
   1. Book of Thoth (power, 2300g)
   2. Chronos' Pendant (power, 2400g)
   3. Spear of Desolation (pen, pen 10.0, 2650g)
   4. The Cosmic Horror (pen, pen 10.0, 2650g)
-  5. Helm of Darkness (defense, active, 2700g)
-  6. Alchemist Coat (mitigate, 2350g)
+  5. Gem of Isolation (mitigate, 2450g)
+  6. Totem of Death (power, 2800g)
 - **Relics:** Aegis of Acceleration (30.0), Purification Beads (30.0)
 
 #### Hecate — C-tier (role rank #19, model 50.1)
@@ -790,32 +790,32 @@ Zeus · Mid · archetype «burst_mage» (INT / magical). Kit effects: attack-spe
 
 *Magical · Intelligence scaling (STR 0% / INT 59.8%)*
 
-Anubis · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, pet / deployable, hard crowd control. Tags: anti_cc, channel, dot, hard_cc, heal, heavy_dot, high_cc, immobile. Style burst 98%/dps 2%; patch volatile (net -2.3, r5 +0.0). Patch axes (r5): survivability -1.0, damage -0.8, heal -0.5. Scale STR 0% / INT 60%. Path: Gluttonous Grimoire (sustain / omnivamp line); Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits). Pen: Gluttonous Grimoire, Book of Thoth, Spear of Desolation, The Cosmic Horror, Rod of Tahuti. Actives 0/2 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Anubis · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, pet / deployable, hard crowd control. Tags: anti_cc, channel, dot, hard_cc, heal, heavy_dot, high_cc, immobile. Style burst 98%/dps 2%; patch volatile (net -2.3, r5 +0.0). Patch axes (r5): survivability -1.0, damage -0.8, heal -0.5. Scale STR 0% / INT 60%. Path: Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 0/2, pen ≈ 35.0):
-  1. Gluttonous Grimoire (pen, pen 10.0, 2600g)
-  2. Book of Thoth (power, 2300g)
-  3. Chronos' Pendant (power, 2400g)
-  4. Spear of Desolation (pen, pen 10.0, 2650g)
-  5. The Cosmic Horror (pen, pen 10.0, 2650g)
-  6. Rod of Tahuti (power, pen 5.0, 3000g)
+- **Buy order** (actives 0/2, pen ≈ 20.0):
+  1. Book of Thoth (power, 2300g)
+  2. Chronos' Pendant (power, 2400g)
+  3. Spear of Desolation (pen, pen 10.0, 2650g)
+  4. The Cosmic Horror (pen, pen 10.0, 2650g)
+  5. Typhon’s Heart (power, 2600g)
+  6. Magi's Cloak (defense, 2400g)
 - **Relics:** Aegis of Acceleration (40.0), Purification Beads (38.0)
 
 #### Aphrodite — D-tier (role rank #23, model 44.4)
 
 *Magical · Intelligence scaling (STR 0% / INT 57.9%)*
 
-Aphrodite · Mid · archetype «burst_mage» (INT / magical). Kit effects: big ult spike, hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, burst, dot, gap_close, hard_cc, heal, long_cd, team_buff. Style burst 60%/dps 40%; patch falling (net -5.7, r5 -6.1). Patch axes (r5): damage -3.4, general -1.4, survivability -0.9. Scale STR 0% / INT 58%. Path: Spear Of The Magus (multi-hit / shred — stacks Magus passive); Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits). Pen: Spear Of The Magus, Book of Thoth, Spear of Desolation, The Cosmic Horror, Rod of Tahuti. Actives 0/2 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Aphrodite · Mid · archetype «burst_mage» (INT / magical). Kit effects: big ult spike, hard crowd control, dash / leap engage, ally buffs / auras, CC immunity in kit, multi-hit / ticks. Tags: anti_cc, burst, dot, gap_close, hard_cc, heal, long_cd, team_buff. Style burst 60%/dps 40%; patch falling (net -5.7, r5 -6.1). Patch axes (r5): damage -3.4, general -1.4, survivability -0.9. Scale STR 0% / INT 58%. Path: Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror. Actives 0/2 · pen ≈ 20. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Conduit Gem
-- **Buy order** (actives 0/2, pen ≈ 35.0):
-  1. Spear Of The Magus (pen, pen 10.0, 2700g)
-  2. Book of Thoth (power, 2300g)
-  3. Chronos' Pendant (power, 2400g)
-  4. Spear of Desolation (pen, pen 10.0, 2650g)
-  5. The Cosmic Horror (pen, pen 10.0, 2650g)
-  6. Rod of Tahuti (power, pen 5.0, 3000g)
+- **Buy order** (actives 0/2, pen ≈ 20.0):
+  1. Book of Thoth (power, 2300g)
+  2. Chronos' Pendant (power, 2400g)
+  3. Spear of Desolation (pen, pen 10.0, 2650g)
+  4. The Cosmic Horror (pen, pen 10.0, 2650g)
+  5. Divine Ruin (counter, 2500g)
+  6. Totem of Death (power, 2800g)
 - **Relics:** Purification Beads (38.0), Aegis of Acceleration (30.0)
 
 #### Merlin — D-tier (role rank #24, model 43.8)
@@ -1560,15 +1560,15 @@ Hercules · Solo · archetype «sustain_solo» (STR / physical). Kit effects: bi
 
 *Magical · Hybrid scaling (STR 60.4% / INT 50.1%)*
 
-Artio · Solo · archetype «sustain_solo» (INT / magical). Kit effects: protection shred, channel / cast time, big ult spike, heavy healing, hard crowd control, ally buffs / auras. Tags: channel, hard_cc, heal, heavy_heal, high_cc, long_cd, prot_shred, team_buff. Style burst 59%/dps 41%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): general +0.1, damage +0.0, mana -0.0. Scale STR 60% / INT 50%. Path: Shifter's Shield (offline hybrid tank); Ethereal Staff (Solo path fit for kit profile); Phoenix Feather (shield / phoenix-style bulk). Actives 1/2 · pen ≈ 0. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
+Artio · Solo · archetype «sustain_solo» (INT / magical). Kit effects: protection shred, channel / cast time, big ult spike, heavy healing, hard crowd control, ally buffs / auras. Tags: channel, hard_cc, heal, heavy_heal, high_cc, long_cd, prot_shred, team_buff. Style burst 59%/dps 41%; patch stable (net +0.0, r5 +0.0). Patch axes (r5): general +0.1, damage +0.0, mana -0.0. Scale STR 60% / INT 50%. Path: Shifter's Shield (offline hybrid tank); Gauntlet of Thebes (team aura / support core); Phoenix Feather (shield / phoenix-style bulk). Actives 1/2 · pen ≈ 0. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 1/2, pen ≈ 0.0):
   1. Shifter's Shield (defense, 2750g)
-  2. Ethereal Staff (mitigate, 2550g)
+  2. Gauntlet of Thebes (defense, 2200g)
   3. Phoenix Feather (mitigate, active, 2350g)
-  4. Gem of Isolation (mitigate, 2450g)
-  5. Stone of Binding (mitigate, 2550g)
+  4. Alchemist Coat (mitigate, 2350g)
+  5. Gem of Isolation (mitigate, 2450g)
   6. Rod Of Asclepius (power, 2350g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
@@ -1576,15 +1576,15 @@ Artio · Solo · archetype «sustain_solo» (INT / magical). Kit effects: protec
 
 *Magical · Intelligence scaling (STR 0% / INT 85.1%)*
 
-Hades · Solo · archetype «sustain_solo» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot, high_cc. Style burst 47%/dps 53%; patch falling (net -1.5, r5 -1.5). Patch axes (r5): cooldown -1.3, survivability -1.2, general +1.0. Scale STR 0% / INT 85%. Path: Shifter's Shield (offline hybrid tank; patch falling — extra bulk/CDR); Breastplate of Valor (physical CDR defense; patch falling — extra bulk/CDR); Genji's Guard (magic prot + CDR for mages; patch falling — extra bulk/CDR). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Hades · Solo · archetype «sustain_solo» (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot, high_cc. Style burst 47%/dps 53%; patch falling (net -1.5, r5 -1.5). Patch axes (r5): cooldown -1.3, survivability -1.2, general +1.0. Scale STR 0% / INT 85%. Path: Shifter's Shield (offline hybrid tank; patch falling — extra bulk/CDR); Genji's Guard (magic prot + CDR for mages; patch falling — extra bulk/CDR); Contagion (team anti-heal aura). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Shifter's Shield (defense, 2750g)
-  2. Breastplate of Valor (defense, 2400g)
-  3. Genji's Guard (defense, 2350g)
-  4. Gladiator's Shield (defense, 2450g)
-  5. Contagion (defense, 2400g)
+  2. Genji's Guard (defense, 2350g)
+  3. Contagion (defense, 2400g)
+  4. Midgardian Mail (counter, 2400g)
+  5. Brawler’s Beat Stick (counter, 2500g)
   6. Stone of Binding (mitigate, 2550g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
@@ -1624,16 +1624,16 @@ Cabrakan · Solo · archetype «shield_solo» (INT / magical). Kit effects: chan
 
 *Magical · Intelligence scaling (STR 0% / INT 42.6%)*
 
-Cerberus · Solo · archetype «sustain_solo» (INT / magical). Kit effects: self heal / drain, pet / deployable, hard crowd control, dash / leap engage, burst combos, lots of CC. Tags: dot, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone, self_sustain. Style burst 100%/dps 0%; patch falling (net -3.9, r5 -2.9). Patch axes (r5): cooldown -2.0, damage -0.9. Scale STR 0% / INT 43%. Path: Shifter's Shield (offline hybrid tank; patch falling — extra bulk/CDR); Breastplate of Valor (physical CDR defense; patch falling — extra bulk/CDR); Genji's Guard (magic prot + CDR for mages; patch falling — extra bulk/CDR). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Cerberus · Solo · archetype «sustain_solo» (INT / magical). Kit effects: self heal / drain, pet / deployable, hard crowd control, dash / leap engage, burst combos, lots of CC. Tags: dot, gap_close, hard_cc, heal, high_cc, long_cd, pet_zone, self_sustain. Style burst 100%/dps 0%; patch falling (net -3.9, r5 -2.9). Patch axes (r5): cooldown -2.0, damage -0.9. Scale STR 0% / INT 43%. Path: Shifter's Shield (offline hybrid tank; patch falling — extra bulk/CDR); Mystical Mail (Solo path fit for kit profile); Genji's Guard (magic prot + CDR for mages; patch falling — extra bulk/CDR). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Shifter's Shield (defense, 2750g)
-  2. Breastplate of Valor (defense, 2400g)
+  2. Mystical Mail (defense, 2550g)
   3. Genji's Guard (defense, 2350g)
-  4. Brawler’s Beat Stick (counter, 2500g)
-  5. Stone of Binding (mitigate, 2550g)
-  6. Regrowth Striders (defense, 2550g)
+  4. Stone of Binding (mitigate, 2550g)
+  5. Regrowth Striders (defense, 2550g)
+  6. Wyrmskin Hide (mitigate, 2600g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 ---
