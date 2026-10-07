@@ -21,3 +21,6 @@ Thumbs.db
 
 # Optional: keep DB in repo for offline use (commented out intentionally)
 # data/smite2.db
+
+# Local Netlify folder
+.netlify
