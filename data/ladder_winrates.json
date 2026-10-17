@@ -1,935 +1,945 @@
 {
-  "generated_at": "2026-10-07T16:27:28.017983+00:00",
+  "generated_at": "2026-10-17T20:53:55.075584+00:00",
   "philosophy": "Tier ladder uses ranked WR as one vote alongside patch/kit/build. SmiteBrain = full top-ranked Conquest window; SmiteSource = Masters+ role meta (strong early-OB signal); tracker.gg = high-SR match sample (global god-meta API is 403). Early OB min SmiteBrain matches=25.",
   "smitebrain": {
     "source": "https://smitebrain.com/gods",
     "source_api": "https://smitebrain.com/gods/__data.json",
     "mode": "conquest-ranked-top",
-    "scraped_at": "2026-10-07T16:27:20.812493+00:00",
+    "scraped_at": "2026-10-17T20:53:48.950651+00:00",
     "gods": {
-      "Bacchus": {
-        "god": "Bacchus",
-        "win_rate": 0.7560975609756098,
-        "pick_rate": 0.009550430934078733,
-        "wins": 31,
-        "matches": 41,
+      "Zeus": {
+        "god": "Zeus",
+        "win_rate": 0.6210045662100456,
+        "pick_rate": 0.00738193952876934,
+        "wins": 272,
+        "matches": 438,
         "tier_label": "S",
         "aspect": null,
-        "score": 60.65636934554182
-      },
-      "Amaterasu": {
-        "god": "Amaterasu",
-        "win_rate": 0.7857142857142857,
-        "pick_rate": 0.006522245515956208,
-        "wins": 22,
-        "matches": 28,
-        "tier_label": "S",
-        "aspect": null,
-        "score": 60.46105292072612
-      },
-      "Athena": {
-        "god": "Athena",
-        "win_rate": 0.7254901960784313,
-        "pick_rate": 0.011879804332634521,
-        "wins": 37,
-        "matches": 51,
-        "tier_label": "S",
-        "aspect": null,
-        "score": 59.05308805092127
-      },
-      "Artio": {
-        "god": "Artio",
-        "win_rate": 0.6792452830188679,
-        "pick_rate": 0.012345679012345678,
-        "wins": 36,
-        "matches": 53,
-        "tier_label": "S",
-        "aspect": null,
-        "score": 54.51826763724886
-      },
-      "Hun Batz": {
-        "god": "Hun Batz",
-        "win_rate": 0.7307692307692307,
-        "pick_rate": 0.00605637083624505,
-        "wins": 19,
-        "matches": 26,
-        "tier_label": "S",
-        "aspect": null,
-        "score": 53.91659658023868
-      },
-      "Scylla": {
-        "god": "Scylla",
-        "win_rate": 0.6610169491525424,
-        "pick_rate": 0.013743303051479153,
-        "wins": 39,
-        "matches": 59,
-        "tier_label": "S",
-        "aspect": null,
-        "score": 53.37223255448901
-      },
-      "Izanami": {
-        "god": "Izanami",
-        "win_rate": 0.64,
-        "pick_rate": 0.017470300489168415,
-        "wins": 48,
-        "matches": 75,
-        "tier_label": "S",
-        "aspect": null,
-        "score": 52.70045111400723
-      },
-      "Cernunnos": {
-        "god": "Cernunnos",
-        "win_rate": 0.6162790697674418,
-        "pick_rate": 0.02003261122757978,
-        "wins": 53,
-        "matches": 86,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 51.0626822596434
-      },
-      "Hades": {
-        "god": "Hades",
-        "win_rate": 0.6896551724137931,
-        "pick_rate": 0.006755182855811786,
-        "wins": 20,
-        "matches": 29,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 50.76952952728146
-      },
-      "Ishtar": {
-        "god": "Ishtar",
-        "win_rate": 0.6666666666666666,
-        "pick_rate": 0.008385744234800839,
-        "wins": 24,
-        "matches": 36,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 50.33369709296684
-      },
-      "Hou Yi": {
-        "god": "Hou Yi",
-        "win_rate": 0.5901639344262295,
-        "pick_rate": 0.02841835546238062,
-        "wins": 72,
-        "matches": 122,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 50.14392708932517
-      },
-      "Ravana": {
-        "god": "Ravana",
-        "win_rate": 0.5961538461538461,
-        "pick_rate": 0.0242254833449802,
-        "wins": 62,
-        "matches": 104,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 50.00569405592721
-      },
-      "Cupid": {
-        "god": "Cupid",
-        "win_rate": 0.6206896551724138,
-        "pick_rate": 0.013510365711623572,
-        "wins": 36,
-        "matches": 58,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 49.202571736165574
-      },
-      "Ymir": {
-        "god": "Ymir",
-        "win_rate": 0.5921052631578947,
-        "pick_rate": 0.017703237829023992,
-        "wins": 45,
-        "matches": 76,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 47.97834798422031
-      },
-      "Medusa": {
-        "god": "Medusa",
-        "win_rate": 0.6470588235294118,
-        "pick_rate": 0.00791986955508968,
-        "wins": 22,
-        "matches": 34,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 47.913658830013425
-      },
-      "Nu Wa": {
-        "god": "Nu Wa",
-        "win_rate": 0.6170212765957447,
-        "pick_rate": 0.010948054973212206,
-        "wins": 29,
-        "matches": 47,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 47.426308443976325
-      },
-      "Jormungandr": {
-        "god": "Jormungandr",
-        "win_rate": 0.6551724137931034,
-        "pick_rate": 0.006755182855811786,
-        "wins": 19,
-        "matches": 29,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 47.34477650715599
-      },
-      "Thor": {
-        "god": "Thor",
-        "win_rate": 0.5660377358490566,
-        "pick_rate": 0.024691358024691357,
-        "wins": 60,
-        "matches": 106,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 47.101182829146445
-      },
-      "Tsukuyomi": {
-        "god": "Tsukuyomi",
-        "win_rate": 0.5873015873015873,
-        "pick_rate": 0.014675052410901468,
-        "wins": 37,
-        "matches": 63,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 46.415095351811104
-      },
-      "Pele": {
-        "god": "Pele",
-        "win_rate": 0.6538461538461539,
-        "pick_rate": 0.00605637083624505,
-        "wins": 17,
-        "matches": 26,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 46.220229009632995
-      },
-      "Sun Wukong": {
-        "god": "Sun Wukong",
-        "win_rate": 0.5647058823529412,
-        "pick_rate": 0.019799673887724203,
-        "wins": 48,
-        "matches": 85,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 45.87719281568645
-      },
-      "Xbalanque": {
-        "god": "Xbalanque",
-        "win_rate": 0.6428571428571429,
-        "pick_rate": 0.006522245515956208,
-        "wins": 18,
-        "matches": 28,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 45.82997758222724
-      },
-      "Aladdin": {
-        "god": "Aladdin",
-        "win_rate": 0.6111111111111112,
-        "pick_rate": 0.008385744234800839,
-        "wins": 22,
-        "matches": 36,
-        "tier_label": "A",
-        "aspect": null,
-        "score": 44.86417029674348
-      },
-      "Danzaburou": {
-        "god": "Danzaburou",
-        "win_rate": 0.6296296296296297,
-        "pick_rate": 0.006289308176100629,
-        "wins": 17,
-        "matches": 27,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 44.228904623446304
-      },
-      "Nut": {
-        "god": "Nut",
-        "win_rate": 0.5487804878048781,
-        "pick_rate": 0.019100861868157466,
-        "wins": 45,
-        "matches": 82,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 44.13058357114519
-      },
-      "Cabrakan": {
-        "god": "Cabrakan",
-        "win_rate": 0.6666666666666666,
-        "pick_rate": 0.0041928721174004195,
-        "wins": 12,
-        "matches": 18,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 43.74906934425036
-      },
-      "Vulcan": {
-        "god": "Vulcan",
-        "win_rate": 0.6,
-        "pick_rate": 0.00815280689494526,
-        "wins": 21,
-        "matches": 35,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 43.57241958151947
-      },
-      "Chronos": {
-        "god": "Chronos",
-        "win_rate": 0.5441176470588235,
-        "pick_rate": 0.01583973911017936,
-        "wins": 37,
-        "matches": 68,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 42.656397784293446
-      },
-      "Eset": {
-        "god": "Eset",
-        "win_rate": 0.6153846153846154,
-        "pick_rate": 0.00605637083624505,
-        "wins": 16,
-        "matches": 26,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 42.53452003942009
-      },
-      "Thanatos": {
-        "god": "Thanatos",
-        "win_rate": 0.5517241379310345,
-        "pick_rate": 0.013510365711623572,
-        "wins": 32,
-        "matches": 58,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 42.45185822161052
-      },
-      "Jing Wei": {
-        "god": "Jing Wei",
-        "win_rate": 0.6923076923076923,
-        "pick_rate": 0.003028185418122525,
-        "wins": 9,
-        "matches": 13,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 42.36888781333764
-      },
-      "Ganesha": {
-        "god": "Ganesha",
-        "win_rate": 0.5882352941176471,
-        "pick_rate": 0.00791986955508968,
-        "wins": 20,
-        "matches": 34,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 42.22130414651927
-      },
-      "Atlas": {
-        "god": "Atlas",
-        "win_rate": 0.5714285714285714,
-        "pick_rate": 0.009783368273934312,
-        "wins": 24,
-        "matches": 42,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 42.20597791187447
-      },
-      "Geb": {
-        "god": "Geb",
-        "win_rate": 0.5833333333333334,
-        "pick_rate": 0.008385744234800839,
-        "wins": 21,
-        "matches": 36,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 42.19996966427768
-      },
-      "Hel": {
-        "god": "Hel",
-        "win_rate": 0.5145631067961165,
-        "pick_rate": 0.023992546005124623,
-        "wins": 53,
-        "matches": 103,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 41.92678734230651
-      },
-      "Apollo": {
-        "god": "Apollo",
-        "win_rate": 0.5384615384615384,
-        "pick_rate": 0.015140927090612625,
-        "wins": 35,
-        "matches": 65,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 41.85318739862352
-      },
-      "Anubis": {
-        "god": "Anubis",
-        "win_rate": 0.6470588235294118,
-        "pick_rate": 0.00395993477754484,
-        "wins": 11,
-        "matches": 17,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 41.29996672121183
-      },
-      "Nike": {
-        "god": "Nike",
-        "win_rate": 0.4853801169590643,
-        "pick_rate": 0.039832285115303984,
-        "wins": 83,
-        "matches": 171,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 41.161774994114246
-      },
-      "Kali": {
-        "god": "Kali",
-        "win_rate": 0.631578947368421,
-        "pick_rate": 0.004425809457255998,
-        "wins": 12,
-        "matches": 19,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 41.03915749815671
-      },
-      "Rama": {
-        "god": "Rama",
-        "win_rate": 0.5641025641025641,
-        "pick_rate": 0.009084556254367574,
-        "wins": 22,
-        "matches": 39,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 40.97542347452211
-      },
-      "The Morrigan": {
-        "god": "The Morrigan",
-        "win_rate": 0.5675675675675675,
-        "pick_rate": 0.008618681574656418,
-        "wins": 21,
-        "matches": 37,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 40.91390633420072
-      },
-      "Neith": {
-        "god": "Neith",
-        "win_rate": 0.5925925925925926,
-        "pick_rate": 0.006289308176100629,
-        "wins": 16,
-        "matches": 27,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 40.72638305536409
-      },
-      "Horus": {
-        "god": "Horus",
-        "win_rate": 0.5357142857142857,
-        "pick_rate": 0.013044491031912415,
-        "wins": 30,
-        "matches": 56,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 40.70395665724008
-      },
-      "Anhur": {
-        "god": "Anhur",
-        "win_rate": 0.5211267605633803,
-        "pick_rate": 0.016538551129746098,
-        "wins": 37,
-        "matches": 71,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 40.68579625004498
-      },
-      "Agni": {
-        "god": "Agni",
-        "win_rate": 0.5283018867924528,
-        "pick_rate": 0.012345679012345678,
-        "wins": 28,
-        "matches": 53,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 39.65985230075644
-      },
-      "Ratatoskr": {
-        "god": "Ratatoskr",
-        "win_rate": 0.5555555555555556,
-        "pick_rate": 0.008385744234800839,
-        "wins": 20,
-        "matches": 36,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 39.580787316003416
-      },
-      "Ares": {
-        "god": "Ares",
-        "win_rate": 0.5294117647058824,
-        "pick_rate": 0.011879804332634521,
-        "wins": 27,
-        "matches": 51,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 39.523071344726596
-      },
-      "Gilgamesh": {
-        "god": "Gilgamesh",
-        "win_rate": 0.5588235294117647,
-        "pick_rate": 0.00791986955508968,
-        "wins": 19,
-        "matches": 34,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 39.453617789183696
-      },
-      "Hachiman": {
-        "god": "Hachiman",
-        "win_rate": 0.4895833333333333,
-        "pick_rate": 0.02236198462613557,
-        "wins": 47,
-        "matches": 96,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 39.19268939484636
-      },
-      "Janus": {
-        "god": "Janus",
-        "win_rate": 0.4891304347826087,
-        "pick_rate": 0.021430235266713255,
-        "wins": 45,
-        "matches": 92,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 38.94853752162455
-      },
-      "Chaac": {
-        "god": "Chaac",
-        "win_rate": 0.6428571428571429,
-        "pick_rate": 0.003261122757978104,
-        "wins": 9,
-        "matches": 14,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 38.76400468214041
-      },
-      "Mercury": {
-        "god": "Mercury",
-        "win_rate": 0.5909090909090909,
-        "pick_rate": 0.005124621476822734,
-        "wins": 13,
-        "matches": 22,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 38.734477382893814
-      },
-      "Princess Bari": {
-        "god": "Princess Bari",
-        "win_rate": 0.6,
-        "pick_rate": 0.004658746797111577,
-        "wins": 12,
-        "matches": 20,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 38.657794231520604
-      },
-      "Ullr": {
-        "god": "Ullr",
-        "win_rate": 0.5,
-        "pick_rate": 0.015373864430468204,
-        "wins": 33,
-        "matches": 66,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 38.27348439948919
-      },
-      "Bastet": {
-        "god": "Bastet",
-        "win_rate": 0.5428571428571428,
-        "pick_rate": 0.00815280689494526,
-        "wins": 19,
-        "matches": 35,
-        "tier_label": "B",
-        "aspect": null,
-        "score": 38.18945134013752
-      },
-      "Discordia": {
-        "god": "Discordia",
-        "win_rate": 0.5098039215686274,
-        "pick_rate": 0.011879804332634521,
-        "wins": 26,
-        "matches": 51,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 37.68069544840959
-      },
-      "Sylvanus": {
-        "god": "Sylvanus",
-        "win_rate": 0.5106382978723404,
-        "pick_rate": 0.010948054973212206,
-        "wins": 24,
-        "matches": 47,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 37.242217589372885
-      },
-      "Susano": {
-        "god": "Susano",
-        "win_rate": 0.46464646464646464,
-        "pick_rate": 0.023060796645702306,
-        "wins": 46,
-        "matches": 99,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 36.95632983501778
-      },
-      "Artemis": {
-        "god": "Artemis",
-        "win_rate": 0.5,
-        "pick_rate": 0.011646866992778943,
-        "wins": 25,
-        "matches": 50,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 36.64428641233285
-      },
-      "Khepri": {
-        "god": "Khepri",
-        "win_rate": 0.53125,
-        "pick_rate": 0.007453994875378523,
-        "wins": 17,
-        "matches": 32,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 36.44923793257382
-      },
-      "Cerberus": {
-        "god": "Cerberus",
-        "win_rate": 0.5333333333333333,
-        "pick_rate": 0.0069881201956673656,
-        "wins": 16,
-        "matches": 30,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 36.142013281525045
-      },
-      "Kukulkan": {
-        "god": "Kukulkan",
-        "win_rate": 0.47058823529411764,
-        "pick_rate": 0.01583973911017936,
-        "wins": 32,
-        "matches": 68,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 35.67291108779441
-      },
-      "Loki": {
-        "god": "Loki",
-        "win_rate": 0.47540983606557374,
-        "pick_rate": 0.01420917773119031,
-        "wins": 29,
-        "matches": 61,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 35.53028228679598
-      },
-      "Ra": {
-        "god": "Ra",
-        "win_rate": 0.4567901234567901,
-        "pick_rate": 0.018867924528301886,
-        "wins": 37,
-        "matches": 81,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 35.2731535009501
-      },
-      "Da Ji": {
-        "god": "Da Ji",
-        "win_rate": 0.5454545454545454,
-        "pick_rate": 0.005124621476822734,
-        "wins": 12,
-        "matches": 22,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 34.65947328904156
-      },
-      "Hecate": {
-        "god": "Hecate",
-        "win_rate": 0.5,
-        "pick_rate": 0.008385744234800839,
-        "wins": 18,
-        "matches": 36,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 34.47406762473052
-      },
-      "Ix Chel": {
-        "god": "Ix Chel",
-        "win_rate": 0.46296296296296297,
-        "pick_rate": 0.012578616352201259,
-        "wins": 25,
-        "matches": 54,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 33.689688992410524
-      },
-      "Merlin": {
-        "god": "Merlin",
-        "win_rate": 0.46153846153846156,
-        "pick_rate": 0.0121127416724901,
-        "wins": 24,
-        "matches": 52,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 33.34025986239788
-      },
-      "Xing Tian": {
-        "god": "Xing Tian",
-        "win_rate": 0.4482758620689655,
-        "pick_rate": 0.013510365711623572,
-        "wins": 26,
-        "matches": 58,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 32.749651292941145
-      },
-      "Cu Chulainn": {
-        "god": "Cu Chulainn",
-        "win_rate": 0.4375,
-        "pick_rate": 0.014907989750757047,
-        "wins": 28,
-        "matches": 64,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 32.293817065427326
-      },
-      "Fenrir": {
-        "god": "Fenrir",
-        "win_rate": 0.44680851063829785,
-        "pick_rate": 0.010948054973212206,
-        "wins": 21,
-        "matches": 47,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 31.41074747491131
-      },
-      "Poseidon": {
-        "god": "Poseidon",
-        "win_rate": 0.4523809523809524,
-        "pick_rate": 0.009783368273934312,
-        "wins": 19,
-        "matches": 42,
-        "tier_label": "C",
-        "aspect": null,
-        "score": 31.22316381863853
+        "score": 57.47039488434187
       },
       "Bellona": {
         "god": "Bellona",
-        "win_rate": 0.4666666666666667,
-        "pick_rate": 0.0069881201956673656,
-        "wins": 14,
-        "matches": 30,
-        "tier_label": "D",
+        "win_rate": 0.5921908893709328,
+        "pick_rate": 0.015539151245491623,
+        "wins": 546,
+        "matches": 922,
+        "tier_label": "S",
         "aspect": null,
-        "score": 30.23212722412823
+        "score": 56.01507051576308
       },
-      "Awilix": {
-        "god": "Awilix",
-        "win_rate": 0.4666666666666667,
-        "pick_rate": 0.0069881201956673656,
-        "wins": 14,
-        "matches": 30,
-        "tier_label": "D",
+      "Ishtar": {
+        "god": "Ishtar",
+        "win_rate": 0.5943952802359882,
+        "pick_rate": 0.011426837900697744,
+        "wins": 403,
+        "matches": 678,
+        "tier_label": "S",
         "aspect": null,
-        "score": 30.23212722412823
+        "score": 55.70040044600436
       },
-      "Hercules": {
-        "god": "Hercules",
-        "win_rate": 0.6666666666666666,
-        "pick_rate": 0.001397624039133473,
-        "wins": 4,
-        "matches": 6,
-        "tier_label": "D",
+      "Scylla": {
+        "god": "Scylla",
+        "win_rate": 0.5836177474402731,
+        "pick_rate": 0.014814440287187784,
+        "wins": 513,
+        "matches": 879,
+        "tier_label": "S",
         "aspect": null,
-        "score": 29.99883213415286
+        "score": 55.07337674419538
       },
-      "Chiron": {
-        "god": "Chiron",
-        "win_rate": 0.4230769230769231,
-        "pick_rate": 0.0121127416724901,
-        "wins": 22,
-        "matches": 52,
-        "tier_label": "D",
+      "Izanami": {
+        "god": "Izanami",
+        "win_rate": 0.581725888324873,
+        "pick_rate": 0.01660093706812283,
+        "wins": 573,
+        "matches": 985,
+        "tier_label": "S",
         "aspect": null,
-        "score": 29.86784790886045
+        "score": 55.06611888813408
       },
-      "Sobek": {
-        "god": "Sobek",
-        "win_rate": 0.4230769230769231,
-        "pick_rate": 0.0121127416724901,
-        "wins": 22,
-        "matches": 52,
-        "tier_label": "D",
+      "Anubis": {
+        "god": "Anubis",
+        "win_rate": 0.5968586387434555,
+        "pick_rate": 0.006438129908652712,
+        "wins": 228,
+        "matches": 382,
+        "tier_label": "S",
         "aspect": null,
-        "score": 29.86784790886045
+        "score": 54.693891391523266
       },
-      "Ne Zha": {
-        "god": "Ne Zha",
-        "win_rate": 0.425531914893617,
-        "pick_rate": 0.010948054973212206,
-        "wins": 20,
-        "matches": 47,
-        "tier_label": "D",
+      "Eset": {
+        "god": "Eset",
+        "win_rate": 0.5972972972972973,
+        "pick_rate": 0.006235884990056292,
+        "wins": 221,
+        "matches": 370,
+        "tier_label": "S",
         "aspect": null,
-        "score": 29.51341600182584
+        "score": 54.65710016924047
       },
-      "Ah Puch": {
-        "god": "Ah Puch",
-        "win_rate": 0.5454545454545454,
-        "pick_rate": 0.002562310738411367,
-        "wins": 6,
-        "matches": 11,
-        "tier_label": "D",
+      "The Morrigan": {
+        "god": "The Morrigan",
+        "win_rate": 0.5869074492099323,
+        "pick_rate": 0.007466208244851181,
+        "wins": 260,
+        "matches": 443,
+        "tier_label": "A",
         "aspect": null,
-        "score": 28.00877556899882
-      },
-      "Nemesis": {
-        "god": "Nemesis",
-        "win_rate": 0.43333333333333335,
-        "pick_rate": 0.0069881201956673656,
-        "wins": 13,
-        "matches": 30,
-        "tier_label": "D",
-        "aspect": null,
-        "score": 27.377237430615114
-      },
-      "Hua Mulan": {
-        "god": "Hua Mulan",
-        "win_rate": 0.45454545454545453,
-        "pick_rate": 0.005124621476822734,
-        "wins": 10,
-        "matches": 22,
-        "tier_label": "D",
-        "aspect": null,
-        "score": 26.920014432004848
-      },
-      "Odin": {
-        "god": "Odin",
-        "win_rate": 0.5,
-        "pick_rate": 0.003261122757978104,
-        "wins": 7,
-        "matches": 14,
-        "tier_label": "D",
-        "aspect": null,
-        "score": 26.798867919475278
-      },
-      "Mordred": {
-        "god": "Mordred",
-        "win_rate": 0.391304347826087,
-        "pick_rate": 0.010715117633356627,
-        "wins": 18,
-        "matches": 46,
-        "tier_label": "D",
-        "aspect": null,
-        "score": 26.393022355248846
-      },
-      "Charon": {
-        "god": "Charon",
-        "win_rate": 0.43478260869565216,
-        "pick_rate": 0.005357558816678314,
-        "wins": 10,
-        "matches": 23,
-        "tier_label": "D",
-        "aspect": null,
-        "score": 25.634368332198655
+        "score": 54.0499233669432
       },
       "Sol": {
         "god": "Sol",
-        "win_rate": 0.40625,
-        "pick_rate": 0.007453994875378523,
-        "wins": 13,
-        "matches": 32,
-        "tier_label": "D",
+        "win_rate": 0.582089552238806,
+        "pick_rate": 0.009033606363973438,
+        "wins": 312,
+        "matches": 536,
+        "tier_label": "A",
         "aspect": null,
-        "score": 25.519402480313797
+        "score": 53.98949586169175
       },
-      "Morgan Le Fay": {
-        "god": "Morgan Le Fay",
-        "win_rate": 0.4,
-        "pick_rate": 0.0069881201956673656,
-        "wins": 12,
-        "matches": 30,
-        "tier_label": "D",
+      "Cupid": {
+        "god": "Cupid",
+        "win_rate": 0.5753228120516499,
+        "pick_rate": 0.011747059021808743,
+        "wins": 401,
+        "matches": 697,
+        "tier_label": "A",
         "aspect": null,
-        "score": 24.5903943260834
+        "score": 53.83117949633755
       },
-      "Zeus": {
-        "god": "Zeus",
-        "win_rate": 0.42857142857142855,
-        "pick_rate": 0.004891684136967156,
-        "wins": 9,
-        "matches": 21,
-        "tier_label": "D",
+      "Cernunnos": {
+        "god": "Cernunnos",
+        "win_rate": 0.5696767001114827,
+        "pick_rate": 0.015117807665082415,
+        "wins": 511,
+        "matches": 897,
+        "tier_label": "A",
         "aspect": null,
-        "score": 24.469699486521044
+        "score": 53.70453868096827
       },
-      "Achilles": {
-        "god": "Achilles",
-        "win_rate": 0.4166666666666667,
-        "pick_rate": 0.005590496156533892,
-        "wins": 10,
-        "matches": 24,
-        "tier_label": "D",
+      "Hou Yi": {
+        "god": "Hou Yi",
+        "win_rate": 0.5591280653950954,
+        "pick_rate": 0.030926618802035934,
+        "wins": 1026,
+        "matches": 1835,
+        "tier_label": "A",
         "aspect": null,
-        "score": 24.467347246538232
+        "score": 53.63110000559964
+      },
+      "Bacchus": {
+        "god": "Bacchus",
+        "win_rate": 0.5682074408117249,
+        "pick_rate": 0.014949270232918732,
+        "wins": 504,
+        "matches": 887,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 53.53847645640213
+      },
+      "Gilgamesh": {
+        "god": "Gilgamesh",
+        "win_rate": 0.5783132530120482,
+        "pick_rate": 0.00839316412175144,
+        "wins": 288,
+        "matches": 498,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 53.45030857184303
+      },
+      "Vulcan": {
+        "god": "Vulcan",
+        "win_rate": 0.5704125177809388,
+        "pick_rate": 0.011848181481106954,
+        "wins": 401,
+        "matches": 703,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 53.35343414789914
+      },
+      "Artemis": {
+        "god": "Artemis",
+        "win_rate": 0.5684754521963824,
+        "pick_rate": 0.013044797249469107,
+        "wins": 440,
+        "matches": 774,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 53.33284222768153
+      },
+      "Geb": {
+        "god": "Geb",
+        "win_rate": 0.5780590717299579,
+        "pick_rate": 0.0079886742845586,
+        "wins": 274,
+        "matches": 474,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 53.31451924955303
+      },
+      "Thor": {
+        "god": "Thor",
+        "win_rate": 0.5556844547563805,
+        "pick_rate": 0.029055853305019044,
+        "wins": 958,
+        "matches": 1724,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 53.21307694148172
+      },
+      "Cerberus": {
+        "god": "Cerberus",
+        "win_rate": 0.5729349736379613,
+        "pick_rate": 0.009589779890113594,
+        "wins": 326,
+        "matches": 569,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 53.1935120734082
+      },
+      "Thanatos": {
+        "god": "Thanatos",
+        "win_rate": 0.5636363636363636,
+        "pick_rate": 0.01575824990730441,
+        "wins": 527,
+        "matches": 935,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 53.165121522232376
+      },
+      "Athena": {
+        "god": "Athena",
+        "win_rate": 0.5639269406392694,
+        "pick_rate": 0.01476387905753868,
+        "wins": 494,
+        "matches": 876,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 53.08790132403849
+      },
+      "Sun Wukong": {
+        "god": "Sun Wukong",
+        "win_rate": 0.5545927209705372,
+        "pick_rate": 0.019449219671689083,
+        "wins": 640,
+        "matches": 1154,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 52.57826044922068
+      },
+      "Medusa": {
+        "god": "Medusa",
+        "win_rate": 0.5691699604743083,
+        "pick_rate": 0.008527994067482388,
+        "wins": 288,
+        "matches": 506,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 52.566106027261526
+      },
+      "Amaterasu": {
+        "god": "Amaterasu",
+        "win_rate": 0.5799373040752351,
+        "pick_rate": 0.005376344086021506,
+        "wins": 185,
+        "matches": 319,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 52.51372237109329
+      },
+      "Tsukuyomi": {
+        "god": "Tsukuyomi",
+        "win_rate": 0.5565312843029637,
+        "pick_rate": 0.015353760070111572,
+        "wins": 507,
+        "matches": 911,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 52.41001747116603
+      },
+      "Mordred": {
+        "god": "Mordred",
+        "win_rate": 0.5635451505016722,
+        "pick_rate": 0.010078538443388277,
+        "wins": 337,
+        "matches": 598,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 52.35143118137964
+      },
+      "Odin": {
+        "god": "Odin",
+        "win_rate": 0.589041095890411,
+        "pick_rate": 0.00369096976438467,
+        "wins": 129,
+        "matches": 219,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 52.28882531903105
+      },
+      "Pele": {
+        "god": "Pele",
+        "win_rate": 0.5626134301270418,
+        "pick_rate": 0.009286412512218964,
+        "wins": 310,
+        "matches": 551,
+        "tier_label": "A",
+        "aspect": null,
+        "score": 52.09005173555593
+      },
+      "Ravana": {
+        "god": "Ravana",
+        "win_rate": 0.5449852507374632,
+        "pick_rate": 0.02285367580139549,
+        "wins": 739,
+        "matches": 1356,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.83901108754665
+      },
+      "Ares": {
+        "god": "Ares",
+        "win_rate": 0.5585738539898133,
+        "pick_rate": 0.009926854754440962,
+        "wins": 329,
+        "matches": 589,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.82204776728467
+      },
+      "Hun Batz": {
+        "god": "Hun Batz",
+        "win_rate": 0.5667506297229219,
+        "pick_rate": 0.006690936056898237,
+        "wins": 225,
+        "matches": 397,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.75963072390536
+      },
+      "Ymir": {
+        "god": "Ymir",
+        "win_rate": 0.547798066595059,
+        "pick_rate": 0.01569083493443894,
+        "wins": 510,
+        "matches": 931,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.56956926985058
+      },
+      "Ratatoskr": {
+        "god": "Ratatoskr",
+        "win_rate": 0.5536,
+        "pick_rate": 0.010533589510230222,
+        "wins": 346,
+        "matches": 625,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.44162972304171
+      },
+      "Xbalanque": {
+        "god": "Xbalanque",
+        "win_rate": 0.5590717299578059,
+        "pick_rate": 0.0079886742845586,
+        "wins": 265,
+        "matches": 474,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.40766815763962
+      },
+      "Fenrir": {
+        "god": "Fenrir",
+        "win_rate": 0.5543672014260249,
+        "pick_rate": 0.009454949944382647,
+        "wins": 311,
+        "matches": 561,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.300556831083476
+      },
+      "Nu Wa": {
+        "god": "Nu Wa",
+        "win_rate": 0.5562130177514792,
+        "pick_rate": 0.008544847810698756,
+        "wins": 282,
+        "matches": 507,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.270374005986355
+      },
+      "Hades": {
+        "god": "Hades",
+        "win_rate": 0.5694915254237288,
+        "pick_rate": 0.004971854248828665,
+        "wins": 168,
+        "matches": 295,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.24514144375202
+      },
+      "Ganesha": {
+        "god": "Ganesha",
+        "win_rate": 0.5598086124401914,
+        "pick_rate": 0.0070448646644419724,
+        "wins": 234,
+        "matches": 418,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.18887976682215
+      },
+      "Horus": {
+        "god": "Horus",
+        "win_rate": 0.5490196078431373,
+        "pick_rate": 0.01117403175245222,
+        "wins": 364,
+        "matches": 663,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 51.09687209380347
+      },
+      "Neith": {
+        "god": "Neith",
+        "win_rate": 0.5611111111111111,
+        "pick_rate": 0.006067347557892608,
+        "wins": 202,
+        "matches": 360,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 50.946984064711096
+      },
+      "Kukulkan": {
+        "god": "Kukulkan",
+        "win_rate": 0.5440806045340051,
+        "pick_rate": 0.013381872113796473,
+        "wins": 432,
+        "matches": 794,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 50.930773250992914
+      },
+      "Ra": {
+        "god": "Ra",
+        "win_rate": 0.5369583687340697,
+        "pick_rate": 0.019836855765665556,
+        "wins": 632,
+        "matches": 1177,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 50.839715958965634
+      },
+      "Bastet": {
+        "god": "Bastet",
+        "win_rate": 0.5483870967741935,
+        "pick_rate": 0.009926854754440962,
+        "wins": 323,
+        "matches": 589,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 50.80120848715618
+      },
+      "Awilix": {
+        "god": "Awilix",
+        "win_rate": 0.5569948186528497,
+        "pick_rate": 0.006505544881518185,
+        "wins": 215,
+        "matches": 386,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 50.71191884404538
+      },
+      "Chronos": {
+        "god": "Chronos",
+        "win_rate": 0.5437853107344632,
+        "pick_rate": 0.011932450197188796,
+        "wins": 385,
+        "matches": 708,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 50.69582219838846
+      },
+      "Rama": {
+        "god": "Rama",
+        "win_rate": 0.5544794188861986,
+        "pick_rate": 0.006960595948360131,
+        "wins": 229,
+        "matches": 413,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 50.62605516923032
+      },
+      "Hua Mulan": {
+        "god": "Hua Mulan",
+        "win_rate": 0.5622775800711743,
+        "pick_rate": 0.0047359018437995075,
+        "wins": 158,
+        "matches": 281,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 50.381738530527706
+      },
+      "Cabrakan": {
+        "god": "Cabrakan",
+        "win_rate": 0.5583596214511041,
+        "pick_rate": 0.005342636599588769,
+        "wins": 177,
+        "matches": 317,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 50.33185500834203
+      },
+      "Da Ji": {
+        "god": "Da Ji",
+        "win_rate": 0.5469107551487414,
+        "pick_rate": 0.007365085785552971,
+        "wins": 239,
+        "matches": 437,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 50.00309976618066
+      },
+      "Poseidon": {
+        "god": "Poseidon",
+        "win_rate": 0.5397631133671743,
+        "pick_rate": 0.009960562240873699,
+        "wins": 319,
+        "matches": 591,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 49.945132421883386
+      },
+      "Susano": {
+        "god": "Susano",
+        "win_rate": 0.5279503105590062,
+        "pick_rate": 0.01628071594701183,
+        "wins": 510,
+        "matches": 966,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 49.6420135583229
+      },
+      "Nike": {
+        "god": "Nike",
+        "win_rate": 0.5199296600234466,
+        "pick_rate": 0.028752485927124413,
+        "wins": 887,
+        "matches": 1706,
+        "tier_label": "B",
+        "aspect": null,
+        "score": 49.62036863693833
+      },
+      "Ullr": {
+        "god": "Ullr",
+        "win_rate": 0.5246913580246914,
+        "pick_rate": 0.01638183840631004,
+        "wins": 510,
+        "matches": 972,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 49.32606988045975
+      },
+      "Loki": {
+        "god": "Loki",
+        "win_rate": 0.5247629083245522,
+        "pick_rate": 0.015994202312333568,
+        "wins": 498,
+        "matches": 949,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 49.295392106626466
+      },
+      "Nemesis": {
+        "god": "Nemesis",
+        "win_rate": 0.5389908256880734,
+        "pick_rate": 0.007348232042336603,
+        "wins": 235,
+        "matches": 436,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 49.20632509519308
+      },
+      "Apollo": {
+        "god": "Apollo",
+        "win_rate": 0.5275590551181102,
+        "pick_rate": 0.012842552330872687,
+        "wins": 402,
+        "matches": 762,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 49.2061875345888
+      },
+      "Jormungandr": {
+        "god": "Jormungandr",
+        "win_rate": 0.5488215488215489,
+        "pick_rate": 0.005005561735261402,
+        "wins": 163,
+        "matches": 297,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 49.196352697182746
+      },
+      "Nut": {
+        "god": "Nut",
+        "win_rate": 0.5217889908256881,
+        "pick_rate": 0.014696464084673205,
+        "wins": 455,
+        "matches": 872,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 48.861061423687815
+      },
+      "Kali": {
+        "god": "Kali",
+        "win_rate": 0.5382513661202186,
+        "pick_rate": 0.006168470017190818,
+        "wins": 197,
+        "matches": 366,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 48.70431478556924
+      },
+      "Danzaburou": {
+        "god": "Danzaburou",
+        "win_rate": 0.540785498489426,
+        "pick_rate": 0.005578589004617926,
+        "wins": 179,
+        "matches": 331,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 48.69382101358962
+      },
+      "Hel": {
+        "god": "Hel",
+        "win_rate": 0.5131022823330516,
+        "pick_rate": 0.019937978224963765,
+        "wins": 607,
+        "matches": 1183,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 48.462305332243986
+      },
+      "Agni": {
+        "god": "Agni",
+        "win_rate": 0.5165775401069519,
+        "pick_rate": 0.01575824990730441,
+        "wins": 483,
+        "matches": 935,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 48.45434302708399
+      },
+      "Chiron": {
+        "god": "Chiron",
+        "win_rate": 0.5222052067381318,
+        "pick_rate": 0.011005494320288536,
+        "wins": 341,
+        "matches": 653,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 48.3874792298401
+      },
+      "Anhur": {
+        "god": "Anhur",
+        "win_rate": 0.5154130702836005,
+        "pick_rate": 0.013668385748474737,
+        "wins": 418,
+        "matches": 811,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 48.102540423327895
+      },
+      "Cu Chulainn": {
+        "god": "Cu Chulainn",
+        "win_rate": 0.5122470713525027,
+        "pick_rate": 0.015825664880169885,
+        "wins": 481,
+        "matches": 939,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 48.0290835869912
       },
       "Baron Samedi": {
         "god": "Baron Samedi",
-        "win_rate": 0.42105263157894735,
-        "pick_rate": 0.004425809457255998,
-        "wins": 8,
-        "matches": 19,
+        "win_rate": 0.530791788856305,
+        "pick_rate": 0.005747126436781609,
+        "wins": 181,
+        "matches": 341,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 47.777427073257826
+      },
+      "Xing Tian": {
+        "god": "Xing Tian",
+        "win_rate": 0.5091116173120729,
+        "pick_rate": 0.014797586543971416,
+        "wins": 447,
+        "matches": 878,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 47.6076100275457
+      },
+      "Sylvanus": {
+        "god": "Sylvanus",
+        "win_rate": 0.5119549929676512,
+        "pick_rate": 0.0119830114268379,
+        "wins": 364,
+        "matches": 711,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 47.52471862656407
+      },
+      "Aladdin": {
+        "god": "Aladdin",
+        "win_rate": 0.522248243559719,
+        "pick_rate": 0.007196548353389288,
+        "wins": 223,
+        "matches": 427,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 47.48825973475468
+      },
+      "Achilles": {
+        "god": "Achilles",
+        "win_rate": 0.5238095238095238,
+        "pick_rate": 0.006724643543330974,
+        "wins": 209,
+        "matches": 399,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 47.48104584294093
+      },
+      "Khepri": {
+        "god": "Khepri",
+        "win_rate": 0.5253333333333333,
+        "pick_rate": 0.0063201537061381334,
+        "wins": 197,
+        "matches": 375,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 47.47907141659346
+      },
+      "Janus": {
+        "god": "Janus",
+        "win_rate": 0.5020746887966805,
+        "pick_rate": 0.02030876057572387,
+        "wins": 605,
+        "matches": 1205,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 47.38818228425637
+      },
+      "Morgan Le Fay": {
+        "god": "Morgan Le Fay",
+        "win_rate": 0.5170940170940171,
+        "pick_rate": 0.00788755182526039,
+        "wins": 242,
+        "matches": 468,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 47.18652743326036
+      },
+      "Discordia": {
+        "god": "Discordia",
+        "win_rate": 0.5128205128205128,
+        "pick_rate": 0.009202143796137123,
+        "wins": 280,
+        "matches": 546,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 47.095122517001876
+      },
+      "Artio": {
+        "god": "Artio",
+        "win_rate": 0.5095238095238095,
+        "pick_rate": 0.010617858226312064,
+        "wins": 321,
+        "matches": 630,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 47.054747159431166
+      },
+      "Atlas": {
+        "god": "Atlas",
+        "win_rate": 0.5131004366812227,
+        "pick_rate": 0.007719014393096707,
+        "wins": 235,
+        "matches": 458,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 46.74054476684907
+      },
+      "Sobek": {
+        "god": "Sobek",
+        "win_rate": 0.5006165228113441,
+        "pick_rate": 0.013668385748474737,
+        "wins": 406,
+        "matches": 811,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 46.62824030065699
+      },
+      "Ix Chel": {
+        "god": "Ix Chel",
+        "win_rate": 0.5042881646655232,
+        "pick_rate": 0.00982573229514275,
+        "wins": 294,
+        "matches": 583,
+        "tier_label": "C",
+        "aspect": null,
+        "score": 46.380718398447065
+      },
+      "Mercury": {
+        "god": "Mercury",
+        "win_rate": 0.5126050420168067,
+        "pick_rate": 0.006016786328243503,
+        "wins": 183,
+        "matches": 357,
         "tier_label": "D",
         "aspect": null,
-        "score": 23.14162039203038
+        "score": 46.089680097443605
       },
-      "Osiris": {
-        "god": "Osiris",
-        "win_rate": 0.42105263157894735,
-        "pick_rate": 0.004425809457255998,
-        "wins": 8,
-        "matches": 19,
+      "Ah Puch": {
+        "god": "Ah Puch",
+        "win_rate": 0.5165289256198347,
+        "pick_rate": 0.004078605858361142,
+        "wins": 125,
+        "matches": 242,
         "tier_label": "D",
         "aspect": null,
-        "score": 23.14162039203038
+        "score": 45.38016228745303
       },
-      "Guan Yu": {
-        "god": "Guan Yu",
-        "win_rate": 0.4,
-        "pick_rate": 0.0023293733985557887,
-        "wins": 4,
-        "matches": 10,
+      "Charon": {
+        "god": "Charon",
+        "win_rate": 0.49873417721518987,
+        "pick_rate": 0.006657228570465501,
+        "wins": 197,
+        "matches": 395,
+        "tier_label": "D",
+        "aspect": null,
+        "score": 44.967541874500924
+      },
+      "Aphrodite": {
+        "god": "Aphrodite",
+        "win_rate": 0.4799426934097421,
+        "pick_rate": 0.011763912765025112,
+        "wins": 335,
+        "matches": 698,
+        "tier_label": "D",
+        "aspect": null,
+        "score": 44.309020123489496
+      },
+      "Merlin": {
+        "god": "Merlin",
+        "win_rate": 0.47901591895803186,
+        "pick_rate": 0.011645936562510534,
+        "wins": 331,
+        "matches": 691,
+        "tier_label": "D",
+        "aspect": null,
+        "score": 44.198675311963875
+      },
+      "Princess Bari": {
+        "god": "Princess Bari",
+        "win_rate": 0.4953560371517028,
+        "pick_rate": 0.005443759058886979,
+        "wins": 160,
+        "matches": 323,
+        "tier_label": "D",
+        "aspect": null,
+        "score": 44.120567708155846
+      },
+      "Jing Wei": {
+        "god": "Jing Wei",
+        "win_rate": 0.49823321554770317,
+        "pick_rate": 0.0047696093302322445,
+        "wins": 141,
+        "matches": 283,
+        "tier_label": "D",
+        "aspect": null,
+        "score": 44.03936930120732
+      },
+      "Hachiman": {
+        "god": "Hachiman",
+        "win_rate": 0.47058823529411764,
+        "pick_rate": 0.01547173627262615,
+        "wins": 432,
+        "matches": 918,
+        "tier_label": "D",
+        "aspect": null,
+        "score": 43.848910776371476
+      },
+      "Hecate": {
+        "god": "Hecate",
+        "win_rate": 0.4869109947643979,
+        "pick_rate": 0.006438129908652712,
+        "wins": 186,
+        "matches": 382,
+        "tier_label": "D",
+        "aspect": null,
+        "score": 43.71673174669876
+      },
+      "Ne Zha": {
+        "god": "Ne Zha",
+        "win_rate": 0.48129675810473815,
+        "pick_rate": 0.006758351029763711,
+        "wins": 193,
+        "matches": 401,
+        "tier_label": "D",
+        "aspect": null,
+        "score": 43.28018829042105
+      },
+      "Hercules": {
+        "god": "Hercules",
+        "win_rate": 0.4708333333333333,
+        "pick_rate": 0.0040448983719284055,
+        "wins": 113,
+        "matches": 240,
         "tier_label": "F",
         "aspect": null,
-        "score": 16.817758120350966
+        "score": 40.86395764916525
       },
       "Yemoja": {
         "god": "Yemoja",
-        "win_rate": 0.3,
-        "pick_rate": 0.004658746797111577,
-        "wins": 6,
-        "matches": 20,
+        "win_rate": 0.4666666666666667,
+        "pick_rate": 0.004550510668419456,
+        "wins": 126,
+        "matches": 270,
         "tier_label": "F",
         "aspect": null,
-        "score": 14.547527396899385
+        "score": 40.80430980739343
+      },
+      "Guan Yu": {
+        "god": "Guan Yu",
+        "win_rate": 0.47282608695652173,
+        "pick_rate": 0.0031010887518117774,
+        "wins": 87,
+        "matches": 184,
+        "tier_label": "F",
+        "aspect": null,
+        "score": 40.19813683842217
+      },
+      "Chaac": {
+        "god": "Chaac",
+        "win_rate": 0.4722222222222222,
+        "pick_rate": 0.002426939023157043,
+        "wins": 68,
+        "matches": 144,
+        "tier_label": "F",
+        "aspect": null,
+        "score": 39.2466609101048
+      },
+      "Osiris": {
+        "god": "Osiris",
+        "win_rate": 0.4251497005988024,
+        "pick_rate": 0.0028145751171335153,
+        "wins": 71,
+        "matches": 167,
+        "tier_label": "F",
+        "aspect": null,
+        "score": 35.26813872783688
       }
     },
-    "row_count_raw": 92,
-    "god_count": 92
+    "row_count_raw": 93,
+    "god_count": 93
   },
   "smitesource_masters": {
     "source": "https://smitesource.com/meta",
@@ -942,1243 +952,1582 @@
       "solo",
       "support"
     ],
-    "scraped_at": "2026-10-07T16:27:28.013983+00:00",
-    "god_count": 77,
+    "scraped_at": "2026-10-17T20:53:55.060515+00:00",
+    "god_count": 92,
     "role_row_counts": {
-      "carry": 17,
-      "mid": 22,
-      "jungle": 22,
-      "solo": 13,
-      "support": 19
+      "carry": 22,
+      "mid": 29,
+      "jungle": 30,
+      "solo": 30,
+      "support": 27
     },
     "errors": [],
     "note": "Masters+ role meta aggregated across Carry/Mid/Jungle/Solo/Support. WR is games-weighted across roles; Bayesian shrink prior=20 toward 50%."
   },
   "smitesource_masters_gods": {
-    "Xbalanque": {
-      "god": "Xbalanque",
-      "games": 32,
-      "wins": 20,
-      "win_rate": 0.625,
-      "bayesian_wr": 0.5769230769230769,
+    "Neith": {
+      "god": "Neith",
+      "games": 310,
+      "wins": 177,
+      "win_rate": 0.5709677419354838,
+      "bayesian_wr": 0.5666666666666667,
       "roles": {
         "carry": {
-          "games": 32,
-          "win_rate": 0.625,
-          "pick_rate": 5.780346820809249,
-          "kda": 1.9510309278350515
-        }
-      }
-    },
-    "Cupid": {
-      "god": "Cupid",
-      "games": 58,
-      "wins": 36,
-      "win_rate": 0.6206896551724138,
-      "bayesian_wr": 0.5897435897435898,
-      "roles": {
-        "carry": {
-          "games": 58,
-          "win_rate": 0.6207,
-          "pick_rate": 10.476878612716762,
-          "kda": 1.7867036011080333
+          "games": 95,
+          "win_rate": 0.6105,
+          "pick_rate": 1.5926503378095191,
+          "kda": 1.7930756843800322
+        },
+        "mid": {
+          "games": 215,
+          "win_rate": 0.5535,
+          "pick_rate": 3.604419185568912,
+          "kda": 2.49002849002849
         }
       }
     },
     "Izanami": {
       "god": "Izanami",
-      "games": 97,
-      "wins": 59,
-      "win_rate": 0.6082474226804123,
-      "bayesian_wr": 0.5897435897435898,
+      "games": 957,
+      "wins": 544,
+      "win_rate": 0.5684430512016719,
+      "bayesian_wr": 0.5670419651995906,
       "roles": {
         "carry": {
-          "games": 97,
-          "win_rate": 0.6082,
-          "pick_rate": 17.521676300578033,
-          "kda": 1.6360808709175738
-        }
-      }
-    },
-    "Hou Yi": {
-      "god": "Hou Yi",
-      "games": 157,
-      "wins": 87,
-      "win_rate": 0.554140127388535,
-      "bayesian_wr": 0.5480225988700564,
-      "roles": {
-        "carry": {
-          "games": 135,
-          "win_rate": 0.5481,
-          "pick_rate": 24.385838150289015,
-          "kda": 1.8433098591549295
-        }
-      }
-    },
-    "Ishtar": {
-      "god": "Ishtar",
-      "games": 39,
-      "wins": 23,
-      "win_rate": 0.5897435897435898,
-      "bayesian_wr": 0.559322033898305,
-      "roles": {
-        "carry": {
-          "games": 39,
-          "win_rate": 0.5897,
-          "pick_rate": 7.044797687861272,
-          "kda": 1.816872427983539
-        }
-      }
-    },
-    "Chronos": {
-      "god": "Chronos",
-      "games": 64,
-      "wins": 33,
-      "win_rate": 0.515625,
-      "bayesian_wr": 0.5119047619047619,
-      "roles": {
-        "carry": {
-          "games": 34,
-          "win_rate": 0.5882,
-          "pick_rate": 6.141618497109826,
-          "kda": 1.7
-        },
-        "mid": {
-          "games": 30,
-          "win_rate": 0.4333,
-          "pick_rate": 5.41907514450867,
-          "kda": 1.5738095238095238
-        }
-      }
-    },
-    "Medusa": {
-      "god": "Medusa",
-      "games": 43,
-      "wins": 25,
-      "win_rate": 0.5813953488372093,
-      "bayesian_wr": 0.5555555555555556,
-      "roles": {
-        "carry": {
-          "games": 43,
-          "win_rate": 0.5814,
-          "pick_rate": 7.767341040462428,
-          "kda": 1.7279693486590038
+          "games": 957,
+          "win_rate": 0.5684,
+          "pick_rate": 16.043856560881157,
+          "kda": 1.6312884403090995
         }
       }
     },
     "Rama": {
       "god": "Rama",
-      "games": 49,
-      "wins": 28,
-      "win_rate": 0.5714285714285714,
-      "bayesian_wr": 0.5507246376811594,
+      "games": 403,
+      "wins": 226,
+      "win_rate": 0.5607940446650124,
+      "bayesian_wr": 0.5579196217494089,
       "roles": {
         "carry": {
-          "games": 49,
-          "win_rate": 0.5714,
-          "pick_rate": 8.851156069364162,
-          "kda": 1.6708860759493671
+          "games": 403,
+          "win_rate": 0.5608,
+          "pick_rate": 6.756190380391961,
+          "kda": 1.602179349767774
         }
       }
     },
-    "Apollo": {
-      "god": "Apollo",
-      "games": 73,
-      "wins": 40,
-      "win_rate": 0.547945205479452,
-      "bayesian_wr": 0.5376344086021505,
+    "Cupid": {
+      "god": "Cupid",
+      "games": 619,
+      "wins": 346,
+      "win_rate": 0.5589660743134087,
+      "bayesian_wr": 0.5571205007824727,
       "roles": {
         "carry": {
-          "games": 45,
-          "win_rate": 0.5556,
-          "pick_rate": 8.128612716763005,
-          "kda": 1.6666666666666667
+          "games": 619,
+          "win_rate": 0.559,
+          "pick_rate": 10.377374306358867,
+          "kda": 1.7398184176394293
+        }
+      }
+    },
+    "Xbalanque": {
+      "god": "Xbalanque",
+      "games": 442,
+      "wins": 245,
+      "win_rate": 0.5542986425339367,
+      "bayesian_wr": 0.551948051948052,
+      "roles": {
+        "carry": {
+          "games": 442,
+          "win_rate": 0.5543,
+          "pick_rate": 7.410015255913763,
+          "kda": 1.6047016274864376
+        }
+      }
+    },
+    "Hou Yi": {
+      "god": "Hou Yi",
+      "games": 1753,
+      "wins": 964,
+      "win_rate": 0.5499144324015972,
+      "bayesian_wr": 0.5493513818386915,
+      "roles": {
+        "carry": {
+          "games": 1468,
+          "win_rate": 0.5518,
+          "pick_rate": 24.610638904256568,
+          "kda": 1.8724795036561046
+        }
+      }
+    },
+    "Ishtar": {
+      "god": "Ishtar",
+      "games": 576,
+      "wins": 322,
+      "win_rate": 0.5590277777777778,
+      "bayesian_wr": 0.5570469798657718,
+      "roles": {
+        "carry": {
+          "games": 475,
+          "win_rate": 0.5495,
+          "pick_rate": 7.9632516890475955,
+          "kda": 1.5873445967484858
         },
         "jungle": {
-          "games": 28,
-          "win_rate": 0.5357,
-          "pick_rate": 5.057803468208092,
-          "kda": 2.4966442953020134
+          "games": 101,
+          "win_rate": 0.604,
+          "pick_rate": 1.6932387801974886,
+          "kda": 1.9827586206896552
         }
       }
     },
-    "Nut": {
-      "god": "Nut",
-      "games": 88,
-      "wins": 48,
-      "win_rate": 0.5454545454545454,
-      "bayesian_wr": 0.5370370370370371,
+    "Medusa": {
+      "god": "Medusa",
+      "games": 495,
+      "wins": 269,
+      "win_rate": 0.5434343434343434,
+      "bayesian_wr": 0.541747572815534,
       "roles": {
         "carry": {
-          "games": 56,
-          "win_rate": 0.5536,
-          "pick_rate": 10.115606936416183,
-          "kda": 1.915929203539823
+          "games": 495,
+          "win_rate": 0.5434,
+          "pick_rate": 8.298546497007495,
+          "kda": 1.6500156592546196
+        }
+      }
+    },
+    "Chronos": {
+      "god": "Chronos",
+      "games": 546,
+      "wins": 290,
+      "win_rate": 0.5311355311355311,
+      "bayesian_wr": 0.5300353356890459,
+      "roles": {
+        "carry": {
+          "games": 287,
+          "win_rate": 0.5401,
+          "pick_rate": 4.811480494224547,
+          "kda": 1.5196765498652292
         },
         "mid": {
-          "games": 32,
-          "win_rate": 0.5312,
-          "pick_rate": 5.780346820809249,
-          "kda": 1.981578947368421
-        }
-      }
-    },
-    "Cernunnos": {
-      "god": "Cernunnos",
-      "games": 103,
-      "wins": 61,
-      "win_rate": 0.5922330097087378,
-      "bayesian_wr": 0.5772357723577236,
-      "roles": {
-        "carry": {
-          "games": 35,
-          "win_rate": 0.5429,
-          "pick_rate": 6.322254335260115,
-          "kda": 1.3903508771929824
-        },
-        "jungle": {
-          "games": 44,
-          "win_rate": 0.6136,
-          "pick_rate": 7.947976878612717,
-          "kda": 2.09
-        },
-        "solo": {
-          "games": 24,
-          "win_rate": 0.625,
-          "pick_rate": 4.335260115606936,
-          "kda": 1.559375
-        }
-      }
-    },
-    "Anhur": {
-      "god": "Anhur",
-      "games": 64,
-      "wins": 33,
-      "win_rate": 0.515625,
-      "bayesian_wr": 0.5119047619047619,
-      "roles": {
-        "carry": {
-          "games": 64,
-          "win_rate": 0.5156,
-          "pick_rate": 11.560693641618498,
-          "kda": 1.6256097560975609
-        }
-      }
-    },
-    "Chiron": {
-      "god": "Chiron",
-      "games": 42,
-      "wins": 21,
-      "win_rate": 0.5,
-      "bayesian_wr": 0.5,
-      "roles": {
-        "carry": {
-          "games": 42,
-          "win_rate": 0.5,
-          "pick_rate": 7.586705202312139,
-          "kda": 1.8541666666666667
-        }
-      }
-    },
-    "Ullr": {
-      "god": "Ullr",
-      "games": 59,
-      "wins": 27,
-      "win_rate": 0.4576271186440678,
-      "bayesian_wr": 0.46835443037974683,
-      "roles": {
-        "carry": {
-          "games": 59,
-          "win_rate": 0.4576,
-          "pick_rate": 10.657514450867051,
-          "kda": 2.0100574712643677
-        }
-      }
-    },
-    "Hachiman": {
-      "god": "Hachiman",
-      "games": 101,
-      "wins": 46,
-      "win_rate": 0.4554455445544555,
-      "bayesian_wr": 0.46280991735537197,
-      "roles": {
-        "carry": {
-          "games": 101,
-          "win_rate": 0.4554,
-          "pick_rate": 18.24421965317919,
-          "kda": 1.5696517412935322
+          "games": 259,
+          "win_rate": 0.5212,
+          "pick_rate": 4.342067763080689,
+          "kda": 1.7326411421155095
         }
       }
     },
     "Artemis": {
       "god": "Artemis",
-      "games": 60,
-      "wins": 27,
-      "win_rate": 0.45,
-      "bayesian_wr": 0.4625,
+      "games": 683,
+      "wins": 366,
+      "win_rate": 0.5358711566617862,
+      "bayesian_wr": 0.534850640113798,
       "roles": {
         "carry": {
-          "games": 60,
-          "win_rate": 0.45,
-          "pick_rate": 10.83815028901734,
-          "kda": 1.2530120481927711
+          "games": 683,
+          "win_rate": 0.5359,
+          "pick_rate": 11.450317691830543,
+          "kda": 1.6045648751967618
         }
       }
     },
-    "Eset": {
-      "god": "Eset",
-      "games": 30,
-      "wins": 21,
-      "win_rate": 0.7,
-      "bayesian_wr": 0.62,
+    "Chiron": {
+      "god": "Chiron",
+      "games": 602,
+      "wins": 317,
+      "win_rate": 0.526578073089701,
+      "bayesian_wr": 0.5257234726688103,
       "roles": {
+        "carry": {
+          "games": 472,
+          "win_rate": 0.5339,
+          "pick_rate": 7.912957467853611,
+          "kda": 1.9800373134328357
+        },
         "mid": {
-          "games": 30,
-          "win_rate": 0.7,
-          "pick_rate": 5.41907514450867,
-          "kda": 2.136627906976744
+          "games": 130,
+          "win_rate": 0.5,
+          "pick_rate": 2.179416251739342,
+          "kda": 1.9007731958762886
         }
       }
     },
-    "Scylla": {
-      "god": "Scylla",
-      "games": 62,
-      "wins": 41,
-      "win_rate": 0.6612903225806451,
-      "bayesian_wr": 0.6219512195121951,
+    "Anhur": {
+      "god": "Anhur",
+      "games": 787,
+      "wins": 406,
+      "win_rate": 0.5158831003811944,
+      "bayesian_wr": 0.5154894671623296,
       "roles": {
-        "mid": {
-          "games": 62,
-          "win_rate": 0.6613,
-          "pick_rate": 11.199421965317919,
-          "kda": 2.87546468401487
+        "carry": {
+          "games": 678,
+          "win_rate": 0.5236,
+          "pick_rate": 11.366493989840567,
+          "kda": 1.6590855526749941
         }
       }
     },
-    "Princess Bari": {
-      "god": "Princess Bari",
-      "games": 21,
-      "wins": 12,
-      "win_rate": 0.5714285714285714,
-      "bayesian_wr": 0.5365853658536586,
+    "Cernunnos": {
+      "god": "Cernunnos",
+      "games": 819,
+      "wins": 449,
+      "win_rate": 0.5482295482295483,
+      "bayesian_wr": 0.5470798569725864,
       "roles": {
-        "mid": {
-          "games": 21,
-          "win_rate": 0.5714,
-          "pick_rate": 3.7933526011560694,
-          "kda": 2.1307692307692307
+        "carry": {
+          "games": 324,
+          "win_rate": 0.5185,
+          "pick_rate": 5.43177588895036,
+          "kda": 1.5515873015873016
+        },
+        "jungle": {
+          "games": 334,
+          "win_rate": 0.5389,
+          "pick_rate": 5.599423292930309,
+          "kda": 1.7828239345673698
+        },
+        "solo": {
+          "games": 161,
+          "win_rate": 0.6273,
+          "pick_rate": 2.699123204077185,
+          "kda": 1.4934497816593886
+        }
+      }
+    },
+    "Danzaburou": {
+      "god": "Danzaburou",
+      "games": 217,
+      "wins": 111,
+      "win_rate": 0.511520737327189,
+      "bayesian_wr": 0.510548523206751,
+      "roles": {
+        "carry": {
+          "games": 217,
+          "win_rate": 0.5115,
+          "pick_rate": 3.637948666364901,
+          "kda": 1.8816738816738816
         }
       }
     },
     "Sol": {
       "god": "Sol",
-      "games": 21,
-      "wins": 12,
-      "win_rate": 0.5714285714285714,
-      "bayesian_wr": 0.5365853658536586,
+      "games": 407,
+      "wins": 218,
+      "win_rate": 0.5356265356265356,
+      "bayesian_wr": 0.5339578454332553,
       "roles": {
-        "mid": {
-          "games": 21,
-          "win_rate": 0.5714,
-          "pick_rate": 3.7933526011560694,
-          "kda": 1.6428571428571428
-        }
-      }
-    },
-    "Discordia": {
-      "god": "Discordia",
-      "games": 62,
-      "wins": 34,
-      "win_rate": 0.5483870967741935,
-      "bayesian_wr": 0.5365853658536586,
-      "roles": {
-        "mid": {
-          "games": 62,
-          "win_rate": 0.5484,
-          "pick_rate": 11.199421965317919,
-          "kda": 2.2822085889570554
-        }
-      }
-    },
-    "Vulcan": {
-      "god": "Vulcan",
-      "games": 41,
-      "wins": 22,
-      "win_rate": 0.5365853658536586,
-      "bayesian_wr": 0.5245901639344263,
-      "roles": {
-        "mid": {
-          "games": 41,
-          "win_rate": 0.5366,
-          "pick_rate": 7.40606936416185,
-          "kda": 1.8138528138528138
-        }
-      }
-    },
-    "Hecate": {
-      "god": "Hecate",
-      "games": 43,
-      "wins": 23,
-      "win_rate": 0.5348837209302325,
-      "bayesian_wr": 0.5238095238095238,
-      "roles": {
-        "mid": {
-          "games": 43,
-          "win_rate": 0.5349,
-          "pick_rate": 7.767341040462428,
-          "kda": 2.588516746411483
-        }
-      }
-    },
-    "Nu Wa": {
-      "god": "Nu Wa",
-      "games": 61,
-      "wins": 31,
-      "win_rate": 0.5081967213114754,
-      "bayesian_wr": 0.5061728395061729,
-      "roles": {
-        "mid": {
-          "games": 61,
-          "win_rate": 0.5082,
-          "pick_rate": 11.01878612716763,
-          "kda": 2.076923076923077
-        }
-      }
-    },
-    "Agni": {
-      "god": "Agni",
-      "games": 60,
-      "wins": 30,
-      "win_rate": 0.5,
-      "bayesian_wr": 0.5,
-      "roles": {
-        "mid": {
-          "games": 60,
-          "win_rate": 0.5,
-          "pick_rate": 10.83815028901734,
-          "kda": 2.0
-        }
-      }
-    },
-    "Janus": {
-      "god": "Janus",
-      "games": 125,
-      "wins": 61,
-      "win_rate": 0.488,
-      "bayesian_wr": 0.4896551724137931,
-      "roles": {
-        "mid": {
-          "games": 125,
-          "win_rate": 0.488,
-          "pick_rate": 22.579479768786126,
-          "kda": 2.4597701149425286
-        }
-      }
-    },
-    "The Morrigan": {
-      "god": "The Morrigan",
-      "games": 23,
-      "wins": 11,
-      "win_rate": 0.4782608695652174,
-      "bayesian_wr": 0.4883720930232558,
-      "roles": {
-        "mid": {
-          "games": 23,
-          "win_rate": 0.4783,
-          "pick_rate": 4.154624277456647,
-          "kda": 1.953416149068323
-        }
-      }
-    },
-    "Merlin": {
-      "god": "Merlin",
-      "games": 59,
-      "wins": 28,
-      "win_rate": 0.4745762711864407,
-      "bayesian_wr": 0.4810126582278481,
-      "roles": {
-        "mid": {
-          "games": 59,
-          "win_rate": 0.4746,
-          "pick_rate": 10.657514450867051,
-          "kda": 2.1607717041800645
-        }
-      }
-    },
-    "Kukulkan": {
-      "god": "Kukulkan",
-      "games": 62,
-      "wins": 29,
-      "win_rate": 0.46774193548387094,
-      "bayesian_wr": 0.47560975609756095,
-      "roles": {
-        "mid": {
-          "games": 62,
-          "win_rate": 0.4677,
-          "pick_rate": 11.199421965317919,
-          "kda": 1.8567708333333333
-        }
-      }
-    },
-    "Ra": {
-      "god": "Ra",
-      "games": 99,
-      "wins": 46,
-      "win_rate": 0.46464646464646464,
-      "bayesian_wr": 0.47058823529411764,
-      "roles": {
-        "mid": {
-          "games": 99,
-          "win_rate": 0.4646,
-          "pick_rate": 17.88294797687861,
-          "kda": 1.9807692307692308
-        }
-      }
-    },
-    "Hel": {
-      "god": "Hel",
-      "games": 107,
-      "wins": 45,
-      "win_rate": 0.4205607476635514,
-      "bayesian_wr": 0.4330708661417323,
-      "roles": {
-        "mid": {
-          "games": 56,
-          "win_rate": 0.4643,
-          "pick_rate": 10.115606936416183,
-          "kda": 1.7394014962593516
+        "carry": {
+          "games": 253,
+          "win_rate": 0.5099,
+          "pick_rate": 4.241479320692719,
+          "kda": 1.5276705276705276
         },
-        "support": {
-          "games": 27,
-          "win_rate": 0.4074,
-          "pick_rate": 4.877167630057803,
-          "kda": 1.3451612903225807
+        "mid": {
+          "games": 154,
+          "win_rate": 0.5779,
+          "pick_rate": 2.5817700212912205,
+          "kda": 2.000539374325782
         }
       }
     },
-    "Ix Chel": {
-      "god": "Ix Chel",
-      "games": 52,
-      "wins": 24,
-      "win_rate": 0.46153846153846156,
-      "bayesian_wr": 0.4722222222222222,
+    "Apollo": {
+      "god": "Apollo",
+      "games": 693,
+      "wins": 354,
+      "win_rate": 0.5108225108225108,
+      "bayesian_wr": 0.5105189340813464,
       "roles": {
-        "mid": {
-          "games": 52,
-          "win_rate": 0.4615,
-          "pick_rate": 9.393063583815028,
-          "kda": 2.036697247706422
+        "carry": {
+          "games": 559,
+          "win_rate": 0.5098,
+          "pick_rate": 9.37148988247917,
+          "kda": 1.7272458628841607
+        },
+        "jungle": {
+          "games": 134,
+          "win_rate": 0.5149,
+          "pick_rate": 2.2464752133313217,
+          "kda": 2.050959232613909
         }
       }
     },
-    "Morgan Le Fay": {
-      "god": "Morgan Le Fay",
-      "games": 31,
-      "wins": 13,
-      "win_rate": 0.41935483870967744,
-      "bayesian_wr": 0.45098039215686275,
+    "Nut": {
+      "god": "Nut",
+      "games": 812,
+      "wins": 420,
+      "win_rate": 0.5172413793103449,
+      "bayesian_wr": 0.5168269230769231,
       "roles": {
+        "carry": {
+          "games": 517,
+          "win_rate": 0.5048,
+          "pick_rate": 8.667370785763383,
+          "kda": 1.7659192825112107
+        },
         "mid": {
-          "games": 31,
-          "win_rate": 0.4194,
-          "pick_rate": 5.5997109826589595,
-          "kda": 1.6807511737089202
+          "games": 295,
+          "win_rate": 0.539,
+          "pick_rate": 4.945598417408506,
+          "kda": 1.9760956175298805
+        }
+      }
+    },
+    "Ullr": {
+      "god": "Ullr",
+      "games": 872,
+      "wins": 442,
+      "win_rate": 0.506880733944954,
+      "bayesian_wr": 0.506726457399103,
+      "roles": {
+        "carry": {
+          "games": 713,
+          "win_rate": 0.4993,
+          "pick_rate": 11.953259903770391,
+          "kda": 2.0437257751937983
+        },
+        "jungle": {
+          "games": 159,
+          "win_rate": 0.5409,
+          "pick_rate": 2.6655937232811953,
+          "kda": 2.3562162162162164
+        }
+      }
+    },
+    "Jing Wei": {
+      "god": "Jing Wei",
+      "games": 254,
+      "wins": 124,
+      "win_rate": 0.4881889763779527,
+      "bayesian_wr": 0.48905109489051096,
+      "roles": {
+        "carry": {
+          "games": 254,
+          "win_rate": 0.4882,
+          "pick_rate": 4.258244061090714,
+          "kda": 1.615678776290631
+        }
+      }
+    },
+    "Hachiman": {
+      "god": "Hachiman",
+      "games": 809,
+      "wins": 363,
+      "win_rate": 0.44870210135970334,
+      "bayesian_wr": 0.4499396863691194,
+      "roles": {
+        "carry": {
+          "games": 809,
+          "win_rate": 0.4487,
+          "pick_rate": 13.562674981977905,
+          "kda": 1.5571847507331378
         }
       }
     },
     "Zeus": {
       "god": "Zeus",
-      "games": 24,
-      "wins": 10,
-      "win_rate": 0.41666666666666674,
-      "bayesian_wr": 0.45454545454545453,
+      "games": 334,
+      "wins": 205,
+      "win_rate": 0.6137724550898204,
+      "bayesian_wr": 0.6073446327683616,
       "roles": {
         "mid": {
-          "games": 24,
-          "win_rate": 0.4167,
-          "pick_rate": 4.335260115606936,
-          "kda": 1.894904458598726
+          "games": 334,
+          "win_rate": 0.6138,
+          "pick_rate": 5.599423292930309,
+          "kda": 2.118605817452357
         }
       }
     },
-    "Poseidon": {
-      "god": "Poseidon",
-      "games": 41,
-      "wins": 17,
-      "win_rate": 0.4146341463414634,
-      "bayesian_wr": 0.4426229508196721,
+    "Anubis": {
+      "god": "Anubis",
+      "games": 232,
+      "wins": 142,
+      "win_rate": 0.6120689655172413,
+      "bayesian_wr": 0.6031746031746031,
       "roles": {
         "mid": {
-          "games": 41,
-          "win_rate": 0.4146,
-          "pick_rate": 7.40606936416185,
-          "kda": 1.5032051282051282
+          "games": 232,
+          "win_rate": 0.6121,
+          "pick_rate": 3.8894197723348256,
+          "kda": 2.0068119891008176
         }
       }
     },
-    "Hun Batz": {
-      "god": "Hun Batz",
-      "games": 31,
-      "wins": 21,
-      "win_rate": 0.6774193548387096,
-      "bayesian_wr": 0.6078431372549019,
+    "Eset": {
+      "god": "Eset",
+      "games": 244,
+      "wins": 141,
+      "win_rate": 0.5778688524590164,
+      "bayesian_wr": 0.571969696969697,
       "roles": {
-        "jungle": {
-          "games": 31,
-          "win_rate": 0.6774,
-          "pick_rate": 5.5997109826589595,
-          "kda": 2.852201257861635
-        }
-      }
-    },
-    "Ratatoskr": {
-      "god": "Ratatoskr",
-      "games": 36,
-      "wins": 21,
-      "win_rate": 0.5833333333333334,
-      "bayesian_wr": 0.5535714285714286,
-      "roles": {
-        "jungle": {
-          "games": 36,
-          "win_rate": 0.5833,
-          "pick_rate": 6.502890173410404,
-          "kda": 2.606194690265487
-        }
-      }
-    },
-    "Ravana": {
-      "god": "Ravana",
-      "games": 135,
-      "wins": 76,
-      "win_rate": 0.562962962962963,
-      "bayesian_wr": 0.5548387096774193,
-      "roles": {
-        "jungle": {
-          "games": 36,
-          "win_rate": 0.5833,
-          "pick_rate": 6.502890173410404,
-          "kda": 2.488095238095238
-        },
-        "solo": {
-          "games": 99,
-          "win_rate": 0.5556,
-          "pick_rate": 17.88294797687861,
-          "kda": 2.1242603550295858
-        }
-      }
-    },
-    "Pele": {
-      "god": "Pele",
-      "games": 24,
-      "wins": 14,
-      "win_rate": 0.5833333333333334,
-      "bayesian_wr": 0.5454545454545454,
-      "roles": {
-        "jungle": {
-          "games": 24,
-          "win_rate": 0.5833,
-          "pick_rate": 4.335260115606936,
-          "kda": 2.842767295597484
-        }
-      }
-    },
-    "Tsukuyomi": {
-      "god": "Tsukuyomi",
-      "games": 74,
-      "wins": 43,
-      "win_rate": 0.581081081081081,
-      "bayesian_wr": 0.5638297872340424,
-      "roles": {
-        "jungle": {
-          "games": 74,
-          "win_rate": 0.5811,
-          "pick_rate": 13.367052023121387,
-          "kda": 1.9502762430939227
-        }
-      }
-    },
-    "Mercury": {
-      "god": "Mercury",
-      "games": 26,
-      "wins": 15,
-      "win_rate": 0.5769230769230769,
-      "bayesian_wr": 0.5434782608695652,
-      "roles": {
-        "jungle": {
-          "games": 26,
-          "win_rate": 0.5769,
-          "pick_rate": 4.696531791907514,
-          "kda": 1.938953488372093
-        }
-      }
-    },
-    "Aladdin": {
-      "god": "Aladdin",
-      "games": 32,
-      "wins": 18,
-      "win_rate": 0.5625,
-      "bayesian_wr": 0.5384615384615384,
-      "roles": {
-        "jungle": {
-          "games": 32,
-          "win_rate": 0.5625,
-          "pick_rate": 5.780346820809249,
-          "kda": 1.8864628820960698
-        }
-      }
-    },
-    "Thor": {
-      "god": "Thor",
-      "games": 128,
-      "wins": 71,
-      "win_rate": 0.5546875,
-      "bayesian_wr": 0.5472972972972973,
-      "roles": {
-        "jungle": {
-          "games": 66,
-          "win_rate": 0.5606,
-          "pick_rate": 11.921965317919074,
-          "kda": 2.8155737704918034
-        },
-        "solo": {
-          "games": 42,
-          "win_rate": 0.619,
-          "pick_rate": 7.586705202312139,
-          "kda": 2.3864864864864863
-        }
-      }
-    },
-    "Susano": {
-      "god": "Susano",
-      "games": 105,
-      "wins": 51,
-      "win_rate": 0.4857142857142857,
-      "bayesian_wr": 0.488,
-      "roles": {
-        "jungle": {
-          "games": 55,
-          "win_rate": 0.5273,
-          "pick_rate": 9.934971098265896,
-          "kda": 2.2356770833333335
-        },
-        "support": {
-          "games": 50,
-          "win_rate": 0.44,
-          "pick_rate": 9.03179190751445,
-          "kda": 1.9964028776978417
-        }
-      }
-    },
-    "Ne Zha": {
-      "god": "Ne Zha",
-      "games": 40,
-      "wins": 21,
-      "win_rate": 0.525,
-      "bayesian_wr": 0.5166666666666667,
-      "roles": {
-        "jungle": {
-          "games": 40,
-          "win_rate": 0.525,
-          "pick_rate": 7.22543352601156,
-          "kda": 1.9981949458483754
-        }
-      }
-    },
-    "Bastet": {
-      "god": "Bastet",
-      "games": 42,
-      "wins": 22,
-      "win_rate": 0.5238095238095238,
-      "bayesian_wr": 0.5161290322580645,
-      "roles": {
-        "jungle": {
-          "games": 42,
-          "win_rate": 0.5238,
-          "pick_rate": 7.586705202312139,
-          "kda": 2.072519083969466
-        }
-      }
-    },
-    "Da Ji": {
-      "god": "Da Ji",
-      "games": 29,
-      "wins": 15,
-      "win_rate": 0.5172413793103449,
-      "bayesian_wr": 0.5102040816326531,
-      "roles": {
-        "jungle": {
-          "games": 29,
-          "win_rate": 0.5172,
-          "pick_rate": 5.238439306358381,
-          "kda": 1.990950226244344
-        }
-      }
-    },
-    "Thanatos": {
-      "god": "Thanatos",
-      "games": 70,
-      "wins": 33,
-      "win_rate": 0.4714285714285714,
-      "bayesian_wr": 0.4777777777777778,
-      "roles": {
-        "jungle": {
-          "games": 48,
-          "win_rate": 0.4583,
-          "pick_rate": 8.670520231213873,
-          "kda": 2.0254957507082154
-        }
-      }
-    },
-    "Fenrir": {
-      "god": "Fenrir",
-      "games": 40,
-      "wins": 19,
-      "win_rate": 0.475,
-      "bayesian_wr": 0.48333333333333334,
-      "roles": {
-        "jungle": {
-          "games": 40,
-          "win_rate": 0.475,
-          "pick_rate": 7.22543352601156,
-          "kda": 2.31875
-        }
-      }
-    },
-    "Loki": {
-      "god": "Loki",
-      "games": 67,
-      "wins": 31,
-      "win_rate": 0.4626865671641791,
-      "bayesian_wr": 0.47126436781609193,
-      "roles": {
-        "jungle": {
-          "games": 67,
-          "win_rate": 0.4627,
-          "pick_rate": 12.102601156069364,
-          "kda": 2.1353944562899785
-        }
-      }
-    },
-    "Awilix": {
-      "god": "Awilix",
-      "games": 39,
-      "wins": 18,
-      "win_rate": 0.46153846153846156,
-      "bayesian_wr": 0.4745762711864407,
-      "roles": {
-        "jungle": {
-          "games": 39,
-          "win_rate": 0.4615,
-          "pick_rate": 7.044797687861272,
-          "kda": 1.9107806691449813
+        "mid": {
+          "games": 244,
+          "win_rate": 0.5779,
+          "pick_rate": 4.090596657110765,
+          "kda": 1.8231162196679438
         }
       }
     },
     "Nike": {
       "god": "Nike",
-      "games": 213,
-      "wins": 97,
-      "win_rate": 0.45539906103286387,
-      "bayesian_wr": 0.4592274678111588,
+      "games": 1700,
+      "wins": 857,
+      "win_rate": 0.5041176470588236,
+      "bayesian_wr": 0.5040697674418605,
       "roles": {
+        "mid": {
+          "games": 181,
+          "win_rate": 0.5746,
+          "pick_rate": 3.034418012037084,
+          "kda": 2.619348054679285
+        },
         "jungle": {
-          "games": 44,
-          "win_rate": 0.4545,
-          "pick_rate": 7.947976878612717,
-          "kda": 1.8079847908745248
+          "games": 196,
+          "win_rate": 0.5459,
+          "pick_rate": 3.285889118007008,
+          "kda": 2.429800724637681
         },
         "solo": {
-          "games": 135,
-          "win_rate": 0.4741,
-          "pick_rate": 24.385838150289015,
-          "kda": 1.7093184979137692
+          "games": 927,
+          "win_rate": 0.493,
+          "pick_rate": 15.540914348941307,
+          "kda": 1.8464964370546317
         },
         "support": {
-          "games": 34,
-          "win_rate": 0.3824,
-          "pick_rate": 6.141618497109826,
-          "kda": 1.422907488986784
+          "games": 163,
+          "win_rate": 0.4724,
+          "pick_rate": 2.731141717770852,
+          "kda": 1.507561436672968
         }
       }
     },
-    "Nemesis": {
-      "god": "Nemesis",
-      "games": 20,
-      "wins": 9,
-      "win_rate": 0.45,
-      "bayesian_wr": 0.475,
+    "The Morrigan": {
+      "god": "The Morrigan",
+      "games": 251,
+      "wins": 143,
+      "win_rate": 0.5697211155378487,
+      "bayesian_wr": 0.5645756457564576,
       "roles": {
-        "jungle": {
-          "games": 20,
-          "win_rate": 0.45,
-          "pick_rate": 3.61271676300578,
-          "kda": 2.0198412698412698
+        "mid": {
+          "games": 251,
+          "win_rate": 0.5697,
+          "pick_rate": 4.207949839896729,
+          "kda": 2.1296182266009853
         }
       }
     },
-    "Ymir": {
-      "god": "Ymir",
-      "games": 87,
-      "wins": 50,
-      "win_rate": 0.5747126436781609,
-      "bayesian_wr": 0.5607476635514018,
+    "Vulcan": {
+      "god": "Vulcan",
+      "games": 604,
+      "wins": 338,
+      "win_rate": 0.5596026490066225,
+      "bayesian_wr": 0.5576923076923077,
       "roles": {
-        "solo": {
-          "games": 24,
-          "win_rate": 0.75,
-          "pick_rate": 4.335260115606936,
-          "kda": 2.1106194690265485
+        "mid": {
+          "games": 604,
+          "win_rate": 0.5596,
+          "pick_rate": 10.125903200388944,
+          "kda": 1.9989660265878877
+        }
+      }
+    },
+    "Scylla": {
+      "god": "Scylla",
+      "games": 761,
+      "wins": 420,
+      "win_rate": 0.5519053876478318,
+      "bayesian_wr": 0.5505761843790012,
+      "roles": {
+        "mid": {
+          "games": 761,
+          "win_rate": 0.5519,
+          "pick_rate": 12.757967442874149,
+          "kda": 2.4631819403386186
+        }
+      }
+    },
+    "Nu Wa": {
+      "god": "Nu Wa",
+      "games": 459,
+      "wins": 250,
+      "win_rate": 0.5446623093681917,
+      "bayesian_wr": 0.5427974947807933,
+      "roles": {
+        "mid": {
+          "games": 459,
+          "win_rate": 0.5447,
+          "pick_rate": 7.695015842679677,
+          "kda": 2.1117693522906795
+        }
+      }
+    },
+    "Kukulkan": {
+      "god": "Kukulkan",
+      "games": 669,
+      "wins": 351,
+      "win_rate": 0.5246636771300448,
+      "bayesian_wr": 0.5239477503628447,
+      "roles": {
+        "mid": {
+          "games": 669,
+          "win_rate": 0.5247,
+          "pick_rate": 11.215611326258614,
+          "kda": 2.11685667752443
+        }
+      }
+    },
+    "Discordia": {
+      "god": "Discordia",
+      "games": 515,
+      "wins": 269,
+      "win_rate": 0.5223300970873787,
+      "bayesian_wr": 0.5214953271028038,
+      "roles": {
+        "mid": {
+          "games": 515,
+          "win_rate": 0.5223,
+          "pick_rate": 8.633841304967394,
+          "kda": 2.1473765432098766
+        }
+      }
+    },
+    "Ra": {
+      "god": "Ra",
+      "games": 1081,
+      "wins": 562,
+      "win_rate": 0.5198889916743756,
+      "bayesian_wr": 0.5195277020890101,
+      "roles": {
+        "mid": {
+          "games": 1081,
+          "win_rate": 0.5199,
+          "pick_rate": 18.122684370232527,
+          "kda": 1.9062258014557845
+        }
+      }
+    },
+    "Poseidon": {
+      "god": "Poseidon",
+      "games": 418,
+      "wins": 216,
+      "win_rate": 0.5167464114832536,
+      "bayesian_wr": 0.5159817351598174,
+      "roles": {
+        "mid": {
+          "games": 418,
+          "win_rate": 0.5167,
+          "pick_rate": 7.007661486361884,
+          "kda": 1.7161818181818183
+        }
+      }
+    },
+    "Agni": {
+      "god": "Agni",
+      "games": 842,
+      "wins": 431,
+      "win_rate": 0.5118764845605701,
+      "bayesian_wr": 0.511600928074246,
+      "roles": {
+        "mid": {
+          "games": 842,
+          "win_rate": 0.5119,
+          "pick_rate": 14.115911415111738,
+          "kda": 2.0748047677764077
+        }
+      }
+    },
+    "Ah Puch": {
+      "god": "Ah Puch",
+      "games": 186,
+      "wins": 95,
+      "win_rate": 0.510752688172043,
+      "bayesian_wr": 0.5097087378640777,
+      "roles": {
+        "mid": {
+          "games": 186,
+          "win_rate": 0.5108,
+          "pick_rate": 3.118241714027058,
+          "kda": 1.75736568457539
+        }
+      }
+    },
+    "Hel": {
+      "god": "Hel",
+      "games": 1011,
+      "wins": 507,
+      "win_rate": 0.5014836795252225,
+      "bayesian_wr": 0.501454898157129,
+      "roles": {
+        "mid": {
+          "games": 510,
+          "win_rate": 0.5078,
+          "pick_rate": 8.550017602977418,
+          "kda": 1.8599270891755468
         },
         "support": {
-          "games": 63,
-          "win_rate": 0.5079,
-          "pick_rate": 11.380057803468208,
-          "kda": 1.6383248730964468
+          "games": 337,
+          "win_rate": 0.5549,
+          "pick_rate": 5.646593612814584,
+          "kda": 1.5429196282121378
         }
       }
     },
-    "Amaterasu": {
-      "god": "Amaterasu",
-      "games": 35,
-      "wins": 25,
-      "win_rate": 0.7142857142857143,
-      "bayesian_wr": 0.6363636363636364,
+    "Ix Chel": {
+      "god": "Ix Chel",
+      "games": 469,
+      "wins": 236,
+      "win_rate": 0.5031982942430704,
+      "bayesian_wr": 0.5030674846625767,
       "roles": {
-        "solo": {
-          "games": 35,
-          "win_rate": 0.7143,
-          "pick_rate": 6.322254335260115,
-          "kda": 2.138364779874214
+        "mid": {
+          "games": 469,
+          "win_rate": 0.5032,
+          "pick_rate": 7.8626632466596265,
+          "kda": 2.123242042931162
         }
       }
     },
-    "Sun Wukong": {
-      "god": "Sun Wukong",
-      "games": 90,
-      "wins": 52,
-      "win_rate": 0.5777777777777777,
-      "bayesian_wr": 0.5636363636363636,
+    "Janus": {
+      "god": "Janus",
+      "games": 1206,
+      "wins": 606,
+      "win_rate": 0.5024875621890548,
+      "bayesian_wr": 0.5024469820554649,
       "roles": {
-        "solo": {
+        "mid": {
+          "games": 1206,
+          "win_rate": 0.5025,
+          "pick_rate": 20.218276919981896,
+          "kda": 2.4390849897189857
+        }
+      }
+    },
+    "Baron Samedi": {
+      "god": "Baron Samedi",
+      "games": 303,
+      "wins": 165,
+      "win_rate": 0.5445544554455446,
+      "bayesian_wr": 0.541795665634675,
+      "roles": {
+        "mid": {
           "games": 90,
-          "win_rate": 0.5778,
-          "pick_rate": 16.25722543352601,
-          "kda": 2.578048780487805
-        }
-      }
-    },
-    "Hades": {
-      "god": "Hades",
-      "games": 33,
-      "wins": 19,
-      "win_rate": 0.5757575757575758,
-      "bayesian_wr": 0.5471698113207547,
-      "roles": {
-        "solo": {
-          "games": 33,
-          "win_rate": 0.5758,
-          "pick_rate": 5.960982658959537,
-          "kda": 1.917989417989418
-        }
-      }
-    },
-    "Jormungandr": {
-      "god": "Jormungandr",
-      "games": 27,
-      "wins": 15,
-      "win_rate": 0.5555555555555556,
-      "bayesian_wr": 0.5319148936170213,
-      "roles": {
-        "solo": {
-          "games": 27,
-          "win_rate": 0.5556,
-          "pick_rate": 4.877167630057803,
-          "kda": 1.9488188976377954
-        }
-      }
-    },
-    "Cu Chulainn": {
-      "god": "Cu Chulainn",
-      "games": 73,
-      "wins": 33,
-      "win_rate": 0.45205479452054786,
-      "bayesian_wr": 0.4623655913978494,
-      "roles": {
-        "solo": {
-          "games": 73,
-          "win_rate": 0.4521,
-          "pick_rate": 13.186416184971097,
-          "kda": 1.7595907928388748
-        }
-      }
-    },
-    "Mordred": {
-      "god": "Mordred",
-      "games": 37,
-      "wins": 16,
-      "win_rate": 0.4324324324324324,
-      "bayesian_wr": 0.45614035087719296,
-      "roles": {
-        "solo": {
-          "games": 37,
-          "win_rate": 0.4324,
-          "pick_rate": 6.683526011560693,
-          "kda": 1.5747863247863247
-        }
-      }
-    },
-    "Bellona": {
-      "god": "Bellona",
-      "games": 30,
-      "wins": 12,
-      "win_rate": 0.4,
-      "bayesian_wr": 0.44,
-      "roles": {
-        "solo": {
-          "games": 30,
-          "win_rate": 0.4,
-          "pick_rate": 5.41907514450867,
-          "kda": 1.276470588235294
-        }
-      }
-    },
-    "Achilles": {
-      "god": "Achilles",
-      "games": 20,
-      "wins": 8,
-      "win_rate": 0.4,
-      "bayesian_wr": 0.45,
-      "roles": {
-        "solo": {
-          "games": 20,
-          "win_rate": 0.4,
-          "pick_rate": 3.61271676300578,
-          "kda": 2.2049180327868854
-        }
-      }
-    },
-    "Bacchus": {
-      "god": "Bacchus",
-      "games": 38,
-      "wins": 27,
-      "win_rate": 0.7105263157894737,
-      "bayesian_wr": 0.6379310344827587,
-      "roles": {
+          "win_rate": 0.5,
+          "pick_rate": 1.5088266358195446,
+          "kda": 1.9063517915309447
+        },
         "support": {
-          "games": 38,
-          "win_rate": 0.7105,
-          "pick_rate": 6.864161849710983,
-          "kda": 2.217391304347826
+          "games": 107,
+          "win_rate": 0.5701,
+          "pick_rate": 1.7928353607452836,
+          "kda": 1.661659513590844
         }
       }
     },
-    "Ganesha": {
-      "god": "Ganesha",
-      "games": 32,
-      "wins": 21,
-      "win_rate": 0.65625,
-      "bayesian_wr": 0.5961538461538461,
+    "Hecate": {
+      "god": "Hecate",
+      "games": 345,
+      "wins": 171,
+      "win_rate": 0.4956521739130435,
+      "bayesian_wr": 0.4958904109589041,
       "roles": {
-        "support": {
-          "games": 32,
-          "win_rate": 0.6562,
-          "pick_rate": 5.780346820809249,
-          "kda": 1.7590673575129534
+        "mid": {
+          "games": 345,
+          "win_rate": 0.4957,
+          "pick_rate": 5.7838354373082534,
+          "kda": 2.2489106753812638
         }
       }
     },
-    "Geb": {
-      "god": "Geb",
-      "games": 46,
-      "wins": 29,
-      "win_rate": 0.6304347826086957,
-      "bayesian_wr": 0.5909090909090909,
+    "Princess Bari": {
+      "god": "Princess Bari",
+      "games": 219,
+      "wins": 108,
+      "win_rate": 0.4931506849315068,
+      "bayesian_wr": 0.49372384937238495,
       "roles": {
-        "support": {
-          "games": 46,
-          "win_rate": 0.6304,
-          "pick_rate": 8.309248554913294,
-          "kda": 1.7639405204460967
+        "mid": {
+          "games": 219,
+          "win_rate": 0.4932,
+          "pick_rate": 3.6714781471608915,
+          "kda": 1.9896723646723646
         }
       }
     },
-    "Atlas": {
-      "god": "Atlas",
-      "games": 35,
-      "wins": 20,
-      "win_rate": 0.5714285714285714,
-      "bayesian_wr": 0.5454545454545454,
+    "Merlin": {
+      "god": "Merlin",
+      "games": 662,
+      "wins": 317,
+      "win_rate": 0.47885196374622363,
+      "bayesian_wr": 0.4794721407624634,
       "roles": {
-        "support": {
-          "games": 35,
-          "win_rate": 0.5714,
-          "pick_rate": 6.322254335260115,
-          "kda": 2.1120689655172415
+        "mid": {
+          "games": 662,
+          "win_rate": 0.4789,
+          "pick_rate": 11.098258143472648,
+          "kda": 1.9824561403508771
         }
       }
     },
-    "Artio": {
-      "god": "Artio",
-      "games": 23,
-      "wins": 13,
-      "win_rate": 0.5652173913043478,
-      "bayesian_wr": 0.5348837209302325,
+    "Morgan Le Fay": {
+      "god": "Morgan Le Fay",
+      "games": 444,
+      "wins": 223,
+      "win_rate": 0.5022522522522522,
+      "bayesian_wr": 0.5021551724137931,
       "roles": {
-        "support": {
-          "games": 23,
-          "win_rate": 0.5652,
-          "pick_rate": 4.154624277456647,
-          "kda": 1.7806451612903227
+        "mid": {
+          "games": 348,
+          "win_rate": 0.477,
+          "pick_rate": 5.834129658502238,
+          "kda": 1.8703614457831326
+        },
+        "solo": {
+          "games": 96,
+          "win_rate": 0.5938,
+          "pick_rate": 1.6094150782075143,
+          "kda": 1.9023941068139962
         }
       }
     },
-    "Sylvanus": {
-      "god": "Sylvanus",
-      "games": 54,
-      "wins": 30,
-      "win_rate": 0.5555555555555556,
-      "bayesian_wr": 0.5405405405405406,
+    "Aphrodite": {
+      "god": "Aphrodite",
+      "games": 600,
+      "wins": 277,
+      "win_rate": 0.46166666666666667,
+      "bayesian_wr": 0.4629032258064516,
       "roles": {
+        "mid": {
+          "games": 448,
+          "win_rate": 0.4353,
+          "pick_rate": 7.510603698301733,
+          "kda": 1.6333027242118152
+        },
         "support": {
-          "games": 54,
-          "win_rate": 0.5556,
-          "pick_rate": 9.754335260115607,
-          "kda": 1.5841121495327102
+          "games": 152,
+          "win_rate": 0.5395,
+          "pick_rate": 2.5468315404979727,
+          "kda": 1.898
         }
       }
     },
     "Athena": {
       "god": "Athena",
-      "games": 45,
-      "wins": 25,
-      "win_rate": 0.5555555555555556,
-      "bayesian_wr": 0.5384615384615384,
+      "games": 757,
+      "wins": 414,
+      "win_rate": 0.5468956406869221,
+      "bayesian_wr": 0.5456885456885457,
       "roles": {
+        "jungle": {
+          "games": 152,
+          "win_rate": 0.5789,
+          "pick_rate": 2.5482405404952306,
+          "kda": 2.2134328358208957
+        },
         "support": {
-          "games": 45,
-          "win_rate": 0.5556,
-          "pick_rate": 8.128612716763005,
-          "kda": 1.7463235294117647
+          "games": 605,
+          "win_rate": 0.5388,
+          "pick_rate": 10.137059750008378,
+          "kda": 1.775814082939048
         }
       }
     },
-    "Ares": {
-      "god": "Ares",
-      "games": 37,
-      "wins": 20,
-      "win_rate": 0.5405405405405406,
-      "bayesian_wr": 0.5263157894736842,
+    "Mordred": {
+      "god": "Mordred",
+      "games": 541,
+      "wins": 289,
+      "win_rate": 0.5341959334565619,
+      "bayesian_wr": 0.5329768270944741,
       "roles": {
+        "jungle": {
+          "games": 159,
+          "win_rate": 0.5786,
+          "pick_rate": 2.6655937232811953,
+          "kda": 2.06511839708561
+        },
+        "solo": {
+          "games": 382,
+          "win_rate": 0.5157,
+          "pick_rate": 6.404130832034066,
+          "kda": 1.8077621425329096
+        }
+      }
+    },
+    "Gilgamesh": {
+      "god": "Gilgamesh",
+      "games": 427,
+      "wins": 239,
+      "win_rate": 0.5597189695550351,
+      "bayesian_wr": 0.5570469798657718,
+      "roles": {
+        "jungle": {
+          "games": 190,
+          "win_rate": 0.5474,
+          "pick_rate": 3.1853006756190383,
+          "kda": 2.2785961871750433
+        },
+        "solo": {
+          "games": 146,
+          "win_rate": 0.5685,
+          "pick_rate": 2.447652098107261,
+          "kda": 2.0423031727379555
+        }
+      }
+    },
+    "Thor": {
+      "god": "Thor",
+      "games": 1603,
+      "wins": 865,
+      "win_rate": 0.5396132252027449,
+      "bayesian_wr": 0.5391250770178682,
+      "roles": {
+        "jungle": {
+          "games": 697,
+          "win_rate": 0.528,
+          "pick_rate": 11.685024057402472,
+          "kda": 2.4166666666666665
+        },
+        "solo": {
+          "games": 476,
+          "win_rate": 0.5546,
+          "pick_rate": 7.980016429445591,
+          "kda": 2.1596057046979866
+        },
         "support": {
-          "games": 37,
-          "win_rate": 0.5405,
-          "pick_rate": 6.683526011560693,
-          "kda": 2.0638297872340425
+          "games": 95,
+          "win_rate": 0.5053,
+          "pick_rate": 1.5917697128112327,
+          "kda": 1.8325471698113207
+        }
+      }
+    },
+    "Pele": {
+      "god": "Pele",
+      "games": 442,
+      "wins": 243,
+      "win_rate": 0.5497737556561086,
+      "bayesian_wr": 0.5476190476190477,
+      "roles": {
+        "jungle": {
+          "games": 442,
+          "win_rate": 0.5498,
+          "pick_rate": 7.410015255913763,
+          "kda": 2.2418346073662265
+        }
+      }
+    },
+    "Hun Batz": {
+      "god": "Hun Batz",
+      "games": 340,
+      "wins": 186,
+      "win_rate": 0.5470588235294118,
+      "bayesian_wr": 0.5444444444444445,
+      "roles": {
+        "jungle": {
+          "games": 340,
+          "win_rate": 0.5471,
+          "pick_rate": 5.700011735318279,
+          "kda": 2.2039566650965616
+        }
+      }
+    },
+    "Awilix": {
+      "god": "Awilix",
+      "games": 379,
+      "wins": 205,
+      "win_rate": 0.5408970976253298,
+      "bayesian_wr": 0.5388471177944862,
+      "roles": {
+        "jungle": {
+          "games": 379,
+          "win_rate": 0.5409,
+          "pick_rate": 6.353836610840082,
+          "kda": 2.135589785164167
+        }
+      }
+    },
+    "Ratatoskr": {
+      "god": "Ratatoskr",
+      "games": 438,
+      "wins": 235,
+      "win_rate": 0.5365296803652968,
+      "bayesian_wr": 0.5349344978165939,
+      "roles": {
+        "jungle": {
+          "games": 438,
+          "win_rate": 0.5365,
+          "pick_rate": 7.342956294321783,
+          "kda": 2.614247311827957
+        }
+      }
+    },
+    "Nemesis": {
+      "god": "Nemesis",
+      "games": 267,
+      "wins": 143,
+      "win_rate": 0.5355805243445693,
+      "bayesian_wr": 0.5331010452961672,
+      "roles": {
+        "jungle": {
+          "games": 267,
+          "win_rate": 0.5356,
+          "pick_rate": 4.476185686264649,
+          "kda": 2.3032154340836013
+        }
+      }
+    },
+    "Fenrir": {
+      "god": "Fenrir",
+      "games": 369,
+      "wins": 197,
+      "win_rate": 0.5338753387533876,
+      "bayesian_wr": 0.532133676092545,
+      "roles": {
+        "jungle": {
+          "games": 369,
+          "win_rate": 0.5339,
+          "pick_rate": 6.186189206860132,
+          "kda": 2.192728036990332
+        }
+      }
+    },
+    "Thanatos": {
+      "god": "Thanatos",
+      "games": 855,
+      "wins": 455,
+      "win_rate": 0.5321637426900585,
+      "bayesian_wr": 0.5314285714285715,
+      "roles": {
+        "jungle": {
+          "games": 685,
+          "win_rate": 0.5328,
+          "pick_rate": 11.483847172626533,
+          "kda": 2.133272431993504
+        }
+      }
+    },
+    "Tsukuyomi": {
+      "god": "Tsukuyomi",
+      "games": 786,
+      "wins": 418,
+      "win_rate": 0.5318066157760815,
+      "bayesian_wr": 0.5310173697270472,
+      "roles": {
+        "jungle": {
+          "games": 786,
+          "win_rate": 0.5318,
+          "pick_rate": 13.177085952824022,
+          "kda": 1.9941121495327103
+        }
+      }
+    },
+    "Bastet": {
+      "god": "Bastet",
+      "games": 515,
+      "wins": 273,
+      "win_rate": 0.5300970873786408,
+      "bayesian_wr": 0.5289719626168224,
+      "roles": {
+        "jungle": {
+          "games": 515,
+          "win_rate": 0.5301,
+          "pick_rate": 8.633841304967394,
+          "kda": 2.1186312933373532
+        }
+      }
+    },
+    "Da Ji": {
+      "god": "Da Ji",
+      "games": 410,
+      "wins": 215,
+      "win_rate": 0.524390243902439,
+      "bayesian_wr": 0.5232558139534884,
+      "roles": {
+        "jungle": {
+          "games": 410,
+          "win_rate": 0.5244,
+          "pick_rate": 6.873543563177925,
+          "kda": 2.0585382750259784
+        }
+      }
+    },
+    "Susano": {
+      "god": "Susano",
+      "games": 895,
+      "wins": 461,
+      "win_rate": 0.5150837988826815,
+      "bayesian_wr": 0.5147540983606558,
+      "roles": {
+        "jungle": {
+          "games": 554,
+          "win_rate": 0.5217,
+          "pick_rate": 9.287666180489197,
+          "kda": 2.3974056603773586
+        },
+        "support": {
+          "games": 341,
+          "win_rate": 0.5044,
+          "pick_rate": 5.713615495459267,
+          "kda": 1.998229640870005
+        }
+      }
+    },
+    "Kali": {
+      "god": "Kali",
+      "games": 210,
+      "wins": 106,
+      "win_rate": 0.5047619047619047,
+      "bayesian_wr": 0.5043478260869565,
+      "roles": {
+        "jungle": {
+          "games": 210,
+          "win_rate": 0.5048,
+          "pick_rate": 3.5205954835789375,
+          "kda": 2.0007147962830594
+        }
+      }
+    },
+    "Loki": {
+      "god": "Loki",
+      "games": 919,
+      "wins": 462,
+      "win_rate": 0.5027203482045701,
+      "bayesian_wr": 0.5026624068157614,
+      "roles": {
+        "jungle": {
+          "games": 789,
+          "win_rate": 0.5044,
+          "pick_rate": 13.227380174018005,
+          "kda": 2.152526215443279
+        },
+        "solo": {
+          "games": 130,
+          "win_rate": 0.4923,
+          "pick_rate": 2.179416251739342,
+          "kda": 1.7812920592193808
+        }
+      }
+    },
+    "Mercury": {
+      "god": "Mercury",
+      "games": 353,
+      "wins": 176,
+      "win_rate": 0.4985835694050991,
+      "bayesian_wr": 0.49865951742627346,
+      "roles": {
+        "jungle": {
+          "games": 353,
+          "win_rate": 0.4986,
+          "pick_rate": 5.917953360492214,
+          "kda": 2.0821978021978023
+        }
+      }
+    },
+    "Aladdin": {
+      "god": "Aladdin",
+      "games": 323,
+      "wins": 161,
+      "win_rate": 0.4984520123839009,
+      "bayesian_wr": 0.49854227405247814,
+      "roles": {
+        "jungle": {
+          "games": 323,
+          "win_rate": 0.4985,
+          "pick_rate": 5.415011148552365,
+          "kda": 2.1495263870094723
+        }
+      }
+    },
+    "Ne Zha": {
+      "god": "Ne Zha",
+      "games": 282,
+      "wins": 140,
+      "win_rate": 0.49645390070921985,
+      "bayesian_wr": 0.4966887417218543,
+      "roles": {
+        "jungle": {
+          "games": 282,
+          "win_rate": 0.4965,
+          "pick_rate": 4.727656792234573,
+          "kda": 1.7617617617617618
+        }
+      }
+    },
+    "Ravana": {
+      "god": "Ravana",
+      "games": 1388,
+      "wins": 738,
+      "win_rate": 0.531700288184438,
+      "bayesian_wr": 0.53125,
+      "roles": {
+        "jungle": {
+          "games": 427,
+          "win_rate": 0.4941,
+          "pick_rate": 7.158544149943838,
+          "kda": 2.1748112832737387
+        },
+        "solo": {
+          "games": 961,
+          "win_rate": 0.5484,
+          "pick_rate": 16.110915522473135,
+          "kda": 2.1174142480211082
+        }
+      }
+    },
+    "Odin": {
+      "god": "Odin",
+      "games": 98,
+      "wins": 63,
+      "win_rate": 0.6428571428571429,
+      "bayesian_wr": 0.6186440677966102,
+      "roles": {
+        "solo": {
+          "games": 98,
+          "win_rate": 0.6429,
+          "pick_rate": 1.642944559003504,
+          "kda": 2.1840354767184036
+        }
+      }
+    },
+    "Bacchus": {
+      "god": "Bacchus",
+      "games": 842,
+      "wins": 468,
+      "win_rate": 0.5558194774346793,
+      "bayesian_wr": 0.5545243619489559,
+      "roles": {
+        "solo": {
+          "games": 269,
+          "win_rate": 0.5985,
+          "pick_rate": 4.509715167060638,
+          "kda": 1.987171052631579
+        },
+        "support": {
+          "games": 481,
+          "win_rate": 0.5447,
+          "pick_rate": 8.05938138802319,
+          "kda": 1.8382804503582395
+        }
+      }
+    },
+    "Sylvanus": {
+      "god": "Sylvanus",
+      "games": 666,
+      "wins": 333,
+      "win_rate": 0.5,
+      "bayesian_wr": 0.5,
+      "roles": {
+        "solo": {
+          "games": 139,
+          "win_rate": 0.5971,
+          "pick_rate": 2.330298915321296,
+          "kda": 1.8177570093457944
+        },
+        "support": {
+          "games": 527,
+          "win_rate": 0.4744,
+          "pick_rate": 8.83013303843705,
+          "kda": 1.4674134419551934
+        }
+      }
+    },
+    "Bellona": {
+      "god": "Bellona",
+      "games": 759,
+      "wins": 448,
+      "win_rate": 0.5902503293807642,
+      "bayesian_wr": 0.5879332477535302,
+      "roles": {
+        "solo": {
+          "games": 759,
+          "win_rate": 0.5903,
+          "pick_rate": 12.724437962078158,
+          "kda": 1.9117308135515096
+        }
+      }
+    },
+    "Amaterasu": {
+      "god": "Amaterasu",
+      "games": 277,
+      "wins": 161,
+      "win_rate": 0.5812274368231047,
+      "bayesian_wr": 0.5757575757575758,
+      "roles": {
+        "solo": {
+          "games": 277,
+          "win_rate": 0.5812,
+          "pick_rate": 4.643833090244598,
+          "kda": 2.1166023166023167
+        }
+      }
+    },
+    "Ymir": {
+      "god": "Ymir",
+      "games": 928,
+      "wins": 500,
+      "win_rate": 0.5387931034482759,
+      "bayesian_wr": 0.5379746835443038,
+      "roles": {
+        "solo": {
+          "games": 287,
+          "win_rate": 0.5784,
+          "pick_rate": 4.811480494224547,
+          "kda": 1.7568807339449541
+        },
+        "support": {
+          "games": 641,
+          "win_rate": 0.5211,
+          "pick_rate": 10.74025669381053,
+          "kda": 1.6611030478955007
+        }
+      }
+    },
+    "Hades": {
+      "god": "Hades",
+      "games": 211,
+      "wins": 117,
+      "win_rate": 0.5545023696682464,
+      "bayesian_wr": 0.5497835497835497,
+      "roles": {
+        "solo": {
+          "games": 211,
+          "win_rate": 0.5545,
+          "pick_rate": 3.5373602239769317,
+          "kda": 1.693801652892562
+        }
+      }
+    },
+    "Cabrakan": {
+      "god": "Cabrakan",
+      "games": 263,
+      "wins": 147,
+      "win_rate": 0.55893536121673,
+      "bayesian_wr": 0.5547703180212014,
+      "roles": {
+        "solo": {
+          "games": 140,
+          "win_rate": 0.55,
+          "pick_rate": 2.347063655719291,
+          "kda": 1.7663727959697733
+        },
+        "support": {
+          "games": 123,
+          "win_rate": 0.5691,
+          "pick_rate": 2.0609228913240174,
+          "kda": 1.5858524788391777
+        }
+      }
+    },
+    "Sun Wukong": {
+      "god": "Sun Wukong",
+      "games": 1012,
+      "wins": 552,
+      "win_rate": 0.5454545454545454,
+      "bayesian_wr": 0.5445736434108527,
+      "roles": {
+        "solo": {
+          "games": 1012,
+          "win_rate": 0.5455,
+          "pick_rate": 16.965917282770874,
+          "kda": 2.4528977871443627
+        }
+      }
+    },
+    "Hua Mulan": {
+      "god": "Hua Mulan",
+      "games": 204,
+      "wins": 110,
+      "win_rate": 0.5392156862745098,
+      "bayesian_wr": 0.5357142857142857,
+      "roles": {
+        "solo": {
+          "games": 204,
+          "win_rate": 0.5392,
+          "pick_rate": 3.420007041190967,
+          "kda": 1.5865921787709498
+        }
+      }
+    },
+    "Artio": {
+      "god": "Artio",
+      "games": 573,
+      "wins": 281,
+      "win_rate": 0.49040139616055844,
+      "bayesian_wr": 0.49072512647554806,
+      "roles": {
+        "solo": {
+          "games": 181,
+          "win_rate": 0.4641,
+          "pick_rate": 3.034418012037084,
+          "kda": 1.6229895931882687
+        },
+        "support": {
+          "games": 178,
+          "win_rate": 0.4607,
+          "pick_rate": 2.9824737776884156,
+          "kda": 1.613799283154122
+        }
+      }
+    },
+    "Achilles": {
+      "god": "Achilles",
+      "games": 185,
+      "wins": 98,
+      "win_rate": 0.5297297297297298,
+      "bayesian_wr": 0.526829268292683,
+      "roles": {
+        "solo": {
+          "games": 185,
+          "win_rate": 0.5297,
+          "pick_rate": 3.1014769736290635,
+          "kda": 2.123644251626898
+        }
+      }
+    },
+    "Jormungandr": {
+      "god": "Jormungandr",
+      "games": 272,
+      "wins": 139,
+      "win_rate": 0.5110294117647058,
+      "bayesian_wr": 0.5102739726027398,
+      "roles": {
+        "solo": {
+          "games": 177,
+          "win_rate": 0.5254,
+          "pick_rate": 2.967359050445104,
+          "kda": 2.0083333333333333
+        }
+      }
+    },
+    "Cu Chulainn": {
+      "god": "Cu Chulainn",
+      "games": 864,
+      "wins": 426,
+      "win_rate": 0.4930555555555556,
+      "bayesian_wr": 0.49321266968325794,
+      "roles": {
+        "solo": {
+          "games": 864,
+          "win_rate": 0.4931,
+          "pick_rate": 14.484735703867626,
+          "kda": 1.7297131147540983
+        }
+      }
+    },
+    "Hercules": {
+      "god": "Hercules",
+      "games": 135,
+      "wins": 63,
+      "win_rate": 0.4666666666666666,
+      "bayesian_wr": 0.47096774193548385,
+      "roles": {
+        "solo": {
+          "games": 135,
+          "win_rate": 0.4667,
+          "pick_rate": 2.2632399537293164,
+          "kda": 1.6748737373737375
+        }
+      }
+    },
+    "Guan Yu": {
+      "god": "Guan Yu",
+      "games": 96,
+      "wins": 44,
+      "win_rate": 0.45833333333333326,
+      "bayesian_wr": 0.4655172413793103,
+      "roles": {
+        "solo": {
+          "games": 96,
+          "win_rate": 0.4583,
+          "pick_rate": 1.6094150782075143,
+          "kda": 1.8330058939096268
         }
       }
     },
     "Xing Tian": {
       "god": "Xing Tian",
-      "games": 43,
-      "wins": 22,
-      "win_rate": 0.5116279069767442,
-      "bayesian_wr": 0.5079365079365079,
+      "games": 848,
+      "wins": 423,
+      "win_rate": 0.4988207547169811,
+      "bayesian_wr": 0.4988479262672811,
       "roles": {
+        "solo": {
+          "games": 112,
+          "win_rate": 0.4286,
+          "pick_rate": 1.8776509245754331,
+          "kda": 2.2526997840172784
+        },
         "support": {
-          "games": 43,
-          "win_rate": 0.5116,
-          "pick_rate": 7.767341040462428,
-          "kda": 1.8162393162393162
+          "games": 642,
+          "win_rate": 0.5249,
+          "pick_rate": 10.7570121644717,
+          "kda": 2.174411203055379
         }
       }
     },
-    "Khepri": {
-      "god": "Khepri",
-      "games": 22,
-      "wins": 11,
-      "win_rate": 0.5,
-      "bayesian_wr": 0.5,
+    "Osiris": {
+      "god": "Osiris",
+      "games": 108,
+      "wins": 46,
+      "win_rate": 0.42592592592592593,
+      "bayesian_wr": 0.4375,
       "roles": {
-        "support": {
-          "games": 22,
-          "win_rate": 0.5,
-          "pick_rate": 3.9739884393063587,
-          "kda": 1.755639097744361
+        "solo": {
+          "games": 108,
+          "win_rate": 0.4259,
+          "pick_rate": 1.8105919629834533,
+          "kda": 1.4901477832512315
         }
       }
     },
-    "Horus": {
-      "god": "Horus",
-      "games": 70,
-      "wins": 34,
-      "win_rate": 0.4857142857142857,
-      "bayesian_wr": 0.4888888888888889,
+    "Ares": {
+      "god": "Ares",
+      "games": 395,
+      "wins": 233,
+      "win_rate": 0.589873417721519,
+      "bayesian_wr": 0.5855421686746988,
       "roles": {
         "support": {
-          "games": 70,
-          "win_rate": 0.4857,
-          "pick_rate": 12.64450867052023,
-          "kda": 1.9986033519553073
-        }
-      }
-    },
-    "Sobek": {
-      "god": "Sobek",
-      "games": 69,
-      "wins": 32,
-      "win_rate": 0.463768115942029,
-      "bayesian_wr": 0.47191011235955055,
-      "roles": {
-        "support": {
-          "games": 69,
-          "win_rate": 0.4638,
-          "pick_rate": 12.463872832369942,
-          "kda": 1.8217821782178218
+          "games": 395,
+          "win_rate": 0.5899,
+          "pick_rate": 6.618410911162495,
+          "kda": 1.8705161854768153
         }
       }
     },
     "Cerberus": {
       "god": "Cerberus",
-      "games": 35,
-      "wins": 16,
-      "win_rate": 0.45714285714285713,
-      "bayesian_wr": 0.4727272727272727,
+      "games": 528,
+      "wins": 296,
+      "win_rate": 0.5606060606060606,
+      "bayesian_wr": 0.5583941605839416,
       "roles": {
         "support": {
-          "games": 35,
-          "win_rate": 0.4571,
-          "pick_rate": 6.322254335260115,
-          "kda": 1.9416666666666667
+          "games": 528,
+          "win_rate": 0.5606,
+          "pick_rate": 8.846888509098221,
+          "kda": 2.0166724557137896
         }
       }
     },
-    "Yemoja": {
-      "god": "Yemoja",
-      "games": 21,
-      "wins": 8,
-      "win_rate": 0.38095238095238093,
-      "bayesian_wr": 0.43902439024390244,
+    "Geb": {
+      "god": "Geb",
+      "games": 451,
+      "wins": 252,
+      "win_rate": 0.5587583148558758,
+      "bayesian_wr": 0.5562632696390658,
       "roles": {
         "support": {
-          "games": 21,
-          "win_rate": 0.381,
-          "pick_rate": 3.7933526011560694,
-          "kda": 1.6007462686567164
+          "games": 451,
+          "win_rate": 0.5588,
+          "pick_rate": 7.556717268188064,
+          "kda": 1.7894516534114693
+        }
+      }
+    },
+    "Ganesha": {
+      "god": "Ganesha",
+      "games": 369,
+      "wins": 204,
+      "win_rate": 0.5528455284552846,
+      "bayesian_wr": 0.5501285347043702,
+      "roles": {
+        "support": {
+          "games": 369,
+          "win_rate": 0.5528,
+          "pick_rate": 6.182768673972052,
+          "kda": 1.5513290559120074
+        }
+      }
+    },
+    "Horus": {
+      "god": "Horus",
+      "games": 617,
+      "wins": 327,
+      "win_rate": 0.5299837925445705,
+      "bayesian_wr": 0.5290423861852434,
+      "roles": {
+        "support": {
+          "games": 617,
+          "win_rate": 0.53,
+          "pick_rate": 10.338125397942429,
+          "kda": 2.13318553888131
+        }
+      }
+    },
+    "Khepri": {
+      "god": "Khepri",
+      "games": 321,
+      "wins": 163,
+      "win_rate": 0.5077881619937694,
+      "bayesian_wr": 0.5073313782991202,
+      "roles": {
+        "support": {
+          "games": 188,
+          "win_rate": 0.5266,
+          "pick_rate": 3.1500284843001243,
+          "kda": 1.7539388322520852
+        }
+      }
+    },
+    "Atlas": {
+      "god": "Atlas",
+      "games": 356,
+      "wins": 174,
+      "win_rate": 0.4887640449438202,
+      "bayesian_wr": 0.48936170212765956,
+      "roles": {
+        "support": {
+          "games": 356,
+          "win_rate": 0.4888,
+          "pick_rate": 5.964947555376831,
+          "kda": 1.8551859099804304
+        }
+      }
+    },
+    "Sobek": {
+      "god": "Sobek",
+      "games": 759,
+      "wins": 366,
+      "win_rate": 0.4822134387351779,
+      "bayesian_wr": 0.4826700898587934,
+      "roles": {
+        "support": {
+          "games": 759,
+          "win_rate": 0.4822,
+          "pick_rate": 12.717402231828693,
+          "kda": 1.9065484311050478
         }
       }
     },
     "Charon": {
       "god": "Charon",
-      "games": 24,
-      "wins": 8,
-      "win_rate": 0.33333333333333326,
-      "bayesian_wr": 0.4090909090909091,
+      "games": 269,
+      "wins": 126,
+      "win_rate": 0.4684014869888476,
+      "bayesian_wr": 0.47058823529411764,
       "roles": {
         "support": {
-          "games": 24,
-          "win_rate": 0.3333,
-          "pick_rate": 4.335260115606936,
-          "kda": 1.4562043795620438
+          "games": 269,
+          "win_rate": 0.4684,
+          "pick_rate": 4.507221607854965,
+          "kda": 1.8978988837820092
+        }
+      }
+    },
+    "Yemoja": {
+      "god": "Yemoja",
+      "games": 217,
+      "wins": 92,
+      "win_rate": 0.42396313364055305,
+      "bayesian_wr": 0.4303797468354431,
+      "roles": {
+        "support": {
+          "games": 217,
+          "win_rate": 0.424,
+          "pick_rate": 3.635937133474079,
+          "kda": 1.8003194888178913
         }
       }
     }
@@ -2730,321 +3079,321 @@
   "blended": {
     "Achilles": {
       "god": "Achilles",
-      "ladder_score": 47.19,
-      "blended_wr": 0.45,
-      "source": "smitesource",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.005590496156533892,
-      "smitebrain_tier": "D",
-      "smitesource_wr": 0.45,
-      "smitesource_games": 20,
+      "ladder_score": 66.64,
+      "blended_wr": 0.5252,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5238,
+      "smitebrain_matches": 399,
+      "smitebrain_pick_rate": 0.006724643543330974,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5268,
+      "smitesource_games": 185,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Agni": {
       "god": "Agni",
-      "ladder_score": 52.56,
-      "blended_wr": 0.5068,
+      "ladder_score": 61.04,
+      "blended_wr": 0.5146,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5283,
-      "smitebrain_matches": 53,
-      "smitebrain_pick_rate": 0.012345679012345678,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.5,
-      "smitesource_games": 60,
+      "smitebrain_wr": 0.5166,
+      "smitebrain_matches": 935,
+      "smitebrain_pick_rate": 0.01575824990730441,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5116,
+      "smitesource_games": 842,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ah Puch": {
       "god": "Ah Puch",
-      "ladder_score": 50.26,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.002562310738411367,
+      "ladder_score": 58.07,
+      "blended_wr": 0.5132,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5165,
+      "smitebrain_matches": 242,
+      "smitebrain_pick_rate": 0.004078605858361142,
       "smitebrain_tier": "D",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "smitesource_wr": 0.5097,
+      "smitesource_games": 186,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Aladdin": {
       "god": "Aladdin",
-      "ladder_score": 57.0,
-      "blended_wr": 0.5577,
+      "ladder_score": 58.45,
+      "blended_wr": 0.5119,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6111,
-      "smitebrain_matches": 36,
-      "smitebrain_pick_rate": 0.008385744234800839,
-      "smitebrain_tier": "A",
-      "smitesource_wr": 0.5385,
-      "smitesource_games": 32,
+      "smitebrain_wr": 0.5222,
+      "smitebrain_matches": 427,
+      "smitebrain_pick_rate": 0.007196548353389288,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.4985,
+      "smitesource_games": 323,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Amaterasu": {
       "god": "Amaterasu",
-      "ladder_score": 59.86,
-      "blended_wr": 0.6732,
+      "ladder_score": 89.16,
+      "blended_wr": 0.578,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.7857,
-      "smitebrain_matches": 28,
-      "smitebrain_pick_rate": 0.006522245515956208,
-      "smitebrain_tier": "S",
-      "smitesource_wr": 0.6364,
-      "smitesource_games": 35,
+      "smitebrain_wr": 0.5799,
+      "smitebrain_matches": 319,
+      "smitebrain_pick_rate": 0.005376344086021506,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.5758,
+      "smitesource_games": 277,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Anhur": {
       "god": "Anhur",
-      "ladder_score": 54.82,
-      "blended_wr": 0.5142,
+      "ladder_score": 61.39,
+      "blended_wr": 0.5154,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5211,
-      "smitebrain_matches": 71,
-      "smitebrain_pick_rate": 0.016538551129746098,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.5119,
-      "smitesource_games": 64,
+      "smitebrain_wr": 0.5154,
+      "smitebrain_matches": 811,
+      "smitebrain_pick_rate": 0.013668385748474737,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5155,
+      "smitesource_games": 787,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Anubis": {
       "god": "Anubis",
-      "ladder_score": 50.4,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.00395993477754484,
-      "smitebrain_tier": "B",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 93.88,
+      "blended_wr": 0.5997,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5969,
+      "smitebrain_matches": 382,
+      "smitebrain_pick_rate": 0.006438129908652712,
+      "smitebrain_tier": "S",
+      "smitesource_wr": 0.6032,
+      "smitesource_games": 232,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Aphrodite": {
       "god": "Aphrodite",
-      "ladder_score": 50.0,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": null,
-      "smitebrain_tier": null,
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 34.14,
+      "blended_wr": 0.473,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.4799,
+      "smitebrain_matches": 698,
+      "smitebrain_pick_rate": 0.011763912765025112,
+      "smitebrain_tier": "D",
+      "smitesource_wr": 0.4629,
+      "smitesource_games": 600,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Apollo": {
       "god": "Apollo",
-      "ladder_score": 59.6,
-      "blended_wr": 0.5378,
+      "ladder_score": 64.54,
+      "blended_wr": 0.5206,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5385,
-      "smitebrain_matches": 65,
-      "smitebrain_pick_rate": 0.015140927090612625,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.5376,
-      "smitesource_games": 73,
+      "smitebrain_wr": 0.5276,
+      "smitebrain_matches": 762,
+      "smitebrain_pick_rate": 0.012842552330872687,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5105,
+      "smitesource_games": 693,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ares": {
       "god": "Ares",
-      "ladder_score": 55.63,
-      "blended_wr": 0.5272,
+      "ladder_score": 87.18,
+      "blended_wr": 0.5696,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5294,
-      "smitebrain_matches": 51,
-      "smitebrain_pick_rate": 0.011879804332634521,
+      "smitebrain_wr": 0.5586,
+      "smitebrain_matches": 589,
+      "smitebrain_pick_rate": 0.009926854754440962,
       "smitebrain_tier": "B",
-      "smitesource_wr": 0.5263,
-      "smitesource_games": 37,
+      "smitesource_wr": 0.5855,
+      "smitesource_games": 395,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Artemis": {
       "god": "Artemis",
-      "ladder_score": 45.82,
-      "blended_wr": 0.4714,
+      "ladder_score": 82.19,
+      "blended_wr": 0.5548,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5,
-      "smitebrain_matches": 50,
-      "smitebrain_pick_rate": 0.011646866992778943,
-      "smitebrain_tier": "C",
-      "smitesource_wr": 0.4625,
-      "smitesource_games": 60,
+      "smitebrain_wr": 0.5685,
+      "smitebrain_matches": 774,
+      "smitebrain_pick_rate": 0.013044797249469107,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.5349,
+      "smitesource_games": 683,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Artio": {
       "god": "Artio",
-      "ladder_score": 61.66,
-      "blended_wr": 0.5793,
+      "ladder_score": 52.31,
+      "blended_wr": 0.5019,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6792,
-      "smitebrain_matches": 53,
-      "smitebrain_pick_rate": 0.012345679012345678,
-      "smitebrain_tier": "S",
-      "smitesource_wr": 0.5349,
-      "smitesource_games": 23,
+      "smitebrain_wr": 0.5095,
+      "smitebrain_matches": 630,
+      "smitebrain_pick_rate": 0.010617858226312064,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.4907,
+      "smitesource_games": 573,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Athena": {
       "god": "Athena",
-      "ladder_score": 61.74,
-      "blended_wr": 0.5867,
+      "ladder_score": 83.05,
+      "blended_wr": 0.5565,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.7255,
-      "smitebrain_matches": 51,
-      "smitebrain_pick_rate": 0.011879804332634521,
-      "smitebrain_tier": "S",
-      "smitesource_wr": 0.5385,
-      "smitesource_games": 45,
+      "smitebrain_wr": 0.5639,
+      "smitebrain_matches": 876,
+      "smitebrain_pick_rate": 0.01476387905753868,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.5457,
+      "smitesource_games": 757,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Atlas": {
       "god": "Atlas",
-      "ladder_score": 57.53,
-      "blended_wr": 0.5524,
+      "ladder_score": 52.65,
+      "blended_wr": 0.5028,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5714,
-      "smitebrain_matches": 42,
-      "smitebrain_pick_rate": 0.009783368273934312,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.5455,
-      "smitesource_games": 35,
+      "smitebrain_wr": 0.5131,
+      "smitebrain_matches": 458,
+      "smitebrain_pick_rate": 0.007719014393096707,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.4894,
+      "smitesource_games": 356,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Awilix": {
       "god": "Awilix",
-      "ladder_score": 47.14,
-      "blended_wr": 0.4727,
+      "ladder_score": 79.0,
+      "blended_wr": 0.5489,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4667,
-      "smitebrain_matches": 30,
-      "smitebrain_pick_rate": 0.0069881201956673656,
-      "smitebrain_tier": "D",
-      "smitesource_wr": 0.4746,
-      "smitesource_games": 39,
+      "smitebrain_wr": 0.557,
+      "smitebrain_matches": 386,
+      "smitebrain_pick_rate": 0.006505544881518185,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5388,
+      "smitesource_games": 379,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Bacchus": {
       "god": "Bacchus",
-      "ladder_score": 61.46,
-      "blended_wr": 0.6685,
+      "ladder_score": 85.37,
+      "blended_wr": 0.5627,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.7561,
-      "smitebrain_matches": 41,
-      "smitebrain_pick_rate": 0.009550430934078733,
-      "smitebrain_tier": "S",
-      "smitesource_wr": 0.6379,
-      "smitesource_games": 38,
+      "smitebrain_wr": 0.5682,
+      "smitebrain_matches": 887,
+      "smitebrain_pick_rate": 0.014949270232918732,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.5545,
+      "smitesource_games": 842,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Baron Samedi": {
       "god": "Baron Samedi",
-      "ladder_score": 50.44,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.004425809457255998,
-      "smitebrain_tier": "D",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 72.55,
+      "blended_wr": 0.5359,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5308,
+      "smitebrain_matches": 341,
+      "smitebrain_pick_rate": 0.005747126436781609,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5418,
+      "smitesource_games": 303,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Bastet": {
       "god": "Bastet",
-      "ladder_score": 54.0,
-      "blended_wr": 0.5227,
+      "ladder_score": 75.36,
+      "blended_wr": 0.5405,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5429,
-      "smitebrain_matches": 35,
-      "smitebrain_pick_rate": 0.00815280689494526,
+      "smitebrain_wr": 0.5484,
+      "smitebrain_matches": 589,
+      "smitebrain_pick_rate": 0.009926854754440962,
       "smitebrain_tier": "B",
-      "smitesource_wr": 0.5161,
-      "smitesource_games": 42,
+      "smitesource_wr": 0.529,
+      "smitesource_games": 515,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Bellona": {
       "god": "Bellona",
-      "ladder_score": 45.72,
-      "blended_wr": 0.4469,
+      "ladder_score": 93.09,
+      "blended_wr": 0.5905,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4667,
-      "smitebrain_matches": 30,
-      "smitebrain_pick_rate": 0.0069881201956673656,
-      "smitebrain_tier": "D",
-      "smitesource_wr": 0.44,
-      "smitesource_games": 30,
+      "smitebrain_wr": 0.5922,
+      "smitebrain_matches": 922,
+      "smitebrain_pick_rate": 0.015539151245491623,
+      "smitebrain_tier": "S",
+      "smitesource_wr": 0.5879,
+      "smitesource_games": 759,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Cabrakan": {
       "god": "Cabrakan",
-      "ladder_score": 50.42,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.0041928721174004195,
+      "ladder_score": 82.17,
+      "blended_wr": 0.5567,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5584,
+      "smitebrain_matches": 317,
+      "smitebrain_pick_rate": 0.005342636599588769,
       "smitebrain_tier": "B",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "smitesource_wr": 0.5548,
+      "smitesource_games": 263,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Cerberus": {
       "god": "Cerberus",
-      "ladder_score": 49.21,
-      "blended_wr": 0.4879,
+      "ladder_score": 86.31,
+      "blended_wr": 0.567,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5333,
-      "smitebrain_matches": 30,
-      "smitebrain_pick_rate": 0.0069881201956673656,
-      "smitebrain_tier": "C",
-      "smitesource_wr": 0.4727,
-      "smitesource_games": 35,
+      "smitebrain_wr": 0.5729,
+      "smitebrain_matches": 569,
+      "smitebrain_pick_rate": 0.009589779890113594,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.5584,
+      "smitesource_games": 528,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Cernunnos": {
       "god": "Cernunnos",
-      "ladder_score": 71.86,
-      "blended_wr": 0.5938,
+      "ladder_score": 84.6,
+      "blended_wr": 0.5605,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6163,
-      "smitebrain_matches": 86,
-      "smitebrain_pick_rate": 0.02003261122757978,
+      "smitebrain_wr": 0.5697,
+      "smitebrain_matches": 897,
+      "smitebrain_pick_rate": 0.015117807665082415,
       "smitebrain_tier": "A",
-      "smitesource_wr": 0.5772,
-      "smitesource_games": 103,
+      "smitesource_wr": 0.5471,
+      "smitesource_games": 819,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Chaac": {
       "god": "Chaac",
-      "ladder_score": 50.33,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.003261122757978104,
-      "smitebrain_tier": "B",
+      "ladder_score": 41.83,
+      "blended_wr": 0.4722,
+      "source": "smitebrain",
+      "smitebrain_wr": 0.4722,
+      "smitebrain_matches": 144,
+      "smitebrain_pick_rate": 0.002426939023157043,
+      "smitebrain_tier": "F",
       "smitesource_wr": null,
       "smitesource_games": null,
       "tracker_wr": null,
@@ -3052,981 +3401,981 @@
     },
     "Charon": {
       "god": "Charon",
-      "ladder_score": 44.86,
-      "blended_wr": 0.4091,
-      "source": "smitesource",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.005357558816678314,
+      "ladder_score": 41.67,
+      "blended_wr": 0.4862,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.4987,
+      "smitebrain_matches": 395,
+      "smitebrain_pick_rate": 0.006657228570465501,
       "smitebrain_tier": "D",
-      "smitesource_wr": 0.4091,
-      "smitesource_games": 24,
+      "smitesource_wr": 0.4706,
+      "smitesource_games": 269,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Chiron": {
       "god": "Chiron",
-      "ladder_score": 47.78,
-      "blended_wr": 0.4797,
+      "ladder_score": 66.17,
+      "blended_wr": 0.5236,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4231,
-      "smitebrain_matches": 52,
-      "smitebrain_pick_rate": 0.0121127416724901,
-      "smitebrain_tier": "D",
-      "smitesource_wr": 0.5,
-      "smitesource_games": 42,
+      "smitebrain_wr": 0.5222,
+      "smitebrain_matches": 653,
+      "smitebrain_pick_rate": 0.011005494320288536,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5257,
+      "smitesource_games": 602,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Chronos": {
       "god": "Chronos",
-      "ladder_score": 55.82,
-      "blended_wr": 0.5199,
+      "ladder_score": 74.4,
+      "blended_wr": 0.5382,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5441,
-      "smitebrain_matches": 68,
-      "smitebrain_pick_rate": 0.01583973911017936,
+      "smitebrain_wr": 0.5438,
+      "smitebrain_matches": 708,
+      "smitebrain_pick_rate": 0.011932450197188796,
       "smitebrain_tier": "B",
-      "smitesource_wr": 0.5119,
-      "smitesource_games": 64,
+      "smitesource_wr": 0.53,
+      "smitesource_games": 546,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Cu Chulainn": {
       "god": "Cu Chulainn",
-      "ladder_score": 42.41,
-      "blended_wr": 0.4565,
+      "ladder_score": 54.55,
+      "blended_wr": 0.5045,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4375,
-      "smitebrain_matches": 64,
-      "smitebrain_pick_rate": 0.014907989750757047,
+      "smitebrain_wr": 0.5122,
+      "smitebrain_matches": 939,
+      "smitebrain_pick_rate": 0.015825664880169885,
       "smitebrain_tier": "C",
-      "smitesource_wr": 0.4624,
-      "smitesource_games": 73,
+      "smitesource_wr": 0.4932,
+      "smitesource_games": 864,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Cupid": {
       "god": "Cupid",
-      "ladder_score": 63.73,
-      "blended_wr": 0.5974,
+      "ladder_score": 86.84,
+      "blended_wr": 0.5679,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6207,
-      "smitebrain_matches": 58,
-      "smitebrain_pick_rate": 0.013510365711623572,
+      "smitebrain_wr": 0.5753,
+      "smitebrain_matches": 697,
+      "smitebrain_pick_rate": 0.011747059021808743,
       "smitebrain_tier": "A",
-      "smitesource_wr": 0.5897,
-      "smitesource_games": 58,
+      "smitesource_wr": 0.5571,
+      "smitesource_games": 619,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Da Ji": {
       "god": "Da Ji",
-      "ladder_score": 51.58,
-      "blended_wr": 0.5102,
-      "source": "smitesource",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.005124621476822734,
-      "smitebrain_tier": "C",
-      "smitesource_wr": 0.5102,
-      "smitesource_games": 29,
+      "ladder_score": 73.11,
+      "blended_wr": 0.5366,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5469,
+      "smitebrain_matches": 437,
+      "smitebrain_pick_rate": 0.007365085785552971,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5233,
+      "smitesource_games": 410,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Danzaburou": {
       "god": "Danzaburou",
-      "ladder_score": 57.69,
-      "blended_wr": 0.6296,
-      "source": "smitebrain",
-      "smitebrain_wr": 0.6296,
-      "smitebrain_matches": 27,
-      "smitebrain_pick_rate": 0.006289308176100629,
-      "smitebrain_tier": "B",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 67.49,
+      "blended_wr": 0.5268,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5408,
+      "smitebrain_matches": 331,
+      "smitebrain_pick_rate": 0.005578589004617926,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5105,
+      "smitesource_games": 217,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Discordia": {
       "god": "Discordia",
-      "ladder_score": 56.97,
-      "blended_wr": 0.5303,
+      "ladder_score": 61.56,
+      "blended_wr": 0.5164,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5098,
-      "smitebrain_matches": 51,
-      "smitebrain_pick_rate": 0.011879804332634521,
+      "smitebrain_wr": 0.5128,
+      "smitebrain_matches": 546,
+      "smitebrain_pick_rate": 0.009202143796137123,
       "smitebrain_tier": "C",
-      "smitesource_wr": 0.5366,
-      "smitesource_games": 62,
+      "smitesource_wr": 0.5215,
+      "smitesource_games": 515,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Eset": {
       "god": "Eset",
-      "ladder_score": 58.16,
-      "blended_wr": 0.6188,
+      "ladder_score": 91.17,
+      "blended_wr": 0.5858,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6154,
-      "smitebrain_matches": 26,
-      "smitebrain_pick_rate": 0.00605637083624505,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.62,
-      "smitesource_games": 30,
+      "smitebrain_wr": 0.5973,
+      "smitebrain_matches": 370,
+      "smitebrain_pick_rate": 0.006235884990056292,
+      "smitebrain_tier": "S",
+      "smitesource_wr": 0.572,
+      "smitesource_games": 244,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Fenrir": {
       "god": "Fenrir",
-      "ladder_score": 47.08,
-      "blended_wr": 0.4738,
+      "ladder_score": 77.61,
+      "blended_wr": 0.5452,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4468,
-      "smitebrain_matches": 47,
-      "smitebrain_pick_rate": 0.010948054973212206,
-      "smitebrain_tier": "C",
-      "smitesource_wr": 0.4833,
-      "smitesource_games": 40,
+      "smitebrain_wr": 0.5544,
+      "smitebrain_matches": 561,
+      "smitebrain_pick_rate": 0.009454949944382647,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5321,
+      "smitesource_games": 369,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ganesha": {
       "god": "Ganesha",
-      "ladder_score": 58.54,
-      "blended_wr": 0.5941,
+      "ladder_score": 81.88,
+      "blended_wr": 0.5555,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5882,
-      "smitebrain_matches": 34,
-      "smitebrain_pick_rate": 0.00791986955508968,
+      "smitebrain_wr": 0.5598,
+      "smitebrain_matches": 418,
+      "smitebrain_pick_rate": 0.0070448646644419724,
       "smitebrain_tier": "B",
-      "smitesource_wr": 0.5962,
-      "smitesource_games": 32,
+      "smitesource_wr": 0.5501,
+      "smitesource_games": 369,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Geb": {
       "god": "Geb",
-      "ladder_score": 60.62,
-      "blended_wr": 0.5891,
+      "ladder_score": 86.72,
+      "blended_wr": 0.5687,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5833,
-      "smitebrain_matches": 36,
-      "smitebrain_pick_rate": 0.008385744234800839,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.5909,
-      "smitesource_games": 46,
+      "smitebrain_wr": 0.5781,
+      "smitebrain_matches": 474,
+      "smitebrain_pick_rate": 0.0079886742845586,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.5563,
+      "smitesource_games": 451,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Gilgamesh": {
       "god": "Gilgamesh",
-      "ladder_score": 56.75,
-      "blended_wr": 0.5588,
-      "source": "smitebrain",
-      "smitebrain_wr": 0.5588,
-      "smitebrain_matches": 34,
-      "smitebrain_pick_rate": 0.00791986955508968,
-      "smitebrain_tier": "B",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 86.94,
+      "blended_wr": 0.5693,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5783,
+      "smitebrain_matches": 498,
+      "smitebrain_pick_rate": 0.00839316412175144,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.557,
+      "smitesource_games": 427,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Guan Yu": {
       "god": "Guan Yu",
-      "ladder_score": 50.23,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.0023293733985557887,
+      "ladder_score": 37.98,
+      "blended_wr": 0.4691,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.4728,
+      "smitebrain_matches": 184,
+      "smitebrain_pick_rate": 0.0031010887518117774,
       "smitebrain_tier": "F",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "smitesource_wr": 0.4655,
+      "smitesource_games": 96,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Hachiman": {
       "god": "Hachiman",
-      "ladder_score": 44.72,
-      "blended_wr": 0.4744,
+      "ladder_score": 28.55,
+      "blended_wr": 0.4622,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4896,
-      "smitebrain_matches": 96,
-      "smitebrain_pick_rate": 0.02236198462613557,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.4628,
-      "smitesource_games": 101,
+      "smitebrain_wr": 0.4706,
+      "smitebrain_matches": 918,
+      "smitebrain_pick_rate": 0.01547173627262615,
+      "smitebrain_tier": "D",
+      "smitesource_wr": 0.4499,
+      "smitesource_games": 809,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Hades": {
       "god": "Hades",
-      "ladder_score": 57.81,
-      "blended_wr": 0.5831,
+      "ladder_score": 83.38,
+      "blended_wr": 0.5602,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6897,
-      "smitebrain_matches": 29,
-      "smitebrain_pick_rate": 0.006755182855811786,
-      "smitebrain_tier": "A",
-      "smitesource_wr": 0.5472,
-      "smitesource_games": 33,
+      "smitebrain_wr": 0.5695,
+      "smitebrain_matches": 295,
+      "smitebrain_pick_rate": 0.004971854248828665,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5498,
+      "smitesource_games": 211,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Hecate": {
       "god": "Hecate",
-      "ladder_score": 53.44,
-      "blended_wr": 0.518,
+      "ladder_score": 44.71,
+      "blended_wr": 0.4909,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5,
-      "smitebrain_matches": 36,
-      "smitebrain_pick_rate": 0.008385744234800839,
-      "smitebrain_tier": "C",
-      "smitesource_wr": 0.5238,
-      "smitesource_games": 43,
+      "smitebrain_wr": 0.4869,
+      "smitebrain_matches": 382,
+      "smitebrain_pick_rate": 0.006438129908652712,
+      "smitebrain_tier": "D",
+      "smitesource_wr": 0.4959,
+      "smitesource_games": 345,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Hel": {
       "god": "Hel",
-      "ladder_score": 42.93,
-      "blended_wr": 0.4687,
+      "ladder_score": 57.48,
+      "blended_wr": 0.5084,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5146,
-      "smitebrain_matches": 103,
-      "smitebrain_pick_rate": 0.023992546005124623,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.4331,
-      "smitesource_games": 107,
+      "smitebrain_wr": 0.5131,
+      "smitebrain_matches": 1183,
+      "smitebrain_pick_rate": 0.019937978224963765,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5015,
+      "smitesource_games": 1011,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Hercules": {
       "god": "Hercules",
-      "ladder_score": 50.14,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.001397624039133473,
-      "smitebrain_tier": "D",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 34.28,
+      "blended_wr": 0.4709,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.4708,
+      "smitebrain_matches": 240,
+      "smitebrain_pick_rate": 0.0040448983719284055,
+      "smitebrain_tier": "F",
+      "smitesource_wr": 0.471,
+      "smitesource_games": 135,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Horus": {
       "god": "Horus",
-      "ladder_score": 51.25,
-      "blended_wr": 0.4997,
+      "ladder_score": 75.7,
+      "blended_wr": 0.5409,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5357,
-      "smitebrain_matches": 56,
-      "smitebrain_pick_rate": 0.013044491031912415,
+      "smitebrain_wr": 0.549,
+      "smitebrain_matches": 663,
+      "smitebrain_pick_rate": 0.01117403175245222,
       "smitebrain_tier": "B",
-      "smitesource_wr": 0.4889,
-      "smitesource_games": 70,
+      "smitesource_wr": 0.529,
+      "smitesource_games": 617,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Hou Yi": {
       "god": "Hou Yi",
-      "ladder_score": 76.66,
-      "blended_wr": 0.567,
+      "ladder_score": 84.12,
+      "blended_wr": 0.5552,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5902,
-      "smitebrain_matches": 122,
-      "smitebrain_pick_rate": 0.02841835546238062,
+      "smitebrain_wr": 0.5591,
+      "smitebrain_matches": 1835,
+      "smitebrain_pick_rate": 0.030926618802035934,
       "smitebrain_tier": "A",
-      "smitesource_wr": 0.548,
-      "smitesource_games": 157,
+      "smitesource_wr": 0.5494,
+      "smitesource_games": 1753,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Hua Mulan": {
       "god": "Hua Mulan",
-      "ladder_score": 50.51,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.005124621476822734,
-      "smitebrain_tier": "D",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 78.46,
+      "blended_wr": 0.5496,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5623,
+      "smitebrain_matches": 281,
+      "smitebrain_pick_rate": 0.0047359018437995075,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5357,
+      "smitesource_games": 204,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Hun Batz": {
       "god": "Hun Batz",
-      "ladder_score": 58.66,
-      "blended_wr": 0.6388,
+      "ladder_score": 82.35,
+      "blended_wr": 0.5568,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.7308,
-      "smitebrain_matches": 26,
-      "smitebrain_pick_rate": 0.00605637083624505,
-      "smitebrain_tier": "S",
-      "smitesource_wr": 0.6078,
-      "smitesource_games": 31,
+      "smitebrain_wr": 0.5668,
+      "smitebrain_matches": 397,
+      "smitebrain_pick_rate": 0.006690936056898237,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5444,
+      "smitesource_games": 340,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ishtar": {
       "god": "Ishtar",
-      "ladder_score": 59.21,
-      "blended_wr": 0.5863,
+      "ladder_score": 90.09,
+      "blended_wr": 0.5792,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6667,
-      "smitebrain_matches": 36,
-      "smitebrain_pick_rate": 0.008385744234800839,
-      "smitebrain_tier": "A",
-      "smitesource_wr": 0.5593,
-      "smitesource_games": 39,
+      "smitebrain_wr": 0.5944,
+      "smitebrain_matches": 678,
+      "smitebrain_pick_rate": 0.011426837900697744,
+      "smitebrain_tier": "S",
+      "smitesource_wr": 0.557,
+      "smitesource_games": 576,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ix Chel": {
       "god": "Ix Chel",
-      "ladder_score": 46.14,
-      "blended_wr": 0.4699,
+      "ladder_score": 53.47,
+      "blended_wr": 0.5038,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.463,
-      "smitebrain_matches": 54,
-      "smitebrain_pick_rate": 0.012578616352201259,
+      "smitebrain_wr": 0.5043,
+      "smitebrain_matches": 583,
+      "smitebrain_pick_rate": 0.00982573229514275,
       "smitebrain_tier": "C",
-      "smitesource_wr": 0.4722,
-      "smitesource_games": 52,
+      "smitesource_wr": 0.5031,
+      "smitesource_games": 469,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Izanami": {
       "god": "Izanami",
-      "ladder_score": 71.18,
-      "blended_wr": 0.601,
+      "ladder_score": 89.67,
+      "blended_wr": 0.5758,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.64,
-      "smitebrain_matches": 75,
-      "smitebrain_pick_rate": 0.017470300489168415,
+      "smitebrain_wr": 0.5817,
+      "smitebrain_matches": 985,
+      "smitebrain_pick_rate": 0.01660093706812283,
       "smitebrain_tier": "S",
-      "smitesource_wr": 0.5897,
-      "smitesource_games": 97,
+      "smitesource_wr": 0.567,
+      "smitesource_games": 957,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Janus": {
       "god": "Janus",
-      "ladder_score": 48.31,
-      "blended_wr": 0.4894,
+      "ladder_score": 53.49,
+      "blended_wr": 0.5022,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4891,
-      "smitebrain_matches": 92,
-      "smitebrain_pick_rate": 0.021430235266713255,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.4897,
-      "smitesource_games": 125,
+      "smitebrain_wr": 0.5021,
+      "smitebrain_matches": 1205,
+      "smitebrain_pick_rate": 0.02030876057572387,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5024,
+      "smitesource_games": 1206,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Jing Wei": {
       "god": "Jing Wei",
-      "ladder_score": 50.3,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.003028185418122525,
-      "smitebrain_tier": "B",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 46.53,
+      "blended_wr": 0.4939,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.4982,
+      "smitebrain_matches": 283,
+      "smitebrain_pick_rate": 0.0047696093302322445,
+      "smitebrain_tier": "D",
+      "smitesource_wr": 0.4891,
+      "smitesource_games": 254,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Jormungandr": {
       "god": "Jormungandr",
-      "ladder_score": 56.22,
-      "blended_wr": 0.5647,
+      "ladder_score": 69.61,
+      "blended_wr": 0.5306,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6552,
-      "smitebrain_matches": 29,
-      "smitebrain_pick_rate": 0.006755182855811786,
-      "smitebrain_tier": "A",
-      "smitesource_wr": 0.5319,
-      "smitesource_games": 27,
+      "smitebrain_wr": 0.5488,
+      "smitebrain_matches": 297,
+      "smitebrain_pick_rate": 0.005005561735261402,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5103,
+      "smitesource_games": 272,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Kali": {
       "god": "Kali",
-      "ladder_score": 50.44,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.004425809457255998,
-      "smitebrain_tier": "B",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 65.24,
+      "blended_wr": 0.5229,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5383,
+      "smitebrain_matches": 366,
+      "smitebrain_pick_rate": 0.006168470017190818,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5043,
+      "smitesource_games": 210,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Khepri": {
       "god": "Khepri",
-      "ladder_score": 51.76,
-      "blended_wr": 0.5089,
+      "ladder_score": 61.77,
+      "blended_wr": 0.5172,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5312,
-      "smitebrain_matches": 32,
-      "smitebrain_pick_rate": 0.007453994875378523,
+      "smitebrain_wr": 0.5253,
+      "smitebrain_matches": 375,
+      "smitebrain_pick_rate": 0.0063201537061381334,
       "smitebrain_tier": "C",
-      "smitesource_wr": 0.5,
-      "smitesource_games": 22,
+      "smitesource_wr": 0.5073,
+      "smitesource_games": 321,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Kukulkan": {
       "god": "Kukulkan",
-      "ladder_score": 46.21,
-      "blended_wr": 0.4744,
+      "ladder_score": 73.35,
+      "blended_wr": 0.5359,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4706,
-      "smitebrain_matches": 68,
-      "smitebrain_pick_rate": 0.01583973911017936,
-      "smitebrain_tier": "C",
-      "smitesource_wr": 0.4756,
-      "smitesource_games": 62,
+      "smitebrain_wr": 0.5441,
+      "smitebrain_matches": 794,
+      "smitebrain_pick_rate": 0.013381872113796473,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5239,
+      "smitesource_games": 669,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Loki": {
       "god": "Loki",
-      "ladder_score": 45.71,
-      "blended_wr": 0.4723,
+      "ladder_score": 61.84,
+      "blended_wr": 0.5158,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4754,
-      "smitebrain_matches": 61,
-      "smitebrain_pick_rate": 0.01420917773119031,
+      "smitebrain_wr": 0.5248,
+      "smitebrain_matches": 949,
+      "smitebrain_pick_rate": 0.015994202312333568,
       "smitebrain_tier": "C",
-      "smitesource_wr": 0.4713,
-      "smitesource_games": 67,
+      "smitesource_wr": 0.5027,
+      "smitesource_games": 919,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Medusa": {
       "god": "Medusa",
-      "ladder_score": 59.42,
-      "blended_wr": 0.5777,
+      "ladder_score": 82.84,
+      "blended_wr": 0.5576,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6471,
-      "smitebrain_matches": 34,
-      "smitebrain_pick_rate": 0.00791986955508968,
+      "smitebrain_wr": 0.5692,
+      "smitebrain_matches": 506,
+      "smitebrain_pick_rate": 0.008527994067482388,
       "smitebrain_tier": "A",
-      "smitesource_wr": 0.5556,
-      "smitesource_games": 43,
+      "smitesource_wr": 0.5417,
+      "smitesource_games": 495,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Mercury": {
       "god": "Mercury",
-      "ladder_score": 54.29,
-      "blended_wr": 0.5435,
-      "source": "smitesource",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.005124621476822734,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.5435,
-      "smitesource_games": 26,
+      "ladder_score": 54.71,
+      "blended_wr": 0.5063,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5126,
+      "smitebrain_matches": 357,
+      "smitebrain_pick_rate": 0.006016786328243503,
+      "smitebrain_tier": "D",
+      "smitesource_wr": 0.4987,
+      "smitesource_games": 353,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Merlin": {
       "god": "Merlin",
-      "ladder_score": 46.79,
-      "blended_wr": 0.4763,
+      "ladder_score": 37.81,
+      "blended_wr": 0.4792,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4615,
-      "smitebrain_matches": 52,
-      "smitebrain_pick_rate": 0.0121127416724901,
-      "smitebrain_tier": "C",
-      "smitesource_wr": 0.481,
-      "smitesource_games": 59,
+      "smitebrain_wr": 0.479,
+      "smitebrain_matches": 691,
+      "smitebrain_pick_rate": 0.011645936562510534,
+      "smitebrain_tier": "D",
+      "smitesource_wr": 0.4795,
+      "smitesource_games": 662,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Mordred": {
       "god": "Mordred",
-      "ladder_score": 43.17,
-      "blended_wr": 0.4389,
+      "ladder_score": 80.35,
+      "blended_wr": 0.5511,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.3913,
-      "smitebrain_matches": 46,
-      "smitebrain_pick_rate": 0.010715117633356627,
-      "smitebrain_tier": "D",
-      "smitesource_wr": 0.4561,
-      "smitesource_games": 37,
+      "smitebrain_wr": 0.5635,
+      "smitebrain_matches": 598,
+      "smitebrain_pick_rate": 0.010078538443388277,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.533,
+      "smitesource_games": 541,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Morgan Le Fay": {
       "god": "Morgan Le Fay",
-      "ladder_score": 44.98,
-      "blended_wr": 0.4378,
+      "ladder_score": 57.76,
+      "blended_wr": 0.5107,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4,
-      "smitebrain_matches": 30,
-      "smitebrain_pick_rate": 0.0069881201956673656,
-      "smitebrain_tier": "D",
-      "smitesource_wr": 0.451,
-      "smitesource_games": 31,
+      "smitebrain_wr": 0.5171,
+      "smitebrain_matches": 468,
+      "smitebrain_pick_rate": 0.00788755182526039,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5022,
+      "smitesource_games": 444,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ne Zha": {
       "god": "Ne Zha",
-      "ladder_score": 49.95,
-      "blended_wr": 0.4928,
+      "ladder_score": 42.93,
+      "blended_wr": 0.4881,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4255,
-      "smitebrain_matches": 47,
-      "smitebrain_pick_rate": 0.010948054973212206,
+      "smitebrain_wr": 0.4813,
+      "smitebrain_matches": 401,
+      "smitebrain_pick_rate": 0.006758351029763711,
       "smitebrain_tier": "D",
-      "smitesource_wr": 0.5167,
-      "smitesource_games": 40,
+      "smitesource_wr": 0.4967,
+      "smitesource_games": 282,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Neith": {
       "god": "Neith",
-      "ladder_score": 56.96,
-      "blended_wr": 0.5926,
-      "source": "smitebrain",
-      "smitebrain_wr": 0.5926,
-      "smitebrain_matches": 27,
-      "smitebrain_pick_rate": 0.006289308176100629,
+      "ladder_score": 84.83,
+      "blended_wr": 0.5636,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.5611,
+      "smitebrain_matches": 360,
+      "smitebrain_pick_rate": 0.006067347557892608,
       "smitebrain_tier": "B",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "smitesource_wr": 0.5667,
+      "smitesource_games": 310,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Nemesis": {
       "god": "Nemesis",
-      "ladder_score": 46.98,
-      "blended_wr": 0.463,
+      "ladder_score": 73.02,
+      "blended_wr": 0.5364,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4333,
-      "smitebrain_matches": 30,
-      "smitebrain_pick_rate": 0.0069881201956673656,
-      "smitebrain_tier": "D",
-      "smitesource_wr": 0.475,
-      "smitesource_games": 20,
+      "smitebrain_wr": 0.539,
+      "smitebrain_matches": 436,
+      "smitebrain_pick_rate": 0.007348232042336603,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5331,
+      "smitesource_games": 267,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Nike": {
       "god": "Nike",
-      "ladder_score": 37.98,
-      "blended_wr": 0.4717,
+      "ladder_score": 61.66,
+      "blended_wr": 0.5135,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4854,
-      "smitebrain_matches": 171,
-      "smitebrain_pick_rate": 0.039832285115303984,
+      "smitebrain_wr": 0.5199,
+      "smitebrain_matches": 1706,
+      "smitebrain_pick_rate": 0.028752485927124413,
       "smitebrain_tier": "B",
-      "smitesource_wr": 0.4592,
-      "smitesource_games": 213,
+      "smitesource_wr": 0.5041,
+      "smitesource_games": 1700,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Nu Wa": {
       "god": "Nu Wa",
-      "ladder_score": 57.09,
-      "blended_wr": 0.532,
+      "ladder_score": 79.94,
+      "blended_wr": 0.5505,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.617,
-      "smitebrain_matches": 47,
-      "smitebrain_pick_rate": 0.010948054973212206,
-      "smitebrain_tier": "A",
-      "smitesource_wr": 0.5062,
-      "smitesource_games": 61,
+      "smitebrain_wr": 0.5562,
+      "smitebrain_matches": 507,
+      "smitebrain_pick_rate": 0.008544847810698756,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5428,
+      "smitesource_games": 459,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Nut": {
       "god": "Nut",
-      "ladder_score": 62.27,
-      "blended_wr": 0.5421,
+      "ladder_score": 64.19,
+      "blended_wr": 0.5198,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5488,
-      "smitebrain_matches": 82,
-      "smitebrain_pick_rate": 0.019100861868157466,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.537,
-      "smitesource_games": 88,
+      "smitebrain_wr": 0.5218,
+      "smitebrain_matches": 872,
+      "smitebrain_pick_rate": 0.014696464084673205,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5168,
+      "smitesource_games": 812,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Odin": {
       "god": "Odin",
-      "ladder_score": 50.33,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.003261122757978104,
-      "smitebrain_tier": "D",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 84.97,
+      "blended_wr": 0.6038,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.589,
+      "smitebrain_matches": 219,
+      "smitebrain_pick_rate": 0.00369096976438467,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.6186,
+      "smitesource_games": 98,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Osiris": {
       "god": "Osiris",
-      "ladder_score": 50.44,
-      "blended_wr": 0.5,
-      "source": "neutral",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.004425809457255998,
-      "smitebrain_tier": "D",
-      "smitesource_wr": null,
-      "smitesource_games": null,
+      "ladder_score": 29.87,
+      "blended_wr": 0.4316,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.4251,
+      "smitebrain_matches": 167,
+      "smitebrain_pick_rate": 0.0028145751171335153,
+      "smitebrain_tier": "F",
+      "smitesource_wr": 0.4375,
+      "smitesource_games": 108,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Pele": {
       "god": "Pele",
-      "ladder_score": 56.11,
-      "blended_wr": 0.5746,
+      "ladder_score": 82.45,
+      "blended_wr": 0.5564,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6538,
-      "smitebrain_matches": 26,
-      "smitebrain_pick_rate": 0.00605637083624505,
+      "smitebrain_wr": 0.5626,
+      "smitebrain_matches": 551,
+      "smitebrain_pick_rate": 0.009286412512218964,
       "smitebrain_tier": "A",
-      "smitesource_wr": 0.5455,
-      "smitesource_games": 24,
+      "smitesource_wr": 0.5476,
+      "smitesource_games": 442,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Poseidon": {
       "god": "Poseidon",
-      "ladder_score": 44.19,
-      "blended_wr": 0.4451,
+      "ladder_score": 69.81,
+      "blended_wr": 0.5301,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4524,
-      "smitebrain_matches": 42,
-      "smitebrain_pick_rate": 0.009783368273934312,
-      "smitebrain_tier": "C",
-      "smitesource_wr": 0.4426,
-      "smitesource_games": 41,
+      "smitebrain_wr": 0.5398,
+      "smitebrain_matches": 591,
+      "smitebrain_pick_rate": 0.009960562240873699,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.516,
+      "smitesource_games": 418,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Princess Bari": {
       "god": "Princess Bari",
-      "ladder_score": 53.11,
-      "blended_wr": 0.5366,
-      "source": "smitesource",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.004658746797111577,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.5366,
-      "smitesource_games": 21,
+      "ladder_score": 47.0,
+      "blended_wr": 0.4946,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.4954,
+      "smitebrain_matches": 323,
+      "smitebrain_pick_rate": 0.005443759058886979,
+      "smitebrain_tier": "D",
+      "smitesource_wr": 0.4937,
+      "smitesource_games": 219,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ra": {
       "god": "Ra",
-      "ladder_score": 42.04,
-      "blended_wr": 0.4648,
+      "ladder_score": 70.69,
+      "blended_wr": 0.5299,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4568,
-      "smitebrain_matches": 81,
-      "smitebrain_pick_rate": 0.018867924528301886,
-      "smitebrain_tier": "C",
-      "smitesource_wr": 0.4706,
-      "smitesource_games": 99,
+      "smitebrain_wr": 0.537,
+      "smitebrain_matches": 1177,
+      "smitebrain_pick_rate": 0.019836855765665556,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5195,
+      "smitesource_games": 1081,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Rama": {
       "god": "Rama",
-      "ladder_score": 58.55,
-      "blended_wr": 0.5539,
+      "ladder_score": 82.06,
+      "blended_wr": 0.556,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5641,
-      "smitebrain_matches": 39,
-      "smitebrain_pick_rate": 0.009084556254367574,
+      "smitebrain_wr": 0.5545,
+      "smitebrain_matches": 413,
+      "smitebrain_pick_rate": 0.006960595948360131,
       "smitebrain_tier": "B",
-      "smitesource_wr": 0.5507,
-      "smitesource_games": 49,
+      "smitesource_wr": 0.5579,
+      "smitesource_games": 403,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ratatoskr": {
       "god": "Ratatoskr",
-      "ladder_score": 56.73,
-      "blended_wr": 0.5541,
+      "ladder_score": 78.1,
+      "blended_wr": 0.546,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5556,
-      "smitebrain_matches": 36,
-      "smitebrain_pick_rate": 0.008385744234800839,
+      "smitebrain_wr": 0.5536,
+      "smitebrain_matches": 625,
+      "smitebrain_pick_rate": 0.010533589510230222,
       "smitebrain_tier": "B",
-      "smitesource_wr": 0.5536,
-      "smitesource_games": 36,
+      "smitesource_wr": 0.5349,
+      "smitesource_games": 438,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ravana": {
       "god": "Ravana",
-      "ladder_score": 67.84,
-      "blended_wr": 0.5439,
+      "ladder_score": 65.7,
+      "blended_wr": 0.5209,
       "source": "smitebrain+smitesource+tracker",
-      "smitebrain_wr": 0.5962,
-      "smitebrain_matches": 104,
-      "smitebrain_pick_rate": 0.0242254833449802,
-      "smitebrain_tier": "A",
-      "smitesource_wr": 0.5548,
-      "smitesource_games": 135,
+      "smitebrain_wr": 0.545,
+      "smitebrain_matches": 1356,
+      "smitebrain_pick_rate": 0.02285367580139549,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5312,
+      "smitesource_games": 1388,
       "tracker_wr": 0.3514,
       "tracker_games": 17
     },
     "Scylla": {
       "god": "Scylla",
-      "ladder_score": 65.73,
-      "blended_wr": 0.6314,
+      "ladder_score": 87.86,
+      "blended_wr": 0.5702,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.661,
-      "smitebrain_matches": 59,
-      "smitebrain_pick_rate": 0.013743303051479153,
+      "smitebrain_wr": 0.5836,
+      "smitebrain_matches": 879,
+      "smitebrain_pick_rate": 0.014814440287187784,
       "smitebrain_tier": "S",
-      "smitesource_wr": 0.622,
-      "smitesource_games": 62,
+      "smitesource_wr": 0.5506,
+      "smitesource_games": 761,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Sobek": {
       "god": "Sobek",
-      "ladder_score": 43.26,
-      "blended_wr": 0.4607,
+      "ladder_score": 46.99,
+      "blended_wr": 0.4933,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4231,
-      "smitebrain_matches": 52,
-      "smitebrain_pick_rate": 0.0121127416724901,
-      "smitebrain_tier": "D",
-      "smitesource_wr": 0.4719,
-      "smitesource_games": 69,
+      "smitebrain_wr": 0.5006,
+      "smitebrain_matches": 811,
+      "smitebrain_pick_rate": 0.013668385748474737,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.4827,
+      "smitesource_games": 759,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Sol": {
       "god": "Sol",
-      "ladder_score": 50.65,
-      "blended_wr": 0.4991,
+      "ladder_score": 84.55,
+      "blended_wr": 0.562,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4062,
-      "smitebrain_matches": 32,
-      "smitebrain_pick_rate": 0.007453994875378523,
-      "smitebrain_tier": "D",
-      "smitesource_wr": 0.5366,
-      "smitesource_games": 21,
+      "smitebrain_wr": 0.5821,
+      "smitebrain_matches": 536,
+      "smitebrain_pick_rate": 0.009033606363973438,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.534,
+      "smitesource_games": 407,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Sun Wukong": {
       "god": "Sun Wukong",
-      "ladder_score": 66.41,
-      "blended_wr": 0.5641,
+      "ladder_score": 81.02,
+      "blended_wr": 0.5505,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5647,
-      "smitebrain_matches": 85,
-      "smitebrain_pick_rate": 0.019799673887724203,
+      "smitebrain_wr": 0.5546,
+      "smitebrain_matches": 1154,
+      "smitebrain_pick_rate": 0.019449219671689083,
       "smitebrain_tier": "A",
-      "smitesource_wr": 0.5636,
-      "smitesource_games": 90,
+      "smitesource_wr": 0.5446,
+      "smitesource_games": 1012,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Susano": {
       "god": "Susano",
-      "ladder_score": 45.53,
-      "blended_wr": 0.4779,
+      "ladder_score": 66.07,
+      "blended_wr": 0.5226,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4646,
-      "smitebrain_matches": 99,
-      "smitebrain_pick_rate": 0.023060796645702306,
-      "smitebrain_tier": "C",
-      "smitesource_wr": 0.488,
-      "smitesource_games": 105,
+      "smitebrain_wr": 0.528,
+      "smitebrain_matches": 966,
+      "smitebrain_pick_rate": 0.01628071594701183,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5148,
+      "smitesource_games": 895,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Sylvanus": {
       "god": "Sylvanus",
-      "ladder_score": 56.7,
-      "blended_wr": 0.5333,
+      "ladder_score": 55.86,
+      "blended_wr": 0.5071,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5106,
-      "smitebrain_matches": 47,
-      "smitebrain_pick_rate": 0.010948054973212206,
+      "smitebrain_wr": 0.512,
+      "smitebrain_matches": 711,
+      "smitebrain_pick_rate": 0.0119830114268379,
       "smitebrain_tier": "C",
-      "smitesource_wr": 0.5405,
-      "smitesource_games": 54,
+      "smitesource_wr": 0.5,
+      "smitesource_games": 666,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Thanatos": {
       "god": "Thanatos",
-      "ladder_score": 50.25,
-      "blended_wr": 0.495,
+      "ladder_score": 80.67,
+      "blended_wr": 0.5506,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5517,
-      "smitebrain_matches": 58,
-      "smitebrain_pick_rate": 0.013510365711623572,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.4778,
-      "smitesource_games": 70,
+      "smitebrain_wr": 0.5636,
+      "smitebrain_matches": 935,
+      "smitebrain_pick_rate": 0.01575824990730441,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.5314,
+      "smitesource_games": 855,
       "tracker_wr": null,
       "tracker_games": null
     },
     "The Morrigan": {
       "god": "The Morrigan",
-      "ladder_score": 52.3,
-      "blended_wr": 0.5112,
+      "ladder_score": 89.15,
+      "blended_wr": 0.5772,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5676,
-      "smitebrain_matches": 37,
-      "smitebrain_pick_rate": 0.008618681574656418,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.4884,
-      "smitesource_games": 23,
+      "smitebrain_wr": 0.5869,
+      "smitebrain_matches": 443,
+      "smitebrain_pick_rate": 0.007466208244851181,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.5646,
+      "smitesource_games": 251,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Thor": {
       "god": "Thor",
-      "ladder_score": 70.12,
-      "blended_wr": 0.5555,
+      "ladder_score": 81.29,
+      "blended_wr": 0.549,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.566,
-      "smitebrain_matches": 106,
-      "smitebrain_pick_rate": 0.024691358024691357,
+      "smitebrain_wr": 0.5557,
+      "smitebrain_matches": 1724,
+      "smitebrain_pick_rate": 0.029055853305019044,
       "smitebrain_tier": "A",
-      "smitesource_wr": 0.5473,
-      "smitesource_games": 128,
+      "smitesource_wr": 0.5391,
+      "smitesource_games": 1603,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Tsukuyomi": {
       "god": "Tsukuyomi",
-      "ladder_score": 64.3,
-      "blended_wr": 0.5693,
+      "ladder_score": 78.66,
+      "blended_wr": 0.5462,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5873,
-      "smitebrain_matches": 63,
-      "smitebrain_pick_rate": 0.014675052410901468,
+      "smitebrain_wr": 0.5565,
+      "smitebrain_matches": 911,
+      "smitebrain_pick_rate": 0.015353760070111572,
       "smitebrain_tier": "A",
-      "smitesource_wr": 0.5638,
-      "smitesource_games": 74,
+      "smitesource_wr": 0.531,
+      "smitesource_games": 786,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ullr": {
       "god": "Ullr",
-      "ladder_score": 46.68,
-      "blended_wr": 0.4763,
+      "ladder_score": 62.89,
+      "blended_wr": 0.5174,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5,
-      "smitebrain_matches": 66,
-      "smitebrain_pick_rate": 0.015373864430468204,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.4684,
-      "smitesource_games": 59,
+      "smitebrain_wr": 0.5247,
+      "smitebrain_matches": 972,
+      "smitebrain_pick_rate": 0.01638183840631004,
+      "smitebrain_tier": "C",
+      "smitesource_wr": 0.5067,
+      "smitesource_games": 872,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Vulcan": {
       "god": "Vulcan",
-      "ladder_score": 56.34,
-      "blended_wr": 0.5432,
+      "ladder_score": 85.96,
+      "blended_wr": 0.5652,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6,
-      "smitebrain_matches": 35,
-      "smitebrain_pick_rate": 0.00815280689494526,
-      "smitebrain_tier": "B",
-      "smitesource_wr": 0.5246,
-      "smitesource_games": 41,
+      "smitebrain_wr": 0.5704,
+      "smitebrain_matches": 703,
+      "smitebrain_pick_rate": 0.011848181481106954,
+      "smitebrain_tier": "A",
+      "smitesource_wr": 0.5577,
+      "smitesource_games": 604,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Xbalanque": {
       "god": "Xbalanque",
-      "ladder_score": 58.0,
-      "blended_wr": 0.5936,
+      "ladder_score": 82.17,
+      "blended_wr": 0.556,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.6429,
-      "smitebrain_matches": 28,
-      "smitebrain_pick_rate": 0.006522245515956208,
-      "smitebrain_tier": "A",
-      "smitesource_wr": 0.5769,
-      "smitesource_games": 32,
+      "smitebrain_wr": 0.5591,
+      "smitebrain_matches": 474,
+      "smitebrain_pick_rate": 0.0079886742845586,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.5519,
+      "smitesource_games": 442,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Xing Tian": {
       "god": "Xing Tian",
-      "ladder_score": 49.83,
-      "blended_wr": 0.4919,
+      "ladder_score": 54.73,
+      "blended_wr": 0.5049,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.4483,
-      "smitebrain_matches": 58,
-      "smitebrain_pick_rate": 0.013510365711623572,
+      "smitebrain_wr": 0.5091,
+      "smitebrain_matches": 878,
+      "smitebrain_pick_rate": 0.014797586543971416,
       "smitebrain_tier": "C",
-      "smitesource_wr": 0.5079,
-      "smitesource_games": 43,
+      "smitesource_wr": 0.4988,
+      "smitesource_games": 848,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Yemoja": {
       "god": "Yemoja",
-      "ladder_score": 46.54,
-      "blended_wr": 0.439,
-      "source": "smitesource",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.004658746797111577,
+      "ladder_score": 22.44,
+      "blended_wr": 0.4492,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.4667,
+      "smitebrain_matches": 270,
+      "smitebrain_pick_rate": 0.004550510668419456,
       "smitebrain_tier": "F",
-      "smitesource_wr": 0.439,
-      "smitesource_games": 21,
+      "smitesource_wr": 0.4304,
+      "smitesource_games": 217,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Ymir": {
       "god": "Ymir",
-      "ladder_score": 66.32,
-      "blended_wr": 0.568,
+      "ladder_score": 77.57,
+      "blended_wr": 0.5438,
       "source": "smitebrain+smitesource",
-      "smitebrain_wr": 0.5921,
-      "smitebrain_matches": 76,
-      "smitebrain_pick_rate": 0.017703237829023992,
-      "smitebrain_tier": "A",
-      "smitesource_wr": 0.5607,
-      "smitesource_games": 87,
+      "smitebrain_wr": 0.5478,
+      "smitebrain_matches": 931,
+      "smitebrain_pick_rate": 0.01569083493443894,
+      "smitebrain_tier": "B",
+      "smitesource_wr": 0.538,
+      "smitesource_games": 928,
       "tracker_wr": null,
       "tracker_games": null
     },
     "Zeus": {
       "god": "Zeus",
-      "ladder_score": 46.87,
-      "blended_wr": 0.4545,
-      "source": "smitesource",
-      "smitebrain_wr": null,
-      "smitebrain_matches": null,
-      "smitebrain_pick_rate": 0.004891684136967156,
-      "smitebrain_tier": "D",
-      "smitesource_wr": 0.4545,
-      "smitesource_games": 24,
+      "ladder_score": 96.12,
+      "blended_wr": 0.615,
+      "source": "smitebrain+smitesource",
+      "smitebrain_wr": 0.621,
+      "smitebrain_matches": 438,
+      "smitebrain_pick_rate": 0.00738193952876934,
+      "smitebrain_tier": "S",
+      "smitesource_wr": 0.6073,
+      "smitesource_games": 334,
       "tracker_wr": null,
       "tracker_games": null
     }

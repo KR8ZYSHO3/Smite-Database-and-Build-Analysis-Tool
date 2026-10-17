@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-07T16:30:22.643700+00:00",
+  "generated_at": "2026-10-17T21:41:19.941653+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -3423,12 +3423,12 @@
       "path_count": 24,
       "staples": [
         {
-          "name": "Tyrfing",
+          "name": "Odysseus' Bow",
           "paths": 19,
           "pct": 79.2
         },
         {
-          "name": "Odysseus' Bow",
+          "name": "Tyrfing",
           "paths": 19,
           "pct": 79.2
         },
@@ -3463,22 +3463,22 @@
           "pct": 25.0
         },
         {
-          "name": "Book of Thoth",
-          "paths": 5,
-          "pct": 20.8
-        },
-        {
-          "name": "Soul Reaver",
-          "paths": 5,
-          "pct": 20.8
-        },
-        {
           "name": "The Cosmic Horror",
           "paths": 5,
           "pct": 20.8
         },
         {
+          "name": "Book of Thoth",
+          "paths": 5,
+          "pct": 20.8
+        },
+        {
           "name": "Spear of Desolation",
+          "paths": 5,
+          "pct": 20.8
+        },
+        {
+          "name": "Soul Reaver",
           "paths": 5,
           "pct": 20.8
         },
@@ -3488,12 +3488,12 @@
           "pct": 16.7
         },
         {
-          "name": "Totem of Death",
+          "name": "Spear Of The Magus",
           "paths": 3,
           "pct": 12.5
         },
         {
-          "name": "Divine Ruin",
+          "name": "Totem of Death",
           "paths": 3,
           "pct": 12.5
         }
@@ -3502,11 +3502,6 @@
     "Mid": {
       "path_count": 26,
       "staples": [
-        {
-          "name": "Book of Thoth",
-          "paths": 25,
-          "pct": 96.2
-        },
         {
           "name": "The Cosmic Horror",
           "paths": 25,
@@ -3518,34 +3513,39 @@
           "pct": 96.2
         },
         {
+          "name": "Book of Thoth",
+          "paths": 24,
+          "pct": 92.3
+        },
+        {
           "name": "Chronos' Pendant",
           "paths": 19,
           "pct": 73.1
         },
         {
           "name": "Divine Ruin",
-          "paths": 12,
-          "pct": 46.2
+          "paths": 10,
+          "pct": 38.5
         },
         {
           "name": "Totem of Death",
-          "paths": 12,
-          "pct": 46.2
-        },
-        {
-          "name": "Gem of Isolation",
-          "paths": 6,
-          "pct": 23.1
+          "paths": 10,
+          "pct": 38.5
         },
         {
           "name": "Rod of Tahuti",
-          "paths": 6,
-          "pct": 23.1
+          "paths": 7,
+          "pct": 26.9
+        },
+        {
+          "name": "Gem of Isolation",
+          "paths": 5,
+          "pct": 19.2
         },
         {
           "name": "Spear Of The Magus",
-          "paths": 4,
-          "pct": 15.4
+          "paths": 5,
+          "pct": 19.2
         },
         {
           "name": "Soul Reaver",
@@ -3553,7 +3553,12 @@
           "pct": 15.4
         },
         {
-          "name": "Typhon\u2019s Heart",
+          "name": "Gluttonous Grimoire",
+          "paths": 3,
+          "pct": 11.5
+        },
+        {
+          "name": "Helm of Darkness",
           "paths": 2,
           "pct": 7.7
         },
@@ -3571,11 +3576,6 @@
           "name": "Ethereal Staff",
           "paths": 1,
           "pct": 3.8
-        },
-        {
-          "name": "Heartseeker",
-          "paths": 1,
-          "pct": 3.8
         }
       ]
     },
@@ -3583,17 +3583,17 @@
       "path_count": 23,
       "staples": [
         {
-          "name": "Hydra's Lament",
-          "paths": 22,
-          "pct": 95.7
-        },
-        {
           "name": "The Crusher",
           "paths": 22,
           "pct": 95.7
         },
         {
           "name": "Jotunn's Revenge",
+          "paths": 22,
+          "pct": 95.7
+        },
+        {
+          "name": "Hydra's Lament",
           "paths": 22,
           "pct": 95.7
         },
@@ -3628,12 +3628,12 @@
           "pct": 26.1
         },
         {
-          "name": "Avatar's Parashu",
+          "name": "Damaru",
           "paths": 4,
           "pct": 17.4
         },
         {
-          "name": "Damaru",
+          "name": "Avatar's Parashu",
           "paths": 4,
           "pct": 17.4
         },
@@ -3648,7 +3648,7 @@
           "pct": 4.3
         },
         {
-          "name": "Book of Thoth",
+          "name": "Toxic Blade",
           "paths": 1,
           "pct": 4.3
         },
@@ -3679,8 +3679,8 @@
         },
         {
           "name": "Stone of Binding",
-          "paths": 7,
-          "pct": 33.3
+          "paths": 8,
+          "pct": 38.1
         },
         {
           "name": "Brawler\u2019s Beat Stick",
@@ -3688,9 +3688,9 @@
           "pct": 33.3
         },
         {
-          "name": "Wyrmskin Hide",
-          "paths": 6,
-          "pct": 28.6
+          "name": "Breastplate of Valor",
+          "paths": 7,
+          "pct": 33.3
         },
         {
           "name": "Phoenix Feather",
@@ -3703,12 +3703,7 @@
           "pct": 23.8
         },
         {
-          "name": "Breastplate of Valor",
-          "paths": 5,
-          "pct": 23.8
-        },
-        {
-          "name": "Mystical Mail",
+          "name": "Wyrmskin Hide",
           "paths": 5,
           "pct": 23.8
         },
@@ -3716,6 +3711,11 @@
           "name": "Xibalban Effigy",
           "paths": 5,
           "pct": 23.8
+        },
+        {
+          "name": "Mystical Mail",
+          "paths": 4,
+          "pct": 19.0
         },
         {
           "name": "Shield of the Phoenix",
@@ -3733,7 +3733,7 @@
           "pct": 14.3
         },
         {
-          "name": "Alchemist Coat",
+          "name": "Stygian Anchor",
           "paths": 3,
           "pct": 14.3
         }
@@ -3743,12 +3743,12 @@
       "path_count": 22,
       "staples": [
         {
-          "name": "Gem of Isolation",
+          "name": "Gauntlet of Thebes",
           "paths": 18,
           "pct": 81.8
         },
         {
-          "name": "Gauntlet of Thebes",
+          "name": "Gem of Isolation",
           "paths": 18,
           "pct": 81.8
         },
@@ -3768,17 +3768,17 @@
           "pct": 31.8
         },
         {
+          "name": "Rod Of Asclepius",
+          "paths": 6,
+          "pct": 27.3
+        },
+        {
           "name": "Phoenix Feather",
           "paths": 6,
           "pct": 27.3
         },
         {
           "name": "Lotus Sickle",
-          "paths": 6,
-          "pct": 27.3
-        },
-        {
-          "name": "Rod Of Asclepius",
           "paths": 6,
           "pct": 27.3
         },
@@ -3829,22 +3829,22 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 3,
+          "covered": 1,
           "total": 24,
-          "pct": 12.5,
+          "pct": 4.2,
           "missing_sample": [
-            "Princess Bari",
+            "Sol",
             "Cupid",
+            "Princess Bari",
             "Nut",
             "Cernunnos",
-            "Hachiman",
-            "Danzaburou",
-            "Anhur",
             "Neith",
-            "Hou Yi",
             "Ishtar",
+            "Danzaburou",
             "Medusa",
-            "Xbalanque"
+            "Xbalanque",
+            "Hachiman",
+            "Anhur"
           ]
         },
         "tanks_hp": {
@@ -3855,10 +3855,10 @@
           "missing_sample": [
             "Cernunnos",
             "Danzaburou",
-            "Apollo",
             "Rama",
-            "Izanami",
             "Ullr",
+            "Apollo",
+            "Izanami",
             "Kali",
             "Tsukuyomi"
           ]
@@ -3880,13 +3880,6 @@
           ]
         },
         {
-          "god": "Apollo",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
           "god": "Rama",
           "missing": [
             "heal",
@@ -3894,14 +3887,21 @@
           ]
         },
         {
-          "god": "Izanami",
+          "god": "Ullr",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Ullr",
+          "god": "Apollo",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Izanami",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3932,22 +3932,22 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 12,
+          "covered": 10,
           "total": 26,
-          "pct": 46.2,
+          "pct": 38.5,
           "missing_sample": [
+            "Sol",
             "Scylla",
             "Ah Puch",
-            "Discordia",
             "Neith",
-            "Vulcan",
             "The Morrigan",
+            "Vulcan",
             "Kukulkan",
+            "Discordia",
+            "Anubis",
             "Hel",
-            "Merlin",
-            "Hecate",
-            "Morgan Le Fay",
-            "Zeus"
+            "Zeus",
+            "Morgan Le Fay"
           ]
         },
         "tanks_hp": {
@@ -3956,31 +3956,31 @@
           "total": 26,
           "pct": 23.1,
           "missing_sample": [
-            "Princess Bari",
-            "Nut",
-            "Scylla",
-            "Chronos",
             "Sol",
+            "Princess Bari",
+            "Scylla",
             "Eset",
-            "Discordia",
+            "Nut",
+            "Chronos",
             "Neith",
             "Baron Samedi",
-            "Ix Chel",
             "Vulcan",
-            "Kukulkan"
+            "Kukulkan",
+            "Discordia",
+            "Poseidon"
           ]
         }
       },
       "multi_gap_sample": [
         {
-          "god": "Scylla",
+          "god": "Sol",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Discordia",
+          "god": "Scylla",
           "missing": [
             "heal",
             "tanks_hp"
@@ -4008,7 +4008,28 @@
           ]
         },
         {
+          "god": "Discordia",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Anubis",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
           "god": "Hel",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Zeus",
           "missing": [
             "heal",
             "tanks_hp"
@@ -4029,14 +4050,7 @@
           ]
         },
         {
-          "god": "Zeus",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Anubis",
+          "god": "Aphrodite",
           "missing": [
             "heal",
             "tanks_hp"
@@ -4057,18 +4071,18 @@
           "total": 23,
           "pct": 4.3,
           "missing_sample": [
-            "Cernunnos",
-            "Tsukuyomi",
-            "Ravana",
-            "Thor",
-            "Ratatoskr",
             "Awilix",
-            "Gilgamesh",
+            "Cernunnos",
+            "Ratatoskr",
+            "Mordred",
+            "Tsukuyomi",
             "Thanatos",
-            "Mercury",
             "Fenrir",
+            "Gilgamesh",
+            "Odin",
+            "Thor",
             "Hun Batz",
-            "Aladdin"
+            "Ravana"
           ]
         },
         "tanks_hp": {
@@ -4077,45 +4091,31 @@
           "total": 23,
           "pct": 0.0,
           "missing_sample": [
-            "Cernunnos",
-            "Tsukuyomi",
-            "Ravana",
-            "Thor",
-            "Ratatoskr",
             "Awilix",
-            "Gilgamesh",
+            "Cernunnos",
+            "Ratatoskr",
+            "Mordred",
+            "Tsukuyomi",
             "Thanatos",
-            "Mercury",
             "Fenrir",
+            "Gilgamesh",
+            "Odin",
+            "Thor",
             "Hun Batz",
-            "Aladdin"
+            "Ravana"
           ]
         }
       },
       "multi_gap_sample": [
         {
+          "god": "Awilix",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
           "god": "Cernunnos",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Tsukuyomi",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Ravana",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Thor",
           "missing": [
             "heal",
             "tanks_hp"
@@ -4129,14 +4129,14 @@
           ]
         },
         {
-          "god": "Awilix",
+          "god": "Mordred",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Gilgamesh",
+          "god": "Tsukuyomi",
           "missing": [
             "heal",
             "tanks_hp"
@@ -4150,14 +4150,28 @@
           ]
         },
         {
-          "god": "Mercury",
+          "god": "Fenrir",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Fenrir",
+          "god": "Gilgamesh",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Odin",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Thor",
           "missing": [
             "heal",
             "tanks_hp"
@@ -4171,28 +4185,28 @@
           ]
         },
         {
-          "god": "Aladdin",
+          "god": "Ravana",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Ne Zha",
+          "god": "Achilles",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Mordred",
+          "god": "Mercury",
           "missing": [
             "heal",
             "tanks_hp"
           ]
         },
         {
-          "god": "Odin",
+          "god": "Loki",
           "missing": [
             "heal",
             "tanks_hp"
@@ -4218,33 +4232,32 @@
             "Sun Wukong",
             "Chaac",
             "Amaterasu",
-            "Thor",
-            "Jormungandr",
-            "Osiris",
             "Gilgamesh",
+            "Jormungandr",
             "Hua Mulan",
-            "Artio",
+            "Thor",
+            "Osiris",
             "Cabrakan",
-            "Cerberus"
+            "Artio",
+            "Hades"
           ]
         },
         "physical": {
           "label": "vs physical damage",
-          "covered": 10,
+          "covered": 11,
           "total": 21,
-          "pct": 47.6,
+          "pct": 52.4,
           "missing_sample": [
             "Sun Wukong",
             "Chaac",
             "Amaterasu",
-            "Hercules",
             "Mordred",
             "Odin",
-            "Artio",
             "Nike",
             "Horus",
-            "Guan Yu",
-            "Cerberus"
+            "Hercules",
+            "Artio",
+            "Guan Yu"
           ]
         },
         "magic": {
@@ -4264,31 +4277,23 @@
           "pct": 0.0,
           "missing_sample": [
             "Sun Wukong",
-            "Chaac",
             "Cu Chulainn",
+            "Chaac",
             "Amaterasu",
-            "Thor",
-            "Jormungandr",
-            "Osiris",
-            "Gilgamesh",
-            "Hercules",
             "Bellona",
             "Mordred",
-            "Odin"
+            "Gilgamesh",
+            "Jormungandr",
+            "Odin",
+            "Hua Mulan",
+            "Thor",
+            "Nike"
           ]
         }
       },
       "multi_gap_sample": [
         {
           "god": "Sun Wukong",
-          "missing": [
-            "heal",
-            "physical",
-            "cc_dive"
-          ]
-        },
-        {
-          "god": "Chaac",
           "missing": [
             "heal",
             "physical",
@@ -4303,6 +4308,14 @@
           ]
         },
         {
+          "god": "Chaac",
+          "missing": [
+            "heal",
+            "physical",
+            "cc_dive"
+          ]
+        },
+        {
           "god": "Amaterasu",
           "missing": [
             "heal",
@@ -4311,23 +4324,10 @@
           ]
         },
         {
-          "god": "Thor",
+          "god": "Mordred",
           "missing": [
-            "heal",
-            "cc_dive"
-          ]
-        },
-        {
-          "god": "Jormungandr",
-          "missing": [
-            "heal",
-            "cc_dive"
-          ]
-        },
-        {
-          "god": "Osiris",
-          "missing": [
-            "heal",
+            "physical",
+            "magic",
             "cc_dive"
           ]
         },
@@ -4339,17 +4339,9 @@
           ]
         },
         {
-          "god": "Hercules",
+          "god": "Jormungandr",
           "missing": [
-            "physical",
-            "cc_dive"
-          ]
-        },
-        {
-          "god": "Mordred",
-          "missing": [
-            "physical",
-            "magic",
+            "heal",
             "cc_dive"
           ]
         },
@@ -4368,10 +4360,9 @@
           ]
         },
         {
-          "god": "Artio",
+          "god": "Thor",
           "missing": [
             "heal",
-            "physical",
             "cc_dive"
           ]
         },
@@ -4383,7 +4374,28 @@
           ]
         },
         {
+          "god": "Osiris",
+          "missing": [
+            "heal",
+            "cc_dive"
+          ]
+        },
+        {
+          "god": "Cabrakan",
+          "missing": [
+            "heal",
+            "cc_dive"
+          ]
+        },
+        {
           "god": "Horus",
+          "missing": [
+            "physical",
+            "cc_dive"
+          ]
+        },
+        {
+          "god": "Hercules",
           "missing": [
             "physical",
             "cc_dive"
@@ -4409,14 +4421,14 @@
             "Ganesha",
             "Ymir",
             "Baron Samedi",
-            "Athena",
-            "Ix Chel",
-            "Yemoja",
             "Ares",
-            "Charon",
-            "Sylvanus",
+            "Ix Chel",
+            "Athena",
             "Bacchus",
-            "Artio",
+            "Hel",
+            "Cabrakan",
+            "Horus",
+            "Charon",
             "Khepri"
           ]
         },
@@ -4427,14 +4439,14 @@
           "pct": 54.5,
           "missing_sample": [
             "Ymir",
-            "Athena",
             "Ares",
-            "Charon",
+            "Athena",
             "Bacchus",
-            "Artio",
-            "Sobek",
             "Cabrakan",
+            "Charon",
+            "Sobek",
             "Geb",
+            "Artio",
             "Cerberus"
           ]
         },
@@ -4448,14 +4460,14 @@
             "Ymir",
             "Jormungandr",
             "Baron Samedi",
-            "Yemoja",
             "Ares",
-            "Sylvanus",
             "Bacchus",
-            "Artio",
-            "Atlas",
             "Hel",
-            "Horus"
+            "Cabrakan",
+            "Horus",
+            "Sylvanus",
+            "Yemoja",
+            "Geb"
           ]
         },
         "heal": {
@@ -4466,15 +4478,15 @@
           "missing_sample": [
             "Ymir",
             "Baron Samedi",
-            "Athena",
             "Ares",
-            "Charon",
+            "Athena",
             "Bacchus",
-            "Artio",
             "Hel",
-            "Sobek",
             "Cabrakan",
+            "Charon",
+            "Sobek",
             "Geb",
+            "Artio",
             "Cerberus"
           ]
         }
@@ -4505,6 +4517,15 @@
           ]
         },
         {
+          "god": "Ares",
+          "missing": [
+            "crit",
+            "attack_speed",
+            "magic",
+            "heal"
+          ]
+        },
+        {
           "god": "Athena",
           "missing": [
             "crit",
@@ -4513,19 +4534,36 @@
           ]
         },
         {
-          "god": "Yemoja",
-          "missing": [
-            "crit",
-            "magic"
-          ]
-        },
-        {
-          "god": "Ares",
+          "god": "Bacchus",
           "missing": [
             "crit",
             "attack_speed",
             "magic",
             "heal"
+          ]
+        },
+        {
+          "god": "Hel",
+          "missing": [
+            "crit",
+            "magic",
+            "heal"
+          ]
+        },
+        {
+          "god": "Cabrakan",
+          "missing": [
+            "crit",
+            "attack_speed",
+            "magic",
+            "heal"
+          ]
+        },
+        {
+          "god": "Horus",
+          "missing": [
+            "crit",
+            "magic"
           ]
         },
         {
@@ -4544,40 +4582,7 @@
           ]
         },
         {
-          "god": "Bacchus",
-          "missing": [
-            "crit",
-            "attack_speed",
-            "magic",
-            "heal"
-          ]
-        },
-        {
-          "god": "Artio",
-          "missing": [
-            "crit",
-            "attack_speed",
-            "magic",
-            "heal"
-          ]
-        },
-        {
-          "god": "Atlas",
-          "missing": [
-            "crit",
-            "magic"
-          ]
-        },
-        {
-          "god": "Hel",
-          "missing": [
-            "crit",
-            "magic",
-            "heal"
-          ]
-        },
-        {
-          "god": "Horus",
+          "god": "Yemoja",
           "missing": [
             "crit",
             "magic"
@@ -4592,7 +4597,16 @@
           ]
         },
         {
-          "god": "Cabrakan",
+          "god": "Geb",
+          "missing": [
+            "crit",
+            "attack_speed",
+            "magic",
+            "heal"
+          ]
+        },
+        {
+          "god": "Artio",
           "missing": [
             "crit",
             "attack_speed",
@@ -4665,18 +4679,6 @@
           "complete": false
         },
         {
-          "god": "Aphrodite",
-          "score": 2,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
           "god": "Baron Samedi",
           "score": 2,
           "max": 4,
@@ -4735,11 +4737,35 @@
             "shred": false
           },
           "complete": false
+        },
+        {
+          "god": "Morgan Le Fay",
+          "score": 2,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
         }
       ],
       "weak": [
         {
           "god": "Anubis",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Aphrodite",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4823,6 +4849,18 @@
           "complete": false
         },
         {
+          "god": "Sol",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
           "god": "Vulcan",
           "score": 1,
           "max": 4,
@@ -4830,30 +4868,6 @@
             "anti_heal": false,
             "pct_hp": false,
             "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Zeus",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Neith",
-          "score": 0,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
             "shred": false
           },
           "complete": false
@@ -4872,7 +4886,19 @@
       "pct_complete": 0.0,
       "leaders": [
         {
-          "god": "Cu Chulainn",
+          "god": "Artio",
+          "score": 2,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": false,
+            "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Cerberus",
           "score": 2,
           "max": 4,
           "parts": {
@@ -4884,7 +4910,7 @@
           "complete": false
         },
         {
-          "god": "Hades",
+          "god": "Cu Chulainn",
           "score": 2,
           "max": 4,
           "parts": {
@@ -4945,18 +4971,6 @@
         },
         {
           "god": "Cabrakan",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
-          "god": "Cerberus",
           "score": 1,
           "max": 4,
           "parts": {
@@ -5030,18 +5044,6 @@
           "complete": false
         },
         {
-          "god": "Cerberus",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
           "god": "Gilgamesh",
           "score": 1,
           "max": 4,
@@ -5062,6 +5064,18 @@
             "pct_hp": false,
             "pen": false,
             "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Hades",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": true
           },
           "complete": false
         },
@@ -5943,7 +5957,7 @@
           "nerf_events": 21,
           "last_patch": "SMITE 2 Open Beta 38",
           "last_direction": "neutral",
-          "patches_touched": 17
+          "patches_touched": 16
         },
         {
           "entity_name": "Kali",
@@ -6054,16 +6068,16 @@
           "patches_touched": 19
         },
         {
-          "entity_name": "Achilles",
+          "entity_name": "Apollo",
           "trajectory": "volatile",
           "recent_5_score": 0.6299605249474366,
-          "recent_10_score": 0.6299605249474366,
-          "net_weighted_score": 0.6254775005834875,
-          "buff_events": 2,
-          "nerf_events": 2,
+          "recent_10_score": 1.0268107879394865,
+          "net_weighted_score": 0.5728043076662518,
+          "buff_events": 3,
+          "nerf_events": 3,
           "last_patch": "SMITE 2 Open Beta 41",
           "last_direction": "buff",
-          "patches_touched": 12
+          "patches_touched": 11
         }
       ],
       "new_or_fresh": [
@@ -6167,6 +6181,18 @@
           "last_patch": "SMITE 2 Open Beta 41",
           "last_direction": "buff",
           "patches_touched": 1
+        },
+        {
+          "entity_name": "Gluttonous Grimoire",
+          "trajectory": "rising",
+          "recent_5_score": 5.302486149841297,
+          "recent_10_score": 5.747935508911467,
+          "net_weighted_score": 5.872935508911467,
+          "buff_events": 5,
+          "nerf_events": 0,
+          "last_patch": "SMITE 2 Open Beta 44",
+          "last_direction": "buff",
+          "patches_touched": 3
         },
         {
           "entity_name": "The Cosmic Horror",
@@ -6275,18 +6301,6 @@
           "last_patch": "SMITE 2 Open Beta 44",
           "last_direction": "buff",
           "patches_touched": 1
-        },
-        {
-          "entity_name": "Stone of Binding",
-          "trajectory": "rising",
-          "recent_5_score": 1.8136152476428333,
-          "recent_10_score": 2.373142787091641,
-          "net_weighted_score": 2.405912912525817,
-          "buff_events": 4,
-          "nerf_events": 1,
-          "last_patch": "SMITE 2 Open Beta 44",
-          "last_direction": "buff",
-          "patches_touched": 10
         }
       ],
       "falling": [
@@ -6499,6 +6513,18 @@
           "patches_touched": 1
         },
         {
+          "entity_name": "Gluttonous Grimoire",
+          "trajectory": "rising",
+          "recent_5_score": 5.302486149841297,
+          "recent_10_score": 5.747935508911467,
+          "net_weighted_score": 5.872935508911467,
+          "buff_events": 5,
+          "nerf_events": 0,
+          "last_patch": "SMITE 2 Open Beta 44",
+          "last_direction": "buff",
+          "patches_touched": 3
+        },
+        {
           "entity_name": "Stygian Anchor",
           "trajectory": "rising",
           "recent_5_score": 4.253093766911629,
@@ -6605,21 +6631,9 @@
           "last_patch": "SMITE 2 Open Beta 44",
           "last_direction": "buff",
           "patches_touched": 2
-        },
-        {
-          "entity_name": "Spear Of The Magus",
-          "trajectory": "rising",
-          "recent_5_score": 1.202713269489458,
-          "recent_10_score": 1.2695306733499834,
-          "net_weighted_score": 1.2695306733499834,
-          "buff_events": 1,
-          "nerf_events": 0,
-          "last_patch": "SMITE 2 Open Beta 44",
-          "last_direction": "buff",
-          "patches_touched": 2
         }
       ],
-      "total_tracked": 225
+      "total_tracked": 226
     },
     "patch_axes_avg_r5": {
       "general": 0.108,
@@ -6640,41 +6654,41 @@
       "count": 22,
       "s_tier": [
         {
-          "name": "Princess Bari",
+          "name": "Sol",
           "rank": 1,
-          "score": 74.9
+          "score": 73.7
         },
         {
           "name": "Cupid",
           "rank": 2,
-          "score": 68.8
+          "score": 73.7
         },
         {
-          "name": "Nut",
+          "name": "Princess Bari",
           "rank": 3,
-          "score": 67.3
+          "score": 73.1
         }
       ],
       "a_tier": [
         {
-          "name": "Cernunnos",
+          "name": "Nut",
           "rank": 4,
-          "score": 66.3
+          "score": 65.4
         },
         {
-          "name": "Hachiman",
+          "name": "Cernunnos",
           "rank": 5,
-          "score": 60.9
+          "score": 65.3
         },
         {
           "name": "Chronos",
           "rank": 6,
-          "score": 59.6
+          "score": 65.1
         },
         {
-          "name": "Danzaburou",
+          "name": "Neith",
           "rank": 7,
-          "score": 58.4
+          "score": 63.1
         }
       ],
       "tier_counts": {
@@ -6689,51 +6703,51 @@
       "count": 26,
       "s_tier": [
         {
-          "name": "Princess Bari",
+          "name": "Sol",
           "rank": 1,
-          "score": 74.9
+          "score": 73.7
         },
         {
-          "name": "Nut",
+          "name": "Princess Bari",
           "rank": 2,
-          "score": 67.3
+          "score": 73.1
         },
         {
           "name": "Scylla",
           "rank": 3,
-          "score": 67.1
+          "score": 70.9
         },
         {
-          "name": "Ah Puch",
+          "name": "Eset",
           "rank": 4,
-          "score": 62.6
+          "score": 67.5
         }
       ],
       "a_tier": [
         {
-          "name": "Chronos",
+          "name": "Ah Puch",
           "rank": 5,
-          "score": 59.6
+          "score": 66.2
         },
         {
-          "name": "Sol",
+          "name": "Nut",
           "rank": 6,
-          "score": 58.2
+          "score": 65.4
         },
         {
-          "name": "Eset",
+          "name": "Chronos",
           "rank": 7,
-          "score": 58.0
-        },
-        {
-          "name": "Discordia",
-          "rank": 8,
-          "score": 55.8
+          "score": 65.1
         },
         {
           "name": "Neith",
+          "rank": 8,
+          "score": 63.1
+        },
+        {
+          "name": "Baron Samedi",
           "rank": 9,
-          "score": 54.8
+          "score": 61.9
         }
       ],
       "tier_counts": {
@@ -6748,46 +6762,46 @@
       "count": 23,
       "s_tier": [
         {
-          "name": "Cernunnos",
+          "name": "Awilix",
           "rank": 1,
-          "score": 66.3
+          "score": 67.3
         },
         {
-          "name": "Tsukuyomi",
+          "name": "Cernunnos",
           "rank": 2,
-          "score": 62.5
+          "score": 65.3
         },
         {
-          "name": "Ravana",
+          "name": "Ratatoskr",
           "rank": 3,
-          "score": 61.1
+          "score": 64.9
         }
       ],
       "a_tier": [
         {
-          "name": "Thor",
+          "name": "Mordred",
           "rank": 4,
-          "score": 58.9
+          "score": 64.5
         },
         {
-          "name": "Ratatoskr",
+          "name": "Tsukuyomi",
           "rank": 5,
-          "score": 58.6
-        },
-        {
-          "name": "Awilix",
-          "rank": 6,
-          "score": 55.3
-        },
-        {
-          "name": "Gilgamesh",
-          "rank": 7,
-          "score": 53.1
+          "score": 64.4
         },
         {
           "name": "Thanatos",
+          "rank": 6,
+          "score": 64.0
+        },
+        {
+          "name": "Fenrir",
+          "rank": 7,
+          "score": 63.0
+        },
+        {
+          "name": "Gilgamesh",
           "rank": 8,
-          "score": 52.8
+          "score": 62.2
         }
       ],
       "tier_counts": {
@@ -6804,39 +6818,39 @@
         {
           "name": "Sun Wukong",
           "rank": 1,
-          "score": 79.5
-        },
-        {
-          "name": "Chaac",
-          "rank": 2,
-          "score": 71.1
+          "score": 80.9
         },
         {
           "name": "Cu Chulainn",
+          "rank": 2,
+          "score": 69.9
+        },
+        {
+          "name": "Chaac",
           "rank": 3,
-          "score": 62.4
+          "score": 69.5
         }
       ],
       "a_tier": [
         {
           "name": "Amaterasu",
           "rank": 4,
-          "score": 61.0
+          "score": 69.0
         },
         {
-          "name": "Thor",
+          "name": "Bellona",
           "rank": 5,
-          "score": 58.9
+          "score": 68.8
         },
         {
-          "name": "Jormungandr",
+          "name": "Mordred",
           "rank": 6,
-          "score": 58.3
+          "score": 64.5
         },
         {
-          "name": "Osiris",
+          "name": "Gilgamesh",
           "rank": 7,
-          "score": 56.6
+          "score": 62.2
         }
       ],
       "tier_counts": {
@@ -6853,39 +6867,39 @@
         {
           "name": "Ganesha",
           "rank": 1,
-          "score": 71.4
+          "score": 77.5
         },
         {
           "name": "Ymir",
           "rank": 2,
-          "score": 62.5
+          "score": 62.6
         },
         {
           "name": "Jormungandr",
           "rank": 3,
-          "score": 58.3
+          "score": 62.1
         }
       ],
       "a_tier": [
         {
           "name": "Baron Samedi",
           "rank": 4,
-          "score": 53.8
+          "score": 61.9
         },
         {
-          "name": "Athena",
+          "name": "Ares",
           "rank": 5,
-          "score": 51.4
+          "score": 59.0
         },
         {
           "name": "Ix Chel",
           "rank": 6,
-          "score": 50.5
+          "score": 56.0
         },
         {
-          "name": "Yemoja",
+          "name": "Athena",
           "rank": 7,
-          "score": 50.0
+          "score": 56.0
         }
       ],
       "tier_counts": {
@@ -6900,7 +6914,7 @@
   "weekly_themes": [
     "Support paths under-buy anti-crit (Spectral on ~9.1% of recs) \u2014 flex Spectral almost every game.",
     "Gods rising (r5 patch): Cu Chulainn, Hachiman, Chronos, Ganesha.",
-    "Items hot (r5 patch): Damaru, Omen Drum, The Cosmic Horror, Brawler\u2019s Beat Stick.",
+    "Items hot (r5 patch): Damaru, Omen Drum, Gluttonous Grimoire, The Cosmic Horror.",
     "Patch axes (avg r5): general +0.11, cooldown -0.07, damage +0.05."
   ]
 }
