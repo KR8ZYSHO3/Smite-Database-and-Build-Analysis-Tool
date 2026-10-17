@@ -38,5 +38,48 @@
       "Avenging Blade",
       "Chandra's Grace"
     ]
+  },
+  "Aspect of the Death March": {
+    "_why": "Ah Puch Death March: Corpse Explosion → Wraith Call (haunt + stacking STR/INT/prot shred; zombies scale off Max Health). Ult deals less damage but slows haunted targets. Corpses refund Fleeting Breath CD. Play as HP-scaling shred Solo or debuff Support — not glass Mid INT burst and not Lotus Sickle enchanter (no ally heals/buffs).",
+    "force_tags": [
+      "hybrid_bulk",
+      "prot_shred",
+      "spam",
+      "self_sustain",
+      "dot",
+      "hard_cc"
+    ],
+    "remove_tags": [
+      "burst",
+      "ult_nuke",
+      "aa",
+      "as_steroid",
+      "heal",
+      "team_buff",
+      "heavy_heal"
+    ],
+    "prefer_items": [
+      "Ethereal Staff",
+      "Shifter's Shield",
+      "Gem of Isolation",
+      "Stone of Binding",
+      "Gauntlet of Thebes",
+      "Chronos' Pendant",
+      "Prophetic Cloak",
+      "Contagion",
+      "Soul Reaver",
+      "Genji's Guard"
+    ],
+    "ban_items": [
+      "Rod of Tahuti",
+      "Dreamer's Idol",
+      "Obsidian Shard",
+      "Lotus Sickle",
+      "Rod Of Asclepius",
+      "Chandra's Grace",
+      "Polynomicon",
+      "Deathbringer",
+      "Riptalon"
+    ]
   }
 }

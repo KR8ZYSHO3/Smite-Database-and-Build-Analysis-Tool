@@ -106,6 +106,17 @@ ASPECT_TAG_RULES: list[tuple[re.Pattern[str], set[str], set[str]]] = [
         {"hybrid_bulk", "shield"},
         set(),
     ),
+    # Ah Puch Death March: Wraith Call haunt/shred + Max Health zombie scaling
+    (
+        re.compile(
+            r"wraith call|\bhaunt(?:ed|s)?\b|max health|"
+            r"strength and intelligence reduction|protections? reduction|"
+            r"scaling with (?:your )?max health",
+            re.I,
+        ),
+        {"hybrid_bulk", "prot_shred", "spam", "self_sustain", "dot", "hard_cc"},
+        {"burst", "ult_nuke", "aa", "as_steroid"},
+    ),
 ]
 
 
@@ -191,6 +202,30 @@ def aspect_playstyle_hints(blob: str) -> dict[str, Any]:
     if re.search(r"-[\d.]+%\s*base health", blob, re.I):
         hints["bulk_boost"] = max(0.0, hints["bulk_boost"] - 0.1)
         hints["aa_boost"] = max(hints["aa_boost"], 0.2)
+    # Max-HP ability scaling + haunt/shred (Death March): lean bulk, soft-penalize glass INT
+    if re.search(
+        r"max health|% max health|scaling with (?:your )?max health|"
+        r"\bhaunt|\bhaunted\b|wraith call|strength and intelligence reduction",
+        blob,
+        re.I,
+    ):
+        hints["bulk_boost"] = max(hints["bulk_boost"], 0.4)
+        hints["power_penalty"] = max(hints["power_penalty"], 0.25)
+        hints["cdr_boost"] = max(hints["cdr_boost"], 0.25)
+        hints["prefer_items"].extend(
+            [
+                "ethereal",
+                "shifter",
+                "thebes",
+                "prophetic",
+                "isolation",
+                "binding",
+                "chronos",
+                "contagion",
+                "genji",
+            ]
+        )
+        hints["ban_items"].extend(["tahuti", "dreamer", "obsidian", "polynomicon", "sickle"])
     return hints
 
 
@@ -339,8 +374,13 @@ def aspect_item_score_delta(item_name: str, bias: dict[str, Any]) -> float:
     n = (item_name or "").lower()
     s = 0.0
     pen = float(bias.get("aspect_power_penalty") or 0)
+    bulk = float(bias.get("aspect_bulk_boost") or 0)
     if pen >= 0.2:
-        if any(k in n for k in ("tahuti", "dreamer", "soul reaver", "obsidian", "desolat")):
+        # Glass INT cores — keep Soul Reaver off this list when bulk/shred aspects want %HP
+        glass = ("tahuti", "dreamer", "obsidian", "desolat", "polynomicon")
+        if bulk < 0.3:
+            glass = glass + ("soul reaver",)
+        if any(k in n for k in glass):
             s -= 45 * pen
         if any(k in n for k in ("asclepius", "thebes", "chandra", "chronos", "genji", "breastplate")):
             s += 35 * pen
@@ -350,6 +390,26 @@ def aspect_item_score_delta(item_name: str, bias: dict[str, Any]) -> float:
     if float(bias.get("aspect_heal_boost") or 0) >= 0.2:
         if any(k in n for k in ("asclepius", "lifebinder", "bancroft", "soul gem", "thebes")):
             s += 32
+    if bulk >= 0.3:
+        if any(
+            k in n
+            for k in (
+                "ethereal",
+                "shifter",
+                "thebes",
+                "prophetic",
+                "isolation",
+                "binding",
+                "yogi",
+                "draconic",
+                "gladiator",
+                "soul reaver",
+                "contagion",
+            )
+        ):
+            s += 36
+        if any(k in n for k in ("tahuti", "dreamer", "obsidian", "polynomicon", "sickle")):
+            s -= 28
     if float(bias.get("aa_score") or 0) >= 0.65 and bias.get("is_aspect"):
         if any(
             k in n
