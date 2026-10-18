@@ -17,6 +17,11 @@ from .kit_effects import (
     effect_labels,
     extract_kit_effects,
 )
+from .kit_identity import (
+    apply_identity_to_bias,
+    detect_identity_hooks,
+    identity_item_score_delta,
+)
 
 
 # (regex on aspect description + enhanced kit text) → tags to force on / off
@@ -106,12 +111,13 @@ ASPECT_TAG_RULES: list[tuple[re.Pattern[str], set[str], set[str]]] = [
         {"hybrid_bulk", "shield"},
         set(),
     ),
-    # Ah Puch Death March: Wraith Call haunt/shred + Max Health zombie scaling
+    # Haunt / shred conversions (Death March etc.) — Max Health Restore alone is NOT enough
     (
         re.compile(
-            r"wraith call|\bhaunt(?:ed|s)?\b|max health|"
+            r"wraith call|\bhaunt(?:ed|s)?\b|"
             r"strength and intelligence reduction|protections? reduction|"
-            r"scaling with (?:your )?max health",
+            r"scaling with (?:your )?max health|"
+            r"zombie damage scaling:\s*[\d.]+%\s*max health",
             re.I,
         ),
         {"hybrid_bulk", "prot_shred", "spam", "self_sustain", "dot", "hard_cc"},
@@ -202,28 +208,19 @@ def aspect_playstyle_hints(blob: str) -> dict[str, Any]:
     if re.search(r"-[\d.]+%\s*base health", blob, re.I):
         hints["bulk_boost"] = max(0.0, hints["bulk_boost"] - 0.1)
         hints["aa_boost"] = max(hints["aa_boost"], 0.2)
-    # Max-HP ability scaling + haunt/shred (Death March): lean bulk, soft-penalize glass INT
+    # Legacy max-HP / haunt hints kept thin — kit_identity.detect_identity_hooks owns this
     if re.search(
-        r"max health|% max health|scaling with (?:your )?max health|"
+        r"scaling with (?:your )?max health|"
+        r"zombie damage scaling:\s*[\d.]+%\s*max health|"
         r"\bhaunt|\bhaunted\b|wraith call|strength and intelligence reduction",
         blob,
         re.I,
     ):
-        hints["bulk_boost"] = max(hints["bulk_boost"], 0.4)
-        hints["power_penalty"] = max(hints["power_penalty"], 0.25)
-        hints["cdr_boost"] = max(hints["cdr_boost"], 0.25)
+        hints["bulk_boost"] = max(hints["bulk_boost"], 0.35)
+        hints["power_penalty"] = max(hints["power_penalty"], 0.2)
+        hints["cdr_boost"] = max(hints["cdr_boost"], 0.2)
         hints["prefer_items"].extend(
-            [
-                "ethereal",
-                "shifter",
-                "thebes",
-                "prophetic",
-                "isolation",
-                "binding",
-                "chronos",
-                "contagion",
-                "genji",
-            ]
+            ["ethereal", "thebes", "prophetic", "isolation", "binding", "contagion"]
         )
         hints["ban_items"].extend(["tahuti", "dreamer", "obsidian", "polynomicon", "sickle"])
     return hints
@@ -345,13 +342,22 @@ def build_aspect_bias(
     if hints.get("force_archetype"):
         bias["force_archetype"] = hints["force_archetype"]
 
-    # Aspect-specific archetype nudges by role-agnostic tags
-    if "aa" in tags and hints["aa_boost"] >= 0.3:
-        # Carry will pick crit_adc; mid aa_mage — detect_archetype handles role
-        pass
-    if hints["power_penalty"] >= 0.2 and "heal" in tags:
-        # Support/Mid heal mages
-        pass
+    # Character-unique hooks from aspect text (item-HP, base-damage-only, haunt, …)
+    id_prof = detect_identity_hooks(blob, is_aspect=True)
+    bias = apply_identity_to_bias(bias, id_prof)
+    # Merge legacy playstyle numerics (identity may already set these — take max)
+    bias["aspect_power_penalty"] = max(
+        float(bias.get("aspect_power_penalty") or 0), float(hints["power_penalty"] or 0)
+    )
+    bias["aspect_cdr_boost"] = max(
+        float(bias.get("aspect_cdr_boost") or 0), float(hints["cdr_boost"] or 0)
+    )
+    bias["aspect_heal_boost"] = max(
+        float(bias.get("aspect_heal_boost") or 0), float(hints["heal_boost"] or 0)
+    )
+    bias["aspect_bulk_boost"] = max(
+        float(bias.get("aspect_bulk_boost") or 0), float(hints["bulk_boost"] or 0)
+    )
 
     bias = apply_kit_overrides(bias, str(bias.get("god_name") or ""))
     # Also allow overrides keyed by aspect name
@@ -359,58 +365,19 @@ def build_aspect_bias(
     effects = extract_kit_effects(bias)
     bias["effects"] = effects
     bias["effect_labels"] = effect_labels(effects)
-    # Store scoring nudges for rescore
-    bias["aspect_power_penalty"] = hints["power_penalty"]
-    bias["aspect_cdr_boost"] = hints["cdr_boost"]
-    bias["aspect_heal_boost"] = hints["heal_boost"]
-    bias["aspect_bulk_boost"] = hints["bulk_boost"]
     return bias
 
 
 def aspect_item_score_delta(item_name: str, bias: dict[str, Any]) -> float:
-    """Extra score from aspect playstyle hints."""
+    """Extra score from identity hooks + aspect AA lean."""
+    s = identity_item_score_delta(item_name, bias)
     if not bias.get("is_aspect"):
-        return 0.0
-    n = (item_name or "").lower()
-    s = 0.0
-    pen = float(bias.get("aspect_power_penalty") or 0)
-    bulk = float(bias.get("aspect_bulk_boost") or 0)
-    if pen >= 0.2:
-        # Glass INT cores — keep Soul Reaver off this list when bulk/shred aspects want %HP
-        glass = ("tahuti", "dreamer", "obsidian", "desolat", "polynomicon")
-        if bulk < 0.3:
-            glass = glass + ("soul reaver",)
-        if any(k in n for k in glass):
-            s -= 45 * pen
-        if any(k in n for k in ("asclepius", "thebes", "chandra", "chronos", "genji", "breastplate")):
-            s += 35 * pen
-    if float(bias.get("aspect_cdr_boost") or 0) >= 0.2:
-        if any(k in n for k in ("chronos", "genji", "breastplate", "valor", "pendant")):
-            s += 30
-    if float(bias.get("aspect_heal_boost") or 0) >= 0.2:
-        if any(k in n for k in ("asclepius", "lifebinder", "bancroft", "soul gem", "thebes")):
-            s += 32
-    if bulk >= 0.3:
-        if any(
-            k in n
-            for k in (
-                "ethereal",
-                "shifter",
-                "thebes",
-                "prophetic",
-                "isolation",
-                "binding",
-                "yogi",
-                "draconic",
-                "gladiator",
-                "soul reaver",
-                "contagion",
-            )
-        ):
-            s += 36
-        if any(k in n for k in ("tahuti", "dreamer", "obsidian", "polynomicon", "sickle")):
-            s -= 28
-    if float(bias.get("aa_score") or 0) >= 0.65 and bias.get("is_aspect"):
+        return s
+    # Item-HP / bulk aspects: do not also boost crit toys
+    if float(bias.get("identity_hp_stack") or 0) >= 0.4:
+        return s
+    if float(bias.get("aa_score") or 0) >= 0.65:
+        n = (item_name or "").lower()
         if any(
             k in n
             for k in (

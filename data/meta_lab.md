@@ -2,11 +2,12 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-10-17T21:41:19.941653+00:00_
+_Generated: 2026-10-18T20:09:03.474133+00:00_
 
 ## Weekly themes
 
-- Support paths under-buy anti-crit (Spectral on ~9.1% of recs) — flex Spectral almost every game.
+- Support paths under-buy anti-crit (Spectral on ~4.5% of recs) — flex Spectral almost every game.
+- Support/Solo anti-heal is rare in defaults (~31.8% support) — Stygian/Brawler's is a live flex.
 - Gods rising (r5 patch): Cu Chulainn, Hachiman, Chronos, Ganesha.
 - Items hot (r5 patch): Damaru, Omen Drum, Gluttonous Grimoire, The Cosmic Horror.
 - Patch axes (avg r5): general +0.11, cooldown -0.07, damage +0.05.
@@ -17,18 +18,18 @@ _Generated: 2026-10-17T21:41:19.941653+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
-| Odysseus' Bow | 19 | 79.2 |
-| Tyrfing | 19 | 79.2 |
-| Deathbringer | 16 | 66.7 |
-| Devourer's Gauntlet | 13 | 54.2 |
+| Tyrfing | 18 | 75.0 |
+| Odysseus' Bow | 18 | 75.0 |
+| Deathbringer | 14 | 58.3 |
+| The Executioner | 13 | 54.2 |
+| Devourer's Gauntlet | 12 | 50.0 |
 | Eye of the Storm | 12 | 50.0 |
-| The Executioner | 11 | 45.8 |
-| Qin's Blade | 6 | 25.0 |
 | Tekko-Kagi | 6 | 25.0 |
 | The Cosmic Horror | 5 | 20.8 |
-| Book of Thoth | 5 | 20.8 |
 | Spear of Desolation | 5 | 20.8 |
 | Soul Reaver | 5 | 20.8 |
+| Book of Thoth | 5 | 20.8 |
+| Qin's Blade | 5 | 20.8 |
 | Sands Of Time | 4 | 16.7 |
 | Spear Of The Magus | 3 | 12.5 |
 | Totem of Death | 3 | 12.5 |
@@ -39,105 +40,105 @@ _Generated: 2026-10-17T21:41:19.941653+00:00_
 |------|------:|--:|
 | The Cosmic Horror | 25 | 96.2 |
 | Spear of Desolation | 25 | 96.2 |
-| Book of Thoth | 24 | 92.3 |
-| Chronos' Pendant | 19 | 73.1 |
-| Divine Ruin | 10 | 38.5 |
+| Book of Thoth | 22 | 84.6 |
+| Chronos' Pendant | 21 | 80.8 |
 | Totem of Death | 10 | 38.5 |
+| Gem of Isolation | 7 | 26.9 |
+| Divine Ruin | 7 | 26.9 |
 | Rod of Tahuti | 7 | 26.9 |
-| Gem of Isolation | 5 | 19.2 |
-| Spear Of The Magus | 5 | 19.2 |
-| Soul Reaver | 4 | 15.4 |
+| Spear Of The Magus | 7 | 26.9 |
 | Gluttonous Grimoire | 3 | 11.5 |
+| Ethereal Staff | 2 | 7.7 |
 | Helm of Darkness | 2 | 7.7 |
-| Polynomicon | 2 | 7.7 |
+| Soul Reaver | 2 | 7.7 |
+| Gladiator's Shield | 2 | 7.7 |
 | Dreamer's Idol | 2 | 7.7 |
-| Ethereal Staff | 1 | 3.8 |
 
 ### Jungle (23 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| The Crusher | 22 | 95.7 |
 | Jotunn's Revenge | 22 | 95.7 |
+| The Crusher | 22 | 95.7 |
 | Hydra's Lament | 22 | 95.7 |
-| Heartseeker | 15 | 65.2 |
-| Arondight | 9 | 39.1 |
-| Tekko-Kagi | 8 | 34.8 |
+| Heartseeker | 17 | 73.9 |
+| Pendulum Blade | 8 | 34.8 |
+| Arondight | 8 | 34.8 |
 | The Reaper | 8 | 34.8 |
-| Bloodforge | 7 | 30.4 |
-| Pendulum Blade | 6 | 26.1 |
+| Tekko-Kagi | 6 | 26.1 |
+| Bloodforge | 4 | 17.4 |
 | Damaru | 4 | 17.4 |
 | Avatar's Parashu | 4 | 17.4 |
-| Deathbringer | 1 | 4.3 |
-| Ashwhorl Acorn | 1 | 4.3 |
+| Oath-Sworn Spear | 2 | 8.7 |
 | Toxic Blade | 1 | 4.3 |
-| The Cosmic Horror | 1 | 4.3 |
+| Ashwhorl Acorn | 1 | 4.3 |
+| Brawler’s Beat Stick | 1 | 4.3 |
 
 ### Solo (21 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Shifter's Shield | 19 | 90.5 |
-| Genji's Guard | 16 | 76.2 |
-| Eye of the Storm | 12 | 57.1 |
-| Stone of Binding | 8 | 38.1 |
-| Brawler’s Beat Stick | 7 | 33.3 |
-| Breastplate of Valor | 7 | 33.3 |
-| Phoenix Feather | 6 | 28.6 |
-| Doublet of Binding | 5 | 23.8 |
-| Wyrmskin Hide | 5 | 23.8 |
-| Xibalban Effigy | 5 | 23.8 |
-| Mystical Mail | 4 | 19.0 |
-| Shield of the Phoenix | 4 | 19.0 |
-| Kinetic Cuirass | 3 | 14.3 |
-| Regrowth Striders | 3 | 14.3 |
-| Stygian Anchor | 3 | 14.3 |
+| Shifter's Shield | 12 | 57.1 |
+| Stone of Binding | 10 | 47.6 |
+| Genji's Guard | 10 | 47.6 |
+| Eye of the Storm | 10 | 47.6 |
+| Wyrmskin Hide | 7 | 33.3 |
+| Contagion | 7 | 33.3 |
+| Breastplate of Valor | 6 | 28.6 |
+| Gladiator's Shield | 5 | 23.8 |
+| Gauntlet of Thebes | 5 | 23.8 |
+| Brawler’s Beat Stick | 5 | 23.8 |
+| Stygian Anchor | 5 | 23.8 |
+| Leviathan's Hide | 4 | 19.0 |
+| Phoenix Feather | 4 | 19.0 |
+| Ethereal Staff | 4 | 19.0 |
+| Prophetic Cloak | 3 | 14.3 |
 
 ### Support (22 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Gauntlet of Thebes | 18 | 81.8 |
-| Gem of Isolation | 18 | 81.8 |
-| Stone of Binding | 13 | 59.1 |
-| Stygian Anchor | 10 | 45.5 |
-| Shifter's Shield | 7 | 31.8 |
-| Rod Of Asclepius | 6 | 27.3 |
-| Phoenix Feather | 6 | 27.3 |
-| Lotus Sickle | 6 | 27.3 |
-| Alchemist Coat | 5 | 22.7 |
-| Helm of Darkness | 4 | 18.2 |
-| Doublet of Binding | 4 | 18.2 |
-| Midgardian Mail | 4 | 18.2 |
+| Gem of Isolation | 19 | 86.4 |
+| Gauntlet of Thebes | 16 | 72.7 |
+| Stone of Binding | 14 | 63.6 |
+| Ethereal Staff | 10 | 45.5 |
+| Contagion | 10 | 45.5 |
+| Stygian Anchor | 7 | 31.8 |
+| Alchemist Coat | 6 | 27.3 |
+| Gladiator's Shield | 5 | 22.7 |
+| Leviathan's Hide | 4 | 18.2 |
+| Rod Of Asclepius | 4 | 18.2 |
+| Lotus Sickle | 4 | 18.2 |
 | Regrowth Striders | 3 | 13.6 |
-| Damaru | 3 | 13.6 |
-| Xibalban Effigy | 2 | 9.1 |
+| Doublet of Binding | 3 | 13.6 |
+| Genji's Guard | 3 | 13.6 |
+| Shifter's Shield | 3 | 13.6 |
 
 ## Answer coverage
 
 ### Carry
-- **vs heals / sustain**: 1/24 (4.2%)
-- **vs high HP / tanks**: 16/24 (66.7%)
+- **vs heals / sustain**: 0/24 (0.0%)
+- **vs high HP / tanks**: 18/24 (75.0%)
 
 ### Mid
-- **vs heals / sustain**: 10/26 (38.5%)
-- **vs high HP / tanks**: 6/26 (23.1%)
+- **vs heals / sustain**: 7/26 (26.9%)
+- **vs high HP / tanks**: 5/26 (19.2%)
 
 ### Jungle
-- **vs heals / sustain**: 1/23 (4.3%)
+- **vs heals / sustain**: 2/23 (8.7%)
 - **vs high HP / tanks**: 0/23 (0.0%)
 
 ### Solo
 - **vs heals / sustain**: 10/21 (47.6%)
-- **vs physical damage**: 11/21 (52.4%)
-- **vs magic damage**: 19/21 (90.5%)
+- **vs physical damage**: 8/21 (38.1%)
+- **vs magic damage**: 13/21 (61.9%)
 - **vs CC / dive**: 0/21 (0.0%)
 
 ### Support
-- **vs crit**: 2/22 (9.1%)
-- **vs attack speed**: 12/22 (54.5%)
-- **vs magic damage**: 7/22 (31.8%)
-- **vs heals / sustain**: 10/22 (45.5%)
+- **vs crit**: 1/22 (4.5%)
+- **vs attack speed**: 9/22 (40.9%)
+- **vs magic damage**: 5/22 (22.7%)
+- **vs heals / sustain**: 7/22 (31.8%)
 
 ## Trajectories — gods rising
 

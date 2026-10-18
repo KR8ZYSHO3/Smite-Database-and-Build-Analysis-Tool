@@ -4,7 +4,7 @@
 **kit-true**, **role-correct**, **spike-ordered**, and **softly informed by high-SR play** —  
 without becoming a frozen meta photocopier.
 
-**Version:** 1.3.0 (OB45) — Roster Hel (OB44) + Nike (OB45); Hel on true-healer allowlist; Aphrodite OB44 mana-regen soulmate scoring; Heartwood OB45 CDR/INT buff (milder active tax); World Stone ult CDR 25%; Sickle still live for true healers; Sundering relic 40% antiheal; heal Support ≤1 shop active.
+**Version:** 1.4.0 (OB45) — **Kit-identity hooks** (`smite2db/kit_identity.py`): detect unique scaling/conversion language (item-HP scale, base-damage-only, permanent Max HP, Plating/Dampening stacks, ally shield/heal, haunt shred). When `identity_lock` fires, identity beats role staples + high-SR inspiration. Prefer lists put identity cores first; `kit_ok` exempts Ethereal/Contagion/Thebes/Hide-class under HP hooks; `_ensure_identity_cores` hard-injects after inspire/scrub (same idea as enchanter Sickle). Aspect-unlocked enchanter Mid may take Sickle/Asclepius. Prior 1.3.0: Hel allowlist; Aphrodite MPR; Heartwood OB45; Sickle live; Sundering 40%.
 
 **Inventory model (SMITE 2):** starter slot separate · 6 shop items · ≤2–3 On-Use actives · relics separate.
 
@@ -17,12 +17,12 @@ When two signals conflict, **higher wins**:
 | Rank | Layer | Rule |
 |-----:|--------|------|
 | 1 | **Hard gates** | Illegal items never appear (damage type, god-only, removed shop, healer-only, etc.) |
-| 2 | **Role job** | Carry shreds/crits, Mid online pen, Jungle ganks (no Omen-as-core), Solo offline+bulk, Support aura/peel (**no Jotunn/Titan/Hydra damage cores**) |
-| 3 | **Buy order / spikes** | Item *sequence* matters as much as the set; early online before late % pen / luxury |
-| 4 | **Kit identity** | Tags, effects, scaling (STR/INT), archetype slot recipe |
-| 5 | **Ladder + patch** | S/A item momentum; C/D soft penalty; role-gated so tank S doesn’t invade Mid |
-| 6 | **High-SR inspiration** | Soft frequency + average inventory slot from tracker.gg — **nudge, never override 1–3** |
-| 7 | **Light diversify** | Only shell / last flex so gods aren’t clones; **never scramble pen/opener cores** |
+| 2 | **Kit identity hooks** | When `identity_lock` (strong text hooks): prefer/ban + archetype nudge; amplify the character gimmick |
+| 3 | **Role job** | Carry shreds/crits, Mid online pen, Jungle ganks, Solo offline+bulk, Support aura/peel — **softened** under identity_lock (e.g. Thermotherapy Mid = utility, not Thoth) |
+| 4 | **Buy order / spikes** | Item *sequence* matters as much as the set; early online before late % pen / luxury |
+| 5 | **Ladder + patch** | S/A item momentum; C/D soft penalty; muted when fighting identity cores |
+| 6 | **High-SR inspiration** | Soft frequency + avg slot — **nudge only**; skip staples that fight hooks under identity_lock |
+| 7 | **Light diversify** | Only shell / last flex so gods aren’t clones; **never scramble pen/opener cores** (unless identity says otherwise) |
 
 Troll / meme and counter paths are **separate pipelines** (same gates, different objective).
 

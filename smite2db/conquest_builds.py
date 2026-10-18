@@ -34,6 +34,11 @@ from .kit_effects import (
     family_score_boost,
     prefer_ban_adjust,
 )
+from .kit_identity import (
+    apply_identity_to_bias,
+    detect_identity_hooks,
+    identity_fights_item,
+)
 from .tracker_inspire import inspiration_boost, inspiration_buy_rank
 from .skill_order import compute_skill_order
 # algorithm_card imported lazily in build_god_build to avoid circular import
@@ -160,14 +165,23 @@ def _is_removed_or_unavailable_item(name: str) -> bool:
 
 def _is_true_healer(bias: dict | None) -> bool:
     """
-    Hard gate for Asclepius / Lifebinder class items.
-    Name allowlist only (Aphrodite / Guan Yu / Yemoja) — kit heal_count is noisy
-    and was putting heal cores on non-heal supports like Athena/Artio.
+    Hard gate for Asclepius / Lifebinder / Sickle class items.
+
+    Name allowlist (Aphrodite / Guan / Yemoja / Hel / …) plus aspect/kit unlocks:
+    mid_enchanter or identity_lock with ally_heal/ally_shield hooks (Ra Thermo,
+    Ix Chel Mother's Light, etc.). Noisy heal_count alone is never enough.
     """
     if not bias:
         return False
     name = (bias.get("god_name") or "").lower().strip()
-    return name in TRUE_HEALER_NAMES
+    if name in TRUE_HEALER_NAMES:
+        return True
+    if bias.get("mid_enchanter"):
+        return True
+    hooks = set(bias.get("identity_hooks") or [])
+    if bias.get("identity_lock") and hooks & {"ally_heal", "ally_shield", "base_damage_only"}:
+        return True
+    return False
 
 
 def _wants_mage_lifesteal(bias: dict | None) -> bool:
@@ -1847,7 +1861,10 @@ def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, Any]:
         "ability_blob": blob[:4000],
         "full_blob": full_blob[:2000],
     }
-    # Structured effects + optional human overrides
+    # Character-unique hooks from base ability text (weaker than aspects)
+    id_prof = detect_identity_hooks(full_blob or blob, is_aspect=False)
+    base_bias = apply_identity_to_bias(base_bias, id_prof)
+    # Structured effects + optional human overrides (overrides win prefer/ban)
     base_bias = apply_kit_overrides(base_bias, god_name)
     effects = extract_kit_effects(base_bias)
     base_bias["effects"] = effects
@@ -1880,13 +1897,19 @@ def rescore_for_god(
     mage = dtype == "magical" or primary == "Intelligence"
     physical = (not mage) and (dtype == "physical" or primary == "Strength")
 
-    # Soft high-SR inspiration (tracker.gg) — never hard-override kit bans
+    # Soft high-SR inspiration (tracker.gg) — never hard-override kit bans.
+    # Identity lock: dampen so staples cannot erase character hooks.
     t_boost, _t_why = inspiration_boost(
         item.name,
         god_name=str(bias.get("god_name") or ""),
         role=role,
     )
     if t_boost:
+        if bias.get("identity_lock"):
+            if identity_fights_item(item.name, bias):
+                t_boost = 0.0
+            else:
+                t_boost *= 0.3
         s += t_boost
 
     # --- Damage-type alignment (hard) ---
@@ -2064,8 +2087,14 @@ def rescore_for_god(
             s += 36
         elif any(k in nlow for k in ("devourer", "bloodforge", "titan")):
             s += 30
-        # Mid-shell is Solo identity — kills gank tempo (esp. post-Shifter nerf)
-        if any(
+        _hp_jg_id = bool(
+            bias.get("identity_lock")
+            and set(bias.get("identity_hooks") or [])
+            & {"permanent_max_hp", "max_hp_scale", "item_hp_scale"}
+        )
+        # Mid-shell is Solo identity — kills gank tempo (esp. post-Shifter nerf).
+        # Max-HP identity junglers (Thanatos Reaping) WANT Contagion/Hide/Gladiator.
+        if not _hp_jg_id and any(
             k in nlow
             for k in (
                 "shifter",
@@ -2083,10 +2112,20 @@ def rescore_for_god(
         ):
             s -= 55
         if item.item_type == "Defensive" and pen_v < 8 and (str_v + int_v) < 35:
-            s -= 40
+            if _hp_jg_id and _canon_stat_value(item.stats, "hp") >= 200:
+                s += 28  # HP stack is the damage amp
+            else:
+                s -= 40
         # Spectral / aura peel is Support identity — not jungle core
-        if any(k in nlow for k in ("spectral", "midgardian", "thebes", "chandra", "contagion")):
+        if not _hp_jg_id and any(
+            k in nlow for k in ("spectral", "midgardian", "thebes", "chandra", "contagion")
+        ):
             s -= 50
+        if _hp_jg_id and any(
+            k in nlow
+            for k in ("contagion", "gladiator", "leviathan", "hide", "thebes", "ethereal", "mystical")
+        ):
+            s += 45
         # Crit ADC toys rarely belong on ability junglers
         if any(k in nlow for k in ("deathbringer", "musashi", "avenging", "wind demon")):
             s -= 35
@@ -2095,7 +2134,16 @@ def rescore_for_god(
     elif role == "Carry":
         # AA carries: AS/crit/LS first-class; ability hunters stay secondary
         aaish = "aa" in tags or float(bias.get("aa_score") or 0) >= 0.5 or "as_steroid" in tags
-        if aaish and physical:
+        _hp_carry = bool(
+            bias.get("identity_lock")
+            and "item_hp_scale" in set(bias.get("identity_hooks") or [])
+        )
+        if _hp_carry and any(
+            k in nlow
+            for k in ("ethereal", "contagion", "thebes", "isolation", "spectral", "prophetic")
+        ):
+            s += 40
+        if aaish and physical and not _hp_carry:
             s += as_v * 0.9 + crit_v * 1.0 + ls_v * 0.45
             if any(k in nlow for k in ("jotunn", "hydra")):
                 s -= 35  # gap/ability items, not ADC cores
@@ -2115,6 +2163,11 @@ def rescore_for_god(
                 )
             ):
                 s += 28
+        elif aaish and physical and _hp_carry:
+            # Soft AS still useful; do not juice crit openers over HP cores
+            s += as_v * 0.35 + ls_v * 0.25
+            if any(k in nlow for k in ("riptalon", "deathbringer", "musashi", "avenging", "wind demon")):
+                s -= 20
 
     # --- Kit tag affinities (LARGE — this is what diversifies gods) ---
     if "mana_stack" in tags:
@@ -2254,7 +2307,11 @@ def rescore_for_god(
             if role in ("Support", "Solo"):
                 s += 40
             elif role == "Mid":
-                s -= 30  # mid is damage; heal items belong on Support
+                # Aspect-unlocked enchanter Mid (Ra Thermo etc.) wants heal cores
+                if bias.get("mid_enchanter"):
+                    s += 45
+                else:
+                    s -= 30  # default Mid is damage; heal items belong on Support
         if physical and (
             ls_v >= 8 or any(k in nlow for k in ("bloodforge", "devourer", "sanguine", "gladiator"))
         ):
@@ -2269,13 +2326,17 @@ def rescore_for_god(
         if _is_heal_core_item(item.name) and true_healer:
             s += 55  # real healers actually want these early
             # OB43: Sickle is Offensive (Support tax) — still identity for enchanters
-            if _is_enchanter_proc_item(item.name) and role == "Support":
+            if _is_enchanter_proc_item(item.name) and role in ("Support", "Mid") and (
+                role == "Support" or bias.get("mid_enchanter")
+            ):
                 s += 45
             # Prefer passive Sickle + Asclepius over nerfed Heartwood active
-            if "asclepius" in nlow and role == "Support":
-                s += 25
-            if "lotus sickle" in nlow and role == "Support":
-                s += 20
+            if "asclepius" in nlow and role in ("Support", "Mid"):
+                if role == "Support" or bias.get("mid_enchanter"):
+                    s += 25
+            if "lotus sickle" in nlow and role in ("Support", "Mid"):
+                if role == "Support" or bias.get("mid_enchanter"):
+                    s += 20
             if "heartwood" in nlow:
                 # OB45: CDR 10→20%, INT 40→45 — still an active; keep mild flex tax
                 s -= 12
@@ -2587,13 +2648,18 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
     sd = float(bias.get("style_dps") or 0.5)
     aa = float(bias.get("aa_score") or 0)
 
+    hooks = set(bias.get("identity_hooks") or [])
+
     if role == "Support":
         # Heal cores (Asclepius/Lifebinder) only for real heal kits — not every team_buff support
         if _is_true_healer(bias) and (
-            "heavy_heal" in tags or "heal" in tags or "team_buff" in tags
+            "heavy_heal" in tags
+            or "heal" in tags
+            or "team_buff" in tags
+            or hooks & {"ally_heal", "ally_shield"}
         ):
             return "heal_support"
-        if "heavy_shield" in tags or "shield" in tags:
+        if "heavy_shield" in tags or "shield" in tags or "ally_shield" in hooks:
             return "shield_support"
         if "high_cc" in tags or "hard_cc" in tags:
             return "lockdown_support"
@@ -2602,12 +2668,19 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
         return "peel_support"
 
     if role == "Solo":
+        # Plating/Dampening stack identity (Ravana Rakshasa etc.)
+        if "plat_damp_stack" in hooks:
+            return "tank_solo"
         # Frontline first — only pure mage tanks use mage_solo
         if "heavy_heal" in tags or ("heal" in tags and "self_sustain" in tags):
             return "sustain_solo"
         if "heavy_shield" in tags or "shield" in tags:
             return "shield_solo"
-        if mage and float(bias.get("int") or 0) >= float(bias.get("str") or 0) + 0.2:
+        if mage and (
+            "haunt_shred" in hooks
+            or "max_hp_scale" in hooks
+            or float(bias.get("int") or 0) >= float(bias.get("str") or 0) + 0.2
+        ):
             return "mage_solo"
         if sb >= 0.55 and float(bias.get("kit_burst") or 0) >= 30:
             return "bruiser_solo"
@@ -2617,6 +2690,9 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
         # Flex-friendly: mages, solo bruisers, and traditional assassins all get paths
         if mage:
             return "mage_jungle"
+        # Permanent Max HP / %HP scythe identity before glass AA
+        if "permanent_max_hp" in hooks or "max_hp_scale" in hooks:
+            return "sustain_assassin"
         # True AA jungle only — noisy "basic attack" tags made everyone aa_assassin
         if (aa >= 0.7 or ("aa" in tags and "as_steroid" in tags)) and "as_steroid" in tags:
             return "aa_assassin"
@@ -2643,6 +2719,8 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
         return "burst_assassin"
 
     if role == "Carry":
+        if "item_hp_scale" in hooks:
+            return "utility_adc"
         if mage:
             # True AA mages (Sol / Chronos style) — AS path, not mid clone
             if "aa" in tags or aa >= 0.55 or "as_steroid" in tags:
@@ -2658,6 +2736,11 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
         return "power_adc"
 
     # Mid — most specific kit identity first
+    if bias.get("mid_enchanter") or (
+        hooks & {"base_damage_only", "ally_heal", "ally_shield"}
+        and float(bias.get("aspect_power_penalty") or 0) >= 0.2
+    ):
+        return "utility_mage"
     if "mana_stack" in tags:
         return "mana_mage"
     if "heavy_dot" in tags or ("dot" in tags and "zone" in tags):
@@ -2691,19 +2774,24 @@ ARCHETYPE_SLOTS: dict[str, list[str]] = {
     "channel_mage": ["flat_pen", "pct_pen", "power", "cdr", "echo_core", "defense"],
     "spam_mage": ["flat_pen", "pct_pen", "cdr", "power", "echo_core", "defense"],
     "sustain_mage": ["flat_pen", "pct_pen", "power", "cdr", "sustain", "echo_core"],
+    # Aspect enchanter Mid (Ra Thermo): heal amp → CDR → aura → lockdown (no Thoth)
+    "utility_mage": ["heal_aura", "cdr", "aura", "defense", "mitigate", "counter"],
     "aa_mage": ["aa_core", "flat_pen", "pct_pen", "as_core", "power", "defense"],
     "zone_mage": ["flat_pen", "pct_pen", "zone_core", "power", "cdr", "echo_core"],
     # Carry — opener → shred (Exec/OBow) → Titan % pen → crit (not crit before shred)
     "crit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "crit_core", "power"],
     "onhit_adc": ["as_core", "onhit", "pct_pen", "ls_core", "power", "crit_core"],
     "power_adc": ["stack", "as_core", "onhit", "pct_pen", "power", "crit_core"],
+    # Item-HP scale Carry (Apollo Harmony): HP stack before crit toys
+    "utility_adc": ["hybrid_bulk", "defense", "onhit", "mitigate", "power", "as_core"],
     # Mage ADC flex: pen first so tanks die in duo
     "dot_mage_adc": ["flat_pen", "pct_pen", "dot_core", "power", "power", "luxury"],
     "aa_mage_adc": ["as_core", "flat_pen", "pct_pen", "power", "ls_core", "power"],
     "ability_mage_adc": ["flat_pen", "pct_pen", "power", "power", "cdr", "luxury"],
     # Jungle — opener → flat pen → % pen → power (Crusher/Titan before luxury Echo)
     "burst_assassin": ["gap", "flat_pen", "pct_pen", "power", "echo_core", "cdr"],
-    "sustain_assassin": ["gap", "flat_pen", "pct_pen", "ls_core", "power", "cdr"],
+    # HP-bank jungle (Thanatos Reaping): bulk/HP before pure glass
+    "sustain_assassin": ["hybrid_bulk", "gap", "flat_pen", "ls_core", "pct_pen", "power"],
     "aa_assassin": ["gap", "as_core", "flat_pen", "pct_pen", "ls_core", "power"],
     "bruiser_jungle": ["gap", "flat_pen", "pct_pen", "power", "hybrid_bulk", "echo_core"],
     "mage_jungle": ["flat_pen", "pct_pen", "power", "echo_core", "cdr", "power"],
@@ -3494,11 +3582,30 @@ def _inject_signature_items(
 
     path = list(path)
     injected = 0
-    # Allow more injects when human prefer list is long (Yogi's + Mystical + shell)
-    max_inject = max(2, min(3, len(forced) or 2))
+    # Allow more injects when human prefer list is long (Yogi's + Mystical + shell).
+    # Identity HP paths need 3–4 cores (Ethereal + Contagion + Thebes).
+    max_inject = max(2, min(4, len(forced) or 2)) if len(forced) >= 3 else max(2, min(3, len(forced) or 2))
+    # Prefer keys that are HP/bulk identity — relax physical INT filter
+    _hp_prefer_keys = (
+        "ethereal",
+        "contagion",
+        "thebes",
+        "isolation",
+        "gladiator",
+        "leviathan",
+        "hide",
+        "prophetic",
+        "spectral",
+        "mystical",
+        "shifter",
+        "binding",
+    )
     for key in prefs:
         if injected >= max_inject:
             break
+        # Skip vague tokens that match ADC toys ("wind" → Wind Demon)
+        if key in ("wind",) or len(key) < 4:
+            continue
         # already have a matching item?
         if any(key in x.name.lower().replace("’", "'") for x in path):
             continue
@@ -3509,6 +3616,7 @@ def _inject_signature_items(
             and key in x.name.lower().replace("’", "'")
             and not (x.is_active_item and actives >= max_actives)
         ]
+        hp_identity_key = any(k in key for k in _hp_prefer_keys)
         if mage:
             cands = [
                 x
@@ -3516,6 +3624,7 @@ def _inject_signature_items(
                 if _canon_stat_value(x.stats, "int") >= _canon_stat_value(x.stats, "str")
                 or x.item_type == "Defensive"
                 or _canon_stat_value(x.stats, "int") >= 25
+                or (hp_identity_key and _canon_stat_value(x.stats, "hp") >= 200)
             ]
         elif physical:
             cands = [
@@ -3523,8 +3632,11 @@ def _inject_signature_items(
                 for x in cands
                 if _canon_stat_value(x.stats, "str") >= _canon_stat_value(x.stats, "int")
                 or x.item_type == "Defensive"
+                or x.item_type == "Hybrid"
+                and hp_identity_key
                 or _canon_stat_value(x.stats, "str") >= 20
                 or _canon_stat_value(x.stats, "as") > 0
+                or (hp_identity_key and _canon_stat_value(x.stats, "hp") >= 200)
             ]
         if not cands:
             continue
@@ -4004,6 +4116,162 @@ def _god_flavor_flex(
     return path
 
 
+# Hook → forced cores when identity_lock (after inspire/scrub). Order matters.
+_IDENTITY_FORCE_CORES: dict[str, tuple[str, ...]] = {
+    "item_hp_scale": ("ethereal", "contagion", "thebes"),
+    "permanent_max_hp": ("contagion", "gladiator", "leviathan", "hide of the nemean"),
+    "max_hp_scale": ("contagion", "gladiator", "ethereal", "leviathan"),
+    "plat_damp_stack": ("spectral", "alchemist", "mystical", "shifter"),
+    "haunt_shred": ("ethereal", "thebes", "isolation", "binding"),
+    "base_damage_only": ("lotus sickle", "asclepius", "chronos"),
+    "ally_heal": ("lotus sickle", "asclepius"),
+    "ally_shield": ("lotus sickle", "asclepius", "thebes"),
+}
+
+
+def _ensure_identity_cores(
+    path: list[ScoredItem],
+    pool: list[ScoredItem],
+    *,
+    max_actives: int,
+    bias: dict | None = None,
+    role: str = "",
+) -> list[ScoredItem]:
+    """
+    Force 2–3 kit-identity cores onto locked paths after inspire/scrub.
+
+    Prefer-inject can miss when base AA tokens or physical/INT filters eat
+    slots (Apollo Harmony Ethereal; Thanatos Contagion/Hide). This is the
+    hard backstop — same idea as _ensure_enchanter_cores.
+    """
+    bias = bias or {}
+    if not path or not bias.get("identity_lock"):
+        return path
+    hooks = set(bias.get("identity_hooks") or [])
+    if not hooks:
+        return path
+
+    want: list[str] = []
+    for h in (
+        "item_hp_scale",
+        "permanent_max_hp",
+        "max_hp_scale",
+        "plat_damp_stack",
+        "haunt_shred",
+        "base_damage_only",
+        "ally_heal",
+        "ally_shield",
+    ):
+        if h not in hooks:
+            continue
+        for k in _IDENTITY_FORCE_CORES.get(h, ()):
+            if k not in want:
+                want.append(k)
+    # Prefer list as secondary (already identity-first under lock)
+    for p in bias.get("prefer_items") or []:
+        pl = str(p).lower().strip()
+        if pl and pl not in want and not any(b and b in pl for b in (bias.get("ban_items") or [])):
+            want.append(pl)
+    if not want:
+        return path
+
+    bans = [str(b).lower() for b in (bias.get("ban_items") or [])]
+    want = [k for k in want if not any(b and b in k for b in bans)]
+    # Cap: 3 cores for HP identity, 2 otherwise
+    max_force = 3 if hooks & {"item_hp_scale", "permanent_max_hp", "max_hp_scale", "haunt_shred"} else 2
+    want = want[: max_force + 2]  # try a few extras if early keys miss shop
+
+    new_path = list(path)[:6]
+    have = {x.name.lower() for x in new_path}
+    protect = tuple(want[:6]) + ("thebes", "ethereal", "contagion", "gladiator", "leviathan")
+
+    def _find(key: str) -> ScoredItem | None:
+        # Prefer exact-ish longer keys; skip vague tokens
+        if len(key) < 4:
+            return None
+        cands = [c for c in pool if key in c.name.lower()]
+        if not cands:
+            return None
+        # Prefer high HP / Defensive / Hybrid for HP hooks
+        cands.sort(
+            key=lambda x: (
+                _canon_stat_value(x.stats, "hp"),
+                1 if x.item_type in ("Defensive", "Hybrid") else 0,
+                x.role_score,
+            ),
+            reverse=True,
+        )
+        for cand in cands:
+            if cand.is_active_item and sum(1 for x in new_path if x.is_active_item) >= max_actives:
+                if not any(key in x.name.lower() for x in new_path if x.is_active_item):
+                    if not cand.is_active_item:
+                        return cand
+            return cand
+        return None
+
+    forced = 0
+    for key in want:
+        if forced >= max_force:
+            break
+        if any(key in h for h in have):
+            continue
+        cand = _find(key)
+        if not cand:
+            continue
+        # Swap AA/assassin filler first
+        soft = (
+            "riptalon",
+            "musashi",
+            "avenging",
+            "tekko",
+            "sanguine",
+            "wind demon",
+            "deathbringer",
+            "tyrfing",
+            "damaru",
+            "reaper",
+            "heartseeker",
+            "hydra",
+            "crusher",
+            "jotunn",
+            "executioner",
+            "odysseus",
+            "qin",
+            "demon blade",
+            "death metal",
+        )
+        idxs = [
+            i
+            for i, x in enumerate(new_path)
+            if not any(p in x.name.lower() for p in protect)
+            and any(s in x.name.lower() for s in soft)
+        ]
+        if not idxs:
+            idxs = [
+                i
+                for i, x in enumerate(new_path)
+                if not any(p in x.name.lower() for p in protect)
+            ]
+        if not idxs:
+            continue
+        idx = min(idxs, key=lambda i: new_path[i].role_score)
+        if cand.is_active_item:
+            actives = sum(1 for x in new_path if x.is_active_item)
+            if not new_path[idx].is_active_item and actives >= max_actives:
+                act_idxs = [
+                    i
+                    for i, x in enumerate(new_path)
+                    if x.is_active_item and not any(p in x.name.lower() for p in protect)
+                ]
+                if not act_idxs:
+                    continue
+                idx = min(act_idxs, key=lambda i: new_path[i].role_score)
+        new_path[idx] = cand
+        have = {x.name.lower() for x in new_path}
+        forced += 1
+    return new_path[:6]
+
+
 def _ensure_enchanter_cores(
     path: list[ScoredItem],
     pool: list[ScoredItem],
@@ -4311,10 +4579,33 @@ def _normalize_jungle_path(
     Enforce standard jungle identity:
       1) Open Jotunn / Hydra OR a stacking item (Trans / HS / DG)
       2) Then pen + power (not four more openers, not ADC toys)
+
+    Permanent Max HP / %HP identity (Thanatos Reaping): keep HP cores; only
+    ensure one gap opener — do not strip Contagion/Gladiator/Hide as "shells".
     """
     if not path:
         return path
     path = list(path)
+    hooks = set(bias.get("identity_hooks") or [])
+    if bias.get("identity_lock") and hooks & {"permanent_max_hp", "max_hp_scale"}:
+        # Light touch: ensure a gap tool exists; preserve HP identity items
+        seen = {x.name for x in path}
+        has_gap = any(
+            any(k in x.name.lower() for k in ("jotunn", "hydra", "crusher", "pendulum", "heartseeker"))
+            for x in path
+        )
+        if not has_gap:
+            for x in pool:
+                n = x.name.lower()
+                if any(k in n for k in ("jotunn", "hydra", "crusher")) and x.name not in seen:
+                    # Replace lowest-HP non-prefer filler
+                    drop = min(
+                        range(len(path)),
+                        key=lambda i: _canon_stat_value(path[i].stats, "hp"),
+                    )
+                    path[drop] = x
+                    break
+        return path[:6]
     arch = detect_archetype(bias, "Jungle", mage, physical)
     aa = arch == "aa_assassin"
     seen = {x.name for x in path}
@@ -5011,10 +5302,13 @@ def _ensure_inspired_cores(
     mage: bool,
     physical: bool,
     max_actives: int,
+    bias: dict | None = None,
 ) -> list[ScoredItem]:
     """
     Inject 1–2 high-SR openers/staples into the path when missing.
     Order is applied later by _order_buy_path — this only ensures the items exist.
+
+    When bias.identity_lock is set, skip staples that fight the character hook.
     """
     from .tracker_inspire import load_inspiration
 
@@ -5024,21 +5318,28 @@ def _ensure_inspired_cores(
     path = list(path)
     seen = {x.name for x in path}
     want: list[str] = []
+    bias = bias or {}
+    lock = bool(bias.get("identity_lock"))
 
     # God-specific openers first
     gr = (data.get("by_god_role") or {}).get(f"{god_name}|{role}")
     if gr and gr.get("games", 0) >= 3:
         for name, meta in list((gr.get("openers") or {}).items())[:3]:
             if float(meta.get("rate") or 0) >= 0.18:
+                if lock and identity_fights_item(name, bias):
+                    continue
                 want.append(name)
     # Role openers (high-SR)
     rr = (data.get("by_role") or {}).get(role) or {}
     for name, meta in list((rr.get("openers") or {}).items())[:4]:
         if float(meta.get("rate") or 0) >= 0.12 and name not in want:
+            if lock and identity_fights_item(name, bias):
+                continue
             want.append(name)
 
     # Role hard staples from ladder snapshot (always try if legal).
     # Soft % pen: do NOT staple Obsidian/Titan — those are tanks_hp flex, not cores.
+    # Identity lock: skip role staples entirely for enchanter Mid / HP Carry / etc.
     role_staples = {
         "Mid": ("Spear of Desolation", "Book of Thoth"),
         "Carry": (
@@ -5059,11 +5360,37 @@ def _ensure_inspired_cores(
             "Jungle": ("Spear of Desolation", "Book of Thoth", "Rod of Tahuti"),
             "Carry": ("Spear of Desolation", "Book of Thoth", "Soul Reaver"),
         }
-    for name in role_staples.get(role, ()):
-        if name not in want:
-            want.append(name)
+    _id_hooks = set(bias.get("identity_hooks") or [])
+    _skip_role_staples = bool(
+        lock
+        and (
+            bias.get("mid_enchanter")
+            or _id_hooks
+            & {
+                "item_hp_scale",
+                "permanent_max_hp",
+                "max_hp_scale",
+                "haunt_shred",
+                "plat_damp_stack",
+                "base_damage_only",
+            }
+        )
+    )
+    if not _skip_role_staples:
+        for name in role_staples.get(role, ()):
+            if name not in want:
+                if lock and identity_fights_item(name, bias):
+                    continue
+                want.append(name)
+    if lock:
+        # Cap inject list so identity cores are not drowned
+        want = want[:2]
 
-    # Jungle high-SR is polluted by Solo flex / bruiser games — never inspire shells
+    # Jungle high-SR is polluted by Solo flex / bruiser games — never inspire shells.
+    # Exception: Max-HP identity junglers (Thanatos Reaping) want Contagion/Hide/Gladiator.
+    _hp_jg = bool(
+        lock and set(bias.get("identity_hooks") or []) & {"permanent_max_hp", "max_hp_scale"}
+    )
     _jungle_shell_ban = (
         "shifter",
         "breastplate",
@@ -5073,14 +5400,17 @@ def _ensure_inspired_cores(
         "thebes",
         "prophetic",
         "oni hunter",
-        "leviathan",
-        "gladiator",
         "dwarven",
-        "contagion",
         "mantle of discord",
         "magi's",
         "chandra",
     )
+    if not _hp_jg:
+        _jungle_shell_ban = _jungle_shell_ban + (
+            "leviathan",
+            "gladiator",
+            "contagion",
+        )
 
     def legal(it: ScoredItem) -> bool:
         if it.name in seen:
@@ -6126,6 +6456,37 @@ def build_god_build(
         # God-specific (acorns, mods, …): owner only (Ratatoskr acorns)
         if is_god_specific_item(s) or is_god_specific_item(s.name):
             return item_allowed_for_god(s.name, god_name_gate)
+        # Identity HP / bulk hooks: Ethereal + Contagion-class must stay in pool
+        _id_hooks_kit = set(bias.get("identity_hooks") or [])
+        _hp_id_kit = bool(
+            bias.get("identity_lock")
+            and _id_hooks_kit
+            & {
+                "item_hp_scale",
+                "permanent_max_hp",
+                "max_hp_scale",
+                "haunt_shred",
+                "plat_damp_stack",
+            }
+        )
+        _hp_identity_item = any(
+            k in nlow
+            for k in (
+                "ethereal",
+                "contagion",
+                "thebes",
+                "gladiator",
+                "leviathan",
+                "hide of the nemean",
+                "mystical mail",
+                "spectral",
+                "prophetic",
+                "isolation",
+                "binding",
+                "shifter",
+                "alchemist",
+            )
+        )
         # Cross-type hard bans
         if physical and any(
             k in nlow
@@ -6147,7 +6508,9 @@ def build_god_build(
                 "rod of asclepius",
             )
         ):
-            return False
+            # Ethereal is INT Hybrid but is the item-HP payoff for physical Harmony etc.
+            if not (_hp_id_kit and "ethereal" in nlow):
+                return False
         if mage and any(
             k in nlow
             for k in (
@@ -6166,8 +6529,10 @@ def build_god_build(
             )
         ):
             return False
+        # Ethereal Staff is INT-tagged Hybrid — still legal under item-HP identity
         if physical and int_v >= 40 and str_v < 25:
-            return False
+            if not (_hp_id_kit and _hp_identity_item and _canon_stat_value(s.stats, "hp") >= 200):
+                return False
         if mage and str_v >= 40 and int_v < 25:
             return False
         if role == "Support":
@@ -6227,31 +6592,31 @@ def build_god_build(
                 return False
             return True
         if role == "Jungle":
-            if any(
-                k in nlow
-                for k in (
-                    "spectral",
-                    "midgardian",
-                    "thebes",
-                    "chandra",
-                    "phoenix",
-                    "alchemist",
-                    "pridwen",
-                    "contagion",
-                    # Mid-shell is Solo — high-SR "jungle" games often mis-role bruisers
-                    "shifter",
-                    "breastplate",
-                    "genji",
-                    "prophetic",
-                    "oni hunter",
-                    "leviathan",
-                    "gladiator",
-                    "dwarven",
-                    "mantle of discord",
-                    "magi's",
-                )
-            ):
-                return False
+            _jg_shell_ban = (
+                "spectral",
+                "midgardian",
+                "thebes",
+                "chandra",
+                "phoenix",
+                "alchemist",
+                "pridwen",
+                "contagion",
+                # Mid-shell is Solo — high-SR "jungle" games often mis-role bruisers
+                "shifter",
+                "breastplate",
+                "genji",
+                "prophetic",
+                "oni hunter",
+                "leviathan",
+                "gladiator",
+                "dwarven",
+                "mantle of discord",
+                "magi's",
+            )
+            if any(k in nlow for k in _jg_shell_ban):
+                # Max-HP identity junglers (Thanatos Reaping) need these in pool
+                if not (_hp_id_kit and _hp_identity_item):
+                    return False
             # Ability jungles: no ADC crit/AS toys unless true AA assassin
             arch = detect_archetype(bias, role, mage, physical)
             if arch != "aa_assassin":
@@ -6265,24 +6630,24 @@ def build_god_build(
                 return False
             return True
         if role == "Carry":
-            if any(
-                k in nlow
-                for k in (
-                    "alchemist",
-                    "spectral",
-                    "phoenix",
-                    "thebes",
-                    "midgardian",
-                    "chandra",
-                    "shifter",
-                    "breastplate",
-                    "genji",
-                    "contagion",
-                    "prophetic",
-                    "pridwen",
-                )
-            ):
-                return False
+            _carry_shell_ban = (
+                "alchemist",
+                "spectral",
+                "phoenix",
+                "thebes",
+                "midgardian",
+                "chandra",
+                "shifter",
+                "breastplate",
+                "genji",
+                "contagion",
+                "prophetic",
+                "pridwen",
+            )
+            if any(k in nlow for k in _carry_shell_ban):
+                # Item-HP Carry (Apollo Harmony) needs Thebes/Contagion/Ethereal
+                if not (_hp_id_kit and _hp_identity_item):
+                    return False
             # AA ADC: no solo/jungle ability cores
             if physical and aaish and any(
                 k in nlow
@@ -6296,22 +6661,27 @@ def build_god_build(
                     "berserker",
                 )
             ):
-                return False
+                if not (_hp_id_kit and _hp_identity_item):
+                    return False
         if role == "Mid" and mage:
             # No heal-support openers / frontline shells as mid cores
-            if any(
-                k in nlow
-                for k in (
-                    "lifebinder",
-                    "asclepius",
-                    "thebes",
-                    "spectral",
-                    "phoenix",
-                    "stampede",
-                    "chandra",
-                )
-            ):
-                return False
+            # Exception: mid_enchanter / identity utility mage (Ra Thermo, etc.)
+            _mid_shell = (
+                "lifebinder",
+                "asclepius",
+                "thebes",
+                "spectral",
+                "phoenix",
+                "stampede",
+                "chandra",
+            )
+            if any(k in nlow for k in _mid_shell):
+                if not (
+                    bias.get("mid_enchanter")
+                    or bias.get("force_archetype") in ("utility_mage", "utility_adc")
+                    or _hp_id_kit
+                ):
+                    return False
             # Soul Gem / Bancroft line — only real self-sustain kits (not every mid)
             if any(k in nlow for k in ("soul gem", "gluttonous", "bancroft", "typhon")):
                 if not _wants_mage_lifesteal(bias) and "self_sustain" not in tags_kit:
@@ -6353,9 +6723,16 @@ def build_god_build(
         t3, bias, role, mage=mage, physical=physical, max_actives=max_act
     )
     # --- P6 Structural repair ---
-    items_6 = _ensure_pen_in_path(
-        items_6, t3, role, max_act, mage=mage, physical=physical
+    # Utility / enchanter identity paths skip forced Deso/Thoth pen floors
+    skip_pen_floor = bool(
+        bias.get("mid_enchanter")
+        or "item_hp_scale" in set(bias.get("identity_hooks") or [])
+        or bias.get("force_archetype") in ("utility_mage", "utility_adc")
     )
+    if not skip_pen_floor:
+        items_6 = _ensure_pen_in_path(
+            items_6, t3, role, max_act, mage=mage, physical=physical
+        )
     if role == "Jungle":
         items_6 = _normalize_jungle_path(
             items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
@@ -6379,8 +6756,16 @@ def build_god_build(
         items_6 = _normalize_carry_path(
             items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
         )
-    if role in DAMAGE_ROLES_NEED_PEN:
+    _hp_id = bool(
+        bias.get("identity_lock")
+        and set(bias.get("identity_hooks") or [])
+        & {"item_hp_scale", "permanent_max_hp", "max_hp_scale", "haunt_shred"}
+    )
+    if role in DAMAGE_ROLES_NEED_PEN and not _hp_id:
         items_6 = _trim_excess_defense(items_6, t3, max_defense=1, max_actives=max_act)
+    elif role in DAMAGE_ROLES_NEED_PEN and _hp_id:
+        # HP-identity Carry/Jungle may keep multiple bulk cores
+        items_6 = _trim_excess_defense(items_6, t3, max_defense=3, max_actives=max_act)
     elif role in ("Solo", "Support"):
         # keep frontline bulk — no trim
         pass
@@ -6390,7 +6775,14 @@ def build_god_build(
         items_6, t3, god_nm, max_actives=max_act, role=role
     )
     items_6 = _ensure_inspired_cores(
-        items_6, t3, role, god_nm, mage=mage, physical=physical, max_actives=max_act
+        items_6,
+        t3,
+        role,
+        god_nm,
+        mage=mage,
+        physical=physical,
+        max_actives=max_act,
+        bias=bias,
     )
     # Final soft-%-pen pass — inspire / jungle normalize may have re-slotted Titan/Shard
     if role in DAMAGE_ROLES_NEED_PEN:
@@ -6407,13 +6799,19 @@ def build_god_build(
         max_actives=max_act,
         tags=set(bias.get("tags") or []),
     )
-    # OB43: true-healer Support must keep Sickle + Asclepius (inspire loves Stampede/Shell)
-    if role == "Support" and _is_true_healer(bias):
+    # OB43: true-healer Support must keep Sickle + Asclepius (inspire loves Stampede/Shell).
+    # Aspect-unlocked enchanter Mid (Ra Thermo) gets the same identity inject.
+    if _is_true_healer(bias) and (
+        role == "Support" or (role == "Mid" and bias.get("mid_enchanter"))
+    ):
         items_6 = _ensure_enchanter_cores(
             items_6, t3, max_actives=max_act, bias=bias
         )
-    # Re-assert human kit cores after SR inspire (Cu: Yogi's + Mystical Mail)
-    if bias.get("prefer_items") and role in ("Solo", "Support"):
+    # Re-assert kit prefer cores after SR inspire (all roles when identity_lock;
+    # always Solo/Support for manual overrides like Cu Yogi's).
+    if bias.get("prefer_items") and (
+        role in ("Solo", "Support") or bias.get("identity_lock")
+    ):
         seen_pref = {x.name for x in items_6}
         act_pref = sum(1 for x in items_6 if x.is_active_item)
         items_6, _, _ = _inject_signature_items(
@@ -6430,15 +6828,17 @@ def build_god_build(
             prefer_items=list(bias.get("prefer_items") or []),
         )
         items_6 = items_6[:6]
-    # Inspire can reintroduce shells — strip again
+    # Inspire can reintroduce shells — strip again (HP-identity jungle is light-touch)
     if role == "Jungle":
         items_6 = _normalize_jungle_path(
             items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
         )
     if role == "Carry":
-        items_6 = _normalize_carry_path(
-            items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
-        )
+        # Item-HP Carry (Apollo Harmony): skip crit/shred normalize that erases HP cores
+        if "item_hp_scale" not in set(bias.get("identity_hooks") or []):
+            items_6 = _normalize_carry_path(
+                items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
+            )
     items_6 = _scrub_role_illegal_items(
         items_6,
         t3,
@@ -6448,6 +6848,16 @@ def build_god_build(
         max_actives=max_act,
         tags=set(bias.get("tags") or []),
     )
+    # Hard backstop: identity cores after all inspire/scrub/normalize
+    if bias.get("identity_lock"):
+        items_6 = _ensure_identity_cores(
+            items_6, t3, max_actives=max_act, bias=bias, role=role
+        )
+        # HP jungle: re-assert one gap opener after identity inject (clear tempo)
+        if role == "Jungle":
+            items_6 = _normalize_jungle_path(
+                items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
+            )
     # --- P7 Buy order (spike timing; high-SR avg_slot when available) ---
     items_6 = _order_buy_path(items_6, role, god_name=god_nm)
     # Avoid double luxury actives (Dreamer's + Wish-Granting) on damage roles

@@ -24,7 +24,7 @@ from typing import Any
 # Phase registry (human + machine readable)
 # ---------------------------------------------------------------------------
 
-ALGORITHM_VERSION = "1.3.0"
+ALGORITHM_VERSION = "1.4.0"
 ALGORITHM_DOC = "docs/BUILD_ALGORITHM.md"
 
 PHASES: list[dict[str, str]] = [
@@ -77,11 +77,11 @@ PHASES: list[dict[str, str]] = [
 
 PRIORITY_LAYERS: list[dict[str, str]] = [
     {"rank": "1", "layer": "hard_gates", "rule": "Illegal items never appear"},
-    {"rank": "2", "layer": "role_job", "rule": "Carry/Mid/Jungle/Solo/Support identity"},
-    {"rank": "3", "layer": "buy_order", "rule": "Spike timing before late % pen / luxury"},
-    {"rank": "4", "layer": "kit", "rule": "Tags, effects, scaling, archetype recipe"},
-    {"rank": "5", "layer": "ladder_patch", "rule": "S/A momentum; tank S muted on backline"},
-    {"rank": "6", "layer": "high_sr_inspire", "rule": "Soft frequency + avg_slot from tracker.gg"},
+    {"rank": "2", "layer": "kit_identity", "rule": "Hooks amplify unique scaling; identity_lock beats staples"},
+    {"rank": "3", "layer": "role_job", "rule": "Carry/Mid/Jungle/Solo/Support identity (soft under lock)"},
+    {"rank": "4", "layer": "buy_order", "rule": "Spike timing before late % pen / luxury"},
+    {"rank": "5", "layer": "ladder_patch", "rule": "S/A momentum; muted when fighting identity"},
+    {"rank": "6", "layer": "high_sr_inspire", "rule": "Soft frequency; skip staples that fight hooks"},
     {"rank": "7", "layer": "diversify", "rule": "Shell/flex only — never scramble openers/pen"},
 ]
 
