@@ -2770,7 +2770,7 @@ details.build-expand.is-aspect {
   border-top: 1px solid var(--border);
   backdrop-filter: blur(12px);
   box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.45);
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 4px;
 }
 .mobile-tab {
@@ -3150,18 +3150,20 @@ body.ui-simple .app {
 .simple-header {
   align-items: center;
   gap: 12px;
-  margin-bottom: 14px;
-  padding: 14px 16px;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
 }
 .simple-header h1 {
-  font-size: clamp(1.2rem, 3vw, 1.5rem) !important;
+  font-size: clamp(1.25rem, 3vw, 1.55rem) !important;
   letter-spacing: 0.04em !important;
-  margin: 0 0 4px !important;
+  margin: 0 0 2px !important;
 }
 .simple-header .site-tagline {
   margin: 0;
-  font-size: 1rem;
-  max-width: 40ch;
+  font-size: 0.98rem;
+  max-width: 42ch;
+  line-height: 1.35;
   color: #c5d0e8;
 }
 .simple-header .site-tagline strong { color: #fff; }
@@ -3268,45 +3270,66 @@ body.ui-simple .app {
 }
 .breadcrumbs .bc-part { color: var(--muted); }
 
-/* Builds mode toggle + sticky role */
-.builds-mode-bar {
-  display: flex;
-  gap: 8px;
-  margin: 0 0 14px;
-  padding: 4px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: rgba(0, 0, 0, 0.25);
-  width: fit-content;
-  max-width: 100%;
-}
-.builds-mode-btn {
-  font: inherit;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 8px 14px;
-  border-radius: 9px;
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-}
-.builds-mode-btn:hover { color: var(--text); }
-.builds-mode-btn.active {
-  color: #041018;
-  background: linear-gradient(135deg, var(--accent), #7b61ff);
-  border-color: transparent;
-}
+/* Builds find bar — search + role pills */
 .builds-sticky-role {
   position: sticky;
   top: 0;
   z-index: 20;
-  margin: 0 0 12px;
-  padding: 10px 12px 8px;
-  border-radius: 12px;
+  margin: 0 0 14px;
+  padding: 12px 14px 10px;
+  border-radius: 14px;
   border: 1px solid var(--border);
-  background: rgba(10, 12, 20, 0.92);
-  backdrop-filter: blur(8px);
+  background: rgba(10, 12, 20, 0.94);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+.builds-find-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.builds-search-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.builds-find-row input[type="search"] {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 1.05rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--text);
+}
+.builds-find-row input[type="search"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(76, 201, 240, 0.25);
+}
+.builds-hint {
+  margin: 8px 0 0;
+  font-size: 0.88rem;
+}
+.builds-all-label {
+  width: 100%;
+  margin: 0 0 4px;
+  font-size: 0.85rem;
+}
+.builds-back-btn {
+  margin-bottom: 8px;
+}
+.builds-sticky-role .role-pills {
+  margin: 0;
+  gap: 6px;
+}
+.builds-sticky-role .role-pill {
+  min-height: 42px;
+  padding: 10px 14px;
 }
 .step-label-inline {
   margin: 0 0 8px !important;
@@ -3387,18 +3410,26 @@ body.ui-simple .app {
   max-width: 100%;
   gap: 6px;
   margin-bottom: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
 }
 .simple-tabs .tab-btn {
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  min-width: 0;
   text-align: center;
   font-size: 0.92rem;
+  min-height: 44px;
 }
 .more-wrap {
   position: relative;
   flex: 0 0 auto;
+  display: flex;
 }
 .more-trigger {
   white-space: nowrap;
+  flex: 0 0 auto;
+  min-width: 5.5rem;
 }
 .more-menu {
   position: absolute;
