@@ -1902,38 +1902,6 @@ function setupBuilds() {
     if (updateHash) syncHashFromUi("builds");
   };
 
-  const openFocusedCard = () => {
-    if (!focusGodName) return;
-    const box = $("#build-gods");
-    if (!box) return;
-    const target = [...box.querySelectorAll("details[data-god]")].find(
-      (el) => (el.getAttribute("data-god") || "").toLowerCase() === focusGodName.toLowerCase()
-    );
-    if (!target) return;
-    target.open = true;
-    target.classList.add("deep-link-focus");
-    try {
-      target.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    } catch {
-      target.scrollIntoView();
-    }
-  };
-
-  const focusGod = (name, { updateHash = true } = {}) => {
-    const g = findGodByName(name);
-    if (!g) return false;
-    focusGodName = g.name;
-    // If search would hide them, clear it
-    if (search && search.value) {
-      search.value = "";
-      render();
-    } else {
-      openFocusedCard();
-    }
-    if (updateHash) syncHashFromUi("builds");
-    return true;
-  };
-
   const render = () => {
     const data = state.builds?.roles?.[activeRole];
     const t = data?.template || {};
@@ -2037,8 +2005,7 @@ function setupBuilds() {
       godsBox.innerHTML = gods.length
         ? gods
             .map((gb) =>
-              godBuildCard(gb, activeRole, {
-                open: focusGodName === gb.god,
+              godPickCard(gb, activeRole, {
                 isNative: !!gb.is_native,
               })
             )
@@ -2051,7 +2018,6 @@ function setupBuilds() {
           );
     }
     renderAllGodHits(q);
-    queueMicrotask(openFocusedCard);
   };
 
   const renderAllGodHits = (qRaw) => {
@@ -2136,43 +2102,10 @@ function setupBuilds() {
     }
   });
   $("#build-gods")?.addEventListener("click", (e) => {
-    // Only BASE/ASPECT toggle buttons — NOT the details card itself
-    // (the card also has data-path-mode, which was swallowing summary clicks)
-    const pathTog = e.target.closest("button.path-tog[data-path-mode]");
-    if (pathTog) {
+    const pick = e.target.closest("[data-search-god]");
+    if (pick) {
       e.preventDefault();
-      e.stopPropagation();
-      const card = pathTog.closest("details.build-expand");
-      if (!card) return;
-      const mode = pathTog.getAttribute("data-path-mode") === "aspect" ? "aspect" : "base";
-      card.setAttribute("data-current-path", mode);
-      card.classList.toggle("is-aspect", mode === "aspect");
-      card.querySelectorAll("button.path-tog").forEach((b) => {
-        b.classList.toggle("active", b.getAttribute("data-path-mode") === mode);
-      });
-      const nameEl = card.querySelector("[data-path-aspect-name]");
-      if (nameEl) nameEl.hidden = mode !== "aspect";
-      card.querySelectorAll("[data-path-panel]").forEach((p) => {
-        p.hidden = p.getAttribute("data-path-panel") !== mode;
-      });
-      const pill = card.querySelector("[data-path-summary-pill]");
-      if (pill) {
-        pill.textContent = mode === "aspect" ? "ASPECT" : "BASE";
-        pill.classList.toggle("path-aspect", mode === "aspect");
-        pill.classList.toggle("path-base", mode !== "aspect");
-      }
-      const panel = card.querySelector(`[data-path-panel="${mode}"]`);
-      const starter = panel?.querySelector(".starter-line")?.textContent?.replace(/^Start\s*/i, "").trim();
-      const names = [...(panel?.querySelectorAll(".buy-name") || [])]
-        .slice(0, 3)
-        .map((n) => n.textContent.trim())
-        .filter(Boolean);
-      const sub = card.querySelector("[data-path-summary-sub]");
-      if (sub) {
-        sub.innerHTML = `Start <strong>${escapeHtml(starter || "—")}</strong>${
-          names.length ? ` · ${escapeHtml(names.join(" → "))}${names.length >= 3 ? "…" : ""}` : ""
-        }`;
-      }
+      focusSearchGod(pick.getAttribute("data-search-god"));
       return;
     }
     const counterBtn = e.target.closest("[data-counter-god]");
@@ -2187,26 +2120,6 @@ function setupBuilds() {
     const btn = e.target.closest("[data-open-god]");
     if (!btn) return;
     selectGod(btn.getAttribute("data-open-god"), true);
-  });
-  // Track which card is open for shareable #builds/Role/God
-  $("#build-gods")?.addEventListener("toggle", (e) => {
-    const det = e.target;
-    if (!(det instanceof HTMLDetailsElement) || !det.matches("details[data-god]")) return;
-    if (det.open) {
-      focusGodName = det.getAttribute("data-god");
-      // Close siblings so one deep-link target is clear
-      $("#build-gods")
-        ?.querySelectorAll("details[data-god][open]")
-        .forEach((other) => {
-          if (other !== det) other.open = false;
-        });
-      updateBreadcrumbs("builds", { role: activeRole, god: focusGodName });
-      if (!routeState.suppressHash) syncHashFromUi("builds");
-    } else if (focusGodName === det.getAttribute("data-god")) {
-      focusGodName = null;
-      updateBreadcrumbs("builds", { role: activeRole });
-      if (!routeState.suppressHash) syncHashFromUi("builds");
-    }
   });
 
   /* --- Search any god mode --- */
@@ -2270,7 +2183,11 @@ function setupBuilds() {
               damage_type: g.primary_damage_type,
             },
             role,
-            { open: cards.length === 0, isNative: !gb.flex_role && !gb.is_aspect }
+            {
+              open: true,
+              isNative: !gb.flex_role && !gb.is_aspect,
+              showRoleLabel: true,
+            }
           )
         );
       }
@@ -2303,6 +2220,10 @@ function setupBuilds() {
     return true;
   };
 
+  // Deep links #builds/Role/God open the full recommended-builds screen
+  const focusGod = (name, { updateHash = true } = {}) =>
+    focusSearchGod(name, { updateHash });
+
   $("#builds-any-search")?.addEventListener("input", () => {
     renderSearchList();
   });
@@ -2316,6 +2237,9 @@ function setupBuilds() {
   $("#builds-any-detail")?.addEventListener("click", (e) => {
     if (e.target.closest("#builds-back-role")) {
       e.preventDefault();
+      if (search) search.value = "";
+      const anySearch = $("#builds-any-search");
+      if (anySearch) anySearch.value = "";
       setMode("role", { updateHash: true });
       return;
     }
@@ -2607,6 +2531,48 @@ function renderGodPathPanel(gb, role, opts = {}) {
   };
 }
 
+/** Role-list pick card — navigates to the full recommended-builds screen. */
+function godPickCard(gb, role, opts = {}) {
+  const godName = gb.god;
+  const native = opts.isNative != null ? !!opts.isNative : !gb.flex_role && !gb.is_aspect;
+  const godMeta = findGodByName(godName);
+  const pantheon = godMeta?.pantheon || "";
+  const mono = godInitials(godName);
+  const items = gb.items || gb.full_path || [];
+  const starter = gb.starter?.name || "—";
+  const preview = items
+    .slice(0, 3)
+    .map((it) => it.name)
+    .join(" → ");
+  const roleBadge = native
+    ? `<span class="pill hot">Native</span>`
+    : `<span class="pill">Off-role</span>`;
+  return `
+    <button type="button" class="card build-card god-pick-card simple-build ${roleClass(role)}${
+      native ? " is-native-role" : " is-flex-role"
+    }" data-search-god="${escapeAttr(godName)}" data-god="${escapeAttr(godName)}" data-pantheon="${escapeAttr(pantheon)}">
+      <span class="hud-br tl" aria-hidden="true"></span><span class="hud-br tr" aria-hidden="true"></span>
+      <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
+      <span class="bes-main">
+        ${artFrame({
+          candidates: godIconCandidates(godName, 64),
+          fallback: mono,
+          className: "bes-mono bes-art",
+          alt: godName,
+          title: pantheon || godName,
+        })}
+        <span class="bes-name">${escapeHtml(godName)}</span>
+        ${roleBadge}
+        <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
+      </span>
+      <span class="bes-sub muted">
+        Start <strong>${escapeHtml(starter)}</strong>
+        ${preview ? ` · ${escapeHtml(preview)}${items.length > 3 ? "…" : ""}` : ""}
+      </span>
+      <span class="bes-cta">Recommended builds →</span>
+    </button>`;
+}
+
 function godBuildCard(gb, role, opts = {}) {
   const godName = gb.god;
   const isNative = opts.isNative != null ? !!opts.isNative : !gb.flex_role && !gb.is_aspect;
@@ -2614,6 +2580,7 @@ function godBuildCard(gb, role, opts = {}) {
   // Row may already be an aspect-only unlock
   const rowIsAspect = !!gb.is_aspect;
   const defaultMode = rowIsAspect && !opts.forceBase ? "aspect" : "base";
+  const showRoleLabel = opts.showRoleLabel !== false;
 
   // Base payload: prefer exported recommended row when it's base; else god.conquest_by_role
   let baseGb = null;
@@ -2704,13 +2671,17 @@ function godBuildCard(gb, role, opts = {}) {
   const godMeta = findGodByName(godName);
   const pantheon = godMeta?.pantheon || "";
   const mono = godInitials(godName);
-
+  // On the all-roles screen, lead with the role name so each build is labeled clearly
+  const titleHtml = showRoleLabel
+    ? `<span class="bes-name bes-role-title">${escapeHtml(role)}</span>
+          <span class="bes-god-sub muted">${escapeHtml(godName)}</span>`
+    : `<span class="bes-name">${escapeHtml(godName)}</span>`;
   return `
     <details class="card build-card god-build-card simple-build build-expand ${roleClass(role)}${
       opts.open ? " deep-link-focus" : ""
     }${isNative ? " is-native-role" : " is-flex-role"}${
       initialMode === "aspect" ? " is-aspect" : ""
-    }" data-god="${escapeAttr(godName)}" data-pantheon="${escapeAttr(pantheon)}" data-current-path="${initialMode}" ${opts.open ? "open" : ""}>
+    }${showRoleLabel ? " has-role-label" : ""}" data-god="${escapeAttr(godName)}" data-role="${escapeAttr(role)}" data-pantheon="${escapeAttr(pantheon)}" data-current-path="${initialMode}" ${opts.open ? "open" : ""}>
       <span class="hud-br tl" aria-hidden="true"></span><span class="hud-br tr" aria-hidden="true"></span>
       <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
       <summary class="build-expand-summary">
@@ -2722,7 +2693,7 @@ function godBuildCard(gb, role, opts = {}) {
             alt: godName,
             title: pantheon || godName,
           })}
-          <span class="bes-name">${escapeHtml(godName)}</span>
+          ${titleHtml}
           ${roleBadge}
           <span class="pill ${initialMode === "aspect" ? "path-aspect" : "path-base"}" data-path-summary-pill>${initialMode === "aspect" ? "ASPECT" : "BASE"}</span>
           <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
@@ -2741,7 +2712,7 @@ function godBuildCard(gb, role, opts = {}) {
               : ""
           }
         </span>
-        <span class="bes-cta">Show buy order ▾</span>
+        <span class="bes-cta"><span class="bes-cta-closed">Show buy order ▾</span><span class="bes-cta-open">Hide buy order ▴</span></span>
       </summary>
       <div class="build-expand-body">
         <div class="path-switch-row">${pathToggle}</div>

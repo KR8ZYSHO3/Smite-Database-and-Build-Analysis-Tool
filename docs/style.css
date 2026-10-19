@@ -1125,6 +1125,12 @@ tr.selected td {
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 14px;
 }
+.build-god-grid[hidden],
+#builds-any-detail[hidden],
+#builds-all-hits[hidden],
+#role-job-wrap[hidden] {
+  display: none !important;
+}
 .god-build-card {
   display: flex;
   flex-direction: column;
@@ -3675,8 +3681,86 @@ details.build-expand > summary:hover {
   color: var(--accent);
   margin-top: 2px;
 }
+.bes-cta-open { display: none; }
 details.build-expand[open] .bes-cta { color: var(--muted); }
+details.build-expand[open] .bes-cta-closed { display: none; }
+details.build-expand[open] .bes-cta-open { display: inline; }
 details.build-expand[open] .bes-cta::after { content: ""; }
+
+/* Role-list pick cards → navigate to recommended builds */
+button.god-pick-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  padding: 14px 16px;
+  appearance: none;
+  -webkit-appearance: none;
+}
+button.god-pick-card:hover {
+  background: rgba(240, 199, 94, 0.07);
+  border-color: rgba(240, 199, 94, 0.45);
+}
+button.god-pick-card:focus-visible {
+  outline: 2px solid rgba(76, 201, 240, 0.55);
+  outline-offset: 2px;
+}
+button.god-pick-card .bes-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+button.god-pick-card.role-carry { box-shadow: inset 3px 0 0 var(--role-carry), 0 8px 28px rgba(0,0,0,0.35); }
+button.god-pick-card.role-mid { box-shadow: inset 3px 0 0 var(--role-mid), 0 8px 28px rgba(0,0,0,0.35); }
+button.god-pick-card.role-jungle { box-shadow: inset 3px 0 0 var(--role-jungle), 0 8px 28px rgba(0,0,0,0.35); }
+button.god-pick-card.role-solo { box-shadow: inset 3px 0 0 var(--role-solo), 0 8px 28px rgba(0,0,0,0.35); }
+button.god-pick-card.role-support { box-shadow: inset 3px 0 0 var(--role-support), 0 8px 28px rgba(0,0,0,0.35); }
+
+/* Role title on all-roles recommended builds screen */
+.bes-role-title {
+  font-size: 1.08rem !important;
+}
+.bes-god-sub {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.god-build-card.has-role-label.role-carry .bes-role-title {
+  background: linear-gradient(90deg, #fff, var(--role-carry) 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.god-build-card.has-role-label.role-mid .bes-role-title {
+  background: linear-gradient(90deg, #fff, var(--role-mid) 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.god-build-card.has-role-label.role-jungle .bes-role-title {
+  background: linear-gradient(90deg, #fff, var(--role-jungle) 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.god-build-card.has-role-label.role-solo .bes-role-title {
+  background: linear-gradient(90deg, #fff, var(--role-solo) 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.god-build-card.has-role-label.role-support .bes-role-title {
+  background: linear-gradient(90deg, #fff, var(--role-support) 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 .build-expand-body {
   padding: 0 16px 14px;
   border-top: 1px solid rgba(42, 53, 80, 0.55);
