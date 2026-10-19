@@ -6,28 +6,50 @@
   <title>SMITE 2 Builds — pick a role, get a buy order</title>
   <meta name="description" content="SMITE 2 Conquest builds: pick your role and god, get a numbered item buy order for that kit." />
   <meta name="theme-color" content="#0a0812" />
+  <link rel="icon" type="image/png" sizes="64x64" href="./assets/favicon-64.png" />
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" />
+  <meta property="og:title" content="SMITE 2 Builds" />
+  <meta property="og:description" content="Pick a role and god → follow the buy order." />
+  <meta property="og:image" content="https://smitebuilddatabase.netlify.app/assets/logo-512.png" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body class="ui-simple">
   <div class="app">
     <header class="top site-header simple-header">
-      <div class="site-header-main">
-        <h1>SMITE 2 Builds</h1>
-        <p class="site-tagline">Pick a role and god → follow the buy order.</p>
-        <p class="site-updated" id="site-updated" data-exported-at="2026-10-18T20:08:05.437007+00:00" data-latest-patch="SMITE 2 Open Beta 45" title="Export timestamp (UTC): 2026-10-18T20:08:05.437007+00:00">
-          Updated <strong>Oct 18, 2026</strong> · <strong>OB45</strong>
-        </p>
-        <nav class="breadcrumbs" id="site-breadcrumbs" aria-label="Location" hidden>Builds</nav>
+      <div class="brand-lockup">
+        <img
+          class="brand-logo"
+          src="./assets/logo-mark.png"
+          width="72"
+          height="72"
+          alt=""
+          decoding="async"
+        />
+        <div class="site-header-main">
+          <h1>SMITE 2 Builds</h1>
+          <p class="site-tagline">Pick a role and god → follow the buy order.</p>
+          <p class="site-updated" id="site-updated" data-exported-at="2026-10-18T20:08:05.437007+00:00" data-latest-patch="SMITE 2 Open Beta 45" title="Export timestamp (UTC): 2026-10-18T20:08:05.437007+00:00">
+            Updated <strong>Oct 18, 2026</strong> · <strong>OB45</strong>
+          </p>
+          <nav class="breadcrumbs" id="site-breadcrumbs" aria-label="Location" hidden>Builds</nav>
+        </div>
       </div>
       <button type="button" class="btn-ghost help-btn" id="btn-help" title="How this works" aria-label="Help">?</button>
     </header>
+    <div class="mythic-ornament" aria-hidden="true">
+      <img src="./assets/ornament-banner.jpg" alt="" decoding="async" />
+    </div>
 
-    <div id="loading" class="loading">Loading builds…</div>
+    <div id="loading" class="loading">
+      <img class="loading-logo" src="./assets/logo-mark.png" width="56" height="56" alt="" decoding="async" />
+      <span>Loading builds…</span>
+    </div>
 
     <div id="app-main" style="display:none">
       <!-- Simple help modal / panel -->
       <section class="help-panel" id="help-panel" hidden>
         <div class="help-panel-inner">
+          <img class="help-logo" src="./assets/logo-mark.png" width="48" height="48" alt="" decoding="async" />
           <h2>How to use this</h2>
           <ol class="help-steps">
             <li><strong>Builds</strong> — pick a role, search or tap a god, buy top → bottom</li>
@@ -567,7 +589,10 @@
     </div>
 
     <footer class="footer">
-      SMITE 2 Builds · ranked WR + kit/patch model · not affiliated with Hi-Rez
+      <div class="footer-brand">
+        <img src="./assets/logo-mark.png" width="28" height="28" alt="" decoding="async" />
+        <span>SMITE 2 Builds · ranked WR + kit/patch model · not affiliated with Hi-Rez</span>
+      </div>
       <span class="meta-telemetry muted" id="meta-line" style="display:block;margin-top:6px"></span>
     </footer>
   </div>

@@ -211,6 +211,7 @@ function trustLine(extra) {
 
 function emptyHud(title, body) {
   return `<div class="empty-hud card">
+    <img class="empty-hud-art" src="./assets/empty-relic.jpg" width="120" height="120" alt="" loading="lazy" decoding="async" />
     <div class="empty-hud-title">${escapeHtml(title)}</div>
     <p class="muted">${escapeHtml(body)}</p>
   </div>`;
