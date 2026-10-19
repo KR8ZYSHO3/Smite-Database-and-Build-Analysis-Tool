@@ -1477,30 +1477,31 @@ header.top,
 .card.hud::before,
 .card.hud::after,
 header.top.hud-frame::before,
-header.top.hud-frame::after,
-.build-card::before,
-.build-card::after {
+header.top.hud-frame::after {
   content: "";
   position: absolute;
   width: 12px;
   height: 12px;
   pointer-events: none;
   z-index: 2;
-  border-color: rgba(76, 201, 240, 0.45);
+  border-color: rgba(240, 199, 94, 0.45);
   border-style: solid;
   opacity: 0.7;
 }
 .card.hud::before,
-header.top.hud-frame::before,
-.build-card::before {
+header.top.hud-frame::before {
   top: 6px; left: 6px;
   border-width: 1.5px 0 0 1.5px;
 }
 .card.hud::after,
-header.top.hud-frame::after,
-.build-card::after {
+header.top.hud-frame::after {
   top: 6px; right: 6px;
   border-width: 1.5px 1.5px 0 0;
+}
+/* Build cards use .hud-br spans + top bar — skip cyan corner pseudos */
+.build-card::before,
+.build-card::after {
+  content: none;
 }
 .build-card .hud-br,
 .card.hud .hud-br {
@@ -1508,9 +1509,9 @@ header.top.hud-frame::after,
   width: 12px; height: 12px;
   pointer-events: none;
   z-index: 2;
-  border-color: rgba(76, 201, 240, 0.45);
+  border-color: rgba(240, 199, 94, 0.5);
   border-style: solid;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 .build-card .hud-br.bl,
 .card.hud .hud-br.bl { bottom: 6px; left: 6px; border-width: 0 0 1.5px 1.5px; }
@@ -4013,11 +4014,12 @@ header.top h1 {
   pointer-events: none;
   z-index: 2;
 }
-.god-build-card.build-expand.role-carry { box-shadow: inset 3px 0 0 #f59e0b, 0 8px 28px rgba(0,0,0,0.35); }
-.god-build-card.build-expand.role-mid { box-shadow: inset 3px 0 0 #a78bfa, 0 8px 28px rgba(0,0,0,0.35); }
-.god-build-card.build-expand.role-jungle { box-shadow: inset 3px 0 0 #34d399, 0 8px 28px rgba(0,0,0,0.35); }
-.god-build-card.build-expand.role-solo { box-shadow: inset 3px 0 0 #60a5fa, 0 8px 28px rgba(0,0,0,0.35); }
-.god-build-card.build-expand.role-support { box-shadow: inset 3px 0 0 #f472b6, 0 8px 28px rgba(0,0,0,0.35); }
+/* Role edge accents — match role pill colors (no mint/green jungle wash) */
+.god-build-card.build-expand.role-carry { box-shadow: inset 3px 0 0 var(--role-carry), 0 8px 28px rgba(0,0,0,0.35); }
+.god-build-card.build-expand.role-mid { box-shadow: inset 3px 0 0 var(--role-mid), 0 8px 28px rgba(0,0,0,0.35); }
+.god-build-card.build-expand.role-jungle { box-shadow: inset 3px 0 0 var(--role-jungle), 0 8px 28px rgba(0,0,0,0.35); }
+.god-build-card.build-expand.role-solo { box-shadow: inset 3px 0 0 var(--role-solo), 0 8px 28px rgba(0,0,0,0.35); }
+.god-build-card.build-expand.role-support { box-shadow: inset 3px 0 0 var(--role-support), 0 8px 28px rgba(0,0,0,0.35); }
 .god-build-card.build-expand.is-aspect {
   border-color: rgba(181, 108, 255, 0.4);
   box-shadow: inset 3px 0 0 #b56cff, 0 0 28px rgba(181, 108, 255, 0.12), 0 8px 28px rgba(0,0,0,0.35);
@@ -4055,13 +4057,14 @@ details.build-expand[open] .bes-cta { color: var(--muted); }
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 0 14px rgba(240, 199, 94, 0.35);
   flex-shrink: 0;
+  filter: none;
 }
-.god-build-card[data-pantheon="Greek"] .bes-mono { filter: hue-rotate(-8deg); }
-.god-build-card[data-pantheon="Egyptian"] .bes-mono { filter: hue-rotate(25deg); }
-.god-build-card[data-pantheon="Norse"] .bes-mono { filter: hue-rotate(-40deg) saturate(1.1); }
-.god-build-card[data-pantheon="Chinese"] .bes-mono { filter: hue-rotate(60deg); }
-.god-build-card[data-pantheon="Hindu"] .bes-mono { filter: hue-rotate(90deg); }
-.god-build-card[data-pantheon="Japanese"] .bes-mono { filter: hue-rotate(-20deg) brightness(1.05); }
+/* Keep wiki god art true-color — no pantheon hue filters on portraits */
+.god-build-card .bes-mono.bes-art,
+.god-build-card .art-frame.bes-art,
+.god-build-card .art-frame .art-img {
+  filter: none !important;
+}
 
 .tier-pill.tier-S {
   color: #1a1208;
