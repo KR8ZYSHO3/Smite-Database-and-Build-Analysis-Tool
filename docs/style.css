@@ -1122,8 +1122,9 @@ tr.selected td {
 
 .build-god-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+  align-items: stretch;
 }
 .build-god-grid[hidden],
 #builds-any-detail[hidden],
@@ -4471,5 +4472,206 @@ body.ui-simple::after {
   body.ui-simple::after,
   .loading-logo {
     animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   Neatness — tighter spacing, even cards, quieter chrome
+   ========================================================================== */
+
+.app {
+  padding: 14px 16px 48px;
+}
+
+.simple-header {
+  padding: 10px 14px;
+  gap: 10px;
+  margin-bottom: 0;
+}
+.brand-lockup {
+  gap: 12px;
+}
+.brand-logo {
+  width: 56px;
+  height: 56px;
+}
+.simple-header h1 {
+  font-size: clamp(1.12rem, 2.6vw, 1.4rem) !important;
+}
+.simple-header .site-tagline {
+  font-size: 0.9rem;
+  max-width: 40ch;
+  opacity: 0.92;
+}
+.simple-header .site-updated {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+.mythic-ornament {
+  margin: 0 0 10px;
+}
+.mythic-ornament img {
+  height: 28px;
+  opacity: 0.55;
+}
+
+.simple-tabs {
+  margin-bottom: 12px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.builds-sticky-role {
+  margin: 0 0 10px;
+  padding: 10px 12px 8px;
+  border-radius: 12px;
+}
+.builds-find-row {
+  margin-bottom: 8px;
+  gap: 4px;
+}
+.builds-search-label {
+  font-size: 0.72rem;
+}
+.builds-find-row input[type="search"] {
+  min-height: 40px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 9px;
+}
+.builds-sticky-role .role-pills {
+  gap: 5px;
+}
+.builds-sticky-role .role-pill {
+  min-height: 36px;
+  padding: 7px 12px;
+  font-size: 0.88rem;
+}
+.builds-hint {
+  margin: 6px 0 0;
+  font-size: 0.82rem;
+}
+
+.role-job-details {
+  margin: 0 0 10px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border-color: rgba(58, 49, 88, 0.7);
+  background: rgba(0, 0, 0, 0.14);
+}
+.role-job-details > summary {
+  padding: 8px 2px;
+  font-size: 0.88rem;
+}
+
+/* Even-height pick cards */
+button.god-pick-card {
+  height: 100%;
+  min-height: 118px;
+  padding: 12px 14px;
+  gap: 8px;
+  justify-content: flex-start;
+  border-radius: 12px;
+}
+button.god-pick-card .hud-br {
+  opacity: 0.45;
+}
+button.god-pick-card .gpc-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+button.god-pick-card .bes-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+button.god-pick-card .bes-name {
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+button.god-pick-card .gpc-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+button.god-pick-card .compact-pill,
+button.god-pick-card .tier-pill {
+  margin: 0;
+  padding: 2px 7px;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+}
+button.god-pick-card .bes-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+  font-size: 0.84rem;
+  line-height: 1.3;
+  min-height: 2.6em;
+}
+button.god-pick-card .gpc-start,
+button.god-pick-card .gpc-preview {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+button.god-pick-card .bes-cta {
+  margin-top: auto;
+  padding-top: 2px;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+/* Detail role cards — consistent open summary density */
+#builds-any-detail .build-god-grid {
+  gap: 12px;
+}
+#builds-any-detail details.build-expand > summary {
+  padding: 12px 14px;
+  gap: 6px;
+}
+#builds-any-detail .bes-main {
+  gap: 8px;
+}
+#builds-any-detail .compact-pill,
+#builds-any-detail .bes-main .pill,
+#builds-any-detail .bes-main .tier-pill {
+  margin: 0;
+  padding: 2px 7px;
+  font-size: 0.68rem;
+}
+#builds-any-detail .builds-any-detail-head {
+  margin-bottom: 10px;
+}
+#builds-any-detail .builds-any-detail-head h2 {
+  font-size: 1.35rem;
+}
+
+@media (max-width: 860px) {
+  .app {
+    padding: 10px 12px 48px;
+  }
+  .brand-logo {
+    width: 48px;
+    height: 48px;
+  }
+  .build-god-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  button.god-pick-card {
+    min-height: 0;
   }
 }

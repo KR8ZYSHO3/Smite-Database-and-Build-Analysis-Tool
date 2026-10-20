@@ -2541,33 +2541,37 @@ function godPickCard(gb, role, opts = {}) {
   const items = gb.items || gb.full_path || [];
   const starter = gb.starter?.name || "—";
   const preview = items
-    .slice(0, 3)
+    .slice(0, 2)
     .map((it) => it.name)
     .join(" → ");
   const roleBadge = native
-    ? `<span class="pill hot">Native</span>`
-    : `<span class="pill">Off-role</span>`;
+    ? `<span class="pill hot compact-pill">Native</span>`
+    : `<span class="pill compact-pill">Off-role</span>`;
   return `
     <button type="button" class="card build-card god-pick-card simple-build ${roleClass(role)}${
       native ? " is-native-role" : " is-flex-role"
     }" data-search-god="${escapeAttr(godName)}" data-god="${escapeAttr(godName)}" data-pantheon="${escapeAttr(pantheon)}">
       <span class="hud-br tl" aria-hidden="true"></span><span class="hud-br tr" aria-hidden="true"></span>
       <span class="hud-br bl" aria-hidden="true"></span><span class="hud-br br" aria-hidden="true"></span>
-      <span class="bes-main">
-        ${artFrame({
-          candidates: godIconCandidates(godName, 64),
-          fallback: mono,
-          className: "bes-mono bes-art",
-          alt: godName,
-          title: pantheon || godName,
-        })}
-        <span class="bes-name">${escapeHtml(godName)}</span>
-        ${roleBadge}
-        <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
+      <span class="gpc-top">
+        <span class="bes-main">
+          ${artFrame({
+            candidates: godIconCandidates(godName, 64),
+            fallback: mono,
+            className: "bes-mono bes-art",
+            alt: godName,
+            title: pantheon || godName,
+          })}
+          <span class="bes-name">${escapeHtml(godName)}</span>
+        </span>
+        <span class="gpc-meta">
+          ${roleBadge}
+          <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
+        </span>
       </span>
       <span class="bes-sub muted">
-        Start <strong>${escapeHtml(starter)}</strong>
-        ${preview ? ` · ${escapeHtml(preview)}${items.length > 3 ? "…" : ""}` : ""}
+        <span class="gpc-start">Start <strong>${escapeHtml(starter)}</strong></span>
+        ${preview ? `<span class="gpc-preview">${escapeHtml(preview)}${items.length > 2 ? "…" : ""}</span>` : ""}
       </span>
       <span class="bes-cta">Recommended builds →</span>
     </button>`;
