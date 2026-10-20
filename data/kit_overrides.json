@@ -81,5 +81,46 @@
       "Deathbringer",
       "Riptalon"
     ]
+  },
+  "Kuzenbo": {
+    "_why": "OB46 King Kappa. Water Bowl stacks mitigation from Max HP damage taken; Shell Spikes reflects % damage taken (and NeNe Kappas reflect while active); NeNe Kappa transfers your Health and Protections to the pet. Play Max-HP / prot shell Support or Solo — not glass Thoth Mid. Aspect of Spirits (Oct 23) swaps mitigation/reflect for spirit Kappa throws.",
+    "force_tags": [
+      "hybrid_bulk",
+      "hard_cc",
+      "gap_close",
+      "anti_cc",
+      "pet_zone",
+      "self_sustain"
+    ],
+    "remove_tags": [
+      "burst",
+      "ult_nuke",
+      "aa",
+      "as_steroid"
+    ],
+    "prefer_items": [
+      "Gauntlet of Thebes",
+      "Contagion",
+      "Mystical Mail",
+      "Hide of the Nemean Lion",
+      "Prophetic Cloak",
+      "Stone of Binding",
+      "Gem of Isolation",
+      "Midgardian Mail",
+      "Shifter's Shield",
+      "Breastplate of Valor"
+    ],
+    "ban_items": [
+      "Book of Thoth",
+      "Rod of Tahuti",
+      "Dreamer's Idol",
+      "Doom Orb",
+      "Polynomicon",
+      "Deathbringer",
+      "Riptalon",
+      "Tyrfing",
+      "Lotus Sickle",
+      "Chandra's Grace"
+    ]
   }
 }

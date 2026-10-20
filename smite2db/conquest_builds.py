@@ -2090,7 +2090,7 @@ def rescore_for_god(
         _hp_jg_id = bool(
             bias.get("identity_lock")
             and set(bias.get("identity_hooks") or [])
-            & {"permanent_max_hp", "max_hp_scale", "item_hp_scale"}
+            & {"permanent_max_hp", "max_hp_scale", "item_hp_scale", "damage_reflect"}
         )
         # Mid-shell is Solo identity — kills gank tempo (esp. post-Shifter nerf).
         # Max-HP identity junglers (Thanatos Reaping) WANT Contagion/Hide/Gladiator.
@@ -2679,6 +2679,7 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
         if mage and (
             "haunt_shred" in hooks
             or "max_hp_scale" in hooks
+            or "damage_reflect" in hooks
             or float(bias.get("int") or 0) >= float(bias.get("str") or 0) + 0.2
         ):
             return "mage_solo"
@@ -2690,8 +2691,8 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
         # Flex-friendly: mages, solo bruisers, and traditional assassins all get paths
         if mage:
             return "mage_jungle"
-        # Permanent Max HP / %HP scythe identity before glass AA
-        if "permanent_max_hp" in hooks or "max_hp_scale" in hooks:
+        # Permanent Max HP / %HP / reflect identity before glass AA
+        if "permanent_max_hp" in hooks or "max_hp_scale" in hooks or "damage_reflect" in hooks:
             return "sustain_assassin"
         # True AA jungle only — noisy "basic attack" tags made everyone aa_assassin
         if (aa >= 0.7 or ("aa" in tags and "as_steroid" in tags)) and "as_steroid" in tags:
@@ -4120,7 +4121,9 @@ def _god_flavor_flex(
 _IDENTITY_FORCE_CORES: dict[str, tuple[str, ...]] = {
     "item_hp_scale": ("ethereal", "contagion", "thebes"),
     "permanent_max_hp": ("contagion", "gladiator", "leviathan", "hide of the nemean"),
-    "max_hp_scale": ("contagion", "gladiator", "ethereal", "leviathan"),
+    "max_hp_scale": ("contagion", "thebes", "gladiator", "ethereal", "leviathan"),
+    # Kuzenbo Shell Spikes / thorns — Max-HP shell + reflect aura cores
+    "damage_reflect": ("thebes", "contagion", "mystical", "hide of the nemean"),
     "plat_damp_stack": ("spectral", "alchemist", "mystical", "shifter"),
     "haunt_shred": ("ethereal", "thebes", "isolation", "binding"),
     "base_damage_only": ("lotus sickle", "asclepius", "chronos"),
@@ -4156,6 +4159,7 @@ def _ensure_identity_cores(
         "item_hp_scale",
         "permanent_max_hp",
         "max_hp_scale",
+        "damage_reflect",
         "plat_damp_stack",
         "haunt_shred",
         "base_damage_only",
@@ -4177,13 +4181,32 @@ def _ensure_identity_cores(
 
     bans = [str(b).lower() for b in (bias.get("ban_items") or [])]
     want = [k for k in want if not any(b and b in k for b in bans)]
-    # Cap: 3 cores for HP identity, 2 otherwise
-    max_force = 3 if hooks & {"item_hp_scale", "permanent_max_hp", "max_hp_scale", "haunt_shred"} else 2
+    # Cap: 3 cores for HP / reflect identity, 2 otherwise
+    max_force = (
+        3
+        if hooks
+        & {
+            "item_hp_scale",
+            "permanent_max_hp",
+            "max_hp_scale",
+            "damage_reflect",
+            "haunt_shred",
+        }
+        else 2
+    )
     want = want[: max_force + 2]  # try a few extras if early keys miss shop
 
     new_path = list(path)[:6]
     have = {x.name.lower() for x in new_path}
-    protect = tuple(want[:6]) + ("thebes", "ethereal", "contagion", "gladiator", "leviathan")
+    protect = tuple(want[:6]) + (
+        "thebes",
+        "ethereal",
+        "contagion",
+        "gladiator",
+        "leviathan",
+        "mystical",
+        "hide of the nemean",
+    )
 
     def _find(key: str) -> ScoredItem | None:
         # Prefer exact-ish longer keys; skip vague tokens
@@ -4587,7 +4610,11 @@ def _normalize_jungle_path(
         return path
     path = list(path)
     hooks = set(bias.get("identity_hooks") or [])
-    if bias.get("identity_lock") and hooks & {"permanent_max_hp", "max_hp_scale"}:
+    if bias.get("identity_lock") and hooks & {
+        "permanent_max_hp",
+        "max_hp_scale",
+        "damage_reflect",
+    }:
         # Light touch: ensure a gap tool exists; preserve HP identity items
         seen = {x.name for x in path}
         has_gap = any(
@@ -5370,6 +5397,7 @@ def _ensure_inspired_cores(
                 "item_hp_scale",
                 "permanent_max_hp",
                 "max_hp_scale",
+                "damage_reflect",
                 "haunt_shred",
                 "plat_damp_stack",
                 "base_damage_only",
@@ -5387,9 +5415,11 @@ def _ensure_inspired_cores(
         want = want[:2]
 
     # Jungle high-SR is polluted by Solo flex / bruiser games — never inspire shells.
-    # Exception: Max-HP identity junglers (Thanatos Reaping) want Contagion/Hide/Gladiator.
+    # Exception: Max-HP / reflect identity junglers want Contagion/Hide/Gladiator.
     _hp_jg = bool(
-        lock and set(bias.get("identity_hooks") or []) & {"permanent_max_hp", "max_hp_scale"}
+        lock
+        and set(bias.get("identity_hooks") or [])
+        & {"permanent_max_hp", "max_hp_scale", "damage_reflect"}
     )
     _jungle_shell_ban = (
         "shifter",
@@ -6465,6 +6495,7 @@ def build_god_build(
                 "item_hp_scale",
                 "permanent_max_hp",
                 "max_hp_scale",
+                "damage_reflect",
                 "haunt_shred",
                 "plat_damp_stack",
             }
@@ -6759,7 +6790,13 @@ def build_god_build(
     _hp_id = bool(
         bias.get("identity_lock")
         and set(bias.get("identity_hooks") or [])
-        & {"item_hp_scale", "permanent_max_hp", "max_hp_scale", "haunt_shred"}
+        & {
+            "item_hp_scale",
+            "permanent_max_hp",
+            "max_hp_scale",
+            "damage_reflect",
+            "haunt_shred",
+        }
     )
     if role in DAMAGE_ROLES_NEED_PEN and not _hp_id:
         items_6 = _trim_excess_defense(items_6, t3, max_defense=1, max_actives=max_act)

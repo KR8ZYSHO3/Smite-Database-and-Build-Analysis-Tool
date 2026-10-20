@@ -93,15 +93,34 @@ def _discover_gods_from_latest_patches(
             continue
         if not wt or len(wt) < 200:
             continue
-        # Prefer New Classic God section; fall back to full page links under === [[God]] ===
+        # Prefer New Classic God section; fall back to full page.
+        # OB46+ headings look like "== New Classic God Kuzenbo ==" (god name in heading).
         sections = re.findall(
-            r"==\s*New Classic Gods?\s*==(.+?)(?:\n==\s[^=]|\Z)",
+            r"==\s*New Classic Gods?(?:\s+[^=]+)?\s*==(.+?)(?:\n==\s[^=]|\Z)",
             wt,
             flags=re.S | re.I,
         )
         blob = "\n".join(sections) if sections else wt
+        candidates_names: list[str] = []
+        # Heading form: "== New Classic God Kuzenbo =="
+        for hm in re.finditer(
+            r"==\s*New Classic Gods?\s+([^=]+?)\s*==",
+            wt,
+            flags=re.I,
+        ):
+            candidates_names.append(hm.group(1).strip())
+        # [[God]] wiki links
         for link in re.findall(r"\[\[([^\]|#]+)(?:[|#][^\]]*)?\]\]", blob):
-            name = link.strip()
+            candidates_names.append(link.strip())
+        # {{Kuzenbo}} reveal templates (common when Gods.json lags)
+        for tmpl in re.findall(r"\{\{\s*([A-Z][^|{}#\n]+?)\s*\}\}", blob):
+            tname = tmpl.strip()
+            if " " in tname and not tname.startswith("God"):
+                # skip multi-word templates that aren't god pages (Patch infobox etc.)
+                if tname.lower().startswith(("patch", "toc", "nav", "ref", "cite", "clear")):
+                    continue
+            candidates_names.append(tname)
+        for name in candidates_names:
             if not name or name.lower().startswith(skip_prefixes):
                 continue
             # Skip patch-nav style links

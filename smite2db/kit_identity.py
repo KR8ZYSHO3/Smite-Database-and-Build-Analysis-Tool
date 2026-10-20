@@ -69,10 +69,26 @@ _HOOK_PATTERNS: list[tuple[str, re.Pattern[str], float]] = [
             r"scaling with (?:your )?max health|"
             r"[\d.]+%\s*(?:of )?(?:your )?max health|"
             r"based on (?:your )?max health|"
-            r"zombie damage scaling:\s*[\d.]+%\s*max health",
+            r"zombie damage scaling:\s*[\d.]+%\s*max health|"
+            # Kuzenbo Water Bowl: mitigation stacks from Max HP taken
+            r"[\d.]+%\s*per\s*[\d.]+%\s*of\s*max\s*hp|"
+            r"max\s*hp\s*taken|"
+            r"portion of (?:your )?(?:maximum|max) health as damage",
             re.I,
         ),
         0.75,
+    ),
+    (
+        # Shell Spikes / thorns / reflect % of damage taken
+        "damage_reflect",
+        re.compile(
+            r"damage reflected:\s*[\d.]+%|"
+            r"reflect(?:ing|s)? a portion of damage|"
+            r"reflect(?:s|ed)?\s*[\d.]+%\s*of\s*(?:damage|pre-mitigated)|"
+            r"reflect(?:s|ing)? damage taken",
+            re.I,
+        ),
+        0.7,
     ),
     (
         "permanent_max_hp",
@@ -176,6 +192,16 @@ _HOOK_PREFER: dict[str, list[str]] = {
         "soul reaver",
         "shifter",
     ],
+    "damage_reflect": [
+        "hide of the nemean",
+        "mystical",
+        "contagion",
+        "thebes",
+        "midgardian",
+        "prophetic",
+        "shifter",
+        "gladiator",
+    ],
     "permanent_max_hp": [
         "contagion",
         "gladiator",
@@ -254,6 +280,15 @@ _HOOK_BAN: dict[str, list[str]] = {
         "lotus sickle",
         "asclepius",
     ],
+    "damage_reflect": [
+        "tahuti",
+        "dreamer",
+        "thoth",
+        "doom orb",
+        "polynomicon",
+        "deathbringer",
+        "riptalon",
+    ],
     "permanent_max_hp": [
         "lotus sickle",
         "asclepius",
@@ -300,6 +335,7 @@ _HOOK_TAGS_ADD: dict[str, set[str]] = {
     "base_damage_only": {"heal", "team_buff", "aspect_utility", "spam"},
     "item_hp_scale": {"hybrid_bulk", "aa", "team_buff"},
     "max_hp_scale": {"hybrid_bulk", "self_sustain"},
+    "damage_reflect": {"hybrid_bulk", "self_sustain", "anti_cc"},
     "permanent_max_hp": {"hybrid_bulk", "self_sustain", "execute"},
     "plat_damp_stack": {"hybrid_bulk", "self_sustain", "anti_cc"},
     "ally_shield": {"heal", "team_buff", "shield", "heavy_heal"},
@@ -312,6 +348,7 @@ _HOOK_TAGS_REMOVE: dict[str, set[str]] = {
     "base_damage_only": {"burst", "ult_nuke", "mana_stack"},
     "item_hp_scale": {"burst"},
     "max_hp_scale": {"burst", "ult_nuke"},
+    "damage_reflect": {"burst", "ult_nuke", "aa", "as_steroid"},
     "haunt_shred": {"burst", "ult_nuke", "aa", "as_steroid", "heal", "team_buff", "heavy_heal"},
 }
 
@@ -373,6 +410,10 @@ def detect_identity_hooks(blob: str, *, is_aspect: bool = False) -> IdentityProf
     if "max_hp_scale" in prof.hooks or "permanent_max_hp" in prof.hooks:
         prof.hp_stack_boost = max(prof.hp_stack_boost, 0.5)
         prof.bulk_boost = max(prof.bulk_boost, 0.4)
+    if "damage_reflect" in prof.hooks:
+        prof.hp_stack_boost = max(prof.hp_stack_boost, 0.45)
+        prof.bulk_boost = max(prof.bulk_boost, 0.45)
+        prof.power_penalty = max(prof.power_penalty, 0.2)
     if "plat_damp_stack" in prof.hooks:
         prof.bulk_boost = max(prof.bulk_boost, 0.45)
         prof.hp_stack_boost = max(prof.hp_stack_boost, 0.25)
