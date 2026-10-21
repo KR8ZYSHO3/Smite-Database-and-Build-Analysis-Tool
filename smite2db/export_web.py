@@ -448,6 +448,20 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
 
     meta["build_algorithm"] = algorithm_card()
     meta["has_meta_lab"] = bool(meta_lab) and "error" not in meta_lab
+
+    # Curated Featured Builds explainers (editorial — not regenerated from ladder)
+    featured_builds: dict = {}
+    featured_src = ROOT / "data" / "featured_builds.json"
+    try:
+        if featured_src.is_file():
+            featured_builds = json.loads(featured_src.read_text(encoding="utf-8"))
+            (WEB_DATA / "featured_builds.json").write_text(
+                json.dumps(featured_builds, indent=2), encoding="utf-8"
+            )
+    except Exception as exc:  # noqa: BLE001
+        print(f"WARN: featured_builds load failed: {exc}")
+        featured_builds = {}
+
     payload = {
         "meta": meta,
         "gods": gods,
@@ -455,6 +469,7 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
         "items": items,
         "builds": builds,
         "meta_lab": meta_lab,
+        "featured_builds": featured_builds,
     }
 
     # Split for lighter loads

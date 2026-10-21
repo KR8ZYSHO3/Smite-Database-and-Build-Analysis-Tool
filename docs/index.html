@@ -28,8 +28,8 @@
         <div class="site-header-main">
           <h1>SMITE 2 Builds</h1>
           <p class="site-tagline">Pick a role and god → follow the buy order.</p>
-        <p class="site-updated" id="site-updated" data-exported-at="2026-10-21T03:01:41.125182+00:00" data-latest-patch="SMITE 2 Open Beta 46" title="Export timestamp (UTC): 2026-10-21T03:01:41.125182+00:00">
-          Last updated: <strong>Oct 21, 2026 3:01 AM UTC</strong> · Patch data: <strong>Open Beta 46</strong> (October 20th, 2026)
+        <p class="site-updated" id="site-updated" data-exported-at="2026-10-21T03:11:07.211946+00:00" data-latest-patch="SMITE 2 Open Beta 46" title="Export timestamp (UTC): 2026-10-21T03:11:07.211946+00:00">
+          Last updated: <strong>Oct 21, 2026 3:11 AM UTC</strong> · Patch data: <strong>Open Beta 46</strong> (October 20th, 2026)
         </p>
           <nav class="breadcrumbs" id="site-breadcrumbs" aria-label="Location" hidden>Builds</nav>
         </div>
@@ -101,6 +101,23 @@
             <p class="builds-hint muted" id="build-god-count"></p>
           </div>
 
+          <section
+            id="featured-builds"
+            class="featured-builds"
+            aria-labelledby="featured-builds-title"
+          >
+            <div class="featured-builds-head">
+              <div>
+                <h2 id="featured-builds-title">Featured Builds</h2>
+                <p class="muted featured-builds-blurb" id="featured-builds-blurb">
+                  Kit cheeses with plain-English explainers.
+                </p>
+              </div>
+            </div>
+            <div id="featured-builds-grid" class="featured-builds-grid"></div>
+            <div id="featured-builds-detail" class="featured-builds-detail" hidden></div>
+          </section>
+
           <div id="builds-all-hits" class="builds-any-list" hidden></div>
           <div id="builds-any-detail" class="builds-any-detail" hidden></div>
 
@@ -112,6 +129,10 @@
             </div>
           </details>
 
+          <div class="builds-roster-label" id="builds-roster-label">
+            <h3>All ranked builds</h3>
+            <p class="muted">Full roster for the role above — same paths as the Featured cards when they overlap.</p>
+          </div>
           <div id="build-gods" class="build-god-grid"></div>
         </div>
         <!-- Hidden legacy search input kept for hash/JS compat -->

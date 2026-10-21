@@ -1,0 +1,205 @@
+{
+  "title": "Featured Builds",
+  "blurb": "Kit cheeses with plain-English explainers — how the abilities work, why each item is here, and how to play the path. These also appear on normal god cards; this strip is the guided tour.",
+  "builds": [
+    {
+      "id": "apollo-harmony-support",
+      "god": "Apollo",
+      "role": "Support",
+      "aspect": "Aspect of Harmony",
+      "headline": "Item-HP peel Support",
+      "tagline": "Get fat so free So Beautifuls hit harder and Serenade shields your carry.",
+      "hook_label": "Item HP + Max HP shields",
+      "ability_plain": "Aspect of Harmony changes Apollo’s kit. Audacity refunds free So Beautiful casts (no attack-speed steroid). So Beautiful damage scales with Health from Items — the more HP your items give you, the harder each free cast hits. Serenade shields nearby allies for a chunk of your Max Health and gives protections while the shield holds. Buffing an ally also stacks Audacity. You are not a crit ADC here; you are a fat duo laner who peels and pokes with HP-scaled spells.",
+      "playstyle": "Start Selflessness and stack Thebes while you roam between waves. Sit near your carry so Serenade and free So Beautifuls land on whoever dives them. Buy HP shells early (Thebes, Leviathan, Contagion, Ethereal) before luxury. Use Beads/Aegis like a normal Support. In fights, shield first, then dump free So Beautifuls into the front line — your “damage” is item HP, not Deathbringer.",
+      "starter_why": "Selflessness — Support gold + shared sustain so you can afford the HP shell without falling behind.",
+      "relics_why": "Beads and Aegis — standard Support peel. You are the one who lives through the dive so Serenade keeps ticking.",
+      "item_why": [
+        {
+          "match": "thebes",
+          "why": "Stacks Health and protections from assists. Feeds So Beautiful’s item-HP scaling and Serenade’s Max-HP shield."
+        },
+        {
+          "match": "leviathan",
+          "why": "Big Health chunk that counts as item HP — raw fuel for every free So Beautiful."
+        },
+        {
+          "match": "contagion",
+          "why": "More Max HP plus anti-heal aura. You want to be unkillable in the duo pit while cutting enemy sustain."
+        },
+        {
+          "match": "gladiator",
+          "why": "Health + power while you take hits. Synergizes with sitting in front of your carry."
+        },
+        {
+          "match": "wyrmskin",
+          "why": "Extra Health shell and physical answer when the enemy ADC is the problem."
+        },
+        {
+          "match": "ethereal",
+          "why": "Converts Max Health into magical power. The “cheese” item — your HP stack becomes real poke on So Beautiful."
+        },
+        {
+          "match": "isolation",
+          "why": "Slow stick so free So Beautifuls and Serenade peel keep landing on the same target."
+        }
+      ]
+    },
+    {
+      "id": "nemesis-support",
+      "god": "Nemesis",
+      "role": "Support",
+      "aspect": null,
+      "headline": "Max-HP shield + reflect",
+      "tagline": "Turn their damage back on them with a fatter Retribution shield.",
+      "hook_label": "Max HP shield + damage reflect",
+      "ability_plain": "Retribution gives Nemesis a Health shield that scales with 7.5% of her Max Health. While that shield holds, she reflects 40% of the damage blocked (plus Strength scaling) and heals from damage blocked (plus Intelligence). Bigger Max HP = bigger shield = more reflect and heal. Scales of Fate steals power on hits; Divine Judgement deletes a chunk of current HP. She is a physical god, but this Support path builds tank HP so Retribution becomes a brick wall that bites back.",
+      "playstyle": "Body-block for your carry and pop Retribution when the dive lands — that is your “ult moment” every fight. Stack Thebes and Contagion so the shield is huge. Mystical and Nemean punish people who keep swinging at you. Isolation keeps them stuck in the reflect window. Do not build Tekko/Crusher glass; you win by absorbing and reflecting, then finishing with Judgement.",
+      "starter_why": "Selflessness — Support income so the HP shell comes online before mid game.",
+      "relics_why": "Beads and Aegis — live long enough for Retribution to eat the all-in.",
+      "item_why": [
+        {
+          "match": "thebes",
+          "why": "Assist stacks of Health and protections — direct Max HP for a fatter Retribution shield."
+        },
+        {
+          "match": "contagion",
+          "why": "Huge Max HP + anti-heal. More shield health and less enemy recovery while you reflect."
+        },
+        {
+          "match": "isolation",
+          "why": "Slows so enemies stay in melee range while your reflect shield is up."
+        },
+        {
+          "match": "mystical",
+          "why": "Aura damage while you stand in the pit. Pairs with reflecting people who auto you."
+        },
+        {
+          "match": "ethereal",
+          "why": "More Max HP (and power from HP) so the shield and heal off blocked damage scale harder."
+        },
+        {
+          "match": "nemean",
+          "why": "Classic reflect partner — Hide of the Nemean Lion stacks with Retribution’s blocked-damage reflect."
+        }
+      ]
+    },
+    {
+      "id": "ymir-support",
+      "god": "Ymir",
+      "role": "Support",
+      "aspect": null,
+      "headline": "Item-Prot stun stretch",
+      "tagline": "Stack protections so Frost Breath stuns longer — up to +0.4s.",
+      "hook_label": "Item Protections → longer stun",
+      "ability_plain": "Frost Breath stuns in a cone. The stun duration scales: +0.2 seconds per 100 Item Protections, stacking up to 2 times (+0.4s). That means Physical + Magical protections from items (Thebes, Breastplate, Genji, Contagion, Spectral…) literally make your breath stun longer. Shards of Ice also scales with Protections. Frostbite on your abilities cuts enemy damage and attack speed. This is not a Book of Thoth Mid path — raw protections are your “power.”",
+      "playstyle": "Wall off escapes, then breath when they are trapped for the stretched stun. Build dual protections early (Thebes + Breastplate + Genji) before luxury. Contagion and Spectral keep you alive while you sit in melee range. Isolation sticks people in the cone. You are a lockdown Support: set the wall, breathe, ult when the stun window is real.",
+      "starter_why": "Selflessness — Support gold to rush the protection stack that stretches the stun.",
+      "relics_why": "Beads and Aegis — you need to land the breath; dying mid-channel wastes the cheese.",
+      "item_why": [
+        {
+          "match": "thebes",
+          "why": "Stacks both Physical and Magical Item Protections — the exact stat Frost Breath reads."
+        },
+        {
+          "match": "breastplate",
+          "why": "Big Physical protections + cooldown. Fills the Item Protections pool and keeps breath up more often."
+        },
+        {
+          "match": "genji",
+          "why": "Big Magical protections + cooldown. Same idea on the other side of the pool."
+        },
+        {
+          "match": "contagion",
+          "why": "More protections and Health plus anti-heal while you breathe in their faces."
+        },
+        {
+          "match": "isolation",
+          "why": "Slow so they cannot walk out of the Frost Breath cone or Ice Wall trap."
+        },
+        {
+          "match": "spectral",
+          "why": "Physical protections and anti-crit — more Item Protections and an answer to ADC autos."
+        }
+      ]
+    },
+    {
+      "id": "hades-support",
+      "god": "Hades",
+      "role": "Support",
+      "aspect": null,
+      "headline": "Item-Prot silence stretch",
+      "tagline": "Same protection cheese as Ymir — but your silence gets longer.",
+      "hook_label": "Item Protections → longer silence",
+      "ability_plain": "Shroud of Darkness silences in a cone. Silence duration scales +0.2 seconds per 100 Item Protections (max 2 stacks). Stack protections and the silence window grows — enemies cannot dash, ult, or beads through your setup as easily. Blight cuts their damage; Devour Souls heals you from protections; Pillar of Agony is a channelled vortex. You play him as a lockdown Support who silences the carry’s escape, then pulls with the ult.",
+      "playstyle": "Leap in, shroud the priority target for the stretched silence, then Pillar when they cannot leave. Build Thebes + Breastplate + Genji like Ymir so Item Protections are high before you fight. Contagion and Binding keep them stuck and anti-healed. Spectral answers physical carries. You win fights by deleting their buttons for longer, not by Thoth burst.",
+      "starter_why": "Selflessness — Support path income for the protection shell.",
+      "relics_why": "Beads and Aegis — survive long enough to finish Pillar after the silence lands.",
+      "item_why": [
+        {
+          "match": "thebes",
+          "why": "Dual Item Protections from assists — directly lengthens Shroud silence."
+        },
+        {
+          "match": "breastplate",
+          "why": "Physical protections + CDR so silence and Pillar come up more often."
+        },
+        {
+          "match": "genji",
+          "why": "Magical protections + CDR — fills the other half of the Item Protections pool."
+        },
+        {
+          "match": "contagion",
+          "why": "Protections, Health, and anti-heal while you channel Pillar on top of them."
+        },
+        {
+          "match": "binding",
+          "why": "Stone of Binding shreds prots and sticks people in your silence / Pillar."
+        },
+        {
+          "match": "spectral",
+          "why": "More Physical Item Protections and anti-crit when the enemy ADC is the problem."
+        }
+      ]
+    },
+    {
+      "id": "kuzenbo-support",
+      "god": "Kuzenbo",
+      "role": "Support",
+      "aspect": null,
+      "headline": "Max-HP mitigation + shell reflect",
+      "tagline": "Water Bowl stacks mitigation from Max HP taken; Shell Spikes reflects damage back.",
+      "hook_label": "Max HP mitigation + damage reflect",
+      "ability_plain": "Water Bowl (passive) stacks damage mitigation based on Max HP damage you take — the tankier you are, the more you shrug off. Shell Spikes reflects a percent of damage taken (and NeNe Kappas also reflect while active). NeNe Kappa can move a portion of your Health and Protections onto the pet. Slam and walls give lockdown. This Support path stacks Max HP and reflect items so every hit into you (or your Kappa) hurts them back.",
+      "playstyle": "Soak poke on purpose to stack Water Bowl, then fight in their faces with Shell Spikes up. Thebes and Contagion grow Max HP; Mystical ticks while you sit mid-fight; Nemean and reflect passives amplify Shell Spikes; Isolation sticks people on the Kappa. Mid/Jungle variants lean Chronos + Ethereal for uptime — Support stays the aura HP shell. Do not buy Thoth/Cosmic glass.",
+      "starter_why": "Selflessness — Support gold to rush Thebes/Contagion before the reflect shell matters.",
+      "relics_why": "Beads and Aegis — classic Support; you need to live through the engage you started.",
+      "item_why": [
+        {
+          "match": "thebes",
+          "why": "Assist HP/prot stacks — more Max HP for Water Bowl mitigation and a fatter shell."
+        },
+        {
+          "match": "contagion",
+          "why": "Max HP + anti-heal. Fuels mitigation stacks and keeps fights from healing out."
+        },
+        {
+          "match": "isolation",
+          "why": "Slow so NeNe Kappa and Shell Spikes keep hitting the same targets."
+        },
+        {
+          "match": "mystical",
+          "why": "Aura damage while you body-block — pairs with standing in the pit to reflect."
+        },
+        {
+          "match": "ethereal",
+          "why": "More Max HP (and power from it) so Water Bowl and shell trades hit harder."
+        },
+        {
+          "match": "nemean",
+          "why": "Hide of the Nemean Lion — extra reflect that stacks with Shell Spikes."
+        }
+      ]
+    }
+  ]
+}

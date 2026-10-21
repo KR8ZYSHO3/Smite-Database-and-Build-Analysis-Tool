@@ -7,6 +7,7 @@ const state = {
   gods: null,
   items: null,
   meta_lab: null,
+  featured_builds: null,
   selectedGod: null,
 };
 
@@ -1163,6 +1164,7 @@ function applyPayload(payload) {
   state.gods = payload.gods || [];
   state.items = payload.items || [];
   state.meta_lab = payload.meta_lab || null;
+  state.featured_builds = payload.featured_builds || null;
 }
 
 async function fetchJson(url) {
@@ -1181,21 +1183,30 @@ async function loadData() {
   const base = new URL("./data/", window.location.href);
   // Prefer one-shot bundle (fewer requests on CDNs).
   try {
-    applyPayload(await fetchJson(new URL("bundle.json", base)));
+    const payload = await fetchJson(new URL("bundle.json", base));
+    // Bundle may lag editorial featured_builds — refresh side file when missing
+    if (!payload.featured_builds) {
+      payload.featured_builds = await fetchJson(
+        new URL("featured_builds.json", base)
+      ).catch(() => null);
+    }
+    applyPayload(payload);
     return;
   } catch (bundleErr) {
     console.warn("bundle.json failed, falling back to split files", bundleErr);
   }
 
-  const [meta, tiers, builds, gods, items, meta_lab] = await Promise.all([
-    fetchJson(new URL("meta.json", base)),
-    fetchJson(new URL("tiers.json", base)),
-    fetchJson(new URL("builds.json", base)),
-    fetchJson(new URL("gods.json", base)),
-    fetchJson(new URL("items.json", base)),
-    fetchJson(new URL("meta_lab.json", base)).catch(() => null),
-  ]);
-  applyPayload({ meta, tiers, builds, gods, items, meta_lab });
+  const [meta, tiers, builds, gods, items, meta_lab, featured_builds] =
+    await Promise.all([
+      fetchJson(new URL("meta.json", base)),
+      fetchJson(new URL("tiers.json", base)),
+      fetchJson(new URL("builds.json", base)),
+      fetchJson(new URL("gods.json", base)),
+      fetchJson(new URL("items.json", base)),
+      fetchJson(new URL("meta_lab.json", base)).catch(() => null),
+      fetchJson(new URL("featured_builds.json", base)).catch(() => null),
+    ]);
+  applyPayload({ meta, tiers, builds, gods, items, meta_lab, featured_builds });
 }
 
 /* -------------------- Tiers -------------------- */
@@ -1818,6 +1829,281 @@ function syncSharedRole(role) {
   }
 }
 
+/* -------------------- Featured Builds (kit cheese explainers) -------------------- */
+let featuredActiveId = null;
+
+function resolveFeaturedPath(entry) {
+  if (!entry?.god) return null;
+  const g = (state.gods || []).find((x) => x.name === entry.god);
+  if (!g) return null;
+  const role = entry.role || "Support";
+  if (entry.aspect) {
+    const byAspect = g.conquest_by_aspect || {};
+    const fromMap = byAspect[entry.aspect]?.[role];
+    if (fromMap) return { godRow: g, path: fromMap, isAspect: true };
+    const flat = g.conquest_by_role_aspect || {};
+    const flatPath = flat[role];
+    if (
+      flatPath &&
+      (!flatPath.aspect_name || flatPath.aspect_name === entry.aspect)
+    ) {
+      return { godRow: g, path: flatPath, isAspect: true };
+    }
+  }
+  const base = (g.conquest_by_role || {})[role];
+  if (!base) return null;
+  return { godRow: g, path: base, isAspect: false };
+}
+
+function matchItemWhy(itemName, whyList) {
+  const n = String(itemName || "").toLowerCase();
+  for (const w of whyList || []) {
+    const m = String(w.match || "").toLowerCase();
+    if (m && n.includes(m)) return w.why || "";
+  }
+  return "";
+}
+
+function featuredCardHtml(entry, resolved, { selected = false } = {}) {
+  const path = resolved?.path || {};
+  const items = path.items || [];
+  const starter = path.starter;
+  const starterName =
+    starter && typeof starter === "object" ? starter.name : starter;
+  const roleCls = roleClass(entry.role);
+  const preview = items.slice(0, 4);
+  const more = Math.max(0, items.length - preview.length);
+  return `<button type="button" class="featured-card ${roleCls}${
+    selected ? " is-selected" : ""
+  }" data-featured-id="${escapeAttr(entry.id)}" aria-pressed="${
+    selected ? "true" : "false"
+  }">
+    <div class="fc-top">
+      ${artFrame({
+        candidates: godIconCandidates(entry.god, 64),
+        fallback: godInitials(entry.god),
+        className: "fc-god-art bes-mono",
+        alt: entry.god,
+        title: entry.god,
+      })}
+      <div class="fc-meta">
+        <div class="fc-name-row">
+          <strong class="fc-god">${escapeHtml(entry.god)}</strong>
+          <span class="fc-role-pill">${escapeHtml(entry.role)}</span>
+        </div>
+        ${
+          entry.aspect
+            ? `<span class="fc-aspect">${escapeHtml(entry.aspect)}</span>`
+            : ""
+        }
+        <span class="fc-headline">${escapeHtml(entry.headline || "")}</span>
+      </div>
+    </div>
+    <p class="fc-tagline">${escapeHtml(entry.tagline || "")}</p>
+    <div class="fc-items" aria-hidden="true">
+      ${
+        starterName
+          ? `<span class="fc-item-chip is-starter" title="${escapeAttr(
+              starterName
+            )}">${artFrame({
+              candidates: itemIconCandidates(starterName, 48),
+              fallback: itemInitials(starterName),
+              className: "fc-item-art",
+              alt: starterName,
+            })}</span>`
+          : ""
+      }
+      ${preview
+        .map((it) => {
+          const nm = it?.name || it;
+          return `<span class="fc-item-chip" title="${escapeAttr(nm)}">${artFrame({
+            candidates: itemIconCandidates(nm, 48),
+            fallback: itemInitials(nm),
+            className: "fc-item-art",
+            alt: nm,
+          })}</span>`;
+        })
+        .join("")}
+      ${more ? `<span class="fc-more">+${more}</span>` : ""}
+    </div>
+    <span class="fc-open">${selected ? "Hide guide ▲" : "Why this build ▼"}</span>
+  </button>`;
+}
+
+function featuredDetailHtml(entry, resolved) {
+  const path = resolved?.path || {};
+  const items = path.items || [];
+  const starter = path.starter;
+  const starterName =
+    starter && typeof starter === "object" ? starter.name : starter;
+  const relics = (path.relics || [])
+    .map((r) => (typeof r === "object" ? r.name : r))
+    .filter(Boolean);
+  const whyList = entry.item_why || [];
+  const buyRows = [];
+  if (starterName) {
+    buyRows.push({
+      name: starterName,
+      kind: "Starter",
+      why: entry.starter_why || "Support starter for this path.",
+    });
+  }
+  items.forEach((it, i) => {
+    const nm = it?.name || it;
+    buyRows.push({
+      name: nm,
+      kind: `Item ${i + 1}`,
+      why: matchItemWhy(nm, whyList) || "Core shell piece for this kit cheese.",
+    });
+  });
+  if (relics.length) {
+    buyRows.push({
+      name: relics.join(" + "),
+      kind: "Relics",
+      why: entry.relics_why || "Standard Support relics.",
+    });
+  }
+  const loadoutItems = [
+    ...(starterName ? [{ name: starterName, slot: "starter" }] : []),
+    ...items.map((it) =>
+      typeof it === "object" ? it : { name: it }
+    ),
+  ];
+  return `<article class="featured-detail-card role-${escapeAttr(
+    String(entry.role || "support").toLowerCase()
+  )}">
+    <div class="fd-head">
+      ${artFrame({
+        candidates: godIconCandidates(entry.god, 96),
+        fallback: godInitials(entry.god),
+        className: "fd-god-art bes-mono",
+        alt: entry.god,
+      })}
+      <div class="fd-titles">
+        <h3>${escapeHtml(entry.god)} <span class="muted">· ${escapeHtml(
+    entry.role
+  )}</span></h3>
+        ${
+          entry.aspect
+            ? `<p class="fd-aspect">${escapeHtml(entry.aspect)}</p>`
+            : ""
+        }
+        <p class="fd-headline">${escapeHtml(entry.headline || "")}</p>
+        ${
+          entry.hook_label
+            ? `<span class="fd-hook">${escapeHtml(entry.hook_label)}</span>`
+            : ""
+        }
+      </div>
+      <button type="button" class="btn-secondary fd-close" data-featured-close>Close</button>
+    </div>
+    <div class="fd-loadout">${loadoutRail(loadoutItems)}</div>
+    <div class="fd-sections">
+      <section class="fd-block">
+        <h4>How the kit works</h4>
+        <p>${escapeHtml(entry.ability_plain || "")}</p>
+      </section>
+      <section class="fd-block">
+        <h4>Playstyle</h4>
+        <p>${escapeHtml(entry.playstyle || "")}</p>
+      </section>
+      <section class="fd-block fd-items-why">
+        <h4>Why these items</h4>
+        <ol class="fd-why-list">
+          ${buyRows
+            .map(
+              (row) => `<li>
+              <div class="fd-why-item">
+                ${artFrame({
+                  candidates: String(row.name).includes(" + ")
+                    ? []
+                    : itemIconCandidates(row.name, 48),
+                  fallback: itemInitials(row.name.split(" + ")[0]),
+                  className: "fd-why-art",
+                  alt: row.name,
+                })}
+                <div>
+                  <strong>${escapeHtml(row.name)}</strong>
+                  <span class="fd-why-kind">${escapeHtml(row.kind)}</span>
+                  <p>${escapeHtml(row.why)}</p>
+                </div>
+              </div>
+            </li>`
+            )
+            .join("")}
+        </ol>
+      </section>
+    </div>
+    <p class="fd-foot muted">This path also lives on the normal ${escapeHtml(
+      entry.god
+    )} god card below. Featured is the guided tour.</p>
+  </article>`;
+}
+
+function setupFeaturedBuilds() {
+  const root = $("#featured-builds");
+  const grid = $("#featured-builds-grid");
+  const detail = $("#featured-builds-detail");
+  const blurbEl = $("#featured-builds-blurb");
+  const titleEl = $("#featured-builds-title");
+  if (!root || !grid) return;
+
+  const data = state.featured_builds;
+  const entries = data?.builds || [];
+  if (!entries.length) {
+    root.hidden = true;
+    return;
+  }
+  root.hidden = false;
+  if (titleEl && data.title) titleEl.textContent = data.title;
+  if (blurbEl && data.blurb) blurbEl.textContent = data.blurb;
+
+  const paint = () => {
+    grid.innerHTML = entries
+      .map((entry) => {
+        const resolved = resolveFeaturedPath(entry);
+        return featuredCardHtml(entry, resolved, {
+          selected: featuredActiveId === entry.id,
+        });
+      })
+      .join("");
+
+    if (!detail) return;
+    if (!featuredActiveId) {
+      detail.hidden = true;
+      detail.innerHTML = "";
+      return;
+    }
+    const entry = entries.find((e) => e.id === featuredActiveId);
+    if (!entry) {
+      detail.hidden = true;
+      detail.innerHTML = "";
+      return;
+    }
+    const resolved = resolveFeaturedPath(entry);
+    detail.hidden = false;
+    detail.innerHTML = featuredDetailHtml(entry, resolved);
+    detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  };
+
+  grid.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-featured-id]");
+    if (!btn) return;
+    const id = btn.getAttribute("data-featured-id");
+    featuredActiveId = featuredActiveId === id ? null : id;
+    paint();
+  });
+
+  detail?.addEventListener("click", (e) => {
+    if (e.target.closest("[data-featured-close]")) {
+      featuredActiveId = null;
+      paint();
+    }
+  });
+
+  paint();
+}
+
 function setupBuilds() {
   const roles = ["Carry", "Mid", "Jungle", "Solo", "Support"].filter(
     (r) => state.builds?.roles?.[r]
@@ -1875,10 +2161,17 @@ function setupBuilds() {
     const godsBox = $("#build-gods");
     const jobWrap = $("#role-job-wrap");
     const allHits = $("#builds-all-hits");
+    const featured = $("#featured-builds");
+    const rosterLabel = $("#builds-roster-label");
     const viewingGod = buildsMode === "search" && searchFocusGod;
     if (detail) detail.hidden = !viewingGod;
     if (godsBox) godsBox.hidden = !!viewingGod;
     if (jobWrap) jobWrap.hidden = !!viewingGod;
+    if (featured) {
+      const hasFeatured = (state.featured_builds?.builds || []).length > 0;
+      featured.hidden = !!viewingGod || !hasFeatured;
+    }
+    if (rosterLabel) rosterLabel.hidden = !!viewingGod;
     if (allHits && viewingGod) allHits.hidden = true;
   };
 
@@ -6860,6 +7153,7 @@ async function main() {
     await loadData();
     loading.style.display = "none";
     $("#app-main").style.display = "block";
+    setupFeaturedBuilds();
 
     // Prefer the newest of meta / HTML shell / scraped (bundle.meta can lag a stamp-only push)
     const shellExported = $("#site-updated")?.getAttribute("data-exported-at") || "";
