@@ -79,16 +79,31 @@ _HOOK_PATTERNS: list[tuple[str, re.Pattern[str], float]] = [
         0.75,
     ),
     (
-        # Shell Spikes / thorns / reflect % of damage taken
+        # Shell Spikes / Nemesis Retribution / thorns — reflect % of damage taken or blocked
         "damage_reflect",
         re.compile(
             r"damage reflected:\s*[\d.]+%|"
+            r"reflect damage:\s*[\d.]+%\s*of\s*damage blocked|"
+            r"reflect damage:\s*[\d.]+%|"
             r"reflect(?:ing|s)? a portion of damage|"
-            r"reflect(?:s|ed)?\s*[\d.]+%\s*of\s*(?:damage|pre-mitigated)|"
-            r"reflect(?:s|ing)? damage taken",
+            r"reflect(?:s|ed)?\s*[\d.]+%\s*of\s*(?:damage|pre-mitigated|damage blocked)|"
+            r"reflect(?:s|ing)? damage taken|"
+            r"[\d.]+%\s*of\s*damage blocked",
             re.I,
         ),
         0.7,
+    ),
+    (
+        # Ymir Frost Breath / Athena Confound / Hades Shroud — CC duration from Item Protections
+        "item_prot_cc",
+        re.compile(
+            r"(?:stun|taunt|silence|root|slow)\s*duration\s*scaling:\s*"
+            r"[\d.]+\s*seconds?\s*per\s*[\d.]+\s*item\s*protections?"
+            r"|[\d.]+\s*seconds?\s*per\s*[\d.]+\s*item\s*protections?"
+            r"|per\s*[\d.]+\s*item\s*protections?",
+            re.I,
+        ),
+        0.8,
     ),
     (
         "permanent_max_hp",
@@ -202,6 +217,21 @@ _HOOK_PREFER: dict[str, list[str]] = {
         "shifter",
         "gladiator",
     ],
+    "item_prot_cc": [
+        "gauntlet of thebes",
+        "breastplate of valor",
+        "genji",
+        "contagion",
+        "spectral",
+        "prophetic",
+        "mystical",
+        "stone of binding",
+        "shifter",
+        "doublet",
+        "alchemist",
+        "magi",
+        "mantle",
+    ],
     "permanent_max_hp": [
         "contagion",
         "gladiator",
@@ -289,6 +319,18 @@ _HOOK_BAN: dict[str, list[str]] = {
         "deathbringer",
         "riptalon",
     ],
+    "item_prot_cc": [
+        "tahuti",
+        "dreamer",
+        "thoth",
+        "doom orb",
+        "polynomicon",
+        "obsidian",
+        "desolat",
+        "cosmic",
+        "deathbringer",
+        "riptalon",
+    ],
     "permanent_max_hp": [
         "lotus sickle",
         "asclepius",
@@ -336,6 +378,7 @@ _HOOK_TAGS_ADD: dict[str, set[str]] = {
     "item_hp_scale": {"hybrid_bulk", "aa", "team_buff"},
     "max_hp_scale": {"hybrid_bulk", "self_sustain"},
     "damage_reflect": {"hybrid_bulk", "self_sustain", "anti_cc"},
+    "item_prot_cc": {"hybrid_bulk", "hard_cc", "anti_cc"},
     "permanent_max_hp": {"hybrid_bulk", "self_sustain", "execute"},
     "plat_damp_stack": {"hybrid_bulk", "self_sustain", "anti_cc"},
     "ally_shield": {"heal", "team_buff", "shield", "heavy_heal"},
@@ -349,6 +392,7 @@ _HOOK_TAGS_REMOVE: dict[str, set[str]] = {
     "item_hp_scale": {"burst"},
     "max_hp_scale": {"burst", "ult_nuke"},
     "damage_reflect": {"burst", "ult_nuke", "aa", "as_steroid"},
+    "item_prot_cc": {"burst", "ult_nuke", "aa", "as_steroid", "mana_stack"},
     "haunt_shred": {"burst", "ult_nuke", "aa", "as_steroid", "heal", "team_buff", "heavy_heal"},
 }
 
@@ -414,6 +458,11 @@ def detect_identity_hooks(blob: str, *, is_aspect: bool = False) -> IdentityProf
         prof.hp_stack_boost = max(prof.hp_stack_boost, 0.45)
         prof.bulk_boost = max(prof.bulk_boost, 0.45)
         prof.power_penalty = max(prof.power_penalty, 0.2)
+    if "item_prot_cc" in prof.hooks:
+        # Stretch stun/taunt/silence — raw Item Protections over glass power
+        prof.bulk_boost = max(prof.bulk_boost, 0.5)
+        prof.power_penalty = max(prof.power_penalty, 0.25)
+        prof.cdr_boost = max(prof.cdr_boost, 0.2)
     if "plat_damp_stack" in prof.hooks:
         prof.bulk_boost = max(prof.bulk_boost, 0.45)
         prof.hp_stack_boost = max(prof.hp_stack_boost, 0.25)
@@ -605,6 +654,30 @@ def identity_item_score_delta(item_name: str, bias: dict[str, Any]) -> float:
         if any(k in n for k in ("tahuti", "obsidian", "titan")):
             s -= 35
 
+    if "item_prot_cc" in hooks:
+        # Raw Physical + Magical Item Protections stretch CC duration
+        if any(
+            k in n
+            for k in (
+                "thebes",
+                "breastplate",
+                "genji",
+                "contagion",
+                "spectral",
+                "prophetic",
+                "mystical",
+                "binding",
+                "shifter",
+                "doublet",
+                "alchemist",
+                "magi",
+                "mantle",
+            )
+        ):
+            s += 45 if lock else 32
+        if any(k in n for k in ("tahuti", "dreamer", "thoth", "doom orb", "obsidian", "desolat", "cosmic")):
+            s -= 40 if lock else 28
+
     if "permanent_max_hp" in hooks:
         if any(k in n for k in ("contagion", "gladiator", "leviathan", "hide", "mystical")):
             s += 40
@@ -641,5 +714,11 @@ def identity_fights_item(item_name: str, bias: dict[str, Any]) -> bool:
             return True
     if "plat_damp_stack" in hooks:
         if any(k in n for k in ("tahuti", "tyrfing", "deathbringer", "obsidian", "titan")):
+            return True
+    if "item_prot_cc" in hooks:
+        if any(k in n for k in ("tahuti", "dreamer", "thoth", "doom orb", "obsidian", "desolat", "cosmic")):
+            return True
+    if "damage_reflect" in hooks:
+        if any(k in n for k in ("tahuti", "dreamer", "thoth", "doom orb", "polynomicon", "deathbringer", "riptalon")):
             return True
     return False

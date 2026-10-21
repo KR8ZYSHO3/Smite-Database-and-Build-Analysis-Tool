@@ -175,5 +175,203 @@
         "Gauntlet of Thebes"
       ]
     }
+  },
+  "Nemesis": {
+    "_why": "Retribution: Health Shield scales 7.5% Max Health; Reflect Damage 40% of Damage Blocked (+STR) and Heal 40% of Damage Blocked (+INT). Support/Solo = Max-HP + reflect shell (Thebes/Contagion/Nemean/Mystical). Jungle = reflect gank with Contagion/Nemean + gap tool — never glass AA Tekko/Crusher stack. Scales of Fate shred wants Isolation/Binding stick.",
+    "force_tags": [
+      "hybrid_bulk",
+      "self_sustain",
+      "anti_cc",
+      "gap_close",
+      "shield",
+      "prot_shred"
+    ],
+    "remove_tags": [
+      "burst",
+      "ult_nuke",
+      "aa",
+      "as_steroid"
+    ],
+    "prefer_items": [
+      "Gauntlet of Thebes",
+      "Contagion",
+      "Hide of the Nemean Lion",
+      "Mystical Mail",
+      "Ethereal Staff",
+      "Prophetic Cloak",
+      "Gem of Isolation",
+      "Stone of Binding",
+      "Shifter's Shield",
+      "Gladiator's Shield",
+      "Breastplate of Valor"
+    ],
+    "prefer_by_role": {
+      "Support": [
+        "Gauntlet of Thebes",
+        "Contagion",
+        "Hide of the Nemean Lion",
+        "Mystical Mail",
+        "Ethereal Staff",
+        "Gem of Isolation",
+        "Stone of Binding",
+        "Prophetic Cloak"
+      ],
+      "Solo": [
+        "Contagion",
+        "Hide of the Nemean Lion",
+        "Mystical Mail",
+        "Gauntlet of Thebes",
+        "Ethereal Staff",
+        "Prophetic Cloak",
+        "Shifter's Shield",
+        "Gladiator's Shield"
+      ],
+      "Jungle": [
+        "Hide of the Nemean Lion",
+        "Contagion",
+        "Mystical Mail",
+        "Ethereal Staff",
+        "Jotunn's Revenge",
+        "Gem of Isolation",
+        "Stone of Binding",
+        "Breastplate of Valor"
+      ]
+    },
+    "ban_items": [
+      "Rod of Tahuti",
+      "Dreamer's Idol",
+      "Book of Thoth",
+      "Doom Orb",
+      "Polynomicon",
+      "Deathbringer",
+      "Riptalon",
+      "Tyrfing",
+      "Tekko-Kagi",
+      "The Crusher",
+      "Pendulum Blade",
+      "Lotus Sickle",
+      "Chandra's Grace"
+    ],
+    "ban_by_role": {
+      "Jungle": [
+        "Gauntlet of Thebes",
+        "Tekko-Kagi",
+        "The Crusher",
+        "Pendulum Blade",
+        "Devourer's Gauntlet"
+      ],
+      "Support": [
+        "Tekko-Kagi",
+        "The Crusher",
+        "Jotunn's Revenge",
+        "Hydra's Lament"
+      ]
+    }
+  },
+  "Ymir": {
+    "_why": "Frost Breath stun scales +0.2s per 100 Item Protections (max 2 stacks = +0.4s). Shards of Ice also scales off Protections. Support/Solo = stack raw Item Protections (Thebes + Breastplate + Genji + Contagion) to stretch stun — never glass Thoth/Cosmic Mid path on Support. Isolation/Binding stick Frostbite slows.",
+    "force_tags": [
+      "hybrid_bulk",
+      "hard_cc",
+      "anti_cc",
+      "zone"
+    ],
+    "remove_tags": [
+      "burst",
+      "ult_nuke",
+      "aa",
+      "as_steroid",
+      "mana_stack"
+    ],
+    "prefer_items": [
+      "Gauntlet of Thebes",
+      "Breastplate of Valor",
+      "Genji's Guard",
+      "Contagion",
+      "Spectral Armor",
+      "Prophetic Cloak",
+      "Mystical Mail",
+      "Stone of Binding",
+      "Gem of Isolation",
+      "Shifter's Shield",
+      "Alchemist Coat",
+      "Doublet of Binding"
+    ],
+    "prefer_by_role": {
+      "Support": [
+        "Gauntlet of Thebes",
+        "Breastplate of Valor",
+        "Genji's Guard",
+        "Contagion",
+        "Spectral Armor",
+        "Stone of Binding",
+        "Gem of Isolation",
+        "Prophetic Cloak"
+      ],
+      "Solo": [
+        "Breastplate of Valor",
+        "Genji's Guard",
+        "Gauntlet of Thebes",
+        "Contagion",
+        "Mystical Mail",
+        "Prophetic Cloak",
+        "Stone of Binding",
+        "Shifter's Shield"
+      ],
+      "Jungle": [
+        "Breastplate of Valor",
+        "Genji's Guard",
+        "Contagion",
+        "Gem of Isolation",
+        "Stone of Binding",
+        "Mystical Mail",
+        "Spear Of The Magus",
+        "Chronos' Pendant"
+      ],
+      "Mid": [
+        "Breastplate of Valor",
+        "Genji's Guard",
+        "Contagion",
+        "Gem of Isolation",
+        "Chronos' Pendant",
+        "Spear Of The Magus",
+        "Stone of Binding",
+        "Prophetic Cloak"
+      ]
+    },
+    "ban_items": [
+      "Rod of Tahuti",
+      "Dreamer's Idol",
+      "Book of Thoth",
+      "Doom Orb",
+      "Polynomicon",
+      "The Cosmic Horror",
+      "Obsidian Shard",
+      "Spear of Desolation",
+      "Deathbringer",
+      "Riptalon",
+      "Lotus Sickle",
+      "Chandra's Grace"
+    ],
+    "ban_by_role": {
+      "Support": [
+        "Book of Thoth",
+        "The Cosmic Horror",
+        "Spear of Desolation",
+        "Rod of Tahuti"
+      ],
+      "Jungle": [
+        "Gauntlet of Thebes",
+        "Book of Thoth",
+        "The Cosmic Horror",
+        "Rod of Tahuti"
+      ],
+      "Mid": [
+        "Gauntlet of Thebes",
+        "Book of Thoth",
+        "The Cosmic Horror",
+        "Rod of Tahuti"
+      ]
+    }
   }
 }

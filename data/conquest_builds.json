@@ -49136,26 +49136,32 @@
           "scaling": "Strength",
           "archetype": "sustain_assassin",
           "kit_tags": [
+            "anti_cc",
             "gap_close",
             "heal",
             "hybrid_bulk",
             "long_cd",
+            "prot_shred",
             "self_sustain",
             "shield"
           ],
           "kit_effects": [
+            "protection shred",
             "self heal / drain",
             "dash / leap engage",
+            "CC immunity in kit",
             "big ult spike",
             "shields",
             "healing in kit",
             "long cooldowns"
           ],
           "kit_effect_scores": {
+            "prot_shred": 1.0,
             "self_sustain": 1.0,
             "heal": 0.7,
             "shield": 0.8,
             "gap_close": 1.0,
+            "anti_cc": 1.0,
             "long_cd": 0.7,
             "ult_nuke": 0.9
           },
@@ -49191,7 +49197,7 @@
           "items": [
             {
               "name": "Jotunn's Revenge",
-              "score": 306.6,
+              "score": 389.8,
               "cost": 2400,
               "type": "Offensive",
               "slot": "power",
@@ -49215,127 +49221,123 @@
               "inspired": true
             },
             {
-              "name": "Tekko-Kagi",
-              "score": 280.0,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 0.41,
-              "ladder_tier": "A",
-              "ladder_rank": 26,
-              "ladder_score": 54.2,
-              "stats": {
-                "pen": 10.0,
-                "str": 40.0,
-                "as": 20.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Used: Gain a stack of Momentum.\nMomentum grants +7% Pathfinding for 8s. Stacks up to 3 times.",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Toxic Blade",
-              "score": 220.7,
-              "cost": 2700,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 2.11,
-              "ladder_tier": "S",
-              "ladder_rank": 5,
-              "ladder_score": 83.1,
-              "stats": {
-                "pen": 10.0,
-                "hp": 100.0,
-                "as": 20.0,
-                "bap": 25.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hit a God with an Attack: Apply 40% Healing Reduction and 7% Attack Speed reduction for 5s. Gain 7% Attack Speed for 5s.\n*Attack Speed Buff and Debuff can stack up to 3 times.",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Hydra's Lament",
-              "score": 224.1,
+              "name": "Gem of Isolation",
+              "score": 16.1,
               "cost": 2450,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.01,
-              "ladder_tier": "B",
-              "ladder_rank": 72,
-              "ladder_score": 25.0,
+              "type": "Hybrid",
+              "slot": "mitigate",
+              "momentum": 0.91,
+              "ladder_tier": "A",
+              "ladder_rank": 31,
+              "ladder_score": 47.9,
               "stats": {
-                "str": 45.0,
-                "cdr": 10.0,
-                "mp": 200.0,
-                "mpr": 4.0
+                "ten": 15.0,
+                "hp": 250.0,
+                "int": 50.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
-              "ten": 0,
-              "effect": "Ability Used: Bonus Damage on your next successful Attack.\n*+30% for Melee or +20% for Ranged\nBuff lasts 8s.",
+              "ten": 15.0,
+              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
               "is_active": false,
-              "why": "CDR + pen for gank/engage; inspired: high-SR Nemesis Jungle (1/2)",
-              "inspired": true
+              "why": "zones & CC \u2014 Isolation slow/shred value"
             },
             {
-              "name": "Bloodforge",
-              "score": 306.1,
+              "name": "Ethereal Staff",
+              "score": 98.0,
               "cost": 2550,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 1.1,
+              "type": "Hybrid",
+              "slot": "mitigate",
+              "momentum": 0.99,
               "ladder_tier": "A",
-              "ladder_rank": 24,
-              "ladder_score": 55.1,
+              "ladder_rank": 29,
+              "ladder_score": 50.1,
               "stats": {
-                "str": 55.0,
-                "ls": 7.5
+                "ten": 15.0,
+                "hp": 250.0,
+                "int": 60.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 15.0,
+              "effect": "Ability Hit a God: Steal 5% Max Health and Mana from a single target.\n*Triggers once per Ability\n*Stacks last 60s\n*Stacks decay 1 at a time",
+              "is_active": false,
+              "why": "mitigation vs enemy damage types"
+            },
+            {
+              "name": "Contagion",
+              "score": 261.5,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
+              "stats": {
+                "hp": 425.0,
+                "hpr": 6.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "On Use: + Health Shield for 6s.\n*Shield = 10% Max Health & 150% Strength from Items\n*While Shielded: +10% Lifesteal\nKill a God: -25% Cooldown.\nCooldown: 80s\nYou can own up to 3 act",
-              "is_active": true,
-              "why": "lifesteal + power for execute/bruiser"
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "is_active": false,
+              "why": "team anti-heal aura"
             },
             {
-              "name": "The Crusher",
-              "score": 304.8,
-              "cost": 2750,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 1.17,
-              "ladder_tier": "A",
-              "ladder_rank": 32,
-              "ladder_score": 47.8,
+              "name": "Hide of the Nemean Lion",
+              "score": 243.4,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": -0.03,
+              "ladder_tier": "C",
+              "ladder_rank": 108,
+              "ladder_score": 21.8,
               "stats": {
-                "pen": 10.0,
-                "str": 55.0
+                "pprot": 35.0,
+                "hp": 350.0,
+                "hpr": 4.0
               },
-              "pen": 10.0,
+              "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Ability Hit: +Physical Damage.\n*Damage = 35% of your Strength\n*Damage is dealt over 1s\n*Subsequent hits on the same target deal 33% bonus Damage, over 3s.",
+              "effect": "On Use: Reflect:\n*40% of pre-mitigated Attack Damage\n*20% of pre-mitigated Ability Damage\n*Damage is Reflected as Physical Damage\nBuff lasts 4s.\nCooldown: 60s\nYou can own up to 3 a",
+              "is_active": true,
+              "why": "mitigate enemy crit (Spectral line)"
+            },
+            {
+              "name": "Mystical Mail",
+              "score": 228.7,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.44,
+              "ladder_tier": "B",
+              "ladder_rank": 58,
+              "ladder_score": 27.5,
+              "stats": {
+                "pprot": 40.0,
+                "hp": 300.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Enemies within 4m: 15 (+1 per Level) Magical Damage and lose 25% of Health Shield per 1s.\nRange Scaling Damage:\n*+50% at Close Range\n*-50% at Maximum Range",
               "is_active": false,
-              "why": "penetration required for damage role; inspired: high-SR Nemesis Jungle (1/2); high-SR Jungle staple",
-              "inspired": true
+              "why": "Jungle defensive slot \u2014 survive focus"
             }
           ],
           "full_path": [
             {
               "name": "Jotunn's Revenge",
-              "score": 306.6,
+              "score": 389.8,
               "cost": 2400,
               "type": "Offensive",
               "slot": "power",
@@ -49359,128 +49361,124 @@
               "inspired": true
             },
             {
-              "name": "Tekko-Kagi",
-              "score": 280.0,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 0.41,
-              "ladder_tier": "A",
-              "ladder_rank": 26,
-              "ladder_score": 54.2,
-              "stats": {
-                "pen": 10.0,
-                "str": 40.0,
-                "as": 20.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Used: Gain a stack of Momentum.\nMomentum grants +7% Pathfinding for 8s. Stacks up to 3 times.",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Toxic Blade",
-              "score": 220.7,
-              "cost": 2700,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 2.11,
-              "ladder_tier": "S",
-              "ladder_rank": 5,
-              "ladder_score": 83.1,
-              "stats": {
-                "pen": 10.0,
-                "hp": 100.0,
-                "as": 20.0,
-                "bap": 25.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hit a God with an Attack: Apply 40% Healing Reduction and 7% Attack Speed reduction for 5s. Gain 7% Attack Speed for 5s.\n*Attack Speed Buff and Debuff can stack up to 3 times.",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Hydra's Lament",
-              "score": 224.1,
+              "name": "Gem of Isolation",
+              "score": 16.1,
               "cost": 2450,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.01,
-              "ladder_tier": "B",
-              "ladder_rank": 72,
-              "ladder_score": 25.0,
+              "type": "Hybrid",
+              "slot": "mitigate",
+              "momentum": 0.91,
+              "ladder_tier": "A",
+              "ladder_rank": 31,
+              "ladder_score": 47.9,
               "stats": {
-                "str": 45.0,
-                "cdr": 10.0,
-                "mp": 200.0,
-                "mpr": 4.0
+                "ten": 15.0,
+                "hp": 250.0,
+                "int": 50.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
-              "ten": 0,
-              "effect": "Ability Used: Bonus Damage on your next successful Attack.\n*+30% for Melee or +20% for Ranged\nBuff lasts 8s.",
+              "ten": 15.0,
+              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
               "is_active": false,
-              "why": "CDR + pen for gank/engage; inspired: high-SR Nemesis Jungle (1/2)",
-              "inspired": true
+              "why": "zones & CC \u2014 Isolation slow/shred value"
             },
             {
-              "name": "Bloodforge",
-              "score": 306.1,
+              "name": "Ethereal Staff",
+              "score": 98.0,
               "cost": 2550,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 1.1,
+              "type": "Hybrid",
+              "slot": "mitigate",
+              "momentum": 0.99,
               "ladder_tier": "A",
-              "ladder_rank": 24,
-              "ladder_score": 55.1,
+              "ladder_rank": 29,
+              "ladder_score": 50.1,
               "stats": {
-                "str": 55.0,
-                "ls": 7.5
+                "ten": 15.0,
+                "hp": 250.0,
+                "int": 60.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 15.0,
+              "effect": "Ability Hit a God: Steal 5% Max Health and Mana from a single target.\n*Triggers once per Ability\n*Stacks last 60s\n*Stacks decay 1 at a time",
+              "is_active": false,
+              "why": "mitigation vs enemy damage types"
+            },
+            {
+              "name": "Contagion",
+              "score": 261.5,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
+              "stats": {
+                "hp": 425.0,
+                "hpr": 6.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "On Use: + Health Shield for 6s.\n*Shield = 10% Max Health & 150% Strength from Items\n*While Shielded: +10% Lifesteal\nKill a God: -25% Cooldown.\nCooldown: 80s\nYou can own up to 3 act",
-              "is_active": true,
-              "why": "lifesteal + power for execute/bruiser"
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "is_active": false,
+              "why": "team anti-heal aura"
             },
             {
-              "name": "The Crusher",
-              "score": 304.8,
-              "cost": 2750,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 1.17,
-              "ladder_tier": "A",
-              "ladder_rank": 32,
-              "ladder_score": 47.8,
+              "name": "Hide of the Nemean Lion",
+              "score": 243.4,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": -0.03,
+              "ladder_tier": "C",
+              "ladder_rank": 108,
+              "ladder_score": 21.8,
               "stats": {
-                "pen": 10.0,
-                "str": 55.0
+                "pprot": 35.0,
+                "hp": 350.0,
+                "hpr": 4.0
               },
-              "pen": 10.0,
+              "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Ability Hit: +Physical Damage.\n*Damage = 35% of your Strength\n*Damage is dealt over 1s\n*Subsequent hits on the same target deal 33% bonus Damage, over 3s.",
+              "effect": "On Use: Reflect:\n*40% of pre-mitigated Attack Damage\n*20% of pre-mitigated Ability Damage\n*Damage is Reflected as Physical Damage\nBuff lasts 4s.\nCooldown: 60s\nYou can own up to 3 a",
+              "is_active": true,
+              "why": "mitigate enemy crit (Spectral line)"
+            },
+            {
+              "name": "Mystical Mail",
+              "score": 228.7,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.44,
+              "ladder_tier": "B",
+              "ladder_rank": 58,
+              "ladder_score": 27.5,
+              "stats": {
+                "pprot": 40.0,
+                "hp": 300.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Enemies within 4m: 15 (+1 per Level) Magical Damage and lose 25% of Health Shield per 1s.\nRange Scaling Damage:\n*+50% at Close Range\n*-50% at Maximum Range",
               "is_active": false,
-              "why": "penetration required for damage role; inspired: high-SR Nemesis Jungle (1/2); high-SR Jungle staple",
-              "inspired": true
+              "why": "Jungle defensive slot \u2014 survive focus"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
               "name": "Jotunn's Revenge",
-              "score": 306.6,
+              "score": 389.8,
               "cost": 2400,
               "type": "Offensive",
               "slot": "power",
@@ -49504,79 +49502,99 @@
               "inspired": true
             },
             {
-              "name": "Tekko-Kagi",
-              "score": 280.0,
-              "cost": 2650,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 0.41,
-              "ladder_tier": "A",
-              "ladder_rank": 26,
-              "ladder_score": 54.2,
-              "stats": {
-                "pen": 10.0,
-                "str": 40.0,
-                "as": 20.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Ability Used: Gain a stack of Momentum.\nMomentum grants +7% Pathfinding for 8s. Stacks up to 3 times.",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Toxic Blade",
-              "score": 220.7,
-              "cost": 2700,
-              "type": "Offensive",
-              "slot": "pen",
-              "momentum": 2.11,
-              "ladder_tier": "S",
-              "ladder_rank": 5,
-              "ladder_score": 83.1,
-              "stats": {
-                "pen": 10.0,
-                "hp": 100.0,
-                "as": 20.0,
-                "bap": 25.0
-              },
-              "pen": 10.0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hit a God with an Attack: Apply 40% Healing Reduction and 7% Attack Speed reduction for 5s. Gain 7% Attack Speed for 5s.\n*Attack Speed Buff and Debuff can stack up to 3 times.",
-              "is_active": false,
-              "why": "penetration required for damage role"
-            },
-            {
-              "name": "Hydra's Lament",
-              "score": 224.1,
+              "name": "Gem of Isolation",
+              "score": 16.1,
               "cost": 2450,
-              "type": "Offensive",
-              "slot": "power",
-              "momentum": 0.01,
-              "ladder_tier": "B",
-              "ladder_rank": 72,
-              "ladder_score": 25.0,
+              "type": "Hybrid",
+              "slot": "mitigate",
+              "momentum": 0.91,
+              "ladder_tier": "A",
+              "ladder_rank": 31,
+              "ladder_score": 47.9,
               "stats": {
-                "str": 45.0,
-                "cdr": 10.0,
-                "mp": 200.0,
-                "mpr": 4.0
+                "ten": 15.0,
+                "hp": 250.0,
+                "int": 50.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 15.0,
+              "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
+              "is_active": false,
+              "why": "zones & CC \u2014 Isolation slow/shred value"
+            },
+            {
+              "name": "Ethereal Staff",
+              "score": 98.0,
+              "cost": 2550,
+              "type": "Hybrid",
+              "slot": "mitigate",
+              "momentum": 0.99,
+              "ladder_tier": "A",
+              "ladder_rank": 29,
+              "ladder_score": 50.1,
+              "stats": {
+                "ten": 15.0,
+                "hp": 250.0,
+                "int": 60.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 15.0,
+              "effect": "Ability Hit a God: Steal 5% Max Health and Mana from a single target.\n*Triggers once per Ability\n*Stacks last 60s\n*Stacks decay 1 at a time",
+              "is_active": false,
+              "why": "mitigation vs enemy damage types"
+            }
+          ],
+          "defense": [
+            {
+              "name": "Contagion",
+              "score": 261.5,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
+              "stats": {
+                "hp": 425.0,
+                "hpr": 6.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Ability Used: Bonus Damage on your next successful Attack.\n*+30% for Melee or +20% for Ranged\nBuff lasts 8s.",
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
               "is_active": false,
-              "why": "CDR + pen for gank/engage; inspired: high-SR Nemesis Jungle (1/2)",
-              "inspired": true
+              "why": "team anti-heal aura"
+            },
+            {
+              "name": "Hide of the Nemean Lion",
+              "score": 243.4,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": -0.03,
+              "ladder_tier": "C",
+              "ladder_rank": 108,
+              "ladder_score": 21.8,
+              "stats": {
+                "pprot": 35.0,
+                "hp": 350.0,
+                "hpr": 4.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On Use: Reflect:\n*40% of pre-mitigated Attack Damage\n*20% of pre-mitigated Ability Damage\n*Damage is Reflected as Physical Damage\nBuff lasts 4s.\nCooldown: 60s\nYou can own up to 3 a",
+              "is_active": true,
+              "why": "mitigate enemy crit (Spectral line)"
             }
           ],
-          "defense": [],
           "relics": [
             {
               "name": "Blink Rune",
@@ -49618,7 +49636,7 @@
           "max_shop_actives": 3,
           "hard_max_actives": 3,
           "active_count": 1,
-          "pen_total": 35.0,
+          "pen_total": 5.0,
           "min_build_pen": 20.0,
           "algorithm": {
             "version": "1.4.0",
@@ -49768,7 +49786,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Nemesis \u00b7 Jungle \u00b7 archetype \u00absustain_assassin\u00bb (STR / physical). Kit effects: self heal / drain, dash / leap engage, big ult spike, shields, healing in kit, long cooldowns. Tags: gap_close, heal, hybrid_bulk, long_cd, self_sustain, shield. Style burst 53%/dps 47%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): damage +0.0. Scale STR 102% / INT 70%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Tekko-Kagi (penetration required for damage role); Toxic Blade (penetration required for damage role). Pen: Jotunn's Revenge, Tekko-Kagi, Toxic Blade, The Crusher. Actives 1/3 \u00b7 pen \u2248 35. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Nemesis \u00b7 Jungle \u00b7 archetype \u00absustain_assassin\u00bb (STR / physical). Kit effects: protection shred, self heal / drain, dash / leap engage, CC immunity in kit, big ult spike, shields. Tags: anti_cc, gap_close, heal, hybrid_bulk, long_cd, prot_shred, self_sustain, shield. Style burst 33%/dps 47%; patch stable (net +0.1, r5 +0.0). Patch axes (r5): damage +0.0. Scale STR 102% / INT 70%. Path: Jotunn's Revenge (CDR + pen for gank/engage); Gem of Isolation (zones & CC \u2014 Isolation slow/shred value); Ethereal Staff (Jungle path fit for kit profile). Pen: Jotunn's Revenge. Actives 1/3 \u00b7 pen \u2248 5. Soft high-SR inspiration on 1 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 2 > 1 > 3",
           "skill_order": "2/1/3/2/4/2/2/2/4/1/1/1/4/1/3/3/4/3/3/4",
           "skill_order_list": [
@@ -49812,10 +49830,8 @@
               "label": "vs heals / sustain",
               "short": "heal",
               "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
-              "in_path": true,
-              "path_items": [
-                "Toxic Blade"
-              ],
+              "in_path": false,
+              "path_items": [],
               "suggest": [
                 "Divine Ruin",
                 "Brawler's Beat Stick"
@@ -49826,8 +49842,10 @@
               "label": "vs high HP / tanks",
               "short": "tanks",
               "why": "%HP, pen, and prot shred so fat targets take real damage.",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Ethereal Staff"
+              ],
               "suggest": [
                 "Soul Reaver",
                 "Ethereal Staff"
@@ -49859,8 +49877,8 @@
             }
           ],
           "answer_flags": {
-            "heal": true,
-            "tanks_hp": false,
+            "heal": false,
+            "tanks_hp": true,
             "cc_dive": false,
             "physical": false
           }
@@ -63258,14 +63276,13 @@
           "scaling": "Strength",
           "archetype": "sustain_solo",
           "kit_tags": [
-            "aa",
             "anti_cc",
-            "burst",
             "gap_close",
             "hard_cc",
             "heal",
             "heavy_shield",
             "high_cc",
+            "hybrid_bulk",
             "long_cd",
             "mobile",
             "self_sustain",
@@ -63273,18 +63290,16 @@
             "utility"
           ],
           "kit_effects": [
-            "basic-attack kit",
             "self heal / drain",
             "shields",
             "hard crowd control",
             "dash / leap engage",
             "CC immunity in kit",
             "lots of CC",
-            "high mobility"
+            "high mobility",
+            "basic-attack kit"
           ],
           "kit_effect_scores": {
-            "burst": 0.85,
-            "aa": 1.0,
             "self_sustain": 1.0,
             "heal": 0.7,
             "shield": 1.0,
@@ -63293,7 +63308,8 @@
             "mobile": 0.9,
             "gap_close": 1.0,
             "anti_cc": 1.0,
-            "long_cd": 0.7
+            "long_cd": 0.7,
+            "aa": 0.9
           },
           "is_aspect": false,
           "aspect_name": null,
@@ -63326,364 +63342,357 @@
           },
           "items": [
             {
-              "name": "Yogi's Necklace",
-              "score": 169.9,
-              "cost": 2250,
+              "name": "Mystical Mail",
+              "score": 421.9,
+              "cost": 2550,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": 0.0,
-              "ladder_tier": "C",
-              "ladder_rank": 103,
-              "ladder_score": 22.1,
+              "momentum": 0.44,
+              "ladder_tier": "B",
+              "ladder_rank": 58,
+              "ladder_score": 27.5,
               "stats": {
-                "hp": 325.0,
-                "mp": 250.0,
-                "hpr": 6.0,
-                "mpr": 6.0
+                "pprot": 40.0,
+                "hp": 300.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Heal +0.5% of your Max Health per second.",
+              "effect": "Enemies within 4m: 15 (+1 per Level) Magical Damage and lose 25% of Health Shield per 1s.\nRange Scaling Damage:\n*+50% at Close Range\n*-50% at Maximum Range",
               "is_active": false,
-              "why": "Solo defensive slot \u2014 survive focus"
+              "why": "Solo defensive slot \u2014 survive focus; inspired: high-SR Bellona Solo (1/4)",
+              "inspired": true
             },
             {
-              "name": "Berserker's Shield",
-              "score": 221.7,
-              "cost": 2400,
-              "type": "Defensive",
+              "name": "Shifter's Shield",
+              "score": 317.6,
+              "cost": 2750,
+              "type": "Hybrid",
               "slot": "defense",
-              "momentum": 0.09,
-              "ladder_tier": "C",
-              "ladder_rank": 95,
-              "ladder_score": 23.2,
+              "momentum": -1.33,
+              "ladder_tier": "D",
+              "ladder_rank": 120,
+              "ladder_score": 18.4,
               "stats": {
-                "pprot": 50.0,
+                "pprot": 25.0,
+                "mprot": 25.0,
                 "hp": 200.0,
-                "as": 20.0,
                 "hpr": 4.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "When falling below 60% Health: Become Berserk for 8s.\nWhile Berserk:\n*+15 Physical Protection\n*+15 Magical Protection\n*+25% Attack Speed",
+              "effect": "Over 75% Health:+30 Strength or +40 Intelligence (whichever is higher).\nUnder 75% Health: +20 Physical and Magical Protection.",
               "is_active": false,
-              "why": "Solo defensive slot \u2014 survive focus; inspired: high-SR Bellona Solo (3/4); common high-SR opener",
+              "why": "offline hybrid tank; inspired: high-SR Bellona Solo (2/4)",
               "inspired": true
             },
             {
-              "name": "Phoenix Feather",
-              "score": 366.2,
-              "cost": 2350,
+              "name": "Gauntlet of Thebes",
+              "score": 373.8,
+              "cost": 2200,
               "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.58,
-              "ladder_tier": "S",
-              "ladder_rank": 17,
-              "ladder_score": 63.7,
+              "slot": "defense",
+              "momentum": 0.54,
+              "ladder_tier": "B",
+              "ladder_rank": 49,
+              "ladder_score": 33.0,
               "stats": {
-                "damp": 5.0,
-                "mprot": 40.0,
-                "hp": 300.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Fire 3 Pulses that Heal you and True Damage enemies within 3.2m.\n*Heal = +75 Health +7.5 Missing Health\n*True Damage = +3% Max Health from Items\nCooldown: 120s\nYou can own ",
-              "is_active": true,
-              "why": "shield / phoenix-style bulk"
-            },
-            {
-              "name": "Brawler\u2019s Beat Stick",
-              "score": 378.9,
-              "cost": 2500,
-              "type": "Hybrid",
-              "slot": "counter",
-              "momentum": 3.7,
-              "ladder_tier": "S",
-              "ladder_rank": 11,
-              "ladder_score": 73.4,
-              "stats": {
-                "pprot": 15.0,
-                "mprot": 15.0
+                "hp": 200.0,
+                "mp": 150.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).\nOn God Damage Dealt: Apply 40% Healing Reduction for 5s\nWhile in Combat: +2% Strength, +2% Intelligenc",
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
               "is_active": false,
-              "why": "healing reduction"
+              "why": "team aura / support core"
             },
             {
-              "name": "Wyrmskin Hide",
-              "score": 393.8,
-              "cost": 2600,
+              "name": "Contagion",
+              "score": 404.8,
+              "cost": 2400,
               "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.78,
-              "ladder_tier": "S",
-              "ladder_rank": 14,
-              "ladder_score": 72.3,
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
               "stats": {
-                "damp": 5.0,
-                "mprot": 25.0,
-                "hp": 300.0,
-                "str": 20.0
+                "hp": 425.0,
+                "hpr": 6.0
               },
               "pen": 0,
-              "damp": 5.0,
+              "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Hit a God (once every 8s): Gain 1 Dampening per level against them.",
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
               "is_active": false,
-              "why": "mitigation vs enemy damage types"
+              "why": "team anti-heal aura"
             },
             {
-              "name": "Doublet of Binding",
-              "score": 277.9,
-              "cost": 2700,
+              "name": "Midgardian Mail",
+              "score": 391.5,
+              "cost": 2400,
               "type": "Defensive",
               "slot": "mitigate",
-              "momentum": -0.15,
+              "momentum": 0.95,
+              "ladder_tier": "A",
+              "ladder_rank": 28,
+              "ladder_score": 51.5,
+              "stats": {
+                "plat": 5.0,
+                "pprot": 50.0,
+                "hp": 250.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 5.0,
+              "ten": 0,
+              "effect": "Hit by a basic attack: the enemy has their Attack Speed reduced by 10% for 3s. Stacks up to 4 times.",
+              "is_active": false,
+              "why": "cut enemy attack speed"
+            },
+            {
+              "name": "Hide of the Nemean Lion",
+              "score": 346.5,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": -0.03,
               "ladder_tier": "C",
-              "ladder_rank": 84,
-              "ladder_score": 24.6,
+              "ladder_rank": 108,
+              "ladder_score": 21.8,
               "stats": {
-                "damp": 5.0,
-                "mprot": 50.0,
-                "hp": 400.0
+                "pprot": 35.0,
+                "hp": 350.0,
+                "hpr": 4.0
               },
               "pen": 0,
-              "damp": 5.0,
+              "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "On Use: Gain Protective Link to a target.\nProtective Link redirects 20% of Damage they take, up to 600 Health. This Damage is mitigated by your Dampening.\nCooldown: 45s\nYou can own",
+              "effect": "On Use: Reflect:\n*40% of pre-mitigated Attack Damage\n*20% of pre-mitigated Ability Damage\n*Damage is Reflected as Physical Damage\nBuff lasts 4s.\nCooldown: 60s\nYou can own up to 3 a",
               "is_active": true,
-              "why": "Stone of Binding \u2014 CC setup shred"
+              "why": "mitigate enemy crit (Spectral line)"
             }
           ],
           "full_path": [
             {
-              "name": "Yogi's Necklace",
-              "score": 169.9,
-              "cost": 2250,
+              "name": "Mystical Mail",
+              "score": 421.9,
+              "cost": 2550,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": 0.0,
-              "ladder_tier": "C",
-              "ladder_rank": 103,
-              "ladder_score": 22.1,
+              "momentum": 0.44,
+              "ladder_tier": "B",
+              "ladder_rank": 58,
+              "ladder_score": 27.5,
               "stats": {
-                "hp": 325.0,
-                "mp": 250.0,
-                "hpr": 6.0,
-                "mpr": 6.0
+                "pprot": 40.0,
+                "hp": 300.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Heal +0.5% of your Max Health per second.",
+              "effect": "Enemies within 4m: 15 (+1 per Level) Magical Damage and lose 25% of Health Shield per 1s.\nRange Scaling Damage:\n*+50% at Close Range\n*-50% at Maximum Range",
               "is_active": false,
-              "why": "Solo defensive slot \u2014 survive focus"
+              "why": "Solo defensive slot \u2014 survive focus; inspired: high-SR Bellona Solo (1/4)",
+              "inspired": true
             },
             {
-              "name": "Berserker's Shield",
-              "score": 221.7,
-              "cost": 2400,
-              "type": "Defensive",
+              "name": "Shifter's Shield",
+              "score": 317.6,
+              "cost": 2750,
+              "type": "Hybrid",
               "slot": "defense",
-              "momentum": 0.09,
-              "ladder_tier": "C",
-              "ladder_rank": 95,
-              "ladder_score": 23.2,
+              "momentum": -1.33,
+              "ladder_tier": "D",
+              "ladder_rank": 120,
+              "ladder_score": 18.4,
               "stats": {
-                "pprot": 50.0,
+                "pprot": 25.0,
+                "mprot": 25.0,
                 "hp": 200.0,
-                "as": 20.0,
                 "hpr": 4.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "When falling below 60% Health: Become Berserk for 8s.\nWhile Berserk:\n*+15 Physical Protection\n*+15 Magical Protection\n*+25% Attack Speed",
+              "effect": "Over 75% Health:+30 Strength or +40 Intelligence (whichever is higher).\nUnder 75% Health: +20 Physical and Magical Protection.",
               "is_active": false,
-              "why": "Solo defensive slot \u2014 survive focus; inspired: high-SR Bellona Solo (3/4); common high-SR opener",
+              "why": "offline hybrid tank; inspired: high-SR Bellona Solo (2/4)",
               "inspired": true
             },
             {
-              "name": "Phoenix Feather",
-              "score": 366.2,
-              "cost": 2350,
+              "name": "Gauntlet of Thebes",
+              "score": 373.8,
+              "cost": 2200,
               "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.58,
-              "ladder_tier": "S",
-              "ladder_rank": 17,
-              "ladder_score": 63.7,
+              "slot": "defense",
+              "momentum": 0.54,
+              "ladder_tier": "B",
+              "ladder_rank": 49,
+              "ladder_score": 33.0,
               "stats": {
-                "damp": 5.0,
-                "mprot": 40.0,
-                "hp": 300.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Fire 3 Pulses that Heal you and True Damage enemies within 3.2m.\n*Heal = +75 Health +7.5 Missing Health\n*True Damage = +3% Max Health from Items\nCooldown: 120s\nYou can own ",
-              "is_active": true,
-              "why": "shield / phoenix-style bulk"
-            },
-            {
-              "name": "Brawler\u2019s Beat Stick",
-              "score": 378.9,
-              "cost": 2500,
-              "type": "Hybrid",
-              "slot": "counter",
-              "momentum": 3.7,
-              "ladder_tier": "S",
-              "ladder_rank": 11,
-              "ladder_score": 73.4,
-              "stats": {
-                "pprot": 15.0,
-                "mprot": 15.0
+                "hp": 200.0,
+                "mp": 150.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).\nOn God Damage Dealt: Apply 40% Healing Reduction for 5s\nWhile in Combat: +2% Strength, +2% Intelligenc",
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
               "is_active": false,
-              "why": "healing reduction"
+              "why": "team aura / support core"
             },
             {
-              "name": "Wyrmskin Hide",
-              "score": 393.8,
-              "cost": 2600,
+              "name": "Contagion",
+              "score": 404.8,
+              "cost": 2400,
               "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.78,
-              "ladder_tier": "S",
-              "ladder_rank": 14,
-              "ladder_score": 72.3,
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
               "stats": {
-                "damp": 5.0,
-                "mprot": 25.0,
-                "hp": 300.0,
-                "str": 20.0
+                "hp": 425.0,
+                "hpr": 6.0
               },
               "pen": 0,
-              "damp": 5.0,
+              "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Hit a God (once every 8s): Gain 1 Dampening per level against them.",
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
               "is_active": false,
-              "why": "mitigation vs enemy damage types"
+              "why": "team anti-heal aura"
             },
             {
-              "name": "Doublet of Binding",
-              "score": 277.9,
-              "cost": 2700,
+              "name": "Midgardian Mail",
+              "score": 391.5,
+              "cost": 2400,
               "type": "Defensive",
               "slot": "mitigate",
-              "momentum": -0.15,
+              "momentum": 0.95,
+              "ladder_tier": "A",
+              "ladder_rank": 28,
+              "ladder_score": 51.5,
+              "stats": {
+                "plat": 5.0,
+                "pprot": 50.0,
+                "hp": 250.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 5.0,
+              "ten": 0,
+              "effect": "Hit by a basic attack: the enemy has their Attack Speed reduced by 10% for 3s. Stacks up to 4 times.",
+              "is_active": false,
+              "why": "cut enemy attack speed"
+            },
+            {
+              "name": "Hide of the Nemean Lion",
+              "score": 346.5,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": -0.03,
               "ladder_tier": "C",
-              "ladder_rank": 84,
-              "ladder_score": 24.6,
+              "ladder_rank": 108,
+              "ladder_score": 21.8,
               "stats": {
-                "damp": 5.0,
-                "mprot": 50.0,
-                "hp": 400.0
+                "pprot": 35.0,
+                "hp": 350.0,
+                "hpr": 4.0
               },
               "pen": 0,
-              "damp": 5.0,
+              "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "On Use: Gain Protective Link to a target.\nProtective Link redirects 20% of Damage they take, up to 600 Health. This Damage is mitigated by your Dampening.\nCooldown: 45s\nYou can own",
+              "effect": "On Use: Reflect:\n*40% of pre-mitigated Attack Damage\n*20% of pre-mitigated Ability Damage\n*Damage is Reflected as Physical Damage\nBuff lasts 4s.\nCooldown: 60s\nYou can own up to 3 a",
               "is_active": true,
-              "why": "Stone of Binding \u2014 CC setup shred"
+              "why": "mitigate enemy crit (Spectral line)"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
-              "name": "Brawler\u2019s Beat Stick",
-              "score": 378.9,
-              "cost": 2500,
+              "name": "Shifter's Shield",
+              "score": 317.6,
+              "cost": 2750,
               "type": "Hybrid",
-              "slot": "counter",
-              "momentum": 3.7,
-              "ladder_tier": "S",
-              "ladder_rank": 11,
-              "ladder_score": 73.4,
-              "stats": {
-                "pprot": 15.0,
-                "mprot": 15.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Adaptive Stat: +35 Strength or +50 Intelligence (based on highest item stat).\nOn God Damage Dealt: Apply 40% Healing Reduction for 5s\nWhile in Combat: +2% Strength, +2% Intelligenc",
-              "is_active": false,
-              "why": "healing reduction"
-            }
-          ],
-          "defense": [
-            {
-              "name": "Yogi's Necklace",
-              "score": 169.9,
-              "cost": 2250,
-              "type": "Defensive",
               "slot": "defense",
-              "momentum": 0.0,
-              "ladder_tier": "C",
-              "ladder_rank": 103,
-              "ladder_score": 22.1,
+              "momentum": -1.33,
+              "ladder_tier": "D",
+              "ladder_rank": 120,
+              "ladder_score": 18.4,
               "stats": {
-                "hp": 325.0,
-                "mp": 250.0,
-                "hpr": 6.0,
-                "mpr": 6.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Heal +0.5% of your Max Health per second.",
-              "is_active": false,
-              "why": "Solo defensive slot \u2014 survive focus"
-            },
-            {
-              "name": "Berserker's Shield",
-              "score": 221.7,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": 0.09,
-              "ladder_tier": "C",
-              "ladder_rank": 95,
-              "ladder_score": 23.2,
-              "stats": {
-                "pprot": 50.0,
+                "pprot": 25.0,
+                "mprot": 25.0,
                 "hp": 200.0,
-                "as": 20.0,
                 "hpr": 4.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "When falling below 60% Health: Become Berserk for 8s.\nWhile Berserk:\n*+15 Physical Protection\n*+15 Magical Protection\n*+25% Attack Speed",
+              "effect": "Over 75% Health:+30 Strength or +40 Intelligence (whichever is higher).\nUnder 75% Health: +20 Physical and Magical Protection.",
               "is_active": false,
-              "why": "Solo defensive slot \u2014 survive focus; inspired: high-SR Bellona Solo (3/4); common high-SR opener",
+              "why": "offline hybrid tank; inspired: high-SR Bellona Solo (2/4)",
               "inspired": true
+            }
+          ],
+          "defense": [
+            {
+              "name": "Mystical Mail",
+              "score": 421.9,
+              "cost": 2550,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.44,
+              "ladder_tier": "B",
+              "ladder_rank": 58,
+              "ladder_score": 27.5,
+              "stats": {
+                "pprot": 40.0,
+                "hp": 300.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Enemies within 4m: 15 (+1 per Level) Magical Damage and lose 25% of Health Shield per 1s.\nRange Scaling Damage:\n*+50% at Close Range\n*-50% at Maximum Range",
+              "is_active": false,
+              "why": "Solo defensive slot \u2014 survive focus; inspired: high-SR Bellona Solo (1/4)",
+              "inspired": true
+            },
+            {
+              "name": "Gauntlet of Thebes",
+              "score": 373.8,
+              "cost": 2200,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.54,
+              "ladder_tier": "B",
+              "ladder_rank": 49,
+              "ladder_score": 33.0,
+              "stats": {
+                "hp": 200.0,
+                "mp": 150.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
+              "is_active": false,
+              "why": "team aura / support core"
             }
           ],
           "relics": [
@@ -63726,7 +63735,7 @@
           ],
           "max_shop_actives": 3,
           "hard_max_actives": 3,
-          "active_count": 2,
+          "active_count": 1,
           "pen_total": 0.0,
           "min_build_pen": 20.0,
           "algorithm": {
@@ -63877,7 +63886,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Bellona \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (STR / physical). Kit effects: basic-attack kit, self heal / drain, shields, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, burst, gap_close, hard_cc, heal, heavy_shield, high_cc. Style burst 65%/dps 35%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): damage +0.3, heal +0.0, general +0.0. Scale STR 70% / INT 0%. Path: Yogi's Necklace (Solo path fit for kit profile); Berserker's Shield (Solo path fit for kit profile); Phoenix Feather (shield / phoenix-style bulk). Actives 2/3 \u00b7 pen \u2248 0. Soft high-SR inspiration on 1 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Bellona \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (STR / physical). Kit effects: self heal / drain, shields, hard crowd control, dash / leap engage, CC immunity in kit, lots of CC. Tags: anti_cc, gap_close, hard_cc, heal, heavy_shield, high_cc, hybrid_bulk, long_cd. Style burst 45%/dps 35%; patch stable (net +0.3, r5 +0.0). Patch axes (r5): damage +0.3, heal +0.0, general +0.0. Scale STR 70% / INT 0%. Path: Mystical Mail (Solo path fit for kit profile); Shifter's Shield (offline hybrid tank); Gauntlet of Thebes (team aura / support core). Actives 1/3 \u00b7 pen \u2248 0. Soft high-SR inspiration on 2 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 2 > 3 > 1",
           "skill_order": "2/3/1/2/4/2/2/2/4/3/3/3/4/3/1/1/4/1/1/4",
           "skill_order_list": [
@@ -63921,10 +63930,8 @@
               "label": "vs heals / sustain",
               "short": "heal",
               "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
-              "in_path": true,
-              "path_items": [
-                "Brawler\u2019s Beat Stick"
-              ],
+              "in_path": false,
+              "path_items": [],
               "suggest": [
                 "Divine Ruin",
                 "Brawler's Beat Stick"
@@ -63935,10 +63942,8 @@
               "label": "vs magic damage",
               "short": "magic",
               "why": "Magical protections / mitigation into mid and magical junglers.",
-              "in_path": true,
-              "path_items": [
-                "Phoenix Feather"
-              ],
+              "in_path": false,
+              "path_items": [],
               "suggest": [
                 "Genji's Guard",
                 "Phoenix Feather"
@@ -63951,7 +63956,7 @@
               "why": "Physical bulk into ADCs, hunters, physical junglers.",
               "in_path": true,
               "path_items": [
-                "Berserker's Shield"
+                "Midgardian Mail"
               ],
               "suggest": [
                 "Breastplate of Valor",
@@ -63998,8 +64003,10 @@
               "label": "vs attack speed",
               "short": "AS",
               "why": "Slow freefire AAs; Midgardian stacks when they hit you.",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Midgardian Mail"
+              ],
               "suggest": [
                 "Midgardian Mail",
                 "Toxic Blade"
@@ -64007,13 +64014,13 @@
             }
           ],
           "answer_flags": {
-            "heal": true,
-            "magic": true,
+            "heal": false,
+            "magic": false,
             "physical": true,
             "cc_dive": false,
             "tanks_hp": false,
             "crit": false,
-            "attack_speed": false
+            "attack_speed": true
           }
         },
         {
@@ -67955,38 +67962,40 @@
           "damage_type": "Magical",
           "pantheon": "Maya",
           "scaling": "Hybrid",
-          "archetype": "sustain_solo",
+          "archetype": "tank_solo",
           "kit_tags": [
+            "anti_cc",
             "channel",
             "hard_cc",
             "heal",
             "high_cc",
             "hybrid_bulk",
-            "long_cd",
             "self_sustain",
             "shield",
+            "spam",
             "team_buff",
             "utility"
           ],
           "kit_effects": [
             "channel / cast time",
+            "low cooldowns",
             "self heal / drain",
             "hard crowd control",
             "ally buffs / auras",
+            "CC immunity in kit",
             "lots of CC",
-            "big ult spike",
-            "multi-hit / ticks",
-            "shields"
+            "big ult spike"
           ],
           "kit_effect_scores": {
             "channel": 1.0,
+            "spam": 1.0,
             "self_sustain": 1.0,
             "heal": 0.7,
             "shield": 0.8,
             "hard_cc": 1.0,
             "high_cc": 0.9,
             "team_buff": 1.0,
-            "long_cd": 0.7,
+            "anti_cc": 1.0,
             "ult_nuke": 0.9,
             "multi_hit": 0.9
           },
@@ -68022,7 +68031,7 @@
           "items": [
             {
               "name": "Prophetic Cloak",
-              "score": 395.9,
+              "score": 509.9,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -68046,7 +68055,7 @@
             },
             {
               "name": "Ethereal Staff",
-              "score": 580.6,
+              "score": 629.1,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -68069,7 +68078,7 @@
             },
             {
               "name": "Gladiator's Shield",
-              "score": 378.2,
+              "score": 420.3,
               "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
@@ -68092,7 +68101,7 @@
             },
             {
               "name": "Gauntlet of Thebes",
-              "score": 446.2,
+              "score": 525.2,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -68113,8 +68122,30 @@
               "why": "team aura / support core"
             },
             {
+              "name": "Contagion",
+              "score": 513.8,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
+              "stats": {
+                "hp": 425.0,
+                "hpr": 6.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "is_active": false,
+              "why": "team anti-heal aura"
+            },
+            {
               "name": "Leviathan's Hide",
-              "score": 455.4,
+              "score": 483.4,
               "cost": 2400,
               "type": "Defensive",
               "slot": "mitigate",
@@ -68134,34 +68165,12 @@
               "effect": "Damaged by God Attack: That God is -10% Strength & Attack Damage for 4s.\nAttack an Enemy God: +8 Max Health Permanently.\nDamaged by Enemy God: -0.5s once per Ability Cast or Attack",
               "is_active": false,
               "why": "mitigation vs enemy damage types"
-            },
-            {
-              "name": "Contagion",
-              "score": 443.6,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": 0.07,
-              "ladder_tier": "B",
-              "ladder_rank": 60,
-              "ladder_score": 27.3,
-              "stats": {
-                "hp": 425.0,
-                "hpr": 6.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
-              "is_active": false,
-              "why": "team anti-heal aura"
             }
           ],
           "full_path": [
             {
               "name": "Prophetic Cloak",
-              "score": 395.9,
+              "score": 509.9,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -68185,7 +68194,7 @@
             },
             {
               "name": "Ethereal Staff",
-              "score": 580.6,
+              "score": 629.1,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -68208,7 +68217,7 @@
             },
             {
               "name": "Gladiator's Shield",
-              "score": 378.2,
+              "score": 420.3,
               "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
@@ -68231,7 +68240,7 @@
             },
             {
               "name": "Gauntlet of Thebes",
-              "score": 446.2,
+              "score": 525.2,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -68252,8 +68261,30 @@
               "why": "team aura / support core"
             },
             {
+              "name": "Contagion",
+              "score": 513.8,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
+              "stats": {
+                "hp": 425.0,
+                "hpr": 6.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "is_active": false,
+              "why": "team anti-heal aura"
+            },
+            {
               "name": "Leviathan's Hide",
-              "score": 455.4,
+              "score": 483.4,
               "cost": 2400,
               "type": "Defensive",
               "slot": "mitigate",
@@ -68273,35 +68304,13 @@
               "effect": "Damaged by God Attack: That God is -10% Strength & Attack Damage for 4s.\nAttack an Enemy God: +8 Max Health Permanently.\nDamaged by Enemy God: -0.5s once per Ability Cast or Attack",
               "is_active": false,
               "why": "mitigation vs enemy damage types"
-            },
-            {
-              "name": "Contagion",
-              "score": 443.6,
-              "cost": 2400,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": 0.07,
-              "ladder_tier": "B",
-              "ladder_rank": 60,
-              "ladder_score": 27.3,
-              "stats": {
-                "hp": 425.0,
-                "hpr": 6.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
-              "is_active": false,
-              "why": "team anti-heal aura"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
               "name": "Ethereal Staff",
-              "score": 580.6,
+              "score": 629.1,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -68326,7 +68335,7 @@
           "defense": [
             {
               "name": "Prophetic Cloak",
-              "score": 395.9,
+              "score": 509.9,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -68350,7 +68359,7 @@
             },
             {
               "name": "Gladiator's Shield",
-              "score": 378.2,
+              "score": 420.3,
               "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
@@ -68563,7 +68572,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Cabrakan \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (INT / magical). Kit effects: channel / cast time, self heal / drain, hard crowd control, ally buffs / auras, lots of CC, big ult spike. Tags: channel, hard_cc, heal, high_cc, hybrid_bulk, long_cd, self_sustain, shield. Style burst 55%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Prophetic Cloak (tenacity / anti-CC bulk); Ethereal Staff (Solo path fit for kit profile); Gladiator's Shield (Solo path fit for kit profile). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 1 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Cabrakan \u00b7 Solo \u00b7 archetype \u00abtank_solo\u00bb (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Prophetic Cloak (tenacity / anti-CC bulk); Ethereal Staff (Solo path fit for kit profile); Gladiator's Shield (Solo path fit for kit profile). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 1 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 3 > 1 > 2",
           "skill_order": "3/1/2/3/4/3/3/3/4/1/1/1/4/1/2/2/4/2/2/4",
           "skill_order_list": [
@@ -71083,7 +71092,7 @@
           "damage_type": "Magical",
           "pantheon": "Greek",
           "scaling": "Intelligence",
-          "archetype": "sustain_solo",
+          "archetype": "tank_solo",
           "kit_tags": [
             "anti_cc",
             "channel",
@@ -71093,17 +71102,17 @@
             "heal",
             "heavy_dot",
             "high_cc",
-            "long_cd",
+            "hybrid_bulk",
             "self_sustain",
+            "spam",
             "team_buff",
-            "ult_nuke",
             "utility",
             "zone"
           ],
           "kit_effects": [
             "damage over time",
             "channel / cast time",
-            "big ult spike",
+            "low cooldowns",
             "self heal / drain",
             "hard crowd control",
             "dash / leap engage",
@@ -71113,7 +71122,7 @@
           "kit_effect_scores": {
             "dot": 1.0,
             "channel": 1.0,
-            "ult_nuke": 1.0,
+            "spam": 1.0,
             "self_sustain": 1.0,
             "heal": 0.7,
             "zone": 0.8,
@@ -71122,8 +71131,8 @@
             "gap_close": 1.0,
             "team_buff": 1.0,
             "anti_cc": 1.0,
-            "long_cd": 0.7,
-            "multi_hit": 0.9
+            "multi_hit": 0.9,
+            "ult_nuke": 0.9
           },
           "is_aspect": false,
           "aspect_name": null,
@@ -71156,33 +71165,8 @@
           },
           "items": [
             {
-              "name": "Shifter's Shield",
-              "score": 213.1,
-              "cost": 2750,
-              "type": "Hybrid",
-              "slot": "defense",
-              "momentum": -1.33,
-              "ladder_tier": "D",
-              "ladder_rank": 120,
-              "ladder_score": 18.4,
-              "stats": {
-                "pprot": 25.0,
-                "mprot": 25.0,
-                "hp": 200.0,
-                "hpr": 4.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Over 75% Health:+30 Strength or +40 Intelligence (whichever is higher).\nUnder 75% Health: +20 Physical and Magical Protection.",
-              "is_active": false,
-              "why": "offline hybrid tank; patch falling \u2014 extra bulk/CDR; inspired: high-SR Hades Solo (3/6)",
-              "inspired": true
-            },
-            {
               "name": "Breastplate of Valor",
-              "score": 316.4,
+              "score": 580.8,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -71207,7 +71191,7 @@
             },
             {
               "name": "Genji's Guard",
-              "score": 231.8,
+              "score": 448.9,
               "cost": 2350,
               "type": "Defensive",
               "slot": "defense",
@@ -71231,31 +71215,53 @@
               "inspired": true
             },
             {
-              "name": "Gladiator's Shield",
-              "score": 307.5,
-              "cost": 2450,
+              "name": "Gauntlet of Thebes",
+              "score": 497.3,
+              "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": -0.01,
-              "ladder_tier": "C",
-              "ladder_rank": 105,
-              "ladder_score": 22.1,
+              "momentum": 0.54,
+              "ladder_tier": "B",
+              "ladder_rank": 49,
+              "ladder_score": 33.0,
               "stats": {
-                "pprot": 25.0,
                 "hp": 200.0,
-                "cdr": 10.0
+                "mp": 150.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Abilities deal bonus Physical Damage.\n*Damage = +10 + 40% of your Item Protections\n*Triggers once per Ability Cast, per God",
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
               "is_active": false,
-              "why": "Solo defensive slot \u2014 survive focus"
+              "why": "team aura / support core"
+            },
+            {
+              "name": "Spectral Armor",
+              "score": 521.7,
+              "cost": 2300,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 0.12,
+              "ladder_tier": "B",
+              "ladder_rank": 56,
+              "ladder_score": 27.9,
+              "stats": {
+                "plat": 10.0,
+                "pprot": 20.0,
+                "hp": 450.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 10.0,
+              "ten": 0,
+              "effect": "You take -30% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating.\nAllies within 8.8m: Take -15% Damage from Critical Strikes.",
+              "is_active": false,
+              "why": "mitigate enemy crit (Spectral line)"
             },
             {
               "name": "Contagion",
-              "score": 357.2,
+              "score": 545.4,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -71276,58 +71282,34 @@
               "why": "team anti-heal aura"
             },
             {
-              "name": "Stone of Binding",
-              "score": 454.6,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.14,
+              "name": "Gluttonous Grimoire",
+              "score": 573.9,
+              "cost": 2600,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 5.23,
               "ladder_tier": "S",
-              "ladder_rank": 7,
-              "ladder_score": 76.7,
+              "ladder_rank": 3,
+              "ladder_score": 83.7,
               "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
+                "pen": 10.0,
+                "hp": 150.0,
+                "int": 55.0,
+                "ls": 7.5
               },
-              "pen": 0,
-              "damp": 5.0,
+              "pen": 10.0,
+              "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
+              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
               "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
+              "why": "sustain / omnivamp line"
             }
           ],
           "full_path": [
             {
-              "name": "Shifter's Shield",
-              "score": 213.1,
-              "cost": 2750,
-              "type": "Hybrid",
-              "slot": "defense",
-              "momentum": -1.33,
-              "ladder_tier": "D",
-              "ladder_rank": 120,
-              "ladder_score": 18.4,
-              "stats": {
-                "pprot": 25.0,
-                "mprot": 25.0,
-                "hp": 200.0,
-                "hpr": 4.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Over 75% Health:+30 Strength or +40 Intelligence (whichever is higher).\nUnder 75% Health: +20 Physical and Magical Protection.",
-              "is_active": false,
-              "why": "offline hybrid tank; patch falling \u2014 extra bulk/CDR; inspired: high-SR Hades Solo (3/6)",
-              "inspired": true
-            },
-            {
               "name": "Breastplate of Valor",
-              "score": 316.4,
+              "score": 580.8,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -71352,7 +71334,7 @@
             },
             {
               "name": "Genji's Guard",
-              "score": 231.8,
+              "score": 448.9,
               "cost": 2350,
               "type": "Defensive",
               "slot": "defense",
@@ -71376,31 +71358,53 @@
               "inspired": true
             },
             {
-              "name": "Gladiator's Shield",
-              "score": 307.5,
-              "cost": 2450,
+              "name": "Gauntlet of Thebes",
+              "score": 497.3,
+              "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": -0.01,
-              "ladder_tier": "C",
-              "ladder_rank": 105,
-              "ladder_score": 22.1,
+              "momentum": 0.54,
+              "ladder_tier": "B",
+              "ladder_rank": 49,
+              "ladder_score": 33.0,
               "stats": {
-                "pprot": 25.0,
                 "hp": 200.0,
-                "cdr": 10.0
+                "mp": 150.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Abilities deal bonus Physical Damage.\n*Damage = +10 + 40% of your Item Protections\n*Triggers once per Ability Cast, per God",
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
               "is_active": false,
-              "why": "Solo defensive slot \u2014 survive focus"
+              "why": "team aura / support core"
+            },
+            {
+              "name": "Spectral Armor",
+              "score": 521.7,
+              "cost": 2300,
+              "type": "Defensive",
+              "slot": "mitigate",
+              "momentum": 0.12,
+              "ladder_tier": "B",
+              "ladder_rank": 56,
+              "ladder_score": 27.9,
+              "stats": {
+                "plat": 10.0,
+                "pprot": 20.0,
+                "hp": 450.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 10.0,
+              "ten": 0,
+              "effect": "You take -30% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating.\nAllies within 8.8m: Take -15% Damage from Critical Strikes.",
+              "is_active": false,
+              "why": "mitigate enemy crit (Spectral line)"
             },
             {
               "name": "Contagion",
-              "score": 357.2,
+              "score": 545.4,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -71421,61 +71425,61 @@
               "why": "team anti-heal aura"
             },
             {
-              "name": "Stone of Binding",
-              "score": 454.6,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.14,
+              "name": "Gluttonous Grimoire",
+              "score": 573.9,
+              "cost": 2600,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 5.23,
               "ladder_tier": "S",
-              "ladder_rank": 7,
-              "ladder_score": 76.7,
+              "ladder_rank": 3,
+              "ladder_score": 83.7,
               "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
+                "pen": 10.0,
+                "hp": 150.0,
+                "int": 55.0,
+                "ls": 7.5
               },
-              "pen": 0,
-              "damp": 5.0,
+              "pen": 10.0,
+              "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
+              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
               "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
+              "why": "sustain / omnivamp line"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
-              "name": "Shifter's Shield",
-              "score": 213.1,
-              "cost": 2750,
-              "type": "Hybrid",
-              "slot": "defense",
-              "momentum": -1.33,
-              "ladder_tier": "D",
-              "ladder_rank": 120,
-              "ladder_score": 18.4,
+              "name": "Gluttonous Grimoire",
+              "score": 573.9,
+              "cost": 2600,
+              "type": "Offensive",
+              "slot": "pen",
+              "momentum": 5.23,
+              "ladder_tier": "S",
+              "ladder_rank": 3,
+              "ladder_score": 83.7,
               "stats": {
-                "pprot": 25.0,
-                "mprot": 25.0,
-                "hp": 200.0,
-                "hpr": 4.0
+                "pen": 10.0,
+                "hp": 150.0,
+                "int": 55.0,
+                "ls": 7.5
               },
-              "pen": 0,
+              "pen": 10.0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Over 75% Health:+30 Strength or +40 Intelligence (whichever is higher).\nUnder 75% Health: +20 Physical and Magical Protection.",
+              "effect": "Store 50% of your Lifesteal healing as  bonus Magical Damage on your next Attack.\n*If at  full Health: Store 65% instead\n*Stored damage is capped to 10% of your Max Health + 50% In",
               "is_active": false,
-              "why": "offline hybrid tank; patch falling \u2014 extra bulk/CDR; inspired: high-SR Hades Solo (3/6)",
-              "inspired": true
+              "why": "sustain / omnivamp line"
             }
           ],
           "defense": [
             {
               "name": "Breastplate of Valor",
-              "score": 316.4,
+              "score": 580.8,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -71500,7 +71504,7 @@
             },
             {
               "name": "Genji's Guard",
-              "score": 231.8,
+              "score": 448.9,
               "cost": 2350,
               "type": "Defensive",
               "slot": "defense",
@@ -71565,7 +71569,7 @@
           "max_shop_actives": 2,
           "hard_max_actives": 3,
           "active_count": 0,
-          "pen_total": 0.0,
+          "pen_total": 10.0,
           "min_build_pen": 20.0,
           "algorithm": {
             "version": "1.4.0",
@@ -71715,7 +71719,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Hades \u00b7 Solo \u00b7 archetype \u00absustain_solo\u00bb (INT / magical). Kit effects: damage over time, channel / cast time, big ult spike, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot, high_cc. Style burst 46%/dps 54%; patch falling (net -1.4, r5 -1.3). Patch axes (r5): cooldown -1.1, survivability -1.1, general +0.9. Scale STR 0% / INT 85%. Path: Shifter's Shield (offline hybrid tank; patch falling \u2014 extra bulk/CDR); Breastplate of Valor (physical CDR defense; patch falling \u2014 extra bulk/CDR); Genji's Guard (magic prot + CDR for mages; patch falling \u2014 extra bulk/CDR). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Hades \u00b7 Solo \u00b7 archetype \u00abtank_solo\u00bb (INT / magical). Kit effects: damage over time, channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, heal, heavy_dot, high_cc. Style burst 26%/dps 54%; patch falling (net -1.4, r5 -1.3). Patch axes (r5): cooldown -1.1, survivability -1.1, general +0.9. Scale STR 0% / INT 85%. Path: Breastplate of Valor (physical CDR defense; patch falling \u2014 extra bulk/CDR); Genji's Guard (magic prot + CDR for mages; patch falling \u2014 extra bulk/CDR); Gauntlet of Thebes (team aura / support core). Pen: Gluttonous Grimoire. Actives 0/2 \u00b7 pen \u2248 10. Soft high-SR inspiration on 2 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 3 > 1 > 2",
           "skill_order": "3/1/2/3/4/3/3/3/4/1/1/1/4/1/2/2/4/2/2/4",
           "skill_order_list": [
@@ -71787,7 +71791,8 @@
               "why": "Physical bulk into ADCs, hunters, physical junglers.",
               "in_path": true,
               "path_items": [
-                "Breastplate of Valor"
+                "Breastplate of Valor",
+                "Spectral Armor"
               ],
               "suggest": [
                 "Breastplate of Valor",
@@ -71811,10 +71816,8 @@
               "label": "vs high HP / tanks",
               "short": "tanks",
               "why": "%HP, pen, and prot shred so fat targets take real damage.",
-              "in_path": true,
-              "path_items": [
-                "Stone of Binding"
-              ],
+              "in_path": false,
+              "path_items": [],
               "suggest": [
                 "Soul Reaver",
                 "Ethereal Staff"
@@ -71825,8 +71828,10 @@
               "label": "vs crit",
               "short": "crit",
               "why": "Cut crit damage on you and nearby allies (Carry freefire).",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Spectral Armor"
+              ],
               "suggest": [
                 "Spectral Armor"
               ]
@@ -71849,8 +71854,8 @@
             "magic": true,
             "physical": true,
             "cc_dive": false,
-            "tanks_hp": true,
-            "crit": false,
+            "tanks_hp": false,
+            "crit": true,
             "attack_speed": false
           }
         },
@@ -74694,37 +74699,35 @@
           "archetype": "lockdown_support",
           "kit_tags": [
             "anti_cc",
-            "burst",
             "channel",
             "hard_cc",
             "high_cc",
+            "hybrid_bulk",
             "immobile",
-            "long_cd",
             "pet_zone",
-            "ult_nuke",
+            "spam",
             "zone"
           ],
           "kit_effects": [
             "channel / cast time",
-            "big ult spike",
+            "low cooldowns",
             "pet / deployable",
             "hard crowd control",
             "low mobility",
             "CC immunity in kit",
             "lots of CC",
-            "multi-hit / ticks"
+            "big ult spike"
           ],
           "kit_effect_scores": {
             "channel": 1.0,
-            "ult_nuke": 1.0,
-            "burst": 0.85,
+            "spam": 1.0,
             "zone": 0.8,
             "pet_zone": 1.0,
             "hard_cc": 1.0,
             "high_cc": 0.9,
             "immobile": 1.0,
             "anti_cc": 1.0,
-            "long_cd": 0.7,
+            "ult_nuke": 0.9,
             "multi_hit": 0.9
           },
           "is_aspect": false,
@@ -74759,8 +74762,56 @@
           },
           "items": [
             {
+              "name": "Gauntlet of Thebes",
+              "score": 501.3,
+              "cost": 2200,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.54,
+              "ladder_tier": "B",
+              "ladder_rank": 49,
+              "ladder_score": 33.0,
+              "stats": {
+                "hp": 200.0,
+                "mp": 150.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
+              "is_active": false,
+              "why": "team aura / support core; inspired: high-SR Ymir Support (1/5)",
+              "inspired": true
+            },
+            {
+              "name": "Breastplate of Valor",
+              "score": 558.1,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": -0.45,
+              "ladder_tier": "D",
+              "ladder_rank": 125,
+              "ladder_score": 17.3,
+              "stats": {
+                "pprot": 45.0,
+                "cdr": 20.0,
+                "mp": 200.0,
+                "mpr": 2.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On 500 (+25 per Level) Health lost: -1s Ability Cooldowns.",
+              "is_active": false,
+              "why": "physical CDR defense; inspired: high-SR Ymir Support (1/5); common high-SR opener",
+              "inspired": true
+            },
+            {
               "name": "Genji's Guard",
-              "score": 257.2,
+              "score": 472.3,
               "cost": 2350,
               "type": "Defensive",
               "slot": "defense",
@@ -74784,32 +74835,30 @@
               "inspired": true
             },
             {
-              "name": "Alchemist Coat",
-              "score": 493.0,
-              "cost": 2350,
+              "name": "Contagion",
+              "score": 491.8,
+              "cost": 2400,
               "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.68,
-              "ladder_tier": "A",
-              "ladder_rank": 18,
-              "ladder_score": 63.3,
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
               "stats": {
-                "damp": 15.0,
-                "hp": 250.0,
-                "int": 40.0,
-                "mpr": 2.5
+                "hp": 425.0,
+                "hpr": 6.0
               },
               "pen": 0,
-              "damp": 15.0,
+              "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Use a Consumable: Gain 10 Dampening for 8s.\n*Open inventory slot: Gain a Multi Potion once every 45s",
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
               "is_active": false,
-              "why": "tenacity / anti-CC bulk"
+              "why": "team anti-heal aura"
             },
             {
               "name": "Gem of Isolation",
-              "score": 569.5,
+              "score": 701.5,
               "cost": 2450,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -74831,79 +74880,81 @@
               "why": "zones & CC \u2014 Isolation slow/shred value"
             },
             {
-              "name": "Doublet of Binding",
-              "score": 374.6,
-              "cost": 2700,
+              "name": "Spectral Armor",
+              "score": 632.7,
+              "cost": 2300,
               "type": "Defensive",
               "slot": "mitigate",
-              "momentum": -0.15,
-              "ladder_tier": "C",
-              "ladder_rank": 84,
-              "ladder_score": 24.6,
+              "momentum": 0.12,
+              "ladder_tier": "B",
+              "ladder_rank": 56,
+              "ladder_score": 27.9,
               "stats": {
-                "damp": 5.0,
-                "mprot": 50.0,
-                "hp": 400.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Gain Protective Link to a target.\nProtective Link redirects 20% of Damage they take, up to 600 Health. This Damage is mitigated by your Dampening.\nCooldown: 45s\nYou can own",
-              "is_active": true,
-              "why": "Stone of Binding \u2014 CC setup shred"
-            },
-            {
-              "name": "Triton's Conch",
-              "score": 266.1,
-              "cost": 2700,
-              "type": "Hybrid",
-              "slot": "power",
-              "momentum": 0.0,
-              "ladder_tier": "C",
-              "ladder_rank": 94,
-              "ladder_score": 23.2,
-              "stats": {
-                "hp": 250.0,
-                "int": 40.0,
-                "str": 25.0
+                "plat": 10.0,
+                "pprot": 20.0,
+                "hp": 450.0
               },
               "pen": 0,
               "damp": 0,
-              "plat": 0,
+              "plat": 10.0,
               "ten": 0,
-              "effect": "You and allies within 8.8m:\n*+5 (+0.5 per Level) Strength\n*+5 (+1 per Level) Intelligence",
+              "effect": "You take -30% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating.\nAllies within 8.8m: Take -15% Damage from Critical Strikes.",
               "is_active": false,
-              "why": "Support path fit for kit profile; inspired: high-SR Ymir Support (1/5); common high-SR opener",
-              "inspired": true
-            },
-            {
-              "name": "Resolute Mantle",
-              "score": 376.3,
-              "cost": 2750,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": -0.7,
-              "ladder_tier": "D",
-              "ladder_rank": 130,
-              "ladder_score": 17.3,
-              "stats": {
-                "ten": 10.0,
-                "hp": 550.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 10.0,
-              "effect": "When Hard Crowd Controlled by an Ability:\n*+25 Health Regen and +5 Tenacity for 4s\n*This effect can stack\n*When stacks fall off, gain 0.5 Health Regen and 1 Tenacity permanently\n*S",
-              "is_active": false,
-              "why": "tenacity / anti-CC bulk"
+              "why": "mitigate enemy crit (Spectral line)"
             }
           ],
           "full_path": [
             {
+              "name": "Gauntlet of Thebes",
+              "score": 501.3,
+              "cost": 2200,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.54,
+              "ladder_tier": "B",
+              "ladder_rank": 49,
+              "ladder_score": 33.0,
+              "stats": {
+                "hp": 200.0,
+                "mp": 150.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
+              "is_active": false,
+              "why": "team aura / support core; inspired: high-SR Ymir Support (1/5)",
+              "inspired": true
+            },
+            {
+              "name": "Breastplate of Valor",
+              "score": 558.1,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": -0.45,
+              "ladder_tier": "D",
+              "ladder_rank": 125,
+              "ladder_score": 17.3,
+              "stats": {
+                "pprot": 45.0,
+                "cdr": 20.0,
+                "mp": 200.0,
+                "mpr": 2.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "On 500 (+25 per Level) Health lost: -1s Ability Cooldowns.",
+              "is_active": false,
+              "why": "physical CDR defense; inspired: high-SR Ymir Support (1/5); common high-SR opener",
+              "inspired": true
+            },
+            {
               "name": "Genji's Guard",
-              "score": 257.2,
+              "score": 472.3,
               "cost": 2350,
               "type": "Defensive",
               "slot": "defense",
@@ -74927,32 +74978,30 @@
               "inspired": true
             },
             {
-              "name": "Alchemist Coat",
-              "score": 493.0,
-              "cost": 2350,
+              "name": "Contagion",
+              "score": 491.8,
+              "cost": 2400,
               "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.68,
-              "ladder_tier": "A",
-              "ladder_rank": 18,
-              "ladder_score": 63.3,
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
               "stats": {
-                "damp": 15.0,
-                "hp": 250.0,
-                "int": 40.0,
-                "mpr": 2.5
+                "hp": 425.0,
+                "hpr": 6.0
               },
               "pen": 0,
-              "damp": 15.0,
+              "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Use a Consumable: Gain 10 Dampening for 8s.\n*Open inventory slot: Gain a Multi Potion once every 45s",
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
               "is_active": false,
-              "why": "tenacity / anti-CC bulk"
+              "why": "team anti-heal aura"
             },
             {
               "name": "Gem of Isolation",
-              "score": 569.5,
+              "score": 701.5,
               "cost": 2450,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -74974,80 +75023,34 @@
               "why": "zones & CC \u2014 Isolation slow/shred value"
             },
             {
-              "name": "Doublet of Binding",
-              "score": 374.6,
-              "cost": 2700,
+              "name": "Spectral Armor",
+              "score": 632.7,
+              "cost": 2300,
               "type": "Defensive",
               "slot": "mitigate",
-              "momentum": -0.15,
-              "ladder_tier": "C",
-              "ladder_rank": 84,
-              "ladder_score": 24.6,
+              "momentum": 0.12,
+              "ladder_tier": "B",
+              "ladder_rank": 56,
+              "ladder_score": 27.9,
               "stats": {
-                "damp": 5.0,
-                "mprot": 50.0,
-                "hp": 400.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Gain Protective Link to a target.\nProtective Link redirects 20% of Damage they take, up to 600 Health. This Damage is mitigated by your Dampening.\nCooldown: 45s\nYou can own",
-              "is_active": true,
-              "why": "Stone of Binding \u2014 CC setup shred"
-            },
-            {
-              "name": "Triton's Conch",
-              "score": 266.1,
-              "cost": 2700,
-              "type": "Hybrid",
-              "slot": "power",
-              "momentum": 0.0,
-              "ladder_tier": "C",
-              "ladder_rank": 94,
-              "ladder_score": 23.2,
-              "stats": {
-                "hp": 250.0,
-                "int": 40.0,
-                "str": 25.0
+                "plat": 10.0,
+                "pprot": 20.0,
+                "hp": 450.0
               },
               "pen": 0,
               "damp": 0,
-              "plat": 0,
+              "plat": 10.0,
               "ten": 0,
-              "effect": "You and allies within 8.8m:\n*+5 (+0.5 per Level) Strength\n*+5 (+1 per Level) Intelligence",
+              "effect": "You take -30% Damage from Critical Strikes. Ability Critical Strikes are mitigated by your Plating.\nAllies within 8.8m: Take -15% Damage from Critical Strikes.",
               "is_active": false,
-              "why": "Support path fit for kit profile; inspired: high-SR Ymir Support (1/5); common high-SR opener",
-              "inspired": true
-            },
-            {
-              "name": "Resolute Mantle",
-              "score": 376.3,
-              "cost": 2750,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": -0.7,
-              "ladder_tier": "D",
-              "ladder_rank": 130,
-              "ladder_score": 17.3,
-              "stats": {
-                "ten": 10.0,
-                "hp": 550.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 10.0,
-              "effect": "When Hard Crowd Controlled by an Ability:\n*+25 Health Regen and +5 Tenacity for 4s\n*This effect can stack\n*When stacks fall off, gain 0.5 Health Regen and 1 Tenacity permanently\n*S",
-              "is_active": false,
-              "why": "tenacity / anti-CC bulk"
+              "why": "mitigate enemy crit (Spectral line)"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
               "name": "Gem of Isolation",
-              "score": 569.5,
+              "score": 701.5,
               "cost": 2450,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -75067,81 +75070,56 @@
               "effect": "Damaging Ability Hit: 15% Slow.\nThe Slow lasts for 2s.",
               "is_active": false,
               "why": "zones & CC \u2014 Isolation slow/shred value"
-            },
-            {
-              "name": "Triton's Conch",
-              "score": 266.1,
-              "cost": 2700,
-              "type": "Hybrid",
-              "slot": "power",
-              "momentum": 0.0,
-              "ladder_tier": "C",
-              "ladder_rank": 94,
-              "ladder_score": 23.2,
-              "stats": {
-                "hp": 250.0,
-                "int": 40.0,
-                "str": 25.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "You and allies within 8.8m:\n*+5 (+0.5 per Level) Strength\n*+5 (+1 per Level) Intelligence",
-              "is_active": false,
-              "why": "Support path fit for kit profile; inspired: high-SR Ymir Support (1/5); common high-SR opener",
-              "inspired": true
             }
           ],
           "defense": [
             {
-              "name": "Genji's Guard",
-              "score": 257.2,
-              "cost": 2350,
+              "name": "Gauntlet of Thebes",
+              "score": 501.3,
+              "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": -0.75,
-              "ladder_tier": "D",
-              "ladder_rank": 128,
-              "ladder_score": 17.3,
+              "momentum": 0.54,
+              "ladder_tier": "B",
+              "ladder_rank": 49,
+              "ladder_score": 33.0,
               "stats": {
-                "mprot": 55.0,
-                "cdr": 15.0,
-                "mp": 200.0,
-                "mpr": 5.0
+                "hp": 200.0,
+                "mp": 150.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Hit by Magical Ability Damage: -3s Cooldowns.\nCooldown: 20s",
+              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
               "is_active": false,
-              "why": "magic prot + CDR for mages; inspired: high-SR Ymir Support (2/5)",
+              "why": "team aura / support core; inspired: high-SR Ymir Support (1/5)",
               "inspired": true
             },
             {
-              "name": "Alchemist Coat",
-              "score": 493.0,
-              "cost": 2350,
+              "name": "Breastplate of Valor",
+              "score": 558.1,
+              "cost": 2400,
               "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.68,
-              "ladder_tier": "A",
-              "ladder_rank": 18,
-              "ladder_score": 63.3,
+              "slot": "defense",
+              "momentum": -0.45,
+              "ladder_tier": "D",
+              "ladder_rank": 125,
+              "ladder_score": 17.3,
               "stats": {
-                "damp": 15.0,
-                "hp": 250.0,
-                "int": 40.0,
-                "mpr": 2.5
+                "pprot": 45.0,
+                "cdr": 20.0,
+                "mp": 200.0,
+                "mpr": 2.0
               },
               "pen": 0,
-              "damp": 15.0,
+              "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Use a Consumable: Gain 10 Dampening for 8s.\n*Open inventory slot: Gain a Multi Potion once every 45s",
+              "effect": "On 500 (+25 per Level) Health lost: -1s Ability Cooldowns.",
               "is_active": false,
-              "why": "tenacity / anti-CC bulk"
+              "why": "physical CDR defense; inspired: high-SR Ymir Support (1/5); common high-SR opener",
+              "inspired": true
             }
           ],
           "relics": [
@@ -75184,7 +75162,7 @@
           ],
           "max_shop_actives": 2,
           "hard_max_actives": 3,
-          "active_count": 1,
+          "active_count": 0,
           "pen_total": 0.0,
           "min_build_pen": 20.0,
           "algorithm": {
@@ -75335,7 +75313,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Ymir \u00b7 Support \u00b7 archetype \u00ablockdown_support\u00bb (INT / magical). Kit effects: channel / cast time, big ult spike, pet / deployable, hard crowd control, low mobility, CC immunity in kit. Tags: anti_cc, burst, channel, hard_cc, high_cc, immobile, long_cd, pet_zone. Style burst 61%/dps 39%; patch stable (net +0.8, r5 +0.0). Patch axes (r5): damage +0.5, survivability +0.3, cooldown +0.0. Scale STR 12% / INT 118%. Path: Genji's Guard (magic prot + CDR for mages); Alchemist Coat (tenacity / anti-CC bulk); Gem of Isolation (zones & CC \u2014 Isolation slow/shred value). Actives 1/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 2 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Ymir \u00b7 Support \u00b7 archetype \u00ablockdown_support\u00bb (INT / magical). Kit effects: channel / cast time, low cooldowns, pet / deployable, hard crowd control, low mobility, CC immunity in kit. Tags: anti_cc, channel, hard_cc, high_cc, hybrid_bulk, immobile, pet_zone, spam. Style burst 41%/dps 39%; patch stable (net +0.8, r5 +0.0). Patch axes (r5): damage +0.5, survivability +0.3, cooldown +0.0. Scale STR 12% / INT 118%. Path: Gauntlet of Thebes (team aura / support core); Breastplate of Valor (physical CDR defense); Genji's Guard (magic prot + CDR for mages). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 2 > 3 > 1",
           "skill_order": "2/3/1/2/4/2/2/2/4/3/3/3/4/3/1/1/4/1/1/4",
           "skill_order_list": [
@@ -75379,8 +75357,10 @@
               "label": "vs crit",
               "short": "crit",
               "why": "Cut crit damage on you and nearby allies (Carry freefire).",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Spectral Armor"
+              ],
               "suggest": [
                 "Spectral Armor"
               ]
@@ -75440,8 +75420,11 @@
               "label": "vs physical damage",
               "short": "phys",
               "why": "Physical bulk into ADCs, hunters, physical junglers.",
-              "in_path": false,
-              "path_items": [],
+              "in_path": true,
+              "path_items": [
+                "Breastplate of Valor",
+                "Spectral Armor"
+              ],
               "suggest": [
                 "Breastplate of Valor",
                 "Berserker's Shield"
@@ -75449,12 +75432,12 @@
             }
           ],
           "answer_flags": {
-            "crit": false,
+            "crit": true,
             "attack_speed": false,
             "magic": true,
             "heal": false,
             "cc_dive": false,
-            "physical": false
+            "physical": true
           }
         },
         {
@@ -75466,39 +75449,40 @@
           "damage_type": "Magical",
           "pantheon": "Greek",
           "scaling": "Intelligence",
-          "archetype": "shield_support",
+          "archetype": "lockdown_support",
           "kit_tags": [
             "anti_cc",
             "channel",
             "gap_close",
+            "hard_cc",
             "high_cc",
             "hybrid_bulk",
-            "long_cd",
             "self_sustain",
             "shield",
+            "spam",
             "team_buff"
           ],
           "kit_effects": [
             "channel / cast time",
+            "low cooldowns",
             "self heal / drain",
+            "hard crowd control",
             "dash / leap engage",
             "ally buffs / auras",
             "CC immunity in kit",
-            "lots of CC",
-            "big ult spike",
-            "multi-hit / ticks"
+            "lots of CC"
           ],
           "kit_effect_scores": {
             "channel": 1.0,
+            "spam": 1.0,
             "self_sustain": 1.0,
             "shield": 0.8,
+            "hard_cc": 1.0,
             "high_cc": 0.9,
             "gap_close": 1.0,
             "team_buff": 1.0,
             "anti_cc": 1.0,
-            "long_cd": 0.7,
             "ult_nuke": 0.9,
-            "burst": 0.718,
             "multi_hit": 0.9
           },
           "is_aspect": false,
@@ -75534,7 +75518,7 @@
           "items": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 438.5,
+              "score": 514.1,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -75557,7 +75541,7 @@
             },
             {
               "name": "Prophetic Cloak",
-              "score": 398.0,
+              "score": 476.4,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -75580,8 +75564,30 @@
               "inspired": true
             },
             {
+              "name": "Contagion",
+              "score": 476.3,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
+              "stats": {
+                "hp": 425.0,
+                "hpr": 6.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "is_active": false,
+              "why": "team anti-heal aura"
+            },
+            {
               "name": "Leviathan's Hide",
-              "score": 416.0,
+              "score": 444.0,
               "cost": 2400,
               "type": "Defensive",
               "slot": "mitigate",
@@ -75603,30 +75609,31 @@
               "why": "mitigation vs enemy damage types"
             },
             {
-              "name": "Contagion",
-              "score": 403.3,
-              "cost": 2400,
+              "name": "Gladiator's Shield",
+              "score": 355.1,
+              "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": 0.07,
-              "ladder_tier": "B",
-              "ladder_rank": 60,
-              "ladder_score": 27.3,
+              "momentum": -0.01,
+              "ladder_tier": "C",
+              "ladder_rank": 105,
+              "ladder_score": 22.1,
               "stats": {
-                "hp": 425.0,
-                "hpr": 6.0
+                "pprot": 25.0,
+                "hp": 200.0,
+                "cdr": 10.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "effect": "Abilities deal bonus Physical Damage.\n*Damage = +10 + 40% of your Item Protections\n*Triggers once per Ability Cast, per God",
               "is_active": false,
-              "why": "team anti-heal aura"
+              "why": "Support defensive slot \u2014 survive focus"
             },
             {
               "name": "Ethereal Staff",
-              "score": 564.7,
+              "score": 588.3,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -75647,35 +75654,12 @@
               "is_active": false,
               "why": "mitigation vs enemy damage types; inspired: high-SR Support staple",
               "inspired": true
-            },
-            {
-              "name": "Hide of the Nemean Lion",
-              "score": 315.8,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": -0.03,
-              "ladder_tier": "C",
-              "ladder_rank": 108,
-              "ladder_score": 21.8,
-              "stats": {
-                "pprot": 35.0,
-                "hp": 350.0,
-                "hpr": 4.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Reflect:\n*40% of pre-mitigated Attack Damage\n*20% of pre-mitigated Ability Damage\n*Damage is Reflected as Physical Damage\nBuff lasts 4s.\nCooldown: 60s\nYou can own up to 3 a",
-              "is_active": true,
-              "why": "mitigate enemy crit (Spectral line)"
             }
           ],
           "full_path": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 438.5,
+              "score": 514.1,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -75698,7 +75682,7 @@
             },
             {
               "name": "Prophetic Cloak",
-              "score": 398.0,
+              "score": 476.4,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -75721,8 +75705,30 @@
               "inspired": true
             },
             {
+              "name": "Contagion",
+              "score": 476.3,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
+              "stats": {
+                "hp": 425.0,
+                "hpr": 6.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "is_active": false,
+              "why": "team anti-heal aura"
+            },
+            {
               "name": "Leviathan's Hide",
-              "score": 416.0,
+              "score": 444.0,
               "cost": 2400,
               "type": "Defensive",
               "slot": "mitigate",
@@ -75744,30 +75750,31 @@
               "why": "mitigation vs enemy damage types"
             },
             {
-              "name": "Contagion",
-              "score": 403.3,
-              "cost": 2400,
+              "name": "Gladiator's Shield",
+              "score": 355.1,
+              "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": 0.07,
-              "ladder_tier": "B",
-              "ladder_rank": 60,
-              "ladder_score": 27.3,
+              "momentum": -0.01,
+              "ladder_tier": "C",
+              "ladder_rank": 105,
+              "ladder_score": 22.1,
               "stats": {
-                "hp": 425.0,
-                "hpr": 6.0
+                "pprot": 25.0,
+                "hp": 200.0,
+                "cdr": 10.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "effect": "Abilities deal bonus Physical Damage.\n*Damage = +10 + 40% of your Item Protections\n*Triggers once per Ability Cast, per God",
               "is_active": false,
-              "why": "team anti-heal aura"
+              "why": "Support defensive slot \u2014 survive focus"
             },
             {
               "name": "Ethereal Staff",
-              "score": 564.7,
+              "score": 588.3,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -75788,36 +75795,13 @@
               "is_active": false,
               "why": "mitigation vs enemy damage types; inspired: high-SR Support staple",
               "inspired": true
-            },
-            {
-              "name": "Hide of the Nemean Lion",
-              "score": 315.8,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": -0.03,
-              "ladder_tier": "C",
-              "ladder_rank": 108,
-              "ladder_score": 21.8,
-              "stats": {
-                "pprot": 35.0,
-                "hp": 350.0,
-                "hpr": 4.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "On Use: Reflect:\n*40% of pre-mitigated Attack Damage\n*20% of pre-mitigated Ability Damage\n*Damage is Reflected as Physical Damage\nBuff lasts 4s.\nCooldown: 60s\nYou can own up to 3 a",
-              "is_active": true,
-              "why": "mitigate enemy crit (Spectral line)"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
               "name": "Ethereal Staff",
-              "score": 564.7,
+              "score": 588.3,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -75843,7 +75827,7 @@
           "defense": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 438.5,
+              "score": 514.1,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -75866,7 +75850,7 @@
             },
             {
               "name": "Prophetic Cloak",
-              "score": 398.0,
+              "score": 476.4,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -75929,7 +75913,7 @@
           ],
           "max_shop_actives": 2,
           "hard_max_actives": 3,
-          "active_count": 1,
+          "active_count": 0,
           "pen_total": 0.0,
           "min_build_pen": 20.0,
           "algorithm": {
@@ -76080,7 +76064,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Athena \u00b7 Support \u00b7 archetype \u00abshield_support\u00bb (INT / magical). Kit effects: channel / cast time, self heal / drain, dash / leap engage, ally buffs / auras, CC immunity in kit, lots of CC. Tags: anti_cc, channel, gap_close, high_cc, hybrid_bulk, long_cd, self_sustain, shield. Style burst 72%/dps 28%; patch stable (net -0.5, r5 +0.0). Patch axes (r5): general -0.5, damage +0.1, utility -0.0. Scale STR 12% / INT 67%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Leviathan's Hide (Support path fit for kit profile). Actives 1/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Athena \u00b7 Support \u00b7 archetype \u00ablockdown_support\u00bb (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage, ally buffs / auras. Tags: anti_cc, channel, gap_close, hard_cc, high_cc, hybrid_bulk, self_sustain, shield. Style burst 52%/dps 28%; patch stable (net -0.5, r5 +0.0). Patch axes (r5): general -0.5, damage +0.1, utility -0.0. Scale STR 12% / INT 67%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 3 > 1 > 2",
           "skill_order": "3/1/2/3/4/3/3/3/4/1/1/1/4/1/2/2/4/2/2/4",
           "skill_order_list": [
@@ -80822,38 +80806,40 @@
           "damage_type": "Magical",
           "pantheon": "Maya",
           "scaling": "Hybrid",
-          "archetype": "shield_support",
+          "archetype": "lockdown_support",
           "kit_tags": [
+            "anti_cc",
             "channel",
             "hard_cc",
             "heal",
             "high_cc",
             "hybrid_bulk",
-            "long_cd",
             "self_sustain",
             "shield",
+            "spam",
             "team_buff",
             "utility"
           ],
           "kit_effects": [
             "channel / cast time",
+            "low cooldowns",
             "self heal / drain",
             "hard crowd control",
             "ally buffs / auras",
+            "CC immunity in kit",
             "lots of CC",
-            "big ult spike",
-            "multi-hit / ticks",
-            "shields"
+            "big ult spike"
           ],
           "kit_effect_scores": {
             "channel": 1.0,
+            "spam": 1.0,
             "self_sustain": 1.0,
             "heal": 0.7,
             "shield": 0.8,
             "hard_cc": 1.0,
             "high_cc": 0.9,
             "team_buff": 1.0,
-            "long_cd": 0.7,
+            "anti_cc": 1.0,
             "ult_nuke": 0.9,
             "multi_hit": 0.9
           },
@@ -80890,7 +80876,7 @@
           "items": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 441.0,
+              "score": 515.1,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -80913,7 +80899,7 @@
             },
             {
               "name": "Prophetic Cloak",
-              "score": 387.1,
+              "score": 501.8,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -80936,8 +80922,30 @@
               "inspired": true
             },
             {
+              "name": "Contagion",
+              "score": 499.6,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
+              "stats": {
+                "hp": 425.0,
+                "hpr": 6.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "is_active": false,
+              "why": "team anti-heal aura"
+            },
+            {
               "name": "Leviathan's Hide",
-              "score": 447.0,
+              "score": 475.0,
               "cost": 2400,
               "type": "Defensive",
               "slot": "mitigate",
@@ -80959,54 +80967,31 @@
               "why": "mitigation vs enemy damage types"
             },
             {
-              "name": "Contagion",
-              "score": 426.6,
-              "cost": 2400,
+              "name": "Gladiator's Shield",
+              "score": 377.3,
+              "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": 0.07,
-              "ladder_tier": "B",
-              "ladder_rank": 60,
-              "ladder_score": 27.3,
+              "momentum": -0.01,
+              "ladder_tier": "C",
+              "ladder_rank": 105,
+              "ladder_score": 22.1,
               "stats": {
-                "hp": 425.0,
-                "hpr": 6.0
+                "pprot": 25.0,
+                "hp": 200.0,
+                "cdr": 10.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "effect": "Abilities deal bonus Physical Damage.\n*Damage = +10 + 40% of your Item Protections\n*Triggers once per Ability Cast, per God",
               "is_active": false,
-              "why": "team anti-heal aura"
-            },
-            {
-              "name": "Wyrmskin Hide",
-              "score": 436.0,
-              "cost": 2600,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.78,
-              "ladder_tier": "S",
-              "ladder_rank": 14,
-              "ladder_score": 72.3,
-              "stats": {
-                "damp": 5.0,
-                "mprot": 25.0,
-                "hp": 300.0,
-                "str": 20.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hit a God (once every 8s): Gain 1 Dampening per level against them.",
-              "is_active": false,
-              "why": "mitigation vs enemy damage types"
+              "why": "Support defensive slot \u2014 survive focus"
             },
             {
               "name": "Ethereal Staff",
-              "score": 532.6,
+              "score": 580.2,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -81032,7 +81017,7 @@
           "full_path": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 441.0,
+              "score": 515.1,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -81055,7 +81040,7 @@
             },
             {
               "name": "Prophetic Cloak",
-              "score": 387.1,
+              "score": 501.8,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -81078,8 +81063,30 @@
               "inspired": true
             },
             {
+              "name": "Contagion",
+              "score": 499.6,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.07,
+              "ladder_tier": "B",
+              "ladder_rank": 60,
+              "ladder_score": 27.3,
+              "stats": {
+                "hp": 425.0,
+                "hpr": 6.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "is_active": false,
+              "why": "team anti-heal aura"
+            },
+            {
               "name": "Leviathan's Hide",
-              "score": 447.0,
+              "score": 475.0,
               "cost": 2400,
               "type": "Defensive",
               "slot": "mitigate",
@@ -81101,54 +81108,31 @@
               "why": "mitigation vs enemy damage types"
             },
             {
-              "name": "Contagion",
-              "score": 426.6,
-              "cost": 2400,
+              "name": "Gladiator's Shield",
+              "score": 377.3,
+              "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": 0.07,
-              "ladder_tier": "B",
-              "ladder_rank": 60,
-              "ladder_score": 27.3,
+              "momentum": -0.01,
+              "ladder_tier": "C",
+              "ladder_rank": 105,
+              "ladder_score": 22.1,
               "stats": {
-                "hp": 425.0,
-                "hpr": 6.0
+                "pprot": 25.0,
+                "hp": 200.0,
+                "cdr": 10.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "effect": "Abilities deal bonus Physical Damage.\n*Damage = +10 + 40% of your Item Protections\n*Triggers once per Ability Cast, per God",
               "is_active": false,
-              "why": "team anti-heal aura"
-            },
-            {
-              "name": "Wyrmskin Hide",
-              "score": 436.0,
-              "cost": 2600,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 1.78,
-              "ladder_tier": "S",
-              "ladder_rank": 14,
-              "ladder_score": 72.3,
-              "stats": {
-                "damp": 5.0,
-                "mprot": 25.0,
-                "hp": 300.0,
-                "str": 20.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hit a God (once every 8s): Gain 1 Dampening per level against them.",
-              "is_active": false,
-              "why": "mitigation vs enemy damage types"
+              "why": "Support defensive slot \u2014 survive focus"
             },
             {
               "name": "Ethereal Staff",
-              "score": 532.6,
+              "score": 580.2,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -81175,7 +81159,7 @@
           "cores": [
             {
               "name": "Ethereal Staff",
-              "score": 532.6,
+              "score": 580.2,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -81201,7 +81185,7 @@
           "defense": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 441.0,
+              "score": 515.1,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -81224,7 +81208,7 @@
             },
             {
               "name": "Prophetic Cloak",
-              "score": 387.1,
+              "score": 501.8,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -81438,7 +81422,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Cabrakan \u00b7 Support \u00b7 archetype \u00abshield_support\u00bb (INT / magical). Kit effects: channel / cast time, self heal / drain, hard crowd control, ally buffs / auras, lots of CC, big ult spike. Tags: channel, hard_cc, heal, high_cc, hybrid_bulk, long_cd, self_sustain, shield. Style burst 55%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Leviathan's Hide (Support path fit for kit profile). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Cabrakan \u00b7 Support \u00b7 archetype \u00ablockdown_support\u00bb (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 2 > 3 > 1",
           "skill_order": "2/3/1/2/4/2/2/2/4/3/3/3/4/3/1/1/4/1/1/4",
           "skill_order_list": [
@@ -90728,7 +90712,9 @@
         "unique": 22,
         "total": 23,
         "shared_groups": 1,
-        "pen_fail": [],
+        "pen_fail": [
+          "Nemesis"
+        ],
         "early_melt_fail": [],
         "luxury_fail": [],
         "role_job_fail": []
@@ -90743,7 +90729,7 @@
         "role_job_fail": []
       },
       "Support": {
-        "unique": 21,
+        "unique": 19,
         "total": 23,
         "shared_groups": 1,
         "pen_fail": [],
@@ -90757,8 +90743,9 @@
       "Carry: shared paths ['Nut, Sol', 'Neith, Ullr, Rama', 'Hou Yi, Medusa']",
       "Mid: no early tank-melt ['Kukulkan', 'Anubis']",
       "Jungle: shared paths ['Thanatos, Bastet']",
+      "Jungle: low pen ['Nemesis']",
       "Solo: shared paths ['Sun Wukong, Nike']",
-      "Support: shared paths ['Jormungandr, Khepri, Geb']"
+      "Support: shared paths ['Jormungandr, Athena, Cabrakan, Khepri, Geb']"
     ]
   }
 }

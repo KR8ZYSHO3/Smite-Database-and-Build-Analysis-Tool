@@ -2660,6 +2660,9 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
             or hooks & {"ally_heal", "ally_shield"}
         ):
             return "heal_support"
+        # Item-Prot CC stretch (Ymir/Athena/Hades) before generic shield labeling
+        if "item_prot_cc" in hooks:
+            return "lockdown_support"
         if "heavy_shield" in tags or "shield" in tags or "ally_shield" in hooks:
             return "shield_support"
         if "high_cc" in tags or "hard_cc" in tags:
@@ -2671,6 +2674,8 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
     if role == "Solo":
         # Plating/Dampening stack identity (Ravana Rakshasa etc.)
         if "plat_damp_stack" in hooks:
+            return "tank_solo"
+        if "item_prot_cc" in hooks:
             return "tank_solo"
         # Frontline first — only pure mage tanks use mage_solo
         if "heavy_heal" in tags or ("heal" in tags and "self_sustain" in tags):
@@ -4133,7 +4138,7 @@ _IDENTITY_FORCE_CORES: dict[str, tuple[str, ...]] = {
     "item_hp_scale": ("ethereal", "contagion", "thebes"),
     "permanent_max_hp": ("contagion", "gladiator", "leviathan", "hide of the nemean"),
     "max_hp_scale": ("contagion", "thebes", "gladiator", "ethereal", "leviathan"),
-    # Kuzenbo Shell Spikes / thorns — Max-HP shell + reflect + CDR uptime
+    # Kuzenbo Shell Spikes / Nemesis Retribution — Max-HP shell + reflect + CDR uptime
     "damage_reflect": (
         "contagion",
         "hide of the nemean",
@@ -4141,6 +4146,17 @@ _IDENTITY_FORCE_CORES: dict[str, tuple[str, ...]] = {
         "ethereal",
         "chronos",
         "thebes",
+    ),
+    # Ymir Frost Breath / Athena Confound / Hades Shroud — Item Protections stretch CC
+    "item_prot_cc": (
+        "thebes",
+        "breastplate",
+        "genji",
+        "contagion",
+        "spectral",
+        "prophetic",
+        "mystical",
+        "binding",
     ),
     "plat_damp_stack": ("spectral", "alchemist", "mystical", "shifter"),
     "haunt_shred": ("ethereal", "thebes", "isolation", "binding"),
@@ -4179,6 +4195,7 @@ def _ensure_identity_cores(
         "permanent_max_hp",
         "damage_reflect",
         "max_hp_scale",
+        "item_prot_cc",
         "plat_damp_stack",
         "haunt_shred",
         "base_damage_only",
@@ -4209,6 +4226,7 @@ def _ensure_identity_cores(
             "permanent_max_hp",
             "max_hp_scale",
             "damage_reflect",
+            "item_prot_cc",
             "haunt_shred",
         }
         else 2
@@ -5419,6 +5437,7 @@ def _ensure_inspired_cores(
                 "permanent_max_hp",
                 "max_hp_scale",
                 "damage_reflect",
+                "item_prot_cc",
                 "haunt_shred",
                 "plat_damp_stack",
                 "base_damage_only",
@@ -6519,6 +6538,7 @@ def build_god_build(
                 "permanent_max_hp",
                 "max_hp_scale",
                 "damage_reflect",
+                "item_prot_cc",
                 "haunt_shred",
                 "plat_damp_stack",
             }
@@ -6539,6 +6559,8 @@ def build_god_build(
                 "binding",
                 "shifter",
                 "alchemist",
+                "breastplate",
+                "genji",
             )
         )
         # Cross-type hard bans
@@ -6818,6 +6840,7 @@ def build_god_build(
             "permanent_max_hp",
             "max_hp_scale",
             "damage_reflect",
+            "item_prot_cc",
             "haunt_shred",
         }
     )
