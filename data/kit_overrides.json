@@ -83,7 +83,7 @@
     ]
   },
   "Kuzenbo": {
-    "_why": "OB46 King Kappa. Water Bowl stacks mitigation from Max HP damage taken; Shell Spikes reflects % damage taken (and NeNe Kappas reflect while active); NeNe Kappa transfers your Health and Protections to the pet. Play Max-HP / prot shell Support or Solo — not glass Thoth Mid. Aspect of Spirits (Oct 23) swaps mitigation/reflect for spirit Kappa throws.",
+    "_why": "OB46 King Kappa. Water Bowl stacks mitigation from Max HP damage taken; Shell Spikes reflects % damage taken (and NeNe Kappas reflect while active); NeNe Kappa transfers your Health and Protections to the pet. Support/Solo = Max-HP shell. Mid = CDR-bruiser roam (Chronos + Ethereal + Isolation). Jungle = reflect gank (Nemean + Contagion + CDR clear). Never glass Thoth/Cosmic. Aspect of Spirits (Oct 23) swaps mitigation/reflect for spirit Kappa throws.",
     "force_tags": [
       "hybrid_bulk",
       "hard_cc",
@@ -108,8 +108,52 @@
       "Gem of Isolation",
       "Midgardian Mail",
       "Shifter's Shield",
-      "Breastplate of Valor"
+      "Breastplate of Valor",
+      "Ethereal Staff",
+      "Chronos' Pendant"
     ],
+    "prefer_by_role": {
+      "Mid": [
+        "Chronos' Pendant",
+        "Spear Of The Magus",
+        "Ethereal Staff",
+        "Gem of Isolation",
+        "Contagion",
+        "Hide of the Nemean Lion",
+        "Mystical Mail",
+        "Stone of Binding"
+      ],
+      "Jungle": [
+        "Hide of the Nemean Lion",
+        "Chronos' Pendant",
+        "Gluttonous Grimoire",
+        "Ethereal Staff",
+        "Contagion",
+        "Mystical Mail",
+        "Gem of Isolation",
+        "Stone of Binding"
+      ],
+      "Solo": [
+        "Mystical Mail",
+        "Contagion",
+        "Gauntlet of Thebes",
+        "Ethereal Staff",
+        "Hide of the Nemean Lion",
+        "Prophetic Cloak",
+        "Stone of Binding",
+        "Gem of Isolation"
+      ],
+      "Support": [
+        "Gauntlet of Thebes",
+        "Contagion",
+        "Mystical Mail",
+        "Stone of Binding",
+        "Gem of Isolation",
+        "Hide of the Nemean Lion",
+        "Prophetic Cloak",
+        "Ethereal Staff"
+      ]
+    },
     "ban_items": [
       "Book of Thoth",
       "Rod of Tahuti",
@@ -120,7 +164,16 @@
       "Riptalon",
       "Tyrfing",
       "Lotus Sickle",
-      "Chandra's Grace"
-    ]
+      "Chandra's Grace",
+      "The Cosmic Horror"
+    ],
+    "ban_by_role": {
+      "Jungle": [
+        "Gauntlet of Thebes"
+      ],
+      "Mid": [
+        "Gauntlet of Thebes"
+      ]
+    }
   }
 }

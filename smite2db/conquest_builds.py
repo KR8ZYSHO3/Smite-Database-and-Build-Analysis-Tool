@@ -30,6 +30,7 @@ from .kit_effects import (
     apply_kit_overrides,
     effect_labels,
     explain_item_pick,
+    merge_role_kit_overrides,
     extract_kit_effects,
     family_score_boost,
     prefer_ban_adjust,
@@ -3648,12 +3649,20 @@ def _inject_signature_items(
         )
         pick = cands[0]
         # Prefer replacing luxury actives / low-score filler, never strip last pen
+        # or earlier human-prefer cores (Kuzenbo Jungle: Nemean/Chronos score low as
+        # shells and were getting overwritten by later Ethereal/Contagion injects).
         drop_idx = None
         pen_idxs = [
             i
             for i, it in enumerate(path)
             if is_pen_item(it) and _pen_matches_kit(it, mage=mage, physical=physical)
         ]
+        prefer_protect = tuple(forced[:8]) if forced else ()
+
+        def _is_prefer_protected(it: ScoredItem) -> bool:
+            n = it.name.lower().replace("’", "'")
+            return any(p and p in n for p in prefer_protect)
+
         for i, it in enumerate(path):
             if it.is_active_item and (it.total_cost or 0) >= 3200:
                 drop_idx = i
@@ -3665,6 +3674,8 @@ def _inject_signature_items(
             )
             for i in ranked:
                 if len(pen_idxs) <= 1 and i in pen_idxs:
+                    continue
+                if _is_prefer_protected(path[i]):
                     continue
                 drop_idx = i
                 break
@@ -4122,8 +4133,15 @@ _IDENTITY_FORCE_CORES: dict[str, tuple[str, ...]] = {
     "item_hp_scale": ("ethereal", "contagion", "thebes"),
     "permanent_max_hp": ("contagion", "gladiator", "leviathan", "hide of the nemean"),
     "max_hp_scale": ("contagion", "thebes", "gladiator", "ethereal", "leviathan"),
-    # Kuzenbo Shell Spikes / thorns — Max-HP shell + reflect aura cores
-    "damage_reflect": ("thebes", "contagion", "mystical", "hide of the nemean"),
+    # Kuzenbo Shell Spikes / thorns — Max-HP shell + reflect + CDR uptime
+    "damage_reflect": (
+        "contagion",
+        "hide of the nemean",
+        "mystical",
+        "ethereal",
+        "chronos",
+        "thebes",
+    ),
     "plat_damp_stack": ("spectral", "alchemist", "mystical", "shifter"),
     "haunt_shred": ("ethereal", "thebes", "isolation", "binding"),
     "base_damage_only": ("lotus sickle", "asclepius", "chronos"),
@@ -4155,11 +4173,12 @@ def _ensure_identity_cores(
         return path
 
     want: list[str] = []
+    # damage_reflect before max_hp_scale so Nemean/Chronos beat generic Gladiator/Leviathan
     for h in (
         "item_hp_scale",
         "permanent_max_hp",
-        "max_hp_scale",
         "damage_reflect",
+        "max_hp_scale",
         "plat_damp_stack",
         "haunt_shred",
         "base_damage_only",
@@ -4206,6 +4225,8 @@ def _ensure_identity_cores(
         "leviathan",
         "mystical",
         "hide of the nemean",
+        "chronos",
+        "isolation",
     )
 
     def _find(key: str) -> ScoredItem | None:
@@ -6351,6 +6372,8 @@ def build_god_build(
     bias = god_scaling_bias(conn, god["god_id"])
     if use_aspect or aspect_id is not None:
         bias = build_aspect_bias(conn, god["god_id"], bias, aspect_id=aspect_id)
+    # Role-specific prefer/ban (Kuzenbo Mid CDR-bruiser vs Support shell, etc.)
+    bias = merge_role_kit_overrides(bias, role)
     dtype = god.get("primary_damage_type")
 
     # Carry is duo ADC — base kit only for native Carry; flex only via ranged-basics aspects

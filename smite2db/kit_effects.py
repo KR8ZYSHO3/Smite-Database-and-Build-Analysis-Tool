@@ -398,8 +398,18 @@ def load_kit_overrides(path: Path | None = None) -> dict[str, Any]:
         return {}
 
 
-def apply_kit_overrides(bias: dict[str, Any], god_name: str) -> dict[str, Any]:
-    """Mutate a copy of bias with force_tags / ban list stored for assembly."""
+def apply_kit_overrides(
+    bias: dict[str, Any],
+    god_name: str,
+    *,
+    role: str | None = None,
+) -> dict[str, Any]:
+    """Mutate a copy of bias with force_tags / ban list stored for assembly.
+
+    Optional ``prefer_by_role`` / ``ban_by_role`` in kit_overrides.json let a
+    god keep one kit identity while Mid/Jungle/Solo/Support diverge (e.g.
+    Kuzenbo Max-HP shell Support vs CDR-bruiser Mid vs reflect gank Jungle).
+    """
     overrides = load_kit_overrides()
     entry = overrides.get(god_name) or overrides.get((god_name or "").strip())
     if not entry or not isinstance(entry, dict):
@@ -417,6 +427,45 @@ def apply_kit_overrides(bias: dict[str, Any], god_name: str) -> dict[str, Any]:
         out["ban_items"] = [str(x).lower() for x in entry["ban_items"]]
     if entry.get("archetype"):
         out["force_archetype"] = str(entry["archetype"])
+
+    # Stash role maps so build_god_build can re-apply after role is known
+    if entry.get("prefer_by_role"):
+        out["prefer_by_role"] = {
+            str(k): [str(x).lower() for x in (v or [])]
+            for k, v in dict(entry["prefer_by_role"]).items()
+        }
+    if entry.get("ban_by_role"):
+        out["ban_by_role"] = {
+            str(k): [str(x).lower() for x in (v or [])]
+            for k, v in dict(entry["ban_by_role"]).items()
+        }
+
+    if role:
+        out = merge_role_kit_overrides(out, role)
+    return out
+
+
+def merge_role_kit_overrides(bias: dict[str, Any], role: str) -> dict[str, Any]:
+    """Front-load role prefers and extend bans when prefer_by_role is set."""
+    if not role:
+        return bias
+    out = dict(bias)
+    role_prefs = list((out.get("prefer_by_role") or {}).get(role) or [])
+    if role_prefs:
+        merged: list[str] = []
+        for p in role_prefs + list(out.get("prefer_items") or []):
+            pl = str(p).lower().strip()
+            if pl and pl not in merged:
+                merged.append(pl)
+        out["prefer_items"] = merged
+    role_bans = list((out.get("ban_by_role") or {}).get(role) or [])
+    if role_bans:
+        bans = list(out.get("ban_items") or [])
+        for b in role_bans:
+            bl = str(b).lower().strip()
+            if bl and bl not in bans:
+                bans.append(bl)
+        out["ban_items"] = bans
     return out
 
 
