@@ -94,6 +94,21 @@ _HOOK_PATTERNS: list[tuple[str, re.Pattern[str], float]] = [
         0.7,
     ),
     (
+        # Kuzenbo Aspect of Spirits — LS per orbiting Kappa; throw spirits (not reflect)
+        "spirit_lifesteal",
+        re.compile(
+            r"lifesteal for each|"
+            r"gain [\d.]+%\s*lifesteal for each|"
+            r"orbiting kappa|"
+            r"kappa spirits? are regularly summoned|"
+            r"throw(?:s|ing)? (?:a )?spirit kappas?|"
+            r"no longer reflects? damage but instead|"
+            r"spawn orbiting kappa spirits",
+            re.I,
+        ),
+        0.8,
+    ),
+    (
         # Ymir Frost Breath / Athena Confound / Hades Shroud — CC duration from Item Protections
         "item_prot_cc",
         re.compile(
@@ -217,6 +232,18 @@ _HOOK_PREFER: dict[str, list[str]] = {
         "shifter",
         "gladiator",
     ],
+    "spirit_lifesteal": [
+        "gluttonous",
+        "chronos",
+        "ethereal",
+        "prophetic",
+        "bancroft",
+        "soul gem",
+        "umbral",
+        "wish-granting",
+        "shifter",
+        "isolation",
+    ],
     "item_prot_cc": [
         "gauntlet of thebes",
         "breastplate of valor",
@@ -319,6 +346,20 @@ _HOOK_BAN: dict[str, list[str]] = {
         "deathbringer",
         "riptalon",
     ],
+    "spirit_lifesteal": [
+        "tahuti",
+        "dreamer",
+        "thoth",
+        "doom orb",
+        "polynomicon",
+        "cosmic",
+        "hide of the nemean",
+        "contagion",
+        "mystical",
+        "bloodforge",
+        "sanguine",
+        "devourer",
+    ],
     "item_prot_cc": [
         "tahuti",
         "dreamer",
@@ -378,6 +419,7 @@ _HOOK_TAGS_ADD: dict[str, set[str]] = {
     "item_hp_scale": {"hybrid_bulk", "aa", "team_buff"},
     "max_hp_scale": {"hybrid_bulk", "self_sustain"},
     "damage_reflect": {"hybrid_bulk", "self_sustain", "anti_cc"},
+    "spirit_lifesteal": {"hybrid_bulk", "self_sustain", "heal", "spam", "pet_zone"},
     "item_prot_cc": {"hybrid_bulk", "hard_cc", "anti_cc"},
     "permanent_max_hp": {"hybrid_bulk", "self_sustain", "execute"},
     "plat_damp_stack": {"hybrid_bulk", "self_sustain", "anti_cc"},
@@ -392,6 +434,7 @@ _HOOK_TAGS_REMOVE: dict[str, set[str]] = {
     "item_hp_scale": {"burst"},
     "max_hp_scale": {"burst", "ult_nuke"},
     "damage_reflect": {"burst", "ult_nuke", "aa", "as_steroid"},
+    "spirit_lifesteal": {"burst", "ult_nuke", "aa", "as_steroid", "long_cd"},
     "item_prot_cc": {"burst", "ult_nuke", "aa", "as_steroid", "mana_stack"},
     "haunt_shred": {"burst", "ult_nuke", "aa", "as_steroid", "heal", "team_buff", "heavy_heal"},
 }
@@ -458,6 +501,12 @@ def detect_identity_hooks(blob: str, *, is_aspect: bool = False) -> IdentityProf
         prof.hp_stack_boost = max(prof.hp_stack_boost, 0.45)
         prof.bulk_boost = max(prof.bulk_boost, 0.45)
         prof.power_penalty = max(prof.power_penalty, 0.2)
+    if "spirit_lifesteal" in prof.hooks:
+        # INT LS + dual-prot orbit; keep some power for throws, still bruiser
+        prof.bulk_boost = max(prof.bulk_boost, 0.35)
+        prof.heal_boost = max(prof.heal_boost, 0.45)
+        prof.cdr_boost = max(prof.cdr_boost, 0.25)
+        prof.power_penalty = max(prof.power_penalty, 0.15)
     if "item_prot_cc" in prof.hooks:
         # Stretch stun/taunt/silence — raw Item Protections over glass power
         prof.bulk_boost = max(prof.bulk_boost, 0.5)
@@ -685,6 +734,40 @@ def identity_item_score_delta(item_name: str, bias: dict[str, Any]) -> float:
             # Keep gap tools but don't let them erase HP identity as sole cores
             s -= 8
 
+    if "spirit_lifesteal" in hooks:
+        if any(
+            k in n
+            for k in (
+                "gluttonous",
+                "bancroft",
+                "soul gem",
+                "umbral",
+                "chronos",
+                "ethereal",
+                "prophetic",
+                "wish-granting",
+                "shifter",
+            )
+        ):
+            s += 48 if lock else 34
+        if any(
+            k in n
+            for k in (
+                "hide of the nemean",
+                "contagion",
+                "mystical",
+                "tahuti",
+                "dreamer",
+                "thoth",
+                "doom orb",
+                "cosmic",
+                "bloodforge",
+                "sanguine",
+                "desolat",
+            )
+        ):
+            s -= 42 if lock else 28
+
     if bias.get("mid_enchanter"):
         if any(k in n for k in ("lotus sickle", "asclepius", "heartwood", "chronos", "thebes")):
             s += 48
@@ -720,5 +803,23 @@ def identity_fights_item(item_name: str, bias: dict[str, Any]) -> bool:
             return True
     if "damage_reflect" in hooks:
         if any(k in n for k in ("tahuti", "dreamer", "thoth", "doom orb", "polynomicon", "deathbringer", "riptalon")):
+            return True
+    if "spirit_lifesteal" in hooks:
+        if any(
+            k in n
+            for k in (
+                "tahuti",
+                "dreamer",
+                "thoth",
+                "doom orb",
+                "cosmic",
+                "desolat",
+                "hide of the nemean",
+                "contagion",
+                "mystical",
+                "bloodforge",
+                "sanguine",
+            )
+        ):
             return True
     return False

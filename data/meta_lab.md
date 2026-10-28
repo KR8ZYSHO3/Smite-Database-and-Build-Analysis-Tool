@@ -2,7 +2,7 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-10-23T18:30:14.865793+00:00_
+_Generated: 2026-10-28T01:28:55.987182+00:00_
 
 ## Weekly themes
 
@@ -26,9 +26,9 @@ _Generated: 2026-10-23T18:30:14.865793+00:00_
 | Eye of the Storm | 11 | 45.8 |
 | Tekko-Kagi | 6 | 25.0 |
 | Book of Thoth | 5 | 20.8 |
-| The Cosmic Horror | 5 | 20.8 |
-| Spear of Desolation | 5 | 20.8 |
 | Soul Reaver | 5 | 20.8 |
+| Spear of Desolation | 5 | 20.8 |
+| The Cosmic Horror | 5 | 20.8 |
 | Qin's Blade | 5 | 20.8 |
 | Sands Of Time | 4 | 16.7 |
 | Spear Of The Magus | 4 | 16.7 |
@@ -72,7 +72,7 @@ _Generated: 2026-10-23T18:30:14.865793+00:00_
 | Damaru | 2 | 8.7 |
 | Brawler’s Beat Stick | 2 | 8.7 |
 | Oath-Sworn Spear | 1 | 4.3 |
-| Rod of Tahuti | 1 | 4.3 |
+| Book of Thoth | 1 | 4.3 |
 
 ### Solo (21 paths)
 
@@ -82,14 +82,14 @@ _Generated: 2026-10-23T18:30:14.865793+00:00_
 | Genji's Guard | 11 | 52.4 |
 | Gauntlet of Thebes | 10 | 47.6 |
 | Eye of the Storm | 10 | 47.6 |
-| Contagion | 7 | 33.3 |
+| Prophetic Cloak | 7 | 33.3 |
 | Wyrmskin Hide | 7 | 33.3 |
-| Prophetic Cloak | 6 | 28.6 |
+| Contagion | 7 | 33.3 |
 | Leviathan's Hide | 5 | 23.8 |
 | Doublet of Binding | 5 | 23.8 |
-| Stone of Binding | 5 | 23.8 |
 | Gladiator's Shield | 4 | 19.0 |
 | Regrowth Striders | 4 | 19.0 |
+| Stone of Binding | 4 | 19.0 |
 | Phoenix Feather | 3 | 14.3 |
 | Mystical Mail | 3 | 14.3 |
 | Breastplate of Valor | 3 | 14.3 |
@@ -102,9 +102,9 @@ _Generated: 2026-10-23T18:30:14.865793+00:00_
 | Gem of Isolation | 13 | 56.5 |
 | Ethereal Staff | 12 | 52.2 |
 | Contagion | 11 | 47.8 |
-| Stone of Binding | 11 | 47.8 |
+| Prophetic Cloak | 9 | 39.1 |
+| Stone of Binding | 9 | 39.1 |
 | Gladiator's Shield | 8 | 34.8 |
-| Prophetic Cloak | 7 | 30.4 |
 | Leviathan's Hide | 6 | 26.1 |
 | Stygian Anchor | 5 | 21.7 |
 | Doublet of Binding | 5 | 21.7 |

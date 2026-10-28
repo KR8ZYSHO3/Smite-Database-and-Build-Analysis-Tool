@@ -83,7 +83,7 @@
     ]
   },
   "Kuzenbo": {
-    "_why": "OB46 King Kappa. Water Bowl stacks mitigation from Max HP damage taken; Shell Spikes reflects % damage taken (and NeNe Kappas reflect while active); NeNe Kappa transfers your Health and Protections to the pet. Support/Solo = Max-HP shell. Mid = CDR-bruiser roam (Chronos + Ethereal + Isolation). Jungle = reflect gank (Nemean + Contagion + CDR clear). Never glass Thoth/Cosmic. Aspect of Spirits (Oct 23) swaps mitigation/reflect for spirit Kappa throws.",
+    "_why": "OB46 King Kappa BASE kit. Water Bowl stacks mitigation from Max HP damage taken; Shell Spikes reflects % damage taken (and NeNe Kappas reflect while active); NeNe Kappa transfers your Health and Protections to the pet. Support/Solo = Max-HP shell. Mid = CDR-bruiser roam. Jungle = reflect gank. Never glass Thoth/Cosmic. Aspect of Spirits is a separate override key — LS + INT + dual-prot spirit path.",
     "force_tags": [
       "hybrid_bulk",
       "hard_cc",
@@ -173,6 +173,109 @@
       ],
       "Mid": [
         "Gauntlet of Thebes"
+      ]
+    }
+  },
+  "Aspect of Spirits": {
+    "_why": "Kuzenbo aspect (live OB46 Hotfix window). Water Bowl spawns orbiting Kappa Spirits (+3% Lifesteal each) instead of mitigation; Shell Spikes throws Spirit Kappas (50% INT) instead of reflecting. Orbit damage scales 5% INT + 15% Phys Prot + 15% Mag Prot. Itemize INT LS + dual prots + HP + CDR — not Contagion/Nemean reflect shells.",
+    "force_tags": [
+      "hybrid_bulk",
+      "self_sustain",
+      "heal",
+      "hard_cc",
+      "gap_close",
+      "pet_zone",
+      "spam"
+    ],
+    "remove_tags": [
+      "burst",
+      "ult_nuke",
+      "aa",
+      "as_steroid",
+      "long_cd"
+    ],
+    "prefer_items": [
+      "Gluttonous Grimoire",
+      "Chronos' Pendant",
+      "Ethereal Staff",
+      "Prophetic Cloak",
+      "Bancroft's Talon",
+      "Soul Gem",
+      "Wish-Granting Pearl",
+      "Shifter's Shield",
+      "Gem of Isolation"
+    ],
+    "prefer_by_role": {
+      "Solo": [
+        "Gluttonous Grimoire",
+        "Chronos' Pendant",
+        "Ethereal Staff",
+        "Prophetic Cloak",
+        "Bancroft's Talon",
+        "Wish-Granting Pearl",
+        "Soul Gem",
+        "Shifter's Shield"
+      ],
+      "Support": [
+        "Gauntlet of Thebes",
+        "Umbral Link",
+        "Prophetic Cloak",
+        "Gluttonous Grimoire",
+        "Ethereal Staff",
+        "Chronos' Pendant",
+        "Soul Gem",
+        "Gem of Isolation"
+      ],
+      "Mid": [
+        "Chronos' Pendant",
+        "Gluttonous Grimoire",
+        "Ethereal Staff",
+        "Prophetic Cloak",
+        "Bancroft's Talon",
+        "Soul Gem",
+        "Gem of Isolation",
+        "Wish-Granting Pearl"
+      ],
+      "Jungle": [
+        "Gluttonous Grimoire",
+        "Chronos' Pendant",
+        "Ethereal Staff",
+        "Prophetic Cloak",
+        "Soul Gem",
+        "Bancroft's Talon",
+        "Typhon",
+        "Gem of Isolation"
+      ]
+    },
+    "ban_items": [
+      "Book of Thoth",
+      "Rod of Tahuti",
+      "Dreamer's Idol",
+      "Doom Orb",
+      "Polynomicon",
+      "Deathbringer",
+      "Riptalon",
+      "Tyrfing",
+      "Lotus Sickle",
+      "Chandra's Grace",
+      "The Cosmic Horror",
+      "Hide of the Nemean Lion",
+      "Contagion",
+      "Mystical Mail",
+      "Bloodforge",
+      "Sanguine Lash",
+      "Devourer's Gauntlet"
+    ],
+    "ban_by_role": {
+      "Jungle": [
+        "Gauntlet of Thebes"
+      ],
+      "Mid": [
+        "Gauntlet of Thebes",
+        "Umbral Link"
+      ],
+      "Solo": [
+        "Umbral Link"
       ]
     }
   },

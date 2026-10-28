@@ -67514,8 +67514,32 @@
           },
           "items": [
             {
+              "name": "Prophetic Cloak",
+              "score": 510.6,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.32,
+              "ladder_tier": "B",
+              "ladder_rank": 66,
+              "ladder_score": 28.0,
+              "stats": {
+                "pprot": 22.0,
+                "mprot": 22.0,
+                "cdr": 10.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damage a God: +1 Protection Stack against the damage type they deal. Cooldown: 5s.\nAt +15 of each Protection Stack, item evolves:\n*+10 Physical Protection and Magical Protection\n*+",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk; inspired: high-SR Cabrakan Solo (1/2)",
+              "inspired": true
+            },
+            {
               "name": "Ethereal Staff",
-              "score": 568.5,
+              "score": 628.5,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -67538,7 +67562,7 @@
             },
             {
               "name": "Gladiator's Shield",
-              "score": 409.2,
+              "score": 421.2,
               "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
@@ -67561,7 +67585,7 @@
             },
             {
               "name": "Gauntlet of Thebes",
-              "score": 549.8,
+              "score": 525.8,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -67583,7 +67607,7 @@
             },
             {
               "name": "Contagion",
-              "score": 490.6,
+              "score": 514.6,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -67625,35 +67649,36 @@
               "effect": "Damaged by God Attack: That God is -10% Strength & Attack Damage for 4s.\nAttack an Enemy God: +8 Max Health Permanently.\nDamaged by Enemy God: -0.5s once per Ability Cast or Attack",
               "is_active": false,
               "why": "mitigation vs enemy damage types"
-            },
-            {
-              "name": "Stone of Binding",
-              "score": 631.0,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.14,
-              "ladder_tier": "S",
-              "ladder_rank": 15,
-              "ladder_score": 71.8,
-              "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
-              "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
             }
           ],
           "full_path": [
             {
+              "name": "Prophetic Cloak",
+              "score": 510.6,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.32,
+              "ladder_tier": "B",
+              "ladder_rank": 66,
+              "ladder_score": 28.0,
+              "stats": {
+                "pprot": 22.0,
+                "mprot": 22.0,
+                "cdr": 10.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damage a God: +1 Protection Stack against the damage type they deal. Cooldown: 5s.\nAt +15 of each Protection Stack, item evolves:\n*+10 Physical Protection and Magical Protection\n*+",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk; inspired: high-SR Cabrakan Solo (1/2)",
+              "inspired": true
+            },
+            {
               "name": "Ethereal Staff",
-              "score": 568.5,
+              "score": 628.5,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -67676,7 +67701,7 @@
             },
             {
               "name": "Gladiator's Shield",
-              "score": 409.2,
+              "score": 421.2,
               "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
@@ -67699,7 +67724,7 @@
             },
             {
               "name": "Gauntlet of Thebes",
-              "score": 549.8,
+              "score": 525.8,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -67721,7 +67746,7 @@
             },
             {
               "name": "Contagion",
-              "score": 490.6,
+              "score": 514.6,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -67763,36 +67788,13 @@
               "effect": "Damaged by God Attack: That God is -10% Strength & Attack Damage for 4s.\nAttack an Enemy God: +8 Max Health Permanently.\nDamaged by Enemy God: -0.5s once per Ability Cast or Attack",
               "is_active": false,
               "why": "mitigation vs enemy damage types"
-            },
-            {
-              "name": "Stone of Binding",
-              "score": 631.0,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.14,
-              "ladder_tier": "S",
-              "ladder_rank": 15,
-              "ladder_score": 71.8,
-              "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
-              "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
             }
           ],
           "inventory_slots": 7,
           "cores": [
             {
               "name": "Ethereal Staff",
-              "score": 568.5,
+              "score": 628.5,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -67816,8 +67818,32 @@
           ],
           "defense": [
             {
+              "name": "Prophetic Cloak",
+              "score": 510.6,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.32,
+              "ladder_tier": "B",
+              "ladder_rank": 66,
+              "ladder_score": 28.0,
+              "stats": {
+                "pprot": 22.0,
+                "mprot": 22.0,
+                "cdr": 10.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damage a God: +1 Protection Stack against the damage type they deal. Cooldown: 5s.\nAt +15 of each Protection Stack, item evolves:\n*+10 Physical Protection and Magical Protection\n*+",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk; inspired: high-SR Cabrakan Solo (1/2)",
+              "inspired": true
+            },
+            {
               "name": "Gladiator's Shield",
-              "score": 409.2,
+              "score": 421.2,
               "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
@@ -67837,28 +67863,6 @@
               "effect": "Abilities deal bonus Physical Damage.\n*Damage = +10 + 40% of your Item Protections\n*Triggers once per Ability Cast, per God",
               "is_active": false,
               "why": "Solo defensive slot \u2014 survive focus"
-            },
-            {
-              "name": "Gauntlet of Thebes",
-              "score": 549.8,
-              "cost": 2200,
-              "type": "Defensive",
-              "slot": "defense",
-              "momentum": 0.54,
-              "ladder_tier": "B",
-              "ladder_rank": 49,
-              "ladder_score": 34.5,
-              "stats": {
-                "hp": 200.0,
-                "mp": 150.0
-              },
-              "pen": 0,
-              "damp": 0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Assist a Minion: +1 Stack.\nGod Kill or Assist: +5 Stacks.\nStacks grant +15 Max Health (max 40 Stacks).\nAt 40 Stacks, Item evolves and gains:\n*+100 Max Health\n*+10 Physical and Magi",
-              "is_active": false,
-              "why": "team aura / support core"
             }
           ],
           "relics": [
@@ -68052,7 +68056,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Cabrakan \u00b7 Solo \u00b7 archetype \u00abtank_solo\u00bb (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Ethereal Staff (Solo path fit for kit profile); Gladiator's Shield (Solo path fit for kit profile); Gauntlet of Thebes (team aura / support core). Actives 0/2 \u00b7 pen \u2248 0.",
+          "why": "Cabrakan \u00b7 Solo \u00b7 archetype \u00abtank_solo\u00bb (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Prophetic Cloak (tenacity / anti-CC bulk); Ethereal Staff (Solo path fit for kit profile); Gladiator's Shield (Solo path fit for kit profile). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 1 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 3 > 1 > 2",
           "skill_order": "3/1/2/3/4/3/3/3/4/1/1/1/4/1/2/2/4/2/2/4",
           "skill_order_list": [
@@ -68146,8 +68150,7 @@
               "why": "%HP, pen, and prot shred so fat targets take real damage.",
               "in_path": true,
               "path_items": [
-                "Ethereal Staff",
-                "Stone of Binding"
+                "Ethereal Staff"
               ],
               "suggest": [
                 "Soul Reaver",
@@ -76646,7 +76649,7 @@
           "items": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 538.7,
+              "score": 514.7,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -76668,8 +76671,32 @@
               "inspired": true
             },
             {
+              "name": "Prophetic Cloak",
+              "score": 477.1,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.32,
+              "ladder_tier": "B",
+              "ladder_rank": 66,
+              "ladder_score": 28.0,
+              "stats": {
+                "pprot": 22.0,
+                "mprot": 22.0,
+                "cdr": 10.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damage a God: +1 Protection Stack against the damage type they deal. Cooldown: 5s.\nAt +15 of each Protection Stack, item evolves:\n*+10 Physical Protection and Magical Protection\n*+",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk; inspired: high-SR Athena Support (2/5); common high-SR opener",
+              "inspired": true
+            },
+            {
               "name": "Contagion",
-              "score": 453.1,
+              "score": 477.1,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -76714,7 +76741,7 @@
             },
             {
               "name": "Gladiator's Shield",
-              "score": 344.0,
+              "score": 356.0,
               "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
@@ -76736,31 +76763,8 @@
               "why": "Support defensive slot \u2014 survive focus"
             },
             {
-              "name": "Stone of Binding",
-              "score": 632.4,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.14,
-              "ladder_tier": "S",
-              "ladder_rank": 15,
-              "ladder_score": 71.8,
-              "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
-              "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
-            },
-            {
               "name": "Ethereal Staff",
-              "score": 527.8,
+              "score": 587.8,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -76786,7 +76790,7 @@
           "full_path": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 538.7,
+              "score": 514.7,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -76808,8 +76812,32 @@
               "inspired": true
             },
             {
+              "name": "Prophetic Cloak",
+              "score": 477.1,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.32,
+              "ladder_tier": "B",
+              "ladder_rank": 66,
+              "ladder_score": 28.0,
+              "stats": {
+                "pprot": 22.0,
+                "mprot": 22.0,
+                "cdr": 10.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damage a God: +1 Protection Stack against the damage type they deal. Cooldown: 5s.\nAt +15 of each Protection Stack, item evolves:\n*+10 Physical Protection and Magical Protection\n*+",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk; inspired: high-SR Athena Support (2/5); common high-SR opener",
+              "inspired": true
+            },
+            {
               "name": "Contagion",
-              "score": 453.1,
+              "score": 477.1,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -76854,7 +76882,7 @@
             },
             {
               "name": "Gladiator's Shield",
-              "score": 344.0,
+              "score": 356.0,
               "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
@@ -76876,31 +76904,8 @@
               "why": "Support defensive slot \u2014 survive focus"
             },
             {
-              "name": "Stone of Binding",
-              "score": 632.4,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.14,
-              "ladder_tier": "S",
-              "ladder_rank": 15,
-              "ladder_score": 71.8,
-              "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
-              "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
-            },
-            {
               "name": "Ethereal Staff",
-              "score": 527.8,
+              "score": 587.8,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -76927,7 +76932,7 @@
           "cores": [
             {
               "name": "Ethereal Staff",
-              "score": 527.8,
+              "score": 587.8,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -76953,7 +76958,7 @@
           "defense": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 538.7,
+              "score": 514.7,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -76975,26 +76980,28 @@
               "inspired": true
             },
             {
-              "name": "Contagion",
-              "score": 453.1,
+              "name": "Prophetic Cloak",
+              "score": 477.1,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": 0.07,
+              "momentum": 0.32,
               "ladder_tier": "B",
-              "ladder_rank": 56,
-              "ladder_score": 29.7,
+              "ladder_rank": 66,
+              "ladder_score": 28.0,
               "stats": {
-                "hp": 425.0,
-                "hpr": 6.0
+                "pprot": 22.0,
+                "mprot": 22.0,
+                "cdr": 10.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "effect": "Damage a God: +1 Protection Stack against the damage type they deal. Cooldown: 5s.\nAt +15 of each Protection Stack, item evolves:\n*+10 Physical Protection and Magical Protection\n*+",
               "is_active": false,
-              "why": "team anti-heal aura"
+              "why": "tenacity / anti-CC bulk; inspired: high-SR Athena Support (2/5); common high-SR opener",
+              "inspired": true
             }
           ],
           "relics": [
@@ -77188,7 +77195,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Athena \u00b7 Support \u00b7 archetype \u00ablockdown_support\u00bb (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage, ally buffs / auras. Tags: anti_cc, channel, gap_close, hard_cc, high_cc, hybrid_bulk, self_sustain, shield. Style burst 52%/dps 28%; patch stable (net -0.5, r5 +0.0). Patch axes (r5): general -0.5, damage +0.1, utility -0.0. Scale STR 12% / INT 67%. Path: Gauntlet of Thebes (team aura / support core); Contagion (team anti-heal aura); Leviathan's Hide (Support path fit for kit profile). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 2 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Athena \u00b7 Support \u00b7 archetype \u00ablockdown_support\u00bb (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage, ally buffs / auras. Tags: anti_cc, channel, gap_close, hard_cc, high_cc, hybrid_bulk, self_sustain, shield. Style burst 52%/dps 28%; patch stable (net -0.5, r5 +0.0). Patch axes (r5): general -0.5, damage +0.1, utility -0.0. Scale STR 12% / INT 67%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 3 > 1 > 2",
           "skill_order": "3/1/2/3/4/3/3/3/4/1/1/1/4/1/2/2/4/2/2/4",
           "skill_order_list": [
@@ -81956,7 +81963,7 @@
           "items": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 539.7,
+              "score": 515.7,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -81978,8 +81985,32 @@
               "inspired": true
             },
             {
+              "name": "Prophetic Cloak",
+              "score": 502.6,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.32,
+              "ladder_tier": "B",
+              "ladder_rank": 66,
+              "ladder_score": 28.0,
+              "stats": {
+                "pprot": 22.0,
+                "mprot": 22.0,
+                "cdr": 10.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damage a God: +1 Protection Stack against the damage type they deal. Cooldown: 5s.\nAt +15 of each Protection Stack, item evolves:\n*+10 Physical Protection and Magical Protection\n*+",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk; inspired: high-SR Support staple",
+              "inspired": true
+            },
+            {
               "name": "Contagion",
-              "score": 476.5,
+              "score": 500.5,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -82024,7 +82055,7 @@
             },
             {
               "name": "Gladiator's Shield",
-              "score": 366.3,
+              "score": 378.3,
               "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
@@ -82046,31 +82077,8 @@
               "why": "Support defensive slot \u2014 survive focus"
             },
             {
-              "name": "Stone of Binding",
-              "score": 643.8,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.14,
-              "ladder_tier": "S",
-              "ladder_rank": 15,
-              "ladder_score": 71.8,
-              "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
-              "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
-            },
-            {
               "name": "Ethereal Staff",
-              "score": 519.7,
+              "score": 579.7,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -82096,7 +82104,7 @@
           "full_path": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 539.7,
+              "score": 515.7,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -82118,8 +82126,32 @@
               "inspired": true
             },
             {
+              "name": "Prophetic Cloak",
+              "score": 502.6,
+              "cost": 2400,
+              "type": "Defensive",
+              "slot": "defense",
+              "momentum": 0.32,
+              "ladder_tier": "B",
+              "ladder_rank": 66,
+              "ladder_score": 28.0,
+              "stats": {
+                "pprot": 22.0,
+                "mprot": 22.0,
+                "cdr": 10.0
+              },
+              "pen": 0,
+              "damp": 0,
+              "plat": 0,
+              "ten": 0,
+              "effect": "Damage a God: +1 Protection Stack against the damage type they deal. Cooldown: 5s.\nAt +15 of each Protection Stack, item evolves:\n*+10 Physical Protection and Magical Protection\n*+",
+              "is_active": false,
+              "why": "tenacity / anti-CC bulk; inspired: high-SR Support staple",
+              "inspired": true
+            },
+            {
               "name": "Contagion",
-              "score": 476.5,
+              "score": 500.5,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
@@ -82164,7 +82196,7 @@
             },
             {
               "name": "Gladiator's Shield",
-              "score": 366.3,
+              "score": 378.3,
               "cost": 2450,
               "type": "Defensive",
               "slot": "defense",
@@ -82186,31 +82218,8 @@
               "why": "Support defensive slot \u2014 survive focus"
             },
             {
-              "name": "Stone of Binding",
-              "score": 643.8,
-              "cost": 2550,
-              "type": "Defensive",
-              "slot": "mitigate",
-              "momentum": 2.14,
-              "ladder_tier": "S",
-              "ladder_rank": 15,
-              "ladder_score": 71.8,
-              "stats": {
-                "damp": 5.0,
-                "pprot": 35.0,
-                "mprot": 35.0
-              },
-              "pen": 0,
-              "damp": 5.0,
-              "plat": 0,
-              "ten": 0,
-              "effect": "Hard Crowd Control an Enemy: Apply -10 Physical and Magical Protections for 6s.\nStacks up to 3 times. Stacks fall off one at a time.",
-              "is_active": false,
-              "why": "Stone of Binding \u2014 CC setup shred"
-            },
-            {
               "name": "Ethereal Staff",
-              "score": 519.7,
+              "score": 579.7,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -82237,7 +82246,7 @@
           "cores": [
             {
               "name": "Ethereal Staff",
-              "score": 519.7,
+              "score": 579.7,
               "cost": 2550,
               "type": "Hybrid",
               "slot": "mitigate",
@@ -82263,7 +82272,7 @@
           "defense": [
             {
               "name": "Gauntlet of Thebes",
-              "score": 539.7,
+              "score": 515.7,
               "cost": 2200,
               "type": "Defensive",
               "slot": "defense",
@@ -82285,26 +82294,28 @@
               "inspired": true
             },
             {
-              "name": "Contagion",
-              "score": 476.5,
+              "name": "Prophetic Cloak",
+              "score": 502.6,
               "cost": 2400,
               "type": "Defensive",
               "slot": "defense",
-              "momentum": 0.07,
+              "momentum": 0.32,
               "ladder_tier": "B",
-              "ladder_rank": 56,
-              "ladder_score": 29.7,
+              "ladder_rank": 66,
+              "ladder_score": 28.0,
               "stats": {
-                "hp": 425.0,
-                "hpr": 6.0
+                "pprot": 22.0,
+                "mprot": 22.0,
+                "cdr": 10.0
               },
               "pen": 0,
               "damp": 0,
               "plat": 0,
               "ten": 0,
-              "effect": "Damaged by an Attack or Ability: Apply +1 Stack of Contagion (1 per hit)\n*If an enemy Lifesteals 100 Health from you: Apply +5 Stacks\nAttack or Hard Crowd Control an afflicted enem",
+              "effect": "Damage a God: +1 Protection Stack against the damage type they deal. Cooldown: 5s.\nAt +15 of each Protection Stack, item evolves:\n*+10 Physical Protection and Magical Protection\n*+",
               "is_active": false,
-              "why": "team anti-heal aura"
+              "why": "tenacity / anti-CC bulk; inspired: high-SR Support staple",
+              "inspired": true
             }
           ],
           "relics": [
@@ -82498,7 +82509,7 @@
             },
             "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
           },
-          "why": "Cabrakan \u00b7 Support \u00b7 archetype \u00ablockdown_support\u00bb (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Gauntlet of Thebes (team aura / support core); Contagion (team anti-heal aura); Leviathan's Hide (Support path fit for kit profile). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 2 item(s) (tracker.gg \u2014 not a meta copy).",
+          "why": "Cabrakan \u00b7 Support \u00b7 archetype \u00ablockdown_support\u00bb (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/2 \u00b7 pen \u2248 0. Soft high-SR inspiration on 3 item(s) (tracker.gg \u2014 not a meta copy).",
           "skill_priority": "4 > 2 > 3 > 1",
           "skill_order": "2/3/1/2/4/2/2/2/4/3/3/3/4/3/1/1/4/1/1/4",
           "skill_order_list": [
@@ -91011,9 +91022,9 @@
         "role_job_fail": []
       },
       "Support": {
-        "unique": 20,
+        "unique": 19,
         "total": 23,
-        "shared_groups": 2,
+        "shared_groups": 1,
         "pen_fail": [],
         "early_melt_fail": [],
         "luxury_fail": [],
@@ -91028,7 +91039,7 @@
       "Jungle: shared paths ['Ne Zha, Thanatos']",
       "Jungle: low pen ['Nemesis']",
       "Solo: shared paths ['Sun Wukong, Nike']",
-      "Support: shared paths ['Jormungandr, Khepri, Geb', 'Athena, Cabrakan']"
+      "Support: shared paths ['Jormungandr, Athena, Cabrakan, Khepri, Geb']"
     ]
   }
 }

@@ -1528,16 +1528,16 @@ Bellona · Solo · archetype «sustain_solo» (STR / physical). Kit effects: sel
 
 *Magical · Hybrid scaling (STR 75.1% / INT 51.1%)*
 
-Cabrakan · Solo · archetype «tank_solo» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Ethereal Staff (Solo path fit for kit profile); Gladiator's Shield (Solo path fit for kit profile); Gauntlet of Thebes (team aura / support core). Actives 0/2 · pen ≈ 0.
+Cabrakan · Solo · archetype «tank_solo» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Prophetic Cloak (tenacity / anti-CC bulk); Ethereal Staff (Solo path fit for kit profile); Gladiator's Shield (Solo path fit for kit profile). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 0/2, pen ≈ 0.0):
-  1. Ethereal Staff (mitigate, 2550g)
-  2. Gladiator's Shield (defense, 2450g)
-  3. Gauntlet of Thebes (defense, 2200g)
-  4. Contagion (defense, 2400g)
-  5. Leviathan's Hide (mitigate, 2400g)
-  6. Stone of Binding (mitigate, 2550g)
+  1. Prophetic Cloak (defense, 2400g)
+  2. Ethereal Staff (mitigate, 2550g)
+  3. Gladiator's Shield (defense, 2450g)
+  4. Gauntlet of Thebes (defense, 2200g)
+  5. Contagion (defense, 2400g)
+  6. Leviathan's Hide (mitigate, 2400g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Guan Yu — C-tier (role rank #16, model 46.1)
@@ -1740,15 +1740,15 @@ Ymir · Support · archetype «lockdown_support» (INT / magical). Kit effects: 
 
 *Magical · Intelligence scaling (STR 12.0% / INT 66.9%)*
 
-Athena · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage, ally buffs / auras. Tags: anti_cc, channel, gap_close, hard_cc, high_cc, hybrid_bulk, self_sustain, shield. Style burst 52%/dps 28%; patch stable (net -0.5, r5 +0.0). Patch axes (r5): general -0.5, damage +0.1, utility -0.0. Scale STR 12% / INT 67%. Path: Gauntlet of Thebes (team aura / support core); Contagion (team anti-heal aura); Leviathan's Hide (Support path fit for kit profile). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
+Athena · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage, ally buffs / auras. Tags: anti_cc, channel, gap_close, hard_cc, high_cc, hybrid_bulk, self_sustain, shield. Style burst 52%/dps 28%; patch stable (net -0.5, r5 +0.0). Patch axes (r5): general -0.5, damage +0.1, utility -0.0. Scale STR 12% / INT 67%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Gauntlet of Thebes (defense, 2200g)
-  2. Contagion (defense, 2400g)
-  3. Leviathan's Hide (mitigate, 2400g)
-  4. Gladiator's Shield (defense, 2450g)
-  5. Stone of Binding (mitigate, 2550g)
+  2. Prophetic Cloak (defense, 2400g)
+  3. Contagion (defense, 2400g)
+  4. Leviathan's Hide (mitigate, 2400g)
+  5. Gladiator's Shield (defense, 2450g)
   6. Ethereal Staff (mitigate, 2550g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
@@ -1852,15 +1852,15 @@ Bacchus · Support · archetype «lockdown_support» (INT / magical). Kit effect
 
 *Magical · Hybrid scaling (STR 75.1% / INT 51.1%)*
 
-Cabrakan · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Gauntlet of Thebes (team aura / support core); Contagion (team anti-heal aura); Leviathan's Hide (Support path fit for kit profile). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
+Cabrakan · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Gauntlet of Thebes (defense, 2200g)
-  2. Contagion (defense, 2400g)
-  3. Leviathan's Hide (mitigate, 2400g)
-  4. Gladiator's Shield (defense, 2450g)
-  5. Stone of Binding (mitigate, 2550g)
+  2. Prophetic Cloak (defense, 2400g)
+  3. Contagion (defense, 2400g)
+  4. Leviathan's Hide (mitigate, 2400g)
+  5. Gladiator's Shield (defense, 2450g)
   6. Ethereal Staff (mitigate, 2550g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 

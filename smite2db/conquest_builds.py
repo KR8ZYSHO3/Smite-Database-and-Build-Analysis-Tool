@@ -192,6 +192,10 @@ def _wants_mage_lifesteal(bias: dict | None) -> bool:
     """
     if not bias:
         return False
+    hooks = set(bias.get("identity_hooks") or [])
+    # Kuzenbo Aspect of Spirits — LS per orbiting Kappa
+    if "spirit_lifesteal" in hooks:
+        return True
     tags = set(bias.get("tags") or [])
     # Real self-heal / drain language from kit (not team heal, not ally buffs)
     if "self_sustain" in tags:
@@ -1072,7 +1076,7 @@ def score_item_for_role(item: dict, role: str, profile: dict) -> ScoredItem:
         util += _canon_stat_value(item["stats"], "damp") * 1.2
         util += _canon_stat_value(item["stats"], "plat") * 1.4
         util += _canon_stat_value(item["stats"], "ten") * 0.9
-        # Lifesteal cores are wrong on support
+        # Lifesteal cores are wrong on support (Aspect of Spirits hard-injects Umbral/Gluttonous)
         ls_v = _canon_stat_value(item["stats"], "ls")
         if ls_v >= 5:
             util -= 22
@@ -4147,6 +4151,17 @@ _IDENTITY_FORCE_CORES: dict[str, tuple[str, ...]] = {
         "chronos",
         "thebes",
     ),
+    # Kuzenbo Aspect of Spirits — INT LS + dual-prot orbit (not reflect shells)
+    # Umbral early so Support can share aspect LS; Mid/Solo/Jungle ban Umbral.
+    "spirit_lifesteal": (
+        "gluttonous",
+        "umbral",
+        "chronos",
+        "prophetic",
+        "ethereal",
+        "bancroft",
+        "soul gem",
+    ),
     # Ymir Frost Breath / Athena Confound / Hades Shroud — Item Protections stretch CC
     "item_prot_cc": (
         "thebes",
@@ -4193,6 +4208,7 @@ def _ensure_identity_cores(
     for h in (
         "item_hp_scale",
         "permanent_max_hp",
+        "spirit_lifesteal",
         "damage_reflect",
         "max_hp_scale",
         "item_prot_cc",
@@ -4216,10 +4232,16 @@ def _ensure_identity_cores(
         return path
 
     bans = [str(b).lower() for b in (bias.get("ban_items") or [])]
-    want = [k for k in want if not any(b and b in k for b in bans)]
-    # Cap: 3 cores for HP / reflect identity, 2 otherwise
+    want = [
+        k
+        for k in want
+        if not any(b and (b in k or k in b) for b in bans)
+    ]
+    # Cap: 3–4 cores for strong identity hooks, 2 otherwise
     max_force = (
-        3
+        4
+        if "spirit_lifesteal" in hooks
+        else 3
         if hooks
         & {
             "item_hp_scale",
@@ -4235,7 +4257,7 @@ def _ensure_identity_cores(
 
     new_path = list(path)[:6]
     have = {x.name.lower() for x in new_path}
-    protect = tuple(want[:6]) + (
+    protect = tuple(want[:8]) + (
         "thebes",
         "ethereal",
         "contagion",
@@ -4245,6 +4267,11 @@ def _ensure_identity_cores(
         "hide of the nemean",
         "chronos",
         "isolation",
+        "umbral",
+        "gluttonous",
+        "bancroft",
+        "soul gem",
+        "prophetic",
     )
 
     def _find(key: str) -> ScoredItem | None:
@@ -6543,6 +6570,23 @@ def build_god_build(
                 "plat_damp_stack",
             }
         )
+        _spirit_ls_kit = bool(
+            bias.get("identity_lock") and "spirit_lifesteal" in _id_hooks_kit
+        )
+        _spirit_ls_item = any(
+            k in nlow
+            for k in (
+                "gluttonous",
+                "umbral",
+                "bancroft",
+                "soul gem",
+                "chronos",
+                "ethereal",
+                "prophetic",
+                "wish-granting",
+                "typhon",
+            )
+        )
         _hp_identity_item = any(
             k in nlow
             for k in (
@@ -6612,6 +6656,9 @@ def build_god_build(
         if mage and str_v >= 40 and int_v < 25:
             return False
         if role == "Support":
+            # Aspect of Spirits: allow Umbral/Gluttonous/Chronos LS path through the gate
+            if _spirit_ls_kit and _spirit_ls_item:
+                return True
             if ls_v >= 5:
                 return False
             # personal AS/crit toys are not support cores
@@ -6655,6 +6702,9 @@ def build_god_build(
                 return False
             return True
         if role == "Solo":
+            # Aspect of Spirits: Gluttonous/Chronos/Bancroft stay legal on Solo
+            if _spirit_ls_kit and _spirit_ls_item:
+                return True
             # frontline: skip pure glass AS/crit carries and luxury mage toys
             if (as_v >= 25 or crit_v >= 20) and _canon_stat_value(s.stats, "hp") < 200:
                 return False

@@ -200,6 +200,170 @@
           "why": "Hide of the Nemean Lion — extra reflect that stacks with Shell Spikes."
         }
       ]
+    },
+    {
+      "id": "kuzenbo-spirits-solo",
+      "god": "Kuzenbo",
+      "role": "Solo",
+      "aspect": "Aspect of Spirits",
+      "headline": "Spirit lifesteal bruiser",
+      "tagline": "3% LS per orbiting Kappa + INT/prot-scaled spirit damage — stack item LS and sit in melee.",
+      "hook_label": "Aspect LS + INT + dual prots",
+      "ability_plain": "Aspect of Spirits rewrites the kit. Water Bowl no longer gives mitigation — it spawns orbiting Kappa Spirits. You gain 3% Lifesteal for each spirit summoned. Shell Spikes no longer reflects; it throws Spirit Kappas (50% Intelligence scaling). Orbit ticks scale with Intelligence plus Physical and Magical Protections. Lifesteal only pays when you deal damage, so this path stacks item LS with INT and dual prots and stays in their faces so spirits keep ticking.",
+      "playstyle": "Lane with Warrior's Axe (or Vampiric Shroud if you want earlier LS). Rush Gluttonous for INT + 7.5% LS + pen. Chronos keeps 2 up so you throw spirits often. Ethereal fattens you and steals HP. Prophetic gives both prot types for orbit damage. Cap with Bancroft's or Pearl. Skip Contagion/Nemean — reflect is gone on this aspect.",
+      "starter_why": "Warrior's Axe — Solo lane pressure; optional Vampiric Shroud if you want LS from the first back.",
+      "relics_why": "Beads and Aegis — live through the brawl so spirits and Gluttonous keep healing.",
+      "item_why": [
+        {
+          "match": "gluttonous",
+          "why": "INT + 7.5% LS + HP + 10% pen. Best aspect core — item LS stacks with spirit LS and stores heal as bonus AA damage."
+        },
+        {
+          "match": "chronos",
+          "why": "25% CDR so Shell Spikes throws stay up. More throws = more spirit pressure and LS uptime."
+        },
+        {
+          "match": "ethereal",
+          "why": "INT + Max HP and steals HP on ability hits — stay fat while spirits tick and LS pays out."
+        },
+        {
+          "match": "prophetic",
+          "why": "Dual Physical and Magical Protections. Orbit damage scales 15% of each — this item feeds the spirit aura."
+        },
+        {
+          "match": "bancroft",
+          "why": "Another 7.5% LS + INT. Ramps harder as you drop HP in the pit — pairs with spirit LS."
+        },
+        {
+          "match": "pearl",
+          "why": "Wish-Granting Pearl — huge INT for Spirit throws plus a fat HP chunk."
+        },
+        {
+          "match": "soul gem",
+          "why": "Flex LS + INT + CDR; ability proc heal when you would rather share sustain than Bancroft selfish ramp."
+        }
+      ]
+    },
+    {
+      "id": "kuzenbo-spirits-support",
+      "god": "Kuzenbo",
+      "role": "Support",
+      "aspect": "Aspect of Spirits",
+      "headline": "Spirit LS aura Support",
+      "tagline": "Umbral Link shares your spirit lifesteal with the duo while dual prots feed orbit damage.",
+      "hook_label": "Aspect LS shared via Umbral",
+      "ability_plain": "Same Aspect of Spirits rules: orbiting Kappas grant 3% Lifesteal each, throws scale with INT, orbit scales INT + both protections. On Support you keep Thebes for aura HP, then Umbral Link (10% LS that splits healing to nearby allies) so your spirit sustain feeds the carry. Prophetic dual prots amp orbit ticks. Gluttonous and Ethereal keep INT/LS/HP without going glass mage.",
+      "playstyle": "Selflessness into Thebes as usual. Second back prioritizes Umbral Link so spirit LS becomes team healing. Prophetic for dual-prot orbit damage. Gluttonous + Ethereal for selfish LS and HP. Chronos if you need more 2 uptime; Isolation if the lane needs slow stick. Do not buy Nemean/Contagion reflect packages — Shell Spikes does not reflect on this aspect.",
+      "starter_why": "Selflessness — Support gold and shared sustain while you stack Thebes.",
+      "relics_why": "Beads and Aegis — peel so you stay alive with spirits orbiting the pit.",
+      "item_why": [
+        {
+          "match": "thebes",
+          "why": "Assist stacks of HP/prots — you still need a Support shell so spirits can sit in fights."
+        },
+        {
+          "match": "umbral",
+          "why": "10% LS and splits lifesteal healing to allies in range. Turns aspect LS into duo-lane sustain."
+        },
+        {
+          "match": "prophetic",
+          "why": "Dual prots feed orbit damage (15% Phys + 15% Mag Prot scaling)."
+        },
+        {
+          "match": "gluttonous",
+          "why": "INT + item LS + pen so spirits and throws hit harder while you stack more heal."
+        },
+        {
+          "match": "ethereal",
+          "why": "INT + HP steal — bulk for frontline Support without abandoning spirit scaling."
+        },
+        {
+          "match": "chronos",
+          "why": "CDR for more Spirit throws and NeNe uptime while you roam."
+        }
+      ]
+    },
+    {
+      "id": "kuzenbo-spirits-mid",
+      "god": "Kuzenbo",
+      "role": "Mid",
+      "aspect": "Aspect of Spirits",
+      "headline": "CDR spirit roam Mid",
+      "tagline": "Chronos + Gluttonous roam — throw spirits, stack LS, dual-prot orbit while you rotate.",
+      "hook_label": "Aspect LS Mid roam",
+      "ability_plain": "Aspect Mid keeps the spirit LS fantasy but prioritizes Chronos uptime and Gluttonous sustain so you can roam with NeNe and Spirit throws. Ethereal and Prophetic keep INT and dual prots for orbit damage. Bancroft's or Soul Gem caps the LS stack. No Thebes — too slow for Mid tempo.",
+      "playstyle": "Conduit into Chronos or Gluttonous. Fight in river/side waves where spirits can tick on multiple targets. Throw 2 on cooldown. Build dual prots before full glass pen. Skip Contagion/Nemean.",
+      "starter_why": "Conduit Gem — Mid lane adaptive power into the LS/INT path.",
+      "relics_why": "Beads and Blink or Aegis — roam tools; live long enough for spirit LS to matter.",
+      "item_why": [
+        {
+          "match": "chronos",
+          "why": "CDR engine for Spirit throws and NeNe while you rotate."
+        },
+        {
+          "match": "gluttonous",
+          "why": "Core INT LS pen item — stacks with aspect LS."
+        },
+        {
+          "match": "ethereal",
+          "why": "INT + HP for bruiser Mid trades."
+        },
+        {
+          "match": "prophetic",
+          "why": "Dual prots for orbit scaling on a Mid budget."
+        },
+        {
+          "match": "bancroft",
+          "why": "Selfish LS ramp when you commit to skirmishes."
+        },
+        {
+          "match": "soul gem",
+          "why": "LS + ability proc heal flex if the teamfight needs shared sustain."
+        }
+      ]
+    },
+    {
+      "id": "kuzenbo-spirits-jungle",
+      "god": "Kuzenbo",
+      "role": "Jungle",
+      "aspect": "Aspect of Spirits",
+      "headline": "Gluttonous spirit gank Jungle",
+      "tagline": "Clear on Gluttonous LS, gank with spirit throws, dual-prot orbit in the pit.",
+      "hook_label": "Aspect LS Jungle clear/gank",
+      "ability_plain": "Jungle Spirits uses Gluttonous as clear and fight sustain, Chronos for throw uptime, Ethereal/Prophetic for INT + dual-prot orbit damage, then Soul Gem / Bancroft's / Typhon to stack more LS. Aspect LS makes camp clear and skirmishes sticky. Reflect items are wrong — Shell Spikes throws spirits now.",
+      "playstyle": "Bumba's into Gluttonous. Keep spirits up in camps and on ganks. Chronos second or third. Dive with slam + thrown spirits, sit in melee so orbit + LS pay out. No Thebes.",
+      "starter_why": "Bumba's Cudgel — Jungle clear starter into the LS path.",
+      "relics_why": "Beads and Blink — standard Jungle engage/escape while spirits work.",
+      "item_why": [
+        {
+          "match": "gluttonous",
+          "why": "Clear + fight LS with INT and pen — the Jungle aspect opener."
+        },
+        {
+          "match": "chronos",
+          "why": "More Spirit throws and NeNe on every rotate."
+        },
+        {
+          "match": "ethereal",
+          "why": "INT + HP steal so ganks leave you healthy."
+        },
+        {
+          "match": "prophetic",
+          "why": "Dual prots amp orbit damage when you sit on the carry."
+        },
+        {
+          "match": "soul gem",
+          "why": "More LS + ability heal proc in multi-man fights."
+        },
+        {
+          "match": "bancroft",
+          "why": "Selfish LS when you are the dive threat."
+        },
+        {
+          "match": "typhon",
+          "why": "Stacking INT LS pet — snowballs off Jungle kills/assists."
+        }
+      ]
     }
   ]
 }
