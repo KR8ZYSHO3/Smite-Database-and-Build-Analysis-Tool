@@ -1,6 +1,9 @@
 """
 One-command refresh: optional wiki scrape → analyze → export web.
 
+For a gated ship (fixtures + tier delta + links) use:
+  python -m smite2db.ship
+
 Examples:
   python -m smite2db.refresh              # analyze + export (fast)
   python -m smite2db.refresh --scrape     # scrape all then analyze + export

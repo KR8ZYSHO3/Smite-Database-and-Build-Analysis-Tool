@@ -2,7 +2,7 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-10-29T22:20:25.241766+00:00_
+_Generated: 2026-10-29T23:00:42.019972+00:00_
 
 ## Weekly themes
 
@@ -24,10 +24,10 @@ _Generated: 2026-10-29T22:20:25.241766+00:00_
 | The Executioner | 13 | 54.2 |
 | Eye of the Storm | 12 | 50.0 |
 | Devourer's Gauntlet | 11 | 45.8 |
-| Book of Thoth | 5 | 20.8 |
-| Soul Reaver | 5 | 20.8 |
-| Spear of Desolation | 5 | 20.8 |
 | The Cosmic Horror | 5 | 20.8 |
+| Spear of Desolation | 5 | 20.8 |
+| Soul Reaver | 5 | 20.8 |
+| Book of Thoth | 5 | 20.8 |
 | Qin's Blade | 5 | 20.8 |
 | Sands Of Time | 4 | 16.7 |
 | Tekko-Kagi | 4 | 16.7 |
@@ -39,8 +39,8 @@ _Generated: 2026-10-29T22:20:25.241766+00:00_
 | Item | Paths | % |
 |------|------:|--:|
 | Spear of Desolation | 24 | 92.3 |
-| Book of Thoth | 22 | 84.6 |
 | The Cosmic Horror | 22 | 84.6 |
+| Book of Thoth | 22 | 84.6 |
 | Chronos' Pendant | 18 | 69.2 |
 | Gem of Isolation | 10 | 38.5 |
 | Soul Reaver | 7 | 26.9 |
@@ -51,8 +51,8 @@ _Generated: 2026-10-29T22:20:25.241766+00:00_
 | Alchemist Coat | 3 | 11.5 |
 | Doom Orb | 2 | 7.7 |
 | Gluttonous Grimoire | 2 | 7.7 |
-| Breastplate of Valor | 1 | 3.8 |
-| Genji's Guard | 1 | 3.8 |
+| Dreamer's Idol | 1 | 3.8 |
+| Prophetic Cloak | 1 | 3.8 |
 
 ### Jungle (23 paths)
 
@@ -68,11 +68,11 @@ _Generated: 2026-10-29T22:20:25.241766+00:00_
 | Avatar's Parashu | 7 | 30.4 |
 | Arondight | 6 | 26.1 |
 | Damaru | 4 | 17.4 |
-| Hastened Fatalis | 2 | 8.7 |
 | Bloodforge | 2 | 8.7 |
+| Hastened Fatalis | 2 | 8.7 |
 | Brawler’s Beat Stick | 2 | 8.7 |
-| Spear Of The Magus | 1 | 4.3 |
-| Book of Thoth | 1 | 4.3 |
+| The Cosmic Horror | 1 | 4.3 |
+| Spear of Desolation | 1 | 4.3 |
 
 ### Solo (21 paths)
 
@@ -84,15 +84,15 @@ _Generated: 2026-10-29T22:20:25.241766+00:00_
 | Eye of the Storm | 10 | 47.6 |
 | Contagion | 8 | 38.1 |
 | Stone of Binding | 8 | 38.1 |
-| Prophetic Cloak | 7 | 33.3 |
+| Prophetic Cloak | 6 | 28.6 |
 | Leviathan's Hide | 6 | 28.6 |
 | Gladiator's Shield | 5 | 23.8 |
 | Wyrmskin Hide | 5 | 23.8 |
 | Midgardian Mail | 5 | 23.8 |
 | Breastplate of Valor | 5 | 23.8 |
+| Brawler’s Beat Stick | 3 | 14.3 |
 | Mystical Mail | 3 | 14.3 |
 | Doublet of Binding | 3 | 14.3 |
-| Brawler’s Beat Stick | 3 | 14.3 |
 
 ### Support (23 paths)
 
@@ -100,9 +100,9 @@ _Generated: 2026-10-29T22:20:25.241766+00:00_
 |------|------:|--:|
 | Gauntlet of Thebes | 21 | 91.3 |
 | Gem of Isolation | 13 | 56.5 |
-| Prophetic Cloak | 12 | 52.2 |
-| Contagion | 12 | 52.2 |
 | Ethereal Staff | 11 | 47.8 |
+| Prophetic Cloak | 11 | 47.8 |
+| Contagion | 10 | 43.5 |
 | Stone of Binding | 10 | 43.5 |
 | Leviathan's Hide | 7 | 30.4 |
 | Gladiator's Shield | 7 | 30.4 |
@@ -112,7 +112,7 @@ _Generated: 2026-10-29T22:20:25.241766+00:00_
 | Rod Of Asclepius | 4 | 17.4 |
 | Alchemist Coat | 4 | 17.4 |
 | Midgardian Mail | 3 | 13.0 |
-| Spectral Armor | 2 | 8.7 |
+| Doublet of Binding | 3 | 13.0 |
 
 ## Answer coverage
 
@@ -130,14 +130,14 @@ _Generated: 2026-10-29T22:20:25.241766+00:00_
 
 ### Solo
 - **vs heals / sustain**: 3/21 (14.3%)
-- **vs physical damage**: 9/21 (42.9%)
+- **vs physical damage**: 10/21 (47.6%)
 - **vs magic damage**: 12/21 (57.1%)
 - **vs CC / dive**: 0/21 (0.0%)
 
 ### Support
 - **vs crit**: 2/23 (8.7%)
 - **vs attack speed**: 6/23 (26.1%)
-- **vs magic damage**: 5/23 (21.7%)
+- **vs magic damage**: 6/23 (26.1%)
 - **vs heals / sustain**: 4/23 (17.4%)
 
 ## Trajectories — gods rising

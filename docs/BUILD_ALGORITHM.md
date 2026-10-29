@@ -288,12 +288,29 @@ Path score is **not** sum of item scores alone — structure (pen, opener, order
 
 ## Refresh loop (ops)
 
+Preferred one-shot (analyze → fixture gate → export → tier/smoke report):
+
 ```text
-1. python -m smite2db.scrape / refresh     # wiki + metrics
-2. python -m smite2db.analyze run         # tiers
-3. python -m smite2db.tracker_inspire     # high-SR soft prior + avg_slot
-4. python -m smite2db.export_web          # docs/data + standalone
+python -m smite2db.ship                  # reuse inspiration snapshot
+python -m smite2db.ship --refresh-inspire
+python -m smite2db.ship --deploy-netlify # best-effort; falls back to local/githack
 ```
+
+Manual steps (same order `ship` runs):
+
+```text
+1. python -m smite2db.scrape / refresh     # wiki (optional)
+2. python -m smite2db.analyze run         # kit + patch + build metrics + tiers
+3. python -m smite2db.tracker_inspire     # high-SR soft prior (optional; empty scrapes guarded)
+4. python -m smite2db.eval_builds --fixtures-only   # identity gate — fail = do not ship
+5. python -m smite2db.export_web          # docs/data + standalone
+6. python -m smite2db.ship_report --vs HEAD
+```
+
+**Tier build vote (18%)** uses the same `build_god_build` engine as Conquest paths.
+When `identity_lock` is on, `build_synergy` gets a capped bonus for hook-core hits
+(and a small penalty for ban-items on the path). Aspects stay out of the overall
+god tier; overall uses the primary-role base path only.
 
 Empty inspiration scrapes **must not** overwrite a good snapshot (guard in `save_inspiration`).
 

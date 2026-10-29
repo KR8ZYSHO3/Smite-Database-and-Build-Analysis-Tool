@@ -7238,6 +7238,9 @@ def build_god_build(
     out["score_breakdown"] = summarize_path_breakdown(items_6)
     out["ladder_games"] = int(bias.get("_ladder_games") or 0)
     out["ladder_weight"] = conf.get("ladder_weight")
+    out["identity_lock"] = bool(bias.get("identity_lock"))
+    out["identity_strength"] = round(float(bias.get("identity_strength") or 0), 3)
+    out["identity_hooks"] = list(bias.get("identity_hooks") or [])
     if skill:
         out.update(skill)
     return out

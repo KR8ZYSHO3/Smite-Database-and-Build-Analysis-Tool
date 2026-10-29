@@ -12,6 +12,10 @@ from .stat_parse import normalize_minmax
 # Prefer primary Conquest role for tier "build fit"
 _ROLE_PRIORITY = ("Carry", "Mid", "Jungle", "Solo", "Support")
 
+# Bounded identity vote — rewards locked kits whose path lands hook cores.
+_IDENTITY_SYNERGY_CAP = 12.0
+_IDENTITY_BAN_PENALTY = 4.0
+
 
 def _parse_roles(roles_json: str | None) -> list[str]:
     if not roles_json:
@@ -41,6 +45,73 @@ def _primary_role(roles: list[str], damage_type: str | None) -> str:
     if dtype == "physical":
         return "Carry"
     return "Mid"
+
+
+def _identity_synergy_delta(path_names: list[str], bias: dict[str, Any]) -> dict[str, Any]:
+    """
+    Bounded bonus/penalty when identity_lock is on.
+
+    Hits against hook force-cores and prefer_items raise synergy; ban_items
+    on the path lower it. Caps keep the 18% build vote from flipping S/A alone.
+    """
+    if not bias.get("identity_lock"):
+        return {"delta": 0.0, "hits": 0, "want": 0, "ban_hits": 0}
+
+    hooks = set(bias.get("identity_hooks") or [])
+    if not hooks:
+        return {"delta": 0.0, "hits": 0, "want": 0, "ban_hits": 0}
+
+    from ..conquest_builds import _IDENTITY_FORCE_CORES
+
+    blob = " | ".join((n or "").lower() for n in path_names)
+    want_keys: list[str] = []
+    for h in (
+        "item_hp_scale",
+        "permanent_max_hp",
+        "spirit_lifesteal",
+        "max_mana_scale",
+        "damage_reflect",
+        "max_hp_scale",
+        "item_prot_cc",
+        "plat_damp_stack",
+        "haunt_shred",
+        "base_damage_only",
+        "ally_heal",
+        "ally_shield",
+    ):
+        if h not in hooks:
+            continue
+        for k in _IDENTITY_FORCE_CORES.get(h, ()):
+            if k not in want_keys:
+                want_keys.append(k)
+    for p in bias.get("prefer_items") or []:
+        pl = str(p).lower().strip()
+        if pl and pl not in want_keys:
+            want_keys.append(pl)
+
+    # Expect up to 3 distinct hook cores on a healthy locked path
+    expect = want_keys[:5]
+    hits = sum(1 for k in expect if k and k in blob)
+    want_n = max(len(expect), 1)
+    hit_ratio = hits / want_n
+    # 0 hits → 0; full expect → +cap
+    bonus = _IDENTITY_SYNERGY_CAP * hit_ratio
+
+    ban_hits = 0
+    for b in bias.get("ban_items") or []:
+        bl = str(b).lower().strip()
+        if bl and bl in blob:
+            ban_hits += 1
+    penalty = min(_IDENTITY_BAN_PENALTY * ban_hits, _IDENTITY_SYNERGY_CAP)
+
+    delta = max(-_IDENTITY_SYNERGY_CAP, min(_IDENTITY_SYNERGY_CAP, bonus - penalty))
+    return {
+        "delta": round(delta, 2),
+        "hits": hits,
+        "want": len(expect),
+        "ban_hits": ban_hits,
+        "hooks": sorted(hooks),
+    }
 
 
 def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
@@ -176,6 +247,10 @@ def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
         if arch:
             synergy = min(100.0, synergy + 3)
 
+        path_names = [it["name"] for it in path]
+        id_vote = _identity_synergy_delta(path_names, bias)
+        synergy = max(0.0, min(100.0, synergy + float(id_vote["delta"])))
+
         # Meta: mean recent-ish scores on path items (stored on item cards as momentum)
         moms = [float(it.get("momentum") or 0) for it in path]
         meta_score_raw = (sum(moms) / max(len(moms), 1)) * 4 + synergy * 0.02
@@ -184,10 +259,21 @@ def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
         top_ax = sorted(axes.items(), key=lambda x: abs(x[1]), reverse=True)[:3]
         ax_txt = ", ".join(f"{k} {v:+.1f}" for k, v in top_ax) if top_ax else "—"
 
+        algo_ver = None
+        try:
+            algo_ver = (build.get("algorithm") or {}).get("version")
+        except AttributeError:
+            algo_ver = None
+
         notes = [
             f"Primary role {role} · archetype «{arch}».",
             f"Same path engine as Conquest Builds (actives ≤{build.get('max_shop_actives', 2)}).",
         ]
+        if bias.get("identity_lock"):
+            notes.append(
+                f"Identity lock (+{id_vote['delta']} synergy; "
+                f"hook hits {id_vote['hits']}/{id_vote['want']})."
+            )
         if dtype.lower() == "magical":
             notes.append("Magical damage → INT / magical cores.")
         elif dtype.lower() == "physical":
@@ -212,11 +298,16 @@ def compute_build_metrics(conn: sqlite3.Connection) -> dict[str, int]:
                 "extra": {
                     "role": role,
                     "archetype": arch,
-                    "full_path": [it["name"] for it in path],
+                    "full_path": path_names,
                     "pen_total": build.get("pen_total"),
                     "kit_tags": build.get("kit_tags"),
                     "patch_axes_r5": axes,
                     "source": "conquest_builds.build_god_build",
+                    "algorithm_version": algo_ver,
+                    "identity_lock": bool(bias.get("identity_lock")),
+                    "identity_strength": float(bias.get("identity_strength") or 0),
+                    "identity_hooks": list(bias.get("identity_hooks") or []),
+                    "identity_synergy": id_vote,
                 },
             }
         )
