@@ -2,12 +2,12 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-10-28T01:28:55.987182+00:00_
+_Generated: 2026-10-29T22:20:25.241766+00:00_
 
 ## Weekly themes
 
-- Support paths under-buy anti-crit (Spectral on ~13.0% of recs) — flex Spectral almost every game.
-- Support/Solo anti-heal is rare in defaults (~21.7% support) — Stygian/Brawler's is a live flex.
+- Support paths under-buy anti-crit (Spectral on ~8.7% of recs) — flex Spectral almost every game.
+- Support/Solo anti-heal is rare in defaults (~17.4% support) — Stygian/Brawler's is a live flex.
 - Gods rising (r5 patch): Hachiman, Chronos, Ganesha, Hel.
 - Items hot (r5 patch): Gluttonous Grimoire, Eros' Bow, Brawler’s Beat Stick, Stygian Anchor.
 - Patch axes (avg r5): damage +0.09, general +0.07, survivability -0.06.
@@ -18,41 +18,41 @@ _Generated: 2026-10-28T01:28:55.987182+00:00_
 
 | Item | Paths | % |
 |------|------:|--:|
-| Odysseus' Bow | 18 | 75.0 |
 | Tyrfing | 18 | 75.0 |
-| Deathbringer | 15 | 62.5 |
-| The Executioner | 14 | 58.3 |
-| Devourer's Gauntlet | 12 | 50.0 |
-| Eye of the Storm | 11 | 45.8 |
-| Tekko-Kagi | 6 | 25.0 |
+| Odysseus' Bow | 18 | 75.0 |
+| Deathbringer | 14 | 58.3 |
+| The Executioner | 13 | 54.2 |
+| Eye of the Storm | 12 | 50.0 |
+| Devourer's Gauntlet | 11 | 45.8 |
 | Book of Thoth | 5 | 20.8 |
 | Soul Reaver | 5 | 20.8 |
 | Spear of Desolation | 5 | 20.8 |
 | The Cosmic Horror | 5 | 20.8 |
 | Qin's Blade | 5 | 20.8 |
 | Sands Of Time | 4 | 16.7 |
+| Tekko-Kagi | 4 | 16.7 |
 | Spear Of The Magus | 4 | 16.7 |
-| Demon Blade | 3 | 12.5 |
+| Ethereal Staff | 3 | 12.5 |
 
 ### Mid (26 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Spear of Desolation | 25 | 96.2 |
-| The Cosmic Horror | 24 | 92.3 |
+| Spear of Desolation | 24 | 92.3 |
 | Book of Thoth | 22 | 84.6 |
-| Chronos' Pendant | 19 | 73.1 |
-| Divine Ruin | 9 | 34.6 |
-| Gem of Isolation | 9 | 34.6 |
-| Totem of Death | 9 | 34.6 |
+| The Cosmic Horror | 22 | 84.6 |
+| Chronos' Pendant | 18 | 69.2 |
+| Gem of Isolation | 10 | 38.5 |
+| Soul Reaver | 7 | 26.9 |
+| Totem of Death | 7 | 26.9 |
+| Divine Ruin | 6 | 23.1 |
 | Rod of Tahuti | 5 | 19.2 |
 | Polynomicon | 4 | 15.4 |
-| Spear Of The Magus | 3 | 11.5 |
-| Gluttonous Grimoire | 3 | 11.5 |
-| Soul Reaver | 3 | 11.5 |
+| Alchemist Coat | 3 | 11.5 |
 | Doom Orb | 2 | 7.7 |
-| Bancroft's Talon | 2 | 7.7 |
-| Alchemist Coat | 2 | 7.7 |
+| Gluttonous Grimoire | 2 | 7.7 |
+| Breastplate of Valor | 1 | 3.8 |
+| Genji's Guard | 1 | 3.8 |
 
 ### Jungle (23 paths)
 
@@ -61,38 +61,38 @@ _Generated: 2026-10-28T01:28:55.987182+00:00_
 | Jotunn's Revenge | 22 | 95.7 |
 | Hydra's Lament | 21 | 91.3 |
 | The Crusher | 20 | 87.0 |
-| Heartseeker | 15 | 65.2 |
-| Tekko-Kagi | 9 | 39.1 |
-| Arondight | 9 | 39.1 |
-| The Reaper | 9 | 39.1 |
-| Pendulum Blade | 8 | 34.8 |
-| Avatar's Parashu | 4 | 17.4 |
-| Bloodforge | 2 | 8.7 |
+| Heartseeker | 14 | 60.9 |
+| Tekko-Kagi | 10 | 43.5 |
+| The Reaper | 8 | 34.8 |
+| Pendulum Blade | 7 | 30.4 |
+| Avatar's Parashu | 7 | 30.4 |
+| Arondight | 6 | 26.1 |
+| Damaru | 4 | 17.4 |
 | Hastened Fatalis | 2 | 8.7 |
-| Damaru | 2 | 8.7 |
+| Bloodforge | 2 | 8.7 |
 | Brawler’s Beat Stick | 2 | 8.7 |
-| Oath-Sworn Spear | 1 | 4.3 |
+| Spear Of The Magus | 1 | 4.3 |
 | Book of Thoth | 1 | 4.3 |
 
 ### Solo (21 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
-| Shifter's Shield | 13 | 61.9 |
+| Shifter's Shield | 12 | 57.1 |
 | Genji's Guard | 11 | 52.4 |
 | Gauntlet of Thebes | 10 | 47.6 |
 | Eye of the Storm | 10 | 47.6 |
+| Contagion | 8 | 38.1 |
+| Stone of Binding | 8 | 38.1 |
 | Prophetic Cloak | 7 | 33.3 |
-| Wyrmskin Hide | 7 | 33.3 |
-| Contagion | 7 | 33.3 |
-| Leviathan's Hide | 5 | 23.8 |
-| Doublet of Binding | 5 | 23.8 |
-| Gladiator's Shield | 4 | 19.0 |
-| Regrowth Striders | 4 | 19.0 |
-| Stone of Binding | 4 | 19.0 |
-| Phoenix Feather | 3 | 14.3 |
+| Leviathan's Hide | 6 | 28.6 |
+| Gladiator's Shield | 5 | 23.8 |
+| Wyrmskin Hide | 5 | 23.8 |
+| Midgardian Mail | 5 | 23.8 |
+| Breastplate of Valor | 5 | 23.8 |
 | Mystical Mail | 3 | 14.3 |
-| Breastplate of Valor | 3 | 14.3 |
+| Doublet of Binding | 3 | 14.3 |
+| Brawler’s Beat Stick | 3 | 14.3 |
 
 ### Support (23 paths)
 
@@ -100,45 +100,45 @@ _Generated: 2026-10-28T01:28:55.987182+00:00_
 |------|------:|--:|
 | Gauntlet of Thebes | 21 | 91.3 |
 | Gem of Isolation | 13 | 56.5 |
-| Ethereal Staff | 12 | 52.2 |
-| Contagion | 11 | 47.8 |
-| Prophetic Cloak | 9 | 39.1 |
-| Stone of Binding | 9 | 39.1 |
-| Gladiator's Shield | 8 | 34.8 |
-| Leviathan's Hide | 6 | 26.1 |
-| Stygian Anchor | 5 | 21.7 |
-| Doublet of Binding | 5 | 21.7 |
-| Rod Of Asclepius | 4 | 17.4 |
+| Prophetic Cloak | 12 | 52.2 |
+| Contagion | 12 | 52.2 |
+| Ethereal Staff | 11 | 47.8 |
+| Stone of Binding | 10 | 43.5 |
+| Leviathan's Hide | 7 | 30.4 |
+| Gladiator's Shield | 7 | 30.4 |
+| Breastplate of Valor | 5 | 21.7 |
+| Stygian Anchor | 4 | 17.4 |
 | Lotus Sickle | 4 | 17.4 |
+| Rod Of Asclepius | 4 | 17.4 |
 | Alchemist Coat | 4 | 17.4 |
-| Spectral Armor | 3 | 13.0 |
 | Midgardian Mail | 3 | 13.0 |
+| Spectral Armor | 2 | 8.7 |
 
 ## Answer coverage
 
 ### Carry
-- **vs heals / sustain**: 2/24 (8.3%)
-- **vs high HP / tanks**: 19/24 (79.2%)
+- **vs heals / sustain**: 1/24 (4.2%)
+- **vs high HP / tanks**: 18/24 (75.0%)
 
 ### Mid
-- **vs heals / sustain**: 10/26 (38.5%)
-- **vs high HP / tanks**: 3/26 (11.5%)
+- **vs heals / sustain**: 7/26 (26.9%)
+- **vs high HP / tanks**: 9/26 (34.6%)
 
 ### Jungle
 - **vs heals / sustain**: 2/23 (8.7%)
 - **vs high HP / tanks**: 1/23 (4.3%)
 
 ### Solo
-- **vs heals / sustain**: 4/21 (19.0%)
-- **vs physical damage**: 7/21 (33.3%)
+- **vs heals / sustain**: 3/21 (14.3%)
+- **vs physical damage**: 9/21 (42.9%)
 - **vs magic damage**: 12/21 (57.1%)
 - **vs CC / dive**: 0/21 (0.0%)
 
 ### Support
-- **vs crit**: 3/23 (13.0%)
-- **vs attack speed**: 8/23 (34.8%)
+- **vs crit**: 2/23 (8.7%)
+- **vs attack speed**: 6/23 (26.1%)
 - **vs magic damage**: 5/23 (21.7%)
-- **vs heals / sustain**: 5/23 (21.7%)
+- **vs heals / sustain**: 4/23 (17.4%)
 
 ## Trajectories — gods rising
 

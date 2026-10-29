@@ -1,0 +1,123 @@
+{
+  "algorithm_version": "1.6.0",
+  "ladder_n0": 100,
+  "unit_blend": {
+    "ok": true,
+    "errors": []
+  },
+  "fixtures": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "results": [
+      {
+        "name": "kuzenbo_base_support",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Gauntlet of Thebes",
+          "Prophetic Cloak",
+          "Contagion",
+          "Gem of Isolation",
+          "Mystical Mail",
+          "Hide of the Nemean Lion"
+        ],
+        "starter": "Selflessness",
+        "confidence": "medium",
+        "ladder_games": 24,
+        "ladder_weight": 0.12,
+        "aspect": null,
+        "note": "Base Support Max-HP/reflect shell; no spirit LS cores",
+        "confidence_rationale": "24 god\u00d7role games \u2192 ladder weight 0.12; identity_lock on \u2014 kit cores outrank thin ladder"
+      },
+      {
+        "name": "kuzenbo_spirits_jungle",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Gluttonous Grimoire",
+          "Spear Of The Magus",
+          "Chronos' Pendant",
+          "Gem of Isolation",
+          "Ethereal Staff",
+          "Soul Gem"
+        ],
+        "starter": "Bumba's Cudgel",
+        "confidence": "low",
+        "ladder_games": 0,
+        "ladder_weight": 0.0,
+        "aspect": "Aspect of Spirits",
+        "note": "Spirits Jungle LS/INT; reflect cores and Thebes banned",
+        "confidence_rationale": "0 god\u00d7role games \u2192 ladder weight 0.00; identity_lock on \u2014 kit cores outrank thin ladder; treat as kit/role theory until sample grows"
+      },
+      {
+        "name": "kuzenbo_spirits_support",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Gauntlet of Thebes",
+          "Prophetic Cloak",
+          "Gem of Isolation",
+          "Umbral Link",
+          "Gluttonous Grimoire",
+          "Ethereal Staff"
+        ],
+        "starter": "Selflessness",
+        "confidence": "medium",
+        "ladder_games": 24,
+        "ladder_weight": 0.12,
+        "aspect": "Aspect of Spirits",
+        "note": "Spirits Support may keep Thebes; must not run reflect package",
+        "confidence_rationale": "24 god\u00d7role games \u2192 ladder weight 0.12; identity_lock on \u2014 kit cores outrank thin ladder"
+      },
+      {
+        "name": "kuzenbo_base_jungle",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Gluttonous Grimoire",
+          "Chronos' Pendant",
+          "Ethereal Staff",
+          "Contagion",
+          "Hide of the Nemean Lion",
+          "Mystical Mail"
+        ],
+        "starter": "Bumba's Cudgel",
+        "confidence": "low",
+        "ladder_games": 0,
+        "ladder_weight": 0.0,
+        "aspect": null,
+        "note": "Base Jungle: no Thebes; clear/reflect tempo",
+        "confidence_rationale": "0 god\u00d7role games \u2192 ladder weight 0.00; identity_lock on \u2014 kit cores outrank thin ladder; treat as kit/role theory until sample grows"
+      },
+      {
+        "name": "scylla_devourer_support",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Book of Thoth",
+          "Doom Orb",
+          "Yogi's Necklace",
+          "Breastplate of Valor",
+          "Genji's Guard",
+          "Gem of Isolation"
+        ],
+        "starter": "Selflessness",
+        "confidence": "low",
+        "ladder_games": 0,
+        "ladder_weight": 0.0,
+        "aspect": "Aspect of the Devourer",
+        "note": "Devourer Support: Max Mana bank (Thoth) + peel shell; no glass mid cores",
+        "confidence_rationale": "0 god\u00d7role games \u2192 ladder weight 0.00; identity_lock on \u2014 kit cores outrank thin ladder; treat as kit/role theory until sample grows"
+      }
+    ]
+  },
+  "holdout": null,
+  "summary": {
+    "fixtures_passed": 5,
+    "fixtures_failed": 0,
+    "unit_ok": true,
+    "holdout_mean_hit_rate": null,
+    "holdout_n": null
+  }
+}

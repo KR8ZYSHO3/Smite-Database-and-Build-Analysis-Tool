@@ -1,7 +1,7 @@
 {
   "game": "SMITE 2",
   "source": "https://wiki.smite2.com",
-  "exported_at": "2026-10-28T01:28:10.060225+00:00",
+  "exported_at": "2026-10-29T22:19:49.883216+00:00",
   "repo": "https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool",
   "live_url": "https://smitebuilddatabase.netlify.app/",
   "live_url_alt": "https://smitebuilddatabase.netlify.app/",
@@ -14,7 +14,7 @@
   "latest_patch_date": "King Kappa Update",
   "latest_patch_title": "= New Classic God Kuzenbo =",
   "build_algorithm": {
-    "version": "1.4.0",
+    "version": "1.6.0",
     "doc": "docs/BUILD_ALGORITHM.md",
     "phases": [
       {
@@ -30,12 +30,12 @@
       {
         "id": "P2_hard_gates",
         "name": "Hard gates",
-        "summary": "Illegal items out: type, god-only, heal/LS, removed, role toys"
+        "summary": "Illegal items out: type, god-only, heal/LS, removed, aspect hard-bans, role toys"
       },
       {
         "id": "P3_god_rescore",
         "name": "God rescore",
-        "summary": "Kit affinity + signatures + soft high-SR boost (capped)"
+        "summary": "Kit affinity + signatures + sample-weighted ladder/inspire (capped)"
       },
       {
         "id": "P4_archetype",
@@ -72,12 +72,12 @@
       {
         "rank": "2",
         "layer": "kit_identity",
-        "rule": "Hooks amplify unique scaling; identity_lock beats staples"
+        "rule": "Hooks + stat elasticity amplify unique scaling; identity_lock beats staples"
       },
       {
         "rank": "3",
         "layer": "role_job",
-        "rule": "Carry/Mid/Jungle/Solo/Support identity (soft under lock)"
+        "rule": "Role constraints (soft under lock); meta staples \u00d7 staple_soft_factor"
       },
       {
         "rank": "4",
@@ -87,12 +87,12 @@
       {
         "rank": "5",
         "layer": "ladder_patch",
-        "rule": "S/A momentum; muted when fighting identity"
+        "rule": "S/A momentum \u00d7 sample weight \u00d7 identity mute"
       },
       {
         "rank": "6",
         "layer": "high_sr_inspire",
-        "rule": "Soft frequency; skip staples that fight hooks"
+        "rule": "Flex only under lock; skip fighting staples; scaled by n"
       },
       {
         "rank": "7",
@@ -159,7 +159,12 @@
         "Mantle Of Discord"
       ]
     },
-    "philosophy": "Kit-true, role-correct, spike-ordered paths. High-SR data nudges picks and buy order; it never hard-copies a ladder week. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores."
+    "philosophy": "Kit payoff first (stat elasticity + identity hooks), role as constraints. Ladder/inspire weight scales with god\u00d7role n (n/n0); identity_strength mutes role staples and flex-only inspire under lock. Aspect hard-bans drop removed-mechanic families. Each build exports confidence + score_breakdown. Hard gates and soft pen floors always win \u2014 Obsidian/Titan are tank flex, not mandatory cores.",
+    "blend": {
+      "ladder_n0": 100,
+      "module": "smite2db.build_blend",
+      "eval": "python -m smite2db.eval_builds"
+    }
   },
   "has_meta_lab": true
 }

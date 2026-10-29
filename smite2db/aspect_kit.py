@@ -345,6 +345,13 @@ def build_aspect_bias(
     # Character-unique hooks from aspect text (item-HP, base-damage-only, haunt, …)
     id_prof = detect_identity_hooks(blob, is_aspect=True)
     bias = apply_identity_to_bias(bias, id_prof)
+    bias["aspect_description"] = str(aspect.get("description") or "")
+    try:
+        from .stat_elasticity import apply_elasticity_to_bias
+
+        bias = apply_elasticity_to_bias(bias, blob)
+    except Exception:  # noqa: BLE001
+        pass
     # Merge legacy playstyle numerics (identity may already set these — take max)
     bias["aspect_power_penalty"] = max(
         float(bias.get("aspect_power_penalty") or 0), float(hints["power_penalty"] or 0)

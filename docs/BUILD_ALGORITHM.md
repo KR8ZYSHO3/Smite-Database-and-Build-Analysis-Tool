@@ -4,7 +4,7 @@
 **kit-true**, **role-correct**, **spike-ordered**, and **softly informed by high-SR play** —  
 without becoming a frozen meta photocopier.
 
-**Version:** 1.4.0 (OB46) — **Kit-identity hooks** (`smite2db/kit_identity.py`): detect unique scaling/conversion language (item-HP scale, base-damage-only, permanent Max HP, Plating/Dampening stacks, ally shield/heal, haunt shred, damage reflect, Item-Protections CC). When `identity_lock` fires, identity beats role staples + high-SR inspiration. Prefer lists put identity cores first; `kit_ok` exempts Ethereal/Contagion/Thebes/Hide-class under HP hooks; `_ensure_identity_cores` hard-injects after inspire/scrub (same idea as enchanter Sickle). `damage_reflect` covers Kuzenbo Shell Spikes + Nemesis Retribution (blocked %). `item_prot_cc` covers Ymir Frost Breath / Athena Confound / Hades Shroud (CC duration from Item Protections). Aspect-unlocked enchanter Mid may take Sickle/Asclepius. Prior 1.3.0: Hel allowlist; Aphrodite MPR; Heartwood OB45; Sickle live; Sundering 40%.
+**Version:** 1.6.0 (OB46) — **Stat elasticity + identity-first staples**: `smite2db/stat_elasticity.py` scores items by kit payoff axes (Max Mana / Max HP / Item HP / Item Prot / LS / heal amp / …) from hooks + text; role meta bonuses (Thebes +160) × `staple_soft_factor(identity_strength)`; under `identity_lock`, ladder/inspire muted further and role-staple inject is skipped (god-specific openers only if they do not fight the kit). Prior 1.5.1: **Max Mana identity** (`max_mana_scale` / `mana_support` for Scylla Devourer). Prior 1.5.0: sample-weighted ladder blend. Prior 1.4.0: kit-identity hooks. Prior 1.3.0: Hel / Aphrodite / Heartwood / Sickle / Sundering.
 
 **Inventory model (SMITE 2):** starter slot separate · 6 shop items · ≤2–3 On-Use actives · relics separate.
 
@@ -20,8 +20,8 @@ When two signals conflict, **higher wins**:
 | 2 | **Kit identity hooks** | When `identity_lock` (strong text hooks): prefer/ban + archetype nudge; amplify the character gimmick |
 | 3 | **Role job** | Carry shreds/crits, Mid online pen, Jungle ganks, Solo offline+bulk, Support aura/peel — **softened** under identity_lock (e.g. Thermotherapy Mid = utility, not Thoth) |
 | 4 | **Buy order / spikes** | Item *sequence* matters as much as the set; early online before late % pen / luxury |
-| 5 | **Ladder + patch** | S/A item momentum; C/D soft penalty; muted when fighting identity cores |
-| 6 | **High-SR inspiration** | Soft frequency + avg slot — **nudge only**; skip staples that fight hooks under identity_lock |
+| 5 | **Ladder + patch** | S/A item momentum × **sample weight** (`n/n0`); muted further under identity_lock; thin samples → kit theory |
+| 6 | **High-SR inspiration** | Soft frequency + avg slot — **nudge only**; skip staples that fight hooks; scaled by god×role `n` |
 | 7 | **Light diversify** | Only shell / last flex so gods aren’t clones; **never scramble pen/opener cores** (unless identity says otherwise) |
 
 Troll / meme and counter paths are **separate pipelines** (same gates, different objective).

@@ -183,6 +183,22 @@ _HOOK_PATTERNS: list[tuple[str, re.Pattern[str], float]] = [
         ),
         0.55,
     ),
+    (
+        # Scylla Aspect of the Devourer — ult / empowered AA scale with Max Mana
+        "max_mana_scale",
+        re.compile(
+            r"scales? from (?:your )?max mana|"
+            r"sclaes with max mana|"  # wiki typo (Devourer)
+            r"scales? with (?:your )?max mana|"
+            r"damage scales? from (?:your )?max mana|"
+            r"(?:damage|heal) scaling:\s*[\d.]+%\s*(?:of )?(?:your )?max mana|"
+            r"[\d.]+%\s*(?:of )?(?:your )?max mana|"
+            r"based on (?:your )?max mana|"
+            r"immediately provide(?:s)? max mana",
+            re.I,
+        ),
+        0.85,
+    ),
 ]
 
 # Self-only shield language — do not treat as ally_shield enchanter
@@ -312,6 +328,16 @@ _HOOK_PREFER: dict[str, list[str]] = {
         "void",
         "ethereal",
     ],
+    "max_mana_scale": [
+        "book of thoth",
+        "thoth",
+        "doom orb",
+        "yogi",
+        "breastplate",
+        "transcend",
+        "isolation",
+        "genji",
+    ],
 }
 
 _HOOK_BAN: dict[str, list[str]] = {
@@ -412,6 +438,18 @@ _HOOK_BAN: dict[str, list[str]] = {
         "lotus sickle",
         "asclepius",
     ],
+    "max_mana_scale": [
+        "tahuti",
+        "dreamer",
+        "polynomicon",
+        "wish-granting",
+        "bloodforge",
+        "lotus sickle",
+        "asclepius",
+        # Pure glass without Max Mana — identity is the mana bank
+        "obsidian shard",
+        "desolat",
+    ],
 }
 
 _HOOK_TAGS_ADD: dict[str, set[str]] = {
@@ -427,6 +465,7 @@ _HOOK_TAGS_ADD: dict[str, set[str]] = {
     "ally_heal": {"heal", "team_buff", "heavy_heal"},
     "haunt_shred": {"hybrid_bulk", "prot_shred", "spam", "dot", "hard_cc"},
     "prot_shred_stack": {"prot_shred", "dot"},
+    "max_mana_scale": {"mana_stack", "hybrid_bulk", "ult_nuke"},
 }
 
 _HOOK_TAGS_REMOVE: dict[str, set[str]] = {
@@ -437,6 +476,7 @@ _HOOK_TAGS_REMOVE: dict[str, set[str]] = {
     "spirit_lifesteal": {"burst", "ult_nuke", "aa", "as_steroid", "long_cd"},
     "item_prot_cc": {"burst", "ult_nuke", "aa", "as_steroid", "mana_stack"},
     "haunt_shred": {"burst", "ult_nuke", "aa", "as_steroid", "heal", "team_buff", "heavy_heal"},
+    "max_mana_scale": {"aa", "as_steroid", "heal", "team_buff", "heavy_heal"},
 }
 
 
@@ -524,6 +564,12 @@ def detect_identity_hooks(blob: str, *, is_aspect: bool = False) -> IdentityProf
         for b in ("lotus sickle", "asclepius", "chandra"):
             if b not in prof.ban_items:
                 prof.ban_items.append(b)
+    if "max_mana_scale" in prof.hooks:
+        # Max Mana is the damage stat — stack Thoth/Yogi, keep a Support shell
+        prof.bulk_boost = max(prof.bulk_boost, 0.25)
+        prof.cdr_boost = max(prof.cdr_boost, 0.15)
+        # Do NOT set power_penalty: that glass list wrongly taxes Thoth/Doom Orb
+        prof.mid_enchanter = False
 
     # Mid enchanter requires enough strength
     if prof.mid_enchanter and prof.strength < 0.5:
@@ -619,6 +665,20 @@ def apply_identity_to_bias(bias: dict[str, Any], prof: IdentityProfile) -> dict[
     if prof.force_archetype and not out.get("force_archetype"):
         out["force_archetype"] = prof.force_archetype
 
+    # Stat elasticity from hooks (+ text filled later via apply_elasticity_to_bias)
+    try:
+        from .stat_elasticity import detect_stat_elasticity
+
+        el = detect_stat_elasticity("", hooks=prof.hooks)
+        if el:
+            prev = dict(out.get("stat_elasticity") or {})
+            for k, v in el.items():
+                prev[k] = max(float(prev.get(k) or 0), float(v))
+            peak = max(prev.values()) or 1.0
+            out["stat_elasticity"] = {k: round(v / peak, 4) for k, v in prev.items()}
+    except Exception:  # noqa: BLE001
+        pass
+
     return out
 
 
@@ -649,6 +709,9 @@ def identity_item_score_delta(item_name: str, bias: dict[str, Any]) -> float:
 
     if pen >= 0.2:
         glass = ("tahuti", "dreamer", "obsidian", "desolat", "polynomicon", "thoth", "doom orb")
+        # Max-Mana kits *want* Thoth/Doom Orb — never tax them as glass
+        if "max_mana_scale" in hooks:
+            glass = ("tahuti", "dreamer", "obsidian", "desolat", "polynomicon")
         if bulk < 0.3 and "haunt_shred" not in hooks and "max_hp_scale" not in hooks:
             glass = glass + ("soul reaver",)
         if any(k in n for k in glass):
@@ -774,6 +837,26 @@ def identity_item_score_delta(item_name: str, bias: dict[str, Any]) -> float:
         if any(k in n for k in ("thoth", "doom orb", "tahuti", "dreamer", "desolat")):
             s -= 50
 
+    if "max_mana_scale" in hooks:
+        if any(
+            k in n
+            for k in (
+                "thoth",
+                "doom orb",
+                "yogi",
+                "breastplate",
+                "transcend",
+                "isolation",
+                "genji",
+            )
+        ):
+            s += 52 if lock else 36
+        # Meta Support aura is fine late; do not let it erase the mana bank
+        if lock and any(k in n for k in ("thebes", "stampede", "amanita")):
+            s -= 28
+        if any(k in n for k in ("tahuti", "dreamer", "polynomicon", "wish-granting", "obsidian", "desolat")):
+            s -= 45 if lock else 30
+
     return s
 
 
@@ -819,6 +902,21 @@ def identity_fights_item(item_name: str, bias: dict[str, Any]) -> bool:
                 "mystical",
                 "bloodforge",
                 "sanguine",
+            )
+        ):
+            return True
+    if "max_mana_scale" in hooks:
+        if any(
+            k in n
+            for k in (
+                "tahuti",
+                "dreamer",
+                "polynomicon",
+                "wish-granting",
+                "obsidian",
+                "desolat",
+                "lotus sickle",
+                "asclepius",
             )
         ):
             return True

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-28T01:28:55.987182+00:00",
+  "generated_at": "2026-10-29T22:20:25.241766+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -3423,39 +3423,34 @@
       "path_count": 24,
       "staples": [
         {
-          "name": "Odysseus' Bow",
-          "paths": 18,
-          "pct": 75.0
-        },
-        {
           "name": "Tyrfing",
           "paths": 18,
           "pct": 75.0
         },
         {
-          "name": "Deathbringer",
-          "paths": 15,
-          "pct": 62.5
+          "name": "Odysseus' Bow",
+          "paths": 18,
+          "pct": 75.0
         },
         {
-          "name": "The Executioner",
+          "name": "Deathbringer",
           "paths": 14,
           "pct": 58.3
         },
         {
-          "name": "Devourer's Gauntlet",
+          "name": "The Executioner",
+          "paths": 13,
+          "pct": 54.2
+        },
+        {
+          "name": "Eye of the Storm",
           "paths": 12,
           "pct": 50.0
         },
         {
-          "name": "Eye of the Storm",
+          "name": "Devourer's Gauntlet",
           "paths": 11,
           "pct": 45.8
-        },
-        {
-          "name": "Tekko-Kagi",
-          "paths": 6,
-          "pct": 25.0
         },
         {
           "name": "Book of Thoth",
@@ -3488,12 +3483,17 @@
           "pct": 16.7
         },
         {
+          "name": "Tekko-Kagi",
+          "paths": 4,
+          "pct": 16.7
+        },
+        {
           "name": "Spear Of The Magus",
           "paths": 4,
           "pct": 16.7
         },
         {
-          "name": "Demon Blade",
+          "name": "Ethereal Staff",
           "paths": 3,
           "pct": 12.5
         }
@@ -3504,11 +3504,6 @@
       "staples": [
         {
           "name": "Spear of Desolation",
-          "paths": 25,
-          "pct": 96.2
-        },
-        {
-          "name": "The Cosmic Horror",
           "paths": 24,
           "pct": 92.3
         },
@@ -3518,24 +3513,34 @@
           "pct": 84.6
         },
         {
-          "name": "Chronos' Pendant",
-          "paths": 19,
-          "pct": 73.1
+          "name": "The Cosmic Horror",
+          "paths": 22,
+          "pct": 84.6
         },
         {
-          "name": "Divine Ruin",
-          "paths": 9,
-          "pct": 34.6
+          "name": "Chronos' Pendant",
+          "paths": 18,
+          "pct": 69.2
         },
         {
           "name": "Gem of Isolation",
-          "paths": 9,
-          "pct": 34.6
+          "paths": 10,
+          "pct": 38.5
+        },
+        {
+          "name": "Soul Reaver",
+          "paths": 7,
+          "pct": 26.9
         },
         {
           "name": "Totem of Death",
-          "paths": 9,
-          "pct": 34.6
+          "paths": 7,
+          "pct": 26.9
+        },
+        {
+          "name": "Divine Ruin",
+          "paths": 6,
+          "pct": 23.1
         },
         {
           "name": "Rod of Tahuti",
@@ -3548,17 +3553,7 @@
           "pct": 15.4
         },
         {
-          "name": "Spear Of The Magus",
-          "paths": 3,
-          "pct": 11.5
-        },
-        {
-          "name": "Gluttonous Grimoire",
-          "paths": 3,
-          "pct": 11.5
-        },
-        {
-          "name": "Soul Reaver",
+          "name": "Alchemist Coat",
           "paths": 3,
           "pct": 11.5
         },
@@ -3568,14 +3563,19 @@
           "pct": 7.7
         },
         {
-          "name": "Bancroft's Talon",
+          "name": "Gluttonous Grimoire",
           "paths": 2,
           "pct": 7.7
         },
         {
-          "name": "Alchemist Coat",
-          "paths": 2,
-          "pct": 7.7
+          "name": "Breastplate of Valor",
+          "paths": 1,
+          "pct": 3.8
+        },
+        {
+          "name": "Genji's Guard",
+          "paths": 1,
+          "pct": 3.8
         }
       ]
     },
@@ -3599,38 +3599,38 @@
         },
         {
           "name": "Heartseeker",
-          "paths": 15,
-          "pct": 65.2
+          "paths": 14,
+          "pct": 60.9
         },
         {
           "name": "Tekko-Kagi",
-          "paths": 9,
-          "pct": 39.1
-        },
-        {
-          "name": "Arondight",
-          "paths": 9,
-          "pct": 39.1
+          "paths": 10,
+          "pct": 43.5
         },
         {
           "name": "The Reaper",
-          "paths": 9,
-          "pct": 39.1
-        },
-        {
-          "name": "Pendulum Blade",
           "paths": 8,
           "pct": 34.8
         },
         {
-          "name": "Avatar's Parashu",
-          "paths": 4,
-          "pct": 17.4
+          "name": "Pendulum Blade",
+          "paths": 7,
+          "pct": 30.4
         },
         {
-          "name": "Bloodforge",
-          "paths": 2,
-          "pct": 8.7
+          "name": "Avatar's Parashu",
+          "paths": 7,
+          "pct": 30.4
+        },
+        {
+          "name": "Arondight",
+          "paths": 6,
+          "pct": 26.1
+        },
+        {
+          "name": "Damaru",
+          "paths": 4,
+          "pct": 17.4
         },
         {
           "name": "Hastened Fatalis",
@@ -3638,7 +3638,7 @@
           "pct": 8.7
         },
         {
-          "name": "Damaru",
+          "name": "Bloodforge",
           "paths": 2,
           "pct": 8.7
         },
@@ -3648,7 +3648,7 @@
           "pct": 8.7
         },
         {
-          "name": "Oath-Sworn Spear",
+          "name": "Spear Of The Magus",
           "paths": 1,
           "pct": 4.3
         },
@@ -3664,8 +3664,8 @@
       "staples": [
         {
           "name": "Shifter's Shield",
-          "paths": 13,
-          "pct": 61.9
+          "paths": 12,
+          "pct": 57.1
         },
         {
           "name": "Genji's Guard",
@@ -3683,49 +3683,44 @@
           "pct": 47.6
         },
         {
+          "name": "Contagion",
+          "paths": 8,
+          "pct": 38.1
+        },
+        {
+          "name": "Stone of Binding",
+          "paths": 8,
+          "pct": 38.1
+        },
+        {
           "name": "Prophetic Cloak",
           "paths": 7,
           "pct": 33.3
         },
         {
-          "name": "Wyrmskin Hide",
-          "paths": 7,
-          "pct": 33.3
-        },
-        {
-          "name": "Contagion",
-          "paths": 7,
-          "pct": 33.3
-        },
-        {
           "name": "Leviathan's Hide",
-          "paths": 5,
-          "pct": 23.8
-        },
-        {
-          "name": "Doublet of Binding",
-          "paths": 5,
-          "pct": 23.8
+          "paths": 6,
+          "pct": 28.6
         },
         {
           "name": "Gladiator's Shield",
-          "paths": 4,
-          "pct": 19.0
+          "paths": 5,
+          "pct": 23.8
         },
         {
-          "name": "Regrowth Striders",
-          "paths": 4,
-          "pct": 19.0
+          "name": "Wyrmskin Hide",
+          "paths": 5,
+          "pct": 23.8
         },
         {
-          "name": "Stone of Binding",
-          "paths": 4,
-          "pct": 19.0
+          "name": "Midgardian Mail",
+          "paths": 5,
+          "pct": 23.8
         },
         {
-          "name": "Phoenix Feather",
-          "paths": 3,
-          "pct": 14.3
+          "name": "Breastplate of Valor",
+          "paths": 5,
+          "pct": 23.8
         },
         {
           "name": "Mystical Mail",
@@ -3733,7 +3728,12 @@
           "pct": 14.3
         },
         {
-          "name": "Breastplate of Valor",
+          "name": "Doublet of Binding",
+          "paths": 3,
+          "pct": 14.3
+        },
+        {
+          "name": "Brawler\u2019s Beat Stick",
           "paths": 3,
           "pct": 14.3
         }
@@ -3753,47 +3753,42 @@
           "pct": 56.5
         },
         {
-          "name": "Ethereal Staff",
+          "name": "Prophetic Cloak",
           "paths": 12,
           "pct": 52.2
         },
         {
           "name": "Contagion",
+          "paths": 12,
+          "pct": 52.2
+        },
+        {
+          "name": "Ethereal Staff",
           "paths": 11,
           "pct": 47.8
         },
         {
-          "name": "Prophetic Cloak",
-          "paths": 9,
-          "pct": 39.1
-        },
-        {
           "name": "Stone of Binding",
-          "paths": 9,
-          "pct": 39.1
-        },
-        {
-          "name": "Gladiator's Shield",
-          "paths": 8,
-          "pct": 34.8
+          "paths": 10,
+          "pct": 43.5
         },
         {
           "name": "Leviathan's Hide",
-          "paths": 6,
-          "pct": 26.1
+          "paths": 7,
+          "pct": 30.4
+        },
+        {
+          "name": "Gladiator's Shield",
+          "paths": 7,
+          "pct": 30.4
+        },
+        {
+          "name": "Breastplate of Valor",
+          "paths": 5,
+          "pct": 21.7
         },
         {
           "name": "Stygian Anchor",
-          "paths": 5,
-          "pct": 21.7
-        },
-        {
-          "name": "Doublet of Binding",
-          "paths": 5,
-          "pct": 21.7
-        },
-        {
-          "name": "Rod Of Asclepius",
           "paths": 4,
           "pct": 17.4
         },
@@ -3803,19 +3798,24 @@
           "pct": 17.4
         },
         {
+          "name": "Rod Of Asclepius",
+          "paths": 4,
+          "pct": 17.4
+        },
+        {
           "name": "Alchemist Coat",
           "paths": 4,
           "pct": 17.4
         },
         {
-          "name": "Spectral Armor",
+          "name": "Midgardian Mail",
           "paths": 3,
           "pct": 13.0
         },
         {
-          "name": "Midgardian Mail",
-          "paths": 3,
-          "pct": 13.0
+          "name": "Spectral Armor",
+          "paths": 2,
+          "pct": 8.7
         }
       ]
     }
@@ -3829,13 +3829,14 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 2,
+          "covered": 1,
           "total": 24,
-          "pct": 8.3,
+          "pct": 4.2,
           "missing_sample": [
-            "Princess Bari",
             "Hachiman",
+            "Nut",
             "Cernunnos",
+            "Sol",
             "Chronos",
             "Cupid",
             "Anhur",
@@ -3843,25 +3844,39 @@
             "Neith",
             "Hou Yi",
             "Ishtar",
-            "Ullr",
-            "Jing Wei"
+            "Ullr"
           ]
         },
         "tanks_hp": {
           "label": "vs high HP / tanks",
-          "covered": 19,
+          "covered": 18,
           "total": 24,
-          "pct": 79.2,
+          "pct": 75.0,
           "missing_sample": [
+            "Cupid",
+            "Neith",
             "Medusa",
+            "Xbalanque",
             "Apollo",
-            "Rama",
-            "Izanami",
             "Tsukuyomi"
           ]
         }
       },
       "multi_gap_sample": [
+        {
+          "god": "Cupid",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Neith",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
         {
           "god": "Medusa",
           "missing": [
@@ -3870,21 +3885,14 @@
           ]
         },
         {
+          "god": "Xbalanque",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
           "god": "Apollo",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Rama",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Izanami",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3908,11 +3916,12 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 10,
+          "covered": 7,
           "total": 26,
-          "pct": 38.5,
+          "pct": 26.9,
           "missing_sample": [
-            "Scylla",
+            "Princess Bari",
+            "Ah Puch",
             "Kukulkan",
             "Nut",
             "Discordia",
@@ -3922,41 +3931,33 @@
             "Neith",
             "Eset",
             "Ix Chel",
-            "The Morrigan",
-            "Poseidon"
+            "The Morrigan"
           ]
         },
         "tanks_hp": {
           "label": "vs high HP / tanks",
-          "covered": 3,
+          "covered": 9,
           "total": 26,
-          "pct": 11.5,
+          "pct": 34.6,
           "missing_sample": [
-            "Princess Bari",
-            "Scylla",
             "Merlin",
             "Ah Puch",
-            "Kukulkan",
             "Nut",
             "Hel",
-            "Discordia",
-            "Chronos",
             "Vulcan",
             "Neith",
-            "Eset"
+            "Eset",
+            "Ix Chel",
+            "Poseidon",
+            "Janus",
+            "Morgan Le Fay",
+            "Nu Wa"
           ]
         }
       },
       "multi_gap_sample": [
         {
-          "god": "Scylla",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Kukulkan",
+          "god": "Ah Puch",
           "missing": [
             "heal",
             "tanks_hp"
@@ -3964,20 +3965,6 @@
         },
         {
           "god": "Nut",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Discordia",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
-        {
-          "god": "Chronos",
           "missing": [
             "heal",
             "tanks_hp"
@@ -4019,6 +4006,13 @@
           ]
         },
         {
+          "god": "Morgan Le Fay",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
           "god": "Nu Wa",
           "missing": [
             "heal",
@@ -4027,6 +4021,13 @@
         },
         {
           "god": "Anubis",
+          "missing": [
+            "heal",
+            "tanks_hp"
+          ]
+        },
+        {
+          "god": "Zeus",
           "missing": [
             "heal",
             "tanks_hp"
@@ -4208,9 +4209,9 @@
       "answers": {
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 4,
+          "covered": 3,
           "total": 21,
-          "pct": 19.0,
+          "pct": 14.3,
           "missing_sample": [
             "Sun Wukong",
             "Chaac",
@@ -4228,22 +4229,22 @@
         },
         "physical": {
           "label": "vs physical damage",
-          "covered": 7,
+          "covered": 9,
           "total": 21,
-          "pct": 33.3,
+          "pct": 42.9,
           "missing_sample": [
             "Sun Wukong",
-            "Chaac",
             "Nike",
             "Amaterasu",
             "Jormungandr",
             "Mordred",
-            "Odin",
+            "Hua Mulan",
             "Hercules",
             "Gilgamesh",
-            "Cabrakan",
             "Guan Yu",
-            "Artio"
+            "Artio",
+            "Horus",
+            "Cerberus"
           ]
         },
         "magic": {
@@ -4298,7 +4299,6 @@
           "god": "Chaac",
           "missing": [
             "heal",
-            "physical",
             "cc_dive"
           ]
         },
@@ -4360,7 +4360,6 @@
           "god": "Odin",
           "missing": [
             "heal",
-            "physical",
             "cc_dive"
           ]
         },
@@ -4368,6 +4367,7 @@
           "god": "Hua Mulan",
           "missing": [
             "heal",
+            "physical",
             "cc_dive"
           ]
         },
@@ -4400,7 +4400,6 @@
           "god": "Cabrakan",
           "missing": [
             "heal",
-            "physical",
             "magic",
             "cc_dive"
           ]
@@ -4418,9 +4417,9 @@
       "answers": {
         "crit": {
           "label": "vs crit",
-          "covered": 3,
+          "covered": 2,
           "total": 23,
-          "pct": 13.0,
+          "pct": 8.7,
           "missing_sample": [
             "Hel",
             "Jormungandr",
@@ -4433,14 +4432,14 @@
             "Bacchus",
             "Cabrakan",
             "Sobek",
-            "Artio"
+            "Guan Yu"
           ]
         },
         "attack_speed": {
           "label": "vs attack speed",
-          "covered": 8,
+          "covered": 6,
           "total": 23,
-          "pct": 34.8,
+          "pct": 26.1,
           "missing_sample": [
             "Jormungandr",
             "Ymir",
@@ -4466,21 +4465,21 @@
             "Hel",
             "Jormungandr",
             "Athena",
+            "Baron Samedi",
             "Ares",
             "Yemoja",
+            "Bacchus",
             "Cabrakan",
             "Sobek",
             "Guan Yu",
-            "Artio",
-            "Atlas",
-            "Sylvanus"
+            "Atlas"
           ]
         },
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 5,
+          "covered": 4,
           "total": 23,
-          "pct": 21.7,
+          "pct": 17.4,
           "missing_sample": [
             "Hel",
             "Jormungandr",
@@ -4536,6 +4535,7 @@
           "missing": [
             "crit",
             "attack_speed",
+            "magic",
             "heal"
           ]
         },
@@ -4568,6 +4568,7 @@
           "missing": [
             "crit",
             "attack_speed",
+            "magic",
             "heal"
           ]
         },
@@ -4590,10 +4591,16 @@
           ]
         },
         {
+          "god": "Guan Yu",
+          "missing": [
+            "crit",
+            "magic"
+          ]
+        },
+        {
           "god": "Artio",
           "missing": [
             "crit",
-            "magic",
             "heal"
           ]
         },
@@ -4614,15 +4621,6 @@
             "magic",
             "heal"
           ]
-        },
-        {
-          "god": "Khepri",
-          "missing": [
-            "crit",
-            "attack_speed",
-            "magic",
-            "heal"
-          ]
         }
       ],
       "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat \u2014 use flex chips."
@@ -4636,24 +4634,36 @@
         "pen",
         "shred"
       ],
-      "complete_paths": 0,
+      "complete_paths": 2,
       "total": 26,
-      "pct_complete": 0.0,
+      "pct_complete": 7.7,
       "leaders": [
         {
-          "god": "Agni",
-          "score": 2,
+          "god": "Baron Samedi",
+          "score": 3,
           "max": 4,
           "parts": {
             "anti_heal": true,
             "pct_hp": false,
             "pen": true,
-            "shred": false
+            "shred": true
           },
-          "complete": false
+          "complete": true
         },
         {
-          "god": "Ah Puch",
+          "god": "Scylla",
+          "score": 3,
+          "max": 4,
+          "parts": {
+            "anti_heal": true,
+            "pct_hp": true,
+            "pen": true,
+            "shred": false
+          },
+          "complete": true
+        },
+        {
+          "god": "Agni",
           "score": 2,
           "max": 4,
           "parts": {
@@ -4669,20 +4679,32 @@
           "score": 2,
           "max": 4,
           "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
+            "anti_heal": false,
+            "pct_hp": true,
             "pen": true,
             "shred": false
           },
           "complete": false
         },
         {
-          "god": "Baron Samedi",
+          "god": "Chronos",
           "score": 2,
           "max": 4,
           "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Discordia",
+          "score": 2,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
             "pen": true,
             "shred": false
           },
@@ -4725,19 +4747,7 @@
           "complete": false
         },
         {
-          "god": "Merlin",
-          "score": 2,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Morgan Le Fay",
+          "god": "Kukulkan",
           "score": 2,
           "max": 4,
           "parts": {
@@ -4747,47 +4757,11 @@
             "shred": false
           },
           "complete": false
-        },
-        {
-          "god": "Princess Bari",
-          "score": 2,
-          "max": 4,
-          "parts": {
-            "anti_heal": true,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
         }
       ],
       "weak": [
         {
           "god": "Anubis",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Chronos",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": true,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Discordia",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4823,7 +4797,7 @@
           "complete": false
         },
         {
-          "god": "Kukulkan",
+          "god": "Morgan Le Fay",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4872,6 +4846,30 @@
         },
         {
           "god": "Ra",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Vulcan",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": true,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
+          "god": "Zeus",
           "score": 1,
           "max": 4,
           "parts": {
@@ -4932,6 +4930,18 @@
           "complete": false
         },
         {
+          "god": "Achilles",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": true
+          },
+          "complete": false
+        },
+        {
           "god": "Amaterasu",
           "score": 1,
           "max": 4,
@@ -4968,14 +4978,26 @@
           "complete": false
         },
         {
-          "god": "Guan Yu",
+          "god": "Hades",
           "score": 1,
           "max": 4,
           "parts": {
-            "anti_heal": true,
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
+            "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Hercules",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": true
           },
           "complete": false
         },
@@ -4986,30 +5008,6 @@
           "parts": {
             "anti_heal": false,
             "pct_hp": true,
-            "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Achilles",
-          "score": 0,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Bellona",
-          "score": 0,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
             "pen": false,
             "shred": false
           },
@@ -5018,6 +5016,18 @@
       ],
       "weak": [
         {
+          "god": "Achilles",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": true
+          },
+          "complete": false
+        },
+        {
           "god": "Amaterasu",
           "score": 1,
           "max": 4,
@@ -5054,14 +5064,26 @@
           "complete": false
         },
         {
-          "god": "Guan Yu",
+          "god": "Hades",
           "score": 1,
           "max": 4,
           "parts": {
-            "anti_heal": true,
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
+            "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Hercules",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": false,
+            "pen": false,
+            "shred": true
           },
           "complete": false
         },
@@ -5078,14 +5100,14 @@
           "complete": false
         },
         {
-          "god": "Achilles",
-          "score": 0,
+          "god": "Nike",
+          "score": 1,
           "max": 4,
           "parts": {
             "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
+            "shred": true
           },
           "complete": false
         },
@@ -5103,30 +5125,6 @@
         },
         {
           "god": "Chaac",
-          "score": 0,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Cu Chulainn",
-          "score": 0,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": false,
-            "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Gilgamesh",
           "score": 0,
           "max": 4,
           "parts": {
@@ -5406,7 +5404,7 @@
       "pct_complete": 0.0,
       "leaders": [
         {
-          "god": "Aphrodite",
+          "god": "Ares",
           "score": 2,
           "max": 4,
           "parts": {
@@ -5478,14 +5476,14 @@
           "complete": false
         },
         {
-          "god": "Ares",
+          "god": "Aphrodite",
           "score": 1,
           "max": 4,
           "parts": {
-            "anti_heal": true,
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
+            "shred": true
           },
           "complete": false
         },
@@ -5528,14 +5526,14 @@
       ],
       "weak": [
         {
-          "god": "Ares",
+          "god": "Aphrodite",
           "score": 1,
           "max": 4,
           "parts": {
-            "anti_heal": true,
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
+            "shred": true
           },
           "complete": false
         },
@@ -6999,8 +6997,8 @@
     }
   },
   "weekly_themes": [
-    "Support paths under-buy anti-crit (Spectral on ~13.0% of recs) \u2014 flex Spectral almost every game.",
-    "Support/Solo anti-heal is rare in defaults (~21.7% support) \u2014 Stygian/Brawler's is a live flex.",
+    "Support paths under-buy anti-crit (Spectral on ~8.7% of recs) \u2014 flex Spectral almost every game.",
+    "Support/Solo anti-heal is rare in defaults (~17.4% support) \u2014 Stygian/Brawler's is a live flex.",
     "Gods rising (r5 patch): Hachiman, Chronos, Ganesha, Hel.",
     "Items hot (r5 patch): Gluttonous Grimoire, Eros' Bow, Brawler\u2019s Beat Stick, Stygian Anchor.",
     "Patch axes (avg r5): damage +0.09, general +0.07, survivability -0.06."

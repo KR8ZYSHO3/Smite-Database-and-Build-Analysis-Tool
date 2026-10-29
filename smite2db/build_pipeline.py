@@ -24,7 +24,7 @@ from typing import Any
 # Phase registry (human + machine readable)
 # ---------------------------------------------------------------------------
 
-ALGORITHM_VERSION = "1.4.0"
+ALGORITHM_VERSION = "1.6.0"
 ALGORITHM_DOC = "docs/BUILD_ALGORITHM.md"
 
 PHASES: list[dict[str, str]] = [
@@ -41,12 +41,12 @@ PHASES: list[dict[str, str]] = [
     {
         "id": "P2_hard_gates",
         "name": "Hard gates",
-        "summary": "Illegal items out: type, god-only, heal/LS, removed, role toys",
+        "summary": "Illegal items out: type, god-only, heal/LS, removed, aspect hard-bans, role toys",
     },
     {
         "id": "P3_god_rescore",
         "name": "God rescore",
-        "summary": "Kit affinity + signatures + soft high-SR boost (capped)",
+        "summary": "Kit affinity + signatures + sample-weighted ladder/inspire (capped)",
     },
     {
         "id": "P4_archetype",
@@ -77,11 +77,11 @@ PHASES: list[dict[str, str]] = [
 
 PRIORITY_LAYERS: list[dict[str, str]] = [
     {"rank": "1", "layer": "hard_gates", "rule": "Illegal items never appear"},
-    {"rank": "2", "layer": "kit_identity", "rule": "Hooks amplify unique scaling; identity_lock beats staples"},
-    {"rank": "3", "layer": "role_job", "rule": "Carry/Mid/Jungle/Solo/Support identity (soft under lock)"},
+    {"rank": "2", "layer": "kit_identity", "rule": "Hooks + stat elasticity amplify unique scaling; identity_lock beats staples"},
+    {"rank": "3", "layer": "role_job", "rule": "Role constraints (soft under lock); meta staples × staple_soft_factor"},
     {"rank": "4", "layer": "buy_order", "rule": "Spike timing before late % pen / luxury"},
-    {"rank": "5", "layer": "ladder_patch", "rule": "S/A momentum; muted when fighting identity"},
-    {"rank": "6", "layer": "high_sr_inspire", "rule": "Soft frequency; skip staples that fight hooks"},
+    {"rank": "5", "layer": "ladder_patch", "rule": "S/A momentum × sample weight × identity mute"},
+    {"rank": "6", "layer": "high_sr_inspire", "rule": "Flex only under lock; skip fighting staples; scaled by n"},
     {"rank": "7", "layer": "diversify", "rule": "Shell/flex only — never scramble openers/pen"},
 ]
 
@@ -113,11 +113,19 @@ def algorithm_card() -> dict[str, Any]:
         "role_spike_openers": {k: list(v) for k, v in ROLE_SPIKE_OPENERS.items()},
         "role_late_items": {k: list(v) for k, v in ROLE_LATE_ITEMS.items()},
         "philosophy": (
-            "Kit-true, role-correct, spike-ordered paths. "
-            "High-SR data nudges picks and buy order; it never hard-copies a ladder week. "
+            "Kit payoff first (stat elasticity + identity hooks), role as constraints. "
+            "Ladder/inspire weight scales with god×role n (n/n0); identity_strength mutes "
+            "role staples and flex-only inspire under lock. "
+            "Aspect hard-bans drop removed-mechanic families. "
+            "Each build exports confidence + score_breakdown. "
             "Hard gates and soft pen floors always win — "
             "Obsidian/Titan are tank flex, not mandatory cores."
         ),
+        "blend": {
+            "ladder_n0": 100,
+            "module": "smite2db.build_blend",
+            "eval": "python -m smite2db.eval_builds",
+        },
     }
 
 

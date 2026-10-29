@@ -40,6 +40,21 @@ from .kit_identity import (
     detect_identity_hooks,
     identity_fights_item,
 )
+from .build_blend import (
+    compute_build_confidence,
+    god_role_ladder_games,
+    inspire_sample_scale,
+    item_hits_aspect_hard_ban,
+    ladder_sample_weight,
+    summarize_path_breakdown,
+)
+from .stat_elasticity import (
+    apply_elasticity_to_bias,
+    inspire_identity_factor,
+    item_elasticity_score,
+    ladder_identity_factor,
+    staple_soft_factor,
+)
 from .tracker_inspire import inspiration_boost, inspiration_buy_rank
 from .skill_order import compute_skill_order
 # algorithm_card imported lazily in build_god_build to avoid circular import
@@ -1869,6 +1884,7 @@ def god_scaling_bias(conn: sqlite3.Connection, god_id: int) -> dict[str, Any]:
     # Character-unique hooks from base ability text (weaker than aspects)
     id_prof = detect_identity_hooks(full_blob or blob, is_aspect=False)
     base_bias = apply_identity_to_bias(base_bias, id_prof)
+    base_bias = apply_elasticity_to_bias(base_bias, full_blob or blob)
     # Structured effects + optional human overrides (overrides win prefer/ban)
     base_bias = apply_kit_overrides(base_bias, god_name)
     effects = extract_kit_effects(base_bias)
@@ -1904,18 +1920,52 @@ def rescore_for_god(
 
     # Soft high-SR inspiration (tracker.gg) — never hard-override kit bans.
     # Identity lock: dampen so staples cannot erase character hooks.
+    # Sample weight: thin god×role ladders do not get to rewrite kit theory.
+    god_nm_rescore = str(bias.get("god_name") or "")
+    n_ladder = int(bias.get("_ladder_games") or 0)
+    if n_ladder <= 0 and god_nm_rescore:
+        n_ladder = god_role_ladder_games(god_nm_rescore, role)
+        bias["_ladder_games"] = n_ladder
+    w_ladder = ladder_sample_weight(n_ladder)
+    id_str = float(bias.get("identity_strength") or 0.0)
+    id_lock = bool(bias.get("identity_lock"))
+    # Identity strength mutes ladder further so staples cannot erase kit axes
+    w_ladder *= ladder_identity_factor(id_str, locked=id_lock)
+    # Re-weight the items:overall ladder chunk baked into role_score.
+    ladder_raw = float((item.score_breakdown or {}).get("ladder") or 0.0)
+    if ladder_raw and w_ladder < 0.999:
+        # role_score was shrunk by 0.55 above; peel unearned ladder influence.
+        s -= ladder_raw * 0.55 * (1.0 - w_ladder)
+        item.score_breakdown["ladder_weighted"] = round(ladder_raw * w_ladder, 2)
+        item.score_breakdown["ladder_sample_w"] = round(w_ladder, 3)
+
     t_boost, _t_why = inspiration_boost(
         item.name,
-        god_name=str(bias.get("god_name") or ""),
+        god_name=god_nm_rescore,
         role=role,
     )
     if t_boost:
-        if bias.get("identity_lock"):
+        if id_lock:
             if identity_fights_item(item.name, bias):
                 t_boost = 0.0
             else:
-                t_boost *= 0.3
+                # Flex-only inspire under lock — muted by identity strength
+                t_boost *= 0.25 * inspire_identity_factor(id_str, locked=True)
+        t_boost *= inspire_sample_scale(n_ladder, identity_lock=id_lock)
+        if t_boost:
+            item.score_breakdown["inspire"] = round(t_boost, 2)
         s += t_boost
+
+    # Stat elasticity — kit payoff axes (Max Mana / Item HP / Item Prot / …)
+    el_delta = item_elasticity_score(
+        item_name=item.name,
+        stats=item.stats if isinstance(item.stats, dict) else None,
+        elasticity=bias.get("stat_elasticity") if isinstance(bias.get("stat_elasticity"), dict) else None,
+        identity_lock=id_lock,
+    )
+    if el_delta:
+        item.score_breakdown["elasticity"] = round(el_delta, 2)
+        s += el_delta
 
     # --- Damage-type alignment (hard) ---
     if mage:
@@ -2656,6 +2706,9 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
     hooks = set(bias.get("identity_hooks") or [])
 
     if role == "Support":
+        # Max-Mana damage (Scylla Devourer) before generic aura → Thebes shell
+        if "max_mana_scale" in hooks:
+            return "mana_support"
         # Heal cores (Asclepius/Lifebinder) only for real heal kits — not every team_buff support
         if _is_true_healer(bias) and (
             "heavy_heal" in tags
@@ -2681,6 +2734,9 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
             return "tank_solo"
         if "item_prot_cc" in hooks:
             return "tank_solo"
+        # Max-Mana Solo — bank before pure shell
+        if "max_mana_scale" in hooks and mage:
+            return "mana_mage"
         # Frontline first — only pure mage tanks use mage_solo
         if "heavy_heal" in tags or ("heal" in tags and "self_sustain" in tags):
             return "sustain_solo"
@@ -2752,7 +2808,7 @@ def detect_archetype(bias: dict, role: str, mage: bool, physical: bool) -> str:
         and float(bias.get("aspect_power_penalty") or 0) >= 0.2
     ):
         return "utility_mage"
-    if "mana_stack" in tags:
+    if "max_mana_scale" in hooks or "mana_stack" in tags:
         return "mana_mage"
     if "heavy_dot" in tags or ("dot" in tags and "zone" in tags):
         return "dot_mage"
@@ -2819,6 +2875,8 @@ ARCHETYPE_SLOTS: dict[str, list[str]] = {
     "shield_support": ["aura", "shield_item", "mitigate", "defense", "cdr_def", "counter"],
     "heal_support": ["heal_aura", "aura", "mitigate", "defense", "cdr_def", "counter"],
     "aura_support": ["aura", "mitigate", "defense", "cdr_def", "counter", "tenacity"],
+    # Max-Mana Support (Scylla Devourer): Thoth bank first, then Yogi/CDR shell
+    "mana_support": ["mana_stack", "sustain_tank", "cdr_def", "defense", "mitigate", "counter"],
 }
 
 
@@ -2922,11 +2980,13 @@ def _item_matches_slot(
             return ls_v >= 8 or any(k in n for k in ("bancroft", "typhon", "gluttonous", "soul gem"))
         return ls_v >= 8
     if slot == "mana_stack":
-        return (
-            mp >= 250
-            or any(k in n for k in ("thoth", "book of", "doom orb", "transcend"))
-            or (mp >= 150 and "pendant" in n)
-        )
+        # True mana-bank cores only — high-MP tanks (Yogi) must not steal this slot
+        if any(k in n for k in ("thoth", "book of", "doom orb", "transcend")):
+            return True
+        if mp >= 150 and "pendant" in n:
+            return True
+        # Generic high MP only on Offensive/Hybrid (not Defensive shells)
+        return mp >= 300 and it.item_type in ("Offensive", "Hybrid")
     if slot == "stack":
         # Carry power openers: Transcendence / HS stack (physical) or Book (mage)
         if physical:
@@ -3249,6 +3309,8 @@ def _pick_slot_item(
     tags: set[str] | None = None,
     luxury_actives: int = 0,
     max_luxury_actives: int = 1,
+    identity_strength: float = 0.0,
+    identity_lock: bool = False,
 ) -> ScoredItem | None:
     tags = tags or set()
     cands = [
@@ -3316,15 +3378,22 @@ def _pick_slot_item(
             if "world stone" in n:
                 sc += 40  # OB44: ult CDR 25% (was 30%) — still luxury on heal Support
         if slot == "aura" and role == "Support":
-            # Meta support openers — Thebes / Stampede / Amanita beat Chandra/Spectral
+            # Meta support openers — softened by identity_strength so kit axes win
+            _id_soft = staple_soft_factor(identity_strength, locked=identity_lock)
             if any(k in n for k in ("thebes", "stampede", "amanita")):
-                sc += 160
+                sc += 160 * _id_soft
             elif any(k in n for k in ("sovereignty", "heartward", "shogun")):
-                sc += 70
+                sc += 70 * _id_soft
             elif "contagion" in n:
                 sc += 45
             elif "chandra" in n:
                 sc += 5  # OB43 hotfix — not default over Thebes/Contagion
+        if slot == "mana_stack" and role == "Support":
+            # Devourer / mana_support: Book of Thoth is the identity opener
+            if any(k in n for k in ("thoth", "book of", "doom orb")):
+                sc += 90
+            elif any(k in n for k in ("yogi", "transcend")):
+                sc += 40
         if slot == "dot_core" and any(k in n for k in ("desolat", "magus", "isolation", "divine")):
             sc += 40
         if slot == "zone_core" and any(k in n for k in ("isolation", "magus", "desolat")):
@@ -3784,6 +3853,8 @@ def assemble_kit_path(
             tags=tags,
             luxury_actives=luxury_actives,
             max_luxury_actives=max_lux,
+            identity_strength=float(bias.get("identity_strength") or 0),
+            identity_lock=bool(bias.get("identity_lock")),
         )
         if not pick:
             continue
@@ -4178,6 +4249,8 @@ _IDENTITY_FORCE_CORES: dict[str, tuple[str, ...]] = {
     "base_damage_only": ("lotus sickle", "asclepius", "chronos"),
     "ally_heal": ("lotus sickle", "asclepius"),
     "ally_shield": ("lotus sickle", "asclepius", "thebes"),
+    # Scylla Devourer — Max Mana is the damage stat
+    "max_mana_scale": ("book of thoth", "yogi", "breastplate", "doom orb", "isolation"),
 }
 
 
@@ -4209,6 +4282,7 @@ def _ensure_identity_cores(
         "item_hp_scale",
         "permanent_max_hp",
         "spirit_lifesteal",
+        "max_mana_scale",
         "damage_reflect",
         "max_hp_scale",
         "item_prot_cc",
@@ -4247,6 +4321,7 @@ def _ensure_identity_cores(
             "item_hp_scale",
             "permanent_max_hp",
             "max_hp_scale",
+            "max_mana_scale",
             "damage_reflect",
             "item_prot_cc",
             "haunt_shred",
@@ -4272,7 +4347,14 @@ def _ensure_identity_cores(
         "bancroft",
         "soul gem",
         "prophetic",
+        "thoth",
+        "yogi",
+        "doom orb",
+        "breastplate",
     )
+    # Max-Mana lock: Thebes is swappable so Thoth/Yogi can inject
+    if "max_mana_scale" in hooks:
+        protect = tuple(p for p in protect if p not in ("thebes", "stampede", "amanita"))
 
     def _find(key: str) -> ScoredItem | None:
         # Prefer exact-ish longer keys; skip vague tokens
@@ -4281,15 +4363,25 @@ def _ensure_identity_cores(
         cands = [c for c in pool if key in c.name.lower()]
         if not cands:
             return None
-        # Prefer high HP / Defensive / Hybrid for HP hooks
-        cands.sort(
-            key=lambda x: (
-                _canon_stat_value(x.stats, "hp"),
-                1 if x.item_type in ("Defensive", "Hybrid") else 0,
-                x.role_score,
-            ),
-            reverse=True,
-        )
+        # Max-Mana hooks: prefer raw MP; HP hooks: prefer HP / Defensive
+        if "max_mana_scale" in hooks:
+            cands.sort(
+                key=lambda x: (
+                    _canon_stat_value(x.stats, "mp"),
+                    _canon_stat_value(x.stats, "int"),
+                    x.role_score,
+                ),
+                reverse=True,
+            )
+        else:
+            cands.sort(
+                key=lambda x: (
+                    _canon_stat_value(x.stats, "hp"),
+                    1 if x.item_type in ("Defensive", "Hybrid") else 0,
+                    x.role_score,
+                ),
+                reverse=True,
+            )
         for cand in cands:
             if cand.is_active_item and sum(1 for x in new_path if x.is_active_item) >= max_actives:
                 if not any(key in x.name.lower() for x in new_path if x.is_active_item):
@@ -5414,7 +5506,7 @@ def _ensure_inspired_cores(
     bias = bias or {}
     lock = bool(bias.get("identity_lock"))
 
-    # God-specific openers first
+    # God-specific openers first (allowed under lock if they do not fight identity)
     gr = (data.get("by_god_role") or {}).get(f"{god_name}|{role}")
     if gr and gr.get("games", 0) >= 3:
         for name, meta in list((gr.get("openers") or {}).items())[:3]:
@@ -5422,17 +5514,16 @@ def _ensure_inspired_cores(
                 if lock and identity_fights_item(name, bias):
                     continue
                 want.append(name)
-    # Role openers (high-SR)
-    rr = (data.get("by_role") or {}).get(role) or {}
-    for name, meta in list((rr.get("openers") or {}).items())[:4]:
-        if float(meta.get("rate") or 0) >= 0.12 and name not in want:
-            if lock and identity_fights_item(name, bias):
-                continue
-            want.append(name)
+    # Role openers (high-SR) — flex only; skip entirely under identity_lock
+    if not lock:
+        rr = (data.get("by_role") or {}).get(role) or {}
+        for name, meta in list((rr.get("openers") or {}).items())[:4]:
+            if float(meta.get("rate") or 0) >= 0.12 and name not in want:
+                want.append(name)
 
     # Role hard staples from ladder snapshot (always try if legal).
     # Soft % pen: do NOT staple Obsidian/Titan — those are tanks_hp flex, not cores.
-    # Identity lock: skip role staples entirely for enchanter Mid / HP Carry / etc.
+    # Identity lock: skip role staples entirely — kit cores already forced.
     role_staples = {
         "Mid": ("Spear of Desolation", "Book of Thoth"),
         "Carry": (
@@ -5453,24 +5544,7 @@ def _ensure_inspired_cores(
             "Jungle": ("Spear of Desolation", "Book of Thoth", "Rod of Tahuti"),
             "Carry": ("Spear of Desolation", "Book of Thoth", "Soul Reaver"),
         }
-    _id_hooks = set(bias.get("identity_hooks") or [])
-    _skip_role_staples = bool(
-        lock
-        and (
-            bias.get("mid_enchanter")
-            or _id_hooks
-            & {
-                "item_hp_scale",
-                "permanent_max_hp",
-                "max_hp_scale",
-                "damage_reflect",
-                "item_prot_cc",
-                "haunt_shred",
-                "plat_damp_stack",
-                "base_damage_only",
-            }
-        )
-    )
+    _skip_role_staples = lock
     if not _skip_role_staples:
         for name in role_staples.get(role, ()):
             if name not in want:
@@ -5607,6 +5681,7 @@ def _order_buy_path(
     role: str,
     *,
     god_name: str | None = None,
+    bias: dict | None = None,
 ) -> list[ScoredItem]:
     """
     Buy order is half the build. High-SR Ranked Conquest order (tracker.gg):
@@ -5616,6 +5691,7 @@ def _order_buy_path(
       Jungle:  Jotunn / Hydra / stack → Titan/Crusher → power
       Solo:    Shifter offline → bulk / Genji / BP
       Support: Shifter / Thebes / Stampede → peel shells → Spectral last
+               (Max-Mana identity: Thoth/Doom Orb before peel shell)
 
     When tracker avg_slot is available for an item, it is the primary sort key.
     Heuristics fill gaps so we never open with late % pen or luxury.
@@ -5625,6 +5701,9 @@ def _order_buy_path(
 
     damage = role in DAMAGE_ROLES_NEED_PEN
     gname = god_name or ""
+    bias = bias or {}
+    hooks = set(bias.get("identity_hooks") or [])
+    mana_id = "max_mana_scale" in hooks and bool(bias.get("identity_lock"))
 
     def heuristic_phase(it: ScoredItem) -> tuple[int, int]:
         """(phase 0..5, sub-priority). Lower = buy sooner."""
@@ -5754,6 +5833,11 @@ def _order_buy_path(
             return 2, cost
 
         if role == "Solo":
+            # Max-Mana Solo: Thoth bank before Yogi shell
+            if mana_id and any(k in nlow for k in ("thoth", "book of", "doom orb")):
+                return 0, 0 if "thoth" in nlow or "book of" in nlow else 1
+            if mana_id and "yogi" in nlow:
+                return 0, 2
             # Cu / HP-solo cores: Yogi's max-HP heal + Mystical aura early
             if any(k in nlow for k in ("yogi", "mystical")):
                 return 0, 0 if "yogi" in nlow else 1
@@ -5778,6 +5862,11 @@ def _order_buy_path(
             return 2, cost
 
         if role == "Support":
+            # Max-Mana Support (Scylla Devourer): bank first, peel second
+            if mana_id and any(k in nlow for k in ("thoth", "book of", "doom orb")):
+                return 0, 0 if "thoth" in nlow or "book of" in nlow else 1
+            if mana_id and "yogi" in nlow:
+                return 0, 2
             # High-SR opens Shifter OR Thebes/Stampede — both phase 0
             if any(
                 k in nlow
@@ -5838,6 +5927,12 @@ def _order_buy_path(
             )
             if tank_melt and avg is not None:
                 avg = min(float(avg), 2.8)
+        # Max-Mana Support: Thoth/Doom never park late behind peel shells
+        if mana_id and any(k in nlow for k in ("thoth", "book of", "doom orb")):
+            if avg is not None:
+                avg = min(float(avg), 1.2)
+            else:
+                return (float(phase), float(sub), cost, -it.role_score, 0.0)
         if avg is not None:
             # Blend: tracker position dominates, heuristic breaks ties
             return (avg, phase, sub, cost, -it.role_score)
@@ -6421,6 +6516,13 @@ def build_god_build(
     # Role-specific prefer/ban (Kuzenbo Mid CDR-bruiser vs Support shell, etc.)
     bias = merge_role_kit_overrides(bias, role)
     dtype = god.get("primary_damage_type")
+    # Cache god×role ladder games for sample-weighted ladder/inspire (1.5.0)
+    _god_nm_early = str(
+        bias.get("god_name") or god.get("entity_name") or god.get("name") or ""
+    )
+    if _god_nm_early and not bias.get("god_name"):
+        bias["god_name"] = _god_nm_early
+    bias["_ladder_games"] = god_role_ladder_games(_god_nm_early, role)
 
     # Carry is duo ADC — base kit only for native Carry; flex only via ranged-basics aspects
     if role == "Carry":
@@ -6573,6 +6675,13 @@ def build_god_build(
         _spirit_ls_kit = bool(
             bias.get("identity_lock") and "spirit_lifesteal" in _id_hooks_kit
         )
+        _mana_id_kit = bool(
+            bias.get("identity_lock") and "max_mana_scale" in _id_hooks_kit
+        )
+        # Aspect removed a mechanic → hard-ban the old identity family (e.g. reflect
+        # cores on Aspect of Spirits). Soft identity_fights alone can lose to inspire.
+        if bias.get("identity_lock") and item_hits_aspect_hard_ban(s.name, _id_hooks_kit):
+            return False
         _spirit_ls_item = any(
             k in nlow
             for k in (
@@ -6585,6 +6694,18 @@ def build_god_build(
                 "prophetic",
                 "wish-granting",
                 "typhon",
+            )
+        )
+        _mana_identity_item = any(
+            k in nlow
+            for k in (
+                "thoth",
+                "doom orb",
+                "yogi",
+                "breastplate",
+                "transcend",
+                "isolation",
+                "genji",
             )
         )
         _hp_identity_item = any(
@@ -6659,6 +6780,9 @@ def build_god_build(
             # Aspect of Spirits: allow Umbral/Gluttonous/Chronos LS path through the gate
             if _spirit_ls_kit and _spirit_ls_item:
                 return True
+            # Max-Mana Support (Scylla Devourer): Thoth/Doom Orb/Yogi must stay legal
+            if _mana_id_kit and _mana_identity_item:
+                return True
             if ls_v >= 5:
                 return False
             # personal AS/crit toys are not support cores
@@ -6704,6 +6828,9 @@ def build_god_build(
         if role == "Solo":
             # Aspect of Spirits: Gluttonous/Chronos/Bancroft stay legal on Solo
             if _spirit_ls_kit and _spirit_ls_item:
+                return True
+            # Max-Mana Solo: Thoth/Doom Orb stay legal despite Offensive glass gate
+            if _mana_id_kit and _mana_identity_item:
                 return True
             # frontline: skip pure glass AS/crit carries and luxury mage toys
             if (as_v >= 25 or crit_v >= 20) and _canon_stat_value(s.stats, "hp") < 200:
@@ -6992,7 +7119,7 @@ def build_god_build(
                 items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
             )
     # --- P7 Buy order (spike timing; high-SR avg_slot when available) ---
-    items_6 = _order_buy_path(items_6, role, god_name=god_nm)
+    items_6 = _order_buy_path(items_6, role, god_name=god_nm, bias=bias)
     # Avoid double luxury actives (Dreamer's + Wish-Granting) on damage roles
     luxury = [
         i
@@ -7018,7 +7145,7 @@ def build_god_build(
                 ):
                     items_6[i] = alt
                     break
-        items_6 = _order_buy_path(items_6, role, god_name=god_nm)
+        items_6 = _order_buy_path(items_6, role, god_name=god_nm, bias=bias)
     pen_total = sum(item_pen_value(x) for x in items_6)
     n_act = sum(1 for x in items_6 if x.is_active_item)
 
@@ -7099,6 +7226,18 @@ def build_god_build(
             god, bias, role, items_6, starters, pen_total, n_act, max_act, archetype=archetype
         ),
     }
+    # Sample-weighted confidence + aggregated score breakdown (algorithm 1.5.0)
+    conf = compute_build_confidence(
+        n_games=int(bias.get("_ladder_games") or 0),
+        identity_lock=bool(bias.get("identity_lock")),
+        identity_hooks=list(bias.get("identity_hooks") or []),
+        items=[x.name for x in items_6],
+    )
+    out["confidence"] = conf.get("confidence")
+    out["confidence_card"] = conf
+    out["score_breakdown"] = summarize_path_breakdown(items_6)
+    out["ladder_games"] = int(bias.get("_ladder_games") or 0)
+    out["ladder_weight"] = conf.get("ladder_weight")
     if skill:
         out.update(skill)
     return out
@@ -7213,6 +7352,23 @@ def _item_card(it: ScoredItem | None, why: str | None = None) -> dict | None:
         "effect": (it.passive or it.active or "")[:180],
         "is_active": bool(it.is_active_item),
     }
+    if it.score_breakdown:
+        # Compact per-item breakdown for UI / eval (kit vs ladder vs inspire)
+        bd = it.score_breakdown
+        card["score_breakdown"] = {
+            k: bd[k]
+            for k in (
+                "ladder",
+                "ladder_weighted",
+                "ladder_sample_w",
+                "inspire",
+                "momentum",
+                "cost",
+                "align",
+                "active_tax",
+            )
+            if k in bd
+        }
     if why:
         card["why"] = why
     return card
