@@ -126,6 +126,32 @@ def main(argv: list[str] | None = None) -> int:
         if verbose:
             print(f"Export → {out}")
 
+        # Hard-fail on pen / role-job quality gate (shared clones stay WARN)
+        qg_path = ROOT / "data" / "conquest_builds.json"
+        if qg_path.is_file():
+            import json
+
+            try:
+                qg = (json.loads(qg_path.read_text(encoding="utf-8")) or {}).get(
+                    "quality_gate"
+                ) or {}
+            except (OSError, json.JSONDecodeError):
+                qg = {}
+            pen_fails: list[str] = []
+            job_fails: list[str] = []
+            for role, info in (qg.get("roles") or {}).items():
+                for g in info.get("pen_fail") or []:
+                    pen_fails.append(f"{role}:{g}")
+                for g in info.get("role_job_fail") or []:
+                    job_fails.append(f"{role}:{g}")
+            if pen_fails or job_fails:
+                print("SHIP ABORTED: quality gate pen/role-job failures.")
+                if pen_fails:
+                    print(f"  pen_fail: {pen_fails}")
+                if job_fails:
+                    print(f"  role_job_fail: {job_fails}")
+                return 2
+
     if args.deploy_netlify:
         _maybe_netlify(verbose)
 

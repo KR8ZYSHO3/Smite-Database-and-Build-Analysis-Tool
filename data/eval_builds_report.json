@@ -6,9 +6,9 @@
     "errors": []
   },
   "fixtures": {
-    "passed": 5,
+    "passed": 13,
     "failed": 0,
-    "total": 5,
+    "total": 13,
     "results": [
       {
         "name": "kuzenbo_base_support",
@@ -109,12 +109,172 @@
         "aspect": "Aspect of the Devourer",
         "note": "Devourer Support: Max Mana bank (Thoth) + peel shell; no glass mid cores",
         "confidence_rationale": "0 god\u00d7role games \u2192 ladder weight 0.00; identity_lock on \u2014 kit cores outrank thin ladder; treat as kit/role theory until sample grows"
+      },
+      {
+        "name": "ah_puch_mid_base",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Book of Thoth",
+          "Doom Orb",
+          "The Cosmic Horror",
+          "Gem of Isolation",
+          "Yogi's Necklace",
+          "Breastplate of Valor"
+        ],
+        "starter": "Conduit Gem",
+        "confidence": "low",
+        "ladder_games": 2,
+        "ladder_weight": 0.01,
+        "aspect": null,
+        "note": "Mana Mid: Thoth bank + real tank-melt pen (Deso/Magus/Cosmic/Obsidian; Doom alone insufficient)",
+        "confidence_rationale": "2 god\u00d7role games \u2192 ladder weight 0.01; identity_lock on \u2014 kit cores outrank thin ladder; treat as kit/role theory until sample grows"
+      },
+      {
+        "name": "scylla_devourer_mid",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Book of Thoth",
+          "Doom Orb",
+          "The Cosmic Horror",
+          "Gem of Isolation",
+          "Yogi's Necklace",
+          "Breastplate of Valor"
+        ],
+        "starter": "Conduit Gem",
+        "confidence": "medium",
+        "ladder_games": 21,
+        "ladder_weight": 0.105,
+        "aspect": "Aspect of the Devourer",
+        "note": "Devourer Mid: mana bank + flat/% pen; not a Thebes support shell",
+        "confidence_rationale": "21 god\u00d7role games \u2192 ladder weight 0.10; identity_lock on \u2014 kit cores outrank thin ladder"
+      },
+      {
+        "name": "cupid_love_carry",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Lotus Sickle",
+          "Eye of the Storm",
+          "Riptalon",
+          "Musashi's Dual Swords",
+          "Gauntlet of Thebes",
+          "Rod Of Asclepius"
+        ],
+        "starter": "Gilded Arrow",
+        "confidence": "low",
+        "ladder_games": 0,
+        "ladder_weight": 0.0,
+        "aspect": "Aspect of Love",
+        "note": "Love Carry: ally heal/shield identity must land a heal-amp core",
+        "confidence_rationale": "0 god\u00d7role games \u2192 ladder weight 0.00; identity_lock on \u2014 kit cores outrank thin ladder; treat as kit/role theory until sample grows"
+      },
+      {
+        "name": "apollo_harmony_carry",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Ethereal Staff",
+          "Gauntlet of Thebes",
+          "Contagion",
+          "Prophetic Cloak",
+          "Leviathan's Hide",
+          "Gladiator's Shield"
+        ],
+        "starter": "Gilded Arrow",
+        "confidence": "low",
+        "ladder_games": 4,
+        "ladder_weight": 0.02,
+        "aspect": "Aspect of Harmony",
+        "note": "Harmony Carry: item-HP stack; no crit ADC package",
+        "confidence_rationale": "4 god\u00d7role games \u2192 ladder weight 0.02; identity_lock on \u2014 kit cores outrank thin ladder; treat as kit/role theory until sample grows"
+      },
+      {
+        "name": "thanatos_reaping_jungle",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "The Crusher",
+          "Titan's Bane",
+          "Gauntlet of Thebes",
+          "Contagion",
+          "Leviathan's Hide",
+          "Gladiator's Shield"
+        ],
+        "starter": "Bumba's Cudgel",
+        "confidence": "medium",
+        "ladder_games": 23,
+        "ladder_weight": 0.115,
+        "aspect": "Aspect of Reaping",
+        "note": "Reaping Jungle: permanent Max-HP shell + Contagion; jungle tempo via normalize",
+        "confidence_rationale": "23 god\u00d7role games \u2192 ladder weight 0.12; identity_lock on \u2014 kit cores outrank thin ladder"
+      },
+      {
+        "name": "ymir_support_base",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Gauntlet of Thebes",
+          "Breastplate of Valor",
+          "Genji's Guard",
+          "Contagion",
+          "Gem of Isolation",
+          "Spectral Armor"
+        ],
+        "starter": "Selflessness",
+        "confidence": "low",
+        "ladder_games": 5,
+        "ladder_weight": 0.025,
+        "aspect": null,
+        "note": "Ymir Support: item-prot CC shell (Thebes + BoV/Genji)",
+        "confidence_rationale": "5 god\u00d7role games \u2192 ladder weight 0.03; identity_lock on \u2014 kit cores outrank thin ladder; treat as kit/role theory until sample grows"
+      },
+      {
+        "name": "ravana_rakshasa_solo",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Shifter's Shield",
+          "Mystical Mail",
+          "Breastplate of Valor",
+          "Spectral Armor",
+          "Alchemist Coat",
+          "Resolute Mantle"
+        ],
+        "starter": "Warrior's Axe",
+        "confidence": "medium",
+        "ladder_games": 10,
+        "ladder_weight": 0.05,
+        "aspect": "Aspect of the Rakshasa King",
+        "note": "Rakshasa Solo: Plat/Damp stack (\u22651 of Spectral/Alchemist/Mystical/Shifter)",
+        "confidence_rationale": "10 god\u00d7role games \u2192 ladder weight 0.05; identity_lock on \u2014 kit cores outrank thin ladder"
+      },
+      {
+        "name": "ra_thermo_mid",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Chronos' Pendant",
+          "The Cosmic Horror",
+          "Lotus Sickle",
+          "Gem of Isolation",
+          "Heartwood Charm",
+          "Rod Of Asclepius"
+        ],
+        "starter": "Conduit Gem",
+        "confidence": "medium",
+        "ladder_games": 25,
+        "ladder_weight": 0.125,
+        "aspect": "Aspect of Thermotherapy",
+        "note": "Thermo Mid: enchanter Sickle+Asclepius; no power-mage cores",
+        "confidence_rationale": "25 god\u00d7role games \u2192 ladder weight 0.12; identity_lock on \u2014 kit cores outrank thin ladder"
       }
     ]
   },
   "holdout": null,
   "summary": {
-    "fixtures_passed": 5,
+    "fixtures_passed": 13,
     "fixtures_failed": 0,
     "unit_ok": true,
     "holdout_mean_hit_rate": null,

@@ -4254,6 +4254,39 @@ _IDENTITY_FORCE_CORES: dict[str, tuple[str, ...]] = {
 }
 
 
+def _identity_force_keys(bias: dict | None) -> list[str]:
+    """Ordered name-substrings for locked hook cores (kit_ok + pen protect)."""
+    if not bias or not bias.get("identity_lock"):
+        return []
+    hooks = set(bias.get("identity_hooks") or [])
+    want: list[str] = []
+    for h in (
+        "item_hp_scale",
+        "permanent_max_hp",
+        "spirit_lifesteal",
+        "max_mana_scale",
+        "damage_reflect",
+        "max_hp_scale",
+        "item_prot_cc",
+        "plat_damp_stack",
+        "haunt_shred",
+        "base_damage_only",
+        "ally_heal",
+        "ally_shield",
+    ):
+        if h not in hooks:
+            continue
+        for k in _IDENTITY_FORCE_CORES.get(h, ()):
+            if k not in want:
+                want.append(k)
+    return want
+
+
+def _name_hits_keys(name: str, keys: list[str] | tuple[str, ...]) -> bool:
+    n = (name or "").lower()
+    return any(k and len(k) >= 4 and k in n for k in keys)
+
+
 def _ensure_identity_cores(
     path: list[ScoredItem],
     pool: list[ScoredItem],
@@ -4627,9 +4660,14 @@ def _has_soft_pen_coverage(
                 has_flat = True
                 break
 
-    has_light_pct = any(item_pen_value(x) >= 10 for x in matching)
+    # True % / second pen piece — a single 10-pen flat (Doom Orb) must NOT
+    # count as both flat and "light %" or Mid mana paths skip Deso forever.
+    has_light_pct = any(
+        item_pen_value(x) >= 15 or _is_dedicated_pct_pen_item(x) for x in matching
+    )
+    has_second_flat = sum(1 for x in matching if item_pen_value(x) >= 8) >= 2
     has_shred = _has_role_shred(path, mage=mage, physical=physical)
-    if has_flat and (has_light_pct or has_shred):
+    if has_flat and (has_light_pct or has_second_flat or has_shred):
         return True
 
     # Physical Carry/Jungle: dual shred (Exec+OBow, etc.) is enough without Titan
@@ -6244,10 +6282,17 @@ def _ensure_pen_in_path(
     *,
     mage: bool = False,
     physical: bool = False,
+    protect_keys: list[str] | tuple[str, ...] | None = None,
+    _inject_depth: int = 0,
 ) -> list[ScoredItem]:
     """Guarantee damage roles get real *matching* pen (prefer passive shred)."""
     if role not in DAMAGE_ROLES_NEED_PEN:
         return path
+
+    protect = tuple(protect_keys or ())
+
+    def _protected(it: ScoredItem) -> bool:
+        return _name_hits_keys(it.name, protect)
 
     # Soft: drop forced Obsidian/Titan when flat+% / shred already covers
     path = _strip_dedicated_pct_pen_if_soft_covered(
@@ -6259,6 +6304,10 @@ def _ensure_pen_in_path(
     if total_pen >= MIN_BUILD_PEN and matching:
         # Also strip wrong-type pen if we already have enough matching pen
         return path
+    # Soft shred packages (Exec+OBow, Magus+flat) can skip dedicated % —
+    # but a lone 10-pen flat does not (see _has_soft_pen_coverage).
+    if _has_soft_pen_coverage(path, mage=mage, physical=physical, role=role):
+        return path
 
     seen = {x.name for x in path}
     candidates = [
@@ -6268,11 +6317,22 @@ def _ensure_pen_in_path(
         and _pen_matches_kit(x, mage=mage, physical=physical)
         and item_pen_value(x) >= 8
     ]
+    # When already holding a light flat (Jotunn/Reaper) but still under floor,
+    # prefer Crusher / Pendulum / dedicated % so quality-gate soft packages pass.
+    need_heavy = total_pen > 0 and total_pen < MIN_BUILD_PEN
     candidates.sort(
         key=lambda x: (
             0 if not x.is_active_item else 1,
-            # Prefer flat / light % over dedicated Obsidian/Titan when filling the floor
-            1 if _is_dedicated_pct_pen_item(x) else 0,
+            # Heavy fill: dedicated % / named jungle shred before another light flat
+            (
+                0
+                if need_heavy
+                and (
+                    _is_dedicated_pct_pen_item(x)
+                    or any(k in x.name.lower() for k in ("crusher", "pendulum"))
+                )
+                else (1 if _is_dedicated_pct_pen_item(x) else 0)
+            ),
             -item_pen_value(x),
             -x.role_score,
         )
@@ -6281,14 +6341,19 @@ def _ensure_pen_in_path(
         return path
 
     pick = candidates[0]
-    # Prefer replacing wrong-type pen or a low-value non-pen / active
+    # Prefer replacing wrong-type pen or a low-value non-pen / active.
+    # Never rip identity force-cores (Thoth/Doom/Contagion/Ethereal/…).
     drop_idx = None
     for i, it in enumerate(path):
+        if _protected(it):
+            continue
         if is_pen_item(it) and not _pen_matches_kit(it, mage=mage, physical=physical):
             drop_idx = i
             break
     if drop_idx is None:
         for i, it in enumerate(path):
+            if _protected(it):
+                continue
             if it.is_active_item and not _pen_matches_kit(it, mage=mage, physical=physical):
                 drop_idx = i
                 break
@@ -6296,7 +6361,21 @@ def _ensure_pen_in_path(
         scored = [
             (i, it)
             for i, it in enumerate(path)
-            if not _pen_matches_kit(it, mage=mage, physical=physical)
+            if not _protected(it)
+            and not _pen_matches_kit(it, mage=mage, physical=physical)
+        ]
+        if scored:
+            drop_idx = min(scored, key=lambda t: t[1].role_score)[0]
+    # Reflect / HP-shell locks can protect every non-pen slot (Nemesis Jungle:
+    # Contagion+Nemean+Mystical+Ethereal). Keep the first two force keys and
+    # allow the lowest-scored secondary core to yield for matching pen.
+    if drop_idx is None and protect:
+        primary = tuple(protect[:2])
+        scored = [
+            (i, it)
+            for i, it in enumerate(path)
+            if not _name_hits_keys(it.name, primary)
+            and not _pen_matches_kit(it, mage=mage, physical=physical)
         ]
         if scored:
             drop_idx = min(scored, key=lambda t: t[1].role_score)[0]
@@ -6307,6 +6386,8 @@ def _ensure_pen_in_path(
     new_path[drop_idx] = pick
     while sum(1 for x in new_path if x.is_active_item) > max_actives:
         for i, it in enumerate(new_path):
+            if _protected(it):
+                continue
             if it.is_active_item and not _pen_matches_kit(it, mage=mage, physical=physical):
                 for alt in pool:
                     if alt.name not in {x.name for x in new_path} and not alt.is_active_item:
@@ -6315,6 +6396,18 @@ def _ensure_pen_in_path(
                 break
         else:
             break
+    # One light flat often leaves pen under floor (Jotunn+Reaper=15). Inject again.
+    if _inject_depth < 2:
+        return _ensure_pen_in_path(
+            new_path,
+            pool,
+            role,
+            max_actives,
+            mage=mage,
+            physical=physical,
+            protect_keys=protect_keys,
+            _inject_depth=_inject_depth + 1,
+        )
     return new_path
 
 
@@ -6637,6 +6730,8 @@ def build_god_build(
     )
 
     # --- P2 Hard gates (kit_ok) ---
+    _force_keys_kit = _identity_force_keys(bias)
+
     def kit_ok(s: ScoredItem) -> bool:
         str_v = _canon_stat_value(s.stats, "str")
         int_v = _canon_stat_value(s.stats, "int")
@@ -6657,6 +6752,9 @@ def build_god_build(
         # God-specific (acorns, mods, …): owner only (Ratatoskr acorns)
         if is_god_specific_item(s) or is_god_specific_item(s.name):
             return item_allowed_for_god(s.name, god_name_gate)
+        # Identity force-cores bypass role STR/INT filters (Sickle on Love Carry, etc.)
+        if _force_keys_kit and _name_hits_keys(s.name, _force_keys_kit):
+            return True
         # Identity HP / bulk hooks: Ethereal + Contagion-class must stay in pool
         _id_hooks_kit = set(bias.get("identity_hooks") or [])
         _hp_id_kit = bool(
@@ -7060,9 +7158,17 @@ def build_god_build(
         tags=set(bias.get("tags") or []),
     )
     # OB43: true-healer Support must keep Sickle + Asclepius (inspire loves Stampede/Shell).
-    # Aspect-unlocked enchanter Mid (Ra Thermo) gets the same identity inject.
+    # Aspect-unlocked enchanter Mid (Ra Thermo) and any identity_lock ally_heal/shield
+    # role (Cupid Love Carry, etc.) get the same identity inject.
+    _heal_hooks = set(bias.get("identity_hooks") or []) & {
+        "ally_heal",
+        "ally_shield",
+        "base_damage_only",
+    }
     if _is_true_healer(bias) and (
-        role == "Support" or (role == "Mid" and bias.get("mid_enchanter"))
+        role == "Support"
+        or bias.get("mid_enchanter")
+        or (bias.get("identity_lock") and _heal_hooks)
     ):
         items_6 = _ensure_enchanter_cores(
             items_6, t3, max_actives=max_act, bias=bias
@@ -7117,6 +7223,31 @@ def build_god_build(
         if role == "Jungle":
             items_6 = _normalize_jungle_path(
                 items_6, t3, bias, mage=mage, physical=physical, max_actives=max_act
+            )
+        # Identity inject can erase Deso/Crusher — restore pen floor without
+        # ripping Thoth/Doom/Contagion/Ethereal force-cores.
+        if not skip_pen_floor and role in DAMAGE_ROLES_NEED_PEN:
+            _pen_protect = list(_identity_force_keys(bias)) + [
+                "thoth",
+                "doom orb",
+                "yogi",
+                "ethereal",
+                "contagion",
+                "gluttonous",
+                "lotus sickle",
+                "asclepius",
+                "chronos",
+                "spectral",
+                "alchemist",
+            ]
+            items_6 = _ensure_pen_in_path(
+                items_6,
+                t3,
+                role,
+                max_act,
+                mage=mage,
+                physical=physical,
+                protect_keys=_pen_protect,
             )
     # --- P7 Buy order (spike timing; high-SR avg_slot when available) ---
     items_6 = _order_buy_path(items_6, role, god_name=god_nm, bias=bias)
@@ -7484,10 +7615,177 @@ def _explain_god_build(
     return " ".join(parts)
 
 
+# Flex alts for breaking identical 6-item clones (last-slot / late-flex swaps).
+_DEDUPE_FLEX_ALTS: dict[str, tuple[str, ...]] = {
+    "Jungle": (
+        "arondight",
+        "bloodforge",
+        "damaru",
+        "reaper",
+        "runeforged",
+        "heartseeker",
+        "pendulum",
+        "avatar",
+        "brawler",
+        "serrated",
+    ),
+    "Carry": (
+        "qin",
+        "demon blade",
+        "bloodforge",
+        "silverbranch",
+        "dominance",
+        "asi",
+        "fail-not",
+        "wind demon",
+        "toxic blade",
+    ),
+    "Mid": (
+        "divine ruin",
+        "soul gem",
+        "soul reaver",
+        "chronos",
+        "isolation",
+        "tahuti",
+        "polynomicon",
+        "obsidian",
+        "spear of desolation",
+    ),
+    "Solo": (
+        "spectral",
+        "mystical",
+        "nemean",
+        "leviathan",
+        "gladiator",
+        "shifter",
+        "midgardian",
+        "stygian",
+        "void shield",
+    ),
+    "Support": (
+        "spectral",
+        "midgardian",
+        "binding",
+        "stygian",
+        "mystical",
+        "nemean",
+        "isolation",
+        "void stone",
+        "prophetic",
+        "contagion",
+    ),
+}
+
+
+def _build_item_names(build: dict[str, Any]) -> tuple[str, ...]:
+    return tuple(
+        (it.get("name") if isinstance(it, dict) else str(it)) or "?"
+        for it in (build.get("items") or [])
+    )
+
+
+def _catalog_by_key(items: list[dict], key: str) -> dict | None:
+    kl = key.lower()
+    cands = [it for it in items if kl in (it.get("name") or "").lower()]
+    if not cands:
+        return None
+    cands.sort(key=lambda it: float(it.get("total_cost") or it.get("cost") or 0), reverse=True)
+    return cands[0]
+
+
+def _swap_build_slot(build: dict[str, Any], slot: int, catalog_item: dict) -> None:
+    """Mutate build path card at slot to catalog_item (name + basic fields)."""
+    items = list(build.get("items") or [])
+    if slot < 0 or slot >= len(items):
+        return
+    old = items[slot] if isinstance(items[slot], dict) else {"name": str(items[slot])}
+    card = dict(old)
+    card["name"] = catalog_item.get("name") or card.get("name")
+    if catalog_item.get("total_cost") is not None:
+        card["cost"] = catalog_item.get("total_cost")
+    elif catalog_item.get("cost") is not None:
+        card["cost"] = catalog_item.get("cost")
+    if catalog_item.get("item_type"):
+        card["type"] = catalog_item.get("item_type")
+    card["why"] = card.get("why") or "flex diversify (clone break)"
+    items[slot] = card
+    build["items"] = items
+    build["full_path"] = items
+
+
+def dedupe_identical_paths(
+    role: str,
+    builds: list[dict[str, Any]],
+    catalog: list[dict],
+    *,
+    max_attempts: int = 8,
+) -> int:
+    """
+    Break byte-identical 6-item clones by swapping late flex slots.
+
+    Mutates builds in place. Returns number of paths altered.
+    """
+    if len(builds) < 2:
+        return 0
+    alts = _DEDUPE_FLEX_ALTS.get(role, ())
+    if not alts:
+        return 0
+
+    changed = 0
+    # Iterate until stable or no progress
+    for _round in range(max_attempts):
+        groups: dict[tuple[str, ...], list[int]] = {}
+        for i, b in enumerate(builds):
+            key = _build_item_names(b)
+            if len(key) < 4:
+                continue
+            groups.setdefault(key, []).append(i)
+        shared = {k: idxs for k, idxs in groups.items() if len(idxs) > 1}
+        if not shared:
+            break
+        used = set(groups.keys())
+        progress = False
+        for key, idxs in shared.items():
+            for bi in idxs[1:]:
+                b = builds[bi]
+                names = list(_build_item_names(b))
+                if len(names) < 2:
+                    continue
+                swapped = False
+                for slot in (len(names) - 1, len(names) - 2):
+                    if slot < 2:
+                        continue
+                    for alt_key in alts:
+                        cat = _catalog_by_key(catalog, alt_key)
+                        if not cat:
+                            continue
+                        nm = cat.get("name") or ""
+                        if nm in names:
+                            continue
+                        trial = list(names)
+                        trial[slot] = nm
+                        tt = tuple(trial)
+                        if tt in used:
+                            continue
+                        _swap_build_slot(b, slot, cat)
+                        used.discard(key)
+                        used.add(tt)
+                        names = trial
+                        changed += 1
+                        progress = True
+                        swapped = True
+                        break
+                    if swapped:
+                        break
+        if not progress:
+            break
+    return changed
+
+
 def quality_gate_builds(report: dict[str, Any]) -> dict[str, Any]:
     """
     Soft QA on exported paths: uniqueness, pen on damage roles, luxury cap.
-    Returns summary attached to the report (does not fail hard).
+    Returns summary attached to the report (does not fail hard — ship may).
     """
     summary: dict[str, Any] = {"roles": {}, "ok": True, "warnings": []}
     for role, data in (report.get("roles") or {}).items():
@@ -7744,6 +8042,11 @@ def generate_all(conn: sqlite3.Connection, gods_per_role: int = 80) -> dict[str,
         if role == "Carry":
             aspect_flex = _carry_aspect_flex_builds(conn, items, seen)
             god_builds.extend(aspect_flex)
+
+        # Break identical 6-item clones (kit signal must remain after flex swap)
+        n_dedupe = dedupe_identical_paths(role, god_builds, items)
+        if n_dedupe:
+            report.setdefault("_dedupe_fixes", {})[role] = n_dedupe
 
         # Stable order: role tier rank, then name (never reshuffle by native/flex)
         god_builds.sort(

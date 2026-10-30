@@ -312,6 +312,13 @@ When `identity_lock` is on, `build_synergy` gets a capped bonus for hook-core hi
 (and a small penalty for ban-items on the path). Aspects stay out of the overall
 god tier; overall uses the primary-role base path only.
 
+**Truth-over-meta (post-1.6 ship gate):**
+- Identity force-cores stay in the shop pool even when role STR/INT filters would drop them (e.g. Sickle on Love Carry).
+- After `_ensure_identity_cores`, Mid/Jungle/Carry **re-run the pen floor** without ripping primary force-cores (first two keys, e.g. Contagion/Nemean). Secondary shell pieces may yield so pen still lands.
+- Ally-heal / ally-shield identity gets enchanter cores on **any** role under lock.
+- Identical 6-item clones get a late flex swap (`dedupe_identical_paths`).
+- `python -m smite2db.ship` **aborts** on fixture failure or quality-gate `pen_fail` / `role_job_fail` (shared paths remain WARN).
+
 Empty inspiration scrapes **must not** overwrite a good snapshot (guard in `save_inspiration`).
 
 ---

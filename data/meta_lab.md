@@ -2,12 +2,12 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-10-29T23:00:42.019972+00:00_
+_Generated: 2026-10-30T15:09:50.944238+00:00_
 
 ## Weekly themes
 
-- Support paths under-buy anti-crit (Spectral on ~8.7% of recs) — flex Spectral almost every game.
-- Support/Solo anti-heal is rare in defaults (~17.4% support) — Stygian/Brawler's is a live flex.
+- Support paths under-buy anti-crit (Spectral on ~13.0% of recs) — flex Spectral almost every game.
+- Support/Solo anti-heal is rare in defaults (~21.7% support) — Stygian/Brawler's is a live flex.
 - Gods rising (r5 patch): Hachiman, Chronos, Ganesha, Hel.
 - Items hot (r5 patch): Gluttonous Grimoire, Eros' Bow, Brawler’s Beat Stick, Stygian Anchor.
 - Patch axes (avg r5): damage +0.09, general +0.07, survivability -0.06.
@@ -20,26 +20,26 @@ _Generated: 2026-10-29T23:00:42.019972+00:00_
 |------|------:|--:|
 | Tyrfing | 18 | 75.0 |
 | Odysseus' Bow | 18 | 75.0 |
-| Deathbringer | 14 | 58.3 |
 | The Executioner | 13 | 54.2 |
+| Deathbringer | 13 | 54.2 |
 | Eye of the Storm | 12 | 50.0 |
 | Devourer's Gauntlet | 11 | 45.8 |
+| Book of Thoth | 5 | 20.8 |
 | The Cosmic Horror | 5 | 20.8 |
 | Spear of Desolation | 5 | 20.8 |
-| Soul Reaver | 5 | 20.8 |
-| Book of Thoth | 5 | 20.8 |
 | Qin's Blade | 5 | 20.8 |
 | Sands Of Time | 4 | 16.7 |
+| Soul Reaver | 4 | 16.7 |
 | Tekko-Kagi | 4 | 16.7 |
 | Spear Of The Magus | 4 | 16.7 |
-| Ethereal Staff | 3 | 12.5 |
+| Riptalon | 4 | 16.7 |
 
 ### Mid (26 paths)
 
 | Item | Paths | % |
 |------|------:|--:|
 | Spear of Desolation | 24 | 92.3 |
-| The Cosmic Horror | 22 | 84.6 |
+| The Cosmic Horror | 23 | 88.5 |
 | Book of Thoth | 22 | 84.6 |
 | Chronos' Pendant | 18 | 69.2 |
 | Gem of Isolation | 10 | 38.5 |
@@ -51,8 +51,8 @@ _Generated: 2026-10-29T23:00:42.019972+00:00_
 | Alchemist Coat | 3 | 11.5 |
 | Doom Orb | 2 | 7.7 |
 | Gluttonous Grimoire | 2 | 7.7 |
-| Dreamer's Idol | 1 | 3.8 |
-| Prophetic Cloak | 1 | 3.8 |
+| Breastplate of Valor | 1 | 3.8 |
+| Yogi's Necklace | 1 | 3.8 |
 
 ### Jungle (23 paths)
 
@@ -61,18 +61,18 @@ _Generated: 2026-10-29T23:00:42.019972+00:00_
 | Jotunn's Revenge | 22 | 95.7 |
 | Hydra's Lament | 21 | 91.3 |
 | The Crusher | 20 | 87.0 |
-| Heartseeker | 14 | 60.9 |
+| Heartseeker | 13 | 56.5 |
 | Tekko-Kagi | 10 | 43.5 |
+| Arondight | 8 | 34.8 |
 | The Reaper | 8 | 34.8 |
 | Pendulum Blade | 7 | 30.4 |
-| Avatar's Parashu | 7 | 30.4 |
-| Arondight | 6 | 26.1 |
+| Avatar's Parashu | 4 | 17.4 |
 | Damaru | 4 | 17.4 |
-| Bloodforge | 2 | 8.7 |
+| Bloodforge | 4 | 17.4 |
 | Hastened Fatalis | 2 | 8.7 |
 | Brawler’s Beat Stick | 2 | 8.7 |
-| The Cosmic Horror | 1 | 4.3 |
-| Spear of Desolation | 1 | 4.3 |
+| Spear Of The Magus | 1 | 4.3 |
+| Soul Gem | 1 | 4.3 |
 
 ### Solo (21 paths)
 
@@ -84,12 +84,12 @@ _Generated: 2026-10-29T23:00:42.019972+00:00_
 | Eye of the Storm | 10 | 47.6 |
 | Contagion | 8 | 38.1 |
 | Stone of Binding | 8 | 38.1 |
-| Prophetic Cloak | 6 | 28.6 |
+| Prophetic Cloak | 7 | 33.3 |
 | Leviathan's Hide | 6 | 28.6 |
-| Gladiator's Shield | 5 | 23.8 |
 | Wyrmskin Hide | 5 | 23.8 |
+| Gladiator's Shield | 5 | 23.8 |
 | Midgardian Mail | 5 | 23.8 |
-| Breastplate of Valor | 5 | 23.8 |
+| Breastplate of Valor | 4 | 19.0 |
 | Brawler’s Beat Stick | 3 | 14.3 |
 | Mystical Mail | 3 | 14.3 |
 | Doublet of Binding | 3 | 14.3 |
@@ -100,19 +100,19 @@ _Generated: 2026-10-29T23:00:42.019972+00:00_
 |------|------:|--:|
 | Gauntlet of Thebes | 21 | 91.3 |
 | Gem of Isolation | 13 | 56.5 |
-| Ethereal Staff | 11 | 47.8 |
 | Prophetic Cloak | 11 | 47.8 |
 | Contagion | 10 | 43.5 |
 | Stone of Binding | 10 | 43.5 |
-| Leviathan's Hide | 7 | 30.4 |
+| Leviathan's Hide | 9 | 39.1 |
+| Ethereal Staff | 7 | 30.4 |
 | Gladiator's Shield | 7 | 30.4 |
-| Breastplate of Valor | 5 | 21.7 |
-| Stygian Anchor | 4 | 17.4 |
-| Lotus Sickle | 4 | 17.4 |
+| Stygian Anchor | 5 | 21.7 |
+| Midgardian Mail | 4 | 17.4 |
 | Rod Of Asclepius | 4 | 17.4 |
+| Lotus Sickle | 4 | 17.4 |
+| Doublet of Binding | 4 | 17.4 |
 | Alchemist Coat | 4 | 17.4 |
-| Midgardian Mail | 3 | 13.0 |
-| Doublet of Binding | 3 | 13.0 |
+| Breastplate of Valor | 3 | 13.0 |
 
 ## Answer coverage
 
@@ -130,15 +130,15 @@ _Generated: 2026-10-29T23:00:42.019972+00:00_
 
 ### Solo
 - **vs heals / sustain**: 3/21 (14.3%)
-- **vs physical damage**: 10/21 (47.6%)
+- **vs physical damage**: 9/21 (42.9%)
 - **vs magic damage**: 12/21 (57.1%)
 - **vs CC / dive**: 0/21 (0.0%)
 
 ### Support
-- **vs crit**: 2/23 (8.7%)
-- **vs attack speed**: 6/23 (26.1%)
+- **vs crit**: 3/23 (13.0%)
+- **vs attack speed**: 8/23 (34.8%)
 - **vs magic damage**: 6/23 (26.1%)
-- **vs heals / sustain**: 4/23 (17.4%)
+- **vs heals / sustain**: 5/23 (21.7%)
 
 ## Trajectories — gods rising
 

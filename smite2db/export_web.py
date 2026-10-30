@@ -427,6 +427,19 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
                 g["conquest_by_aspect"] = by_aspect
             if paths:
                 g["build_display"] = "conquest"
+        # Break identical base paths across gods (same role) after full attach
+        from .conquest_builds import dedupe_identical_paths
+
+        for role in ALL_CONQUEST_ROLES:
+            role_builds = [
+                g["conquest_by_role"][role]
+                for g in gods
+                if isinstance(g.get("conquest_by_role"), dict)
+                and role in g["conquest_by_role"]
+            ]
+            n = dedupe_identical_paths(role, role_builds, shop_items)
+            if n:
+                print(f"  Clone break {role}: {n} path(s) flexed")
     except Exception as exc:  # noqa: BLE001
         print(f"WARN: per-god conquest attach failed: {exc}")
 
