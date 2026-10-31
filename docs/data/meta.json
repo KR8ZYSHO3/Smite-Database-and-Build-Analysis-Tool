@@ -1,7 +1,7 @@
 {
   "game": "SMITE 2",
   "source": "https://wiki.smite2.com",
-  "exported_at": "2026-10-31T19:11:43.286503+00:00",
+  "exported_at": "2026-10-31T19:18:12.588410+00:00",
   "repo": "https://github.com/KR8ZYSHO3/Smite-Database-and-Build-Analysis-Tool",
   "live_url": "https://smitebuilddatabase.netlify.app/",
   "live_url_alt": "https://smitebuilddatabase.netlify.app/",
@@ -166,5 +166,24 @@
       "eval": "python -m smite2db.eval_builds"
     }
   },
-  "has_meta_lab": true
+  "has_meta_lab": true,
+  "blend_calibration": {
+    "algorithm_version": "1.6.0",
+    "generated_at": "2026-10-31T19:16:51.752705+00:00",
+    "holdout_n": 49,
+    "holdout_mean_hit_rate": 0.248,
+    "unlocked_mean_holdout_hit_rate": 0.269,
+    "locked_mean_holdout_hit_rate": 0.067,
+    "mean_path_win_affinity": -0.0357,
+    "win_association": {
+      "n": 48,
+      "median_wr": 0.5,
+      "high_wr_n": 29,
+      "low_wr_n": 19,
+      "high_wr_mean_affinity": -0.0321,
+      "low_wr_mean_affinity": -0.0409,
+      "gap": 0.0088
+    },
+    "note": "inspire_sample_scale mutes slightly when holdout_mean_hit_rate < 0.20; win-aff boosts items over-represented in higher-WR inspiration bags."
+  }
 }

@@ -38,6 +38,105 @@ function roleClass(role) {
   return ROLE_THEME[role] || "role-mid";
 }
 
+/** Build-path confidence from export (confidence_card / ladder_games). */
+function resolveBuildConfidence(gb) {
+  if (!gb || typeof gb !== "object") return null;
+  const card = gb.confidence_card || null;
+  const label = String(
+    (card && card.confidence) || gb.confidence || ""
+  ).toLowerCase();
+  if (!label && card == null && gb.ladder_games == null) return null;
+  const n =
+    card?.ladder_games ??
+    gb.ladder_games ??
+    null;
+  const w =
+    card?.ladder_weight ??
+    gb.ladder_weight ??
+    null;
+  const lock = !!(card?.identity_lock ?? gb.identity_lock);
+  const score = card?.confidence_score;
+  const rationale = card?.rationale || "";
+  const hooks = card?.identity_hooks || gb.identity_hooks || [];
+  return {
+    label: label || (n >= 40 ? "high" : n >= 12 ? "medium" : "low"),
+    n,
+    w,
+    lock,
+    score,
+    rationale,
+    hooks,
+  };
+}
+
+function buildConfidencePills(gb, { compact = false } = {}) {
+  const conf = resolveBuildConfidence(gb);
+  if (!conf) return "";
+  const cls =
+    conf.label === "high"
+      ? "conf-high"
+      : conf.label === "medium"
+        ? "conf-med"
+        : "conf-low";
+  const title = conf.rationale
+    ? escapeAttr(conf.rationale)
+    : escapeAttr(
+        `${conf.label} confidence` +
+          (conf.n != null ? ` · ${conf.n} god×role games` : "") +
+          (conf.lock ? " · identity lock" : "")
+      );
+  const nBit =
+    conf.n != null
+      ? `<span class="pill" title="God×role ladder / inspiration sample">n=${escapeHtml(
+          String(conf.n)
+        )}</span>`
+      : "";
+  const lockBit = conf.lock
+    ? `<span class="pill ice" title="Kit identity lock — cores beat thin ladder">kit lock</span>`
+    : "";
+  if (compact) {
+    return `<span class="pill ${cls}" title="${title}">conf ${escapeHtml(
+      conf.label
+    )}</span>`;
+  }
+  return `${`<span class="pill ${cls}" title="${title}">conf ${escapeHtml(
+    conf.label
+  )}</span>`}${nBit}${lockBit}`;
+}
+
+function buildConfidenceDetail(gb) {
+  const conf = resolveBuildConfidence(gb);
+  if (!conf) return "";
+  const bits = [];
+  if (conf.rationale) bits.push(escapeHtml(conf.rationale));
+  if (conf.w != null)
+    bits.push(`ladder weight ${Number(conf.w).toFixed(2)}`);
+  if (conf.score != null)
+    bits.push(`score ${Number(conf.score).toFixed(2)}`);
+  if ((conf.hooks || []).length)
+    bits.push(`hooks: ${escapeHtml(conf.hooks.slice(0, 4).join(", "))}`);
+  if (!bits.length) return "";
+  return `<p class="muted conf-rationale">${bits.join(" · ")}</p>`;
+}
+
+function blendCalibrationStrip() {
+  const cal = state.meta?.blend_calibration;
+  if (!cal || cal.holdout_mean_hit_rate == null) return "";
+  const hit = Number(cal.holdout_mean_hit_rate);
+  const unlocked = cal.unlocked_mean_holdout_hit_rate;
+  const gap = cal.win_association?.gap;
+  const n = cal.holdout_n;
+  const parts = [
+    `holdout hit ${(hit * 100).toFixed(0)}%`,
+    unlocked != null ? `unlocked ${(Number(unlocked) * 100).toFixed(0)}%` : null,
+    gap != null ? `win-assoc gap ${(Number(gap) * 100).toFixed(1)}pp` : null,
+    n != null ? `n=${n}` : null,
+  ].filter(Boolean);
+  return `<p class="muted blend-cal-strip" title="${escapeAttr(
+    cal.note || "Holdout item hit-rate vs tracker inspiration; win-assoc from higher-WR bags."
+  )}">Blend check: ${escapeHtml(parts.join(" · "))}</p>`;
+}
+
 function setActiveRoleTheme(role) {
   document.body.classList.remove("role-carry", "role-mid", "role-jungle", "role-solo", "role-support");
   if (role && ROLE_THEME[role]) document.body.classList.add(ROLE_THEME[role]);
@@ -1781,6 +1880,7 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta, isFlex) {
             )}</p>`
           : ""
       }
+      <div class="build-meta conf-row">${buildConfidencePills(gb)}</div>
       <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>
       ${loadoutRail(items)}
       <ol class="buy-list simple-buy">
@@ -1795,7 +1895,9 @@ function renderRolePathCard(gb, role, dtype, g, isAspect, aspectMeta, isFlex) {
           ${gb.archetype ? `<span class="pill">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
           <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
           <span class="pill">actives ${nAct}/${maxA}</span>
+          ${buildConfidencePills(gb)}
         </div>
+        ${buildConfidenceDetail(gb)}
         ${flexChipsHtml(resolveFlexChips(gb, role), { compact: false })}
       </details>
       ${shareBar(shareData)}
@@ -2216,7 +2318,20 @@ function setupBuilds() {
             : ""
         }
         <p class="muted" style="margin:0">This is only role context. The <strong>god cards below</strong> are the real builds.</p>
+        ${blendCalibrationStrip()}
       `;
+    }
+    const rosterLabel = $("#builds-roster-label");
+    if (rosterLabel && !rosterLabel.hidden) {
+      let calEl = rosterLabel.querySelector(".blend-cal-strip");
+      const stripHtml = blendCalibrationStrip();
+      if (stripHtml) {
+        if (!calEl) {
+          rosterLabel.insertAdjacentHTML("beforeend", stripHtml);
+        } else {
+          calEl.outerHTML = stripHtml;
+        }
+      }
     }
 
     const q = (search.value || "").toLowerCase().trim();
@@ -2764,6 +2879,7 @@ function renderGodPathPanel(gb, role, opts = {}) {
             : ""
         }
         ${shortWhy ? `<p class="why simple-why">${escapeHtml(shortWhy)}.</p>` : ""}
+        <div class="build-meta conf-row">${buildConfidencePills(gb)}</div>
         <div class="starter-line"><span class="tag-start">Start</span> ${escapeHtml(gb.starter?.name || "—")}</div>
         ${
           gb.skill_order
@@ -2802,7 +2918,9 @@ function renderGodPathPanel(gb, role, opts = {}) {
             ${gb.archetype ? `<span class="pill">${escapeHtml(String(gb.archetype).replace(/_/g, " "))}</span>` : ""}
             <span class="pill">pen ≈ ${fmt(penG, 0)}</span>
             ${showMit ? `<span class="pill">mit ≈ ${fmt(mitG, 0)}</span>` : ""}
+            ${buildConfidencePills(gb)}
           </div>
+          ${buildConfidenceDetail(gb)}
           ${
             effects.length
               ? `<div class="kit-effects">${effects
@@ -2840,6 +2958,7 @@ function godPickCard(gb, role, opts = {}) {
   const roleBadge = native
     ? `<span class="pill hot compact-pill">Native</span>`
     : `<span class="pill compact-pill">Off-role</span>`;
+  const confCompact = buildConfidencePills(gb, { compact: true });
   return `
     <button type="button" class="card build-card god-pick-card simple-build ${roleClass(role)}${
       native ? " is-native-role" : " is-flex-role"
@@ -2859,6 +2978,7 @@ function godPickCard(gb, role, opts = {}) {
         </span>
         <span class="gpc-meta">
           ${roleBadge}
+          ${confCompact}
           <span class="tier-pill tier-${gb.tier || ""}">${escapeHtml(gb.tier || "?")}</span>
         </span>
       </span>
@@ -7202,11 +7322,19 @@ async function main() {
         upd.setAttribute("data-exported-at", String(exported));
       }
     }
+    const cal = state.meta?.blend_calibration;
+    const algoVer = state.meta?.build_algorithm?.version || "1.6.0";
+    const calBit =
+      cal?.holdout_mean_hit_rate != null
+        ? `holdout ${(Number(cal.holdout_mean_hit_rate) * 100).toFixed(0)}%`
+        : null;
     $("#meta-line").textContent = [
       `${(state.gods || []).length} gods`,
       `${(state.items || []).length} items`,
       stamp ? `updated ${stamp}` : "live data",
-      "model: kit + patch + ranked WR",
+      `algo ${algoVer}`,
+      calBit,
+      "kit + patch + ranked WR",
     ]
       .filter(Boolean)
       .join(" · ");

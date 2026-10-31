@@ -543,15 +543,32 @@ def inspiration_buy_rank(
 def save_inspiration(doc: dict[str, Any], path: Path | str | None = None) -> Path:
     out = Path(path) if path else DEFAULT_OUT
     out.parent.mkdir(parents=True, exist_ok=True)
-    # Never clobber a good snapshot with an empty scrape (403 / rate-limit)
+    # Never clobber a good snapshot with an empty or much thinner scrape
+    # (tracker.gg often 403/rate-limits mid-run → 1–2 players only).
     n = int(doc.get("builds_extracted") or 0)
-    if n < 20 and out.is_file():
+    n_bags = len(doc.get("by_god_role") or {})
+    n_players = int(doc.get("players_with_builds") or 0)
+    if out.is_file():
         try:
             old = json.loads(out.read_text(encoding="utf-8"))
-            if int(old.get("builds_extracted") or 0) >= 20:
+            old_n = int(old.get("builds_extracted") or 0)
+            old_bags = len(old.get("by_god_role") or {})
+            old_players = int(old.get("players_with_builds") or 0)
+            thin_empty = n < 20 and old_n >= 20
+            thin_coverage = (
+                old_n >= 100
+                and old_bags >= 40
+                and (
+                    n < int(old_n * 0.55)
+                    or n_bags < int(old_bags * 0.55)
+                    or (old_players >= 3 and n_players < 2)
+                )
+            )
+            if thin_empty or thin_coverage:
                 print(
                     f"WARN: refusing to overwrite {out} "
-                    f"(new builds={n}, existing={old.get('builds_extracted')})"
+                    f"(new builds={n} bags={n_bags} players={n_players}; "
+                    f"existing builds={old_n} bags={old_bags} players={old_players})"
                 )
                 return out
         except (OSError, json.JSONDecodeError, TypeError):

@@ -197,10 +197,10 @@
         "items": [
           "The Crusher",
           "Titan's Bane",
+          "Gauntlet of Thebes",
           "Contagion",
           "Leviathan's Hide",
-          "Gladiator's Shield",
-          "Hide of the Nemean Lion"
+          "Gladiator's Shield"
         ],
         "starter": "Bumba's Cudgel",
         "confidence": "medium",
@@ -296,25 +296,25 @@
     "n": 49,
     "holdout": 0.3,
     "min_games": 4,
-    "mean_holdout_hit_rate": 0.252,
+    "mean_holdout_hit_rate": 0.248,
     "mean_train_hit_rate": 0.442,
-    "mean_path_win_affinity": -0.0334,
-    "corr_hit_vs_wr": -0.07,
+    "mean_path_win_affinity": -0.0357,
+    "corr_hit_vs_wr": -0.061,
     "win_association": {
       "n": 48,
       "median_wr": 0.5,
       "high_wr_n": 29,
       "low_wr_n": 19,
-      "high_wr_mean_affinity": -0.0317,
-      "low_wr_mean_affinity": -0.0357,
-      "gap": 0.004
+      "high_wr_mean_affinity": -0.0321,
+      "low_wr_mean_affinity": -0.0409,
+      "gap": 0.0088
     },
     "thin_sample_n": 40,
-    "thin_mean_holdout_hit_rate": 0.225,
+    "thin_mean_holdout_hit_rate": 0.221,
     "fat_sample_n": 0,
     "fat_mean_holdout_hit_rate": null,
     "locked_n": 5,
-    "locked_mean_holdout_hit_rate": 0.1,
+    "locked_mean_holdout_hit_rate": 0.067,
     "unlocked_n": 44,
     "unlocked_mean_holdout_hit_rate": 0.269,
     "rows": [
@@ -681,14 +681,14 @@
         "algo_items": [
           "Gauntlet of Thebes",
           "Prophetic Cloak",
+          "Contagion",
           "Gem of Isolation",
           "Stone of Binding",
-          "Void Stone",
           "Ethereal Staff"
         ],
         "holdout_hit_rate": 0.0,
         "train_hit_rate": 0.333,
-        "path_win_affinity": -0.0874,
+        "path_win_affinity": -0.0993,
         "holdout_size": 6,
         "identity_lock": true
       },
@@ -924,13 +924,13 @@
           "Gauntlet of Thebes",
           "Prophetic Cloak",
           "Contagion",
+          "Leviathan's Hide",
           "Gladiator's Shield",
-          "Ethereal Staff",
-          "Breastplate of Valor"
+          "Ethereal Staff"
         ],
-        "holdout_hit_rate": 0.333,
-        "train_hit_rate": 0.333,
-        "path_win_affinity": -0.0827,
+        "holdout_hit_rate": 0.167,
+        "train_hit_rate": 0.167,
+        "path_win_affinity": -0.0993,
         "holdout_size": 7,
         "identity_lock": true
       },
@@ -1318,15 +1318,15 @@
         "confidence": "low",
         "algo_items": [
           "Gauntlet of Thebes",
+          "Prophetic Cloak",
+          "Contagion",
           "Gem of Isolation",
           "Stone of Binding",
-          "Void Shield",
-          "Doublet of Binding",
           "Ethereal Staff"
         ],
         "holdout_hit_rate": 0.0,
-        "train_hit_rate": 0.167,
-        "path_win_affinity": -0.0168,
+        "train_hit_rate": 0.333,
+        "path_win_affinity": -0.0993,
         "holdout_size": 7,
         "identity_lock": true
       },
@@ -1402,10 +1402,10 @@
     "fixtures_passed": 14,
     "fixtures_failed": 0,
     "unit_ok": true,
-    "holdout_mean_hit_rate": 0.252,
+    "holdout_mean_hit_rate": 0.248,
     "holdout_n": 49,
-    "mean_path_win_affinity": -0.0334,
-    "corr_hit_vs_wr": -0.07,
-    "win_assoc_gap": 0.004
+    "mean_path_win_affinity": -0.0357,
+    "corr_hit_vs_wr": -0.061,
+    "win_assoc_gap": 0.0088
   }
 }

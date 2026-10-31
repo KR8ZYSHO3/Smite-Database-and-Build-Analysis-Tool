@@ -462,6 +462,30 @@ def export_web(db_path: Path | str | None = None, rebuild_builds: bool = True) -
     meta["build_algorithm"] = algorithm_card()
     meta["has_meta_lab"] = bool(meta_lab) and "error" not in meta_lab
 
+    # Holdout / win-association calibration (written by eval_builds)
+    blend_cal: dict = {}
+    blend_cal_src = ROOT / "data" / "blend_calibration.json"
+    try:
+        if blend_cal_src.is_file():
+            blend_cal = json.loads(blend_cal_src.read_text(encoding="utf-8"))
+            meta["blend_calibration"] = {
+                "algorithm_version": blend_cal.get("algorithm_version"),
+                "generated_at": blend_cal.get("generated_at"),
+                "holdout_n": blend_cal.get("holdout_n"),
+                "holdout_mean_hit_rate": blend_cal.get("holdout_mean_hit_rate"),
+                "unlocked_mean_holdout_hit_rate": blend_cal.get(
+                    "unlocked_mean_holdout_hit_rate"
+                ),
+                "locked_mean_holdout_hit_rate": blend_cal.get(
+                    "locked_mean_holdout_hit_rate"
+                ),
+                "mean_path_win_affinity": blend_cal.get("mean_path_win_affinity"),
+                "win_association": blend_cal.get("win_association"),
+                "note": blend_cal.get("note"),
+            }
+    except Exception as exc:  # noqa: BLE001
+        print(f"WARN: blend_calibration load failed: {exc}")
+
     # Curated Featured Builds explainers (editorial — not regenerated from ladder)
     featured_builds: dict = {}
     featured_src = ROOT / "data" / "featured_builds.json"

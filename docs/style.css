@@ -417,6 +417,31 @@ tr.selected td {
 }
 .pill.tier-S, .pill.s { border-color: rgba(255,214,10,0.5); color: var(--s); }
 .pill.hot { border-color: rgba(232,93,117,0.5); color: #ffb4a2; }
+.pill.conf-high {
+  border-color: rgba(61, 214, 140, 0.55);
+  color: #8ef0c0;
+}
+.pill.conf-med {
+  border-color: rgba(240, 199, 94, 0.55);
+  color: #f0c75e;
+}
+.pill.conf-low {
+  border-color: rgba(148, 163, 184, 0.45);
+  color: #94a3b8;
+}
+.build-meta.conf-row {
+  margin: 4px 0 8px;
+}
+.conf-rationale {
+  margin: 4px 0 8px;
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+.blend-cal-strip {
+  margin: 8px 0 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
 
 /* ----- Builds ----- */
 .build-line {

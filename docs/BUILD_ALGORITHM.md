@@ -320,7 +320,13 @@ god tier; overall uses the primary-role base path only.
 - `python -m smite2db.ship` **aborts** on fixture failure, holdout floor collapse (`mean_hit < 0.12`), or quality-gate `pen_fail` / `role_job_fail` (shared paths remain WARN).
 - **Holdout + win-association:** full `eval_builds` splits tracker inspiration bags, scores algorithm hit-rate, and measures path win-affinity (items over-represented in higher-WR god|role bags). Writes `data/blend_calibration.json`. Soft `win-aff` score nudge in `inspiration_boost`; inspire scale mutes slightly when holdout hit is poor.
 
-Empty inspiration scrapes **must not** overwrite a good snapshot (guard in `save_inspiration`).
+Empty or much thinner inspiration scrapes **must not** overwrite a good snapshot
+(`save_inspiration` refuses when builds/bags drop below ~55% of an existing solid snapshot,
+or when player coverage collapses under rate-limits).
+
+**Website surfaces:** each Conquest path exports `confidence_card` / `ladder_games`; the Builds UI
+shows conf high/med/low pills + sample `n` and kit-lock badges. `meta.blend_calibration`
+(from holdout eval) appears on the role context card and in the header meta line.
 
 ---
 

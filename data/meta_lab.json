@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-31T19:12:26.802053+00:00",
+  "generated_at": "2026-10-31T19:18:48.894609+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -3453,12 +3453,12 @@
           "pct": 45.8
         },
         {
-          "name": "Book of Thoth",
+          "name": "Spear of Desolation",
           "paths": 5,
           "pct": 20.8
         },
         {
-          "name": "Spear of Desolation",
+          "name": "Book of Thoth",
           "paths": 5,
           "pct": 20.8
         },
@@ -3468,12 +3468,12 @@
           "pct": 20.8
         },
         {
-          "name": "Sands Of Time",
+          "name": "Soul Reaver",
           "paths": 4,
           "pct": 16.7
         },
         {
-          "name": "Soul Reaver",
+          "name": "Sands Of Time",
           "paths": 4,
           "pct": 16.7
         },
@@ -3568,12 +3568,12 @@
           "pct": 7.7
         },
         {
-          "name": "Breastplate of Valor",
+          "name": "Yogi's Necklace",
           "paths": 1,
           "pct": 3.8
         },
         {
-          "name": "Yogi's Necklace",
+          "name": "Breastplate of Valor",
           "paths": 1,
           "pct": 3.8
         }
@@ -3628,12 +3628,12 @@
           "pct": 17.4
         },
         {
-          "name": "Damaru",
+          "name": "Bloodforge",
           "paths": 4,
           "pct": 17.4
         },
         {
-          "name": "Bloodforge",
+          "name": "Damaru",
           "paths": 4,
           "pct": 17.4
         },
@@ -3648,12 +3648,12 @@
           "pct": 8.7
         },
         {
-          "name": "Soul Gem",
+          "name": "Spear Of The Magus",
           "paths": 1,
           "pct": 4.3
         },
         {
-          "name": "Spear Of The Magus",
+          "name": "Soul Gem",
           "paths": 1,
           "pct": 4.3
         }
@@ -3703,12 +3703,12 @@
           "pct": 28.6
         },
         {
-          "name": "Gladiator's Shield",
+          "name": "Wyrmskin Hide",
           "paths": 5,
           "pct": 23.8
         },
         {
-          "name": "Wyrmskin Hide",
+          "name": "Gladiator's Shield",
           "paths": 5,
           "pct": 23.8
         },
@@ -3793,22 +3793,22 @@
           "pct": 21.7
         },
         {
-          "name": "Spectral Armor",
-          "paths": 4,
-          "pct": 17.4
-        },
-        {
           "name": "Stygian Anchor",
           "paths": 4,
           "pct": 17.4
         },
         {
-          "name": "Rod Of Asclepius",
+          "name": "Spectral Armor",
           "paths": 4,
           "pct": 17.4
         },
         {
           "name": "Lotus Sickle",
+          "paths": 4,
+          "pct": 17.4
+        },
+        {
+          "name": "Rod Of Asclepius",
           "paths": 4,
           "pct": 17.4
         },

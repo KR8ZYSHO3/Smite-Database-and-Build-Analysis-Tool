@@ -2,7 +2,7 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-10-31T19:12:26.802053+00:00_
+_Generated: 2026-10-31T19:18:48.894609+00:00_
 
 ## Weekly themes
 
@@ -24,11 +24,11 @@ _Generated: 2026-10-31T19:12:26.802053+00:00_
 | Deathbringer | 12 | 50.0 |
 | Eye of the Storm | 12 | 50.0 |
 | Devourer's Gauntlet | 11 | 45.8 |
-| Book of Thoth | 5 | 20.8 |
 | Spear of Desolation | 5 | 20.8 |
+| Book of Thoth | 5 | 20.8 |
 | The Cosmic Horror | 5 | 20.8 |
-| Sands Of Time | 4 | 16.7 |
 | Soul Reaver | 4 | 16.7 |
+| Sands Of Time | 4 | 16.7 |
 | Tekko-Kagi | 4 | 16.7 |
 | Spear Of The Magus | 4 | 16.7 |
 | Qin's Blade | 4 | 16.7 |
@@ -51,8 +51,8 @@ _Generated: 2026-10-31T19:12:26.802053+00:00_
 | Alchemist Coat | 3 | 11.5 |
 | Doom Orb | 2 | 7.7 |
 | Gluttonous Grimoire | 2 | 7.7 |
-| Breastplate of Valor | 1 | 3.8 |
 | Yogi's Necklace | 1 | 3.8 |
+| Breastplate of Valor | 1 | 3.8 |
 
 ### Jungle (23 paths)
 
@@ -67,12 +67,12 @@ _Generated: 2026-10-31T19:12:26.802053+00:00_
 | The Reaper | 8 | 34.8 |
 | Pendulum Blade | 7 | 30.4 |
 | Avatar's Parashu | 4 | 17.4 |
-| Damaru | 4 | 17.4 |
 | Bloodforge | 4 | 17.4 |
+| Damaru | 4 | 17.4 |
 | Hastened Fatalis | 2 | 8.7 |
 | Brawler’s Beat Stick | 2 | 8.7 |
-| Soul Gem | 1 | 4.3 |
 | Spear Of The Magus | 1 | 4.3 |
+| Soul Gem | 1 | 4.3 |
 
 ### Solo (21 paths)
 
@@ -86,8 +86,8 @@ _Generated: 2026-10-31T19:12:26.802053+00:00_
 | Stone of Binding | 8 | 38.1 |
 | Prophetic Cloak | 7 | 33.3 |
 | Leviathan's Hide | 6 | 28.6 |
-| Gladiator's Shield | 5 | 23.8 |
 | Wyrmskin Hide | 5 | 23.8 |
+| Gladiator's Shield | 5 | 23.8 |
 | Midgardian Mail | 5 | 23.8 |
 | Breastplate of Valor | 5 | 23.8 |
 | Brawler’s Beat Stick | 3 | 14.3 |
@@ -108,10 +108,10 @@ _Generated: 2026-10-31T19:12:26.802053+00:00_
 | Leviathan's Hide | 6 | 26.1 |
 | Breastplate of Valor | 5 | 21.7 |
 | Midgardian Mail | 5 | 21.7 |
-| Spectral Armor | 4 | 17.4 |
 | Stygian Anchor | 4 | 17.4 |
-| Rod Of Asclepius | 4 | 17.4 |
+| Spectral Armor | 4 | 17.4 |
 | Lotus Sickle | 4 | 17.4 |
+| Rod Of Asclepius | 4 | 17.4 |
 | Alchemist Coat | 4 | 17.4 |
 
 ## Answer coverage
