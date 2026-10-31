@@ -2,12 +2,12 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-10-30T15:09:50.944238+00:00_
+_Generated: 2026-10-31T18:47:40.325240+00:00_
 
 ## Weekly themes
 
-- Support paths under-buy anti-crit (Spectral on ~13.0% of recs) — flex Spectral almost every game.
-- Support/Solo anti-heal is rare in defaults (~21.7% support) — Stygian/Brawler's is a live flex.
+- Support paths under-buy anti-crit (Spectral on ~17.4% of recs) — flex Spectral almost every game.
+- Support/Solo anti-heal is rare in defaults (~17.4% support) — Stygian/Brawler's is a live flex.
 - Gods rising (r5 patch): Hachiman, Chronos, Ganesha, Hel.
 - Items hot (r5 patch): Gluttonous Grimoire, Eros' Bow, Brawler’s Beat Stick, Stygian Anchor.
 - Patch axes (avg r5): damage +0.09, general +0.07, survivability -0.06.
@@ -24,9 +24,9 @@ _Generated: 2026-10-30T15:09:50.944238+00:00_
 | Deathbringer | 13 | 54.2 |
 | Eye of the Storm | 12 | 50.0 |
 | Devourer's Gauntlet | 11 | 45.8 |
-| Book of Thoth | 5 | 20.8 |
 | The Cosmic Horror | 5 | 20.8 |
 | Spear of Desolation | 5 | 20.8 |
+| Book of Thoth | 5 | 20.8 |
 | Qin's Blade | 5 | 20.8 |
 | Sands Of Time | 4 | 16.7 |
 | Soul Reaver | 4 | 16.7 |
@@ -71,8 +71,8 @@ _Generated: 2026-10-30T15:09:50.944238+00:00_
 | Bloodforge | 4 | 17.4 |
 | Hastened Fatalis | 2 | 8.7 |
 | Brawler’s Beat Stick | 2 | 8.7 |
-| Spear Of The Magus | 1 | 4.3 |
 | Soul Gem | 1 | 4.3 |
+| Spear Of The Magus | 1 | 4.3 |
 
 ### Solo (21 paths)
 
@@ -86,10 +86,10 @@ _Generated: 2026-10-30T15:09:50.944238+00:00_
 | Stone of Binding | 8 | 38.1 |
 | Prophetic Cloak | 7 | 33.3 |
 | Leviathan's Hide | 6 | 28.6 |
-| Wyrmskin Hide | 5 | 23.8 |
 | Gladiator's Shield | 5 | 23.8 |
+| Wyrmskin Hide | 5 | 23.8 |
 | Midgardian Mail | 5 | 23.8 |
-| Breastplate of Valor | 4 | 19.0 |
+| Breastplate of Valor | 5 | 23.8 |
 | Brawler’s Beat Stick | 3 | 14.3 |
 | Mystical Mail | 3 | 14.3 |
 | Doublet of Binding | 3 | 14.3 |
@@ -100,19 +100,19 @@ _Generated: 2026-10-30T15:09:50.944238+00:00_
 |------|------:|--:|
 | Gauntlet of Thebes | 21 | 91.3 |
 | Gem of Isolation | 13 | 56.5 |
-| Prophetic Cloak | 11 | 47.8 |
-| Contagion | 10 | 43.5 |
+| Contagion | 12 | 52.2 |
+| Prophetic Cloak | 12 | 52.2 |
 | Stone of Binding | 10 | 43.5 |
-| Leviathan's Hide | 9 | 39.1 |
 | Ethereal Staff | 7 | 30.4 |
+| Leviathan's Hide | 7 | 30.4 |
 | Gladiator's Shield | 7 | 30.4 |
-| Stygian Anchor | 5 | 21.7 |
-| Midgardian Mail | 4 | 17.4 |
+| Breastplate of Valor | 5 | 21.7 |
+| Midgardian Mail | 5 | 21.7 |
+| Spectral Armor | 4 | 17.4 |
+| Stygian Anchor | 4 | 17.4 |
 | Rod Of Asclepius | 4 | 17.4 |
 | Lotus Sickle | 4 | 17.4 |
-| Doublet of Binding | 4 | 17.4 |
 | Alchemist Coat | 4 | 17.4 |
-| Breastplate of Valor | 3 | 13.0 |
 
 ## Answer coverage
 
@@ -135,10 +135,10 @@ _Generated: 2026-10-30T15:09:50.944238+00:00_
 - **vs CC / dive**: 0/21 (0.0%)
 
 ### Support
-- **vs crit**: 3/23 (13.0%)
+- **vs crit**: 4/23 (17.4%)
 - **vs attack speed**: 8/23 (34.8%)
-- **vs magic damage**: 6/23 (26.1%)
-- **vs heals / sustain**: 5/23 (21.7%)
+- **vs magic damage**: 5/23 (21.7%)
+- **vs heals / sustain**: 4/23 (17.4%)
 
 ## Trajectories — gods rising
 

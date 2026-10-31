@@ -1528,11 +1528,11 @@ Bellona · Solo · archetype «sustain_solo» (STR / physical). Kit effects: sel
 
 *Magical · Hybrid scaling (STR 75.1% / INT 51.1%)*
 
-Cabrakan · Solo · archetype «tank_solo» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Prophetic Cloak (tenacity / anti-CC bulk); Ethereal Staff (Solo path fit for kit profile); Gladiator's Shield (Solo path fit for kit profile). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
+Cabrakan · Solo · archetype «tank_solo» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Breastplate of Valor (physical CDR defense; patch falling — extra bulk/CDR); Ethereal Staff (Solo path fit for kit profile); Gladiator's Shield (Solo path fit for kit profile). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 0/2, pen ≈ 0.0):
-  1. Prophetic Cloak (defense, 2400g)
+  1. Breastplate of Valor (defense, 2400g)
   2. Ethereal Staff (mitigate, 2550g)
   3. Gladiator's Shield (defense, 2450g)
   4. Gauntlet of Thebes (defense, 2200g)
@@ -1592,16 +1592,16 @@ Thor · Solo · archetype «tank_solo» (STR / physical). Kit effects: channel /
 
 *Physical · Strength scaling (STR 74.4% / INT 0%)*
 
-Horus · Solo · archetype «shield_solo» (STR / physical). Kit effects: protection shred, channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, high_cc, hybrid_bulk, mobile. Style burst 15%/dps 70%; patch falling (net -5.4, r5 -4.9). Patch axes (r5): survivability -2.6, heal -1.0, cooldown -0.9. Scale STR 74% / INT 0%. Path: Ethereal Staff (Solo path fit for kit profile); Gauntlet of Thebes (team aura / support core); Contagion (team anti-heal aura). Actives 0/3 · pen ≈ 0.
+Horus · Solo · archetype «shield_solo» (STR / physical). Kit effects: protection shred, channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, high_cc, hybrid_bulk, mobile. Style burst 15%/dps 70%; patch falling (net -5.4, r5 -4.9). Patch axes (r5): survivability -2.6, heal -1.0, cooldown -0.9. Scale STR 74% / INT 0%. Path: Prophetic Cloak (tenacity / anti-CC bulk); Ethereal Staff (Solo path fit for kit profile); Gauntlet of Thebes (team aura / support core). Actives 0/3 · pen ≈ 0.
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 0/3, pen ≈ 0.0):
-  1. Ethereal Staff (mitigate, 2550g)
-  2. Gauntlet of Thebes (defense, 2200g)
-  3. Contagion (defense, 2400g)
-  4. Gem of Isolation (mitigate, 2450g)
-  5. Stone of Binding (mitigate, 2550g)
-  6. Void Shield (defense, 2550g)
+  1. Prophetic Cloak (defense, 2400g)
+  2. Ethereal Staff (mitigate, 2550g)
+  3. Gauntlet of Thebes (defense, 2200g)
+  4. Contagion (defense, 2400g)
+  5. Gem of Isolation (mitigate, 2450g)
+  6. Stone of Binding (mitigate, 2550g)
 - **Relics:** Purification Beads (42.0), Aegis of Acceleration (32.0)
 
 #### Hades — D-tier (role rank #20, model 33.8)
@@ -1772,16 +1772,16 @@ Jormungandr · Support · archetype «lockdown_support» (INT / magical). Kit ef
 
 *Magical · Intelligence scaling (STR 12.0% / INT 66.9%)*
 
-Athena · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage, ally buffs / auras. Tags: anti_cc, channel, gap_close, hard_cc, high_cc, hybrid_bulk, self_sustain, shield. Style burst 52%/dps 28%; patch stable (net -0.5, r5 +0.0). Patch axes (r5): general -0.5, damage +0.1, utility -0.0. Scale STR 12% / INT 67%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Athena · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage, ally buffs / auras. Tags: anti_cc, channel, gap_close, hard_cc, high_cc, hybrid_bulk, self_sustain, shield. Style burst 52%/dps 28%; patch stable (net -0.5, r5 +0.0). Patch axes (r5): general -0.5, damage +0.1, utility -0.0. Scale STR 12% / INT 67%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Gauntlet of Thebes (defense, 2200g)
   2. Prophetic Cloak (defense, 2400g)
   3. Contagion (defense, 2400g)
-  4. Leviathan's Hide (mitigate, 2400g)
-  5. Gladiator's Shield (defense, 2450g)
-  6. Spectral Armor (mitigate, 2300g)
+  4. Gladiator's Shield (defense, 2450g)
+  5. Ethereal Staff (mitigate, 2550g)
+  6. Breastplate of Valor (defense, 2400g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Ix Chel — A-tier (role rank #8, model 51.8)
@@ -1852,16 +1852,16 @@ Sobek · Support · archetype «lockdown_support» (INT / magical). Kit effects:
 
 *Magical · Hybrid scaling (STR 75.1% / INT 51.1%)*
 
-Cabrakan · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Cabrakan · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Breastplate of Valor (physical CDR defense; patch falling — extra bulk/CDR). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Gauntlet of Thebes (defense, 2200g)
   2. Prophetic Cloak (defense, 2400g)
-  3. Contagion (defense, 2400g)
-  4. Leviathan's Hide (mitigate, 2400g)
+  3. Breastplate of Valor (defense, 2400g)
+  4. Contagion (defense, 2400g)
   5. Gladiator's Shield (defense, 2450g)
-  6. Midgardian Mail (mitigate, 2400g)
+  6. Ethereal Staff (mitigate, 2550g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Bacchus — B-tier (role rank #13, model 46.1)
@@ -1916,15 +1916,15 @@ Artio · Support · archetype «heal_support» (INT / magical). Kit effects: pro
 
 *Magical · Intelligence scaling (STR 0% / INT 51.4%)*
 
-Atlas · Support · archetype «lockdown_support» (INT / magical). Kit effects: protection shred, low cooldowns, pet / deployable, hard crowd control, dash / leap engage, lots of CC. Tags: dot, gap_close, hard_cc, high_cc, hybrid_bulk, pet_zone, prot_shred, spam. Style burst 58%/dps 22%; patch falling (net -1.2, r5 -0.9). Patch axes (r5): mana -0.9. Scale STR 0% / INT 51%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Gem of Isolation (zones & CC — Isolation slow/shred value). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Atlas · Support · archetype «lockdown_support» (INT / magical). Kit effects: protection shred, low cooldowns, pet / deployable, hard crowd control, dash / leap engage, lots of CC. Tags: dot, gap_close, hard_cc, high_cc, hybrid_bulk, pet_zone, prot_shred, spam. Style burst 58%/dps 22%; patch falling (net -1.2, r5 -0.9). Patch axes (r5): mana -0.9. Scale STR 0% / INT 51%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Gauntlet of Thebes (defense, 2200g)
   2. Prophetic Cloak (defense, 2400g)
-  3. Gem of Isolation (mitigate, 2450g)
-  4. Stone of Binding (mitigate, 2550g)
-  5. Void Stone (defense, 2550g)
+  3. Contagion (defense, 2400g)
+  4. Gem of Isolation (mitigate, 2450g)
+  5. Stone of Binding (mitigate, 2550g)
   6. Ethereal Staff (mitigate, 2550g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
@@ -1941,7 +1941,7 @@ Sylvanus · Support · archetype «lockdown_support» (INT / magical). Kit effec
   3. Contagion (defense, 2400g)
   4. Gem of Isolation (mitigate, 2450g)
   5. Stone of Binding (mitigate, 2550g)
-  6. Ethereal Staff (mitigate, 2550g)
+  6. Spectral Armor (mitigate, 2300g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (42.0)
 
 #### Khepri — C-tier (role rank #18, model 42.1)
@@ -1957,23 +1957,23 @@ Khepri · Support · archetype «shield_support» (INT / magical). Kit effects: 
   3. Contagion (defense, 2400g)
   4. Leviathan's Hide (mitigate, 2400g)
   5. Gladiator's Shield (defense, 2450g)
-  6. Doublet of Binding (mitigate, 2700g)
+  6. Spectral Armor (mitigate, 2300g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Horus — C-tier (role rank #19, model 40.9)
 
 *Physical · Strength scaling (STR 74.4% / INT 0%)*
 
-Horus · Support · archetype «shield_support» (STR / physical). Kit effects: protection shred, channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, high_cc, hybrid_bulk, mobile. Style burst 15%/dps 70%; patch falling (net -5.4, r5 -4.9). Patch axes (r5): survivability -2.6, heal -1.0, cooldown -0.9. Scale STR 74% / INT 0%. Path: Gauntlet of Thebes (team aura / support core); Gem of Isolation (zones & CC — Isolation slow/shred value); Stone of Binding (Stone of Binding — CC setup shred). Actives 1/1 · pen ≈ 0. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
+Horus · Support · archetype «shield_support» (STR / physical). Kit effects: protection shred, channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, high_cc, hybrid_bulk, mobile. Style burst 15%/dps 70%; patch falling (net -5.4, r5 -4.9). Patch axes (r5): survivability -2.6, heal -1.0, cooldown -0.9. Scale STR 74% / INT 0%. Path: Gauntlet of Thebes (team aura / support core); Prophetic Cloak (tenacity / anti-CC bulk); Contagion (team anti-heal aura). Actives 0/1 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
-- **Buy order** (actives 1/1, pen ≈ 0.0):
+- **Buy order** (actives 0/1, pen ≈ 0.0):
   1. Gauntlet of Thebes (defense, 2200g)
-  2. Gem of Isolation (mitigate, 2450g)
-  3. Stone of Binding (mitigate, 2550g)
-  4. Void Shield (defense, 2550g)
-  5. Doublet of Binding (mitigate, active, 2700g)
-  6. Ethereal Staff (mitigate, 2550g)
+  2. Prophetic Cloak (defense, 2400g)
+  3. Contagion (defense, 2400g)
+  4. Gem of Isolation (mitigate, 2450g)
+  5. Stone of Binding (mitigate, 2550g)
+  6. Midgardian Mail (mitigate, 2400g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Aphrodite — D-tier (role rank #20, model 35.0)
@@ -2005,7 +2005,7 @@ Geb · Support · archetype «shield_support» (INT / magical). Kit effects: sel
   3. Contagion (defense, 2400g)
   4. Leviathan's Hide (mitigate, 2400g)
   5. Gladiator's Shield (defense, 2450g)
-  6. Stygian Anchor (mitigate, 2550g)
+  6. Midgardian Mail (mitigate, 2400g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Kuzenbo — D-tier (role rank #22, model 32.8)

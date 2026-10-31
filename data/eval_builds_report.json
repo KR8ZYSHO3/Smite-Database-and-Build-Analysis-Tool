@@ -6,9 +6,9 @@
     "errors": []
   },
   "fixtures": {
-    "passed": 13,
+    "passed": 14,
     "failed": 0,
-    "total": 13,
+    "total": 14,
     "results": [
       {
         "name": "kuzenbo_base_support",
@@ -178,8 +178,8 @@
           "Ethereal Staff",
           "Gauntlet of Thebes",
           "Contagion",
-          "Prophetic Cloak",
           "Leviathan's Hide",
+          "Prophetic Cloak",
           "Gladiator's Shield"
         ],
         "starter": "Gilded Arrow",
@@ -197,10 +197,10 @@
         "items": [
           "The Crusher",
           "Titan's Bane",
-          "Gauntlet of Thebes",
           "Contagion",
           "Leviathan's Hide",
-          "Gladiator's Shield"
+          "Gladiator's Shield",
+          "Hide of the Nemean Lion"
         ],
         "starter": "Bumba's Cudgel",
         "confidence": "medium",
@@ -269,12 +269,32 @@
         "aspect": "Aspect of Thermotherapy",
         "note": "Thermo Mid: enchanter Sickle+Asclepius; no power-mage cores",
         "confidence_rationale": "25 god\u00d7role games \u2192 ladder weight 0.12; identity_lock on \u2014 kit cores outrank thin ladder"
+      },
+      {
+        "name": "danza_fellowship_carry",
+        "ok": true,
+        "errors": [],
+        "items": [
+          "Tyrfing",
+          "Qin's Blade",
+          "Silverbranch Bow",
+          "Eros' Bow",
+          "Eye of the Storm",
+          "Odysseus' Bow"
+        ],
+        "starter": "Gilded Arrow",
+        "confidence": "low",
+        "ladder_games": 0,
+        "ladder_weight": 0.0,
+        "aspect": "Aspect of Fellowship",
+        "note": "Fellowship Carry: hybrid INT+AS clone amp (Eros/Bragi/Death Metal) + on-hit volume; no pure crit glass",
+        "confidence_rationale": "0 god\u00d7role games \u2192 ladder weight 0.00; identity_lock on \u2014 kit cores outrank thin ladder; treat as kit/role theory until sample grows"
       }
     ]
   },
   "holdout": null,
   "summary": {
-    "fixtures_passed": 13,
+    "fixtures_passed": 14,
     "fixtures_failed": 0,
     "unit_ok": true,
     "holdout_mean_hit_rate": null,

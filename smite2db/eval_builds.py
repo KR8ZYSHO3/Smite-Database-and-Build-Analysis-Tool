@@ -185,6 +185,16 @@ FIXTURES: list[Fixture] = [
         ban=["desolat", "thoth", "tahuti"],
         note="Thermo Mid: enchanter Sickle+Asclepius; no power-mage cores",
     ),
+    Fixture(
+        name="danza_fellowship_carry",
+        god="Danzaburou",
+        role="Carry",
+        aspect="Aspect of Fellowship",
+        require_any=["bragi", "eros", "death metal"],
+        require_all=[],
+        ban=["deathbringer", "riptalon"],
+        note="Fellowship Carry: hybrid INT+AS clone amp (Eros/Bragi/Death Metal) + on-hit volume; no pure crit glass",
+    ),
 ]
 
 

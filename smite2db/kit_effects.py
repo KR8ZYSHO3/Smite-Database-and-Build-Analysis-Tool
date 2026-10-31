@@ -427,6 +427,20 @@ def apply_kit_overrides(
         out["ban_items"] = [str(x).lower() for x in entry["ban_items"]]
     if entry.get("archetype"):
         out["force_archetype"] = str(entry["archetype"])
+    # Optional hard identity (e.g. Aspect of Fellowship clone-amp ADC)
+    if entry.get("identity_lock"):
+        out["identity_lock"] = True
+        out["identity_strength"] = max(
+            float(out.get("identity_strength") or 0),
+            float(entry.get("identity_strength") or 0.85),
+        )
+    if entry.get("identity_hooks"):
+        hooks = set(out.get("identity_hooks") or [])
+        for h in entry["identity_hooks"]:
+            hs = str(h).strip()
+            if hs:
+                hooks.add(hs)
+        out["identity_hooks"] = sorted(hooks)
 
     # Stash role maps so build_god_build can re-apply after role is known
     if entry.get("prefer_by_role"):

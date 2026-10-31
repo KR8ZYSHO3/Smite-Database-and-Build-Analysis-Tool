@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-30T15:09:50.944238+00:00",
+  "generated_at": "2026-10-31T18:47:40.325240+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -3453,17 +3453,17 @@
           "pct": 45.8
         },
         {
-          "name": "Book of Thoth",
-          "paths": 5,
-          "pct": 20.8
-        },
-        {
           "name": "The Cosmic Horror",
           "paths": 5,
           "pct": 20.8
         },
         {
           "name": "Spear of Desolation",
+          "paths": 5,
+          "pct": 20.8
+        },
+        {
+          "name": "Book of Thoth",
           "paths": 5,
           "pct": 20.8
         },
@@ -3648,12 +3648,12 @@
           "pct": 8.7
         },
         {
-          "name": "Spear Of The Magus",
+          "name": "Soul Gem",
           "paths": 1,
           "pct": 4.3
         },
         {
-          "name": "Soul Gem",
+          "name": "Spear Of The Magus",
           "paths": 1,
           "pct": 4.3
         }
@@ -3703,12 +3703,12 @@
           "pct": 28.6
         },
         {
-          "name": "Wyrmskin Hide",
+          "name": "Gladiator's Shield",
           "paths": 5,
           "pct": 23.8
         },
         {
-          "name": "Gladiator's Shield",
+          "name": "Wyrmskin Hide",
           "paths": 5,
           "pct": 23.8
         },
@@ -3719,8 +3719,8 @@
         },
         {
           "name": "Breastplate of Valor",
-          "paths": 4,
-          "pct": 19.0
+          "paths": 5,
+          "pct": 23.8
         },
         {
           "name": "Brawler\u2019s Beat Stick",
@@ -3753,14 +3753,14 @@
           "pct": 56.5
         },
         {
-          "name": "Prophetic Cloak",
-          "paths": 11,
-          "pct": 47.8
+          "name": "Contagion",
+          "paths": 12,
+          "pct": 52.2
         },
         {
-          "name": "Contagion",
-          "paths": 10,
-          "pct": 43.5
+          "name": "Prophetic Cloak",
+          "paths": 12,
+          "pct": 52.2
         },
         {
           "name": "Stone of Binding",
@@ -3768,12 +3768,12 @@
           "pct": 43.5
         },
         {
-          "name": "Leviathan's Hide",
-          "paths": 9,
-          "pct": 39.1
+          "name": "Ethereal Staff",
+          "paths": 7,
+          "pct": 30.4
         },
         {
-          "name": "Ethereal Staff",
+          "name": "Leviathan's Hide",
           "paths": 7,
           "pct": 30.4
         },
@@ -3783,12 +3783,22 @@
           "pct": 30.4
         },
         {
-          "name": "Stygian Anchor",
+          "name": "Breastplate of Valor",
           "paths": 5,
           "pct": 21.7
         },
         {
           "name": "Midgardian Mail",
+          "paths": 5,
+          "pct": 21.7
+        },
+        {
+          "name": "Spectral Armor",
+          "paths": 4,
+          "pct": 17.4
+        },
+        {
+          "name": "Stygian Anchor",
           "paths": 4,
           "pct": 17.4
         },
@@ -3803,19 +3813,9 @@
           "pct": 17.4
         },
         {
-          "name": "Doublet of Binding",
-          "paths": 4,
-          "pct": 17.4
-        },
-        {
           "name": "Alchemist Coat",
           "paths": 4,
           "pct": 17.4
-        },
-        {
-          "name": "Breastplate of Valor",
-          "paths": 3,
-          "pct": 13.0
         }
       ]
     }
@@ -4241,9 +4241,9 @@
             "Hercules",
             "Jormungandr",
             "Gilgamesh",
-            "Cabrakan",
             "Guan Yu",
             "Artio",
+            "Horus",
             "Cerberus"
           ]
         },
@@ -4400,7 +4400,6 @@
           "god": "Cabrakan",
           "missing": [
             "heal",
-            "physical",
             "magic",
             "cc_dive"
           ]
@@ -4418,22 +4417,22 @@
       "answers": {
         "crit": {
           "label": "vs crit",
-          "covered": 3,
+          "covered": 4,
           "total": 23,
-          "pct": 13.0,
+          "pct": 17.4,
           "missing_sample": [
             "Hel",
             "Baron Samedi",
             "Charon",
             "Jormungandr",
+            "Athena",
             "Ix Chel",
             "Ares",
             "Yemoja",
             "Sobek",
             "Cabrakan",
             "Bacchus",
-            "Guan Yu",
-            "Artio"
+            "Guan Yu"
           ]
         },
         "attack_speed": {
@@ -4449,18 +4448,18 @@
             "Ix Chel",
             "Yemoja",
             "Sobek",
+            "Cabrakan",
             "Bacchus",
             "Atlas",
             "Sylvanus",
-            "Khepri",
-            "Horus"
+            "Khepri"
           ]
         },
         "magic": {
           "label": "vs magic damage",
-          "covered": 6,
+          "covered": 5,
           "total": 23,
-          "pct": 26.1,
+          "pct": 21.7,
           "missing_sample": [
             "Ganesha",
             "Hel",
@@ -4473,14 +4472,14 @@
             "Cabrakan",
             "Bacchus",
             "Guan Yu",
-            "Sylvanus"
+            "Atlas"
           ]
         },
         "heal": {
           "label": "vs heals / sustain",
-          "covered": 5,
+          "covered": 4,
           "total": 23,
-          "pct": 21.7,
+          "pct": 17.4,
           "missing_sample": [
             "Hel",
             "Ymir",
@@ -4534,6 +4533,7 @@
         {
           "god": "Athena",
           "missing": [
+            "crit",
             "attack_speed",
             "magic",
             "heal"
@@ -4576,6 +4576,7 @@
           "god": "Cabrakan",
           "missing": [
             "crit",
+            "attack_speed",
             "magic",
             "heal"
           ]
@@ -4608,13 +4609,13 @@
           "missing": [
             "crit",
             "attack_speed",
+            "magic",
             "heal"
           ]
         },
         {
           "god": "Sylvanus",
           "missing": [
-            "crit",
             "attack_speed",
             "magic",
             "heal"
@@ -5450,30 +5451,6 @@
           "complete": false
         },
         {
-          "god": "Horus",
-          "score": 2,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": true,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
-          "god": "Sylvanus",
-          "score": 2,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": true,
-            "pen": false,
-            "shred": true
-          },
-          "complete": false
-        },
-        {
           "god": "Aphrodite",
           "score": 1,
           "max": 4,
@@ -5498,6 +5475,18 @@
           "complete": false
         },
         {
+          "god": "Athena",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
           "god": "Bacchus",
           "score": 1,
           "max": 4,
@@ -5518,6 +5507,18 @@
             "pct_hp": false,
             "pen": false,
             "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Cabrakan",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": false,
+            "shred": false
           },
           "complete": false
         }
@@ -5548,6 +5549,18 @@
           "complete": false
         },
         {
+          "god": "Athena",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": false,
+            "shred": false
+          },
+          "complete": false
+        },
+        {
           "god": "Bacchus",
           "score": 1,
           "max": 4,
@@ -5568,6 +5581,18 @@
             "pct_hp": false,
             "pen": false,
             "shred": true
+          },
+          "complete": false
+        },
+        {
+          "god": "Cabrakan",
+          "score": 1,
+          "max": 4,
+          "parts": {
+            "anti_heal": false,
+            "pct_hp": true,
+            "pen": false,
+            "shred": false
           },
           "complete": false
         },
@@ -5596,43 +5621,19 @@
           "complete": false
         },
         {
-          "god": "Geb",
+          "god": "Horus",
           "score": 1,
           "max": 4,
           "parts": {
-            "anti_heal": true,
+            "anti_heal": false,
             "pct_hp": false,
             "pen": false,
-            "shred": false
+            "shred": true
           },
           "complete": false
         },
         {
           "god": "Jormungandr",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": true,
-            "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Sobek",
-          "score": 1,
-          "max": 4,
-          "parts": {
-            "anti_heal": false,
-            "pct_hp": true,
-            "pen": false,
-            "shred": false
-          },
-          "complete": false
-        },
-        {
-          "god": "Yemoja",
           "score": 1,
           "max": 4,
           "parts": {
@@ -6995,8 +6996,8 @@
     }
   },
   "weekly_themes": [
-    "Support paths under-buy anti-crit (Spectral on ~13.0% of recs) \u2014 flex Spectral almost every game.",
-    "Support/Solo anti-heal is rare in defaults (~21.7% support) \u2014 Stygian/Brawler's is a live flex.",
+    "Support paths under-buy anti-crit (Spectral on ~17.4% of recs) \u2014 flex Spectral almost every game.",
+    "Support/Solo anti-heal is rare in defaults (~17.4% support) \u2014 Stygian/Brawler's is a live flex.",
     "Gods rising (r5 patch): Hachiman, Chronos, Ganesha, Hel.",
     "Items hot (r5 patch): Gluttonous Grimoire, Eros' Bow, Brawler\u2019s Beat Stick, Stygian Anchor.",
     "Patch axes (avg r5): damage +0.09, general +0.07, survivability -0.06."

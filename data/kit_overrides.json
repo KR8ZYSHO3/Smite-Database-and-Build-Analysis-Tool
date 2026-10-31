@@ -476,5 +476,58 @@
         "Rod of Tahuti"
       ]
     }
+  },
+  "Aspect of Fellowship": {
+    "_why": "Danzaburou Fellowship ADC: Alluring Spirits conjures 2 clones (BA-scaled); passive Dishonest Duplication spawn chance scales with INT; clones deal % of Basic Attack damage (higher under aspect as 2 ranks). Amplify clones with hybrid INT+AS+BAP (Bragi/Eros/Death Metal) + on-hit volume (Qin/Frenzy/Silverbranch) + CDR for 2 (Jotunn). Ban pure Deathbringer/Riptalon crit glass that dumps the INT spawn axis.",
+    "identity_lock": true,
+    "identity_strength": 0.9,
+    "force_tags": [
+      "aa",
+      "as_steroid",
+      "sustained",
+      "spam",
+      "hybrid"
+    ],
+    "remove_tags": [
+      "burst",
+      "ult_nuke"
+    ],
+    "archetype": "onhit_adc",
+    "prefer_items": [
+      "Bragi's Harp",
+      "Eros' Bow",
+      "Qin's Blade",
+      "Dagger of Frenzy",
+      "Death Metal",
+      "Silverbranch Bow",
+      "Dominance",
+      "Devourer's Gauntlet",
+      "The Executioner",
+      "Eye of the Storm"
+    ],
+    "prefer_by_role": {
+      "Carry": [
+        "Bragi's Harp",
+        "Eros' Bow",
+        "Qin's Blade",
+        "Dagger of Frenzy",
+        "Death Metal",
+        "Silverbranch Bow",
+        "Dominance",
+        "Eye of the Storm"
+      ]
+    },
+    "ban_items": [
+      "Deathbringer",
+      "Riptalon",
+      "Demon Blade",
+      "Musashi's Dual Swords",
+      "Jotunn's Revenge",
+      "Hydra's Lament",
+      "Bloodforge",
+      "Gauntlet of Thebes",
+      "Book of Thoth",
+      "Rod of Tahuti"
+    ]
   }
 }
