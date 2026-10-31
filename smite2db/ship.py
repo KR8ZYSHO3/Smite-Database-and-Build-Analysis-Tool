@@ -23,10 +23,13 @@ from .ship_report import print_report
 ROOT = Path(__file__).resolve().parent.parent
 
 
-def _run_fixtures(db: Path, verbose: bool) -> int:
+def _run_eval_gate(db: Path, verbose: bool, *, fixtures_only: bool = False) -> int:
+    """Fixtures always; holdout + win-assoc when inspiration bags exist."""
     from . import eval_builds
 
-    argv = ["--fixtures-only", "--db", str(db)]
+    argv = ["--db", str(db), "--min-games", "4"]
+    if fixtures_only:
+        argv.append("--fixtures-only")
     if not verbose:
         # eval_builds always prints; keep default
         pass
@@ -111,10 +114,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if not args.skip_fixtures:
         if verbose:
-            print("Fixture gate …")
-        code = _run_fixtures(args.db, verbose)
+            print("Eval gate (fixtures + holdout / win-assoc) …")
+        code = _run_eval_gate(args.db, verbose, fixtures_only=False)
         if code != 0:
-            print("SHIP ABORTED: identity fixtures failed.")
+            print("SHIP ABORTED: eval gate failed (fixtures and/or holdout floor).")
             return code
 
     if not args.skip_export:

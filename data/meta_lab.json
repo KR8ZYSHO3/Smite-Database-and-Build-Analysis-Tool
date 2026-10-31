@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-31T18:47:40.325240+00:00",
+  "generated_at": "2026-10-31T19:12:26.802053+00:00",
   "game": "SMITE 2",
   "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
@@ -3434,13 +3434,13 @@
         },
         {
           "name": "The Executioner",
-          "paths": 13,
-          "pct": 54.2
+          "paths": 14,
+          "pct": 58.3
         },
         {
           "name": "Deathbringer",
-          "paths": 13,
-          "pct": 54.2
+          "paths": 12,
+          "pct": 50.0
         },
         {
           "name": "Eye of the Storm",
@@ -3453,7 +3453,7 @@
           "pct": 45.8
         },
         {
-          "name": "The Cosmic Horror",
+          "name": "Book of Thoth",
           "paths": 5,
           "pct": 20.8
         },
@@ -3463,12 +3463,7 @@
           "pct": 20.8
         },
         {
-          "name": "Book of Thoth",
-          "paths": 5,
-          "pct": 20.8
-        },
-        {
-          "name": "Qin's Blade",
+          "name": "The Cosmic Horror",
           "paths": 5,
           "pct": 20.8
         },
@@ -3489,6 +3484,11 @@
         },
         {
           "name": "Spear Of The Magus",
+          "paths": 4,
+          "pct": 16.7
+        },
+        {
+          "name": "Qin's Blade",
           "paths": 4,
           "pct": 16.7
         },
@@ -3773,14 +3773,14 @@
           "pct": 30.4
         },
         {
-          "name": "Leviathan's Hide",
+          "name": "Gladiator's Shield",
           "paths": 7,
           "pct": 30.4
         },
         {
-          "name": "Gladiator's Shield",
-          "paths": 7,
-          "pct": 30.4
+          "name": "Leviathan's Hide",
+          "paths": 6,
+          "pct": 26.1
         },
         {
           "name": "Breastplate of Valor",
@@ -3849,11 +3849,10 @@
         },
         "tanks_hp": {
           "label": "vs high HP / tanks",
-          "covered": 18,
+          "covered": 19,
           "total": 24,
-          "pct": 75.0,
+          "pct": 79.2,
           "missing_sample": [
-            "Cupid",
             "Neith",
             "Xbalanque",
             "Apollo",
@@ -3863,13 +3862,6 @@
         }
       },
       "multi_gap_sample": [
-        {
-          "god": "Cupid",
-          "missing": [
-            "heal",
-            "tanks_hp"
-          ]
-        },
         {
           "god": "Neith",
           "missing": [

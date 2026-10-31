@@ -2,7 +2,7 @@
 
 Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.
 
-_Generated: 2026-10-31T18:47:40.325240+00:00_
+_Generated: 2026-10-31T19:12:26.802053+00:00_
 
 ## Weekly themes
 
@@ -20,18 +20,18 @@ _Generated: 2026-10-31T18:47:40.325240+00:00_
 |------|------:|--:|
 | Tyrfing | 18 | 75.0 |
 | Odysseus' Bow | 18 | 75.0 |
-| The Executioner | 13 | 54.2 |
-| Deathbringer | 13 | 54.2 |
+| The Executioner | 14 | 58.3 |
+| Deathbringer | 12 | 50.0 |
 | Eye of the Storm | 12 | 50.0 |
 | Devourer's Gauntlet | 11 | 45.8 |
-| The Cosmic Horror | 5 | 20.8 |
-| Spear of Desolation | 5 | 20.8 |
 | Book of Thoth | 5 | 20.8 |
-| Qin's Blade | 5 | 20.8 |
+| Spear of Desolation | 5 | 20.8 |
+| The Cosmic Horror | 5 | 20.8 |
 | Sands Of Time | 4 | 16.7 |
 | Soul Reaver | 4 | 16.7 |
 | Tekko-Kagi | 4 | 16.7 |
 | Spear Of The Magus | 4 | 16.7 |
+| Qin's Blade | 4 | 16.7 |
 | Riptalon | 4 | 16.7 |
 
 ### Mid (26 paths)
@@ -104,8 +104,8 @@ _Generated: 2026-10-31T18:47:40.325240+00:00_
 | Prophetic Cloak | 12 | 52.2 |
 | Stone of Binding | 10 | 43.5 |
 | Ethereal Staff | 7 | 30.4 |
-| Leviathan's Hide | 7 | 30.4 |
 | Gladiator's Shield | 7 | 30.4 |
+| Leviathan's Hide | 6 | 26.1 |
 | Breastplate of Valor | 5 | 21.7 |
 | Midgardian Mail | 5 | 21.7 |
 | Spectral Armor | 4 | 17.4 |
@@ -118,7 +118,7 @@ _Generated: 2026-10-31T18:47:40.325240+00:00_
 
 ### Carry
 - **vs heals / sustain**: 1/24 (4.2%)
-- **vs high HP / tanks**: 18/24 (75.0%)
+- **vs high HP / tanks**: 19/24 (79.2%)
 
 ### Mid
 - **vs heals / sustain**: 7/26 (26.9%)

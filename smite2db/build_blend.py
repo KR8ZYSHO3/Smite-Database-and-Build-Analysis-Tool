@@ -73,6 +73,16 @@ def inspire_sample_scale(n_games: int | float | None, *, identity_lock: bool = F
     scale = 0.25 + 0.75 * w
     if identity_lock:
         scale *= 0.85
+    # Last holdout calibration: if we poorly match high-SR bags, mute inspire slightly
+    cal = _load_calibration()
+    hit = cal.get("holdout_mean_hit_rate")
+    try:
+        if hit is not None and float(hit) < 0.20:
+            scale *= 0.9
+        elif hit is not None and float(hit) >= 0.35:
+            scale = min(1.0, scale * 1.05)
+    except (TypeError, ValueError):
+        pass
     return max(0.0, min(1.0, scale))
 
 
@@ -109,8 +119,146 @@ def _load_ladder_wr() -> dict[str, Any]:
         return {}
 
 
+CALIBRATION_PATH = Path(__file__).resolve().parent.parent / "data" / "blend_calibration.json"
+
+
+@lru_cache(maxsize=1)
+def _load_calibration() -> dict[str, Any]:
+    if not CALIBRATION_PATH.is_file():
+        return {}
+    try:
+        return json.loads(CALIBRATION_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+@lru_cache(maxsize=1)
+def _item_win_affinity_table() -> dict[tuple[str, str], float]:
+    """
+    (item_lower, role_lower) → WR affinity vs role mean.
+
+    Built from tracker inspiration god|role bags: items that show up more in
+    higher-WR god|role slices get positive affinity. This is a soft proxy for
+    win association when we lack per-item match outcomes.
+    """
+    try:
+        from .tracker_inspire import load_inspiration
+    except Exception:  # noqa: BLE001
+        return {}
+    insp = load_inspiration() or {}
+    by = insp.get("by_god_role") or {}
+    if not by:
+        return {}
+
+    role_wr_pairs: dict[str, list[tuple[float, float]]] = {}
+    item_wr_sum: dict[str, dict[str, float]] = {}
+    item_cnt: dict[str, dict[str, float]] = {}
+
+    for key, gr in by.items():
+        if "|" not in str(key) or not isinstance(gr, dict):
+            continue
+        _god, role = str(key).split("|", 1)
+        role_l = role.strip().lower()
+        try:
+            games = float(gr.get("games") or 0)
+            wr = float(gr.get("win_rate") or 0)
+        except (TypeError, ValueError):
+            continue
+        if games < 3 or wr <= 0:
+            continue
+        role_wr_pairs.setdefault(role_l, []).append((wr, games))
+        for name, ent in (gr.get("items") or {}).items():
+            if not isinstance(ent, dict):
+                continue
+            try:
+                cnt = float(ent.get("count") or 0)
+            except (TypeError, ValueError):
+                cnt = 0.0
+            if cnt <= 0:
+                continue
+            nm = str(name).lower()
+            item_wr_sum.setdefault(role_l, {})
+            item_cnt.setdefault(role_l, {})
+            item_wr_sum[role_l][nm] = item_wr_sum[role_l].get(nm, 0.0) + wr * cnt
+            item_cnt[role_l][nm] = item_cnt[role_l].get(nm, 0.0) + cnt
+
+    role_mean: dict[str, float] = {}
+    for role_l, pairs in role_wr_pairs.items():
+        tw = sum(g for _, g in pairs)
+        role_mean[role_l] = (sum(wr * g for wr, g in pairs) / tw) if tw else 0.5
+
+    out: dict[tuple[str, str], float] = {}
+    for role_l, items in item_wr_sum.items():
+        mean = role_mean.get(role_l, 0.5)
+        for nm, wsum in items.items():
+            cnt = item_cnt[role_l].get(nm, 0.0)
+            if cnt < 2:
+                continue
+            out[(nm, role_l)] = (wsum / cnt) - mean
+    return out
+
+
+def item_win_affinity(item_name: str | None, role: str | None) -> float:
+    """
+    Soft win-association for an item in a role.
+
+    Positive = item is over-represented in higher-WR god|role inspiration bags.
+    Returns 0 when sample is missing.
+    """
+    if not item_name or not role:
+        return 0.0
+    table = _item_win_affinity_table()
+    if not table:
+        return 0.0
+    key = (str(item_name).lower(), str(role).strip().lower())
+    # exact
+    if key in table:
+        return round(float(table[key]), 4)
+    # substring / alias soft match (first hit)
+    nl, rl = key
+    for (inm, irl), aff in table.items():
+        if irl != rl:
+            continue
+        if nl == inm or nl in inm or inm in nl:
+            return round(float(aff), 4)
+    return 0.0
+
+
+def path_win_affinity(item_names: list[str] | None, role: str | None) -> float:
+    """Mean item_win_affinity across a 6-item path."""
+    names = [str(x) for x in (item_names or []) if x]
+    if not names or not role:
+        return 0.0
+    vals = [item_win_affinity(n, role) for n in names]
+    return round(sum(vals) / len(vals), 4)
+
+
+def win_affinity_score_delta(item_name: str | None, role: str | None) -> tuple[float, str | None]:
+    """
+    Soft score nudge from win affinity (positive only — never fights kit bans).
+
+    ~+2 at +0.04 affinity, capped at +8.
+    """
+    aff = item_win_affinity(item_name, role)
+    if aff < 0.04:
+        return 0.0, None
+    add = min(8.0, aff * 50.0)
+    return round(add, 2), f"win-aff {aff:+.2f}"
+
+
+def write_blend_calibration(payload: dict[str, Any]) -> Path:
+    """Persist last eval holdout / win-assoc summary for blend introspection."""
+    CALIBRATION_PATH.parent.mkdir(parents=True, exist_ok=True)
+    doc = dict(payload or {})
+    CALIBRATION_PATH.write_text(json.dumps(doc, indent=2), encoding="utf-8")
+    _load_calibration.cache_clear()
+    return CALIBRATION_PATH
+
+
 def clear_blend_caches() -> None:
     _load_ladder_wr.cache_clear()
+    _load_calibration.cache_clear()
+    _item_win_affinity_table.cache_clear()
 
 
 def god_role_ladder_games(god_name: str | None, role: str | None) -> int:

@@ -38,7 +38,7 @@ This is the Carry job description + common items — not a complete build. Open 
 
 *Magical · Intelligence scaling (STR 82.0% / INT 112.3%)*
 
-Princess Bari · Carry · archetype «ability_mage_adc» (INT / magical). Kit effects: big ult spike, pet / deployable, hard crowd control, ally buffs / auras, lots of CC, burst combos. Tags: burst, hard_cc, high_cc, long_cd, pet_zone, team_buff, ult_nuke. Style burst 70%/dps 30%; patch rising (net +2.6, r5 +2.6). Patch axes (r5): attack_speed +1.4, cooldown +0.7, damage +0.5. Scale STR 82% / INT 112%. Path: Book of Thoth (mana stack → power scaling); Divine Ruin (anti-heal + pen for healing/sustain kits); The Cosmic Horror (penetration required for damage role). Pen: Book of Thoth, The Cosmic Horror, Spear of Desolation, Rod of Tahuti. Actives 0/2 · pen ≈ 25.
+Princess Bari · Carry · archetype «ability_mage_adc» (INT / magical). Kit effects: big ult spike, pet / deployable, hard crowd control, ally buffs / auras, lots of CC, burst combos. Tags: burst, hard_cc, high_cc, long_cd, pet_zone, team_buff, ult_nuke. Style burst 70%/dps 30%; patch rising (net +2.6, r5 +2.6). Patch axes (r5): attack_speed +1.4, cooldown +0.7, damage +0.5. Scale STR 82% / INT 112%. Path: Book of Thoth (mana stack → power scaling); Divine Ruin (anti-heal + pen for healing/sustain kits); The Cosmic Horror (penetration required for damage role). Pen: Book of Thoth, The Cosmic Horror, Spear of Desolation, Rod of Tahuti. Actives 0/2 · pen ≈ 25. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Sands Of Time
 - **Buy order** (actives 0/2, pen ≈ 25.0):
@@ -70,15 +70,15 @@ Hachiman · Carry · archetype «crit_adc» (STR / physical). Kit effects: basic
 
 *Physical · Strength scaling (STR 116.6% / INT 86.4%)*
 
-Cupid · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, attack-speed steroid, heavy healing, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, gap_close, hard_cc, heal, heavy_heal, long_cd, pet_zone, sustained. Style burst 43%/dps 57%; patch stable (net +0.7, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 117% / INT 86%. Path: Devourer's Gauntlet (lifesteal stacking); Tyrfing (Carry path fit for kit profile); Qin's Blade (Carry path fit for kit profile). Pen: Devourer's Gauntlet. Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
+Cupid · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult spike, attack-speed steroid, heavy healing, pet / deployable, hard crowd control, dash / leap engage. Tags: as_steroid, gap_close, hard_cc, heal, heavy_heal, long_cd, pet_zone, sustained. Style burst 43%/dps 57%; patch stable (net +0.7, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 117% / INT 86%. Path: Devourer's Gauntlet (lifesteal stacking); Odysseus' Bow (Carry path fit for kit profile); Tyrfing (Carry path fit for kit profile). Pen: Devourer's Gauntlet. Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
 - **Buy order** (actives 0/2, pen ≈ 0.0):
   1. Devourer's Gauntlet (power, 2500g)
-  2. Tyrfing (power, 2400g)
-  3. Qin's Blade (power, 2600g)
-  4. Eye of the Storm (power, 2600g)
-  5. Odysseus' Bow (power, 2450g)
+  2. Odysseus' Bow (power, 2450g)
+  3. Tyrfing (power, 2400g)
+  4. The Executioner (power, 2550g)
+  5. Eye of the Storm (power, 2600g)
   6. Deathbringer (power, 2900g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
@@ -127,7 +127,7 @@ Danzaburou · Carry · archetype «crit_adc» (STR / physical). Kit effects: cha
   3. Tyrfing (power, 2400g)
   4. The Executioner (power, 2550g)
   5. Eye of the Storm (power, 2600g)
-  6. Deathbringer (power, 2900g)
+  6. Qin's Blade (power, 2600g)
 - **Relics:** Purification Beads (41.0), Aegis of Acceleration (28.0)
 
 #### Chronos — A-tier (role rank #7, model 59.4)
@@ -198,7 +198,7 @@ Hou Yi · Carry · archetype «power_adc» (STR / physical). Kit effects: big ul
 
 *Physical · Hybrid scaling (STR 63.3% / INT 76.7%)*
 
-Neith · Carry · archetype «crit_adc» (STR / physical). Kit effects: channel / cast time, big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, lots of CC. Tags: as_steroid, burst, channel, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 68%/dps 32%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage +0.0. Scale STR 63% / INT 77%. Path: Tyrfing (Carry path fit for kit profile); Qin's Blade (Carry path fit for kit profile); Eye of the Storm (Carry path fit for kit profile). Pen: Tekko-Kagi. Actives 0/2 · pen ≈ 10. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
+Neith · Carry · archetype «crit_adc» (STR / physical). Kit effects: channel / cast time, big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, lots of CC. Tags: as_steroid, burst, channel, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 68%/dps 32%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage +0.0. Scale STR 63% / INT 77%. Path: Tyrfing (Carry path fit for kit profile); Qin's Blade (Carry path fit for kit profile); Eye of the Storm (Carry path fit for kit profile). Pen: Tekko-Kagi. Actives 0/2 · pen ≈ 10. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
 - **Buy order** (actives 0/2, pen ≈ 10.0):
@@ -262,7 +262,7 @@ Medusa · Carry · archetype «crit_adc» (STR / physical). Kit effects: big ult
 
 *Physical · Strength scaling (STR 36.9% / INT 34.2%)*
 
-Xbalanque · Carry · archetype «power_adc» (STR / physical). Kit effects: damage over time, dash / leap engage, CC immunity in kit, multi-hit / ticks, sustained DPS, zones / linger. Tags: anti_cc, dot, gap_close, heal, heavy_dot, long_cd, sustained, zone. Style burst 29%/dps 71%; patch stable (net +0.8, r5 +0.0). Patch axes (r5): damage +0.8, utility +0.0, attack_speed +0.0. Scale STR 37% / INT 34%. Path: Tyrfing (Carry path fit for kit profile); Transcendence (mana stack → power scaling); Pendulum Blade (penetration required for damage role). Pen: Transcendence, Pendulum Blade. Actives 1/2 · pen ≈ 10. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
+Xbalanque · Carry · archetype «power_adc» (STR / physical). Kit effects: damage over time, dash / leap engage, CC immunity in kit, multi-hit / ticks, sustained DPS, zones / linger. Tags: anti_cc, dot, gap_close, heal, heavy_dot, long_cd, sustained, zone. Style burst 29%/dps 71%; patch stable (net +0.8, r5 +0.0). Patch axes (r5): damage +0.8, utility +0.0, attack_speed +0.0. Scale STR 37% / INT 34%. Path: Tyrfing (Carry path fit for kit profile); Transcendence (mana stack → power scaling); Pendulum Blade (penetration required for damage role). Pen: Transcendence, Pendulum Blade. Actives 1/2 · pen ≈ 10. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
 - **Buy order** (actives 1/2, pen ≈ 10.0):
@@ -287,7 +287,7 @@ Jing Wei · Carry · archetype «crit_adc» (STR / physical). Kit effects: big u
   3. Tyrfing (power, 2400g)
   4. The Executioner (power, 2550g)
   5. Eye of the Storm (power, 2600g)
-  6. Qin's Blade (power, 2600g)
+  6. Demon Blade (power, 2750g)
 - **Relics:** Purification Beads (33.0), Aegis of Acceleration (28.0)
 
 #### Chiron — C-tier (role rank #17, model 46.9)
@@ -406,7 +406,7 @@ Kali · Carry · archetype «crit_adc» (STR / physical). ASPECT «Aspect of Unb
 
 *Physical · Strength scaling (STR 157.1% / INT 112.5%)*
 
-Tsukuyomi · Carry · archetype «crit_adc» (STR / physical). ASPECT «Aspect of Mangetsu». When gaining Shingetsu Ranged Attack, they become Mangetsu Ranged Attacks instead. Dark Moon Shuriken no longer sticks to gods. Piercing Moo Kit effects: big ult spike, basic-attack kit, attack-speed steroid, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, as_steroid, burst, gap_close, hard_cc, heal, long_cd. Style burst 40%/dps 75%; patch stable (net -0.2, r5 +0.0). Patch axes (r5): damage -0.2, general +0.0, utility +0.0. Scale STR 157% / INT 112%. Path: Tyrfing (Carry path fit for kit profile); Odysseus' Bow (Carry path fit for kit profile); Riptalon (attack speed / crit carry core). Pen: Riptalon, Transcendence. Actives 0/2 · pen ≈ 10. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
+Tsukuyomi · Carry · archetype «crit_adc» (STR / physical). ASPECT «Aspect of Mangetsu». When gaining Shingetsu Ranged Attack, they become Mangetsu Ranged Attacks instead. Dark Moon Shuriken no longer sticks to gods. Piercing Moo Kit effects: big ult spike, basic-attack kit, attack-speed steroid, hard crowd control, dash / leap engage, CC immunity in kit. Tags: aa, anti_cc, as_steroid, burst, gap_close, hard_cc, heal, long_cd. Style burst 40%/dps 75%; patch stable (net -0.2, r5 +0.0). Patch axes (r5): damage -0.2, general +0.0, utility +0.0. Scale STR 157% / INT 112%. Path: Tyrfing (Carry path fit for kit profile); Odysseus' Bow (Carry path fit for kit profile); Riptalon (attack speed / crit carry core). Pen: Riptalon, Transcendence. Actives 0/2 · pen ≈ 10. Soft high-SR inspiration on 5 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Gilded Arrow
 - **Buy order** (actives 0/2, pen ≈ 10.0):
@@ -534,7 +534,7 @@ Kukulkan · Mid · archetype «mana_mage» (INT / magical). Kit effects: big ult
 
 *Magical · Intelligence scaling (STR 0% / INT 91.5%)*
 
-Hel · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, big ult spike, attack-speed steroid, self heal / drain, ally buffs / auras, CC immunity in kit. Tags: anti_cc, as_steroid, dot, heal, heavy_dot, self_sustain, team_buff, ult_nuke. Style burst 41%/dps 59%; patch rising (net +3.4, r5 +3.4). Patch axes (r5): damage +3.0, general +0.8, survivability -0.5. Scale STR 0% / INT 91%. Path: Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst; patch rising — lean damage). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror, Dreamer's Idol. Actives 1/2 · pen ≈ 30. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Hel · Mid · archetype «dot_mage» (INT / magical). Kit effects: damage over time, big ult spike, attack-speed steroid, self heal / drain, ally buffs / auras, CC immunity in kit. Tags: anti_cc, as_steroid, dot, heal, heavy_dot, self_sustain, team_buff, ult_nuke. Style burst 41%/dps 59%; patch rising (net +3.4, r5 +3.4). Patch axes (r5): damage +3.0, general +0.8, survivability -0.5. Scale STR 0% / INT 91%. Path: Book of Thoth (mana stack → power scaling); Chronos' Pendant (CDR core for spam / channel kits); Spear of Desolation (flat pen + CDR for ability burst; patch rising — lean damage). Pen: Book of Thoth, Spear of Desolation, The Cosmic Horror, Dreamer's Idol. Actives 1/2 · pen ≈ 30. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Conduit Gem
 - **Buy order** (actives 1/2, pen ≈ 30.0):
@@ -646,7 +646,7 @@ Baron Samedi · Mid · archetype «dot_mage» (INT / magical). Kit effects: dama
 
 *Physical · Hybrid scaling (STR 63.3% / INT 76.7%)*
 
-Neith · Mid · archetype «channel_mage» (STR / physical). Kit effects: channel / cast time, big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, lots of CC. Tags: as_steroid, burst, channel, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 68%/dps 32%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage +0.0. Scale STR 63% / INT 77%. Path: The Crusher (penetration required for damage role); Pendulum Blade (penetration required for damage role); Heartseeker (stacking pen power for assassins). Pen: The Crusher, Pendulum Blade, Heartseeker, Jotunn's Revenge. Actives 1/2 · pen ≈ 35.
+Neith · Mid · archetype «channel_mage» (STR / physical). Kit effects: channel / cast time, big ult spike, attack-speed steroid, hard crowd control, dash / leap engage, lots of CC. Tags: as_steroid, burst, channel, gap_close, hard_cc, heal, high_cc, long_cd. Style burst 68%/dps 32%; patch stable (net -0.0, r5 +0.0). Patch axes (r5): damage +0.0. Scale STR 63% / INT 77%. Path: The Crusher (penetration required for damage role); Pendulum Blade (penetration required for damage role); Heartseeker (stacking pen power for assassins). Pen: The Crusher, Pendulum Blade, Heartseeker, Jotunn's Revenge. Actives 1/2 · pen ≈ 35. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Bluestone Pendant
 - **Buy order** (actives 1/2, pen ≈ 35.0):
@@ -1528,7 +1528,7 @@ Bellona · Solo · archetype «sustain_solo» (STR / physical). Kit effects: sel
 
 *Magical · Hybrid scaling (STR 75.1% / INT 51.1%)*
 
-Cabrakan · Solo · archetype «tank_solo» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Breastplate of Valor (physical CDR defense; patch falling — extra bulk/CDR); Ethereal Staff (Solo path fit for kit profile); Gladiator's Shield (Solo path fit for kit profile). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
+Cabrakan · Solo · archetype «tank_solo» (INT / magical). Kit effects: channel / cast time, low cooldowns, self heal / drain, hard crowd control, ally buffs / auras, CC immunity in kit. Tags: anti_cc, channel, hard_cc, heal, high_cc, hybrid_bulk, self_sustain, shield. Style burst 35%/dps 45%; patch falling (net -2.5, r5 +0.1). Patch axes (r5): heal +0.1. Scale STR 75% / INT 51%. Path: Breastplate of Valor (physical CDR defense; patch falling — extra bulk/CDR); Ethereal Staff (Solo path fit for kit profile); Gladiator's Shield (Solo path fit for kit profile). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 0/2, pen ≈ 0.0):
@@ -1592,7 +1592,7 @@ Thor · Solo · archetype «tank_solo» (STR / physical). Kit effects: channel /
 
 *Physical · Strength scaling (STR 74.4% / INT 0%)*
 
-Horus · Solo · archetype «shield_solo» (STR / physical). Kit effects: protection shred, channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, high_cc, hybrid_bulk, mobile. Style burst 15%/dps 70%; patch falling (net -5.4, r5 -4.9). Patch axes (r5): survivability -2.6, heal -1.0, cooldown -0.9. Scale STR 74% / INT 0%. Path: Prophetic Cloak (tenacity / anti-CC bulk); Ethereal Staff (Solo path fit for kit profile); Gauntlet of Thebes (team aura / support core). Actives 0/3 · pen ≈ 0.
+Horus · Solo · archetype «shield_solo» (STR / physical). Kit effects: protection shred, channel / cast time, low cooldowns, self heal / drain, hard crowd control, dash / leap engage. Tags: anti_cc, channel, dot, gap_close, hard_cc, high_cc, hybrid_bulk, mobile. Style burst 15%/dps 70%; patch falling (net -5.4, r5 -4.9). Patch axes (r5): survivability -2.6, heal -1.0, cooldown -0.9. Scale STR 74% / INT 0%. Path: Prophetic Cloak (tenacity / anti-CC bulk); Ethereal Staff (Solo path fit for kit profile); Gauntlet of Thebes (team aura / support core). Actives 0/3 · pen ≈ 0. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Warrior's Axe
 - **Buy order** (actives 0/3, pen ≈ 0.0):
@@ -1676,7 +1676,7 @@ This is the Support job description + common items — not a complete build. Ope
 
 *Magical · Intelligence scaling (STR 0% / INT 75.0%)*
 
-Ganesha · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, big ult spike, execute / threshold, pet / deployable, hard crowd control, dash / leap engage. Tags: burst, channel, dot, execute, gap_close, hard_cc, high_cc, long_cd. Style burst 82%/dps 18%; patch rising (net +3.8, r5 +3.8). Patch axes (r5): damage +1.9, general +1.3, cooldown +0.6. Scale STR 0% / INT 75%. Path: Gauntlet of Thebes (team aura / support core); Breastplate of Valor (physical CDR defense); Gem of Isolation (zones & CC — Isolation slow/shred value). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Ganesha · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, big ult spike, execute / threshold, pet / deployable, hard crowd control, dash / leap engage. Tags: burst, channel, dot, execute, gap_close, hard_cc, high_cc, long_cd. Style burst 82%/dps 18%; patch rising (net +3.8, r5 +3.8). Patch axes (r5): damage +1.9, general +1.3, cooldown +0.6. Scale STR 0% / INT 75%. Path: Gauntlet of Thebes (team aura / support core); Breastplate of Valor (physical CDR defense); Gem of Isolation (zones & CC — Isolation slow/shred value). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
 - **Buy order** (actives 0/2, pen ≈ 0.0):
@@ -1692,7 +1692,7 @@ Ganesha · Support · archetype «lockdown_support» (INT / magical). Kit effect
 
 *Magical · Intelligence scaling (STR 0% / INT 91.5%)*
 
-Hel · Support · archetype «heal_support» (INT / magical). Kit effects: damage over time, big ult spike, attack-speed steroid, self heal / drain, ally buffs / auras, CC immunity in kit. Tags: anti_cc, as_steroid, dot, heal, heavy_dot, self_sustain, team_buff, ult_nuke. Style burst 41%/dps 59%; patch rising (net +3.4, r5 +3.4). Patch axes (r5): damage +3.0, general +0.8, survivability -0.5. Scale STR 0% / INT 91%. Path: Lotus Sickle (heal amp / team sustain); Gauntlet of Thebes (team aura / support core); Gem of Isolation (zones & CC — Isolation slow/shred value). Actives 1/1 · pen ≈ 0. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
+Hel · Support · archetype «heal_support» (INT / magical). Kit effects: damage over time, big ult spike, attack-speed steroid, self heal / drain, ally buffs / auras, CC immunity in kit. Tags: anti_cc, as_steroid, dot, heal, heavy_dot, self_sustain, team_buff, ult_nuke. Style burst 41%/dps 59%; patch rising (net +3.4, r5 +3.4). Patch axes (r5): damage +3.0, general +0.8, survivability -0.5. Scale STR 0% / INT 91%. Path: Lotus Sickle (heal amp / team sustain); Gauntlet of Thebes (team aura / support core); Gem of Isolation (zones & CC — Isolation slow/shred value). Actives 1/1 · pen ≈ 0. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
 - **Buy order** (actives 1/1, pen ≈ 0.0):
@@ -1708,7 +1708,7 @@ Hel · Support · archetype «heal_support» (INT / magical). Kit effects: damag
 
 *Magical · Intelligence scaling (STR 12.3% / INT 117.7%)*
 
-Ymir · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, low cooldowns, pet / deployable, hard crowd control, low mobility, CC immunity in kit. Tags: anti_cc, channel, hard_cc, high_cc, hybrid_bulk, immobile, pet_zone, spam. Style burst 41%/dps 39%; patch stable (net +0.8, r5 +0.0). Patch axes (r5): damage +0.5, survivability +0.3, cooldown +0.0. Scale STR 12% / INT 118%. Path: Gauntlet of Thebes (team aura / support core); Breastplate of Valor (physical CDR defense); Genji's Guard (magic prot + CDR for mages). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
+Ymir · Support · archetype «lockdown_support» (INT / magical). Kit effects: channel / cast time, low cooldowns, pet / deployable, hard crowd control, low mobility, CC immunity in kit. Tags: anti_cc, channel, hard_cc, high_cc, hybrid_bulk, immobile, pet_zone, spam. Style burst 41%/dps 39%; patch stable (net +0.8, r5 +0.0). Patch axes (r5): damage +0.5, survivability +0.3, cooldown +0.0. Scale STR 12% / INT 118%. Path: Gauntlet of Thebes (team aura / support core); Breastplate of Valor (physical CDR defense); Genji's Guard (magic prot + CDR for mages). Actives 0/2 · pen ≈ 0. Soft high-SR inspiration on 4 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
 - **Buy order** (actives 0/2, pen ≈ 0.0):
@@ -1724,7 +1724,7 @@ Ymir · Support · archetype «lockdown_support» (INT / magical). Kit effects: 
 
 *Magical · Intelligence scaling (STR 0% / INT 69.6%)*
 
-Baron Samedi · Support · archetype «lockdown_support» (INT / magical). Kit effects: damage over time, channel / cast time, execute / threshold, pet / deployable, hard crowd control, ally buffs / auras. Tags: burst, channel, dot, execute, hard_cc, heal, heavy_dot, high_cc. Style burst 71%/dps 29%; patch volatile (net +1.0, r5 +0.6). Patch axes (r5): general +0.6. Scale STR 0% / INT 70%. Path: Gauntlet of Thebes (team aura / support core); Gem of Isolation (zones & CC — Isolation slow/shred value); Damaru (Support path fit for kit profile). Actives 1/2 · pen ≈ 0. Soft high-SR inspiration on 1 item(s) (tracker.gg — not a meta copy).
+Baron Samedi · Support · archetype «lockdown_support» (INT / magical). Kit effects: damage over time, channel / cast time, execute / threshold, pet / deployable, hard crowd control, ally buffs / auras. Tags: burst, channel, dot, execute, hard_cc, heal, heavy_dot, high_cc. Style burst 71%/dps 29%; patch volatile (net +1.0, r5 +0.6). Patch axes (r5): general +0.6. Scale STR 0% / INT 70%. Path: Gauntlet of Thebes (team aura / support core); Gem of Isolation (zones & CC — Isolation slow/shred value); Damaru (Support path fit for kit profile). Actives 1/2 · pen ≈ 0. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
 - **Buy order** (actives 1/2, pen ≈ 0.0):
@@ -1747,9 +1747,9 @@ Charon · Support · archetype «shield_support» (INT / magical). Kit effects: 
   1. Gauntlet of Thebes (defense, 2200g)
   2. Alchemist Coat (mitigate, 2350g)
   3. Phoenix Feather (mitigate, active, 2350g)
-  4. Leviathan's Hide (mitigate, 2400g)
-  5. Gem of Isolation (mitigate, 2450g)
-  6. Stygian Anchor (counter, 2550g)
+  4. Gem of Isolation (mitigate, 2450g)
+  5. Stygian Anchor (counter, 2550g)
+  6. Mantle Of Discord (mitigate, 2600g)
 - **Relics:** Purification Beads (46.0), Aegis of Acceleration (32.0)
 
 #### Jormungandr — A-tier (role rank #6, model 56.4)
@@ -1788,7 +1788,7 @@ Athena · Support · archetype «lockdown_support» (INT / magical). Kit effects
 
 *Magical · Intelligence scaling (STR 0% / INT 64.4%)*
 
-Ix Chel · Support · archetype «heal_support» (INT / magical). Kit effects: channel / cast time, self heal / drain, heavy healing, pet / deployable, hard crowd control, ally buffs / auras. Tags: anti_cc, channel, dot, echo, hard_cc, heal, heavy_heal, high_cc. Style burst 49%/dps 51%; patch new (net -0.6, r5 -1.2). Patch axes (r5): damage -0.7, cooldown -0.6, general +0.1. Scale STR 0% / INT 64%. Path: Lotus Sickle (heal amp / team sustain); Gauntlet of Thebes (team aura / support core); Genji's Guard (magic prot + CDR for mages; patch falling — extra bulk/CDR). Actives 1/1 · pen ≈ 0. Soft high-SR inspiration on 2 item(s) (tracker.gg — not a meta copy).
+Ix Chel · Support · archetype «heal_support» (INT / magical). Kit effects: channel / cast time, self heal / drain, heavy healing, pet / deployable, hard crowd control, ally buffs / auras. Tags: anti_cc, channel, dot, echo, hard_cc, heal, heavy_heal, high_cc. Style burst 49%/dps 51%; patch new (net -0.6, r5 -1.2). Patch axes (r5): damage -0.7, cooldown -0.6, general +0.1. Scale STR 0% / INT 64%. Path: Lotus Sickle (heal amp / team sustain); Gauntlet of Thebes (team aura / support core); Genji's Guard (magic prot + CDR for mages; patch falling — extra bulk/CDR). Actives 1/1 · pen ≈ 0. Soft high-SR inspiration on 3 item(s) (tracker.gg — not a meta copy).
 
 - **Starter:** Selflessness
 - **Buy order** (actives 1/1, pen ≈ 0.0):

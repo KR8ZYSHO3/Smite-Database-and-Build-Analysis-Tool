@@ -487,6 +487,18 @@ def inspiration_boost(
                 if "opener" not in " ".join(why_bits):
                     why_bits.append("high-SR role opener")
 
+    # Soft win-association nudge (items over-represented in higher-WR god|role bags)
+    try:
+        from .build_blend import win_affinity_score_delta
+
+        wa, wa_why = win_affinity_score_delta(item_name, role_key)
+        if wa > 0:
+            delta += wa
+            if wa_why:
+                why_bits.append(wa_why)
+    except Exception:  # noqa: BLE001
+        pass
+
     if delta <= 0:
         return 0.0, None
     return round(delta, 2), ("; ".join(why_bits) if why_bits else "high-SR inspiration")

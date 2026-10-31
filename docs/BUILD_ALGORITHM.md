@@ -317,7 +317,8 @@ god tier; overall uses the primary-role base path only.
 - After `_ensure_identity_cores`, Mid/Jungle/Carry **re-run the pen floor** without ripping primary force-cores (first two keys, e.g. Contagion/Nemean). Secondary shell pieces may yield so pen still lands.
 - Ally-heal / ally-shield identity gets enchanter cores on **any** role under lock.
 - Identical 6-item clones get a late flex swap (`dedupe_identical_paths`).
-- `python -m smite2db.ship` **aborts** on fixture failure or quality-gate `pen_fail` / `role_job_fail` (shared paths remain WARN).
+- `python -m smite2db.ship` **aborts** on fixture failure, holdout floor collapse (`mean_hit < 0.12`), or quality-gate `pen_fail` / `role_job_fail` (shared paths remain WARN).
+- **Holdout + win-association:** full `eval_builds` splits tracker inspiration bags, scores algorithm hit-rate, and measures path win-affinity (items over-represented in higher-WR god|role bags). Writes `data/blend_calibration.json`. Soft `win-aff` score nudge in `inspiration_boost`; inspire scale mutes slightly when holdout hit is poor.
 
 Empty inspiration scrapes **must not** overwrite a good snapshot (guard in `save_inspiration`).
 

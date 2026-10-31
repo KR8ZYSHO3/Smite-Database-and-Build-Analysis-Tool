@@ -34,6 +34,8 @@ from .build_blend import (
     god_role_ladder_games,
     item_hits_aspect_hard_ban,
     ladder_sample_weight,
+    path_win_affinity,
+    write_blend_calibration,
 )
 from .build_pipeline import ALGORITHM_VERSION
 from .conquest_builds import build_god_build, load_items
@@ -436,17 +438,24 @@ def holdout_hit_rate(
             if any(_norm(nm) == _norm(h) or _norm(h) in _norm(nm) for h in train)
         )
         n_ladder = god_role_ladder_games(god, role)
+        try:
+            role_wr = float(gr.get("win_rate") or 0)
+        except (TypeError, ValueError):
+            role_wr = 0.0
+        path_aff = path_win_affinity(algo, role)
         rows.append(
             {
                 "god": god,
                 "role": role,
                 "games": games,
+                "role_win_rate": round(role_wr, 3) if role_wr else None,
                 "ladder_games": n_ladder,
                 "ladder_weight": ladder_sample_weight(n_ladder),
                 "confidence": build.get("confidence"),
                 "algo_items": algo,
                 "holdout_hit_rate": round(hit_rate, 3),
                 "train_hit_rate": round(train_hits / len(algo), 3),
+                "path_win_affinity": path_aff,
                 "holdout_size": len(hold),
                 "identity_lock": bool(
                     (build.get("confidence_card") or {}).get("identity_lock")
@@ -459,21 +468,34 @@ def holdout_hit_rate(
             "n": 0,
             "mean_holdout_hit_rate": None,
             "mean_train_hit_rate": None,
+            "mean_path_win_affinity": None,
+            "corr_hit_vs_wr": None,
             "rows": [],
             "note": "No god|role bags met min_games",
         }
 
     mean_h = sum(r["holdout_hit_rate"] for r in rows) / len(rows)
     mean_t = sum(r["train_hit_rate"] for r in rows) / len(rows)
+    mean_aff = sum(float(r.get("path_win_affinity") or 0) for r in rows) / len(rows)
     # Stratify by ladder weight
     thin = [r for r in rows if r["ladder_weight"] < 0.25]
     fat = [r for r in rows if r["ladder_weight"] >= 0.5]
+    locked = [r for r in rows if r.get("identity_lock")]
+    unlocked = [r for r in rows if not r.get("identity_lock")]
+    # Spearman-ish: correlation of holdout hit rate vs god|role WR (when WR present)
+    corr = _corr_hit_vs_wr(rows)
+    # High-WR vs low-WR path affinity gap (win association signal)
+    wr_rows = [r for r in rows if r.get("role_win_rate") is not None]
+    win_assoc = _win_assoc_gap(wr_rows)
     return {
         "n": len(rows),
         "holdout": holdout,
         "min_games": min_games,
         "mean_holdout_hit_rate": round(mean_h, 3),
         "mean_train_hit_rate": round(mean_t, 3),
+        "mean_path_win_affinity": round(mean_aff, 4),
+        "corr_hit_vs_wr": corr,
+        "win_association": win_assoc,
         "thin_sample_n": len(thin),
         "thin_mean_holdout_hit_rate": round(
             sum(r["holdout_hit_rate"] for r in thin) / len(thin), 3
@@ -486,7 +508,67 @@ def holdout_hit_rate(
         )
         if fat
         else None,
+        "locked_n": len(locked),
+        "locked_mean_holdout_hit_rate": round(
+            sum(r["holdout_hit_rate"] for r in locked) / len(locked), 3
+        )
+        if locked
+        else None,
+        "unlocked_n": len(unlocked),
+        "unlocked_mean_holdout_hit_rate": round(
+            sum(r["holdout_hit_rate"] for r in unlocked) / len(unlocked), 3
+        )
+        if unlocked
+        else None,
         "rows": rows,
+    }
+
+
+def _corr_hit_vs_wr(rows: list[dict[str, Any]]) -> float | None:
+    """Pearson correlation between holdout_hit_rate and role_win_rate."""
+    pairs = [
+        (float(r["holdout_hit_rate"]), float(r["role_win_rate"]))
+        for r in rows
+        if r.get("role_win_rate") is not None
+    ]
+    if len(pairs) < 8:
+        return None
+    xs = [p[0] for p in pairs]
+    ys = [p[1] for p in pairs]
+    mx = sum(xs) / len(xs)
+    my = sum(ys) / len(ys)
+    num = sum((x - mx) * (y - my) for x, y in pairs)
+    den_x = sum((x - mx) ** 2 for x in xs) ** 0.5
+    den_y = sum((y - my) ** 2 for y in ys) ** 0.5
+    if den_x <= 1e-9 or den_y <= 1e-9:
+        return None
+    return round(num / (den_x * den_y), 3)
+
+
+def _win_assoc_gap(wr_rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """
+    Compare mean path_win_affinity for above-median vs below-median WR god|roles.
+
+    Positive gap ⇒ our paths lean toward items that sit in higher-WR inspiration bags.
+    """
+    if len(wr_rows) < 8:
+        return {"n": len(wr_rows), "gap": None, "note": "need ≥8 rows with WR"}
+    wrs = sorted(float(r["role_win_rate"]) for r in wr_rows)
+    med = wrs[len(wrs) // 2]
+    hi = [r for r in wr_rows if float(r["role_win_rate"]) >= med]
+    lo = [r for r in wr_rows if float(r["role_win_rate"]) < med]
+    if not hi or not lo:
+        return {"n": len(wr_rows), "gap": None, "median_wr": med}
+    hi_aff = sum(float(r.get("path_win_affinity") or 0) for r in hi) / len(hi)
+    lo_aff = sum(float(r.get("path_win_affinity") or 0) for r in lo) / len(lo)
+    return {
+        "n": len(wr_rows),
+        "median_wr": round(med, 3),
+        "high_wr_n": len(hi),
+        "low_wr_n": len(lo),
+        "high_wr_mean_affinity": round(hi_aff, 4),
+        "low_wr_mean_affinity": round(lo_aff, 4),
+        "gap": round(hi_aff - lo_aff, 4),
     }
 
 
@@ -509,6 +591,14 @@ def unit_blend_checks() -> dict[str, Any]:
     conf2 = compute_build_confidence(n_games=120, identity_lock=False)
     if conf2["confidence"] != "high":
         errors.append(f"fat sample should be high, got {conf2['confidence']}")
+    # Win-affinity helpers should be import-safe even with empty inspiration
+    from .build_blend import item_win_affinity, path_win_affinity, win_affinity_score_delta
+
+    _ = item_win_affinity("Spear of Desolation", "Mid")
+    _ = path_win_affinity(["Spear of Desolation", "Book of Thoth"], "Mid")
+    d, _why = win_affinity_score_delta("Spear of Desolation", "Mid")
+    if d < 0:
+        errors.append("win_affinity_score_delta should be ≥0 (positive-only nudge)")
     return {"ok": not errors, "errors": errors}
 
 
@@ -550,11 +640,39 @@ def run_eval(
             "unit_ok": unit["ok"],
             "holdout_mean_hit_rate": (hold or {}).get("mean_holdout_hit_rate"),
             "holdout_n": (hold or {}).get("n"),
+            "mean_path_win_affinity": (hold or {}).get("mean_path_win_affinity"),
+            "corr_hit_vs_wr": (hold or {}).get("corr_hit_vs_wr"),
+            "win_assoc_gap": ((hold or {}).get("win_association") or {}).get("gap"),
         },
     }
     if write_report:
         REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
         REPORT_PATH.write_text(json.dumps(report, indent=2), encoding="utf-8")
+        # Persist blend calibration whenever holdout ran (ship + full eval)
+        if hold and (hold.get("n") or 0) > 0:
+            from datetime import datetime, timezone
+
+            write_blend_calibration(
+                {
+                    "generated_at": datetime.now(timezone.utc).isoformat(),
+                    "algorithm_version": ALGORITHM_VERSION,
+                    "ladder_n0": LADDER_N0,
+                    "holdout_n": hold.get("n"),
+                    "holdout_mean_hit_rate": hold.get("mean_holdout_hit_rate"),
+                    "holdout_mean_train_hit_rate": hold.get("mean_train_hit_rate"),
+                    "mean_path_win_affinity": hold.get("mean_path_win_affinity"),
+                    "corr_hit_vs_wr": hold.get("corr_hit_vs_wr"),
+                    "win_association": hold.get("win_association"),
+                    "locked_mean_holdout_hit_rate": hold.get("locked_mean_holdout_hit_rate"),
+                    "unlocked_mean_holdout_hit_rate": hold.get(
+                        "unlocked_mean_holdout_hit_rate"
+                    ),
+                    "note": (
+                        "inspire_sample_scale mutes slightly when holdout_mean_hit_rate < 0.20; "
+                        "win-aff boosts items over-represented in higher-WR inspiration bags."
+                    ),
+                }
+            )
     return report
 
 
@@ -594,9 +712,25 @@ def main(argv: list[str] | None = None) -> int:
             f"train_hit={h.get('mean_train_hit_rate')} "
             f"thin={h.get('thin_mean_holdout_hit_rate')} fat={h.get('fat_mean_holdout_hit_rate')}"
         )
+        print(
+            f"win-assoc: path_aff={h.get('mean_path_win_affinity')} "
+            f"corr_hit_wr={h.get('corr_hit_vs_wr')} "
+            f"gap={((h.get('win_association') or {}).get('gap'))} "
+            f"locked_hit={h.get('locked_mean_holdout_hit_rate')} "
+            f"unlocked_hit={h.get('unlocked_mean_holdout_hit_rate')}"
+        )
     if not args.no_report:
         print(f"wrote {REPORT_PATH}")
     ok = s["unit_ok"] and s["fixtures_failed"] == 0
+    # Full eval: collapse of holdout (inspiration present but n=0) is a soft fail signal
+    if not args.fixtures_only and report.get("holdout") is not None:
+        hn = (report["holdout"] or {}).get("n") or 0
+        mean_h = (report["holdout"] or {}).get("mean_holdout_hit_rate")
+        if hn == 0:
+            print("WARN: holdout n=0 — inspiration bags empty or min_games too high")
+        elif mean_h is not None and float(mean_h) < 0.12:
+            print(f"HOLD OUT FLOOR FAIL: mean_hit={mean_h} < 0.12")
+            ok = False
     return 0 if ok else 1
 
 
