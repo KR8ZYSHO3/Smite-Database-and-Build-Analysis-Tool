@@ -1154,6 +1154,9 @@ tr.selected td {
 .build-god-grid[hidden],
 #builds-any-detail[hidden],
 #builds-all-hits[hidden],
+#builds-god-home[hidden],
+#builds-role-browse[hidden],
+#builds-roster-label[hidden],
 #role-job-wrap[hidden] {
   display: none !important;
 }
@@ -3385,7 +3388,7 @@ body.ui-simple .app {
 }
 .breadcrumbs .bc-part { color: var(--muted); }
 
-/* Builds find bar — search + role pills */
+/* Builds find bar — god-first search + optional role browse */
 .builds-sticky-role {
   position: sticky;
   top: 0;
@@ -3397,6 +3400,47 @@ body.ui-simple .app {
   background: rgba(10, 12, 20, 0.94);
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+.builds-mode-toggle {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 10px;
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.builds-mode-btn {
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  min-height: 36px;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.builds-mode-btn:hover {
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.builds-mode-btn.active {
+  color: var(--text);
+  background: rgba(61, 126, 166, 0.28);
+  border-color: rgba(61, 126, 166, 0.55);
+  box-shadow: 0 0 12px rgba(61, 126, 166, 0.2);
+}
+.builds-role-browse {
+  margin-top: 4px;
+}
+.builds-god-path-blurb {
+  margin: 4px 0 10px;
+  font-size: 0.88rem;
 }
 .builds-find-row {
   display: flex;

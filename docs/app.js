@@ -898,7 +898,7 @@ function currentHash() {
 
 function parseRoute(hash) {
   const raw = (hash || "").replace(/^#/, "").trim();
-  if (!raw) return { tab: "builds" };
+  if (!raw) return { tab: "builds", mode: "search" };
   const segs = raw.split("/").map((s) => {
     try {
       return decodeURIComponent(s);
@@ -909,8 +909,9 @@ function parseRoute(hash) {
   const tab = (segs[0] || "builds").toLowerCase();
   if (!VALID_TABS.has(tab)) return { tab: "builds" };
   if (tab === "builds") {
-    // #builds | #builds/Carry | #builds/Carry/Artemis | #builds/search | #builds/search/Artemis
-    if ((segs[1] || "").toLowerCase() === "search") {
+    // #builds | #builds/search | #builds/search/Artemis | #builds/Carry | #builds/Carry/Artemis
+    const seg1 = (segs[1] || "").toLowerCase();
+    if (!seg1 || seg1 === "search") {
       return { tab, mode: "search", god: segs[2] || null, role: null };
     }
     return { tab, mode: "role", role: segs[1] || null, god: segs[2] || null };
@@ -1063,7 +1064,7 @@ function syncHashFromUi(tab) {
   if (routeState.suppressHash) return;
   let hash = tab || "builds";
   if (hash === "builds" && routeState.build) {
-    const mode = routeState.build.getMode?.() || "role";
+    const mode = routeState.build.getMode?.() || "search";
     if (mode === "search") {
       const god = routeState.build.getGod?.() || state.selectedGod?.name;
       hash = god
@@ -1128,14 +1129,7 @@ function applyRoute(route) {
   activateTab(route.tab, { updateHash: false });
 
   if (route.tab === "builds") {
-    if (route.mode === "search") {
-      routeState.build?.setMode?.("search", { updateHash: false });
-      if (route.god) {
-        queueMicrotask(() =>
-          routeState.build?.focusSearchGod?.(route.god, { updateHash: false })
-        );
-      }
-    } else {
+    if (route.mode === "role") {
       routeState.build?.setMode?.("role", { updateHash: false });
       if (route.role && routeState.build?.setRole) {
         routeState.build.setRole(route.role, { updateHash: false });
@@ -1143,6 +1137,14 @@ function applyRoute(route) {
       if (route.god && routeState.build?.focusGod) {
         queueMicrotask(() =>
           routeState.build.focusGod(route.god, { updateHash: false })
+        );
+      }
+    } else {
+      // Default / god-first
+      routeState.build?.setMode?.("search", { updateHash: false });
+      if (route.god) {
+        queueMicrotask(() =>
+          routeState.build?.focusSearchGod?.(route.god, { updateHash: false })
         );
       }
     }
@@ -2218,7 +2220,7 @@ function setupBuilds() {
     if (saved && roles.some((r) => r === saved)) activeRole = saved;
   } catch (_) {}
   let focusGodName = null;
-  let buildsMode = "role"; // "role" | "search"
+  let buildsMode = "search"; // "search" (god-first) | "role" (browse ladder by lane)
   let searchFocusGod = null;
 
   pills.innerHTML = roles
@@ -2228,13 +2230,35 @@ function setupBuilds() {
     )
     .join("");
 
+  const syncModeToggle = () => {
+    $$(".builds-mode-btn").forEach((btn) => {
+      const mode = btn.getAttribute("data-builds-mode") || "search";
+      btn.classList.toggle("active", mode === buildsMode);
+    });
+    const label = $("#builds-search-label");
+    if (label) {
+      label.textContent =
+        buildsMode === "role" ? "Filter this role" : "Find a god";
+    }
+    if (search) {
+      search.placeholder =
+        buildsMode === "role"
+          ? `Filter ${activeRole} roster…`
+          : "Type a god — see every role build for them…";
+    }
+    const homeHint = $("#builds-god-home-hint");
+    if (homeHint) {
+      homeHint.hidden = buildsMode !== "search" || !!searchFocusGod;
+    }
+  };
+
   const setRole = (role, { updateHash = true } = {}) => {
     const hit = roles.find((r) => r.toLowerCase() === String(role || "").toLowerCase());
     if (!hit) return false;
     activeRole = hit;
     focusGodName = null;
-    // Switching role returns to the role list (keeps search text for filter)
-    if (buildsMode === "search" && searchFocusGod) {
+    // Role browse is explicit — leave god detail and show the lane ladder
+    if (buildsMode === "search") {
       searchFocusGod = null;
       buildsMode = "role";
       const detail = $("#builds-any-detail");
@@ -2242,6 +2266,9 @@ function setupBuilds() {
         detail.hidden = true;
         detail.innerHTML = "";
       }
+      if (search) search.value = "";
+      const anySearch = $("#builds-any-search");
+      if (anySearch) anySearch.value = "";
     }
     syncSharedRole(activeRole);
     pills.querySelectorAll(".role-pill").forEach((b) =>
@@ -2265,20 +2292,28 @@ function setupBuilds() {
     const allHits = $("#builds-all-hits");
     const featured = $("#featured-builds");
     const rosterLabel = $("#builds-roster-label");
-    const viewingGod = buildsMode === "search" && searchFocusGod;
+    const roleBrowse = $("#builds-role-browse");
+    const godHome = $("#builds-god-home");
+    const viewingGod = buildsMode === "search" && !!searchFocusGod;
+    const godHomeMode = buildsMode === "search" && !searchFocusGod;
+    const roleMode = buildsMode === "role";
     if (detail) detail.hidden = !viewingGod;
-    if (godsBox) godsBox.hidden = !!viewingGod;
-    if (jobWrap) jobWrap.hidden = !!viewingGod;
+    if (roleBrowse) roleBrowse.hidden = !roleMode;
+    if (godsBox) godsBox.hidden = !roleMode;
+    if (jobWrap) jobWrap.hidden = !roleMode;
+    if (rosterLabel) rosterLabel.hidden = !roleMode;
+    if (godHome) godHome.hidden = !godHomeMode;
     if (featured) {
       const hasFeatured = (state.featured_builds?.builds || []).length > 0;
-      featured.hidden = !!viewingGod || !hasFeatured;
+      // Featured sits under search home; hide when viewing a god or browsing a role ladder
+      featured.hidden = !godHomeMode || !hasFeatured;
     }
-    if (rosterLabel) rosterLabel.hidden = !!viewingGod;
-    if (allHits && viewingGod) allHits.hidden = true;
+    if (allHits && (viewingGod || roleMode)) allHits.hidden = true;
+    syncModeToggle();
   };
 
   const setMode = (mode, { updateHash = true } = {}) => {
-    buildsMode = mode === "search" ? "search" : "role";
+    buildsMode = mode === "role" ? "role" : "search";
     if (buildsMode === "role") {
       searchFocusGod = null;
       const detail = $("#builds-any-detail");
@@ -2286,10 +2321,20 @@ function setupBuilds() {
         detail.hidden = true;
         detail.innerHTML = "";
       }
+      const godHome = $("#builds-god-home");
+      if (godHome) godHome.hidden = true;
+    } else {
+      // Returning to god-first clears role-filter text so the full A–Z list shows
+      focusGodName = null;
+      if (!searchFocusGod && search) search.value = "";
+      const anySearch = $("#builds-any-search");
+      if (anySearch && !searchFocusGod) anySearch.value = "";
     }
     applyBuildsModeUi();
-    if (buildsMode === "search") renderSearchList();
-    else render();
+    if (buildsMode === "search") {
+      if (searchFocusGod) focusSearchGod(searchFocusGod, { updateHash: false });
+      else renderGodHome();
+    } else render();
     updateBreadcrumbs("builds", {
       role: activeRole,
       god: buildsMode === "search" ? searchFocusGod : focusGodName,
@@ -2478,25 +2523,32 @@ function setupBuilds() {
   });
   search?.addEventListener("input", () => {
     focusGodName = null;
-    // Leaving a focused all-roles view when the user types again
+    const anySearch = $("#builds-any-search");
+    if (anySearch) anySearch.value = search.value || "";
+    // Typing while viewing a god returns to the god list (stay god-first)
     if (buildsMode === "search" && searchFocusGod) {
       searchFocusGod = null;
-      buildsMode = "role";
       const detail = $("#builds-any-detail");
       if (detail) {
         detail.hidden = true;
         detail.innerHTML = "";
       }
       applyBuildsModeUi();
+      renderGodHome();
+      syncHashFromUi("builds");
+      return;
     }
-    const anySearch = $("#builds-any-search");
-    if (anySearch) anySearch.value = search.value || "";
+    if (buildsMode === "search") {
+      renderGodHome();
+      return;
+    }
     render();
   });
   search?.addEventListener("keydown", (e) => {
     if (e.key !== "Enter") return;
     const q = (search.value || "").trim();
     if (!q) return;
+    // Enter in role browse still jumps to that god's full multi-role page
     const exact = (state.gods || []).find(
       (g) => (g.name || "").toLowerCase() === q.toLowerCase()
     );
@@ -2530,36 +2582,70 @@ function setupBuilds() {
     selectGod(btn.getAttribute("data-open-god"), true);
   });
 
-  /* --- Search any god mode --- */
-  const renderSearchList = () => {
-    const q = ($("#builds-any-search")?.value || "").toLowerCase().trim();
-    const list = $("#builds-any-list");
-    const detail = $("#builds-any-detail");
+  /* --- God-first home + search --- */
+  const godNativeRoles = (g) => {
+    const raw = g?.native_roles || g?.roles || [];
+    if (Array.isArray(raw)) return raw.map(String);
+    if (typeof raw === "string") {
+      try {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed)) return parsed.map(String);
+      } catch (_) {}
+      return raw.split(/[,/|]/).map((s) => s.trim()).filter(Boolean);
+    }
+    return [];
+  };
+
+  const renderGodHome = () => {
+    const list = $("#builds-god-home");
     if (!list) return;
+    const q = (search?.value || $("#builds-any-search")?.value || "")
+      .toLowerCase()
+      .trim();
     let gods = [...(state.gods || [])].sort((a, b) =>
       String(a.name).localeCompare(String(b.name))
     );
-    if (q) gods = gods.filter((g) => (g.name || "").toLowerCase().includes(q));
-    if (searchFocusGod && detail && !detail.hidden) {
-      // keep detail; still show filtered chips above
+    if (q) {
+      gods = gods.filter((g) => (g.name || "").toLowerCase().includes(q));
+      gods.sort((a, b) => {
+        const an = (a.name || "").toLowerCase();
+        const bn = (b.name || "").toLowerCase();
+        const as = an === q ? 0 : an.startsWith(q) ? 1 : 2;
+        const bs = bn === q ? 0 : bn.startsWith(q) ? 1 : 2;
+        return as - bs || an.localeCompare(bn);
+      });
     }
+    const hint = $("#builds-god-home-hint");
+    if (hint && buildsMode === "search" && !searchFocusGod) {
+      hint.hidden = false;
+      hint.textContent = q
+        ? `${gods.length} god${gods.length === 1 ? "" : "s"} matching “${q}” — tap for every role path`
+        : "Search a god for their tailored paths. Role browse is optional if you want ladder order by lane.";
+    }
+    list.hidden = false;
     list.innerHTML = gods.length
       ? gods
-          .slice(0, 80)
+          .slice(0, q ? 40 : 93)
           .map((g) => {
-            const active =
-              searchFocusGod &&
-              g.name.toLowerCase() === String(searchFocusGod).toLowerCase();
-            return `<button type="button" class="builds-any-chip${
-              active ? " active" : ""
-            }" data-search-god="${escapeAttr(g.name)}">
+            const natives = godNativeRoles(g);
+            const nativeBit = natives.length
+              ? `<span class="muted">${escapeHtml(natives.slice(0, 2).join(" · "))}</span>`
+              : `<span class="muted">${escapeHtml(g.pantheon || "")}</span>`;
+            return `<button type="button" class="builds-any-chip" data-search-god="${escapeAttr(
+              g.name
+            )}">
               <span class="bes-name">${escapeHtml(g.name)}</span>
               <span class="tier-pill tier-${g.tier || ""}">${escapeHtml(g.tier || "?")}</span>
-              <span class="muted">${escapeHtml(g.pantheon || "")}</span>
+              ${nativeBit}
             </button>`;
           })
           .join("")
       : emptyHud("No gods match", "Try another spelling.");
+  };
+
+  const renderSearchList = () => {
+    // Legacy list hook — god-first home owns the chip grid now
+    if (buildsMode === "search" && !searchFocusGod) renderGodHome();
   };
 
   const focusSearchGod = (name, { updateHash = true } = {}) => {
@@ -2572,15 +2658,28 @@ function setupBuilds() {
     const anySearch = $("#builds-any-search");
     if (anySearch) anySearch.value = g.name;
     applyBuildsModeUi();
-    renderSearchList();
     const detail = $("#builds-any-detail");
     if (detail) {
       detail.hidden = false;
       const roleOrder = ["Carry", "Mid", "Jungle", "Solo", "Support"];
+      const nativeSet = new Set(
+        godNativeRoles(g).map((r) => String(r).toLowerCase())
+      );
+      // Native roles first, then flex — still within Carry→Support order
+      const ordered = [...roleOrder].sort((a, b) => {
+        const an = nativeSet.has(a.toLowerCase()) ? 0 : 1;
+        const bn = nativeSet.has(b.toLowerCase()) ? 0 : 1;
+        if (an !== bn) return an - bn;
+        return roleOrder.indexOf(a) - roleOrder.indexOf(b);
+      });
       const cards = [];
-      for (const role of roleOrder) {
+      let primaryRole = activeRole;
+      for (const role of ordered) {
         const gb = findGodBuild(g, role);
         if (!gb) continue;
+        const isNative =
+          nativeSet.has(role.toLowerCase()) && !gb.flex_role && !gb.is_aspect;
+        if (isNative && cards.length === 0) primaryRole = role;
         cards.push(
           godBuildCard(
             {
@@ -2593,27 +2692,37 @@ function setupBuilds() {
             role,
             {
               open: true,
-              isNative: !gb.flex_role && !gb.is_aspect,
+              isNative,
               showRoleLabel: true,
             }
           )
         );
       }
+      if (cards.length && nativeSet.size) {
+        const firstNative = ordered.find((r) => nativeSet.has(r.toLowerCase()));
+        if (firstNative) primaryRole = firstNative;
+      }
       detail.innerHTML = `
         <div class="builds-any-detail-head">
-          <button type="button" class="btn-ghost builds-back-btn" id="builds-back-role">← Back to ${escapeHtml(
-            activeRole
-          )}</button>
+          <button type="button" class="btn-ghost builds-back-btn" id="builds-back-role">← All gods</button>
           <h2>${escapeHtml(g.name)}</h2>
           <p class="muted">${escapeHtml(
-            [g.pantheon, g.primary_damage_type, g.tier ? `Tier ${g.tier}` : ""]
+            [
+              g.pantheon,
+              g.primary_damage_type,
+              g.tier ? `Tier ${g.tier}` : "",
+              godNativeRoles(g).length
+                ? `Native: ${godNativeRoles(g).join(", ")}`
+                : "",
+            ]
               .filter(Boolean)
               .join(" · ")
           )}</p>
+          <p class="builds-god-path-blurb muted">Paths below are tailored per role — native lanes first, then flex.</p>
           <div class="card-actions">
             <button type="button" class="btn-primary" data-counter-god="${escapeAttr(
               g.name
-            )}" data-counter-role="${escapeAttr(activeRole)}">Open in Counter</button>
+            )}" data-counter-role="${escapeAttr(primaryRole)}">Open in Counter</button>
           </div>
         </div>
         <div class="build-god-grid">${
@@ -2642,13 +2751,24 @@ function setupBuilds() {
   };
   $("#builds-any-list")?.addEventListener("click", onSearchGodChip);
   $("#builds-all-hits")?.addEventListener("click", onSearchGodChip);
+  $("#builds-god-home")?.addEventListener("click", onSearchGodChip);
   $("#builds-any-detail")?.addEventListener("click", (e) => {
     if (e.target.closest("#builds-back-role")) {
       e.preventDefault();
+      searchFocusGod = null;
       if (search) search.value = "";
       const anySearch = $("#builds-any-search");
       if (anySearch) anySearch.value = "";
-      setMode("role", { updateHash: true });
+      const detail = $("#builds-any-detail");
+      if (detail) {
+        detail.hidden = true;
+        detail.innerHTML = "";
+      }
+      buildsMode = "search";
+      applyBuildsModeUi();
+      renderGodHome();
+      updateBreadcrumbs("builds", {});
+      syncHashFromUi("builds");
       return;
     }
     const pathTog = e.target.closest("button.path-tog[data-path-mode]");
@@ -2713,7 +2833,9 @@ function setupBuilds() {
     focusSearchGod,
   };
   applyBuildsModeUi();
-  render();
+  // God-first home by default; role browse only when toggled / deep-linked
+  if (buildsMode === "search") renderGodHome();
+  else render();
   syncSharedRole(activeRole);
 }
 

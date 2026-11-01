@@ -90,19 +90,36 @@
       <section id="panel-builds" class="panel active">
         <div id="builds-view-role">
           <div class="builds-sticky-role" id="builds-sticky-role">
+            <div class="builds-mode-toggle" role="group" aria-label="Builds view">
+              <button type="button" class="builds-mode-btn active" data-builds-mode="search" id="builds-mode-search">
+                Find a god
+              </button>
+              <button type="button" class="builds-mode-btn" data-builds-mode="role" id="builds-mode-role">
+                Browse by role
+              </button>
+            </div>
             <div class="builds-find-row">
-              <label class="builds-search-label" for="build-god-search">Find a god</label>
+              <label class="builds-search-label" for="build-god-search" id="builds-search-label">Find a god</label>
               <input
                 id="build-god-search"
                 type="search"
-                placeholder="Search any god…"
+                placeholder="Type a god — see every role build for them…"
                 autocomplete="off"
                 enterkeyhint="search"
               />
             </div>
-            <div class="toolbar role-pills" id="role-pills" role="group" aria-label="Role"></div>
-            <p class="builds-hint muted" id="build-god-count"></p>
+            <div class="builds-role-browse" id="builds-role-browse" hidden>
+              <div class="toolbar role-pills" id="role-pills" role="group" aria-label="Role"></div>
+              <p class="builds-hint muted" id="build-god-count"></p>
+            </div>
+            <p class="builds-hint muted" id="builds-god-home-hint">
+              Search a god for their tailored paths. Role browse is optional if you want ladder order by lane.
+            </p>
           </div>
+
+          <div id="builds-god-home" class="builds-any-list" aria-label="All gods"></div>
+          <div id="builds-all-hits" class="builds-any-list" hidden></div>
+          <div id="builds-any-detail" class="builds-any-detail" hidden></div>
 
           <section
             id="featured-builds"
@@ -121,10 +138,7 @@
             <div id="featured-builds-detail" class="featured-builds-detail" hidden></div>
           </section>
 
-          <div id="builds-all-hits" class="builds-any-list" hidden></div>
-          <div id="builds-any-detail" class="builds-any-detail" hidden></div>
-
-          <details class="role-job-details" id="role-job-wrap">
+          <details class="role-job-details" id="role-job-wrap" hidden>
             <summary>What does this role do?</summary>
             <div class="card role-job" id="role-job">
               <h2>Pick a role above</h2>
@@ -132,11 +146,11 @@
             </div>
           </details>
 
-          <div class="builds-roster-label" id="builds-roster-label">
+          <div class="builds-roster-label" id="builds-roster-label" hidden>
             <h3>All ranked builds</h3>
             <p class="muted">Full roster for the role above — same paths as the Featured cards when they overlap.</p>
           </div>
-          <div id="build-gods" class="build-god-grid"></div>
+          <div id="build-gods" class="build-god-grid" hidden></div>
         </div>
         <!-- Hidden legacy search input kept for hash/JS compat -->
         <input id="builds-any-search" type="search" hidden tabindex="-1" aria-hidden="true" />
