@@ -519,16 +519,75 @@ def generate_meta_lab(
         "trajectories": compute_trajectories(conn),
         "role_tiers": compute_role_tier_snapshot(conn),
         "weekly_themes": _infer_themes(conn, role_paths),
+        "patch_overview": _load_patch_overview(),
     }
     return lab
 
 
+def _load_patch_overview() -> dict[str, Any]:
+    """Editorial Night Update / patch highlights from featured_builds.json."""
+    try:
+        from pathlib import Path
+
+        root = Path(__file__).resolve().parents[2]
+        src = root / "data" / "featured_builds.json"
+        if not src.exists():
+            return {}
+        data = json.loads(src.read_text(encoding="utf-8"))
+        overview = data.get("overview") or {}
+        if not overview:
+            return {}
+        return {
+            "current_patch": data.get("current_patch"),
+            "current_patch_title": data.get("current_patch_title"),
+            "headline": overview.get("headline"),
+            "summary": overview.get("summary"),
+            "disclaimer": overview.get("disclaimer"),
+            "gods": overview.get("gods") or [],
+            "items": overview.get("items") or [],
+        }
+    except Exception:
+        return {}
+
+
+def _featured_theme_lines() -> list[str]:
+    ov = _load_patch_overview()
+    if not ov:
+        return []
+    lines: list[str] = []
+    patch = ov.get("current_patch") or "This patch"
+    title = ov.get("current_patch_title") or ""
+    head = ov.get("headline") or f"{patch} · {title}".strip(" ·")
+    if ov.get("summary"):
+        lines.append(f"{head}: {ov['summary']}")
+    up_gods = [
+        g.get("name")
+        for g in (ov.get("gods") or [])
+        if str(g.get("lean") or "").lower() in ("up", "buff") and g.get("name")
+    ]
+    down_gods = [
+        g.get("name")
+        for g in (ov.get("gods") or [])
+        if str(g.get("lean") or "").lower() in ("down", "nerf") and g.get("name")
+    ]
+    if up_gods:
+        lines.append(f"Patch lean up: {', '.join(up_gods[:5])}.")
+    if down_gods:
+        lines.append(f"Patch lean down: {', '.join(down_gods[:5])}.")
+    hot_items = [
+        it.get("name")
+        for it in (ov.get("items") or [])
+        if str(it.get("lean") or "").lower() in ("up", "buff", "fix") and it.get("name")
+    ]
+    if hot_items:
+        lines.append(f"Items to watch: {', '.join(hot_items[:5])}.")
+    return lines
+
+
 def _infer_themes(conn: sqlite3.Connection, role_paths: dict[str, list]) -> list[str]:
     themes: list[str] = []
+    themes.extend(_featured_theme_lines())
     # Support spectral coverage
-    sup = None
-    # recompute quick support crit coverage
-    from_cov = None
     try:
         cov = compute_answer_coverage(role_paths)
         sc = (cov.get("Support") or {}).get("answers") or {}

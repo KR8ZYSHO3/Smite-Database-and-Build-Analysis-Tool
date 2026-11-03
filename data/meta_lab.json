@@ -378,8 +378,26 @@
   "flex_item_guide": {
     "title": "Items explained \u2014 simple English",
     "disclaimer": "Plain-language guides for new and situational items. Not live win rates. Primary builds come from this site\u2019s kit + patch model \u2014 not copied from other build sites.",
-    "featured_title": "Featured enchanter / remade items (OB43\u2013OB45)",
+    "featured_title": "Night Update & remade items (OB43\u2013OB47)",
     "featured": [
+      {
+        "name": "Ancient Signet",
+        "tags": [
+          "concept"
+        ],
+        "roles": [
+          "Mid",
+          "Support",
+          "Jungle"
+        ],
+        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) \u2014 mana-hungry kits stop going dry between rotates.",
+        "how": "Buy when your clear/ult package is INT-scaled and you were already eyeing Signet; the regen is the Night Update reason to prefer it over thirstier banks.",
+        "when": "Mana-hungry mages who rotate often (Nox, classic INT Mid).",
+        "when_not": "You already solved mana with Thoth/Yogi and want pure pen/burst instead.",
+        "buy_as": "Mid INT flex/core. OB47 mana regen add.",
+        "featured": true,
+        "patch": "OB47"
+      },
       {
         "name": "Barbed Carver",
         "tags": [
@@ -446,12 +464,12 @@
           "Support"
         ],
         "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
-        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit.",
-        "when": "Enchanter supports who can AA safely next to the carry.",
+        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "when": "Enchanter supports who can AA safely next to the carry; niche Jorm pocket after OB47.",
         "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
-        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43.",
+        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43; OB47 Jorm proc note.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       {
         "name": "Gem of Isolation",
@@ -503,12 +521,12 @@
           "Mid"
         ],
         "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
-        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp.",
+        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card\u2019s amp actually applies.",
         "when": "Healers who group fight and can mark the dive target.",
         "when_not": "No heal identity; active slots full.",
-        "buy_as": "Healer flex active. Remade OB43.",
+        "buy_as": "Healer flex active. Remade OB43; OB47 heal-scaling bugfix.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       {
         "name": "Lotus Sickle",
@@ -522,12 +540,12 @@
           "Mid"
         ],
         "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
-        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passiveive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions).",
-        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry.",
+        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry; niche Jorm DoT/heal itemization after OB47.",
         "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
-        "buy_as": "Support 2nd after Thebes (cheap CDR + Int). Live in shop; OB45 also scales bonus dmg with 20% Attack Damage.",
+        "buy_as": "Support 2nd after Thebes (cheap CDR + Int). OB45 AD scaling on bonus dmg; OB47 Jorm proc note.",
         "featured": true,
-        "patch": "OB45"
+        "patch": "OB47"
       },
       {
         "name": "Rod Of Asclepius",
@@ -547,6 +565,23 @@
         "patch": "OB43"
       },
       {
+        "name": "Selflessness",
+        "tags": [
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10\u219215 \u2014 free early shell on every path that already bought it.",
+        "how": "Safer lane opener than greedier flags when you want raw bulk and team sustain over contest tools.",
+        "when": "Support paths that already default Selflessness; any lobby where early prots matter.",
+        "when_not": "You\u2019re not actually supporting.",
+        "buy_as": "Support starter. OB47 Night Update prot buff.",
+        "featured": true,
+        "patch": "OB47"
+      },
+      {
         "name": "Soul Locket",
         "tags": [
           "concept",
@@ -557,13 +592,13 @@
           "Support",
           "Mid"
         ],
-        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks.",
-        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam.",
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70\u219235 but DR per stack 1%\u21922% (same 70% DR cap, fewer stacks to full).",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
         "when": "Enchanter supports who stay in fights and get focused.",
         "when_not": "You never heal/buff allies; you already have 3 better actives.",
-        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. New in OB43.",
+        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       {
         "name": "Stone of Binding",
@@ -603,10 +638,45 @@
         "buy_as": "After a STR/INT core so adaptive lands correctly. Remade OB43.",
         "featured": true,
         "patch": "OB43"
+      },
+      {
+        "name": "War Flag",
+        "tags": [
+          "aura",
+          "answer"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10\u219215 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
+        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window \u2014 peel and roam both pay.",
+        "when": "Almost every Contested Support game that wants early shell + shared farm.",
+        "when_not": "You\u2019re running a full damage Mid with no Support starter.",
+        "buy_as": "Support starter. OB47 Night Update shell buff.",
+        "featured": true,
+        "patch": "OB47"
       }
     ],
     "items": [
       {
+        "name": "Ancient Signet",
+        "tags": [
+          "concept"
+        ],
+        "roles": [
+          "Mid",
+          "Support",
+          "Jungle"
+        ],
+        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) \u2014 mana-hungry kits stop going dry between rotates.",
+        "how": "Buy when your clear/ult package is INT-scaled and you were already eyeing Signet; the regen is the Night Update reason to prefer it over thirstier banks.",
+        "when": "Mana-hungry mages who rotate often (Nox, classic INT Mid).",
+        "when_not": "You already solved mana with Thoth/Yogi and want pure pen/burst instead.",
+        "buy_as": "Mid INT flex/core. OB47 mana regen add.",
+        "featured": true,
+        "patch": "OB47"
+      },
+      {
         "name": "Barbed Carver",
         "tags": [
           "concept",
@@ -672,12 +742,12 @@
           "Support"
         ],
         "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
-        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit.",
-        "when": "Enchanter supports who can AA safely next to the carry.",
+        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "when": "Enchanter supports who can AA safely next to the carry; niche Jorm pocket after OB47.",
         "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
-        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43.",
+        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43; OB47 Jorm proc note.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       {
         "name": "Gem of Isolation",
@@ -729,12 +799,12 @@
           "Mid"
         ],
         "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
-        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp.",
+        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card\u2019s amp actually applies.",
         "when": "Healers who group fight and can mark the dive target.",
         "when_not": "No heal identity; active slots full.",
-        "buy_as": "Healer flex active. Remade OB43.",
+        "buy_as": "Healer flex active. Remade OB43; OB47 heal-scaling bugfix.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       {
         "name": "Lotus Sickle",
@@ -748,12 +818,12 @@
           "Mid"
         ],
         "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
-        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passiveive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions).",
-        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry.",
+        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry; niche Jorm DoT/heal itemization after OB47.",
         "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
-        "buy_as": "Support 2nd after Thebes (cheap CDR + Int). Live in shop; OB45 also scales bonus dmg with 20% Attack Damage.",
+        "buy_as": "Support 2nd after Thebes (cheap CDR + Int). OB45 AD scaling on bonus dmg; OB47 Jorm proc note.",
         "featured": true,
-        "patch": "OB45"
+        "patch": "OB47"
       },
       {
         "name": "Rod Of Asclepius",
@@ -773,6 +843,23 @@
         "patch": "OB43"
       },
       {
+        "name": "Selflessness",
+        "tags": [
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10\u219215 \u2014 free early shell on every path that already bought it.",
+        "how": "Safer lane opener than greedier flags when you want raw bulk and team sustain over contest tools.",
+        "when": "Support paths that already default Selflessness; any lobby where early prots matter.",
+        "when_not": "You\u2019re not actually supporting.",
+        "buy_as": "Support starter. OB47 Night Update prot buff.",
+        "featured": true,
+        "patch": "OB47"
+      },
+      {
         "name": "Soul Locket",
         "tags": [
           "concept",
@@ -783,13 +870,13 @@
           "Support",
           "Mid"
         ],
-        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks.",
-        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam.",
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70\u219235 but DR per stack 1%\u21922% (same 70% DR cap, fewer stacks to full).",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
         "when": "Enchanter supports who stay in fights and get focused.",
         "when_not": "You never heal/buff allies; you already have 3 better actives.",
-        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. New in OB43.",
+        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       {
         "name": "Stone of Binding",
@@ -829,6 +916,23 @@
         "buy_as": "After a STR/INT core so adaptive lands correctly. Remade OB43.",
         "featured": true,
         "patch": "OB43"
+      },
+      {
+        "name": "War Flag",
+        "tags": [
+          "aura",
+          "answer"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10\u219215 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
+        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window \u2014 peel and roam both pay.",
+        "when": "Almost every Contested Support game that wants early shell + shared farm.",
+        "when_not": "You\u2019re running a full damage Mid with no Support starter.",
+        "buy_as": "Support starter. OB47 Night Update shell buff.",
+        "featured": true,
+        "patch": "OB47"
       },
       {
         "name": "Alchemist Coat",
@@ -2012,6 +2116,110 @@
         "featured": false,
         "patch": ""
       },
+      "War Flag": {
+        "name": "War Flag",
+        "tags": [
+          "aura",
+          "answer"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10\u219215 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
+        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window \u2014 peel and roam both pay.",
+        "when": "Almost every Contested Support game that wants early shell + shared farm.",
+        "when_not": "You\u2019re running a full damage Mid with no Support starter.",
+        "buy_as": "Support starter. OB47 Night Update shell buff.",
+        "featured": true,
+        "patch": "OB47"
+      },
+      "war flag": {
+        "name": "War Flag",
+        "tags": [
+          "aura",
+          "answer"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10\u219215 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
+        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window \u2014 peel and roam both pay.",
+        "when": "Almost every Contested Support game that wants early shell + shared farm.",
+        "when_not": "You\u2019re running a full damage Mid with no Support starter.",
+        "buy_as": "Support starter. OB47 Night Update shell buff.",
+        "featured": true,
+        "patch": "OB47"
+      },
+      "Selflessness": {
+        "name": "Selflessness",
+        "tags": [
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10\u219215 \u2014 free early shell on every path that already bought it.",
+        "how": "Safer lane opener than greedier flags when you want raw bulk and team sustain over contest tools.",
+        "when": "Support paths that already default Selflessness; any lobby where early prots matter.",
+        "when_not": "You\u2019re not actually supporting.",
+        "buy_as": "Support starter. OB47 Night Update prot buff.",
+        "featured": true,
+        "patch": "OB47"
+      },
+      "selflessness": {
+        "name": "Selflessness",
+        "tags": [
+          "aura",
+          "sustain"
+        ],
+        "roles": [
+          "Support"
+        ],
+        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10\u219215 \u2014 free early shell on every path that already bought it.",
+        "how": "Safer lane opener than greedier flags when you want raw bulk and team sustain over contest tools.",
+        "when": "Support paths that already default Selflessness; any lobby where early prots matter.",
+        "when_not": "You\u2019re not actually supporting.",
+        "buy_as": "Support starter. OB47 Night Update prot buff.",
+        "featured": true,
+        "patch": "OB47"
+      },
+      "Ancient Signet": {
+        "name": "Ancient Signet",
+        "tags": [
+          "concept"
+        ],
+        "roles": [
+          "Mid",
+          "Support",
+          "Jungle"
+        ],
+        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) \u2014 mana-hungry kits stop going dry between rotates.",
+        "how": "Buy when your clear/ult package is INT-scaled and you were already eyeing Signet; the regen is the Night Update reason to prefer it over thirstier banks.",
+        "when": "Mana-hungry mages who rotate often (Nox, classic INT Mid).",
+        "when_not": "You already solved mana with Thoth/Yogi and want pure pen/burst instead.",
+        "buy_as": "Mid INT flex/core. OB47 mana regen add.",
+        "featured": true,
+        "patch": "OB47"
+      },
+      "ancient signet": {
+        "name": "Ancient Signet",
+        "tags": [
+          "concept"
+        ],
+        "roles": [
+          "Mid",
+          "Support",
+          "Jungle"
+        ],
+        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) \u2014 mana-hungry kits stop going dry between rotates.",
+        "how": "Buy when your clear/ult package is INT-scaled and you were already eyeing Signet; the regen is the Night Update reason to prefer it over thirstier banks.",
+        "when": "Mana-hungry mages who rotate often (Nox, classic INT Mid).",
+        "when_not": "You already solved mana with Thoth/Yogi and want pure pen/burst instead.",
+        "buy_as": "Mid INT flex/core. OB47 mana regen add.",
+        "featured": true,
+        "patch": "OB47"
+      },
       "Lotus Sickle": {
         "name": "Lotus Sickle",
         "tags": [
@@ -2024,12 +2232,12 @@
           "Mid"
         ],
         "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
-        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passiveive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions).",
-        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry.",
+        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry; niche Jorm DoT/heal itemization after OB47.",
         "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
-        "buy_as": "Support 2nd after Thebes (cheap CDR + Int). Live in shop; OB45 also scales bonus dmg with 20% Attack Damage.",
+        "buy_as": "Support 2nd after Thebes (cheap CDR + Int). OB45 AD scaling on bonus dmg; OB47 Jorm proc note.",
         "featured": true,
-        "patch": "OB45"
+        "patch": "OB47"
       },
       "lotus sickle": {
         "name": "Lotus Sickle",
@@ -2043,12 +2251,12 @@
           "Mid"
         ],
         "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
-        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passiveive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions).",
-        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry.",
+        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry; niche Jorm DoT/heal itemization after OB47.",
         "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
-        "buy_as": "Support 2nd after Thebes (cheap CDR + Int). Live in shop; OB45 also scales bonus dmg with 20% Attack Damage.",
+        "buy_as": "Support 2nd after Thebes (cheap CDR + Int). OB45 AD scaling on bonus dmg; OB47 Jorm proc note.",
         "featured": true,
-        "patch": "OB45"
+        "patch": "OB47"
       },
       "Soul Locket": {
         "name": "Soul Locket",
@@ -2061,13 +2269,13 @@
           "Support",
           "Mid"
         ],
-        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks.",
-        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam.",
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70\u219235 but DR per stack 1%\u21922% (same 70% DR cap, fewer stacks to full).",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
         "when": "Enchanter supports who stay in fights and get focused.",
         "when_not": "You never heal/buff allies; you already have 3 better actives.",
-        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. New in OB43.",
+        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       "soul locket": {
         "name": "Soul Locket",
@@ -2080,13 +2288,13 @@
           "Support",
           "Mid"
         ],
-        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks.",
-        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam.",
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70\u219235 but DR per stack 1%\u21922% (same 70% DR cap, fewer stacks to full).",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
         "when": "Enchanter supports who stay in fights and get focused.",
         "when_not": "You never heal/buff allies; you already have 3 better actives.",
-        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. New in OB43.",
+        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       "Vital Amplifier": {
         "name": "Vital Amplifier",
@@ -2174,12 +2382,12 @@
           "Mid"
         ],
         "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
-        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp.",
+        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card\u2019s amp actually applies.",
         "when": "Healers who group fight and can mark the dive target.",
         "when_not": "No heal identity; active slots full.",
-        "buy_as": "Healer flex active. Remade OB43.",
+        "buy_as": "Healer flex active. Remade OB43; OB47 heal-scaling bugfix.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       "lifebinder": {
         "name": "Lifebinder",
@@ -2193,12 +2401,12 @@
           "Mid"
         ],
         "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
-        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp.",
+        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card\u2019s amp actually applies.",
         "when": "Healers who group fight and can mark the dive target.",
         "when_not": "No heal identity; active slots full.",
-        "buy_as": "Healer flex active. Remade OB43.",
+        "buy_as": "Healer flex active. Remade OB43; OB47 heal-scaling bugfix.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       "Chandra's Grace": {
         "name": "Chandra's Grace",
@@ -2799,12 +3007,12 @@
           "Support"
         ],
         "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
-        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit.",
-        "when": "Enchanter supports who can AA safely next to the carry.",
+        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "when": "Enchanter supports who can AA safely next to the carry; niche Jorm pocket after OB47.",
         "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
-        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43.",
+        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43; OB47 Jorm proc note.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       "eros' bow": {
         "name": "Eros' Bow",
@@ -2817,12 +3025,12 @@
           "Support"
         ],
         "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
-        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit.",
-        "when": "Enchanter supports who can AA safely next to the carry.",
+        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "when": "Enchanter supports who can AA safely next to the carry; niche Jorm pocket after OB47.",
         "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
-        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43.",
+        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43; OB47 Jorm proc note.",
         "featured": true,
-        "patch": "OB43"
+        "patch": "OB47"
       },
       "Gluttonous Grimoire": {
         "name": "Gluttonous Grimoire",
@@ -7019,10 +7227,109 @@
     }
   },
   "weekly_themes": [
+    "OB47 \u00b7 The Night Update: New Classic god Nox (candle INT Mid/Support), Izanami's Aspect of the Sickle (area Storm + Wound burst), and a Support starter buff wave. Below: who we think spikes, which items got paid, then Featured kit tours you can expand.",
+    "Patch lean up: Nox, Hachiman, Ne Zha, Izanami, Ah Puch.",
+    "Patch lean down: Hel, Hou Yi, Nike, Nut.",
+    "Items to watch: War Flag, Selflessness, Ancient Signet, Lotus Sickle / Eros' Bow / Soul Locket, Lifebinder.",
     "Support paths under-buy anti-crit (Spectral on ~16.7% of recs) \u2014 flex Spectral almost every game.",
     "Support/Solo anti-heal is rare in defaults (~16.7% support) \u2014 Stygian/Brawler's is a live flex.",
     "Gods rising (r5 patch): Hachiman, Chronos, Ganesha, Hel.",
     "Items hot (r5 patch): Gluttonous Grimoire, Eros' Bow, Xibalban Effigy, Alchemist Coat.",
     "Patch axes (avg r5): damage +0.13, general +0.06, survivability -0.05."
-  ]
+  ],
+  "patch_overview": {
+    "current_patch": "OB47",
+    "current_patch_title": "The Night Update",
+    "headline": "OB47 \u00b7 The Night Update",
+    "summary": "New Classic god Nox (candle INT Mid/Support), Izanami's Aspect of the Sickle (area Storm + Wound burst), and a Support starter buff wave. Below: who we think spikes, which items got paid, then Featured kit tours you can expand.",
+    "disclaimer": "Predictions blend patch notes + our kit model \u2014 early OB ladder is thin. Treat Featured as guided cheese, not a guarantee.",
+    "gods": [
+      {
+        "name": "Nox",
+        "role": "Mid / Support",
+        "lean": "up",
+        "why": "Brand-new Classic with Root DoT, Silence void, ally-shadow dash, and a long-range Night Terror. Novelty plus real setup tools \u2014 expect her in every lobby this week."
+      },
+      {
+        "name": "Hachiman",
+        "role": "Carry",
+        "lean": "up",
+        "why": "Master of Arms early AS per stack doubled (1%\u21922%). Eagle Eye BAD scaling up. Quiet but real duo-lane buff \u2014 classic crit ADC gets to ramp faster."
+      },
+      {
+        "name": "Ne Zha",
+        "role": "Jungle",
+        "lean": "up",
+        "why": "Ring Toss bounce scaling and subsequent bounce damage up; Wind Fire Wheels base + scaling up. Clear and ult both got paid \u2014 assassin Jungle tempo rises."
+      },
+      {
+        "name": "Izanami",
+        "role": "Carry (Sickle)",
+        "lean": "up",
+        "why": "New Aspect of the Sickle: no pierce basics, area Magical Storm with Root + stacking Wound, burst stacks with autos/abilities. Spicy duo cheese and a reason to relearn her 1."
+      },
+      {
+        "name": "Ah Puch",
+        "role": "Mid",
+        "lean": "up",
+        "why": "Empty the Crypts Intelligence scaling per tick 15%\u219220% (base kit). More ult DPS in the pit without touching Death March."
+      },
+      {
+        "name": "Hel",
+        "role": "Mid / Support",
+        "lean": "down",
+        "why": "Decay INT scaling 80%\u219260%; Inspire ally heal INT scaling 10%\u21925%. Still playable, but the free heal/nuke package got trimmed."
+      },
+      {
+        "name": "Hou Yi",
+        "role": "Carry",
+        "lean": "down",
+        "why": "Ricochet cooldown fixed at 10s, damage and Strength scaling down. Aspect basics no longer bounce off non-marked targets \u2014 mark dependency is harsher."
+      },
+      {
+        "name": "Nike",
+        "role": "Flex",
+        "lean": "down",
+        "why": "Rend base damage down; aspect Laurels can no longer proc item effects; aspect Rend Strength scaling trimmed. Victory kit loses some free proc value."
+      },
+      {
+        "name": "Nut",
+        "role": "Carry / Mid",
+        "lean": "down",
+        "why": "Convergence inner/side damage down; Warp bonus projectiles when consuming Astral Flux 2\u21921 and cooldown up. Less free multi-hit pressure."
+      }
+    ],
+    "items": [
+      {
+        "name": "War Flag",
+        "lean": "up",
+        "why": "Physical and Magical prots 10\u219215. Every 8s, applying CC grants double War Flag kill/assist benefits to you and allies in 8.8m. Huge for CC Supports \u2014 rush it."
+      },
+      {
+        "name": "Selflessness",
+        "lean": "up",
+        "why": "Starter Physical and Magical prots 10\u219215. Every Support path that already bought this just got a free early shell."
+      },
+      {
+        "name": "Ancient Signet",
+        "lean": "up",
+        "why": "Now has 5 Mana Regen \u2014 mana-hungry mages stop going dry between rotates."
+      },
+      {
+        "name": "Lotus Sickle / Eros' Bow / Soul Locket",
+        "lean": "up",
+        "why": "Jormungandr Aspect Venomous Haze and Consuming Bellow can now proc these. Niche but real \u2014 serpent DoT/heal itemization opens up."
+      },
+      {
+        "name": "Soul Locket",
+        "lean": "mixed",
+        "why": "Max stacks 70\u219235 but damage reduction per stack 1%\u21922% (same 70% DR cap, fewer stacks to full). Hits full DR sooner; less granular stacking."
+      },
+      {
+        "name": "Lifebinder",
+        "lean": "fix",
+        "why": "Heal scaling bugfix \u2014 healing/shielding stat now applies correctly. Enchanters get what the card promised."
+      }
+    ]
+  }
 }

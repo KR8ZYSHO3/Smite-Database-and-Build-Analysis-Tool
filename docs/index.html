@@ -431,6 +431,7 @@
           <button type="button" class="meta-sub-btn" data-meta-view="guide">Item guide</button>
         </div>
         <p class="step-label">Tier list — who looks strong this patch (not a full build guide)</p>
+        <div id="meta-ladder-banner" class="meta-ladder-banner" hidden></div>
         <div class="toolbar">
           <label>Scope
             <select id="tier-scope"></select>
@@ -525,9 +526,35 @@
             Role staples, answer-item coverage, patch trajectories, and situational flex — kit + patch model with ranked WR signal.
             Builds are generated here (not copied from other sites).
           </p>
+          <section
+            id="meta-patch-highlights"
+            class="patch-highlights meta-patch-highlights"
+            aria-labelledby="meta-ph-title"
+            hidden
+          >
+            <div class="ph-head">
+              <p class="ph-kicker" id="meta-ph-kicker">This patch</p>
+              <h3 id="meta-ph-title">Patch overview</h3>
+              <p class="ph-summary" id="meta-ph-summary"></p>
+              <p class="muted ph-disclaimer" id="meta-ph-disclaimer"></p>
+            </div>
+            <div class="ph-grid">
+              <div class="ph-col">
+                <h4 class="ph-col-title">Gods to watch</h4>
+                <ul id="meta-ph-gods-list" class="ph-list"></ul>
+              </div>
+              <div class="ph-col">
+                <h4 class="ph-col-title">Items to watch</h4>
+                <ul id="meta-ph-items-list" class="ph-list"></ul>
+              </div>
+            </div>
+            <p class="muted meta-ph-tier-note">
+              Tier letters are the same ladder as Meta → Ladder and Builds role boards.
+            </p>
+          </section>
           <p class="meta-guide-jump">
-            <a href="#meta/guide" class="btn-secondary meta-guide-cta">New items explained →</a>
-            <span class="muted">Lotus Sickle, Soul Locket, heal remakes — plain English.</span>
+            <a href="#meta/guide" class="btn-secondary meta-guide-cta">Night Update items explained →</a>
+            <span class="muted">War Flag, Selflessness, Sickle / Locket / Lifebinder — plain English.</span>
           </p>
           <div id="meta-lab-themes" class="meta-themes"></div>
 
@@ -570,7 +597,7 @@
 
           <h3 id="item-guide-heading">Items explained (simple English)</h3>
           <p class="muted" id="meta-guide-disclaimer">
-            What it does, when to buy, when to skip — OB43–OB45 enchanter and answer items.
+            What it does, when to buy, when to skip — OB43–OB47 Night Update starters, enchanters, and answer items.
           </p>
           <div id="meta-guide-featured" class="meta-guide-featured" hidden></div>
           <div class="toolbar meta-guide-toolbar">

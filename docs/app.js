@@ -1326,6 +1326,8 @@ function setupTiers() {
     .join("");
   if (scopes.includes("overall")) scopeSel.value = "overall";
 
+  setupMetaLadderBanner();
+
   const render = () => {
     const scope = scopeSel.value;
     const filt = filterSel.value;
@@ -2004,31 +2006,99 @@ function leanLabel(lean) {
   return "Note";
 }
 
-function setupPatchHighlights() {
-  const root = $("#patch-highlights");
-  if (!root) return;
-  const data = state.featured_builds;
-  const overview = data?.overview;
-  const hasOverview = !!(overview && (overview.gods?.length || overview.items?.length));
-  const hasFeatured = (data?.builds || []).length > 0;
-  if (!hasOverview && !hasFeatured) {
-    root.hidden = true;
-    return;
+function parseRoleHint(roleStr) {
+  const s = String(roleStr || "");
+  for (const r of ["Support", "Carry", "Jungle", "Mid", "Solo"]) {
+    if (s.includes(r)) return r;
   }
-  // Visibility for god-home is handled in syncBuildsChrome
-  const titleEl = $("#patch-highlights-title");
-  const kickerEl = $("#patch-highlights-kicker");
-  const summaryEl = $("#patch-highlights-summary");
-  const discEl = $("#patch-highlights-disclaimer");
-  const godsList = $("#patch-gods-list");
-  const itemsList = $("#patch-items-list");
+  return null;
+}
+
+function lookupGodTier(godName, roleHint) {
+  if (!godName) return null;
+  const tiers = state.tiers || {};
+  const role = parseRoleHint(roleHint);
+  if (role) {
+    const hit = (tiers[`role:${role}`] || []).find((r) => r.entity_name === godName);
+    if (hit) {
+      return {
+        scope: role,
+        tier: hit.tier,
+        rank: hit.rank_in_scope,
+        score: hit.score,
+      };
+    }
+  }
+  const ov = (tiers.overall || []).find((r) => r.entity_name === godName);
+  if (!ov) return null;
+  return {
+    scope: "Overall",
+    tier: ov.tier,
+    rank: ov.rank_in_scope,
+    score: ov.score,
+  };
+}
+
+function lookupItemTier(itemName) {
+  if (!itemName) return null;
+  const needle = String(itemName).split("/")[0].trim().toLowerCase();
+  const rows = state.tiers?.["items:overall"] || [];
+  const hit = rows.find((r) => {
+    const n = String(r.entity_name || "").toLowerCase();
+    return n === needle || n.includes(needle) || needle.includes(n);
+  });
+  if (!hit) return null;
+  return {
+    scope: "Items",
+    tier: hit.tier,
+    rank: hit.rank_in_scope,
+    score: hit.score,
+  };
+}
+
+function tierBadgeHtml(info, { compact = false } = {}) {
+  if (!info?.tier) return "";
+  const label = compact
+    ? `${info.tier}`
+    : `${info.tier} · #${info.rank ?? "—"}`;
+  const title = `${info.scope || "Tier"} #${info.rank ?? "—"}`;
+  return `<span class="ph-tier tier-${escapeAttr(info.tier)}" title="${escapeAttr(
+    title
+  )}">${escapeHtml(label)}</span>`;
+}
+
+function fillPatchOverview(ids) {
+  const data = state.featured_builds;
+  const overview =
+    data?.overview || state.meta_lab?.patch_overview || null;
+  const root = $(ids.root);
+  if (!root) return false;
+  const hasOverview = !!(
+    overview &&
+    (overview.gods?.length || overview.items?.length)
+  );
+  if (!hasOverview) {
+    root.hidden = true;
+    return false;
+  }
+  root.hidden = false;
   const cur = featuredCurrentPatch();
-  const headline = overview?.headline || `${cur} · Patch overview`;
+  const headline =
+    overview?.headline ||
+    data?.overview?.headline ||
+    `${cur} · Patch overview`;
+  const titleEl = $(ids.title);
+  const kickerEl = $(ids.kicker);
+  const summaryEl = $(ids.summary);
+  const discEl = $(ids.disclaimer);
+  const godsList = $(ids.gods);
+  const itemsList = $(ids.items);
   if (titleEl) titleEl.textContent = headline;
   if (kickerEl) {
-    kickerEl.textContent = data?.current_patch_title
-      ? `${cur} · ${data.current_patch_title}`
-      : `${cur} highlights`;
+    kickerEl.textContent =
+      data?.current_patch_title || overview?.current_patch_title
+        ? `${cur} · ${data?.current_patch_title || overview.current_patch_title}`
+        : `${cur} highlights`;
   }
   if (summaryEl) summaryEl.textContent = overview?.summary || "";
   if (discEl) {
@@ -2037,31 +2107,118 @@ function setupPatchHighlights() {
   }
   if (godsList) {
     godsList.innerHTML = (overview?.gods || [])
-      .map(
-        (g) => `<li class="ph-row ${leanClass(g.lean)}">
+      .map((g) => {
+        const godName = String(g.name || "").split("(")[0].trim();
+        const tier = lookupGodTier(godName, g.role);
+        return `<li class="ph-row ${leanClass(g.lean)}">
           <div class="ph-row-top">
             <strong>${escapeHtml(g.name || "")}</strong>
             ${g.role ? `<span class="ph-role">${escapeHtml(g.role)}</span>` : ""}
+            ${tierBadgeHtml(tier)}
             <span class="ph-lean">${escapeHtml(leanLabel(g.lean))}</span>
           </div>
           <p>${escapeHtml(g.why || "")}</p>
-        </li>`
-      )
+        </li>`;
+      })
       .join("");
   }
   if (itemsList) {
     itemsList.innerHTML = (overview?.items || [])
-      .map(
-        (it) => `<li class="ph-row ${leanClass(it.lean)}">
+      .map((it) => {
+        const tier = lookupItemTier(it.name);
+        return `<li class="ph-row ${leanClass(it.lean)}">
           <div class="ph-row-top">
             <strong>${escapeHtml(it.name || "")}</strong>
+            ${tierBadgeHtml(tier)}
             <span class="ph-lean">${escapeHtml(leanLabel(it.lean))}</span>
           </div>
           <p>${escapeHtml(it.why || "")}</p>
-        </li>`
-      )
+        </li>`;
+      })
       .join("");
   }
+  return true;
+}
+
+function setupPatchHighlights() {
+  const root = $("#patch-highlights");
+  if (!root) return;
+  const data = state.featured_builds;
+  const hasFeatured = (data?.builds || []).length > 0;
+  const filled = fillPatchOverview({
+    root: "#patch-highlights",
+    title: "#patch-highlights-title",
+    kicker: "#patch-highlights-kicker",
+    summary: "#patch-highlights-summary",
+    disclaimer: "#patch-highlights-disclaimer",
+    gods: "#patch-gods-list",
+    items: "#patch-items-list",
+  });
+  if (!filled && !hasFeatured) {
+    root.hidden = true;
+  }
+}
+
+function setupMetaPatchHighlights() {
+  fillPatchOverview({
+    root: "#meta-patch-highlights",
+    title: "#meta-ph-title",
+    kicker: "#meta-ph-kicker",
+    summary: "#meta-ph-summary",
+    disclaimer: "#meta-ph-disclaimer",
+    gods: "#meta-ph-gods-list",
+    items: "#meta-ph-items-list",
+  });
+}
+
+function setupMetaLadderBanner() {
+  const banner = $("#meta-ladder-banner");
+  if (!banner) return;
+  const data = state.featured_builds;
+  const overview = data?.overview || state.meta_lab?.patch_overview;
+  const cur = featuredCurrentPatch();
+  const title = data?.current_patch_title || overview?.current_patch_title || "";
+  const headline = overview?.headline || `${cur} ladder`;
+  const upGods = (overview?.gods || [])
+    .filter((g) => ["up", "buff"].includes(String(g.lean || "").toLowerCase()))
+    .slice(0, 4)
+    .map((g) => {
+      const name = String(g.name || "").split("(")[0].trim();
+      const tier = lookupGodTier(name, g.role);
+      return `<button type="button" class="meta-banner-chip" data-tier-god="${escapeAttr(
+        name
+      )}"><span class="meta-banner-name">${escapeHtml(name)}</span>${tierBadgeHtml(
+        tier,
+        { compact: true }
+      )}</button>`;
+    })
+    .join("");
+  if (!overview && !(state.tiers?.overall || []).length) {
+    banner.hidden = true;
+    banner.innerHTML = "";
+    return;
+  }
+  banner.hidden = false;
+  banner.innerHTML = `
+    <div class="meta-banner-copy">
+      <p class="ph-kicker">${escapeHtml(title ? `${cur} · ${title}` : cur)}</p>
+      <strong>${escapeHtml(headline)}</strong>
+      <p class="muted">${escapeHtml(
+        overview?.summary ||
+          "Same composite ladder that ranks Builds role boards and Meta Lab watch lists."
+      )}</p>
+    </div>
+    <div class="meta-banner-chips" aria-label="Patch lean-up gods">
+      ${upGods || `<span class="muted">Open Meta Lab for patch watch lists.</span>`}
+    </div>`;
+  banner.querySelectorAll("[data-tier-god]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const name = btn.getAttribute("data-tier-god");
+      const row = (state.tiers?.overall || []).find((r) => r.entity_name === name);
+      if (row) showTierDetail(row);
+      selectGod(name, true);
+    });
+  });
 }
 
 function featuredCardHtml(entry, resolved, { selected = false } = {}) {
@@ -2073,6 +2230,7 @@ function featuredCardHtml(entry, resolved, { selected = false } = {}) {
   const roleCls = roleClass(entry.role);
   const preview = items.slice(0, 4);
   const more = Math.max(0, items.length - preview.length);
+  const tierInfo = lookupGodTier(entry.god, entry.role);
   return `<button type="button" class="featured-card ${roleCls}${
     selected ? " is-selected" : ""
   }" data-featured-id="${escapeAttr(entry.id)}" aria-pressed="${
@@ -2090,6 +2248,7 @@ function featuredCardHtml(entry, resolved, { selected = false } = {}) {
         <div class="fc-name-row">
           <strong class="fc-god">${escapeHtml(entry.god)}</strong>
           <span class="fc-role-pill">${escapeHtml(entry.role)}</span>
+          ${tierBadgeHtml(tierInfo)}
           ${featuredPatchBadge(entry)}
         </div>
         ${
@@ -2184,7 +2343,9 @@ function featuredDetailHtml(entry, resolved) {
         <h3>${escapeHtml(entry.god)} <span class="muted">· ${escapeHtml(
     entry.role
   )}</span></h3>
-        <div class="fd-patch-row">${featuredPatchBadge(entry)}</div>
+        <div class="fd-patch-row">${featuredPatchBadge(entry)}${tierBadgeHtml(
+          lookupGodTier(entry.god, entry.role)
+        )}</div>
         ${
           entry.aspect
             ? `<p class="fd-aspect">${escapeHtml(entry.aspect)}</p>`
@@ -3708,6 +3869,7 @@ function resolveFlexChips(gb, role) {
 function setupMetaLab() {
   const lab = state.meta_lab;
   const disc = $("#meta-lab-disclaimer");
+  setupMetaPatchHighlights();
   if (!lab || lab.error) {
     if (disc) {
       disc.textContent = lab?.error
@@ -3880,7 +4042,7 @@ function setupMetaLab() {
       .join("");
   }
 
-  // Items explained — simple English guide (featured OB43–OB45 block + full list)
+  // Items explained — simple English guide (featured OB43–OB47 block + full list)
   const guideRoot = lab.flex_item_guide || {};
   const guideItems = guideRoot.items || [];
   const featuredItems = guideRoot.featured || guideItems.filter((g) => g.featured);
