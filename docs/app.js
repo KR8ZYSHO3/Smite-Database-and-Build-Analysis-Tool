@@ -2000,9 +2000,9 @@ function leanClass(lean) {
 
 function leanLabel(lean) {
   const l = String(lean || "").toLowerCase();
-  if (l === "up" || l === "buff") return "Up";
-  if (l === "down" || l === "nerf") return "Down";
-  if (l === "fix") return "Fix";
+  if (l === "up" || l === "buff") return "Stronger";
+  if (l === "down" || l === "nerf") return "Weaker";
+  if (l === "fix") return "Fixed";
   return "Note";
 }
 
@@ -3074,7 +3074,7 @@ function setupBuilds() {
       hint.hidden = false;
       hint.textContent = q
         ? "Matching gods — tap for every role path"
-        : "Type a god for their paths. Patch watch chips and Featured builds sit below — no full roster until you search.";
+        : "Type a god name to see their builds. Patch tips and Featured paths are below — the full god list only shows when you search.";
     }
     // Seamless home: no A–Z god wall until the user searches
     if (!q) {

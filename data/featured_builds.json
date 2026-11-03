@@ -1,6 +1,6 @@
 {
   "title": "Featured Builds",
-  "blurb": "Kit cheeses with plain-English explainers — how the abilities work, why each item is here, and how to play the path. OB47 Night Update picks lead; earlier patch cheeses stay tagged below.",
+  "blurb": "Fun kit paths with plain English — what the abilities do, why the items are there, and how to play them. Night Update picks are up top; older cheeses stay tagged below.",
   "builds": [
     {
       "id": "nox-mid",
@@ -9,37 +9,37 @@
       "aspect": null,
       "patch": "OB47",
       "patch_label": "OB47 · Night Update",
-      "headline": "Candle Mid — silence + root DoT",
-      "tagline": "Light candles for INT, lock a god with Shadow Lock, silence the wave with Siphon, finish with Night Terror.",
-      "hook_label": "New Classic · Flame of the Night INT",
-      "ability_plain": "Nox is the OB47 Classic Mid. Flame of the Night lights a candle each time you cast (up to 4) and each candle adds Intelligence. Shadow Lock sends your shadow through walls, then channels a Root + Cripple DoT on the first god hit. Siphon Darkness drops a delayed void that explodes for Magical Damage and Silence — walking out early still eats half the bang. Shadow Step dashes and can ride an ally's shadow. Night Terror is a long-range vortex that explodes on a god for burst, DoT, silence, and Weaken. You are a setup mage: stack candles, lock a target, silence the escape, ult.",
-      "playstyle": "Conduit into Book of Thoth so candle INT actually hurts. Chronos keeps Lock and Siphon up for every rotate. Desolation and Cosmic Horror punch through Magical prots once you have candles lit. Soul Reaver finishes fat targets after the DoT softens them. Stygian is the late anti-heal flex when the lobby is full of Yogi/Aphro. Level ult > 1 > 2 > 3. Fight after 2–3 candles — raw INT from the passive is free power.",
-      "starter_why": "Conduit Gem — Mid adaptive power into the candle INT stack.",
-      "relics_why": "Beads and Aegis — live through the Lock channel and land Night Terror.",
+      "headline": "Candle Mid — lock, silence, ult",
+      "tagline": "Stack candles for mage power, root someone with Shadow Lock, silence the escape, then land Night Terror.",
+      "hook_label": "New god · candle Intelligence",
+      "ability_plain": "Nox is the new Classic Mid. Every time you cast, Flame of the Night lights a candle (up to 4) and each candle adds Intelligence — free mage power for playing the game. Shadow Lock sends your shadow through walls, then holds the first god it hits with a root and a damage-over-time tick. Siphon Darkness drops a delayed void that explodes for magic damage and silence; even walking out early still hurts. Shadow Step is your dash (you can also ride an ally’s shadow). Night Terror is the long-range ult — big hit, more damage over time, silence, and a weaken. You’re a setup mage: light candles, lock a target, silence the escape, then ult.",
+      "playstyle": "Start Conduit, then Book of Thoth so those candles actually hurt. Chronos’ Pendant keeps Lock and Siphon ready for every rotate. Spear of Desolation and The Cosmic Horror help you punch through magical protections once you’re stacked. Soul Reaver finishes big health bars after your DoTs soften them. Grab Stygian late if the other team is healing a ton. Level ult, then 1, then 2, then 3. Try to fight after two or three candles — the passive is free damage.",
+      "starter_why": "Conduit Gem — Mid starter that feeds into your candle Intelligence stack.",
+      "relics_why": "Beads and Aegis — live through the Lock channel long enough to land Night Terror.",
       "item_why": [
         {
           "match": "thoth",
-          "why": "Huge INT bank — every candle multiplies what Thoth already gives you."
+          "why": "Big Intelligence bank. Every candle makes what Thoth already gave you hit harder."
         },
         {
           "match": "chronos",
-          "why": "CDR so Shadow Lock and Siphon come up every skirmish — more candles, more locks."
+          "why": "Shorter cooldowns so Lock and Siphon are ready for every skirmish — more candles, more locks."
         },
         {
           "match": "desolation",
-          "why": "Flat Magical pen + power so Lock ticks and Night Terror actually chunk."
+          "why": "Flat magical pen and power so Lock ticks and Night Terror actually chunk."
         },
         {
           "match": "cosmic",
-          "why": "The Cosmic Horror — more pen and burst after the silence lands."
+          "why": "More pen and burst after the silence lands."
         },
         {
           "match": "reaver",
-          "why": "Soul Reaver executes the HP% you softened with Lock DoT + Terror ticks."
+          "why": "Punishes the health you already shaved with Lock and Terror ticks."
         },
         {
           "match": "stygian",
-          "why": "Anti-heal flex when the enemy Mid/Support is healing through your DoTs."
+          "why": "Anti-heal when their Mid or Support keeps healing through your damage over time."
         }
       ]
     },
@@ -50,37 +50,37 @@
       "aspect": null,
       "patch": "OB47",
       "patch_label": "OB47 · Night Update",
-      "headline": "Lockdown night Support",
-      "tagline": "Root with Shadow Lock, silence with Siphon, ride your carry with Shadow Step — peel without glass INT.",
-      "hook_label": "New Classic · silence / root peel",
-      "ability_plain": "Same Nox kit, Support job. You are not Book of Thoth here — you buy a shell so you can stand in the duo pit, Lock the diver, silence the follow-up, and Shadow Step onto your carry to travel with them. Flame candles still give INT, but the value is CC uptime and Night Terror picks, not Mid burst. Genji and Alchemist keep you alive through Magical poke; Isolation and Binding stick whoever you locked.",
-      "playstyle": "Selflessness into Thebes like a real Support. Second back Genji or Alchemist depending on whether Mid or Carry is cooking you. Phoenix Feather / Isolation for peel tempo. Use Shadow Step on your ADC when they rotate so you arrive together. Pop Lock on the assassin, Siphon on the cluster, ult when someone is already rooted. Beads/Aegis standard.",
-      "starter_why": "Selflessness — Support gold + shared sustain (also buffed Physical/Magical prots in OB47).",
-      "relics_why": "Beads and Aegis — classic Support; you channel Lock in their faces.",
+      "headline": "Lockdown Support",
+      "tagline": "Root with Shadow Lock, silence with Siphon, ride your Carry with Shadow Step — peel without going glass cannon.",
+      "hook_label": "New god · silence and root peel",
+      "ability_plain": "Same Nox kit, Support job. You’re not building Book of Thoth here — you buy a tanky shell so you can stand in duo, Lock the diver, silence the follow-up, and Shadow Step onto your Carry to travel with them. Candles still give Intelligence, but the real value is crowd control and Night Terror picks, not Mid burst. Genji and Alchemist keep you alive into magical poke; Isolation and Binding stick whoever you locked.",
+      "playstyle": "Selflessness into Thebes like a normal Support. Second back Genji or Alchemist depending on whether Mid or Carry is cooking you. Phoenix Feather or Isolation for peel tempo. Shadow Step onto your ADC when they rotate so you arrive together. Lock the assassin, Siphon the clump, ult when someone is already rooted. Beads and Aegis as usual.",
+      "starter_why": "Selflessness — Support gold and shared sustain (and it got extra early protections this patch).",
+      "relics_why": "Beads and Aegis — classic Support tools while you channel Lock in their faces.",
       "item_why": [
         {
           "match": "thebes",
-          "why": "Assist HP/prot stacks — you need a body to finish Lock channels."
+          "why": "Health and protections from assists — you need a body to finish Lock channels."
         },
         {
           "match": "genji",
-          "why": "Magical protections + CDR so Siphon and Lock come up more often."
+          "why": "Magical protections and cooldown so Siphon and Lock come up more often."
         },
         {
           "match": "alchemist",
-          "why": "Dampening shell vs ability poke while you set voids in lane."
+          "why": "Softer ability poke while you set voids in lane."
         },
         {
           "match": "phoenix",
-          "why": "Phoenix Feather — Support active tempo and peel when the dive is already on you."
+          "why": "Support active when the dive is already on you."
         },
         {
           "match": "isolation",
-          "why": "Slow stick so rooted/silenced targets cannot walk out of Night Terror."
+          "why": "Slow stick so rooted or silenced targets can’t walk out of Night Terror."
         },
         {
           "match": "binding",
-          "why": "Stone of Binding shreds prots on CC'd targets — Lock into Binding is nasty."
+          "why": "Cuts protections on crowd-controlled targets — Lock into Binding feels nasty."
         }
       ]
     },
@@ -91,37 +91,37 @@
       "aspect": "Aspect of the Sickle",
       "patch": "OB47",
       "patch_label": "OB47 · Night Update",
-      "headline": "Wound-stack ADC",
-      "tagline": "Basics no longer pierce — Sickle Storm blankets the pit, wounds stack, then your autos burst them all.",
-      "hook_label": "New aspect · area Storm + Wound burst",
-      "ability_plain": "Aspect of the Sickle (OB47) rewrites Izanami's 1. Your basic attacks no longer pierce. Sickle Storm becomes an area DoT that Roots gods near the center and applies stacking Wound. Your Basic Attack and other abilities burst all Wound stacks for bonus damage. Spectral Projection still shreds heal; Fade Away is your leap/stealth; Dark Portal is the silence nuke. You play closer, drop Storm on the clump, then auto the wounded god to detonate stacks — not a pierce-wave clear ADC anymore.",
-      "playstyle": "Gilded into Tyrfing for early AA power. Executioner and Devourer's keep shred and LS while you stand in Storm range. Eye of the Storm / Odysseus for AS so Wound bursts fire faster. Deathbringer caps crit once stacks are popping every fight. Drop 1 on the wave or pit, auto the priority Wound target, 2 for anti-heal, ult when they are rooted in the Storm center.",
-      "starter_why": "Gilded Arrow — Carry AS/power into the wound-burst AA plan.",
-      "relics_why": "Beads and Aegis — you fight closer without pierce; peel tools matter more.",
+      "headline": "Wound-stack Carry",
+      "tagline": "Basics don’t pierce anymore — drop Sickle Storm, stack Wound, then autos pop them all.",
+      "hook_label": "New aspect · storm + Wound burst",
+      "ability_plain": "Aspect of the Sickle changes her 1. Basic attacks no longer pierce through the wave. Sickle Storm becomes an area cloud that roots gods near the center and stacks Wound. Your basics and other abilities burst those Wound stacks for bonus damage. Spectral Projection still cuts healing, Fade Away is your leap/stealth, and Dark Portal is the silence nuke. You play closer: drop Storm on the clump, then auto the wounded god to detonate — not a pierce-wave clear Carry anymore.",
+      "playstyle": "Gilded into Tyrfing for early basic-attack power. Executioner and Devourer’s keep shred and lifesteal while you stand in Storm range. Eye of the Storm or Odysseus for attack speed so Wound pops faster. Deathbringer once you’re bursting stacks every fight. Drop 1 on the wave or objective, auto the priority Wound target, 2 for anti-heal, ult when they’re rooted in the center.",
+      "starter_why": "Gilded Arrow — Carry opener into the Wound-burst auto plan.",
+      "relics_why": "Beads and Aegis — you fight closer without pierce, so peel tools matter more.",
       "item_why": [
         {
           "match": "tyrfing",
-          "why": "Early Strength/AA power so each Wound detonation from basics hits harder."
+          "why": "Early Strength so each Wound pop from your basics hits harder."
         },
         {
           "match": "executioner",
-          "why": "Prot shred on autos — Wound burst + shred melts the tank you rooted in Storm."
+          "why": "Cuts protections on autos — Wound burst plus shred melts the tank you rooted in Storm."
         },
         {
           "match": "devourer",
-          "why": "LS while you sit in the Storm radius autoing wounded gods."
+          "why": "Lifesteal while you sit in the Storm and keep autoing."
         },
         {
           "match": "eye of the storm",
-          "why": "Attack speed + box — more autos means faster Wound detonations."
+          "why": "Attack speed — more autos means Wound stacks blow up sooner."
         },
         {
           "match": "odysseus",
-          "why": "AS steroid item so Storm uptime turns into a crit machine."
+          "why": "Another attack-speed steroid so Storm uptime turns into a crit machine."
         },
         {
           "match": "deathbringer",
-          "why": "Crit cap once you are reliably bursting Wound stacks every fight."
+          "why": "Crit once you’re reliably popping Wound every fight."
         }
       ]
     },
@@ -132,25 +132,25 @@
       "aspect": null,
       "patch": "OB47",
       "patch_label": "OB47 · Night Update",
-      "headline": "Ring Toss + Wheels buff Jungle",
-      "tagline": "OB47 buffed bounce scaling and Wind Fire Wheels damage — sash in, rings shred, ult deletes.",
-      "hook_label": "Patch buff · Ring Toss / Wheels",
-      "ability_plain": "Ne Zha Jungle got paid in OB47. Universe Ring Toss bounce scaling went 20%→30% and subsequent bounce damage 65%→75% — camps and multi-man fights clear harder. Wind Fire Wheels base and scaling both went up, so the ult hit is fatter. Armillary Sash is still the gap tool; Flaming Spear is the steroid. This path is classic burst assassin: Jotunn's for CDR pen, Hydra for ability→AA punch, Reaper/Arondight/Crusher/Heartseeker to finish.",
-      "playstyle": "Bumba's Golden Dagger into Jotunn's. Keep rings bouncing through camps. Gank with Sash → rings → Wheels when you have ult. Hydra after the first ability for the AA reset. Blink + Sundering for invade/anti-heal. You want short fights where the new bounce and ult numbers show up before they can peel you.",
-      "starter_why": "Bumba's Golden Dagger — Jungle clear into the assassin spike.",
-      "relics_why": "Blink and Sundering — gap to the carry; 40% anti-heal on the ult dive.",
+      "headline": "Rings and Wheels Jungle",
+      "tagline": "Ring Toss and Wind Fire Wheels both got stronger — sash in, bounce rings, ult deletes.",
+      "hook_label": "Patch buff · rings / ult",
+      "ability_plain": "Ne Zha Jungle got real help this patch. Universe Ring Toss bounces harder through camps and multi-person fights. Wind Fire Wheels (the ult) hits harder too. Armillary Sash is still your gap closer; Flaming Spear is the steroid. This path is classic burst assassin: Jotunn’s for cooldown and pen, Hydra’s for the ability-into-basic punch, then Reaper / Arondight / Crusher / Heartseeker to finish.",
+      "playstyle": "Bumba’s Golden Dagger into Jotunn’s. Keep rings bouncing through camps. Gank with Sash → rings → Wheels when you have ult. Hydra after the first ability for the basic-attack reset. Blink plus Sundering for invades and anti-heal. Keep fights short so the new bounce and ult numbers show up before they peel you off.",
+      "starter_why": "Bumba’s Golden Dagger — Jungle clear into the assassin spike.",
+      "relics_why": "Blink and Sundering — gap to the Carry, plus anti-heal on the ult dive.",
       "item_why": [
         {
           "match": "jotunn",
-          "why": "CDR + pen so Ring Toss and Wheels are up for every camp and gank."
+          "why": "Cooldown and pen so Ring Toss and Wheels are ready for every camp and gank."
         },
         {
           "match": "hydra",
-          "why": "Ability→basic punch after Sash or rings — converts the buffed kit into burst."
+          "why": "Ability into basic punch after Sash or rings — turns the buffed kit into burst."
         },
         {
           "match": "reaper",
-          "why": "The Reaper — execute power once Wheels lands on a softened target."
+          "why": "Execute power once Wheels lands on someone you already softened."
         },
         {
           "match": "arondight",
@@ -158,11 +158,11 @@
         },
         {
           "match": "crusher",
-          "why": "More pen and ability damage — rings and ult scale with the OB47 buffs."
+          "why": "More pen and ability damage — rings and ult love it after the buffs."
         },
         {
           "match": "heartseeker",
-          "why": "Stacking power from Jungle pressure — snowballs the buffed clear."
+          "why": "Stacks power from Jungle pressure and snowballs the faster clear."
         }
       ]
     },
@@ -173,37 +173,37 @@
       "aspect": null,
       "patch": "OB47",
       "patch_label": "OB47 · Night Update",
-      "headline": "Master of Arms AS Carry",
-      "tagline": "OB47 doubled early AS stacks on Master of Arms and buffed Eagle Eye — classic crit ADC with real lane pressure.",
-      "hook_label": "Patch buff · AS stacks + Eagle Eye",
-      "ability_plain": "Hachiman's passive Master of Arms now gains 2% Attack Speed per stack (+0.1% per level) instead of 1% — you ramp twice as fast early. Eagle Eye basic-attack damage scaling went 110%→115% BAD, and the aspect spin package also got love (even on base you feel the Eagle Eye buff). Heavenly Banner and Iaijutsu are still the wave/fight tools; Mounted Archery is the ult. This Featured path is the standard crit ADC shell that actually got paid this patch.",
-      "playstyle": "Gilded into Tyrfing. Stack Master of Arms in lane — the doubled AS makes every trade sharper. Devourer's for LS, Tekko for pen/AS, Executioner shred, Odysseus AS, Deathbringer crit. Use Eagle Eye freely now that the scaling is higher. Ult to reposition or finish. You are the 'meta buff' Featured next to Izanami's aspect cheese.",
-      "starter_why": "Gilded Arrow — Carry opener into the buffed AS passive.",
-      "relics_why": "Beads and Aegis — standard duo peel while you ramp stacks.",
+      "headline": "Faster-ramping crit Carry",
+      "tagline": "Passive attack-speed stacks twice as fast early, and Eagle Eye hits harder — classic crit Carry with real lane pressure.",
+      "hook_label": "Patch buff · attack speed + Eagle Eye",
+      "ability_plain": "Master of Arms now gives 2% attack speed per stack early instead of 1% — you ramp about twice as fast in lane. Eagle Eye’s basic-attack scaling went up a notch too. Heavenly Banner and Iaijutsu are still your wave and fight tools; Mounted Archery is the ult. This is the normal crit Carry shell that actually got a real buff this patch.",
+      "playstyle": "Gilded into Tyrfing. Stack Master of Arms in lane — the faster attack speed makes every trade sharper. Devourer’s for lifesteal, Tekko for pen and attack speed, Executioner to shred, Odysseus for more attack speed, Deathbringer for crit. Use Eagle Eye freely now that it scales better. Ult to reposition or finish. Steady meta buff next to Izanami’s wilder aspect cheese.",
+      "starter_why": "Gilded Arrow — Carry opener into the faster attack-speed passive.",
+      "relics_why": "Beads and Aegis — standard duo peel while you stack up.",
       "item_why": [
         {
           "match": "tyrfing",
-          "why": "Early Strength so Eagle Eye and stacked AS hit like a truck."
+          "why": "Early Strength so Eagle Eye and stacked attack speed hit like a truck."
         },
         {
           "match": "devourer",
-          "why": "LS to stay in lane while Master of Arms stacks."
+          "why": "Lifesteal to stay in lane while Master of Arms stacks."
         },
         {
           "match": "tekko",
-          "why": "Tekko-Kagi — pen + AS that rides the passive ramp."
+          "why": "Pen and attack speed that ride the passive ramp."
         },
         {
           "match": "executioner",
-          "why": "Prot shred on the buffed Eagle Eye autos."
+          "why": "Cuts protections on the stronger Eagle Eye autos."
         },
         {
           "match": "odysseus",
-          "why": "More AS on top of Master of Arms — hypersonic late."
+          "why": "Even more attack speed on top of Master of Arms — late game gets silly."
         },
         {
           "match": "deathbringer",
-          "why": "Crit cap once the AS engine is online."
+          "why": "Crit once the attack-speed engine is online."
         }
       ]
     },
@@ -593,94 +593,94 @@
   "current_patch_title": "The Night Update",
   "overview": {
     "headline": "OB47 · The Night Update",
-    "summary": "New Classic god Nox (candle INT Mid/Support), Izanami's Aspect of the Sickle (area Storm + Wound burst), and a Support starter buff wave. Below: who we think spikes, which items got paid, then Featured kit tours you can expand.",
-    "disclaimer": "Predictions blend patch notes + our kit model — early OB ladder is thin. Treat Featured as guided cheese, not a guarantee.",
+    "summary": "Nox joins the roster, Izanami gets a new Sickle aspect, and Support starters got a little tankier. Tap a chip for the short version of who got stronger, who got trimmed, and which items are worth a look.",
+    "disclaimer": "These are early reads from the patch notes and our build model — ranked samples are still thin. Featured paths are guided ideas, not a promise.",
     "gods": [
       {
         "name": "Nox",
         "role": "Mid / Support",
         "lean": "up",
-        "why": "Brand-new Classic with Root DoT, Silence void, ally-shadow dash, and a long-range Night Terror. Novelty plus real setup tools — expect her in every lobby this week."
+        "why": "Brand new. She roots people with her shadow, silences with a void, can dash onto an ally, and throws a long-range ult. Expect to see her a lot while everyone tries her out."
       },
       {
         "name": "Hachiman",
         "role": "Carry",
         "lean": "up",
-        "why": "Master of Arms early AS per stack doubled (1%→2%). Eagle Eye BAD scaling up. Quiet but real duo-lane buff — classic crit ADC gets to ramp faster."
+        "why": "His passive now stacks attack speed twice as fast early, and Eagle Eye hits a bit harder. Same crit Carry plan — you just come online sooner in lane."
       },
       {
         "name": "Ne Zha",
         "role": "Jungle",
         "lean": "up",
-        "why": "Ring Toss bounce scaling and subsequent bounce damage up; Wind Fire Wheels base + scaling up. Clear and ult both got paid — assassin Jungle tempo rises."
+        "why": "Ring Toss bounces harder through camps and fights, and Wind Fire Wheels hits harder. Clear is smoother and the ult delete is meaner."
       },
       {
         "name": "Izanami",
         "role": "Carry (Sickle)",
         "lean": "up",
-        "why": "New Aspect of the Sickle: no pierce basics, area Magical Storm with Root + stacking Wound, burst stacks with autos/abilities. Spicy duo cheese and a reason to relearn her 1."
+        "why": "New Aspect of the Sickle: basics no longer pierce. Instead you drop an area storm that roots and stacks Wound, then autos pop those stacks. Feels like a different god in duo."
       },
       {
         "name": "Ah Puch",
         "role": "Mid",
         "lean": "up",
-        "why": "Empty the Crypts Intelligence scaling per tick 15%→20% (base kit). More ult DPS in the pit without touching Death March."
+        "why": "His ult scales better with Intelligence each tick. Same creepy pit mage — the big button just hurts more."
       },
       {
         "name": "Hel",
         "role": "Mid / Support",
         "lean": "down",
-        "why": "Decay INT scaling 80%→60%; Inspire ally heal INT scaling 10%→5%. Still playable, but the free heal/nuke package got trimmed."
+        "why": "Decay and her ally heal both scale less with Intelligence. Still fine, but the free heal-and-nuke package is softer than before."
       },
       {
         "name": "Hou Yi",
         "role": "Carry",
         "lean": "down",
-        "why": "Ricochet cooldown fixed at 10s, damage and Strength scaling down. Aspect basics no longer bounce off non-marked targets — mark dependency is harsher."
+        "why": "Ricochet is locked to a 10s cooldown and hits softer. On the aspect, basics only bounce off marked targets — you have to mark people more carefully."
       },
       {
         "name": "Nike",
         "role": "Flex",
         "lean": "down",
-        "why": "Rend base damage down; aspect Laurels can no longer proc item effects; aspect Rend Strength scaling trimmed. Victory kit loses some free proc value."
+        "why": "Rend does less, and her aspect laurels no longer trigger item effects. Still a stubborn fighter — a few free tricks got taken away."
       },
       {
         "name": "Nut",
         "role": "Carry / Mid",
         "lean": "down",
-        "why": "Convergence inner/side damage down; Warp bonus projectiles when consuming Astral Flux 2→1 and cooldown up. Less free multi-hit pressure."
+        "why": "Convergence does less on the edges, and Warp fires fewer bonus shots with a longer wait. Less free multi-hit poke than last patch."
       }
     ],
     "items": [
       {
         "name": "War Flag",
         "lean": "up",
-        "why": "Physical and Magical prots 10→15. Every 8s, applying CC grants double War Flag kill/assist benefits to you and allies in 8.8m. Huge for CC Supports — rush it."
+        "why": "Starter protections went up, and landing CC can double the kill/assist gold for you and nearby allies. Great on Supports who actually land crowd control."
       },
       {
         "name": "Selflessness",
         "lean": "up",
-        "why": "Starter Physical and Magical prots 10→15. Every Support path that already bought this just got a free early shell."
+        "why": "Same idea — more early protections on the Support starter. If you already bought this, you just got a free little shell."
       },
       {
         "name": "Ancient Signet",
         "lean": "up",
-        "why": "Now has 5 Mana Regen — mana-hungry mages stop going dry between rotates."
+        "why": "Picked up mana regen. Mana-hungry mages can rotate without going dry as often."
       },
       {
         "name": "Lotus Sickle / Eros' Bow / Soul Locket",
         "lean": "up",
-        "why": "Jormungandr Aspect Venomous Haze and Consuming Bellow can now proc these. Niche but real — serpent DoT/heal itemization opens up."
+        "why": "Jormungandr’s haze and bellow can now trigger these heal/buff items. Niche, but serpent Supports suddenly have a real enchanter toy box."
       },
       {
         "name": "Soul Locket",
         "lean": "mixed",
-        "why": "Max stacks 70→35 but damage reduction per stack 1%→2% (same 70% DR cap, fewer stacks to full). Hits full DR sooner; less granular stacking."
+        "why": "Fewer stacks to fill, but each stack gives more damage reduction. You reach full tankiness sooner; the climb just has bigger steps."
       },
       {
         "name": "Lifebinder",
         "lean": "fix",
-        "why": "Heal scaling bugfix — healing/shielding stat now applies correctly. Enchanters get what the card promised."
+        "why": "Heal scaling works the way the item card always said. Heal Supports finally get the full mark → ally hit → heal bomb."
       }
     ]
   }

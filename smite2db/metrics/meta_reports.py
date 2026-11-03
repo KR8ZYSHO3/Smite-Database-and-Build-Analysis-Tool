@@ -571,16 +571,16 @@ def _featured_theme_lines() -> list[str]:
         if str(g.get("lean") or "").lower() in ("down", "nerf") and g.get("name")
     ]
     if up_gods:
-        lines.append(f"Patch lean up: {', '.join(up_gods[:5])}.")
+        lines.append(f"Looking stronger: {', '.join(up_gods[:5])}.")
     if down_gods:
-        lines.append(f"Patch lean down: {', '.join(down_gods[:5])}.")
+        lines.append(f"Got trimmed: {', '.join(down_gods[:5])}.")
     hot_items = [
         it.get("name")
         for it in (ov.get("items") or [])
         if str(it.get("lean") or "").lower() in ("up", "buff", "fix") and it.get("name")
     ]
     if hot_items:
-        lines.append(f"Items to watch: {', '.join(hot_items[:5])}.")
+        lines.append(f"Items worth a look: {', '.join(hot_items[:5])}.")
     return lines
 
 

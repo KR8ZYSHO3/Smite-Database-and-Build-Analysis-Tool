@@ -1,7 +1,7 @@
 {
   "generated_at": "2026-11-03T19:56:40.247107+00:00",
   "game": "SMITE 2",
-  "disclaimer": "Kit + patch model \u2014 not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
+  "disclaimer": "Kit + patch model — not live win rates. Staples/coverage reflect algorithm recommended paths; flex chips are situational swaps.",
   "flex_catalog": {
     "roles": {
       "Carry": [
@@ -9,7 +9,7 @@
           "id": "heal",
           "label": "vs heals / sustain",
           "short": "heal",
-          "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
+          "why": "Healing reduction — stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
           "items": [
             "Divine Ruin",
             "Brawler's Beat Stick",
@@ -58,7 +58,7 @@
           "id": "heal",
           "label": "vs heals / sustain",
           "short": "heal",
-          "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
+          "why": "Healing reduction — stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
           "items": [
             "Divine Ruin",
             "Brawler's Beat Stick",
@@ -107,7 +107,7 @@
           "id": "heal",
           "label": "vs heals / sustain",
           "short": "heal",
-          "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
+          "why": "Healing reduction — stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
           "items": [
             "Divine Ruin",
             "Brawler's Beat Stick",
@@ -156,7 +156,7 @@
           "id": "heal",
           "label": "vs heals / sustain",
           "short": "heal",
-          "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
+          "why": "Healing reduction — stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
           "items": [
             "Divine Ruin",
             "Brawler's Beat Stick",
@@ -269,7 +269,7 @@
           "id": "heal",
           "label": "vs heals / sustain",
           "short": "heal",
-          "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
+          "why": "Healing reduction — stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
           "items": [
             "Divine Ruin",
             "Brawler's Beat Stick",
@@ -305,7 +305,7 @@
     "all_answers": {
       "heal": {
         "label": "vs heals / sustain",
-        "why": "Healing reduction \u2014 stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
+        "why": "Healing reduction — stops Yogi's, Aphro, Hel, Cu sustain, lifesteal. Sundering relics apply 40% healing reduction.",
         "items": [
           "Divine Ruin",
           "Brawler's Beat Stick",
@@ -376,9 +376,9 @@
     }
   },
   "flex_item_guide": {
-    "title": "Items explained \u2014 simple English",
-    "disclaimer": "Plain-language guides for new and situational items. Not live win rates. Primary builds come from this site\u2019s kit + patch model \u2014 not copied from other build sites.",
-    "featured_title": "Night Update & remade items (OB43\u2013OB47)",
+    "title": "Items explained — simple English",
+    "disclaimer": "Plain-language guides for new and situational items. Not live win rates. Primary builds come from this site’s kit + patch model — not copied from other build sites.",
+    "featured_title": "Night Update & remade items (OB43–OB47)",
     "featured": [
       {
         "name": "Ancient Signet",
@@ -390,7 +390,7 @@
           "Support",
           "Jungle"
         ],
-        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) \u2014 mana-hungry kits stop going dry between rotates.",
+        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) — mana-hungry kits stop going dry between rotates.",
         "how": "Buy when your clear/ult package is INT-scaled and you were already eyeing Signet; the regen is the Night Update reason to prefer it over thirstier banks.",
         "when": "Mana-hungry mages who rotate often (Nox, classic INT Mid).",
         "when_not": "You already solved mana with Thoth/Yogi and want pure pen/burst instead.",
@@ -413,7 +413,7 @@
         "how": "Cast to stack wounds, then auto/ability for bonus damage. Replaced Serrated Edge (old name still ghosts on trackers/wiki).",
         "when": "Physical ability junglers/bruisers who also basic-attack in the combo.",
         "when_not": "Pure mage INT kits; you never land abilities.",
-        "buy_as": "Jungle 1st\u20133rd on ability-physical kits. Live shop name \u2014 not Serrated Edge.",
+        "buy_as": "Jungle 1st–3rd on ability-physical kits. Live shop name — not Serrated Edge.",
         "featured": true,
         "patch": "OB15+"
       },
@@ -427,9 +427,9 @@
           "Support"
         ],
         "simple": "+15% heal/shield strength (OB43 hotfix). Every 15s, lowest-HP nearby ally gets regen and tiny cooldown shred.",
-        "how": "Aura amp for healers plus a periodic \u201chelp the dying ally\u201d buff. Hotfix cut amp 20\u219215% \u2014 still fine on true healers, not a generic Solo shell.",
+        "how": "Aura amp for healers plus a periodic “help the dying ally” buff. Hotfix cut amp 20→15% — still fine on true healers, not a generic Solo shell.",
         "when": "Support heal/amp paths after Thebes / Sickle / Asclepius.",
-        "when_not": "You\u2019re full damage with no heals; non-healer Solo looking for free aura.",
+        "when_not": "You’re full damage with no heals; non-healer Solo looking for free aura.",
         "buy_as": "Support heal flex after core enchanter items. Remade OB43; hotfix 9/9.",
         "featured": true,
         "patch": "OB43"
@@ -446,7 +446,7 @@
           "Mid"
         ],
         "simple": "Heal yourself with a healing ability to build stacks; your next non-heal ability spends them for a big STR or INT buff.",
-        "how": "Self-heal \u2192 stacks \u2192 cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
+        "how": "Self-heal → stacks → cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
         "when": "Self-heal kits (Wild Artemis traps, some bruisers) that also cast non-heals.",
         "when_not": "No self-heal; pure ally-heal support with no dump spell.",
         "buy_as": "Pair with Vital Amplifier on self-heal AA paths. Remade OB43.",
@@ -464,10 +464,10 @@
           "Support"
         ],
         "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
-        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "how": "Same trigger family as Sickle/Locket. Fiddly — mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
         "when": "Enchanter supports who can AA safely next to the carry; niche Jorm pocket after OB47.",
         "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
-        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43; OB47 Jorm proc note.",
+        "buy_as": "Optional 4th after Sickle/Locket — skip if too many actives. Remade OB43; OB47 Jorm proc note.",
         "featured": true,
         "patch": "OB47"
       },
@@ -502,10 +502,10 @@
           "Mid"
         ],
         "simple": "Heal/shield bank dump active. OB45 restored real CDR (20%) and INT (45) after the OB43 hotfix cut.",
-        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb. Still costs an active slot \u2014 prefer Asclepius + Sickle first; Heartwood is the flex active when you want the dump.",
+        "how": "Spam heals to fill the bank → press active for a team heal bomb. Still costs an active slot — prefer Asclepius + Sickle first; Heartwood is the flex active when you want the dump.",
         "when": "Healer supports who specifically want the bank dump and have an active slot free.",
         "when_not": "No heal abilities; you already have Soul Locket; prefer button-light paths.",
-        "buy_as": "Healer flex after Sickle/Asclepius \u2014 not default dual-active. OB45 buffed stats.",
+        "buy_as": "Healer flex after Sickle/Asclepius — not default dual-active. OB45 buffed stats.",
         "featured": true,
         "patch": "OB45"
       },
@@ -521,7 +521,7 @@
           "Mid"
         ],
         "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
-        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card\u2019s amp actually applies.",
+        "how": "Mark → ally hits → heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card’s amp actually applies.",
         "when": "Healers who group fight and can mark the dive target.",
         "when_not": "No heal identity; active slots full.",
         "buy_as": "Healer flex active. Remade OB43; OB47 heal-scaling bugfix.",
@@ -539,8 +539,8 @@
           "Support",
           "Mid"
         ],
-        "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
-        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "simple": "Buff, heal, or shield an ally → gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
+        "how": "You’re charging free damage onto your ADC’s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket — they stack together. Passive — no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
         "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry; niche Jorm DoT/heal itemization after OB47.",
         "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
         "buy_as": "Support 2nd after Thebes (cheap CDR + Int). OB45 AD scaling on bonus dmg; OB47 Jorm proc note.",
@@ -559,8 +559,8 @@
         "simple": "+10% heal/shield strength. When you heal an ally, you heal even more the lower their HP is.",
         "how": "Missing-HP heal amp. Stacks with Soul Locket / Heartwood / Chandra amp.",
         "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
-        "when_not": "No heal abilities \u2014 dead item.",
-        "buy_as": "Support heal core 3rd\u20135th. Remade OB43.",
+        "when_not": "No heal abilities — dead item.",
+        "buy_as": "Support heal core 3rd–5th. Remade OB43.",
         "featured": true,
         "patch": "OB43"
       },
@@ -573,10 +573,10 @@
         "roles": [
           "Support"
         ],
-        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10\u219215 \u2014 free early shell on every path that already bought it.",
+        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10→15 — free early shell on every path that already bought it.",
         "how": "Safer lane opener than greedier flags when you want raw bulk and team sustain over contest tools.",
         "when": "Support paths that already default Selflessness; any lobby where early prots matter.",
-        "when_not": "You\u2019re not actually supporting.",
+        "when_not": "You’re not actually supporting.",
         "buy_as": "Support starter. OB47 Night Update prot buff.",
         "featured": true,
         "patch": "OB47"
@@ -592,11 +592,11 @@
           "Support",
           "Mid"
         ],
-        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70\u219235 but DR per stack 1%\u21922% (same 70% DR cap, fewer stacks to full).",
-        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form — move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70→35 but DR per stack 1%→2% (same 70% DR cap, fewer stacks to full).",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you’re dove or need to escape. Long cooldown — treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
         "when": "Enchanter supports who stay in fights and get focused.",
         "when_not": "You never heal/buff allies; you already have 3 better actives.",
-        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
+        "buy_as": "Support 2nd–3rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
         "featured": true,
         "patch": "OB47"
       },
@@ -615,7 +615,7 @@
         "how": "Only works if you land hard CC (stun/root/knockup/etc.).",
         "when": "You have reliable hard CC (Ymir, Atlas, Hades, etc.).",
         "when_not": "Soft CC only / no CC in kit.",
-        "buy_as": "CC gods \u2014 synergy item, not random bulk. Stronger after OB44.",
+        "buy_as": "CC gods — synergy item, not random bulk. Stronger after OB44.",
         "featured": true,
         "patch": "OB44"
       },
@@ -631,7 +631,7 @@
           "Support",
           "Jungle"
         ],
-        "simple": "Heal yourself with an ability \u2192 stacking attack speed and basic-attack damage (up to 3 stacks).",
+        "simple": "Heal yourself with an ability → stacking attack speed and basic-attack damage (up to 3 stacks).",
         "how": "Self-heal ticks (e.g. Artemis Aspect of the Wild traps) can stack this fast. Adaptive STR or INT from your other items.",
         "when": "Self-heal kits that also basic-attack (Wild Artemis, some bruisers).",
         "when_not": "No self-heal in kit; pure ability mage who never autos.",
@@ -648,10 +648,10 @@
         "roles": [
           "Support"
         ],
-        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10\u219215 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
-        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window \u2014 peel and roam both pay.",
+        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10→15 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
+        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window — peel and roam both pay.",
         "when": "Almost every Contested Support game that wants early shell + shared farm.",
-        "when_not": "You\u2019re running a full damage Mid with no Support starter.",
+        "when_not": "You’re running a full damage Mid with no Support starter.",
         "buy_as": "Support starter. OB47 Night Update shell buff.",
         "featured": true,
         "patch": "OB47"
@@ -668,7 +668,7 @@
           "Support",
           "Jungle"
         ],
-        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) \u2014 mana-hungry kits stop going dry between rotates.",
+        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) — mana-hungry kits stop going dry between rotates.",
         "how": "Buy when your clear/ult package is INT-scaled and you were already eyeing Signet; the regen is the Night Update reason to prefer it over thirstier banks.",
         "when": "Mana-hungry mages who rotate often (Nox, classic INT Mid).",
         "when_not": "You already solved mana with Thoth/Yogi and want pure pen/burst instead.",
@@ -691,7 +691,7 @@
         "how": "Cast to stack wounds, then auto/ability for bonus damage. Replaced Serrated Edge (old name still ghosts on trackers/wiki).",
         "when": "Physical ability junglers/bruisers who also basic-attack in the combo.",
         "when_not": "Pure mage INT kits; you never land abilities.",
-        "buy_as": "Jungle 1st\u20133rd on ability-physical kits. Live shop name \u2014 not Serrated Edge.",
+        "buy_as": "Jungle 1st–3rd on ability-physical kits. Live shop name — not Serrated Edge.",
         "featured": true,
         "patch": "OB15+"
       },
@@ -705,9 +705,9 @@
           "Support"
         ],
         "simple": "+15% heal/shield strength (OB43 hotfix). Every 15s, lowest-HP nearby ally gets regen and tiny cooldown shred.",
-        "how": "Aura amp for healers plus a periodic \u201chelp the dying ally\u201d buff. Hotfix cut amp 20\u219215% \u2014 still fine on true healers, not a generic Solo shell.",
+        "how": "Aura amp for healers plus a periodic “help the dying ally” buff. Hotfix cut amp 20→15% — still fine on true healers, not a generic Solo shell.",
         "when": "Support heal/amp paths after Thebes / Sickle / Asclepius.",
-        "when_not": "You\u2019re full damage with no heals; non-healer Solo looking for free aura.",
+        "when_not": "You’re full damage with no heals; non-healer Solo looking for free aura.",
         "buy_as": "Support heal flex after core enchanter items. Remade OB43; hotfix 9/9.",
         "featured": true,
         "patch": "OB43"
@@ -724,7 +724,7 @@
           "Mid"
         ],
         "simple": "Heal yourself with a healing ability to build stacks; your next non-heal ability spends them for a big STR or INT buff.",
-        "how": "Self-heal \u2192 stacks \u2192 cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
+        "how": "Self-heal → stacks → cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
         "when": "Self-heal kits (Wild Artemis traps, some bruisers) that also cast non-heals.",
         "when_not": "No self-heal; pure ally-heal support with no dump spell.",
         "buy_as": "Pair with Vital Amplifier on self-heal AA paths. Remade OB43.",
@@ -742,10 +742,10 @@
           "Support"
         ],
         "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
-        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "how": "Same trigger family as Sickle/Locket. Fiddly — mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
         "when": "Enchanter supports who can AA safely next to the carry; niche Jorm pocket after OB47.",
         "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
-        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43; OB47 Jorm proc note.",
+        "buy_as": "Optional 4th after Sickle/Locket — skip if too many actives. Remade OB43; OB47 Jorm proc note.",
         "featured": true,
         "patch": "OB47"
       },
@@ -780,10 +780,10 @@
           "Mid"
         ],
         "simple": "Heal/shield bank dump active. OB45 restored real CDR (20%) and INT (45) after the OB43 hotfix cut.",
-        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb. Still costs an active slot \u2014 prefer Asclepius + Sickle first; Heartwood is the flex active when you want the dump.",
+        "how": "Spam heals to fill the bank → press active for a team heal bomb. Still costs an active slot — prefer Asclepius + Sickle first; Heartwood is the flex active when you want the dump.",
         "when": "Healer supports who specifically want the bank dump and have an active slot free.",
         "when_not": "No heal abilities; you already have Soul Locket; prefer button-light paths.",
-        "buy_as": "Healer flex after Sickle/Asclepius \u2014 not default dual-active. OB45 buffed stats.",
+        "buy_as": "Healer flex after Sickle/Asclepius — not default dual-active. OB45 buffed stats.",
         "featured": true,
         "patch": "OB45"
       },
@@ -799,7 +799,7 @@
           "Mid"
         ],
         "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
-        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card\u2019s amp actually applies.",
+        "how": "Mark → ally hits → heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card’s amp actually applies.",
         "when": "Healers who group fight and can mark the dive target.",
         "when_not": "No heal identity; active slots full.",
         "buy_as": "Healer flex active. Remade OB43; OB47 heal-scaling bugfix.",
@@ -817,8 +817,8 @@
           "Support",
           "Mid"
         ],
-        "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
-        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "simple": "Buff, heal, or shield an ally → gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
+        "how": "You’re charging free damage onto your ADC’s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket — they stack together. Passive — no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
         "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry; niche Jorm DoT/heal itemization after OB47.",
         "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
         "buy_as": "Support 2nd after Thebes (cheap CDR + Int). OB45 AD scaling on bonus dmg; OB47 Jorm proc note.",
@@ -837,8 +837,8 @@
         "simple": "+10% heal/shield strength. When you heal an ally, you heal even more the lower their HP is.",
         "how": "Missing-HP heal amp. Stacks with Soul Locket / Heartwood / Chandra amp.",
         "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
-        "when_not": "No heal abilities \u2014 dead item.",
-        "buy_as": "Support heal core 3rd\u20135th. Remade OB43.",
+        "when_not": "No heal abilities — dead item.",
+        "buy_as": "Support heal core 3rd–5th. Remade OB43.",
         "featured": true,
         "patch": "OB43"
       },
@@ -851,10 +851,10 @@
         "roles": [
           "Support"
         ],
-        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10\u219215 \u2014 free early shell on every path that already bought it.",
+        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10→15 — free early shell on every path that already bought it.",
         "how": "Safer lane opener than greedier flags when you want raw bulk and team sustain over contest tools.",
         "when": "Support paths that already default Selflessness; any lobby where early prots matter.",
-        "when_not": "You\u2019re not actually supporting.",
+        "when_not": "You’re not actually supporting.",
         "buy_as": "Support starter. OB47 Night Update prot buff.",
         "featured": true,
         "patch": "OB47"
@@ -870,11 +870,11 @@
           "Support",
           "Mid"
         ],
-        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70\u219235 but DR per stack 1%\u21922% (same 70% DR cap, fewer stacks to full).",
-        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form — move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70→35 but DR per stack 1%→2% (same 70% DR cap, fewer stacks to full).",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you’re dove or need to escape. Long cooldown — treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
         "when": "Enchanter supports who stay in fights and get focused.",
         "when_not": "You never heal/buff allies; you already have 3 better actives.",
-        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
+        "buy_as": "Support 2nd–3rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
         "featured": true,
         "patch": "OB47"
       },
@@ -893,7 +893,7 @@
         "how": "Only works if you land hard CC (stun/root/knockup/etc.).",
         "when": "You have reliable hard CC (Ymir, Atlas, Hades, etc.).",
         "when_not": "Soft CC only / no CC in kit.",
-        "buy_as": "CC gods \u2014 synergy item, not random bulk. Stronger after OB44.",
+        "buy_as": "CC gods — synergy item, not random bulk. Stronger after OB44.",
         "featured": true,
         "patch": "OB44"
       },
@@ -909,7 +909,7 @@
           "Support",
           "Jungle"
         ],
-        "simple": "Heal yourself with an ability \u2192 stacking attack speed and basic-attack damage (up to 3 stacks).",
+        "simple": "Heal yourself with an ability → stacking attack speed and basic-attack damage (up to 3 stacks).",
         "how": "Self-heal ticks (e.g. Artemis Aspect of the Wild traps) can stack this fast. Adaptive STR or INT from your other items.",
         "when": "Self-heal kits that also basic-attack (Wild Artemis, some bruisers).",
         "when_not": "No self-heal in kit; pure ability mage who never autos.",
@@ -926,10 +926,10 @@
         "roles": [
           "Support"
         ],
-        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10\u219215 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
-        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window \u2014 peel and roam both pay.",
+        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10→15 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
+        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window — peel and roam both pay.",
         "when": "Almost every Contested Support game that wants early shell + shared farm.",
-        "when_not": "You\u2019re running a full damage Mid with no Support starter.",
+        "when_not": "You’re running a full damage Mid with no Support starter.",
         "buy_as": "Support starter. OB47 Night Update shell buff.",
         "featured": true,
         "patch": "OB47"
@@ -1022,7 +1022,7 @@
         ],
         "simple": "Hitting gods applies healing reduction + you stack combat stats.",
         "how": "Anti-heal for bruisers/hybrids. Adaptive STR or INT from your build.",
-        "when": "Enemy heals/lifesteals and you\u2019re a damage or hybrid role.",
+        "when": "Enemy heals/lifesteals and you’re a damage or hybrid role.",
         "when_not": "No heals; pure tank with no damage to apply it.",
         "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid.",
         "featured": false,
@@ -1058,8 +1058,8 @@
         ],
         "simple": "Enemies who hit you or lifesteal off you get stacks. You AA or hard CC them to explode stacks for % of YOUR max HP damage.",
         "how": "Not real anti-heal. Soft punish freefire/LS. You must detonate with AA or hard CC.",
-        "when": "You\u2019re the freefire tank into LS ADC/bruisers.",
-        "when_not": "You need antiheal (buy Stygian/Brawler\u2019s/Divine or Sundering 40%); you\u2019re mid glass.",
+        "when": "You’re the freefire tank into LS ADC/bruisers.",
+        "when_not": "You need antiheal (buy Stygian/Brawler’s/Divine or Sundering 40%); you’re mid glass.",
         "buy_as": "Tank flex; never your only anti-heal into Aphro.",
         "featured": false,
         "patch": ""
@@ -1074,10 +1074,10 @@
           "Mid"
         ],
         "simple": "Mage anti-heal: your god damage cuts healing + lightning proc.",
-        "how": "The mid-lane answer to Aphro/Yogi\u2019s/sustain. Also INT power.",
-        "when": "Any real healing on the enemy (or you\u2019re not sure \u2014 safe default mid).",
+        "how": "The mid-lane answer to Aphro/Yogi’s/sustain. Also INT power.",
+        "when": "Any real healing on the enemy (or you’re not sure — safe default mid).",
         "when_not": "Full glass lobby with zero sustain and you need pure burst sooner.",
-        "buy_as": "Mid 2nd\u20134th item into heal comps.",
+        "buy_as": "Mid 2nd–4th item into heal comps.",
         "featured": false,
         "patch": ""
       },
@@ -1093,7 +1093,7 @@
         "simple": "Active links an ally: you take 20% of their damage (mitigated by your dampening).",
         "how": "Bodyguard button. Stack damp/prots so the redirected damage is soft.",
         "when": "You peel one carry hard (Athena/Geb/Ymir).",
-        "when_not": "You\u2019re the one dying first with no bulk.",
+        "when_not": "You’re the one dying first with no bulk.",
         "buy_as": "Support peel path.",
         "featured": false,
         "patch": ""
@@ -1112,7 +1112,7 @@
         "simple": "Enemy shields near you are much weaker; you gain prots when that happens.",
         "how": "Anti-shield aura. Great into shield-heavy kits/items.",
         "when": "Lots of shields (Berserk shields, item shields, kit shields).",
-        "when_not": "Nobody shields \u2014 wasted slot.",
+        "when_not": "Nobody shields — wasted slot.",
         "buy_as": "Situational tank/bruiser.",
         "featured": false,
         "patch": ""
@@ -1180,10 +1180,10 @@
           "Support"
         ],
         "simple": "Stacks max HP from assists; fully stacked gives more HP and dual prots for the team aura fantasy.",
-        "how": "Support farm item. Stack on minions/gods \u2192 evolve power.",
+        "how": "Support farm item. Stack on minions/gods → evolve power.",
         "when": "Almost every Support game as core.",
-        "when_not": "You\u2019re not actually supporting (full damage mid).",
-        "buy_as": "Support item 1\u20132.",
+        "when_not": "You’re not actually supporting (full damage mid).",
+        "buy_as": "Support item 1–2.",
         "featured": false,
         "patch": ""
       },
@@ -1198,7 +1198,7 @@
           "Jungle"
         ],
         "simple": "Big magical protection; getting hit by magic shortens your cooldowns.",
-        "how": "Mage damage answer. They hit you with magic \u2192 you get CDs back.",
+        "how": "Mage damage answer. They hit you with magic → you get CDs back.",
         "when": "Fed mid mage or magical damage everywhere.",
         "when_not": "All physical lobby (ADC + phys jungle only).",
         "buy_as": "Support/Solo default into magic.",
@@ -1216,7 +1216,7 @@
           "Solo"
         ],
         "simple": "Part of your lifesteal is stored as bonus damage on your next basic attack.",
-        "how": "Cast/LS \u2192 bank \u2192 AA to dump a chunk. Stores more at full HP.",
+        "how": "Cast/LS → bank → AA to dump a chunk. Stores more at full HP.",
         "when": "INT + lifesteal mages (Hades, Anubis-style).",
         "when_not": "No LS; you never basic attack.",
         "buy_as": "With Bancroft/Blood-Bound + pen.",
@@ -1257,7 +1257,7 @@
         ],
         "simple": "When you drop low, you stun nearby enemies and get CC immune briefly.",
         "how": "Panic button passive at low HP. Long cooldown.",
-        "when": "You\u2019re the dive target and need a last-stand peel.",
+        "when": "You’re the dive target and need a last-stand peel.",
         "when_not": "You never drop low / never frontline.",
         "buy_as": "Late tank slot.",
         "featured": false,
@@ -1275,7 +1275,7 @@
         ],
         "simple": "When you drop low, you stun nearby enemies and get CC immune briefly.",
         "how": "Panic button passive at low HP. Long cooldown.",
-        "when": "You\u2019re the dive target and need a last-stand peel.",
+        "when": "You’re the dive target and need a last-stand peel.",
         "when_not": "You never drop low / never frontline.",
         "buy_as": "Late tank slot.",
         "featured": false,
@@ -1291,7 +1291,7 @@
           "Solo"
         ],
         "simple": "When they basic-attack you, their attack speed drops (stacks).",
-        "how": "They freefire you \u2192 they get slower. You want them hitting you (frontline).",
+        "how": "They freefire you → they get slower. You want them hitting you (frontline).",
         "when": "ADC or AA jungler is freefiring your face.",
         "when_not": "Nobody basics you (pure mage poke from range).",
         "buy_as": "Support/Solo tank path when AA is the problem.",
@@ -1309,8 +1309,8 @@
         "simple": "% magical penetration + first ability cast gets bonus pen (Shattering).",
         "how": "Makes mage damage actually land on tanks. First cast of the cycle is juicier.",
         "when": "Any mid that needs to kill tanks / bulk.",
-        "when_not": "Never finishing pen into triple tank (you\u2019ll bounce).",
-        "buy_as": "Mid core, often 4th\u20136th.",
+        "when_not": "Never finishing pen into triple tank (you’ll bounce).",
+        "buy_as": "Mid core, often 4th–6th.",
         "featured": false,
         "patch": ""
       },
@@ -1361,9 +1361,9 @@
           "Solo"
         ],
         "simple": "Damaging gods stacks protections vs their damage type; evolves into stronger dual prot + mitigation.",
-        "how": "Adaptive tank: fight people \u2192 stack the right prots \u2192 evolve.",
+        "how": "Adaptive tank: fight people → stack the right prots → evolve.",
         "when": "Frontliners in long games who hit a lot of gods.",
-        "when_not": "You need an immediate answer (Spectral/Genji\u2019s) this fight.",
+        "when_not": "You need an immediate answer (Spectral/Genji’s) this fight.",
         "buy_as": "Early tank scaler; evolve is the payoff.",
         "featured": false,
         "patch": ""
@@ -1414,9 +1414,9 @@
           "Mid",
           "Solo"
         ],
-        "simple": "Ability hits deal extra damage based on the target\u2019s health (base + item HP).",
-        "how": "Tank shred for mages. Still goes through prots \u2014 buy pen too.",
-        "when": "Fat tanks, Thebes stacks, Yogi\u2019s bricks.",
+        "simple": "Ability hits deal extra damage based on the target’s health (base + item HP).",
+        "how": "Tank shred for mages. Still goes through prots — buy pen too.",
+        "when": "Fat tanks, Thebes stacks, Yogi’s bricks.",
         "when_not": "All glass enemies and you need pure burst/CDR sooner.",
         "buy_as": "Mid/offline mage with Obsidian/Deso.",
         "featured": false,
@@ -1433,10 +1433,10 @@
           "Solo"
         ],
         "simple": "You and nearby allies take less damage from critical hits.",
-        "how": "Passive aura. Stand near your carry \u2014 they get part of the anti-crit too.",
+        "how": "Passive aura. Stand near your carry — they get part of the anti-crit too.",
         "when": "Enemy has a crit Carry (or anyone building crit). Default Support flex almost every game.",
         "when_not": "No crit threat at all (full ability damage lobby).",
-        "buy_as": "2nd\u20134th item on Support after Thebes/Shifter\u2019s.",
+        "buy_as": "2nd–4th item on Support after Thebes/Shifter’s.",
         "featured": false,
         "patch": ""
       },
@@ -1450,10 +1450,10 @@
           "Support",
           "Solo"
         ],
-        "simple": "When hard CC\u2019d, you gain a big dual-prot buff and a small heal.",
-        "how": "CC makes you tankier briefly. Note: enemies can \u2018proc\u2019 this on purpose.",
-        "when": "Lots of hard CC and you\u2019re frontline.",
-        "when_not": "You want to avoid giving them free value; Magi\u2019s is cleaner for \u2018don\u2019t get CC\u2019d\u2019.",
+        "simple": "When hard CC’d, you gain a big dual-prot buff and a small heal.",
+        "how": "CC makes you tankier briefly. Note: enemies can ‘proc’ this on purpose.",
+        "when": "Lots of hard CC and you’re frontline.",
+        "when_not": "You want to avoid giving them free value; Magi’s is cleaner for ‘don’t get CC’d’.",
         "buy_as": "Tank flex into CC-heavy lobbies.",
         "featured": false,
         "patch": ""
@@ -1487,8 +1487,8 @@
         "simple": "Active: you and nearby allies get slow immunity and a huge decaying speed boost.",
         "how": "Engage or disengage button for the whole team.",
         "when": "You need team move for fights/rotates (classic support).",
-        "when_not": "Rarely \u2014 it\u2019s a standard support tool when speed wins fights.",
-        "buy_as": "Support 3rd\u20135th often.",
+        "when_not": "Rarely — it’s a standard support tool when speed wins fights.",
+        "buy_as": "Support 3rd–5th often.",
         "featured": false,
         "patch": ""
       },
@@ -1504,9 +1504,9 @@
         ],
         "simple": "Your damage cuts enemy healing (antiheal) and slows their attack speed in stacks.",
         "how": "Real anti-heal on ability damage (not Contagion). Also shreds AS.",
-        "when": "Aphro, Yogi\u2019s, Cu sustain, heavy lifesteal, heal comps.",
+        "when": "Aphro, Yogi’s, Cu sustain, heavy lifesteal, heal comps.",
         "when_not": "Zero healing on the enemy team.",
-        "buy_as": "Support/Solo whenever heals are real \u2014 don\u2019t wait until item 6.",
+        "buy_as": "Support/Solo whenever heals are real — don’t wait until item 6.",
         "featured": false,
         "patch": ""
       },
@@ -1521,7 +1521,7 @@
           "Solo"
         ],
         "simple": "% physical penetration + first ability cast bonus pen (Shattering).",
-        "how": "Same idea as Obsidian for physical. Don\u2019t skip into bulk.",
+        "how": "Same idea as Obsidian for physical. Don’t skip into bulk.",
         "when": "Physical damage roles mid/late.",
         "when_not": "You only AA and never cast (still usually good).",
         "buy_as": "Carry/Jungle pen slot.",
@@ -1539,7 +1539,7 @@
         ],
         "simple": "Your basics apply healing reduction and attack-speed slow.",
         "how": "AA-based anti-heal. You must basic-attack them.",
-        "when": "You\u2019re Carry/AA jungle into heals.",
+        "when": "You’re Carry/AA jungle into heals.",
         "when_not": "Ability-only mage; you never auto.",
         "buy_as": "Carry flex vs heal / high AS.",
         "featured": false,
@@ -1558,7 +1558,7 @@
           "Support"
         ],
         "simple": "Above 50% HP, your lifesteal healing is shared with nearby allies (and gives them small prots).",
-        "how": "You\u2019re a mobile vamp aura. Must build lifesteal and stay healthy next to teammates.",
+        "how": "You’re a mobile vamp aura. Must build lifesteal and stay healthy next to teammates.",
         "when": "Physical LS bruisers (Fenrir, Kali, Chaac paths) who group fight.",
         "when_not": "No LS; always under 50% HP; you never stand near allies.",
         "buy_as": "After or with Bloodforge/DG-style LS cores.",
@@ -1578,7 +1578,7 @@
         ],
         "simple": "Nearby enemies have less physical protection (stronger up close).",
         "how": "Aura shred for physical carries/junglers.",
-        "when": "You\u2019re peeling in front of a physical ADC/jungle.",
+        "when": "You’re peeling in front of a physical ADC/jungle.",
         "when_not": "Full magical team.",
         "buy_as": "Frontline aura slot.",
         "featured": false,
@@ -1597,8 +1597,8 @@
         ],
         "simple": "Nearby enemies have less magical protection (stronger up close).",
         "how": "Aura shred for magical damage dealers on your team (or you).",
-        "when": "You\u2019re frontline with mage allies, or magical bruiser.",
-        "when_not": "All physical team and you\u2019re not magical.",
+        "when": "You’re frontline with mage allies, or magical bruiser.",
+        "when_not": "All physical team and you’re not magical.",
         "buy_as": "Frontline aura slot.",
         "featured": false,
         "patch": ""
@@ -1613,11 +1613,11 @@
           "Support",
           "Solo"
         ],
-        "simple": "For 4s you only take half damage, then you pay back what you blocked (as physical). Can\u2019t kill yourself below 5% HP.",
+        "simple": "For 4s you only take half damage, then you pay back what you blocked (as physical). Can’t kill yourself below 5% HP.",
         "how": "Press when a big burst is landing. You delay death, not become immortal. Moonlight = half the payback.",
-        "when": "You\u2019re a frontline tank and enemy has big ult combos.",
+        "when": "You’re a frontline tank and enemy has big ult combos.",
         "when_not": "Glass builds; long AA freefire with no spike; pressing it with nobody hitting you.",
-        "buy_as": "2nd\u20133rd item on Ymir/Atlas/Xing-style tanks after some bulk.",
+        "buy_as": "2nd–3rd item on Ymir/Atlas/Xing-style tanks after some bulk.",
         "featured": false,
         "patch": ""
       },
@@ -1652,10 +1652,10 @@
           "Solo"
         ],
         "simple": "You and nearby allies take less damage from critical hits.",
-        "how": "Passive aura. Stand near your carry \u2014 they get part of the anti-crit too.",
+        "how": "Passive aura. Stand near your carry — they get part of the anti-crit too.",
         "when": "Enemy has a crit Carry (or anyone building crit). Default Support flex almost every game.",
         "when_not": "No crit threat at all (full ability damage lobby).",
-        "buy_as": "2nd\u20134th item on Support after Thebes/Shifter\u2019s.",
+        "buy_as": "2nd–4th item on Support after Thebes/Shifter’s.",
         "featured": false,
         "patch": ""
       },
@@ -1670,10 +1670,10 @@
           "Solo"
         ],
         "simple": "You and nearby allies take less damage from critical hits.",
-        "how": "Passive aura. Stand near your carry \u2014 they get part of the anti-crit too.",
+        "how": "Passive aura. Stand near your carry — they get part of the anti-crit too.",
         "when": "Enemy has a crit Carry (or anyone building crit). Default Support flex almost every game.",
         "when_not": "No crit threat at all (full ability damage lobby).",
-        "buy_as": "2nd\u20134th item on Support after Thebes/Shifter\u2019s.",
+        "buy_as": "2nd–4th item on Support after Thebes/Shifter’s.",
         "featured": false,
         "patch": ""
       },
@@ -1687,7 +1687,7 @@
           "Solo"
         ],
         "simple": "When they basic-attack you, their attack speed drops (stacks).",
-        "how": "They freefire you \u2192 they get slower. You want them hitting you (frontline).",
+        "how": "They freefire you → they get slower. You want them hitting you (frontline).",
         "when": "ADC or AA jungler is freefiring your face.",
         "when_not": "Nobody basics you (pure mage poke from range).",
         "buy_as": "Support/Solo tank path when AA is the problem.",
@@ -1704,7 +1704,7 @@
           "Solo"
         ],
         "simple": "When they basic-attack you, their attack speed drops (stacks).",
-        "how": "They freefire you \u2192 they get slower. You want them hitting you (frontline).",
+        "how": "They freefire you → they get slower. You want them hitting you (frontline).",
         "when": "ADC or AA jungler is freefiring your face.",
         "when_not": "Nobody basics you (pure mage poke from range).",
         "buy_as": "Support/Solo tank path when AA is the problem.",
@@ -1723,9 +1723,9 @@
         ],
         "simple": "Your damage cuts enemy healing (antiheal) and slows their attack speed in stacks.",
         "how": "Real anti-heal on ability damage (not Contagion). Also shreds AS.",
-        "when": "Aphro, Yogi\u2019s, Cu sustain, heavy lifesteal, heal comps.",
+        "when": "Aphro, Yogi’s, Cu sustain, heavy lifesteal, heal comps.",
         "when_not": "Zero healing on the enemy team.",
-        "buy_as": "Support/Solo whenever heals are real \u2014 don\u2019t wait until item 6.",
+        "buy_as": "Support/Solo whenever heals are real — don’t wait until item 6.",
         "featured": false,
         "patch": ""
       },
@@ -1741,9 +1741,9 @@
         ],
         "simple": "Your damage cuts enemy healing (antiheal) and slows their attack speed in stacks.",
         "how": "Real anti-heal on ability damage (not Contagion). Also shreds AS.",
-        "when": "Aphro, Yogi\u2019s, Cu sustain, heavy lifesteal, heal comps.",
+        "when": "Aphro, Yogi’s, Cu sustain, heavy lifesteal, heal comps.",
         "when_not": "Zero healing on the enemy team.",
-        "buy_as": "Support/Solo whenever heals are real \u2014 don\u2019t wait until item 6.",
+        "buy_as": "Support/Solo whenever heals are real — don’t wait until item 6.",
         "featured": false,
         "patch": ""
       },
@@ -1761,7 +1761,7 @@
         ],
         "simple": "Hitting gods applies healing reduction + you stack combat stats.",
         "how": "Anti-heal for bruisers/hybrids. Adaptive STR or INT from your build.",
-        "when": "Enemy heals/lifesteals and you\u2019re a damage or hybrid role.",
+        "when": "Enemy heals/lifesteals and you’re a damage or hybrid role.",
         "when_not": "No heals; pure tank with no damage to apply it.",
         "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid.",
         "featured": false,
@@ -1781,13 +1781,13 @@
         ],
         "simple": "Hitting gods applies healing reduction + you stack combat stats.",
         "how": "Anti-heal for bruisers/hybrids. Adaptive STR or INT from your build.",
-        "when": "Enemy heals/lifesteals and you\u2019re a damage or hybrid role.",
+        "when": "Enemy heals/lifesteals and you’re a damage or hybrid role.",
         "when_not": "No heals; pure tank with no damage to apply it.",
         "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid.",
         "featured": false,
         "patch": ""
       },
-      "Brawler\u2019s Beat Stick": {
+      "Brawler’s Beat Stick": {
         "name": "Brawler's Beat Stick",
         "tags": [
           "answer",
@@ -1801,7 +1801,7 @@
         ],
         "simple": "Hitting gods applies healing reduction + you stack combat stats.",
         "how": "Anti-heal for bruisers/hybrids. Adaptive STR or INT from your build.",
-        "when": "Enemy heals/lifesteals and you\u2019re a damage or hybrid role.",
+        "when": "Enemy heals/lifesteals and you’re a damage or hybrid role.",
         "when_not": "No heals; pure tank with no damage to apply it.",
         "buy_as": "Solo/Jungle/Carry into sustain; sometimes Mid hybrid.",
         "featured": false,
@@ -1817,10 +1817,10 @@
           "Mid"
         ],
         "simple": "Mage anti-heal: your god damage cuts healing + lightning proc.",
-        "how": "The mid-lane answer to Aphro/Yogi\u2019s/sustain. Also INT power.",
-        "when": "Any real healing on the enemy (or you\u2019re not sure \u2014 safe default mid).",
+        "how": "The mid-lane answer to Aphro/Yogi’s/sustain. Also INT power.",
+        "when": "Any real healing on the enemy (or you’re not sure — safe default mid).",
         "when_not": "Full glass lobby with zero sustain and you need pure burst sooner.",
-        "buy_as": "Mid 2nd\u20134th item into heal comps.",
+        "buy_as": "Mid 2nd–4th item into heal comps.",
         "featured": false,
         "patch": ""
       },
@@ -1834,10 +1834,10 @@
           "Mid"
         ],
         "simple": "Mage anti-heal: your god damage cuts healing + lightning proc.",
-        "how": "The mid-lane answer to Aphro/Yogi\u2019s/sustain. Also INT power.",
-        "when": "Any real healing on the enemy (or you\u2019re not sure \u2014 safe default mid).",
+        "how": "The mid-lane answer to Aphro/Yogi’s/sustain. Also INT power.",
+        "when": "Any real healing on the enemy (or you’re not sure — safe default mid).",
         "when_not": "Full glass lobby with zero sustain and you need pure burst sooner.",
-        "buy_as": "Mid 2nd\u20134th item into heal comps.",
+        "buy_as": "Mid 2nd–4th item into heal comps.",
         "featured": false,
         "patch": ""
       },
@@ -1852,7 +1852,7 @@
         ],
         "simple": "Your basics apply healing reduction and attack-speed slow.",
         "how": "AA-based anti-heal. You must basic-attack them.",
-        "when": "You\u2019re Carry/AA jungle into heals.",
+        "when": "You’re Carry/AA jungle into heals.",
         "when_not": "Ability-only mage; you never auto.",
         "buy_as": "Carry flex vs heal / high AS.",
         "featured": false,
@@ -1869,7 +1869,7 @@
         ],
         "simple": "Your basics apply healing reduction and attack-speed slow.",
         "how": "AA-based anti-heal. You must basic-attack them.",
-        "when": "You\u2019re Carry/AA jungle into heals.",
+        "when": "You’re Carry/AA jungle into heals.",
         "when_not": "Ability-only mage; you never auto.",
         "buy_as": "Carry flex vs heal / high AS.",
         "featured": false,
@@ -1886,7 +1886,7 @@
           "Jungle"
         ],
         "simple": "Big magical protection; getting hit by magic shortens your cooldowns.",
-        "how": "Mage damage answer. They hit you with magic \u2192 you get CDs back.",
+        "how": "Mage damage answer. They hit you with magic → you get CDs back.",
         "when": "Fed mid mage or magical damage everywhere.",
         "when_not": "All physical lobby (ADC + phys jungle only).",
         "buy_as": "Support/Solo default into magic.",
@@ -1904,7 +1904,7 @@
           "Jungle"
         ],
         "simple": "Big magical protection; getting hit by magic shortens your cooldowns.",
-        "how": "Mage damage answer. They hit you with magic \u2192 you get CDs back.",
+        "how": "Mage damage answer. They hit you with magic → you get CDs back.",
         "when": "Fed mid mage or magical damage everywhere.",
         "when_not": "All physical lobby (ADC + phys jungle only).",
         "buy_as": "Support/Solo default into magic.",
@@ -1999,10 +1999,10 @@
           "Support",
           "Solo"
         ],
-        "simple": "When hard CC\u2019d, you gain a big dual-prot buff and a small heal.",
-        "how": "CC makes you tankier briefly. Note: enemies can \u2018proc\u2019 this on purpose.",
-        "when": "Lots of hard CC and you\u2019re frontline.",
-        "when_not": "You want to avoid giving them free value; Magi\u2019s is cleaner for \u2018don\u2019t get CC\u2019d\u2019.",
+        "simple": "When hard CC’d, you gain a big dual-prot buff and a small heal.",
+        "how": "CC makes you tankier briefly. Note: enemies can ‘proc’ this on purpose.",
+        "when": "Lots of hard CC and you’re frontline.",
+        "when_not": "You want to avoid giving them free value; Magi’s is cleaner for ‘don’t get CC’d’.",
         "buy_as": "Tank flex into CC-heavy lobbies.",
         "featured": false,
         "patch": ""
@@ -2017,10 +2017,10 @@
           "Support",
           "Solo"
         ],
-        "simple": "When hard CC\u2019d, you gain a big dual-prot buff and a small heal.",
-        "how": "CC makes you tankier briefly. Note: enemies can \u2018proc\u2019 this on purpose.",
-        "when": "Lots of hard CC and you\u2019re frontline.",
-        "when_not": "You want to avoid giving them free value; Magi\u2019s is cleaner for \u2018don\u2019t get CC\u2019d\u2019.",
+        "simple": "When hard CC’d, you gain a big dual-prot buff and a small heal.",
+        "how": "CC makes you tankier briefly. Note: enemies can ‘proc’ this on purpose.",
+        "when": "Lots of hard CC and you’re frontline.",
+        "when_not": "You want to avoid giving them free value; Magi’s is cleaner for ‘don’t get CC’d’.",
         "buy_as": "Tank flex into CC-heavy lobbies.",
         "featured": false,
         "patch": ""
@@ -2038,7 +2038,7 @@
         ],
         "simple": "When you drop low, you stun nearby enemies and get CC immune briefly.",
         "how": "Panic button passive at low HP. Long cooldown.",
-        "when": "You\u2019re the dive target and need a last-stand peel.",
+        "when": "You’re the dive target and need a last-stand peel.",
         "when_not": "You never drop low / never frontline.",
         "buy_as": "Late tank slot.",
         "featured": false,
@@ -2056,7 +2056,7 @@
         ],
         "simple": "When you drop low, you stun nearby enemies and get CC immune briefly.",
         "how": "Panic button passive at low HP. Long cooldown.",
-        "when": "You\u2019re the dive target and need a last-stand peel.",
+        "when": "You’re the dive target and need a last-stand peel.",
         "when_not": "You never drop low / never frontline.",
         "buy_as": "Late tank slot.",
         "featured": false,
@@ -2074,7 +2074,7 @@
         ],
         "simple": "When you drop low, you stun nearby enemies and get CC immune briefly.",
         "how": "Panic button passive at low HP. Long cooldown.",
-        "when": "You\u2019re the dive target and need a last-stand peel.",
+        "when": "You’re the dive target and need a last-stand peel.",
         "when_not": "You never drop low / never frontline.",
         "buy_as": "Late tank slot.",
         "featured": false,
@@ -2090,11 +2090,11 @@
           "Support",
           "Solo"
         ],
-        "simple": "For 4s you only take half damage, then you pay back what you blocked (as physical). Can\u2019t kill yourself below 5% HP.",
+        "simple": "For 4s you only take half damage, then you pay back what you blocked (as physical). Can’t kill yourself below 5% HP.",
         "how": "Press when a big burst is landing. You delay death, not become immortal. Moonlight = half the payback.",
-        "when": "You\u2019re a frontline tank and enemy has big ult combos.",
+        "when": "You’re a frontline tank and enemy has big ult combos.",
         "when_not": "Glass builds; long AA freefire with no spike; pressing it with nobody hitting you.",
-        "buy_as": "2nd\u20133rd item on Ymir/Atlas/Xing-style tanks after some bulk.",
+        "buy_as": "2nd–3rd item on Ymir/Atlas/Xing-style tanks after some bulk.",
         "featured": false,
         "patch": ""
       },
@@ -2108,11 +2108,11 @@
           "Support",
           "Solo"
         ],
-        "simple": "For 4s you only take half damage, then you pay back what you blocked (as physical). Can\u2019t kill yourself below 5% HP.",
+        "simple": "For 4s you only take half damage, then you pay back what you blocked (as physical). Can’t kill yourself below 5% HP.",
         "how": "Press when a big burst is landing. You delay death, not become immortal. Moonlight = half the payback.",
-        "when": "You\u2019re a frontline tank and enemy has big ult combos.",
+        "when": "You’re a frontline tank and enemy has big ult combos.",
         "when_not": "Glass builds; long AA freefire with no spike; pressing it with nobody hitting you.",
-        "buy_as": "2nd\u20133rd item on Ymir/Atlas/Xing-style tanks after some bulk.",
+        "buy_as": "2nd–3rd item on Ymir/Atlas/Xing-style tanks after some bulk.",
         "featured": false,
         "patch": ""
       },
@@ -2125,10 +2125,10 @@
         "roles": [
           "Support"
         ],
-        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10\u219215 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
-        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window \u2014 peel and roam both pay.",
+        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10→15 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
+        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window — peel and roam both pay.",
         "when": "Almost every Contested Support game that wants early shell + shared farm.",
-        "when_not": "You\u2019re running a full damage Mid with no Support starter.",
+        "when_not": "You’re running a full damage Mid with no Support starter.",
         "buy_as": "Support starter. OB47 Night Update shell buff.",
         "featured": true,
         "patch": "OB47"
@@ -2142,10 +2142,10 @@
         "roles": [
           "Support"
         ],
-        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10\u219215 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
-        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window \u2014 peel and roam both pay.",
+        "simple": "Support starter aura: shared gold/XP on assists plus Physical/Magical prots. OB47 bumped starter prots 10→15 and doubles War Flag kill/assist benefits for you and nearby allies every 8s when you apply CC.",
+        "how": "Default Contested/War Flag lane opener. Land any CC to proc the double-benefit window — peel and roam both pay.",
         "when": "Almost every Contested Support game that wants early shell + shared farm.",
-        "when_not": "You\u2019re running a full damage Mid with no Support starter.",
+        "when_not": "You’re running a full damage Mid with no Support starter.",
         "buy_as": "Support starter. OB47 Night Update shell buff.",
         "featured": true,
         "patch": "OB47"
@@ -2159,10 +2159,10 @@
         "roles": [
           "Support"
         ],
-        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10\u219215 \u2014 free early shell on every path that already bought it.",
+        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10→15 — free early shell on every path that already bought it.",
         "how": "Safer lane opener than greedier flags when you want raw bulk and team sustain over contest tools.",
         "when": "Support paths that already default Selflessness; any lobby where early prots matter.",
-        "when_not": "You\u2019re not actually supporting.",
+        "when_not": "You’re not actually supporting.",
         "buy_as": "Support starter. OB47 Night Update prot buff.",
         "featured": true,
         "patch": "OB47"
@@ -2176,10 +2176,10 @@
         "roles": [
           "Support"
         ],
-        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10\u219215 \u2014 free early shell on every path that already bought it.",
+        "simple": "Support starter with shared sustain and Physical/Magical prots. OB47 raised starter prots 10→15 — free early shell on every path that already bought it.",
         "how": "Safer lane opener than greedier flags when you want raw bulk and team sustain over contest tools.",
         "when": "Support paths that already default Selflessness; any lobby where early prots matter.",
-        "when_not": "You\u2019re not actually supporting.",
+        "when_not": "You’re not actually supporting.",
         "buy_as": "Support starter. OB47 Night Update prot buff.",
         "featured": true,
         "patch": "OB47"
@@ -2194,7 +2194,7 @@
           "Support",
           "Jungle"
         ],
-        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) \u2014 mana-hungry kits stop going dry between rotates.",
+        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) — mana-hungry kits stop going dry between rotates.",
         "how": "Buy when your clear/ult package is INT-scaled and you were already eyeing Signet; the regen is the Night Update reason to prefer it over thirstier banks.",
         "when": "Mana-hungry mages who rotate often (Nox, classic INT Mid).",
         "when_not": "You already solved mana with Thoth/Yogi and want pure pen/burst instead.",
@@ -2212,7 +2212,7 @@
           "Support",
           "Jungle"
         ],
-        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) \u2014 mana-hungry kits stop going dry between rotates.",
+        "simple": "INT mage core that now also grants 5 Mana Regen (OB47) — mana-hungry kits stop going dry between rotates.",
         "how": "Buy when your clear/ult package is INT-scaled and you were already eyeing Signet; the regen is the Night Update reason to prefer it over thirstier banks.",
         "when": "Mana-hungry mages who rotate often (Nox, classic INT Mid).",
         "when_not": "You already solved mana with Thoth/Yogi and want pure pen/burst instead.",
@@ -2231,8 +2231,8 @@
           "Support",
           "Mid"
         ],
-        "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
-        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "simple": "Buff, heal, or shield an ally → gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
+        "how": "You’re charging free damage onto your ADC’s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket — they stack together. Passive — no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
         "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry; niche Jorm DoT/heal itemization after OB47.",
         "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
         "buy_as": "Support 2nd after Thebes (cheap CDR + Int). OB45 AD scaling on bonus dmg; OB47 Jorm proc note.",
@@ -2250,8 +2250,8 @@
           "Support",
           "Mid"
         ],
-        "simple": "Buff, heal, or shield an ally \u2192 gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
-        "how": "You\u2019re charging free damage onto your ADC\u2019s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket \u2014 they stack together. Passive \u2014 no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "simple": "Buff, heal, or shield an ally → gain Lotus stacks. When an ally basic-attacks an enemy, a stack pops for bonus magical damage.",
+        "how": "You’re charging free damage onto your ADC’s autos. Needs an ally who actually basics (Carry). Same trigger as Soul Locket — they stack together. Passive — no button. Do not buy/sell to stack stats (exploit; suspensions). OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
         "when": "Healer/buff supports (Aphrodite, Yemoja, Guan, Sylvanus, Ix Chel) pocketing a crit/AS carry; niche Jorm DoT/heal itemization after OB47.",
         "when_not": "No ally buffs/heals/shields in kit; team never basic-attacks.",
         "buy_as": "Support 2nd after Thebes (cheap CDR + Int). OB45 AD scaling on bonus dmg; OB47 Jorm proc note.",
@@ -2269,11 +2269,11 @@
           "Support",
           "Mid"
         ],
-        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70\u219235 but DR per stack 1%\u21922% (same 70% DR cap, fewer stacks to full).",
-        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form — move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70→35 but DR per stack 1%→2% (same 70% DR cap, fewer stacks to full).",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you’re dove or need to escape. Long cooldown — treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
         "when": "Enchanter supports who stay in fights and get focused.",
         "when_not": "You never heal/buff allies; you already have 3 better actives.",
-        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
+        "buy_as": "Support 2nd–3rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
         "featured": true,
         "patch": "OB47"
       },
@@ -2288,11 +2288,11 @@
           "Support",
           "Mid"
         ],
-        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form \u2014 move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70\u219235 but DR per stack 1%\u21922% (same 70% DR cap, fewer stacks to full).",
-        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you\u2019re dove or need to escape. Long cooldown \u2014 treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
+        "simple": "+10% stronger heals/shields. Buff/heal/shield allies to charge Soul stacks. Active: ghost form — move speed, walk through walls/players, and damage reduction from your stacks. OB47: max stacks 70→35 but DR per stack 1%→2% (same 70% DR cap, fewer stacks to full).",
+        "how": "Same trigger as Lotus Sickle. Build stacks while healing, then press the active when you’re dove or need to escape. Long cooldown — treat it like a save button, not spam. Hits full DR sooner after the Night Update curve change.",
         "when": "Enchanter supports who stay in fights and get focused.",
         "when_not": "You never heal/buff allies; you already have 3 better actives.",
-        "buy_as": "Support 2nd\u20133rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
+        "buy_as": "Support 2nd–3rd with Sickle. Pop when dove or escaping. OB47 stack curve remade.",
         "featured": true,
         "patch": "OB47"
       },
@@ -2308,7 +2308,7 @@
           "Support",
           "Jungle"
         ],
-        "simple": "Heal yourself with an ability \u2192 stacking attack speed and basic-attack damage (up to 3 stacks).",
+        "simple": "Heal yourself with an ability → stacking attack speed and basic-attack damage (up to 3 stacks).",
         "how": "Self-heal ticks (e.g. Artemis Aspect of the Wild traps) can stack this fast. Adaptive STR or INT from your other items.",
         "when": "Self-heal kits that also basic-attack (Wild Artemis, some bruisers).",
         "when_not": "No self-heal in kit; pure ability mage who never autos.",
@@ -2328,7 +2328,7 @@
           "Support",
           "Jungle"
         ],
-        "simple": "Heal yourself with an ability \u2192 stacking attack speed and basic-attack damage (up to 3 stacks).",
+        "simple": "Heal yourself with an ability → stacking attack speed and basic-attack damage (up to 3 stacks).",
         "how": "Self-heal ticks (e.g. Artemis Aspect of the Wild traps) can stack this fast. Adaptive STR or INT from your other items.",
         "when": "Self-heal kits that also basic-attack (Wild Artemis, some bruisers).",
         "when_not": "No self-heal in kit; pure ability mage who never autos.",
@@ -2348,8 +2348,8 @@
         "simple": "+10% heal/shield strength. When you heal an ally, you heal even more the lower their HP is.",
         "how": "Missing-HP heal amp. Stacks with Soul Locket / Heartwood / Chandra amp.",
         "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
-        "when_not": "No heal abilities \u2014 dead item.",
-        "buy_as": "Support heal core 3rd\u20135th. Remade OB43.",
+        "when_not": "No heal abilities — dead item.",
+        "buy_as": "Support heal core 3rd–5th. Remade OB43.",
         "featured": true,
         "patch": "OB43"
       },
@@ -2365,8 +2365,8 @@
         "simple": "+10% heal/shield strength. When you heal an ally, you heal even more the lower their HP is.",
         "how": "Missing-HP heal amp. Stacks with Soul Locket / Heartwood / Chandra amp.",
         "when": "True healers (Aphrodite, Yemoja, Guan Yu).",
-        "when_not": "No heal abilities \u2014 dead item.",
-        "buy_as": "Support heal core 3rd\u20135th. Remade OB43.",
+        "when_not": "No heal abilities — dead item.",
+        "buy_as": "Support heal core 3rd–5th. Remade OB43.",
         "featured": true,
         "patch": "OB43"
       },
@@ -2382,7 +2382,7 @@
           "Mid"
         ],
         "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
-        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card\u2019s amp actually applies.",
+        "how": "Mark → ally hits → heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card’s amp actually applies.",
         "when": "Healers who group fight and can mark the dive target.",
         "when_not": "No heal identity; active slots full.",
         "buy_as": "Healer flex active. Remade OB43; OB47 heal-scaling bugfix.",
@@ -2401,7 +2401,7 @@
           "Mid"
         ],
         "simple": "Active marks an enemy; the first ally to damage them gets a big heal and shield (amped by your heal/shield strength).",
-        "how": "Mark \u2192 ally hits \u2192 heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card\u2019s amp actually applies.",
+        "how": "Mark → ally hits → heal bomb. Stronger if you already built heal amp. OB47 fixed heal/shield scaling so the card’s amp actually applies.",
         "when": "Healers who group fight and can mark the dive target.",
         "when_not": "No heal identity; active slots full.",
         "buy_as": "Healer flex active. Remade OB43; OB47 heal-scaling bugfix.",
@@ -2418,9 +2418,9 @@
           "Support"
         ],
         "simple": "+15% heal/shield strength (OB43 hotfix). Every 15s, lowest-HP nearby ally gets regen and tiny cooldown shred.",
-        "how": "Aura amp for healers plus a periodic \u201chelp the dying ally\u201d buff. Hotfix cut amp 20\u219215% \u2014 still fine on true healers, not a generic Solo shell.",
+        "how": "Aura amp for healers plus a periodic “help the dying ally” buff. Hotfix cut amp 20→15% — still fine on true healers, not a generic Solo shell.",
         "when": "Support heal/amp paths after Thebes / Sickle / Asclepius.",
-        "when_not": "You\u2019re full damage with no heals; non-healer Solo looking for free aura.",
+        "when_not": "You’re full damage with no heals; non-healer Solo looking for free aura.",
         "buy_as": "Support heal flex after core enchanter items. Remade OB43; hotfix 9/9.",
         "featured": true,
         "patch": "OB43"
@@ -2435,9 +2435,9 @@
           "Support"
         ],
         "simple": "+15% heal/shield strength (OB43 hotfix). Every 15s, lowest-HP nearby ally gets regen and tiny cooldown shred.",
-        "how": "Aura amp for healers plus a periodic \u201chelp the dying ally\u201d buff. Hotfix cut amp 20\u219215% \u2014 still fine on true healers, not a generic Solo shell.",
+        "how": "Aura amp for healers plus a periodic “help the dying ally” buff. Hotfix cut amp 20→15% — still fine on true healers, not a generic Solo shell.",
         "when": "Support heal/amp paths after Thebes / Sickle / Asclepius.",
-        "when_not": "You\u2019re full damage with no heals; non-healer Solo looking for free aura.",
+        "when_not": "You’re full damage with no heals; non-healer Solo looking for free aura.",
         "buy_as": "Support heal flex after core enchanter items. Remade OB43; hotfix 9/9.",
         "featured": true,
         "patch": "OB43"
@@ -2457,7 +2457,7 @@
         "how": "Cast to stack wounds, then auto/ability for bonus damage. Replaced Serrated Edge (old name still ghosts on trackers/wiki).",
         "when": "Physical ability junglers/bruisers who also basic-attack in the combo.",
         "when_not": "Pure mage INT kits; you never land abilities.",
-        "buy_as": "Jungle 1st\u20133rd on ability-physical kits. Live shop name \u2014 not Serrated Edge.",
+        "buy_as": "Jungle 1st–3rd on ability-physical kits. Live shop name — not Serrated Edge.",
         "featured": true,
         "patch": "OB15+"
       },
@@ -2476,7 +2476,7 @@
         "how": "Cast to stack wounds, then auto/ability for bonus damage. Replaced Serrated Edge (old name still ghosts on trackers/wiki).",
         "when": "Physical ability junglers/bruisers who also basic-attack in the combo.",
         "when_not": "Pure mage INT kits; you never land abilities.",
-        "buy_as": "Jungle 1st\u20133rd on ability-physical kits. Live shop name \u2014 not Serrated Edge.",
+        "buy_as": "Jungle 1st–3rd on ability-physical kits. Live shop name — not Serrated Edge.",
         "featured": true,
         "patch": "OB15+"
       },
@@ -2493,7 +2493,7 @@
           "Support"
         ],
         "simple": "Above 50% HP, your lifesteal healing is shared with nearby allies (and gives them small prots).",
-        "how": "You\u2019re a mobile vamp aura. Must build lifesteal and stay healthy next to teammates.",
+        "how": "You’re a mobile vamp aura. Must build lifesteal and stay healthy next to teammates.",
         "when": "Physical LS bruisers (Fenrir, Kali, Chaac paths) who group fight.",
         "when_not": "No LS; always under 50% HP; you never stand near allies.",
         "buy_as": "After or with Bloodforge/DG-style LS cores.",
@@ -2513,7 +2513,7 @@
           "Support"
         ],
         "simple": "Above 50% HP, your lifesteal healing is shared with nearby allies (and gives them small prots).",
-        "how": "You\u2019re a mobile vamp aura. Must build lifesteal and stay healthy next to teammates.",
+        "how": "You’re a mobile vamp aura. Must build lifesteal and stay healthy next to teammates.",
         "when": "Physical LS bruisers (Fenrir, Kali, Chaac paths) who group fight.",
         "when_not": "No LS; always under 50% HP; you never stand near allies.",
         "buy_as": "After or with Bloodforge/DG-style LS cores.",
@@ -2531,8 +2531,8 @@
         ],
         "simple": "Enemies who hit you or lifesteal off you get stacks. You AA or hard CC them to explode stacks for % of YOUR max HP damage.",
         "how": "Not real anti-heal. Soft punish freefire/LS. You must detonate with AA or hard CC.",
-        "when": "You\u2019re the freefire tank into LS ADC/bruisers.",
-        "when_not": "You need antiheal (buy Stygian/Brawler\u2019s/Divine or Sundering 40%); you\u2019re mid glass.",
+        "when": "You’re the freefire tank into LS ADC/bruisers.",
+        "when_not": "You need antiheal (buy Stygian/Brawler’s/Divine or Sundering 40%); you’re mid glass.",
         "buy_as": "Tank flex; never your only anti-heal into Aphro.",
         "featured": false,
         "patch": ""
@@ -2548,8 +2548,8 @@
         ],
         "simple": "Enemies who hit you or lifesteal off you get stacks. You AA or hard CC them to explode stacks for % of YOUR max HP damage.",
         "how": "Not real anti-heal. Soft punish freefire/LS. You must detonate with AA or hard CC.",
-        "when": "You\u2019re the freefire tank into LS ADC/bruisers.",
-        "when_not": "You need antiheal (buy Stygian/Brawler\u2019s/Divine or Sundering 40%); you\u2019re mid glass.",
+        "when": "You’re the freefire tank into LS ADC/bruisers.",
+        "when_not": "You need antiheal (buy Stygian/Brawler’s/Divine or Sundering 40%); you’re mid glass.",
         "buy_as": "Tank flex; never your only anti-heal into Aphro.",
         "featured": false,
         "patch": ""
@@ -2568,7 +2568,7 @@
         "simple": "Enemy shields near you are much weaker; you gain prots when that happens.",
         "how": "Anti-shield aura. Great into shield-heavy kits/items.",
         "when": "Lots of shields (Berserk shields, item shields, kit shields).",
-        "when_not": "Nobody shields \u2014 wasted slot.",
+        "when_not": "Nobody shields — wasted slot.",
         "buy_as": "Situational tank/bruiser.",
         "featured": false,
         "patch": ""
@@ -2587,7 +2587,7 @@
         "simple": "Enemy shields near you are much weaker; you gain prots when that happens.",
         "how": "Anti-shield aura. Great into shield-heavy kits/items.",
         "when": "Lots of shields (Berserk shields, item shields, kit shields).",
-        "when_not": "Nobody shields \u2014 wasted slot.",
+        "when_not": "Nobody shields — wasted slot.",
         "buy_as": "Situational tank/bruiser.",
         "featured": false,
         "patch": ""
@@ -2638,9 +2638,9 @@
           "Mid",
           "Solo"
         ],
-        "simple": "Ability hits deal extra damage based on the target\u2019s health (base + item HP).",
-        "how": "Tank shred for mages. Still goes through prots \u2014 buy pen too.",
-        "when": "Fat tanks, Thebes stacks, Yogi\u2019s bricks.",
+        "simple": "Ability hits deal extra damage based on the target’s health (base + item HP).",
+        "how": "Tank shred for mages. Still goes through prots — buy pen too.",
+        "when": "Fat tanks, Thebes stacks, Yogi’s bricks.",
         "when_not": "All glass enemies and you need pure burst/CDR sooner.",
         "buy_as": "Mid/offline mage with Obsidian/Deso.",
         "featured": false,
@@ -2656,9 +2656,9 @@
           "Mid",
           "Solo"
         ],
-        "simple": "Ability hits deal extra damage based on the target\u2019s health (base + item HP).",
-        "how": "Tank shred for mages. Still goes through prots \u2014 buy pen too.",
-        "when": "Fat tanks, Thebes stacks, Yogi\u2019s bricks.",
+        "simple": "Ability hits deal extra damage based on the target’s health (base + item HP).",
+        "how": "Tank shred for mages. Still goes through prots — buy pen too.",
+        "when": "Fat tanks, Thebes stacks, Yogi’s bricks.",
         "when_not": "All glass enemies and you need pure burst/CDR sooner.",
         "buy_as": "Mid/offline mage with Obsidian/Deso.",
         "featured": false,
@@ -2715,7 +2715,7 @@
         "how": "Only works if you land hard CC (stun/root/knockup/etc.).",
         "when": "You have reliable hard CC (Ymir, Atlas, Hades, etc.).",
         "when_not": "Soft CC only / no CC in kit.",
-        "buy_as": "CC gods \u2014 synergy item, not random bulk. Stronger after OB44.",
+        "buy_as": "CC gods — synergy item, not random bulk. Stronger after OB44.",
         "featured": true,
         "patch": "OB44"
       },
@@ -2734,7 +2734,7 @@
         "how": "Only works if you land hard CC (stun/root/knockup/etc.).",
         "when": "You have reliable hard CC (Ymir, Atlas, Hades, etc.).",
         "when_not": "Soft CC only / no CC in kit.",
-        "buy_as": "CC gods \u2014 synergy item, not random bulk. Stronger after OB44.",
+        "buy_as": "CC gods — synergy item, not random bulk. Stronger after OB44.",
         "featured": true,
         "patch": "OB44"
       },
@@ -2789,8 +2789,8 @@
         ],
         "simple": "Nearby enemies have less magical protection (stronger up close).",
         "how": "Aura shred for magical damage dealers on your team (or you).",
-        "when": "You\u2019re frontline with mage allies, or magical bruiser.",
-        "when_not": "All physical team and you\u2019re not magical.",
+        "when": "You’re frontline with mage allies, or magical bruiser.",
+        "when_not": "All physical team and you’re not magical.",
         "buy_as": "Frontline aura slot.",
         "featured": false,
         "patch": ""
@@ -2808,8 +2808,8 @@
         ],
         "simple": "Nearby enemies have less magical protection (stronger up close).",
         "how": "Aura shred for magical damage dealers on your team (or you).",
-        "when": "You\u2019re frontline with mage allies, or magical bruiser.",
-        "when_not": "All physical team and you\u2019re not magical.",
+        "when": "You’re frontline with mage allies, or magical bruiser.",
+        "when_not": "All physical team and you’re not magical.",
         "buy_as": "Frontline aura slot.",
         "featured": false,
         "patch": ""
@@ -2827,7 +2827,7 @@
         ],
         "simple": "Nearby enemies have less physical protection (stronger up close).",
         "how": "Aura shred for physical carries/junglers.",
-        "when": "You\u2019re peeling in front of a physical ADC/jungle.",
+        "when": "You’re peeling in front of a physical ADC/jungle.",
         "when_not": "Full magical team.",
         "buy_as": "Frontline aura slot.",
         "featured": false,
@@ -2846,7 +2846,7 @@
         ],
         "simple": "Nearby enemies have less physical protection (stronger up close).",
         "how": "Aura shred for physical carries/junglers.",
-        "when": "You\u2019re peeling in front of a physical ADC/jungle.",
+        "when": "You’re peeling in front of a physical ADC/jungle.",
         "when_not": "Full magical team.",
         "buy_as": "Frontline aura slot.",
         "featured": false,
@@ -2863,8 +2863,8 @@
         "simple": "% magical penetration + first ability cast gets bonus pen (Shattering).",
         "how": "Makes mage damage actually land on tanks. First cast of the cycle is juicier.",
         "when": "Any mid that needs to kill tanks / bulk.",
-        "when_not": "Never finishing pen into triple tank (you\u2019ll bounce).",
-        "buy_as": "Mid core, often 4th\u20136th.",
+        "when_not": "Never finishing pen into triple tank (you’ll bounce).",
+        "buy_as": "Mid core, often 4th–6th.",
         "featured": false,
         "patch": ""
       },
@@ -2879,8 +2879,8 @@
         "simple": "% magical penetration + first ability cast gets bonus pen (Shattering).",
         "how": "Makes mage damage actually land on tanks. First cast of the cycle is juicier.",
         "when": "Any mid that needs to kill tanks / bulk.",
-        "when_not": "Never finishing pen into triple tank (you\u2019ll bounce).",
-        "buy_as": "Mid core, often 4th\u20136th.",
+        "when_not": "Never finishing pen into triple tank (you’ll bounce).",
+        "buy_as": "Mid core, often 4th–6th.",
         "featured": false,
         "patch": ""
       },
@@ -2895,7 +2895,7 @@
           "Solo"
         ],
         "simple": "% physical penetration + first ability cast bonus pen (Shattering).",
-        "how": "Same idea as Obsidian for physical. Don\u2019t skip into bulk.",
+        "how": "Same idea as Obsidian for physical. Don’t skip into bulk.",
         "when": "Physical damage roles mid/late.",
         "when_not": "You only AA and never cast (still usually good).",
         "buy_as": "Carry/Jungle pen slot.",
@@ -2913,7 +2913,7 @@
           "Solo"
         ],
         "simple": "% physical penetration + first ability cast bonus pen (Shattering).",
-        "how": "Same idea as Obsidian for physical. Don\u2019t skip into bulk.",
+        "how": "Same idea as Obsidian for physical. Don’t skip into bulk.",
         "when": "Physical damage roles mid/late.",
         "when_not": "You only AA and never cast (still usually good).",
         "buy_as": "Carry/Jungle pen slot.",
@@ -2932,10 +2932,10 @@
           "Mid"
         ],
         "simple": "Heal/shield bank dump active. OB45 restored real CDR (20%) and INT (45) after the OB43 hotfix cut.",
-        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb. Still costs an active slot \u2014 prefer Asclepius + Sickle first; Heartwood is the flex active when you want the dump.",
+        "how": "Spam heals to fill the bank → press active for a team heal bomb. Still costs an active slot — prefer Asclepius + Sickle first; Heartwood is the flex active when you want the dump.",
         "when": "Healer supports who specifically want the bank dump and have an active slot free.",
         "when_not": "No heal abilities; you already have Soul Locket; prefer button-light paths.",
-        "buy_as": "Healer flex after Sickle/Asclepius \u2014 not default dual-active. OB45 buffed stats.",
+        "buy_as": "Healer flex after Sickle/Asclepius — not default dual-active. OB45 buffed stats.",
         "featured": true,
         "patch": "OB45"
       },
@@ -2951,10 +2951,10 @@
           "Mid"
         ],
         "simple": "Heal/shield bank dump active. OB45 restored real CDR (20%) and INT (45) after the OB43 hotfix cut.",
-        "how": "Spam heals to fill the bank \u2192 press active for a team heal bomb. Still costs an active slot \u2014 prefer Asclepius + Sickle first; Heartwood is the flex active when you want the dump.",
+        "how": "Spam heals to fill the bank → press active for a team heal bomb. Still costs an active slot — prefer Asclepius + Sickle first; Heartwood is the flex active when you want the dump.",
         "when": "Healer supports who specifically want the bank dump and have an active slot free.",
         "when_not": "No heal abilities; you already have Soul Locket; prefer button-light paths.",
-        "buy_as": "Healer flex after Sickle/Asclepius \u2014 not default dual-active. OB45 buffed stats.",
+        "buy_as": "Healer flex after Sickle/Asclepius — not default dual-active. OB45 buffed stats.",
         "featured": true,
         "patch": "OB45"
       },
@@ -2970,7 +2970,7 @@
           "Mid"
         ],
         "simple": "Heal yourself with a healing ability to build stacks; your next non-heal ability spends them for a big STR or INT buff.",
-        "how": "Self-heal \u2192 stacks \u2192 cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
+        "how": "Self-heal → stacks → cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
         "when": "Self-heal kits (Wild Artemis traps, some bruisers) that also cast non-heals.",
         "when_not": "No self-heal; pure ally-heal support with no dump spell.",
         "buy_as": "Pair with Vital Amplifier on self-heal AA paths. Remade OB43.",
@@ -2989,7 +2989,7 @@
           "Mid"
         ],
         "simple": "Heal yourself with a healing ability to build stacks; your next non-heal ability spends them for a big STR or INT buff.",
-        "how": "Self-heal \u2192 stacks \u2192 cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
+        "how": "Self-heal → stacks → cast 2/3/ult to cash power. Adaptive STR/INT from your other items.",
         "when": "Self-heal kits (Wild Artemis traps, some bruisers) that also cast non-heals.",
         "when_not": "No self-heal; pure ally-heal support with no dump spell.",
         "buy_as": "Pair with Vital Amplifier on self-heal AA paths. Remade OB43.",
@@ -3007,10 +3007,10 @@
           "Support"
         ],
         "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
-        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "how": "Same trigger family as Sickle/Locket. Fiddly — mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
         "when": "Enchanter supports who can AA safely next to the carry; niche Jorm pocket after OB47.",
         "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
-        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43; OB47 Jorm proc note.",
+        "buy_as": "Optional 4th after Sickle/Locket — skip if too many actives. Remade OB43; OB47 Jorm proc note.",
         "featured": true,
         "patch": "OB47"
       },
@@ -3025,10 +3025,10 @@
           "Support"
         ],
         "simple": "Mark an ally as Beloved. Basic-attack to stack Devotion, then buff/heal/shield them to dump Passion (bonus STR and INT on that ally).",
-        "how": "Same trigger family as Sickle/Locket. Fiddly \u2014 mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
+        "how": "Same trigger family as Sickle/Locket. Fiddly — mark, auto, then heal. Strong pocket amp if you commit. OB47: Jormungandr Venomous Haze / Consuming Bellow can proc this family.",
         "when": "Enchanter supports who can AA safely next to the carry; niche Jorm pocket after OB47.",
         "when_not": "You hate actives / never basic-attack; prefer Sickle+Locket only.",
-        "buy_as": "Optional 4th after Sickle/Locket \u2014 skip if too many actives. Remade OB43; OB47 Jorm proc note.",
+        "buy_as": "Optional 4th after Sickle/Locket — skip if too many actives. Remade OB43; OB47 Jorm proc note.",
         "featured": true,
         "patch": "OB47"
       },
@@ -3043,7 +3043,7 @@
           "Solo"
         ],
         "simple": "Part of your lifesteal is stored as bonus damage on your next basic attack.",
-        "how": "Cast/LS \u2192 bank \u2192 AA to dump a chunk. Stores more at full HP.",
+        "how": "Cast/LS → bank → AA to dump a chunk. Stores more at full HP.",
         "when": "INT + lifesteal mages (Hades, Anubis-style).",
         "when_not": "No LS; you never basic attack.",
         "buy_as": "With Bancroft/Blood-Bound + pen.",
@@ -3061,7 +3061,7 @@
           "Solo"
         ],
         "simple": "Part of your lifesteal is stored as bonus damage on your next basic attack.",
-        "how": "Cast/LS \u2192 bank \u2192 AA to dump a chunk. Stores more at full HP.",
+        "how": "Cast/LS → bank → AA to dump a chunk. Stores more at full HP.",
         "when": "INT + lifesteal mages (Hades, Anubis-style).",
         "when_not": "No LS; you never basic attack.",
         "buy_as": "With Bancroft/Blood-Bound + pen.",
@@ -3116,7 +3116,7 @@
         "simple": "Active links an ally: you take 20% of their damage (mitigated by your dampening).",
         "how": "Bodyguard button. Stack damp/prots so the redirected damage is soft.",
         "when": "You peel one carry hard (Athena/Geb/Ymir).",
-        "when_not": "You\u2019re the one dying first with no bulk.",
+        "when_not": "You’re the one dying first with no bulk.",
         "buy_as": "Support peel path.",
         "featured": false,
         "patch": ""
@@ -3133,7 +3133,7 @@
         "simple": "Active links an ally: you take 20% of their damage (mitigated by your dampening).",
         "how": "Bodyguard button. Stack damp/prots so the redirected damage is soft.",
         "when": "You peel one carry hard (Athena/Geb/Ymir).",
-        "when_not": "You\u2019re the one dying first with no bulk.",
+        "when_not": "You’re the one dying first with no bulk.",
         "buy_as": "Support peel path.",
         "featured": false,
         "patch": ""
@@ -3258,9 +3258,9 @@
           "Solo"
         ],
         "simple": "Damaging gods stacks protections vs their damage type; evolves into stronger dual prot + mitigation.",
-        "how": "Adaptive tank: fight people \u2192 stack the right prots \u2192 evolve.",
+        "how": "Adaptive tank: fight people → stack the right prots → evolve.",
         "when": "Frontliners in long games who hit a lot of gods.",
-        "when_not": "You need an immediate answer (Spectral/Genji\u2019s) this fight.",
+        "when_not": "You need an immediate answer (Spectral/Genji’s) this fight.",
         "buy_as": "Early tank scaler; evolve is the payoff.",
         "featured": false,
         "patch": ""
@@ -3275,9 +3275,9 @@
           "Solo"
         ],
         "simple": "Damaging gods stacks protections vs their damage type; evolves into stronger dual prot + mitigation.",
-        "how": "Adaptive tank: fight people \u2192 stack the right prots \u2192 evolve.",
+        "how": "Adaptive tank: fight people → stack the right prots → evolve.",
         "when": "Frontliners in long games who hit a lot of gods.",
-        "when_not": "You need an immediate answer (Spectral/Genji\u2019s) this fight.",
+        "when_not": "You need an immediate answer (Spectral/Genji’s) this fight.",
         "buy_as": "Early tank scaler; evolve is the payoff.",
         "featured": false,
         "patch": ""
@@ -3514,8 +3514,8 @@
         "simple": "Active: you and nearby allies get slow immunity and a huge decaying speed boost.",
         "how": "Engage or disengage button for the whole team.",
         "when": "You need team move for fights/rotates (classic support).",
-        "when_not": "Rarely \u2014 it\u2019s a standard support tool when speed wins fights.",
-        "buy_as": "Support 3rd\u20135th often.",
+        "when_not": "Rarely — it’s a standard support tool when speed wins fights.",
+        "buy_as": "Support 3rd–5th often.",
         "featured": false,
         "patch": ""
       },
@@ -3531,8 +3531,8 @@
         "simple": "Active: you and nearby allies get slow immunity and a huge decaying speed boost.",
         "how": "Engage or disengage button for the whole team.",
         "when": "You need team move for fights/rotates (classic support).",
-        "when_not": "Rarely \u2014 it\u2019s a standard support tool when speed wins fights.",
-        "buy_as": "Support 3rd\u20135th often.",
+        "when_not": "Rarely — it’s a standard support tool when speed wins fights.",
+        "buy_as": "Support 3rd–5th often.",
         "featured": false,
         "patch": ""
       },
@@ -3545,10 +3545,10 @@
           "Support"
         ],
         "simple": "Stacks max HP from assists; fully stacked gives more HP and dual prots for the team aura fantasy.",
-        "how": "Support farm item. Stack on minions/gods \u2192 evolve power.",
+        "how": "Support farm item. Stack on minions/gods → evolve power.",
         "when": "Almost every Support game as core.",
-        "when_not": "You\u2019re not actually supporting (full damage mid).",
-        "buy_as": "Support item 1\u20132.",
+        "when_not": "You’re not actually supporting (full damage mid).",
+        "buy_as": "Support item 1–2.",
         "featured": false,
         "patch": ""
       },
@@ -3561,10 +3561,10 @@
           "Support"
         ],
         "simple": "Stacks max HP from assists; fully stacked gives more HP and dual prots for the team aura fantasy.",
-        "how": "Support farm item. Stack on minions/gods \u2192 evolve power.",
+        "how": "Support farm item. Stack on minions/gods → evolve power.",
         "when": "Almost every Support game as core.",
-        "when_not": "You\u2019re not actually supporting (full damage mid).",
-        "buy_as": "Support item 1\u20132.",
+        "when_not": "You’re not actually supporting (full damage mid).",
+        "buy_as": "Support item 1–2.",
         "featured": false,
         "patch": ""
       },
@@ -4114,7 +4114,7 @@
           ]
         }
       ],
-      "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat \u2014 use flex chips."
+      "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat — use flex chips."
     },
     "Mid": {
       "expected": [
@@ -4270,7 +4270,7 @@
           ]
         }
       ],
-      "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat \u2014 use flex chips."
+      "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat — use flex chips."
     },
     "Jungle": {
       "expected": [
@@ -4426,7 +4426,7 @@
           ]
         }
       ],
-      "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat \u2014 use flex chips."
+      "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat — use flex chips."
     },
     "Solo": {
       "expected": [
@@ -4636,7 +4636,7 @@
           ]
         }
       ],
-      "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat \u2014 use flex chips."
+      "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat — use flex chips."
     },
     "Support": {
       "expected": [
@@ -4853,7 +4853,7 @@
           ]
         }
       ],
-      "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat \u2014 use flex chips."
+      "note": "Coverage = recommended paths that already include an answer item. Low % means the default shell under-answers that threat — use flex chips."
     }
   },
   "tank_shred": {
@@ -6457,7 +6457,7 @@
           "patches_touched": 7
         },
         {
-          "entity_name": "Brawler\u2019s Beat Stick",
+          "entity_name": "Brawler’s Beat Stick",
           "trajectory": "rising",
           "recent_5_score": 1.9899405620791004,
           "recent_10_score": 3.421079673673551,
@@ -6957,7 +6957,7 @@
       "crit": 0.004,
       "heal": -0.002
     },
-    "axis_note": "Average recent-5 patch axes across gods \u2014 positive = meta tilted toward that axis."
+    "axis_note": "Average recent-5 patch axes across gods — positive = meta tilted toward that axis."
   },
   "role_tiers": {
     "Carry": {
@@ -7227,12 +7227,12 @@
     }
   },
   "weekly_themes": [
-    "OB47 \u00b7 The Night Update: New Classic god Nox (candle INT Mid/Support), Izanami's Aspect of the Sickle (area Storm + Wound burst), and a Support starter buff wave. Below: who we think spikes, which items got paid, then Featured kit tours you can expand.",
-    "Patch lean up: Nox, Hachiman, Ne Zha, Izanami, Ah Puch.",
-    "Patch lean down: Hel, Hou Yi, Nike, Nut.",
-    "Items to watch: War Flag, Selflessness, Ancient Signet, Lotus Sickle / Eros' Bow / Soul Locket, Lifebinder.",
-    "Support paths under-buy anti-crit (Spectral on ~16.7% of recs) \u2014 flex Spectral almost every game.",
-    "Support/Solo anti-heal is rare in defaults (~16.7% support) \u2014 Stygian/Brawler's is a live flex.",
+    "OB47 · The Night Update: Nox joins the roster, Izanami gets a new Sickle aspect, and Support starters got a little tankier. Tap a chip for the short version of who got stronger, who got trimmed, and which items are worth a look.",
+    "Looking stronger: Nox, Hachiman, Ne Zha, Izanami, Ah Puch.",
+    "Got trimmed: Hel, Hou Yi, Nike, Nut.",
+    "Items worth a look: War Flag, Selflessness, Ancient Signet, Lotus Sickle / Eros' Bow / Soul Locket, Lifebinder.",
+    "Support paths under-buy anti-crit (Spectral on ~16.7% of recs) — flex Spectral almost every game.",
+    "Support/Solo anti-heal is rare in defaults (~16.7% support) — Stygian/Brawler's is a live flex.",
     "Gods rising (r5 patch): Hachiman, Chronos, Ganesha, Hel.",
     "Items hot (r5 patch): Gluttonous Grimoire, Eros' Bow, Xibalban Effigy, Alchemist Coat.",
     "Patch axes (avg r5): damage +0.13, general +0.06, survivability -0.05."
@@ -7240,95 +7240,95 @@
   "patch_overview": {
     "current_patch": "OB47",
     "current_patch_title": "The Night Update",
-    "headline": "OB47 \u00b7 The Night Update",
-    "summary": "New Classic god Nox (candle INT Mid/Support), Izanami's Aspect of the Sickle (area Storm + Wound burst), and a Support starter buff wave. Below: who we think spikes, which items got paid, then Featured kit tours you can expand.",
-    "disclaimer": "Predictions blend patch notes + our kit model \u2014 early OB ladder is thin. Treat Featured as guided cheese, not a guarantee.",
+    "headline": "OB47 · The Night Update",
+    "summary": "Nox joins the roster, Izanami gets a new Sickle aspect, and Support starters got a little tankier. Tap a chip for the short version of who got stronger, who got trimmed, and which items are worth a look.",
+    "disclaimer": "These are early reads from the patch notes and our build model — ranked samples are still thin. Featured paths are guided ideas, not a promise.",
     "gods": [
       {
         "name": "Nox",
         "role": "Mid / Support",
         "lean": "up",
-        "why": "Brand-new Classic with Root DoT, Silence void, ally-shadow dash, and a long-range Night Terror. Novelty plus real setup tools \u2014 expect her in every lobby this week."
+        "why": "Brand new. She roots people with her shadow, silences with a void, can dash onto an ally, and throws a long-range ult. Expect to see her a lot while everyone tries her out."
       },
       {
         "name": "Hachiman",
         "role": "Carry",
         "lean": "up",
-        "why": "Master of Arms early AS per stack doubled (1%\u21922%). Eagle Eye BAD scaling up. Quiet but real duo-lane buff \u2014 classic crit ADC gets to ramp faster."
+        "why": "His passive now stacks attack speed twice as fast early, and Eagle Eye hits a bit harder. Same crit Carry plan — you just come online sooner in lane."
       },
       {
         "name": "Ne Zha",
         "role": "Jungle",
         "lean": "up",
-        "why": "Ring Toss bounce scaling and subsequent bounce damage up; Wind Fire Wheels base + scaling up. Clear and ult both got paid \u2014 assassin Jungle tempo rises."
+        "why": "Ring Toss bounces harder through camps and fights, and Wind Fire Wheels hits harder. Clear is smoother and the ult delete is meaner."
       },
       {
         "name": "Izanami",
         "role": "Carry (Sickle)",
         "lean": "up",
-        "why": "New Aspect of the Sickle: no pierce basics, area Magical Storm with Root + stacking Wound, burst stacks with autos/abilities. Spicy duo cheese and a reason to relearn her 1."
+        "why": "New Aspect of the Sickle: basics no longer pierce. Instead you drop an area storm that roots and stacks Wound, then autos pop those stacks. Feels like a different god in duo."
       },
       {
         "name": "Ah Puch",
         "role": "Mid",
         "lean": "up",
-        "why": "Empty the Crypts Intelligence scaling per tick 15%\u219220% (base kit). More ult DPS in the pit without touching Death March."
+        "why": "His ult scales better with Intelligence each tick. Same creepy pit mage — the big button just hurts more."
       },
       {
         "name": "Hel",
         "role": "Mid / Support",
         "lean": "down",
-        "why": "Decay INT scaling 80%\u219260%; Inspire ally heal INT scaling 10%\u21925%. Still playable, but the free heal/nuke package got trimmed."
+        "why": "Decay and her ally heal both scale less with Intelligence. Still fine, but the free heal-and-nuke package is softer than before."
       },
       {
         "name": "Hou Yi",
         "role": "Carry",
         "lean": "down",
-        "why": "Ricochet cooldown fixed at 10s, damage and Strength scaling down. Aspect basics no longer bounce off non-marked targets \u2014 mark dependency is harsher."
+        "why": "Ricochet is locked to a 10s cooldown and hits softer. On the aspect, basics only bounce off marked targets — you have to mark people more carefully."
       },
       {
         "name": "Nike",
         "role": "Flex",
         "lean": "down",
-        "why": "Rend base damage down; aspect Laurels can no longer proc item effects; aspect Rend Strength scaling trimmed. Victory kit loses some free proc value."
+        "why": "Rend does less, and her aspect laurels no longer trigger item effects. Still a stubborn fighter — a few free tricks got taken away."
       },
       {
         "name": "Nut",
         "role": "Carry / Mid",
         "lean": "down",
-        "why": "Convergence inner/side damage down; Warp bonus projectiles when consuming Astral Flux 2\u21921 and cooldown up. Less free multi-hit pressure."
+        "why": "Convergence does less on the edges, and Warp fires fewer bonus shots with a longer wait. Less free multi-hit poke than last patch."
       }
     ],
     "items": [
       {
         "name": "War Flag",
         "lean": "up",
-        "why": "Physical and Magical prots 10\u219215. Every 8s, applying CC grants double War Flag kill/assist benefits to you and allies in 8.8m. Huge for CC Supports \u2014 rush it."
+        "why": "Starter protections went up, and landing CC can double the kill/assist gold for you and nearby allies. Great on Supports who actually land crowd control."
       },
       {
         "name": "Selflessness",
         "lean": "up",
-        "why": "Starter Physical and Magical prots 10\u219215. Every Support path that already bought this just got a free early shell."
+        "why": "Same idea — more early protections on the Support starter. If you already bought this, you just got a free little shell."
       },
       {
         "name": "Ancient Signet",
         "lean": "up",
-        "why": "Now has 5 Mana Regen \u2014 mana-hungry mages stop going dry between rotates."
+        "why": "Picked up mana regen. Mana-hungry mages can rotate without going dry as often."
       },
       {
         "name": "Lotus Sickle / Eros' Bow / Soul Locket",
         "lean": "up",
-        "why": "Jormungandr Aspect Venomous Haze and Consuming Bellow can now proc these. Niche but real \u2014 serpent DoT/heal itemization opens up."
+        "why": "Jormungandr’s haze and bellow can now trigger these heal/buff items. Niche, but serpent Supports suddenly have a real enchanter toy box."
       },
       {
         "name": "Soul Locket",
         "lean": "mixed",
-        "why": "Max stacks 70\u219235 but damage reduction per stack 1%\u21922% (same 70% DR cap, fewer stacks to full). Hits full DR sooner; less granular stacking."
+        "why": "Fewer stacks to fill, but each stack gives more damage reduction. You reach full tankiness sooner; the climb just has bigger steps."
       },
       {
         "name": "Lifebinder",
         "lean": "fix",
-        "why": "Heal scaling bugfix \u2014 healing/shielding stat now applies correctly. Enchanters get what the card promised."
+        "why": "Heal scaling works the way the item card always said. Heal Supports finally get the full mark → ally hit → heal bomb."
       }
     ]
   }
