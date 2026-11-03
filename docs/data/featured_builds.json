@@ -1,7 +1,212 @@
 {
   "title": "Featured Builds",
-  "blurb": "Kit cheeses with plain-English explainers \u2014 how the abilities work, why each item is here, and how to play the path. These also appear on normal god cards; this strip is the guided tour.",
+  "blurb": "Kit cheeses with plain-English explainers — how the abilities work, why each item is here, and how to play the path. OB47 Night Update picks lead; earlier patch cheeses stay tagged below.",
   "builds": [
+    {
+      "id": "nox-mid",
+      "god": "Nox",
+      "role": "Mid",
+      "aspect": null,
+      "patch": "OB47",
+      "patch_label": "OB47 · Night Update",
+      "headline": "Candle Mid — silence + root DoT",
+      "tagline": "Light candles for INT, lock a god with Shadow Lock, silence the wave with Siphon, finish with Night Terror.",
+      "hook_label": "New Classic · Flame of the Night INT",
+      "ability_plain": "Nox is the OB47 Classic Mid. Flame of the Night lights a candle each time you cast (up to 4) and each candle adds Intelligence. Shadow Lock sends your shadow through walls, then channels a Root + Cripple DoT on the first god hit. Siphon Darkness drops a delayed void that explodes for Magical Damage and Silence — walking out early still eats half the bang. Shadow Step dashes and can ride an ally's shadow. Night Terror is a long-range vortex that explodes on a god for burst, DoT, silence, and Weaken. You are a setup mage: stack candles, lock a target, silence the escape, ult.",
+      "playstyle": "Conduit into Book of Thoth so candle INT actually hurts. Chronos keeps Lock and Siphon up for every rotate. Desolation and Cosmic Horror punch through Magical prots once you have candles lit. Soul Reaver finishes fat targets after the DoT softens them. Stygian is the late anti-heal flex when the lobby is full of Yogi/Aphro. Level ult > 1 > 2 > 3. Fight after 2–3 candles — raw INT from the passive is free power.",
+      "starter_why": "Conduit Gem — Mid adaptive power into the candle INT stack.",
+      "relics_why": "Beads and Aegis — live through the Lock channel and land Night Terror.",
+      "item_why": [
+        {
+          "match": "thoth",
+          "why": "Huge INT bank — every candle multiplies what Thoth already gives you."
+        },
+        {
+          "match": "chronos",
+          "why": "CDR so Shadow Lock and Siphon come up every skirmish — more candles, more locks."
+        },
+        {
+          "match": "desolation",
+          "why": "Flat Magical pen + power so Lock ticks and Night Terror actually chunk."
+        },
+        {
+          "match": "cosmic",
+          "why": "The Cosmic Horror — more pen and burst after the silence lands."
+        },
+        {
+          "match": "reaver",
+          "why": "Soul Reaver executes the HP% you softened with Lock DoT + Terror ticks."
+        },
+        {
+          "match": "stygian",
+          "why": "Anti-heal flex when the enemy Mid/Support is healing through your DoTs."
+        }
+      ]
+    },
+    {
+      "id": "nox-support",
+      "god": "Nox",
+      "role": "Support",
+      "aspect": null,
+      "patch": "OB47",
+      "patch_label": "OB47 · Night Update",
+      "headline": "Lockdown night Support",
+      "tagline": "Root with Shadow Lock, silence with Siphon, ride your carry with Shadow Step — peel without glass INT.",
+      "hook_label": "New Classic · silence / root peel",
+      "ability_plain": "Same Nox kit, Support job. You are not Book of Thoth here — you buy a shell so you can stand in the duo pit, Lock the diver, silence the follow-up, and Shadow Step onto your carry to travel with them. Flame candles still give INT, but the value is CC uptime and Night Terror picks, not Mid burst. Genji and Alchemist keep you alive through Magical poke; Isolation and Binding stick whoever you locked.",
+      "playstyle": "Selflessness into Thebes like a real Support. Second back Genji or Alchemist depending on whether Mid or Carry is cooking you. Phoenix Feather / Isolation for peel tempo. Use Shadow Step on your ADC when they rotate so you arrive together. Pop Lock on the assassin, Siphon on the cluster, ult when someone is already rooted. Beads/Aegis standard.",
+      "starter_why": "Selflessness — Support gold + shared sustain (also buffed Physical/Magical prots in OB47).",
+      "relics_why": "Beads and Aegis — classic Support; you channel Lock in their faces.",
+      "item_why": [
+        {
+          "match": "thebes",
+          "why": "Assist HP/prot stacks — you need a body to finish Lock channels."
+        },
+        {
+          "match": "genji",
+          "why": "Magical protections + CDR so Siphon and Lock come up more often."
+        },
+        {
+          "match": "alchemist",
+          "why": "Dampening shell vs ability poke while you set voids in lane."
+        },
+        {
+          "match": "phoenix",
+          "why": "Phoenix Feather — Support active tempo and peel when the dive is already on you."
+        },
+        {
+          "match": "isolation",
+          "why": "Slow stick so rooted/silenced targets cannot walk out of Night Terror."
+        },
+        {
+          "match": "binding",
+          "why": "Stone of Binding shreds prots on CC'd targets — Lock into Binding is nasty."
+        }
+      ]
+    },
+    {
+      "id": "izanami-sickle-carry",
+      "god": "Izanami",
+      "role": "Carry",
+      "aspect": "Aspect of the Sickle",
+      "patch": "OB47",
+      "patch_label": "OB47 · Night Update",
+      "headline": "Wound-stack ADC",
+      "tagline": "Basics no longer pierce — Sickle Storm blankets the pit, wounds stack, then your autos burst them all.",
+      "hook_label": "New aspect · area Storm + Wound burst",
+      "ability_plain": "Aspect of the Sickle (OB47) rewrites Izanami's 1. Your basic attacks no longer pierce. Sickle Storm becomes an area DoT that Roots gods near the center and applies stacking Wound. Your Basic Attack and other abilities burst all Wound stacks for bonus damage. Spectral Projection still shreds heal; Fade Away is your leap/stealth; Dark Portal is the silence nuke. You play closer, drop Storm on the clump, then auto the wounded god to detonate stacks — not a pierce-wave clear ADC anymore.",
+      "playstyle": "Gilded into Tyrfing for early AA power. Executioner and Devourer's keep shred and LS while you stand in Storm range. Eye of the Storm / Odysseus for AS so Wound bursts fire faster. Deathbringer caps crit once stacks are popping every fight. Drop 1 on the wave or pit, auto the priority Wound target, 2 for anti-heal, ult when they are rooted in the Storm center.",
+      "starter_why": "Gilded Arrow — Carry AS/power into the wound-burst AA plan.",
+      "relics_why": "Beads and Aegis — you fight closer without pierce; peel tools matter more.",
+      "item_why": [
+        {
+          "match": "tyrfing",
+          "why": "Early Strength/AA power so each Wound detonation from basics hits harder."
+        },
+        {
+          "match": "executioner",
+          "why": "Prot shred on autos — Wound burst + shred melts the tank you rooted in Storm."
+        },
+        {
+          "match": "devourer",
+          "why": "LS while you sit in the Storm radius autoing wounded gods."
+        },
+        {
+          "match": "eye of the storm",
+          "why": "Attack speed + box — more autos means faster Wound detonations."
+        },
+        {
+          "match": "odysseus",
+          "why": "AS steroid item so Storm uptime turns into a crit machine."
+        },
+        {
+          "match": "deathbringer",
+          "why": "Crit cap once you are reliably bursting Wound stacks every fight."
+        }
+      ]
+    },
+    {
+      "id": "nezha-jungle",
+      "god": "Ne Zha",
+      "role": "Jungle",
+      "aspect": null,
+      "patch": "OB47",
+      "patch_label": "OB47 · Night Update",
+      "headline": "Ring Toss + Wheels buff Jungle",
+      "tagline": "OB47 buffed bounce scaling and Wind Fire Wheels damage — sash in, rings shred, ult deletes.",
+      "hook_label": "Patch buff · Ring Toss / Wheels",
+      "ability_plain": "Ne Zha Jungle got paid in OB47. Universe Ring Toss bounce scaling went 20%→30% and subsequent bounce damage 65%→75% — camps and multi-man fights clear harder. Wind Fire Wheels base and scaling both went up, so the ult hit is fatter. Armillary Sash is still the gap tool; Flaming Spear is the steroid. This path is classic burst assassin: Jotunn's for CDR pen, Hydra for ability→AA punch, Reaper/Arondight/Crusher/Heartseeker to finish.",
+      "playstyle": "Bumba's Golden Dagger into Jotunn's. Keep rings bouncing through camps. Gank with Sash → rings → Wheels when you have ult. Hydra after the first ability for the AA reset. Blink + Sundering for invade/anti-heal. You want short fights where the new bounce and ult numbers show up before they can peel you.",
+      "starter_why": "Bumba's Golden Dagger — Jungle clear into the assassin spike.",
+      "relics_why": "Blink and Sundering — gap to the carry; 40% anti-heal on the ult dive.",
+      "item_why": [
+        {
+          "match": "jotunn",
+          "why": "CDR + pen so Ring Toss and Wheels are up for every camp and gank."
+        },
+        {
+          "match": "hydra",
+          "why": "Ability→basic punch after Sash or rings — converts the buffed kit into burst."
+        },
+        {
+          "match": "reaper",
+          "why": "The Reaper — execute power once Wheels lands on a softened target."
+        },
+        {
+          "match": "arondight",
+          "why": "Transform power for the all-in window when you commit Wheels."
+        },
+        {
+          "match": "crusher",
+          "why": "More pen and ability damage — rings and ult scale with the OB47 buffs."
+        },
+        {
+          "match": "heartseeker",
+          "why": "Stacking power from Jungle pressure — snowballs the buffed clear."
+        }
+      ]
+    },
+    {
+      "id": "hachiman-carry",
+      "god": "Hachiman",
+      "role": "Carry",
+      "aspect": null,
+      "patch": "OB47",
+      "patch_label": "OB47 · Night Update",
+      "headline": "Master of Arms AS Carry",
+      "tagline": "OB47 doubled early AS stacks on Master of Arms and buffed Eagle Eye — classic crit ADC with real lane pressure.",
+      "hook_label": "Patch buff · AS stacks + Eagle Eye",
+      "ability_plain": "Hachiman's passive Master of Arms now gains 2% Attack Speed per stack (+0.1% per level) instead of 1% — you ramp twice as fast early. Eagle Eye basic-attack damage scaling went 110%→115% BAD, and the aspect spin package also got love (even on base you feel the Eagle Eye buff). Heavenly Banner and Iaijutsu are still the wave/fight tools; Mounted Archery is the ult. This Featured path is the standard crit ADC shell that actually got paid this patch.",
+      "playstyle": "Gilded into Tyrfing. Stack Master of Arms in lane — the doubled AS makes every trade sharper. Devourer's for LS, Tekko for pen/AS, Executioner shred, Odysseus AS, Deathbringer crit. Use Eagle Eye freely now that the scaling is higher. Ult to reposition or finish. You are the 'meta buff' Featured next to Izanami's aspect cheese.",
+      "starter_why": "Gilded Arrow — Carry opener into the buffed AS passive.",
+      "relics_why": "Beads and Aegis — standard duo peel while you ramp stacks.",
+      "item_why": [
+        {
+          "match": "tyrfing",
+          "why": "Early Strength so Eagle Eye and stacked AS hit like a truck."
+        },
+        {
+          "match": "devourer",
+          "why": "LS to stay in lane while Master of Arms stacks."
+        },
+        {
+          "match": "tekko",
+          "why": "Tekko-Kagi — pen + AS that rides the passive ramp."
+        },
+        {
+          "match": "executioner",
+          "why": "Prot shred on the buffed Eagle Eye autos."
+        },
+        {
+          "match": "odysseus",
+          "why": "More AS on top of Master of Arms — hypersonic late."
+        },
+        {
+          "match": "deathbringer",
+          "why": "Crit cap once the AS engine is online."
+        }
+      ]
+    },
     {
       "id": "apollo-harmony-support",
       "god": "Apollo",
@@ -10,18 +215,18 @@
       "headline": "Item-HP peel Support",
       "tagline": "Get fat so free So Beautifuls hit harder and Serenade shields your carry.",
       "hook_label": "Item HP + Max HP shields",
-      "ability_plain": "Aspect of Harmony changes Apollo\u2019s kit. Audacity refunds free So Beautiful casts (no attack-speed steroid). So Beautiful damage scales with Health from Items \u2014 the more HP your items give you, the harder each free cast hits. Serenade shields nearby allies for a chunk of your Max Health and gives protections while the shield holds. Buffing an ally also stacks Audacity. You are not a crit ADC here; you are a fat duo laner who peels and pokes with HP-scaled spells.",
-      "playstyle": "Start Selflessness and stack Thebes while you roam between waves. Sit near your carry so Serenade and free So Beautifuls land on whoever dives them. Buy HP shells early (Thebes, Leviathan, Contagion, Ethereal) before luxury. Use Beads/Aegis like a normal Support. In fights, shield first, then dump free So Beautifuls into the front line \u2014 your \u201cdamage\u201d is item HP, not Deathbringer.",
-      "starter_why": "Selflessness \u2014 Support gold + shared sustain so you can afford the HP shell without falling behind.",
-      "relics_why": "Beads and Aegis \u2014 standard Support peel. You are the one who lives through the dive so Serenade keeps ticking.",
+      "ability_plain": "Aspect of Harmony changes Apollo’s kit. Audacity refunds free So Beautiful casts (no attack-speed steroid). So Beautiful damage scales with Health from Items — the more HP your items give you, the harder each free cast hits. Serenade shields nearby allies for a chunk of your Max Health and gives protections while the shield holds. Buffing an ally also stacks Audacity. You are not a crit ADC here; you are a fat duo laner who peels and pokes with HP-scaled spells.",
+      "playstyle": "Start Selflessness and stack Thebes while you roam between waves. Sit near your carry so Serenade and free So Beautifuls land on whoever dives them. Buy HP shells early (Thebes, Leviathan, Contagion, Ethereal) before luxury. Use Beads/Aegis like a normal Support. In fights, shield first, then dump free So Beautifuls into the front line — your “damage” is item HP, not Deathbringer.",
+      "starter_why": "Selflessness — Support gold + shared sustain so you can afford the HP shell without falling behind.",
+      "relics_why": "Beads and Aegis — standard Support peel. You are the one who lives through the dive so Serenade keeps ticking.",
       "item_why": [
         {
           "match": "thebes",
-          "why": "Stacks Health and protections from assists. Feeds So Beautiful\u2019s item-HP scaling and Serenade\u2019s Max-HP shield."
+          "why": "Stacks Health and protections from assists. Feeds So Beautiful’s item-HP scaling and Serenade’s Max-HP shield."
         },
         {
           "match": "leviathan",
-          "why": "Big Health chunk that counts as item HP \u2014 raw fuel for every free So Beautiful."
+          "why": "Big Health chunk that counts as item HP — raw fuel for every free So Beautiful."
         },
         {
           "match": "contagion",
@@ -37,13 +242,15 @@
         },
         {
           "match": "ethereal",
-          "why": "Converts Max Health into magical power. The \u201ccheese\u201d item \u2014 your HP stack becomes real poke on So Beautiful."
+          "why": "Converts Max Health into magical power. The “cheese” item — your HP stack becomes real poke on So Beautiful."
         },
         {
           "match": "isolation",
           "why": "Slow stick so free So Beautifuls and Serenade peel keep landing on the same target."
         }
-      ]
+      ],
+      "patch": "OB46",
+      "patch_label": "OB46 · King Kappa"
     },
     {
       "id": "nemesis-support",
@@ -54,13 +261,13 @@
       "tagline": "Turn their damage back on them with a fatter Retribution shield.",
       "hook_label": "Max HP shield + damage reflect",
       "ability_plain": "Retribution gives Nemesis a Health shield that scales with 7.5% of her Max Health. While that shield holds, she reflects 40% of the damage blocked (plus Strength scaling) and heals from damage blocked (plus Intelligence). Bigger Max HP = bigger shield = more reflect and heal. Scales of Fate steals power on hits; Divine Judgement deletes a chunk of current HP. She is a physical god, but this Support path builds tank HP so Retribution becomes a brick wall that bites back.",
-      "playstyle": "Body-block for your carry and pop Retribution when the dive lands \u2014 that is your \u201cult moment\u201d every fight. Stack Thebes and Contagion so the shield is huge. Mystical and Nemean punish people who keep swinging at you. Isolation keeps them stuck in the reflect window. Do not build Tekko/Crusher glass; you win by absorbing and reflecting, then finishing with Judgement.",
-      "starter_why": "Selflessness \u2014 Support income so the HP shell comes online before mid game.",
-      "relics_why": "Beads and Aegis \u2014 live long enough for Retribution to eat the all-in.",
+      "playstyle": "Body-block for your carry and pop Retribution when the dive lands — that is your “ult moment” every fight. Stack Thebes and Contagion so the shield is huge. Mystical and Nemean punish people who keep swinging at you. Isolation keeps them stuck in the reflect window. Do not build Tekko/Crusher glass; you win by absorbing and reflecting, then finishing with Judgement.",
+      "starter_why": "Selflessness — Support income so the HP shell comes online before mid game.",
+      "relics_why": "Beads and Aegis — live long enough for Retribution to eat the all-in.",
       "item_why": [
         {
           "match": "thebes",
-          "why": "Assist stacks of Health and protections \u2014 direct Max HP for a fatter Retribution shield."
+          "why": "Assist stacks of Health and protections — direct Max HP for a fatter Retribution shield."
         },
         {
           "match": "contagion",
@@ -80,9 +287,11 @@
         },
         {
           "match": "nemean",
-          "why": "Classic reflect partner \u2014 Hide of the Nemean Lion stacks with Retribution\u2019s blocked-damage reflect."
+          "why": "Classic reflect partner — Hide of the Nemean Lion stacks with Retribution’s blocked-damage reflect."
         }
-      ]
+      ],
+      "patch": "OB46",
+      "patch_label": "OB46 · King Kappa"
     },
     {
       "id": "ymir-support",
@@ -90,16 +299,16 @@
       "role": "Support",
       "aspect": null,
       "headline": "Item-Prot stun stretch",
-      "tagline": "Stack protections so Frost Breath stuns longer \u2014 up to +0.4s.",
-      "hook_label": "Item Protections \u2192 longer stun",
-      "ability_plain": "Frost Breath stuns in a cone. The stun duration scales: +0.2 seconds per 100 Item Protections, stacking up to 2 times (+0.4s). That means Physical + Magical protections from items (Thebes, Breastplate, Genji, Contagion, Spectral\u2026) literally make your breath stun longer. Shards of Ice also scales with Protections. Frostbite on your abilities cuts enemy damage and attack speed. This is not a Book of Thoth Mid path \u2014 raw protections are your \u201cpower.\u201d",
+      "tagline": "Stack protections so Frost Breath stuns longer — up to +0.4s.",
+      "hook_label": "Item Protections → longer stun",
+      "ability_plain": "Frost Breath stuns in a cone. The stun duration scales: +0.2 seconds per 100 Item Protections, stacking up to 2 times (+0.4s). That means Physical + Magical protections from items (Thebes, Breastplate, Genji, Contagion, Spectral…) literally make your breath stun longer. Shards of Ice also scales with Protections. Frostbite on your abilities cuts enemy damage and attack speed. This is not a Book of Thoth Mid path — raw protections are your “power.”",
       "playstyle": "Wall off escapes, then breath when they are trapped for the stretched stun. Build dual protections early (Thebes + Breastplate + Genji) before luxury. Contagion and Spectral keep you alive while you sit in melee range. Isolation sticks people in the cone. You are a lockdown Support: set the wall, breathe, ult when the stun window is real.",
-      "starter_why": "Selflessness \u2014 Support gold to rush the protection stack that stretches the stun.",
-      "relics_why": "Beads and Aegis \u2014 you need to land the breath; dying mid-channel wastes the cheese.",
+      "starter_why": "Selflessness — Support gold to rush the protection stack that stretches the stun.",
+      "relics_why": "Beads and Aegis — you need to land the breath; dying mid-channel wastes the cheese.",
       "item_why": [
         {
           "match": "thebes",
-          "why": "Stacks both Physical and Magical Item Protections \u2014 the exact stat Frost Breath reads."
+          "why": "Stacks both Physical and Magical Item Protections — the exact stat Frost Breath reads."
         },
         {
           "match": "breastplate",
@@ -119,9 +328,11 @@
         },
         {
           "match": "spectral",
-          "why": "Physical protections and anti-crit \u2014 more Item Protections and an answer to ADC autos."
+          "why": "Physical protections and anti-crit — more Item Protections and an answer to ADC autos."
         }
-      ]
+      ],
+      "patch": "OB46",
+      "patch_label": "OB46 · King Kappa"
     },
     {
       "id": "hades-support",
@@ -129,16 +340,16 @@
       "role": "Support",
       "aspect": null,
       "headline": "Item-Prot silence stretch",
-      "tagline": "Same protection cheese as Ymir \u2014 but your silence gets longer.",
-      "hook_label": "Item Protections \u2192 longer silence",
-      "ability_plain": "Shroud of Darkness silences in a cone. Silence duration scales +0.2 seconds per 100 Item Protections (max 2 stacks). Stack protections and the silence window grows \u2014 enemies cannot dash, ult, or beads through your setup as easily. Blight cuts their damage; Devour Souls heals you from protections; Pillar of Agony is a channelled vortex. You play him as a lockdown Support who silences the carry\u2019s escape, then pulls with the ult.",
+      "tagline": "Same protection cheese as Ymir — but your silence gets longer.",
+      "hook_label": "Item Protections → longer silence",
+      "ability_plain": "Shroud of Darkness silences in a cone. Silence duration scales +0.2 seconds per 100 Item Protections (max 2 stacks). Stack protections and the silence window grows — enemies cannot dash, ult, or beads through your setup as easily. Blight cuts their damage; Devour Souls heals you from protections; Pillar of Agony is a channelled vortex. You play him as a lockdown Support who silences the carry’s escape, then pulls with the ult.",
       "playstyle": "Leap in, shroud the priority target for the stretched silence, then Pillar when they cannot leave. Build Thebes + Breastplate + Genji like Ymir so Item Protections are high before you fight. Contagion and Binding keep them stuck and anti-healed. Spectral answers physical carries. You win fights by deleting their buttons for longer, not by Thoth burst.",
-      "starter_why": "Selflessness \u2014 Support path income for the protection shell.",
-      "relics_why": "Beads and Aegis \u2014 survive long enough to finish Pillar after the silence lands.",
+      "starter_why": "Selflessness — Support path income for the protection shell.",
+      "relics_why": "Beads and Aegis — survive long enough to finish Pillar after the silence lands.",
       "item_why": [
         {
           "match": "thebes",
-          "why": "Dual Item Protections from assists \u2014 directly lengthens Shroud silence."
+          "why": "Dual Item Protections from assists — directly lengthens Shroud silence."
         },
         {
           "match": "breastplate",
@@ -146,7 +357,7 @@
         },
         {
           "match": "genji",
-          "why": "Magical protections + CDR \u2014 fills the other half of the Item Protections pool."
+          "why": "Magical protections + CDR — fills the other half of the Item Protections pool."
         },
         {
           "match": "contagion",
@@ -160,7 +371,9 @@
           "match": "spectral",
           "why": "More Physical Item Protections and anti-crit when the enemy ADC is the problem."
         }
-      ]
+      ],
+      "patch": "OB46",
+      "patch_label": "OB46 · King Kappa"
     },
     {
       "id": "kuzenbo-support",
@@ -170,14 +383,14 @@
       "headline": "Max-HP mitigation + shell reflect",
       "tagline": "Water Bowl stacks mitigation from Max HP taken; Shell Spikes reflects damage back.",
       "hook_label": "Max HP mitigation + damage reflect",
-      "ability_plain": "Water Bowl (passive) stacks damage mitigation based on Max HP damage you take \u2014 the tankier you are, the more you shrug off. Shell Spikes reflects a percent of damage taken (and NeNe Kappas also reflect while active). NeNe Kappa can move a portion of your Health and Protections onto the pet. Slam and walls give lockdown. This Support path stacks Max HP and reflect items so every hit into you (or your Kappa) hurts them back.",
-      "playstyle": "Soak poke on purpose to stack Water Bowl, then fight in their faces with Shell Spikes up. Thebes and Contagion grow Max HP; Mystical ticks while you sit mid-fight; Nemean and reflect passives amplify Shell Spikes; Isolation sticks people on the Kappa. Mid/Jungle variants lean Chronos + Ethereal for uptime \u2014 Support stays the aura HP shell. Do not buy Thoth/Cosmic glass.",
-      "starter_why": "Selflessness \u2014 Support gold to rush Thebes/Contagion before the reflect shell matters.",
-      "relics_why": "Beads and Aegis \u2014 classic Support; you need to live through the engage you started.",
+      "ability_plain": "Water Bowl (passive) stacks damage mitigation based on Max HP damage you take — the tankier you are, the more you shrug off. Shell Spikes reflects a percent of damage taken (and NeNe Kappas also reflect while active). NeNe Kappa can move a portion of your Health and Protections onto the pet. Slam and walls give lockdown. This Support path stacks Max HP and reflect items so every hit into you (or your Kappa) hurts them back.",
+      "playstyle": "Soak poke on purpose to stack Water Bowl, then fight in their faces with Shell Spikes up. Thebes and Contagion grow Max HP; Mystical ticks while you sit mid-fight; Nemean and reflect passives amplify Shell Spikes; Isolation sticks people on the Kappa. Mid/Jungle variants lean Chronos + Ethereal for uptime — Support stays the aura HP shell. Do not buy Thoth/Cosmic glass.",
+      "starter_why": "Selflessness — Support gold to rush Thebes/Contagion before the reflect shell matters.",
+      "relics_why": "Beads and Aegis — classic Support; you need to live through the engage you started.",
       "item_why": [
         {
           "match": "thebes",
-          "why": "Assist HP/prot stacks \u2014 more Max HP for Water Bowl mitigation and a fatter shell."
+          "why": "Assist HP/prot stacks — more Max HP for Water Bowl mitigation and a fatter shell."
         },
         {
           "match": "contagion",
@@ -189,7 +402,7 @@
         },
         {
           "match": "mystical",
-          "why": "Aura damage while you body-block \u2014 pairs with standing in the pit to reflect."
+          "why": "Aura damage while you body-block — pairs with standing in the pit to reflect."
         },
         {
           "match": "ethereal",
@@ -197,9 +410,11 @@
         },
         {
           "match": "nemean",
-          "why": "Hide of the Nemean Lion \u2014 extra reflect that stacks with Shell Spikes."
+          "why": "Hide of the Nemean Lion — extra reflect that stacks with Shell Spikes."
         }
-      ]
+      ],
+      "patch": "OB46",
+      "patch_label": "OB46 · King Kappa"
     },
     {
       "id": "kuzenbo-spirits-solo",
@@ -207,16 +422,16 @@
       "role": "Solo",
       "aspect": "Aspect of Spirits",
       "headline": "Spirit lifesteal bruiser",
-      "tagline": "3% LS per orbiting Kappa + INT/prot-scaled spirit damage \u2014 stack item LS and sit in melee.",
+      "tagline": "3% LS per orbiting Kappa + INT/prot-scaled spirit damage — stack item LS and sit in melee.",
       "hook_label": "Aspect LS + INT + dual prots",
-      "ability_plain": "Aspect of Spirits rewrites the kit. Water Bowl no longer gives mitigation \u2014 it spawns orbiting Kappa Spirits. You gain 3% Lifesteal for each spirit summoned. Shell Spikes no longer reflects; it throws Spirit Kappas (50% Intelligence scaling). Orbit ticks scale with Intelligence plus Physical and Magical Protections. Lifesteal only pays when you deal damage, so this path stacks item LS with INT and dual prots and stays in their faces so spirits keep ticking.",
-      "playstyle": "Lane with Warrior's Axe (or Vampiric Shroud if you want earlier LS). Rush Gluttonous for INT + 7.5% LS + pen. Chronos keeps 2 up so you throw spirits often. Ethereal fattens you and steals HP. Prophetic gives both prot types for orbit damage. Cap with Bancroft's or Pearl. Skip Contagion/Nemean \u2014 reflect is gone on this aspect.",
-      "starter_why": "Warrior's Axe \u2014 Solo lane pressure; optional Vampiric Shroud if you want LS from the first back.",
-      "relics_why": "Beads and Aegis \u2014 live through the brawl so spirits and Gluttonous keep healing.",
+      "ability_plain": "Aspect of Spirits rewrites the kit. Water Bowl no longer gives mitigation — it spawns orbiting Kappa Spirits. You gain 3% Lifesteal for each spirit summoned. Shell Spikes no longer reflects; it throws Spirit Kappas (50% Intelligence scaling). Orbit ticks scale with Intelligence plus Physical and Magical Protections. Lifesteal only pays when you deal damage, so this path stacks item LS with INT and dual prots and stays in their faces so spirits keep ticking.",
+      "playstyle": "Lane with Warrior's Axe (or Vampiric Shroud if you want earlier LS). Rush Gluttonous for INT + 7.5% LS + pen. Chronos keeps 2 up so you throw spirits often. Ethereal fattens you and steals HP. Prophetic gives both prot types for orbit damage. Cap with Bancroft's or Pearl. Skip Contagion/Nemean — reflect is gone on this aspect.",
+      "starter_why": "Warrior's Axe — Solo lane pressure; optional Vampiric Shroud if you want LS from the first back.",
+      "relics_why": "Beads and Aegis — live through the brawl so spirits and Gluttonous keep healing.",
       "item_why": [
         {
           "match": "gluttonous",
-          "why": "INT + 7.5% LS + HP + 10% pen. Best aspect core \u2014 item LS stacks with spirit LS and stores heal as bonus AA damage."
+          "why": "INT + 7.5% LS + HP + 10% pen. Best aspect core — item LS stacks with spirit LS and stores heal as bonus AA damage."
         },
         {
           "match": "chronos",
@@ -224,25 +439,27 @@
         },
         {
           "match": "ethereal",
-          "why": "INT + Max HP and steals HP on ability hits \u2014 stay fat while spirits tick and LS pays out."
+          "why": "INT + Max HP and steals HP on ability hits — stay fat while spirits tick and LS pays out."
         },
         {
           "match": "prophetic",
-          "why": "Dual Physical and Magical Protections. Orbit damage scales 15% of each \u2014 this item feeds the spirit aura."
+          "why": "Dual Physical and Magical Protections. Orbit damage scales 15% of each — this item feeds the spirit aura."
         },
         {
           "match": "bancroft",
-          "why": "Another 7.5% LS + INT. Ramps harder as you drop HP in the pit \u2014 pairs with spirit LS."
+          "why": "Another 7.5% LS + INT. Ramps harder as you drop HP in the pit — pairs with spirit LS."
         },
         {
           "match": "pearl",
-          "why": "Wish-Granting Pearl \u2014 huge INT for Spirit throws plus a fat HP chunk."
+          "why": "Wish-Granting Pearl — huge INT for Spirit throws plus a fat HP chunk."
         },
         {
           "match": "soul gem",
           "why": "Flex LS + INT + CDR; ability proc heal when you would rather share sustain than Bancroft selfish ramp."
         }
-      ]
+      ],
+      "patch": "OB46",
+      "patch_label": "OB46 · King Kappa"
     },
     {
       "id": "kuzenbo-spirits-support",
@@ -253,13 +470,13 @@
       "tagline": "Umbral Link shares your spirit lifesteal with the duo while dual prots feed orbit damage.",
       "hook_label": "Aspect LS shared via Umbral",
       "ability_plain": "Same Aspect of Spirits rules: orbiting Kappas grant 3% Lifesteal each, throws scale with INT, orbit scales INT + both protections. On Support you keep Thebes for aura HP, then Umbral Link (10% LS that splits healing to nearby allies) so your spirit sustain feeds the carry. Prophetic dual prots amp orbit ticks. Gluttonous and Ethereal keep INT/LS/HP without going glass mage.",
-      "playstyle": "Selflessness into Thebes as usual. Second back prioritizes Umbral Link so spirit LS becomes team healing. Prophetic for dual-prot orbit damage. Gluttonous + Ethereal for selfish LS and HP. Chronos if you need more 2 uptime; Isolation if the lane needs slow stick. Do not buy Nemean/Contagion reflect packages \u2014 Shell Spikes does not reflect on this aspect.",
-      "starter_why": "Selflessness \u2014 Support gold and shared sustain while you stack Thebes.",
-      "relics_why": "Beads and Aegis \u2014 peel so you stay alive with spirits orbiting the pit.",
+      "playstyle": "Selflessness into Thebes as usual. Second back prioritizes Umbral Link so spirit LS becomes team healing. Prophetic for dual-prot orbit damage. Gluttonous + Ethereal for selfish LS and HP. Chronos if you need more 2 uptime; Isolation if the lane needs slow stick. Do not buy Nemean/Contagion reflect packages — Shell Spikes does not reflect on this aspect.",
+      "starter_why": "Selflessness — Support gold and shared sustain while you stack Thebes.",
+      "relics_why": "Beads and Aegis — peel so you stay alive with spirits orbiting the pit.",
       "item_why": [
         {
           "match": "thebes",
-          "why": "Assist stacks of HP/prots \u2014 you still need a Support shell so spirits can sit in fights."
+          "why": "Assist stacks of HP/prots — you still need a Support shell so spirits can sit in fights."
         },
         {
           "match": "umbral",
@@ -275,13 +492,15 @@
         },
         {
           "match": "ethereal",
-          "why": "INT + HP steal \u2014 bulk for frontline Support without abandoning spirit scaling."
+          "why": "INT + HP steal — bulk for frontline Support without abandoning spirit scaling."
         },
         {
           "match": "chronos",
           "why": "CDR for more Spirit throws and NeNe uptime while you roam."
         }
-      ]
+      ],
+      "patch": "OB46",
+      "patch_label": "OB46 · King Kappa"
     },
     {
       "id": "kuzenbo-spirits-mid",
@@ -289,12 +508,12 @@
       "role": "Mid",
       "aspect": "Aspect of Spirits",
       "headline": "CDR spirit roam Mid",
-      "tagline": "Chronos + Gluttonous roam \u2014 throw spirits, stack LS, dual-prot orbit while you rotate.",
+      "tagline": "Chronos + Gluttonous roam — throw spirits, stack LS, dual-prot orbit while you rotate.",
       "hook_label": "Aspect LS Mid roam",
-      "ability_plain": "Aspect Mid keeps the spirit LS fantasy but prioritizes Chronos uptime and Gluttonous sustain so you can roam with NeNe and Spirit throws. Ethereal and Prophetic keep INT and dual prots for orbit damage. Bancroft's or Soul Gem caps the LS stack. No Thebes \u2014 too slow for Mid tempo.",
+      "ability_plain": "Aspect Mid keeps the spirit LS fantasy but prioritizes Chronos uptime and Gluttonous sustain so you can roam with NeNe and Spirit throws. Ethereal and Prophetic keep INT and dual prots for orbit damage. Bancroft's or Soul Gem caps the LS stack. No Thebes — too slow for Mid tempo.",
       "playstyle": "Conduit into Chronos or Gluttonous. Fight in river/side waves where spirits can tick on multiple targets. Throw 2 on cooldown. Build dual prots before full glass pen. Skip Contagion/Nemean.",
-      "starter_why": "Conduit Gem \u2014 Mid lane adaptive power into the LS/INT path.",
-      "relics_why": "Beads and Blink or Aegis \u2014 roam tools; live long enough for spirit LS to matter.",
+      "starter_why": "Conduit Gem — Mid lane adaptive power into the LS/INT path.",
+      "relics_why": "Beads and Blink or Aegis — roam tools; live long enough for spirit LS to matter.",
       "item_why": [
         {
           "match": "chronos",
@@ -302,7 +521,7 @@
         },
         {
           "match": "gluttonous",
-          "why": "Core INT LS pen item \u2014 stacks with aspect LS."
+          "why": "Core INT LS pen item — stacks with aspect LS."
         },
         {
           "match": "ethereal",
@@ -320,7 +539,9 @@
           "match": "soul gem",
           "why": "LS + ability proc heal flex if the teamfight needs shared sustain."
         }
-      ]
+      ],
+      "patch": "OB46",
+      "patch_label": "OB46 · King Kappa"
     },
     {
       "id": "kuzenbo-spirits-jungle",
@@ -330,14 +551,14 @@
       "headline": "Gluttonous spirit gank Jungle",
       "tagline": "Clear on Gluttonous LS, gank with spirit throws, dual-prot orbit in the pit.",
       "hook_label": "Aspect LS Jungle clear/gank",
-      "ability_plain": "Jungle Spirits uses Gluttonous as clear and fight sustain, Chronos for throw uptime, Ethereal/Prophetic for INT + dual-prot orbit damage, then Soul Gem / Bancroft's / Typhon to stack more LS. Aspect LS makes camp clear and skirmishes sticky. Reflect items are wrong \u2014 Shell Spikes throws spirits now.",
+      "ability_plain": "Jungle Spirits uses Gluttonous as clear and fight sustain, Chronos for throw uptime, Ethereal/Prophetic for INT + dual-prot orbit damage, then Soul Gem / Bancroft's / Typhon to stack more LS. Aspect LS makes camp clear and skirmishes sticky. Reflect items are wrong — Shell Spikes throws spirits now.",
       "playstyle": "Bumba's into Gluttonous. Keep spirits up in camps and on ganks. Chronos second or third. Dive with slam + thrown spirits, sit in melee so orbit + LS pay out. No Thebes.",
-      "starter_why": "Bumba's Cudgel \u2014 Jungle clear starter into the LS path.",
-      "relics_why": "Beads and Blink \u2014 standard Jungle engage/escape while spirits work.",
+      "starter_why": "Bumba's Cudgel — Jungle clear starter into the LS path.",
+      "relics_why": "Beads and Blink — standard Jungle engage/escape while spirits work.",
       "item_why": [
         {
           "match": "gluttonous",
-          "why": "Clear + fight LS with INT and pen \u2014 the Jungle aspect opener."
+          "why": "Clear + fight LS with INT and pen — the Jungle aspect opener."
         },
         {
           "match": "chronos",
@@ -361,9 +582,106 @@
         },
         {
           "match": "typhon",
-          "why": "Stacking INT LS pet \u2014 snowballs off Jungle kills/assists."
+          "why": "Stacking INT LS pet — snowballs off Jungle kills/assists."
         }
-      ]
+      ],
+      "patch": "OB46",
+      "patch_label": "OB46 · King Kappa"
     }
-  ]
+  ],
+  "current_patch": "OB47",
+  "current_patch_title": "The Night Update",
+  "overview": {
+    "headline": "OB47 · The Night Update",
+    "summary": "New Classic god Nox (candle INT Mid/Support), Izanami's Aspect of the Sickle (area Storm + Wound burst), and a Support starter buff wave. Below: who we think spikes, which items got paid, then Featured kit tours you can expand.",
+    "disclaimer": "Predictions blend patch notes + our kit model — early OB ladder is thin. Treat Featured as guided cheese, not a guarantee.",
+    "gods": [
+      {
+        "name": "Nox",
+        "role": "Mid / Support",
+        "lean": "up",
+        "why": "Brand-new Classic with Root DoT, Silence void, ally-shadow dash, and a long-range Night Terror. Novelty plus real setup tools — expect her in every lobby this week."
+      },
+      {
+        "name": "Hachiman",
+        "role": "Carry",
+        "lean": "up",
+        "why": "Master of Arms early AS per stack doubled (1%→2%). Eagle Eye BAD scaling up. Quiet but real duo-lane buff — classic crit ADC gets to ramp faster."
+      },
+      {
+        "name": "Ne Zha",
+        "role": "Jungle",
+        "lean": "up",
+        "why": "Ring Toss bounce scaling and subsequent bounce damage up; Wind Fire Wheels base + scaling up. Clear and ult both got paid — assassin Jungle tempo rises."
+      },
+      {
+        "name": "Izanami",
+        "role": "Carry (Sickle)",
+        "lean": "up",
+        "why": "New Aspect of the Sickle: no pierce basics, area Magical Storm with Root + stacking Wound, burst stacks with autos/abilities. Spicy duo cheese and a reason to relearn her 1."
+      },
+      {
+        "name": "Ah Puch",
+        "role": "Mid",
+        "lean": "up",
+        "why": "Empty the Crypts Intelligence scaling per tick 15%→20% (base kit). More ult DPS in the pit without touching Death March."
+      },
+      {
+        "name": "Hel",
+        "role": "Mid / Support",
+        "lean": "down",
+        "why": "Decay INT scaling 80%→60%; Inspire ally heal INT scaling 10%→5%. Still playable, but the free heal/nuke package got trimmed."
+      },
+      {
+        "name": "Hou Yi",
+        "role": "Carry",
+        "lean": "down",
+        "why": "Ricochet cooldown fixed at 10s, damage and Strength scaling down. Aspect basics no longer bounce off non-marked targets — mark dependency is harsher."
+      },
+      {
+        "name": "Nike",
+        "role": "Flex",
+        "lean": "down",
+        "why": "Rend base damage down; aspect Laurels can no longer proc item effects; aspect Rend Strength scaling trimmed. Victory kit loses some free proc value."
+      },
+      {
+        "name": "Nut",
+        "role": "Carry / Mid",
+        "lean": "down",
+        "why": "Convergence inner/side damage down; Warp bonus projectiles when consuming Astral Flux 2→1 and cooldown up. Less free multi-hit pressure."
+      }
+    ],
+    "items": [
+      {
+        "name": "War Flag",
+        "lean": "up",
+        "why": "Physical and Magical prots 10→15. Every 8s, applying CC grants double War Flag kill/assist benefits to you and allies in 8.8m. Huge for CC Supports — rush it."
+      },
+      {
+        "name": "Selflessness",
+        "lean": "up",
+        "why": "Starter Physical and Magical prots 10→15. Every Support path that already bought this just got a free early shell."
+      },
+      {
+        "name": "Ancient Signet",
+        "lean": "up",
+        "why": "Now has 5 Mana Regen — mana-hungry mages stop going dry between rotates."
+      },
+      {
+        "name": "Lotus Sickle / Eros' Bow / Soul Locket",
+        "lean": "up",
+        "why": "Jormungandr Aspect Venomous Haze and Consuming Bellow can now proc these. Niche but real — serpent DoT/heal itemization opens up."
+      },
+      {
+        "name": "Soul Locket",
+        "lean": "mixed",
+        "why": "Max stacks 70→35 but damage reduction per stack 1%→2% (same 70% DR cap, fewer stacks to full). Hits full DR sooner; less granular stacking."
+      },
+      {
+        "name": "Lifebinder",
+        "lean": "fix",
+        "why": "Heal scaling bugfix — healing/shielding stat now applies correctly. Enchanters get what the card promised."
+      }
+    ]
+  }
 }

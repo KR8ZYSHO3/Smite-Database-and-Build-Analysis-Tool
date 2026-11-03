@@ -1933,8 +1933,9 @@ function syncSharedRole(role) {
   }
 }
 
-/* -------------------- Featured Builds (kit cheese explainers) -------------------- */
+/* -------------------- Patch highlights + Featured Builds -------------------- */
 let featuredActiveId = null;
+let featuredPatchFilter = "current"; // current | archive | all
 
 function resolveFeaturedPath(entry) {
   if (!entry?.god) return null;
@@ -1968,6 +1969,101 @@ function matchItemWhy(itemName, whyList) {
   return "";
 }
 
+function featuredCurrentPatch() {
+  const data = state.featured_builds || {};
+  return String(data.current_patch || "OB47").toUpperCase();
+}
+
+function featuredEntryPatch(entry) {
+  return String(entry?.patch || featuredCurrentPatch()).toUpperCase();
+}
+
+function featuredPatchBadge(entry) {
+  const patch = featuredEntryPatch(entry);
+  const label = entry?.patch_label || patch;
+  const cur = featuredCurrentPatch();
+  const isCurrent = patch === cur;
+  return `<span class="fc-patch${isCurrent ? " is-current" : " is-archive"}" title="${escapeAttr(
+    label
+  )}">${escapeHtml(isCurrent ? patch : label)}</span>`;
+}
+
+function leanClass(lean) {
+  const l = String(lean || "").toLowerCase();
+  if (l === "up" || l === "buff") return "lean-up";
+  if (l === "down" || l === "nerf") return "lean-down";
+  if (l === "fix") return "lean-fix";
+  return "lean-mixed";
+}
+
+function leanLabel(lean) {
+  const l = String(lean || "").toLowerCase();
+  if (l === "up" || l === "buff") return "Up";
+  if (l === "down" || l === "nerf") return "Down";
+  if (l === "fix") return "Fix";
+  return "Note";
+}
+
+function setupPatchHighlights() {
+  const root = $("#patch-highlights");
+  if (!root) return;
+  const data = state.featured_builds;
+  const overview = data?.overview;
+  const hasOverview = !!(overview && (overview.gods?.length || overview.items?.length));
+  const hasFeatured = (data?.builds || []).length > 0;
+  if (!hasOverview && !hasFeatured) {
+    root.hidden = true;
+    return;
+  }
+  // Visibility for god-home is handled in syncBuildsChrome
+  const titleEl = $("#patch-highlights-title");
+  const kickerEl = $("#patch-highlights-kicker");
+  const summaryEl = $("#patch-highlights-summary");
+  const discEl = $("#patch-highlights-disclaimer");
+  const godsList = $("#patch-gods-list");
+  const itemsList = $("#patch-items-list");
+  const cur = featuredCurrentPatch();
+  const headline = overview?.headline || `${cur} · Patch overview`;
+  if (titleEl) titleEl.textContent = headline;
+  if (kickerEl) {
+    kickerEl.textContent = data?.current_patch_title
+      ? `${cur} · ${data.current_patch_title}`
+      : `${cur} highlights`;
+  }
+  if (summaryEl) summaryEl.textContent = overview?.summary || "";
+  if (discEl) {
+    discEl.textContent = overview?.disclaimer || "";
+    discEl.hidden = !overview?.disclaimer;
+  }
+  if (godsList) {
+    godsList.innerHTML = (overview?.gods || [])
+      .map(
+        (g) => `<li class="ph-row ${leanClass(g.lean)}">
+          <div class="ph-row-top">
+            <strong>${escapeHtml(g.name || "")}</strong>
+            ${g.role ? `<span class="ph-role">${escapeHtml(g.role)}</span>` : ""}
+            <span class="ph-lean">${escapeHtml(leanLabel(g.lean))}</span>
+          </div>
+          <p>${escapeHtml(g.why || "")}</p>
+        </li>`
+      )
+      .join("");
+  }
+  if (itemsList) {
+    itemsList.innerHTML = (overview?.items || [])
+      .map(
+        (it) => `<li class="ph-row ${leanClass(it.lean)}">
+          <div class="ph-row-top">
+            <strong>${escapeHtml(it.name || "")}</strong>
+            <span class="ph-lean">${escapeHtml(leanLabel(it.lean))}</span>
+          </div>
+          <p>${escapeHtml(it.why || "")}</p>
+        </li>`
+      )
+      .join("");
+  }
+}
+
 function featuredCardHtml(entry, resolved, { selected = false } = {}) {
   const path = resolved?.path || {};
   const items = path.items || [];
@@ -1994,6 +2090,7 @@ function featuredCardHtml(entry, resolved, { selected = false } = {}) {
         <div class="fc-name-row">
           <strong class="fc-god">${escapeHtml(entry.god)}</strong>
           <span class="fc-role-pill">${escapeHtml(entry.role)}</span>
+          ${featuredPatchBadge(entry)}
         </div>
         ${
           entry.aspect
@@ -2087,6 +2184,7 @@ function featuredDetailHtml(entry, resolved) {
         <h3>${escapeHtml(entry.god)} <span class="muted">· ${escapeHtml(
     entry.role
   )}</span></h3>
+        <div class="fd-patch-row">${featuredPatchBadge(entry)}</div>
         ${
           entry.aspect
             ? `<p class="fd-aspect">${escapeHtml(entry.aspect)}</p>`
@@ -2145,32 +2243,92 @@ function featuredDetailHtml(entry, resolved) {
 }
 
 function setupFeaturedBuilds() {
-  const root = $("#featured-builds");
+  setupPatchHighlights();
+
+  const fold = $("#featured-builds");
   const grid = $("#featured-builds-grid");
   const detail = $("#featured-builds-detail");
   const blurbEl = $("#featured-builds-blurb");
   const titleEl = $("#featured-builds-title");
-  if (!root || !grid) return;
+  const filters = $("#featured-patch-filters");
+  if (!fold || !grid) return;
 
   const data = state.featured_builds;
   const entries = data?.builds || [];
   if (!entries.length) {
-    root.hidden = true;
+    fold.hidden = true;
     return;
   }
-  root.hidden = false;
+  fold.hidden = false;
   if (titleEl && data.title) titleEl.textContent = data.title;
   if (blurbEl && data.blurb) blurbEl.textContent = data.blurb;
 
-  const paint = () => {
-    grid.innerHTML = entries
-      .map((entry) => {
-        const resolved = resolveFeaturedPath(entry);
-        return featuredCardHtml(entry, resolved, {
-          selected: featuredActiveId === entry.id,
-        });
-      })
+  const cur = featuredCurrentPatch();
+  const archivePatches = [
+    ...new Set(
+      entries
+        .map((e) => featuredEntryPatch(e))
+        .filter((p) => p && p !== cur)
+    ),
+  ];
+  const hasArchive = archivePatches.length > 0;
+  if (!hasArchive && featuredPatchFilter === "archive") {
+    featuredPatchFilter = "current";
+  }
+
+  const filteredEntries = () => {
+    if (featuredPatchFilter === "all") return entries;
+    if (featuredPatchFilter === "archive") {
+      return entries.filter((e) => featuredEntryPatch(e) !== cur);
+    }
+    return entries.filter((e) => featuredEntryPatch(e) === cur);
+  };
+
+  const paintFilters = () => {
+    if (!filters) return;
+    if (!hasArchive) {
+      filters.hidden = true;
+      filters.innerHTML = "";
+      return;
+    }
+    filters.hidden = false;
+    const archiveLabel =
+      archivePatches.length === 1
+        ? archivePatches[0]
+        : `Earlier (${archivePatches.join(", ")})`;
+    const opts = [
+      { id: "current", label: `This patch (${cur})` },
+      { id: "archive", label: archiveLabel },
+      { id: "all", label: "All" },
+    ];
+    filters.innerHTML = opts
+      .map(
+        (o) => `<button type="button" class="featured-filter-btn${
+          featuredPatchFilter === o.id ? " active" : ""
+        }" data-featured-filter="${o.id}">${escapeHtml(o.label)}</button>`
+      )
       .join("");
+  };
+
+  const paint = () => {
+    paintFilters();
+    const list = filteredEntries();
+    if (
+      featuredActiveId &&
+      !list.some((e) => e.id === featuredActiveId)
+    ) {
+      featuredActiveId = null;
+    }
+    grid.innerHTML = list.length
+      ? list
+          .map((entry) => {
+            const resolved = resolveFeaturedPath(entry);
+            return featuredCardHtml(entry, resolved, {
+              selected: featuredActiveId === entry.id,
+            });
+          })
+          .join("")
+      : `<p class="muted featured-empty">No featured builds in this filter.</p>`;
 
     if (!detail) return;
     if (!featuredActiveId) {
@@ -2190,20 +2348,28 @@ function setupFeaturedBuilds() {
     detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
   };
 
-  grid.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-featured-id]");
-    if (!btn) return;
-    const id = btn.getAttribute("data-featured-id");
-    featuredActiveId = featuredActiveId === id ? null : id;
-    paint();
-  });
-
-  detail?.addEventListener("click", (e) => {
-    if (e.target.closest("[data-featured-close]")) {
-      featuredActiveId = null;
+  if (!fold.dataset.featuredBound) {
+    fold.dataset.featuredBound = "1";
+    grid.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-featured-id]");
+      if (!btn) return;
+      const id = btn.getAttribute("data-featured-id");
+      featuredActiveId = featuredActiveId === id ? null : id;
       paint();
-    }
-  });
+    });
+    detail?.addEventListener("click", (e) => {
+      if (e.target.closest("[data-featured-close]")) {
+        featuredActiveId = null;
+        paint();
+      }
+    });
+    filters?.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-featured-filter]");
+      if (!btn) return;
+      featuredPatchFilter = btn.getAttribute("data-featured-filter") || "current";
+      paint();
+    });
+  }
 
   paint();
 }
@@ -2290,7 +2456,7 @@ function setupBuilds() {
     const godsBox = $("#build-gods");
     const jobWrap = $("#role-job-wrap");
     const allHits = $("#builds-all-hits");
-    const featured = $("#featured-builds");
+    const patchHighlights = $("#patch-highlights");
     const rosterLabel = $("#builds-roster-label");
     const roleBrowse = $("#builds-role-browse");
     const godHome = $("#builds-god-home");
@@ -2303,10 +2469,13 @@ function setupBuilds() {
     if (jobWrap) jobWrap.hidden = !roleMode;
     if (rosterLabel) rosterLabel.hidden = !roleMode;
     if (godHome) godHome.hidden = !godHomeMode;
-    if (featured) {
-      const hasFeatured = (state.featured_builds?.builds || []).length > 0;
-      // Featured sits under search home; hide when viewing a god or browsing a role ladder
-      featured.hidden = !godHomeMode || !hasFeatured;
+    if (patchHighlights) {
+      const fb = state.featured_builds;
+      const hasPatch =
+        !!(fb?.overview && (fb.overview.gods?.length || fb.overview.items?.length)) ||
+        (fb?.builds || []).length > 0;
+      // Patch overview + featured sit on god-home; hide on god detail / role browse
+      patchHighlights.hidden = !godHomeMode || !hasPatch;
     }
     if (allHits && (viewingGod || roleMode)) allHits.hidden = true;
     syncModeToggle();

@@ -122,20 +122,53 @@
           <div id="builds-any-detail" class="builds-any-detail" hidden></div>
 
           <section
-            id="featured-builds"
-            class="featured-builds"
-            aria-labelledby="featured-builds-title"
+            id="patch-highlights"
+            class="patch-highlights"
+            aria-labelledby="patch-highlights-title"
+            hidden
           >
-            <div class="featured-builds-head">
-              <div>
-                <h2 id="featured-builds-title">Featured Builds</h2>
-                <p class="muted featured-builds-blurb" id="featured-builds-blurb">
-                  Kit cheeses with plain-English explainers.
-                </p>
+            <div class="ph-head">
+              <p class="ph-kicker" id="patch-highlights-kicker">This patch</p>
+              <h2 id="patch-highlights-title">Patch overview</h2>
+              <p class="ph-summary" id="patch-highlights-summary"></p>
+              <p class="muted ph-disclaimer" id="patch-highlights-disclaimer"></p>
+            </div>
+            <div class="ph-grid">
+              <div class="ph-col">
+                <h3 class="ph-col-title">Gods to watch</h3>
+                <ul id="patch-gods-list" class="ph-list"></ul>
+              </div>
+              <div class="ph-col">
+                <h3 class="ph-col-title">Items to watch</h3>
+                <ul id="patch-items-list" class="ph-list"></ul>
               </div>
             </div>
-            <div id="featured-builds-grid" class="featured-builds-grid"></div>
-            <div id="featured-builds-detail" class="featured-builds-detail" hidden></div>
+
+            <details
+              id="featured-builds"
+              class="featured-builds featured-builds-fold"
+              open
+            >
+              <summary class="featured-builds-summary">
+                <span class="featured-builds-summary-main">
+                  <span id="featured-builds-title">Featured Builds</span>
+                  <span class="muted featured-builds-blurb" id="featured-builds-blurb">
+                    Kit cheeses with plain-English explainers.
+                  </span>
+                </span>
+                <span class="featured-builds-summary-hint" aria-hidden="true">Expand / collapse</span>
+              </summary>
+              <div class="featured-builds-body">
+                <div
+                  class="featured-patch-filters"
+                  id="featured-patch-filters"
+                  role="group"
+                  aria-label="Featured patch filter"
+                ></div>
+                <div id="featured-builds-grid" class="featured-builds-grid"></div>
+                <div id="featured-builds-detail" class="featured-builds-detail" hidden></div>
+              </div>
+            </details>
           </section>
 
           <details class="role-job-details" id="role-job-wrap" hidden>
