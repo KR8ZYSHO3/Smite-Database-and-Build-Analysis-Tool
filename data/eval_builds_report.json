@@ -42,7 +42,7 @@
           "Ethereal Staff",
           "Soul Gem"
         ],
-        "starter": "Bumba's Cudgel",
+        "starter": "Bumba's Golden Dagger",
         "confidence": "low",
         "ladder_games": 0,
         "ladder_weight": 0.0,
@@ -77,12 +77,12 @@
         "items": [
           "Gluttonous Grimoire",
           "Chronos' Pendant",
+          "Gem of Isolation",
           "Ethereal Staff",
           "Contagion",
-          "Hide of the Nemean Lion",
-          "Mystical Mail"
+          "Hide of the Nemean Lion"
         ],
-        "starter": "Bumba's Cudgel",
+        "starter": "Bumba's Golden Dagger",
         "confidence": "low",
         "ladder_games": 0,
         "ladder_weight": 0.0,
@@ -135,9 +135,9 @@
         "ok": true,
         "errors": [],
         "items": [
+          "Spear Of The Magus",
           "Book of Thoth",
           "Doom Orb",
-          "The Cosmic Horror",
           "Gem of Isolation",
           "Yogi's Necklace",
           "Breastplate of Valor"
@@ -157,9 +157,9 @@
         "items": [
           "Lotus Sickle",
           "Eye of the Storm",
-          "Riptalon",
+          "The Reaper",
+          "Odysseus' Bow",
           "Musashi's Dual Swords",
-          "Gauntlet of Thebes",
           "Rod Of Asclepius"
         ],
         "starter": "Gilded Arrow",
@@ -202,7 +202,7 @@
           "Leviathan's Hide",
           "Gladiator's Shield"
         ],
-        "starter": "Bumba's Cudgel",
+        "starter": "Bumba's Golden Dagger",
         "confidence": "medium",
         "ladder_games": 23,
         "ladder_weight": 0.115,
@@ -296,27 +296,27 @@
     "n": 49,
     "holdout": 0.3,
     "min_games": 4,
-    "mean_holdout_hit_rate": 0.248,
-    "mean_train_hit_rate": 0.442,
-    "mean_path_win_affinity": -0.0357,
-    "corr_hit_vs_wr": -0.061,
+    "mean_holdout_hit_rate": 0.255,
+    "mean_train_hit_rate": 0.435,
+    "mean_path_win_affinity": -0.033,
+    "corr_hit_vs_wr": -0.117,
     "win_association": {
       "n": 48,
       "median_wr": 0.5,
       "high_wr_n": 29,
       "low_wr_n": 19,
-      "high_wr_mean_affinity": -0.0321,
-      "low_wr_mean_affinity": -0.0409,
-      "gap": 0.0088
+      "high_wr_mean_affinity": -0.0303,
+      "low_wr_mean_affinity": -0.0378,
+      "gap": 0.0075
     },
     "thin_sample_n": 40,
-    "thin_mean_holdout_hit_rate": 0.221,
+    "thin_mean_holdout_hit_rate": 0.229,
     "fat_sample_n": 0,
     "fat_mean_holdout_hit_rate": null,
     "locked_n": 5,
-    "locked_mean_holdout_hit_rate": 0.067,
+    "locked_mean_holdout_hit_rate": 0.1,
     "unlocked_n": 44,
-    "unlocked_mean_holdout_hit_rate": 0.269,
+    "unlocked_mean_holdout_hit_rate": 0.273,
     "rows": [
       {
         "god": "Aphrodite",
@@ -330,13 +330,13 @@
           "Lotus Sickle",
           "Rod Of Asclepius",
           "Alchemist Coat",
-          "Shogun's Ofuda",
-          "Stone of Binding",
-          "Void Stone"
+          "Magi's Cloak",
+          "Oni Hunter's Garb",
+          "Stygian Anchor"
         ],
-        "holdout_hit_rate": 0.333,
+        "holdout_hit_rate": 0.167,
         "train_hit_rate": 0.167,
-        "path_win_affinity": 0.0281,
+        "path_win_affinity": 0.0352,
         "holdout_size": 9,
         "identity_lock": false
       },
@@ -437,12 +437,12 @@
         "ladder_weight": 0.06,
         "confidence": "low",
         "algo_items": [
+          "Spear Of The Magus",
           "Spear of Desolation",
           "The Cosmic Horror",
           "Soul Reaver",
           "Gem of Isolation",
-          "Alchemist Coat",
-          "Gladiator's Shield"
+          "Contagion"
         ],
         "holdout_hit_rate": 0.167,
         "train_hit_rate": 0.333,
@@ -460,7 +460,7 @@
         "confidence": "low",
         "algo_items": [
           "Tyrfing",
-          "Transcendence",
+          "Devourer's Gauntlet",
           "Pendulum Blade",
           "Qin's Blade",
           "Odysseus' Bow",
@@ -468,7 +468,7 @@
         ],
         "holdout_hit_rate": 0.333,
         "train_hit_rate": 0.167,
-        "path_win_affinity": 0.0134,
+        "path_win_affinity": -0.0189,
         "holdout_size": 3,
         "identity_lock": false
       },
@@ -528,13 +528,13 @@
           "Jotunn's Revenge",
           "Hydra's Lament",
           "The Crusher",
-          "Brawler\u2019s Beat Stick",
           "Arondight",
-          "Heartseeker"
+          "Heartseeker",
+          "Avatar's Parashu"
         ],
-        "holdout_hit_rate": 0.5,
-        "train_hit_rate": 0.5,
-        "path_win_affinity": 0.023,
+        "holdout_hit_rate": 0.667,
+        "train_hit_rate": 0.667,
+        "path_win_affinity": 0.0262,
         "holdout_size": 9,
         "identity_lock": false
       },
@@ -547,7 +547,7 @@
         "ladder_weight": 0.11,
         "confidence": "low",
         "algo_items": [
-          "Tekko-Kagi",
+          "Pendulum Blade",
           "Jotunn's Revenge",
           "Hydra's Lament",
           "The Reaper",
@@ -556,7 +556,7 @@
         ],
         "holdout_hit_rate": 0.5,
         "train_hit_rate": 0.833,
-        "path_win_affinity": 0.0221,
+        "path_win_affinity": -0.0129,
         "holdout_size": 9,
         "identity_lock": false
       },
@@ -569,16 +569,16 @@
         "ladder_weight": 0.1,
         "confidence": "low",
         "algo_items": [
-          "Shifter's Shield",
           "Prophetic Cloak",
           "Gladiator's Shield",
           "Gauntlet of Thebes",
           "Leviathan's Hide",
+          "Wyrmskin Hide",
           "Contagion"
         ],
         "holdout_hit_rate": 0.333,
-        "train_hit_rate": 0.5,
-        "path_win_affinity": -0.0408,
+        "train_hit_rate": 0.333,
+        "path_win_affinity": -0.0341,
         "holdout_size": 12,
         "identity_lock": false
       },
@@ -638,13 +638,13 @@
           "Book of Thoth",
           "Spear of Desolation",
           "The Cosmic Horror",
-          "Totem of Death",
           "Divine Ruin",
-          "Gem of Isolation"
+          "Gem of Isolation",
+          "Breastplate of Valor"
         ],
-        "holdout_hit_rate": 0.333,
-        "train_hit_rate": 0.667,
-        "path_win_affinity": -0.0587,
+        "holdout_hit_rate": 0.167,
+        "train_hit_rate": 0.5,
+        "path_win_affinity": -0.0516,
         "holdout_size": 8,
         "identity_lock": false
       },
@@ -725,14 +725,14 @@
         "algo_items": [
           "Book of Thoth",
           "Chronos' Pendant",
+          "Doom Orb",
           "Spear of Desolation",
           "The Cosmic Horror",
-          "Rod of Tahuti",
-          "Divine Ruin"
+          "Totem of Death"
         ],
         "holdout_hit_rate": 0.333,
         "train_hit_rate": 0.667,
-        "path_win_affinity": -0.0129,
+        "path_win_affinity": -0.0177,
         "holdout_size": 7,
         "identity_lock": false
       },
@@ -771,7 +771,7 @@
           "Prophetic Cloak",
           "Contagion",
           "Leviathan's Hide",
-          "Wyrmskin Hide",
+          "Gladiator's Shield",
           "Ethereal Staff"
         ],
         "holdout_hit_rate": 0.167,
@@ -794,11 +794,11 @@
           "Hydra's Lament",
           "Damaru",
           "Bloodforge",
-          "Hastened Fatalis"
+          "Heartseeker"
         ],
         "holdout_hit_rate": 0.0,
         "train_hit_rate": 0.0,
-        "path_win_affinity": -0.0305,
+        "path_win_affinity": 0.023,
         "holdout_size": 8,
         "identity_lock": false
       },
@@ -812,15 +812,15 @@
         "confidence": "low",
         "algo_items": [
           "Lotus Sickle",
-          "Alchemist Coat",
-          "Stone of Binding",
-          "Void Stone",
+          "Gem of Isolation",
+          "Heartwood Charm",
+          "Xibalban Effigy",
           "Midgardian Mail",
           "Rod Of Asclepius"
         ],
         "holdout_hit_rate": 0.0,
-        "train_hit_rate": 0.167,
-        "path_win_affinity": -0.0539,
+        "train_hit_rate": 0.333,
+        "path_win_affinity": -0.0127,
         "holdout_size": 6,
         "identity_lock": false
       },
@@ -856,15 +856,15 @@
         "confidence": "low",
         "algo_items": [
           "Book of Thoth",
+          "Spear Of The Magus",
           "Spear of Desolation",
           "Chronos' Pendant",
           "The Cosmic Horror",
-          "Divine Ruin",
           "Totem of Death"
         ],
         "holdout_hit_rate": 0.5,
-        "train_hit_rate": 0.5,
-        "path_win_affinity": -0.0229,
+        "train_hit_rate": 0.333,
+        "path_win_affinity": -0.0237,
         "holdout_size": 9,
         "identity_lock": false
       },
@@ -878,15 +878,15 @@
         "confidence": "low",
         "algo_items": [
           "Book of Thoth",
+          "Gluttonous Grimoire",
           "The Cosmic Horror",
           "Spear of Desolation",
           "Spear Of The Magus",
-          "Rod of Tahuti",
           "Soul Reaver"
         ],
         "holdout_hit_rate": 0.0,
-        "train_hit_rate": 0.333,
-        "path_win_affinity": 0.0083,
+        "train_hit_rate": 0.167,
+        "path_win_affinity": -0.0014,
         "holdout_size": 6,
         "identity_lock": false
       },
@@ -902,7 +902,7 @@
           "Book of Thoth",
           "The Cosmic Horror",
           "Spear of Desolation",
-          "Spear Of The Magus",
+          "Totem of Death",
           "Soul Reaver",
           "Dreamer's Idol"
         ],
@@ -924,13 +924,13 @@
           "Gauntlet of Thebes",
           "Prophetic Cloak",
           "Contagion",
-          "Leviathan's Hide",
           "Gladiator's Shield",
-          "Ethereal Staff"
+          "Ethereal Staff",
+          "Breastplate of Valor"
         ],
-        "holdout_hit_rate": 0.167,
-        "train_hit_rate": 0.167,
-        "path_win_affinity": -0.0993,
+        "holdout_hit_rate": 0.333,
+        "train_hit_rate": 0.333,
+        "path_win_affinity": -0.0827,
         "holdout_size": 7,
         "identity_lock": true
       },
@@ -946,13 +946,13 @@
           "Tyrfing",
           "Devourer's Gauntlet",
           "Odysseus' Bow",
-          "The Executioner",
           "Eye of the Storm",
+          "Qin's Blade",
           "Deathbringer"
         ],
-        "holdout_hit_rate": 0.0,
+        "holdout_hit_rate": 0.167,
         "train_hit_rate": 0.5,
-        "path_win_affinity": -0.0397,
+        "path_win_affinity": -0.0189,
         "holdout_size": 5,
         "identity_lock": false
       },
@@ -992,11 +992,11 @@
           "The Cosmic Horror",
           "Rod of Tahuti",
           "Gem of Isolation",
-          "Stygian Anchor"
+          "Totem of Death"
         ],
-        "holdout_hit_rate": 0.333,
+        "holdout_hit_rate": 0.5,
         "train_hit_rate": 0.667,
-        "path_win_affinity": -0.0495,
+        "path_win_affinity": -0.0566,
         "holdout_size": 13,
         "identity_lock": false
       },
@@ -1057,7 +1057,7 @@
           "Prophetic Cloak",
           "Contagion",
           "Gem of Isolation",
-          "Stone of Binding",
+          "Doublet of Binding",
           "Ethereal Staff"
         ],
         "holdout_hit_rate": 0.0,
@@ -1076,15 +1076,15 @@
         "confidence": "low",
         "algo_items": [
           "Jotunn's Revenge",
-          "Pendulum Blade",
-          "Hydra's Lament",
           "The Crusher",
+          "Hydra's Lament",
+          "Arondight",
           "Heartseeker",
           "The Reaper"
         ],
         "holdout_hit_rate": 0.5,
         "train_hit_rate": 0.833,
-        "path_win_affinity": -0.0129,
+        "path_win_affinity": 0.0175,
         "holdout_size": 7,
         "identity_lock": false
       },
@@ -1124,11 +1124,11 @@
           "Pendulum Blade",
           "Hydra's Lament",
           "Hastened Fatalis",
-          "Runeforged Hammer"
+          "The Crusher"
         ],
         "holdout_hit_rate": 0.0,
         "train_hit_rate": 0.333,
-        "path_win_affinity": -0.1286,
+        "path_win_affinity": -0.1119,
         "holdout_size": 5,
         "identity_lock": false
       },
@@ -1187,14 +1187,14 @@
         "algo_items": [
           "Spear of Desolation",
           "Chronos' Pendant",
+          "Staff of Myrddin",
           "The Cosmic Horror",
           "Gem of Isolation",
-          "Ancient Signet",
-          "Alchemist Coat"
+          "Jade Scepter"
         ],
         "holdout_hit_rate": 0.167,
-        "train_hit_rate": 0.667,
-        "path_win_affinity": -0.0447,
+        "train_hit_rate": 0.5,
+        "path_win_affinity": -0.0198,
         "holdout_size": 10,
         "identity_lock": false
       },
@@ -1274,9 +1274,9 @@
         "confidence": "low",
         "algo_items": [
           "Tyrfing",
-          "The Executioner",
           "Devourer's Gauntlet",
-          "Eye of the Storm",
+          "The Reaper",
+          "The Executioner",
           "Odysseus' Bow",
           "Demon Blade"
         ],
@@ -1363,14 +1363,14 @@
         "algo_items": [
           "Gauntlet of Thebes",
           "Alchemist Coat",
-          "Magi's Cloak",
           "Gem of Isolation",
-          "Stygian Anchor",
-          "Regrowth Striders"
+          "Stone of Binding",
+          "Regrowth Striders",
+          "Mantle Of Discord"
         ],
         "holdout_hit_rate": 0.0,
         "train_hit_rate": 0.0,
-        "path_win_affinity": -0.0049,
+        "path_win_affinity": 0.0017,
         "holdout_size": 5,
         "identity_lock": false
       },
@@ -1386,13 +1386,13 @@
           "Gem of Focus",
           "Gluttonous Grimoire",
           "Spear of Desolation",
-          "Soul Gem",
-          "Heartwood Charm",
+          "Chronos' Pendant",
+          "The Cosmic Horror",
           "Totem of Death"
         ],
         "holdout_hit_rate": 0.167,
         "train_hit_rate": 0.333,
-        "path_win_affinity": -0.0139,
+        "path_win_affinity": -0.0242,
         "holdout_size": 5,
         "identity_lock": false
       }
@@ -1402,10 +1402,10 @@
     "fixtures_passed": 14,
     "fixtures_failed": 0,
     "unit_ok": true,
-    "holdout_mean_hit_rate": 0.248,
+    "holdout_mean_hit_rate": 0.255,
     "holdout_n": 49,
-    "mean_path_win_affinity": -0.0357,
-    "corr_hit_vs_wr": -0.061,
-    "win_assoc_gap": 0.0088
+    "mean_path_win_affinity": -0.033,
+    "corr_hit_vs_wr": -0.117,
+    "win_assoc_gap": 0.0075
   }
 }

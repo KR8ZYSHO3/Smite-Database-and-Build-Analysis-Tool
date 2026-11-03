@@ -103,7 +103,9 @@ _HOOK_PATTERNS: list[tuple[str, re.Pattern[str], float]] = [
             r"kappa spirits? are regularly summoned|"
             r"throw(?:s|ing)? (?:a )?spirit kappas?|"
             r"no longer reflects? damage but instead|"
-            r"spawn orbiting kappa spirits",
+            r"spawn orbiting kappa spirits|"
+            # Wiki often stubs this aspect as "Coming Soon"; name alone is enough
+            r"aspect of spirits",
             re.I,
         ),
         0.8,
@@ -480,6 +482,13 @@ _HOOK_TAGS_REMOVE: dict[str, set[str]] = {
 }
 
 
+# When wiki leaves aspect description as "Coming Soon"/empty, seed hooks from
+# the aspect name already present in the kit blob (see _aspect_kit_blob).
+_ASPECT_NAME_HOOK_SEEDS: list[tuple[re.Pattern[str], str, float]] = [
+    (re.compile(r"\baspect of spirits\b", re.I), "spirit_lifesteal", 0.8),
+]
+
+
 def detect_identity_hooks(blob: str, *, is_aspect: bool = False) -> IdentityProfile:
     """Scan kit/aspect text for identity hooks."""
     text = blob or ""
@@ -496,6 +505,20 @@ def detect_identity_hooks(blob: str, *, is_aspect: bool = False) -> IdentityProf
                 continue
         prof.hooks.add(hook_id)
         prof.strength = min(1.0, prof.strength + strength_add)
+
+    # Name-based fallback for stub wiki descriptions (Coming Soon / empty body)
+    stub = bool(
+        re.search(r"^\s*(coming soon)?\s*$", text.split("\n", 1)[0], re.I)
+        or "coming soon" in text
+        or len(text.strip()) < 40
+    )
+    if is_aspect or stub:
+        for cre, hook_id, strength_add in _ASPECT_NAME_HOOK_SEEDS:
+            if hook_id in prof.hooks:
+                continue
+            if cre.search(text):
+                prof.hooks.add(hook_id)
+                prof.strength = min(1.0, prof.strength + strength_add)
 
     # Base kits: dampen strength so weak text matches don't lock every god
     if not is_aspect and prof.strength > 0:

@@ -1,22 +1,22 @@
 {
-  "generated_at": "2026-10-31T19:16:51.752705+00:00",
+  "generated_at": "2026-11-03T19:55:40.497392+00:00",
   "algorithm_version": "1.6.0",
   "ladder_n0": 100,
   "holdout_n": 49,
-  "holdout_mean_hit_rate": 0.248,
-  "holdout_mean_train_hit_rate": 0.442,
-  "mean_path_win_affinity": -0.0357,
-  "corr_hit_vs_wr": -0.061,
+  "holdout_mean_hit_rate": 0.255,
+  "holdout_mean_train_hit_rate": 0.435,
+  "mean_path_win_affinity": -0.033,
+  "corr_hit_vs_wr": -0.117,
   "win_association": {
     "n": 48,
     "median_wr": 0.5,
     "high_wr_n": 29,
     "low_wr_n": 19,
-    "high_wr_mean_affinity": -0.0321,
-    "low_wr_mean_affinity": -0.0409,
-    "gap": 0.0088
+    "high_wr_mean_affinity": -0.0303,
+    "low_wr_mean_affinity": -0.0378,
+    "gap": 0.0075
   },
-  "locked_mean_holdout_hit_rate": 0.067,
-  "unlocked_mean_holdout_hit_rate": 0.269,
+  "locked_mean_holdout_hit_rate": 0.1,
+  "unlocked_mean_holdout_hit_rate": 0.273,
   "note": "inspire_sample_scale mutes slightly when holdout_mean_hit_rate < 0.20; win-aff boosts items over-represented in higher-WR inspiration bags."
 }

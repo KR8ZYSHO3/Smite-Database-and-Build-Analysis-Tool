@@ -177,7 +177,10 @@
     }
   },
   "Aspect of Spirits": {
-    "_why": "Kuzenbo aspect (live OB46 Hotfix window). Water Bowl spawns orbiting Kappa Spirits (+3% Lifesteal each) instead of mitigation; Shell Spikes throws Spirit Kappas (50% INT) instead of reflecting. Orbit damage scales 5% INT + 15% Phys Prot + 15% Mag Prot. Itemize INT LS + dual prots + HP + CDR — not Contagion/Nemean reflect shells.",
+    "_why": "Kuzenbo aspect (live OB46 Hotfix window). Water Bowl spawns orbiting Kappa Spirits (+3% Lifesteal each) instead of mitigation; Shell Spikes throws Spirit Kappas (50% INT) instead of reflecting. Orbit damage scales 5% INT + 15% Phys Prot + 15% Mag Prot. Itemize INT LS + dual prots + HP + CDR — not Contagion/Nemean reflect shells. Wiki often stubs description as Coming Soon — identity_lock/hooks keep LS path live.",
+    "identity_lock": true,
+    "identity_strength": 0.85,
+    "identity_hooks": ["spirit_lifesteal"],
     "force_tags": [
       "hybrid_bulk",
       "self_sustain",
