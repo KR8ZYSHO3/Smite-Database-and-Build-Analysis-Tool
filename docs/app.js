@@ -2067,6 +2067,12 @@ function tierBadgeHtml(info, { compact = false } = {}) {
   )}">${escapeHtml(label)}</span>`;
 }
 
+function shortChipLabel(name, max = 22) {
+  const s = String(name || "").trim();
+  if (s.length <= max) return s;
+  return `${s.slice(0, max - 1)}…`;
+}
+
 function fillPatchOverview(ids) {
   const data = state.featured_builds;
   const overview =
@@ -2102,9 +2108,127 @@ function fillPatchOverview(ids) {
   }
   if (summaryEl) summaryEl.textContent = overview?.summary || "";
   if (discEl) {
-    discEl.textContent = overview?.disclaimer || "";
-    discEl.hidden = !overview?.disclaimer;
+    if (ids.compact) {
+      discEl.hidden = true;
+      discEl.textContent = "";
+    } else {
+      discEl.textContent = overview?.disclaimer || "";
+      discEl.hidden = !overview?.disclaimer;
+    }
   }
+
+  if (ids.compact) {
+    const godsChips = $(ids.godsChips || "#patch-gods-chips");
+    const itemsChips = $(ids.itemsChips || "#patch-items-chips");
+    const detail = $(ids.chipDetail || "#patch-chip-detail");
+    const showDetail = (kind, payload) => {
+      if (!detail) return;
+      if (!payload) {
+        detail.hidden = true;
+        detail.innerHTML = "";
+        return;
+      }
+      const tier =
+        kind === "god"
+          ? lookupGodTier(
+              String(payload.name || "").split("(")[0].trim(),
+              payload.role
+            )
+          : lookupItemTier(payload.name);
+      const openGod =
+        kind === "god"
+          ? String(payload.name || "").split("(")[0].trim()
+          : "";
+      detail.hidden = false;
+      detail.innerHTML = `
+        <div class="ph-chip-detail-top">
+          <strong>${escapeHtml(payload.name || "")}</strong>
+          ${
+            payload.role
+              ? `<span class="ph-role">${escapeHtml(payload.role)}</span>`
+              : ""
+          }
+          ${tierBadgeHtml(tier)}
+          <span class="ph-lean ${leanClass(payload.lean)}">${escapeHtml(
+            leanLabel(payload.lean)
+          )}</span>
+        </div>
+        <p>${escapeHtml(payload.why || "")}</p>
+        ${
+          openGod
+            ? `<button type="button" class="btn-secondary ph-chip-open" data-open-god="${escapeAttr(
+                openGod
+              )}">Open ${escapeHtml(openGod)} builds →</button>`
+            : ""
+        }`;
+      detail.querySelector("[data-open-god]")?.addEventListener("click", () => {
+        const name = detail
+          .querySelector("[data-open-god]")
+          ?.getAttribute("data-open-god");
+        if (name) selectGod(name, true);
+      });
+    };
+    const bindChips = (el, kind, rows) => {
+      if (!el) return;
+      el.innerHTML = (rows || [])
+        .map((row, idx) => {
+          const label =
+            kind === "god"
+              ? shortChipLabel(String(row.name || "").split("(")[0].trim(), 16)
+              : shortChipLabel(row.name, 20);
+          const tier =
+            kind === "god"
+              ? lookupGodTier(
+                  String(row.name || "").split("(")[0].trim(),
+                  row.role
+                )
+              : lookupItemTier(row.name);
+          return `<button type="button" class="ph-chip ${leanClass(
+            row.lean
+          )}" data-ph-kind="${kind}" data-ph-idx="${idx}" aria-pressed="false">
+            <span class="ph-chip-name">${escapeHtml(label)}</span>
+            ${tierBadgeHtml(tier, { compact: true })}
+            <span class="ph-chip-lean">${escapeHtml(leanLabel(row.lean))}</span>
+          </button>`;
+        })
+        .join("");
+      el.querySelectorAll(".ph-chip").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-ph-idx"));
+          const active = btn.getAttribute("aria-pressed") === "true";
+          el.querySelectorAll(".ph-chip").forEach((b) =>
+            b.setAttribute("aria-pressed", "false")
+          );
+          if (ids.godsChips) {
+            $(ids.godsChips)
+              ?.querySelectorAll(".ph-chip")
+              .forEach((b) => b.setAttribute("aria-pressed", "false"));
+          }
+          if (ids.itemsChips) {
+            $(ids.itemsChips)
+              ?.querySelectorAll(".ph-chip")
+              .forEach((b) => b.setAttribute("aria-pressed", "false"));
+          }
+          if (active) {
+            showDetail(null, null);
+            return;
+          }
+          btn.setAttribute("aria-pressed", "true");
+          showDetail(kind, rows[idx]);
+        });
+      });
+    };
+    bindChips(godsChips, "god", overview?.gods || []);
+    bindChips(itemsChips, "item", overview?.items || []);
+    if (detail) {
+      detail.hidden = true;
+      detail.innerHTML = "";
+    }
+    if (godsList) godsList.innerHTML = "";
+    if (itemsList) itemsList.innerHTML = "";
+    return true;
+  }
+
   if (godsList) {
     godsList.innerHTML = (overview?.gods || [])
       .map((g) => {
@@ -2153,6 +2277,10 @@ function setupPatchHighlights() {
     disclaimer: "#patch-highlights-disclaimer",
     gods: "#patch-gods-list",
     items: "#patch-items-list",
+    compact: true,
+    godsChips: "#patch-gods-chips",
+    itemsChips: "#patch-items-chips",
+    chipDetail: "#patch-chip-detail",
   });
   if (!filled && !hasFeatured) {
     root.hidden = true;
@@ -2629,14 +2757,22 @@ function setupBuilds() {
     if (godsBox) godsBox.hidden = !roleMode;
     if (jobWrap) jobWrap.hidden = !roleMode;
     if (rosterLabel) rosterLabel.hidden = !roleMode;
-    if (godHome) godHome.hidden = !godHomeMode;
+    const homeQuery = (
+      search?.value ||
+      $("#builds-any-search")?.value ||
+      ""
+    ).trim();
+    if (godHome) {
+      // Home is search-only: hide the A–Z wall until the user types a query
+      godHome.hidden = !godHomeMode || !homeQuery;
+    }
     if (patchHighlights) {
       const fb = state.featured_builds;
       const hasPatch =
         !!(fb?.overview && (fb.overview.gods?.length || fb.overview.items?.length)) ||
         (fb?.builds || []).length > 0;
-      // Patch overview + featured sit on god-home; hide on god detail / role browse
-      patchHighlights.hidden = !godHomeMode || !hasPatch;
+      // Compact patch + featured on empty home; hide while searching / god detail / role browse
+      patchHighlights.hidden = !godHomeMode || !hasPatch || !!homeQuery;
     }
     if (allHits && (viewingGod || roleMode)) allHits.hidden = true;
     syncModeToggle();
@@ -2869,6 +3005,7 @@ function setupBuilds() {
       return;
     }
     if (buildsMode === "search") {
+      applyBuildsModeUi();
       renderGodHome();
       return;
     }
@@ -2932,30 +3069,37 @@ function setupBuilds() {
     const q = (search?.value || $("#builds-any-search")?.value || "")
       .toLowerCase()
       .trim();
-    let gods = [...(state.gods || [])].sort((a, b) =>
-      String(a.name).localeCompare(String(b.name))
-    );
-    if (q) {
-      gods = gods.filter((g) => (g.name || "").toLowerCase().includes(q));
-      gods.sort((a, b) => {
+    const hint = $("#builds-god-home-hint");
+    if (hint && buildsMode === "search" && !searchFocusGod) {
+      hint.hidden = false;
+      hint.textContent = q
+        ? "Matching gods — tap for every role path"
+        : "Type a god for their paths. Patch watch chips and Featured builds sit below — no full roster until you search.";
+    }
+    // Seamless home: no A–Z god wall until the user searches
+    if (!q) {
+      list.hidden = true;
+      list.innerHTML = "";
+      return;
+    }
+    let gods = [...(state.gods || [])]
+      .filter((g) => (g.name || "").toLowerCase().includes(q))
+      .sort((a, b) => {
         const an = (a.name || "").toLowerCase();
         const bn = (b.name || "").toLowerCase();
         const as = an === q ? 0 : an.startsWith(q) ? 1 : 2;
         const bs = bn === q ? 0 : bn.startsWith(q) ? 1 : 2;
         return as - bs || an.localeCompare(bn);
       });
-    }
-    const hint = $("#builds-god-home-hint");
     if (hint && buildsMode === "search" && !searchFocusGod) {
-      hint.hidden = false;
-      hint.textContent = q
-        ? `${gods.length} god${gods.length === 1 ? "" : "s"} matching “${q}” — tap for every role path`
-        : "Search a god for their tailored paths. Role browse is optional if you want ladder order by lane.";
+      hint.textContent = `${gods.length} god${
+        gods.length === 1 ? "" : "s"
+      } matching “${q}” — tap for every role path`;
     }
     list.hidden = false;
     list.innerHTML = gods.length
       ? gods
-          .slice(0, q ? 40 : 93)
+          .slice(0, 40)
           .map((g) => {
             const natives = godNativeRoles(g);
             const nativeBit = natives.length

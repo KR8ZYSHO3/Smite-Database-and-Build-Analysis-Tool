@@ -4837,6 +4837,102 @@ button.god-pick-card .bes-cta {
   font-size: 0.72rem;
   color: var(--muted);
 }
+.ph-compact-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.ph-chip-block {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+.ph-chip-label {
+  flex: 0 0 auto;
+  min-width: 3.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent, #f0c75e);
+}
+.ph-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  flex: 1 1 auto;
+}
+.ph-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  border-left-width: 3px;
+  background: rgba(0, 0, 0, 0.28);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+.ph-chip.lean-up { border-left-color: #3dd68c; }
+.ph-chip.lean-down { border-left-color: #e85d75; }
+.ph-chip.lean-fix { border-left-color: #3d7ea6; }
+.ph-chip.lean-mixed { border-left-color: #f0c75e; }
+.ph-chip:hover {
+  border-color: color-mix(in srgb, var(--accent, #f0c75e) 50%, var(--border));
+}
+.ph-chip[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--accent2, #3d7ea6) 22%, rgba(0, 0, 0, 0.35));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent2, #3d7ea6) 45%, transparent);
+}
+.ph-chip-name {
+  font-weight: 650;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 11rem;
+}
+.ph-chip-lean {
+  font-size: 0.62rem;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ph-chip-detail {
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.28);
+}
+.ph-chip-detail[hidden] { display: none !important; }
+.ph-chip-detail-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+.ph-chip-detail p {
+  margin: 0 0 8px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  max-width: 70ch;
+}
+.ph-chip-open { margin-top: 2px; }
+.patch-highlights-compact .ph-summary {
+  max-width: 68ch;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .ph-tier {
   font-size: 0.68rem;
   font-weight: 800;

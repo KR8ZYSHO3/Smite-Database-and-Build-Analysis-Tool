@@ -113,17 +113,13 @@
               <p class="builds-hint muted" id="build-god-count"></p>
             </div>
             <p class="builds-hint muted" id="builds-god-home-hint">
-              Search a god for their tailored paths. Role browse is optional if you want ladder order by lane.
+              Type a god for their paths. Patch watch chips and Featured builds sit below — no full roster until you search.
             </p>
           </div>
 
-          <div id="builds-god-home" class="builds-any-list" aria-label="All gods"></div>
-          <div id="builds-all-hits" class="builds-any-list" hidden></div>
-          <div id="builds-any-detail" class="builds-any-detail" hidden></div>
-
           <section
             id="patch-highlights"
-            class="patch-highlights"
+            class="patch-highlights patch-highlights-compact"
             aria-labelledby="patch-highlights-title"
             hidden
           >
@@ -131,23 +127,26 @@
               <p class="ph-kicker" id="patch-highlights-kicker">This patch</p>
               <h2 id="patch-highlights-title">Patch overview</h2>
               <p class="ph-summary" id="patch-highlights-summary"></p>
-              <p class="muted ph-disclaimer" id="patch-highlights-disclaimer"></p>
+              <p class="muted ph-disclaimer" id="patch-highlights-disclaimer" hidden></p>
             </div>
-            <div class="ph-grid">
-              <div class="ph-col">
-                <h3 class="ph-col-title">Gods to watch</h3>
-                <ul id="patch-gods-list" class="ph-list"></ul>
+            <div class="ph-compact-body">
+              <div class="ph-chip-block">
+                <span class="ph-chip-label">Gods</span>
+                <div id="patch-gods-chips" class="ph-chips" role="group" aria-label="Gods to watch"></div>
               </div>
-              <div class="ph-col">
-                <h3 class="ph-col-title">Items to watch</h3>
-                <ul id="patch-items-list" class="ph-list"></ul>
+              <div class="ph-chip-block">
+                <span class="ph-chip-label">Items</span>
+                <div id="patch-items-chips" class="ph-chips" role="group" aria-label="Items to watch"></div>
               </div>
+              <div id="patch-chip-detail" class="ph-chip-detail" hidden></div>
             </div>
+            <!-- Kept for Meta-style fill helpers / a11y fallback; empty on Builds compact home -->
+            <ul id="patch-gods-list" class="ph-list" hidden></ul>
+            <ul id="patch-items-list" class="ph-list" hidden></ul>
 
             <details
               id="featured-builds"
               class="featured-builds featured-builds-fold"
-              open
             >
               <summary class="featured-builds-summary">
                 <span class="featured-builds-summary-main">
@@ -170,6 +169,10 @@
               </div>
             </details>
           </section>
+
+          <div id="builds-god-home" class="builds-any-list" aria-label="Matching gods" hidden></div>
+          <div id="builds-all-hits" class="builds-any-list" hidden></div>
+          <div id="builds-any-detail" class="builds-any-detail" hidden></div>
 
           <details class="role-job-details" id="role-job-wrap" hidden>
             <summary>What does this role do?</summary>
